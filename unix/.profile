@@ -12,7 +12,7 @@
 if [ -n "$BASH_VERSION" ]; then
     #https://github.com/mathiasbynens/dotfiles/blob/master/.bash_profile
     for file in $HOME/.{bashrc,alias,functions}; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+	[ -r "$file" ]  && source "$file";
     done;
     unset file;
 fi

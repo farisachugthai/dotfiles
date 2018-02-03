@@ -126,8 +126,7 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-. /home/faris/miniconda2/etc/profile.d/conda.sh
 
-if [-f $HOME/miniconda2/etc/profile.d/conda.sh ] ; then
+if [ -f $HOME/miniconda2/etc/profile.d/conda.sh ]; then
     . /$HOME/miniconda2/etc/profile.d/conda.sh
 fi
