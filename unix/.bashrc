@@ -1,3 +1,9 @@
+if [ -n "$BASH_VERSION" ]; then
+    for file in $HOME/.{alias,functions}; do
+	[ -r "$file" ]  && source "$file";
+    done;
+fi
+
 export TLDR_COLOR_BLANK="white" 
 export TLDR_COLOR_NAME="white" 
 export TLDR_COLOR_DESCRIPTION="white"
