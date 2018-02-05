@@ -1,0 +1,7 @@
+[user]
+	email = farischugthai@gmail.com
+	name = farisachugthai
+[core]
+	editor = vim
+[color]
+	ui = true

@@ -24,19 +24,3 @@ function extract() # Handy Extract Program
  echo "'$1' is not a valid file!"
  fi
 }
-#TODO
-#figure out what the hell this expressions mean and then add it.
-# it seems useful
-#https://github.com/mathiasbynens/dotfiles/blob/master/.functions
-#function fs() {
-#	if du -b /dev/null > /dev/null 2>&1; then
-#		local arg=-sbh;
-#	else
-#		local arg=-sh;
-#	fi
-#	if [[ -n "$@" ]]; then
-#		du $arg -- "$@";
-#	else
-#		du $arg .[^.]* ./*;
-#	fi;
-#}
