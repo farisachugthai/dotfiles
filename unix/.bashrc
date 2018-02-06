@@ -11,6 +11,15 @@ if [ -n "$BASH_VERSION" ]; then
     done;
 fi
 
+#powerline daemon added but didn't get a package with a
+#/powerline/bindings/bash/ dir?
+#if [ -d /usr/lib/python3/dist-packages/powerline/ ]; then
+#    powerline-daemon -q
+#    POWERLINE_BASH_CONTINUATION=1
+#    POWERLINE_BASH_SELECT=1
+#    . /usr/lib/python3/dist-packages/powerline/bindings/bash/powerline.sh
+#fi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -50,6 +59,9 @@ shopt -s nocaseglob
 
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
+
+#still don't want to clobber things
+set -o noclobber
 
 
 # make less more friendly for non-text input files, see lesspipe(1)
