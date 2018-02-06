@@ -5,3 +5,6 @@
 	editor = vim
 [color]
 	ui = true
+[merge]
+	tool = vimdiff
+	color = auto
