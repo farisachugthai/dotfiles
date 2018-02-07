@@ -135,9 +135,14 @@ export TLDR_CACHE_MAX_AGE=24
 
 #vim is everything
 set -o vi
-export VISUAL=gvim
+if ["$DISPLAY" ]; then
+    export VISUAL=gvim
+else
+    export VISUAL=vim
 export EDITOR='$VISUAL'
+fi
 
+# Paths for a few languages
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
