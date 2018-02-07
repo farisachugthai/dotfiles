@@ -9,11 +9,17 @@
 #umask 022
 
 # if running bash
-if [ -n "$BASH_VERSION" ]; then
-    for file in $HOME/.{bashrc,alias,functions}; do
-	[ -r "$file" ]  && source "$file";
-    done;
+#if [ -n "$BASH_VERSION" ]; then
+#    for file in $HOME/.{bashrc,alias,functions}; do
+#	[ -r "$file" ]  && source "$file";
+#    done;
+#fi
+
+#commented out because i'm gonna try only sourcing .bashrc
+if [ -x $HOME/.bashrc ]; then
+    . $HOME/.bashrc
 fi
+
 
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
