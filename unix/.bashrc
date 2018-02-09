@@ -1,12 +1,5 @@
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
-
-#TODO let's clean this up and maybe make a .bashrc.d style thing
 if [ -n "$BASH_VERSION" ]; then
-    for file in $HOME/.{alias,functions}; do
+    for file in $HOME/.bashrc.d/*; do
 	[ -r "$file" ]  && source "$file";
     done;
 fi
