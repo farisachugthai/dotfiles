@@ -1,19 +1,11 @@
-if [ -n "$BASH_VERSION" ]; then
-    for file in $HOME/.bashrc.d/*; do
-	[ -r "$file" ]  && source "$file";
-    done;
-fi
+#Bashrc. Assumes that the proper installation scripts have been run.
+# Maintained by Faris Chugthai
 
-#powerline daemon added but didn't get a package with a
-#/powerline/bindings/bash/ dir?
-#if [ -d /usr/lib/python3/dist-packages/powerline/ ]; then
-#    powerline-daemon -q
-#    POWERLINE_BASH_CONTINUATION=1
-#    POWERLINE_BASH_SELECT=1
-#    . /usr/lib/python3/dist-packages/powerline/bindings/bash/powerline.sh
-#fi
-
-# don't put duplicate lines or lines starting with space in the history.
+for file in ~/.bashrc.d/*; do
+    if [ -r "$file" ]; then
+        . $i
+    fi
+done# don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
