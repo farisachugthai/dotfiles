@@ -1,9 +1,10 @@
+#!/bin/bash
 #Bashrc. Assumes that the proper installation scripts have been run.
 # Maintained by Faris Chugthai
 
-for file in ~/.bashrc.d/*; do
+for file in ~/.bashrc.d/.{alias,functions}; do
     if [ -r "$file" ]; then
-        . $i
+        . "$file"
     fi
 done
 
@@ -126,7 +127,7 @@ if [ "$DISPLAY" ]; then
     export VISUAL=gvim
 else
     export VISUAL=vim
-export EDITOR='$VISUAL'
+export EDITOR="$VISUAL"
 fi
 
 # Paths for a few languages
@@ -137,6 +138,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-if [ -f $HOME/miniconda2/etc/profile.d/conda.sh ]; then
-    . /$HOME/miniconda2/etc/profile.d/conda.sh
+if [ -f "$HOME/miniconda2/etc/profile.d/conda.sh" ]; then
+    . "$HOME/miniconda2/etc/profile.d/conda.sh"
 fi
