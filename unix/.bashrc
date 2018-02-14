@@ -18,6 +18,11 @@ HISTFILESIZE=2000
 
 #Shopt
 #
+
+#Be notified of asynchronous jobs completing in the background
+set -o notify
+
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 
@@ -138,6 +143,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# TODO: create a list with anaconda2 anaconda3 miniconda2 and miniconda3.
+# iterate over the list and source conda
 if [ -f "$HOME/miniconda2/etc/profile.d/conda.sh" ]; then
     . "$HOME/miniconda2/etc/profile.d/conda.sh"
 fi
