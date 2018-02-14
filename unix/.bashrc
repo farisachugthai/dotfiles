@@ -5,7 +5,9 @@ for file in ~/.bashrc.d/*; do
     if [ -r "$file" ]; then
         . $i
     fi
-done# don't put duplicate lines or lines starting with space in the history.
+done
+
+# don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
@@ -120,7 +122,7 @@ export TLDR_CACHE_MAX_AGE=24
 
 #vim is everything
 set -o vi
-if ["$DISPLAY" ]; then
+if [ "$DISPLAY" ]; then
     export VISUAL=gvim
 else
     export VISUAL=vim
