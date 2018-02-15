@@ -117,14 +117,6 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-export TLDR_COLOR_BLANK="white" 
-export TLDR_COLOR_NAME="white" 
-export TLDR_COLOR_DESCRIPTION="white"
-export TLDR_COLOR_EXAMPLE="white" 
-export TLDR_COLOR_COMMAND="white" 
-export TLDR_COLOR_PARAMETER="white" 
-export TLDR_CACHE_ENABLED=1
-export TLDR_CACHE_MAX_AGE=24
 
 #vim is everything
 set -o vi
@@ -148,3 +140,18 @@ export NVM_DIR="$HOME/.nvm"
 if [ -f "$HOME/miniconda2/etc/profile.d/conda.sh" ]; then
     . "$HOME/miniconda2/etc/profile.d/conda.sh"
 fi
+
+
+#cheatsheets and tldr's
+# for tldr.py
+export TLDR_COLOR_BLANK="white" 
+export TLDR_COLOR_NAME="white" 
+export TLDR_COLOR_DESCRIPTION="white"
+export TLDR_COLOR_EXAMPLE="white" 
+export TLDR_COLOR_COMMAND="white" 
+export TLDR_COLOR_PARAMETER="white" 
+export TLDR_CACHE_ENABLED=1
+export TLDR_CACHE_MAX_AGE=24
+
+# for cheat.py
+export CHEATCOLORS=true
