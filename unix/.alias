@@ -17,3 +17,11 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -pv'
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+#options i use every time i run these commands
+alias du='du -d 1 -h'
+alias df='df -aht --total'
+alias free='free -mt'
