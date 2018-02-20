@@ -115,10 +115,12 @@ export TLDR_CACHE_MAX_AGE=24
 # for cheat.py
 export CHEATCOLORS=true
 
-#add powerline support because it's pretty
-if [ -d /usr/lib/python3/dist-packages/powerline/ ]; then
+#add powerline support
+PLINE_ROOT="/usr/local/lib/python3.5/dist-packages/powerline/"
+if [ -d "$PLINE_ROOT" ]
+then
     powerline-daemon -q
     POWERLINE_BASH_CONTINUATION=1
     POWERLINE_BASH_SELECT=1
-    . /usr/lib/python3/dist-packages/powerline/bindings/bash/powerline.sh
+    . $PLINE_ROOT/bindings/bash/powerline.sh
 fi
