@@ -37,6 +37,7 @@ filetype plugin indent on    " required
 
 " Activate solarized colors
 colorscheme solarized
+set background=dark
 
 "powerline installed via pip
 python3 from powerline.vim import setup as powerline_setup
@@ -52,6 +53,10 @@ endif
 " Common abbreviations / misspellings {{{
 source ~/.vim/autocorrect.vim
 " }}}
+
+"Add a Vim cheat sheet with
+"cd ~/.vim 
+"git clone https://github.com/lifepillar/vim-cheat40.git pack/bundle/start/cheat4
 
 
 " Filetype Specific Options
