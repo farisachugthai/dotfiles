@@ -1,182 +1,236 @@
-" plugins
-" vundle
-" from: https://github.com/VundleVim/Vundle.vim/blob/master/README.md 
-" if you need to reinstall, run these commands
-" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+""""""""""""""""""""""""""""""""
+" My Personal Vimrc            "
+" Maintained by Faris Chugthai "
+""""""""""""""""""""""""""""""""
+
+" TABLE OF CONTENTS
+""""""""""""""""""""""""""""""""
+" Vundle, Plugins and Other Sourced Files
+" Filetype Specific Options
+"   PEP8
+"   Web Dev
+" Global Options
+" Mappings
+" Plugin Configurations
+"   Built-In
+"   NERDTree
+""""""""""""""""""""""""""""""""" 
 "
-"the following's required as stated in the github Quick Start
+"
+" Vundle, Plugins and Other Sourced Files
 set nocompatible
 filetype off
-" set the runtime path to include Vundle and initialize
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdTree'
 Plugin 'vimwiki/vimwiki'
-"Plugin 'vim-scripts/indentpython.vim'
-Plugin 'nvie/vim-flake8'
-"https://github.com/nvie/vim-flake8
-"flake8 is a static syntax and style checker. wraps around pyflakes, pep8 and
-"ned's MacCabe script [complexity checker]
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'davidhalter/jedi-vim'
-"https://github.com/davidhalter/jedi-vim
-"jedi-vim is a vim binding to the autocompletion library jedi
-"run :help jedi-vim if you get confused
-"Plugin 'ivanov/vim-ipython'
-"https://github.com/ivanov/vim-ipython
-Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
-"https://powerline.readthedocs.io/en/latest/usage/other.html#vim-statusline
-"
-" cheat40 not actually managed by vundle
-"$ cd .vim
-"$ git clone https://github.com/lifepillar/vim-cheat40.git pack/bundle/start/cheat40
 
-"https://github.com/lifepillar/vim-cheat40/blob/master/Readme.md#cheat40-a-cheat-sheet-for-vim
-"Cheat40 is a foldable extensible 40-column cheat sheet that you may open in Vim by pressing <leader>?
-
-" All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+
+" Activate solarized colors
+colorscheme solarized
+
+"powerline installed via pip
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
+
+" if you wanna make local changes to your vimrc but don't want them to be 
+" tracked changes, play around in your .vimrc.local!
+if filereadable(glob("~/.vimrc.local")) 
+    source ~/.vimrc.local
+endif
+
+" Common abbreviations / misspellings {{{
+source ~/.vim/autocorrect.vim
+" }}}
 
 
-"pep8
-set tabstop=4 
+" Filetype Specific Options
+
+" PEP8
+"
+" Admittedly these are global options as well.
+" But I like the way it looks!
+"
 "show existing tab with 4 spaces width
-set shiftwidth=4
+set tabstop=4 
 "when indenting with '>', use 4 spaces width
-set expandtab
+set shiftwidth=4 
 "On pressing tab, insert 4 spaces
-set autoindent
-"copy indent from previous line when starting a new line
-set softtabstop=4
-"number of spaces a tab counts for 
-set textwidth=80
-"where the hell is 80 characters?
-set fileformat=unix
-"store in unix format to prevent conversion issues when checking into github
-let python_highlight_all = 1
+set expandtab 
+"from the python moin wiki. look for the vim page
+"TODO: no dummy use this line to differentiate soft/hard tabs
+set softtabstop=4 
+" 80 characters before the line wraps
+set textwidth=80 
 " enable all Python syntax highlighting features
+let python_highlight_all = 1
 
-
-"web dev
-au BufNewFile,BufRead *.js, *.html, *.css
+" Web Dev
+"
+autocmd BufNewFile,BufRead *.js, *.html, *.css
     \ set tabstop=2
     \ set softtabstop=2
     \ set shiftwidth=2
 
+" Markdown
 
-"indentation
-set smartindent
-"do smart autoindenting when starting a new line
-set smarttab
-"at <TAB> at beginning line inserts spaces set in shiftwidth
+"gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 
-"options
-"so this is me reading :options and thinking stuffs interesting
-set cul
+" Global Options
+" If you ever want to review these, hit :tab set
+"
 "cursorline. add a line underneath where your cursor is.
-"set cuc 
-"that would be used for cursorcolumn. much more obnoxious lol
-set title
+" Doesn't appear to work with powerline installed
+set cul
 "shows the name of the file in the window title
-set wildmode=list,full
-" Completion mode.
-" When more than one match, list all matches and complete first match."
-
-
-"uhhh. Other? Idk i'll group it when i get enough items to refactor.
-set colorcolumn=+1
+" also doesn't appear to work when vim is launched from tmux
+set title
 "lets colorize the 80 char line for you
-set ch=2
+set colorcolumn=+1
 "make the command line 2 lines high
-set hlsearch
+set ch=2
 "Switch on search pattern highlighting.
-set ruler
+set hlsearch
 "show line and column number
+set ruler
+" Give backspaces seemingly obvious behavior.
 set backspace=indent,eol,start
-"Make backspaces do seemingly obvious behavior.
-set showcmd
 " show (partial) command in status line
-filetype plugin on
-" i believe that turns on plugins for specific filetypes IE .py .md etc
-set number
+set showcmd
 "show number lines on the left
-set showmatch
+set number
 "show matching brackets
-set ignorecase
+set showmatch
 "do case insensitive matching
-set background=dark
-"this is wildly important for basic viewability on WSL
+set ignorecase
+"do smart autoindenting when starting a new line
+set smartindent
+"at <TAB> at beginning line inserts spaces set in shiftwidth
+set smarttab
+"they're annoying
+set noswapfile
+"simple is better than complex
+set mouse=a
+"TODO figure out if quoteplus is a recognized clipboard name
 set clipboard=unnamed
-"the fact that vim doesn't use the system clipboard drives me crazy
+
+"TODO: this needs to check what OS we're running right? what happens if we run
+"this in gvim win32?
+set fileformat=unix
+"store in unix format to prevent conversion issues when checking into github
+set encoding=utf-8
+
+" Tab completion
+set wildmenu
+set wildignorecase
+set wildmode=list,full
+set display+=lastline
+
+set incsearch
+set history=1000
+set tabpagemax=50
+set viminfo^=!
+set sessionoptions-=options
+
+set noerrorbells
+" don't ring or make noise
+
+
+"Buffers, Windows, and Tabs
+"
+"look to see if a buffer is open before opening a new one
+set switchbuf=newtab
+"modified buffers are hidden and multiple buffers can be worked on without
+"forcing the user to save 
+set hidden
+"if i change a file in a different window, reload it
+set autoread
+" Opening a window will place it below the current one
+set splitbelow
+" If vertical split is invoked put it on the right
+set splitright
+" Last window gets a status line
+set laststatus=2
+
+"Syntax Highlighting Options
+"if we can have syntax recognition go for it
+"this has to come after the colorscheme
 if has("syntax")
     syntax on
 endif
-"if we can have syntax recognition go for it
-set noswapfile
-"they're annoying
 
-" As of version 8, vim enables the mouse by default - but only if no ~/.vimrc
-" is found. Enable that unconditionally for Termux as it's useful with touch:
-set mouse=a
+"set modelines to enable syntax highlighting even when the filename differs
+set modeline
 
-
-"" sensible.vim - Defaults everyone can agree on
-" Maintainer:   Tim Pope <http://tpo.pe/>
-" Version:      1.1
-
-set incsearch
-set laststatus=2
-set display+=lastline
-
-if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-endif
-
-if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j " Delete comment character when joining commented lines
-endif
-
-if has('path_extra')
-  setglobal tags-=./tags tags-=./tags; tags^=./tags;
-endif
-
-set autoread
-
-if &history < 1000
-  set history=1000
-endif
-if &tabpagemax < 50
-  set tabpagemax=50
-endif
-if !empty(&viminfo)
-  set viminfo^=!
-endif
-set sessionoptions-=options
-
-"https://github.com/nvie/vimrc/blob/master/vimrc
+" Mappings
+"
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
+" If running a terminal in Vim, go into Normal mode with Esc
+tnoremap <Esc> <C-W>N
 
-" Common abbreviations / misspellings {{{
-source ~/.vim/autocorrect.vim
-" }}}
+
+" Plugin Configuration
+"
+" Let's start with some builtins
+" Use Vim as the pager when opening man pages
+" From /usr/share/vim/vim80/doc/usr_12.txt
+" Invoke while in Vim by putting your cursor over a word and run \K
+runtime! ftplugin/man.vim
+
+" from filetype line 590
+let g:ft_man_folding_enable = 1
+
+
+
+"NERDTree
+"https://github.com/scrooloose/nerdtree
+"
+"Open NERDTree automatically
+autocmd vimenter * NERDTree
+
+" How can I open a NERDTree automatically when vim starts up if no files were specified?
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+"How can I open NERDTree automatically when vim starts up on opening a directory?
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+"Close vim if the only window left is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"Close NERDTree if you open a file
+let NERDTReeQuitOnOpen = 1
+let NERDTreeDirArrows = 1
+let g:NERDTreeWinPos = "right"
+let NERDTreeShowHidden=0
+
+
+"Syntastic
+"https://github.com/vim-syntastic/syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['flake8']
+
+
+"Jedi. Great out of the box except for the import autofill
+let g:jedi#smart_auto_mappings = 0
