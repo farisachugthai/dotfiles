@@ -1,0 +1,182 @@
+" plugins
+" vundle
+" from: https://github.com/VundleVim/Vundle.vim/blob/master/README.md 
+" if you need to reinstall, run these commands
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"
+"the following's required as stated in the github Quick Start
+set nocompatible
+filetype off
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vimwiki/vimwiki'
+"Plugin 'vim-scripts/indentpython.vim'
+Plugin 'nvie/vim-flake8'
+"https://github.com/nvie/vim-flake8
+"flake8 is a static syntax and style checker. wraps around pyflakes, pep8 and
+"ned's MacCabe script [complexity checker]
+Plugin 'davidhalter/jedi-vim'
+"https://github.com/davidhalter/jedi-vim
+"jedi-vim is a vim binding to the autocompletion library jedi
+"run :help jedi-vim if you get confused
+"Plugin 'ivanov/vim-ipython'
+"https://github.com/ivanov/vim-ipython
+Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+"https://powerline.readthedocs.io/en/latest/usage/other.html#vim-statusline
+"
+" cheat40 not actually managed by vundle
+"$ cd .vim
+"$ git clone https://github.com/lifepillar/vim-cheat40.git pack/bundle/start/cheat40
+
+"https://github.com/lifepillar/vim-cheat40/blob/master/Readme.md#cheat40-a-cheat-sheet-for-vim
+"Cheat40 is a foldable extensible 40-column cheat sheet that you may open in Vim by pressing <leader>?
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+"pep8
+set tabstop=4 
+"show existing tab with 4 spaces width
+set shiftwidth=4
+"when indenting with '>', use 4 spaces width
+set expandtab
+"On pressing tab, insert 4 spaces
+set autoindent
+"copy indent from previous line when starting a new line
+set softtabstop=4
+"number of spaces a tab counts for 
+set textwidth=80
+"where the hell is 80 characters?
+set fileformat=unix
+"store in unix format to prevent conversion issues when checking into github
+let python_highlight_all = 1
+" enable all Python syntax highlighting features
+
+
+"web dev
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+
+
+"indentation
+set smartindent
+"do smart autoindenting when starting a new line
+set smarttab
+"at <TAB> at beginning line inserts spaces set in shiftwidth
+
+
+"options
+"so this is me reading :options and thinking stuffs interesting
+set cul
+"cursorline. add a line underneath where your cursor is.
+"set cuc 
+"that would be used for cursorcolumn. much more obnoxious lol
+set title
+"shows the name of the file in the window title
+set wildmode=list,full
+" Completion mode.
+" When more than one match, list all matches and complete first match."
+
+
+"uhhh. Other? Idk i'll group it when i get enough items to refactor.
+set colorcolumn=+1
+"lets colorize the 80 char line for you
+set ch=2
+"make the command line 2 lines high
+set hlsearch
+"Switch on search pattern highlighting.
+set ruler
+"show line and column number
+set backspace=indent,eol,start
+"Make backspaces do seemingly obvious behavior.
+set showcmd
+" show (partial) command in status line
+filetype plugin on
+" i believe that turns on plugins for specific filetypes IE .py .md etc
+set number
+"show number lines on the left
+set showmatch
+"show matching brackets
+set ignorecase
+"do case insensitive matching
+set background=dark
+"this is wildly important for basic viewability on WSL
+set clipboard=unnamed
+"the fact that vim doesn't use the system clipboard drives me crazy
+if has("syntax")
+    syntax on
+endif
+"if we can have syntax recognition go for it
+set noswapfile
+"they're annoying
+
+" As of version 8, vim enables the mouse by default - but only if no ~/.vimrc
+" is found. Enable that unconditionally for Termux as it's useful with touch:
+set mouse=a
+
+
+"" sensible.vim - Defaults everyone can agree on
+" Maintainer:   Tim Pope <http://tpo.pe/>
+" Version:      1.1
+
+set incsearch
+set laststatus=2
+set display+=lastline
+
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j " Delete comment character when joining commented lines
+endif
+
+if has('path_extra')
+  setglobal tags-=./tags tags-=./tags; tags^=./tags;
+endif
+
+set autoread
+
+if &history < 1000
+  set history=1000
+endif
+if &tabpagemax < 50
+  set tabpagemax=50
+endif
+if !empty(&viminfo)
+  set viminfo^=!
+endif
+set sessionoptions-=options
+
+"https://github.com/nvie/vimrc/blob/master/vimrc
+" Easy window navigation
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+
+" Common abbreviations / misspellings {{{
+source ~/.vim/autocorrect.vim
+" }}}
