@@ -96,6 +96,9 @@ else
 export EDITOR="$VISUAL"
 fi
 
+#Display man pages in a slightly nicer way
+export MANPAGER="vim -M +MANPAGER -"
+
 # Paths for a few languages
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
