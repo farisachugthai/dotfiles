@@ -31,6 +31,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'davidhalter/jedi-vim'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -133,6 +135,8 @@ set clipboard=unnamed
 
 "TODO: this needs to check what OS we're running right? what happens if we run
 "this in gvim win32?
+"Oddly enough i actually don't know if this requires an OS check....
+" I think this needs to be turned off when run as vim -M
 set fileformat=unix
 "store in unix format to prevent conversion issues when checking into github
 set encoding=utf-8
