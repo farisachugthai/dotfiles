@@ -31,13 +31,18 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdTree'
-Plugin 'vimwiki/vimwiki'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'airblade/vim-gitgutter'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'davidhalter/jedi-vim'
+<<<<<<< HEAD
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
+=======
+Plugin 'vimwiki/vimwiki'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'majutsushi/tagbar'
+>>>>>>> How have i gone this long without fugtive?
 
 call vundle#end()            " required
 filetype plugin indent on    " required
