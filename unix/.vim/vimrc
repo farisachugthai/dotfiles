@@ -19,6 +19,7 @@
 "   Syntastic
 "   Jedi
 "   Vimwiki
+"   Fugitive
 """"""""""""""""""""""""""""""""" 
 "
 "
@@ -187,6 +188,8 @@ if has("syntax")
 endif
 
 "set modelines to enable syntax highlighting even when the filename differs
+" heres an example of a modeline
+" /* vim: set syntax=md : */ 
 set modeline
 
 " Mappings
@@ -242,7 +245,7 @@ let NERDTReeQuitOnOpen = 1
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=0
-
+let NERDTreeShowBookmarks=1
 
 "Syntastic
 "https://github.com/vim-syntastic/syntastic
@@ -252,10 +255,14 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['flake8']
 
-
 "Jedi. Great out of the box except for the import autofill
 let g:jedi#smart_auto_mappings = 0
 
 "Vimwiki
 let g:vimwiki_hl_cb_checked=1
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
+
+"Fugitive
+"TODO: Evaluating the line currently creates pyeval errors. Command should be
+"appended to line not erase old one, so set+= was used instead of set=
+set statusline+=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
