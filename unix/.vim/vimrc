@@ -9,11 +9,16 @@
 " Filetype Specific Options
 "   PEP8
 "   Web Dev
+"   Markdown
 " Global Options
 " Mappings
 " Plugin Configurations
 "   Built-In
+"   Vundle
 "   NERDTree
+"   Syntastic
+"   Jedi
+"   Vimwiki
 """"""""""""""""""""""""""""""""" 
 "
 "
@@ -194,15 +199,21 @@ tnoremap <Esc> <C-W>N
 " Plugin Configuration
 "
 " Let's start with some builtins
-" Use Vim as the pager when opening man pages
+" Let Vim open manpages with ex cmd
+" :Man [cmd]
 " From /usr/share/vim/vim80/doc/usr_12.txt
 " Invoke while in Vim by putting your cursor over a word and run \K
 runtime! ftplugin/man.vim
 
 " from filetype line 590
-let g:ft_man_folding_enable = 1
+let g:ft_man_folding_enable = 0
 
+" filetype 596
+set keywordprg=:Man
 
+"Vundle
+"Use git:// instead of https
+"let g:vundle_default_git_proto = 'git'
 
 "NERDTree
 "https://github.com/scrooloose/nerdtree
@@ -239,3 +250,7 @@ let g:syntastic_python_checkers = ['flake8']
 
 "Jedi. Great out of the box except for the import autofill
 let g:jedi#smart_auto_mappings = 0
+
+"Vimwiki
+let g:vimwiki_hl_cb_checked=1
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
