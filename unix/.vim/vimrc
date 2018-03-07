@@ -71,14 +71,14 @@ source ~/.vim/autocorrect.vim
 " Admittedly these are global options as well.
 " But I like the way it looks!
 "
-"show existing tab with 4 spaces width
+" show existing tab with 4 spaces width
 set tabstop=4 
-"when indenting with '>', use 4 spaces width
+" when indenting with '>', use 4 spaces width
 set shiftwidth=4 
-"On pressing tab, insert 4 spaces
+" On pressing tab, insert 4 spaces
 set expandtab 
-"from the python moin wiki. look for the vim page
-"TODO: no dummy use this line to differentiate soft/hard tabs
+" Number of spaces that a <Tab> counts for while performing editing
+" operations, like inserting a <Tab> or using <BS>.
 set softtabstop=4 
 " 80 characters before the line wraps
 set textwidth=80 
@@ -101,50 +101,52 @@ autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " Global Options
 " If you ever want to review these, hit :tab set
 "
-"cursorline. add a line underneath where your cursor is.
+" cursorline. add a line underneath where your cursor is.
 " Doesn't appear to work with powerline installed
 set cul
-"shows the name of the file in the window title
+" shows the name of the file in the window title
 " also doesn't appear to work when vim is launched from tmux
 set title
 "lets colorize the 80 char line for you
 set colorcolumn=+1
-"make the command line 2 lines high
+" make the command line 2 lines high
 set ch=2
-"Switch on search pattern highlighting.
+" Switch on search pattern highlighting.
 set hlsearch
-"show line and column number
+" show line and column number
 set ruler
 " Give backspaces seemingly obvious behavior.
 set backspace=indent,eol,start
 " show (partial) command in status line
 set showcmd
-"show number lines on the left
+" show number lines on the left
 set number
-"show matching brackets
+" show matching brackets
 set showmatch
-"do case insensitive matching
+" do case insensitive matching
 set ignorecase
-"do smart autoindenting when starting a new line
+" do smart autoindenting when starting a new line
 set smartindent
-"at <TAB> at beginning line inserts spaces set in shiftwidth
+" at <TAB> at beginning line inserts spaces set in shiftwidth
 set smarttab
-"they're annoying
+" they're annoying
 set noswapfile
-"simple is better than complex
+" simple is better than complex
 set mouse=a
-"TODO figure out if quoteplus is a recognized clipboard name
+" Use the system clipboard
 set clipboard=unnamed
 
-"TODO: this needs to check what OS we're running right? what happens if we run
-"this in gvim win32?
+" TODO: look up syntax for if (modifiable); do because these options cant be 
+" set in RO mode
 set fileformat=unix
 "store in unix format to prevent conversion issues when checking into github
 set encoding=utf-8
 
 " Tab completion
 set wildmenu
-set wildignorecase
+" fileignorecase ignores case usage in files.
+" wildignorecase does this but only for autocompletions
+set fileignorecase
 set wildmode=list,full
 set display+=lastline
 
@@ -167,6 +169,7 @@ set switchbuf=newtab
 set hidden
 "if i change a file in a different window, reload it
 set autoread
+" TODO: Executing :he still opens buffers above
 " Opening a window will place it below the current one
 set splitbelow
 " If vertical split is invoked put it on the right
