@@ -103,10 +103,16 @@ else
 export EDITOR="$VISUAL"
 fi
 
+<<<<<<< HEAD
 
 # Allow us to run executables for Go, JavaScript and Python 
 export PATH=/usr/local/go/bin:$PATH
 
+=======
+# Paths for a few languages
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+>>>>>>> Removed powerline for faster response from bash. Added pip completion and removed Vim as the pager. Greatly improved stability.
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -118,8 +124,15 @@ if [ -f "$HOME/miniconda2/etc/profile.d/conda.sh" ]; then
     . "$HOME/miniconda2/etc/profile.d/conda.sh"
 fi
 
+<<<<<<< HEAD
 # Some plugins and libraries I enjoy.
 # tldr.py, cheat.py, fuzzy searches
+=======
+# Let's get bash completion for pip
+eval "`pip completion --bash`"
+
+#cheatsheets and tldr's
+>>>>>>> Removed powerline for faster response from bash. Added pip completion and removed Vim as the pager. Greatly improved stability.
 # for tldr.py
 export TLDR_COLOR_BLANK="white" 
 export TLDR_COLOR_NAME="white" 
@@ -132,6 +145,7 @@ export TLDR_CACHE_MAX_AGE=24
 
 # for cheat.py
 export CHEATCOLORS=true
+<<<<<<< HEAD
 
 # for quick, fuzzy searching in the shell
 if [ -f ~/.fzf.bash ]; then
@@ -172,3 +186,5 @@ _pip_completion()
 }
 complete -o default -F _pip_completion pip
 # pip bash completion end
+=======
+>>>>>>> Removed powerline for faster response from bash. Added pip completion and removed Vim as the pager. Greatly improved stability.
