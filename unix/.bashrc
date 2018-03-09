@@ -96,9 +96,6 @@ else
 export EDITOR="$VISUAL"
 fi
 
-#Display man pages in a slightly nicer way
-export MANPAGER="vim -M +MANPAGER -"
-
 # Paths for a few languages
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
@@ -113,6 +110,8 @@ if [ -f "$HOME/miniconda2/etc/profile.d/conda.sh" ]; then
     . "$HOME/miniconda2/etc/profile.d/conda.sh"
 fi
 
+# Let's get bash completion for pip
+eval "`pip completion --bash`"
 
 #cheatsheets and tldr's
 # for tldr.py
@@ -127,13 +126,3 @@ export TLDR_CACHE_MAX_AGE=24
 
 # for cheat.py
 export CHEATCOLORS=true
-
-#add powerline support
-PLINE_ROOT="/usr/local/lib/python3.5/dist-packages/powerline/"
-if [ -d "$PLINE_ROOT" ]
-then
-    powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
-    . $PLINE_ROOT/bindings/bash/powerline.sh
-fi
