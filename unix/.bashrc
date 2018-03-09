@@ -90,10 +90,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 ### Vim
 # I want vim set to be everything
 
-export PAGER="vim -c PAGER -"
-
-export MANPAGER="vim -M +MANPAGER -"
-
 set -o vi
 
 if [ "$DISPLAY" ]; then
@@ -143,25 +139,15 @@ if [ -f "$GOPATH"/src/github.com/github/hub/etc/hub.bash_completion ]; then
     . "$GOPATH"/src/github.com/github/hub/etc.hub.bash_completion
 fi
 
-if [ -f "~/git-completion.bash" ]; then
-    . "~/git-completion.bash"
+if [ -f "~/.bashrc.d/git-completion.bash" ]; then
+    . "~/.bashrc.d/git-completion.bash"
 fi
 
-if [ -f "~/git-prompt.sh" ]; then
-    . "~/git-prompt.sh";
+if [ -f "~/.bashrc.d/git-prompt.sh" ]; then
+    . "~/.bashrc.d/git-prompt.sh";
     export GIT_PS1_SHOWDIRTYSTATE=1
     export PS1='\w$(__git_ps1 " (%s)")\$ '
 fi
-
-PATH="/home/faris/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/faris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/faris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/faris/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/faris/perl5"; export PERL_MM_OPT;
-
-
-
-# i guess it's been one of those days
 
 # pip bash completion start
 _pip_completion()
