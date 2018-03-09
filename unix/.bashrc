@@ -104,11 +104,14 @@ export EDITOR="$VISUAL"
 fi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 # Allow us to run executables for Go, JavaScript and Python 
 export PATH=/usr/local/go/bin:$PATH
 
 =======
+=======
+>>>>>>> 7b9027363b7a09b611f138ef1cd11314b58847a2
 # Paths for a few languages
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
@@ -125,9 +128,12 @@ if [ -f "$HOME/miniconda2/etc/profile.d/conda.sh" ]; then
 fi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Some plugins and libraries I enjoy.
 # tldr.py, cheat.py, fuzzy searches
 =======
+=======
+>>>>>>> 7b9027363b7a09b611f138ef1cd11314b58847a2
 # Let's get bash completion for pip
 eval "`pip completion --bash`"
 
@@ -145,6 +151,7 @@ export TLDR_CACHE_MAX_AGE=24
 
 # for cheat.py
 export CHEATCOLORS=true
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 # for quick, fuzzy searching in the shell
@@ -188,3 +195,5 @@ complete -o default -F _pip_completion pip
 # pip bash completion end
 =======
 >>>>>>> Removed powerline for faster response from bash. Added pip completion and removed Vim as the pager. Greatly improved stability.
+=======
+>>>>>>> 7b9027363b7a09b611f138ef1cd11314b58847a2
