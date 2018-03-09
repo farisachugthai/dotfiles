@@ -268,4 +268,4 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
 "Fugitive
 "TODO: Evaluating the line currently creates pyeval errors. Command should be
 "appended to line not erase old one, so set+= was used instead of set=
-set statusline+=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+" set statusline+=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P

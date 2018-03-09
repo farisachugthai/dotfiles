@@ -3,10 +3,26 @@
 	name = farisachugthai
 [core]
 	editor = vim
+	pager = less
 [color]
 	ui = true
+	pager = false
+    interactive = auto
+    diff = true
+    branch = always
+
+# Man git-difftool: Line 85
+# git difftool falls back to git mergetool config variables when difftool
+# equivalents haven't been set.
 [merge]
-	tool = vimdiff
+    guitool = gvimdiff3
+	tool = vimdiff3
 	color = auto
 [push]
 	default = simple
+[sequence]
+	editor = vim
+[branch]
+    autosetupmerge = true
+[pager]
+	status = true
