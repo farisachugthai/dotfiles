@@ -2,7 +2,7 @@
 #Bashrc. Assumes that the proper installation scripts have been run.
 # Maintained by Faris Chugthai
 
-for file in ~/.bashrc.d/.{alias,functions}; do
+for file in ~/.bashrc.d/{alias,functions}; do
     if [ -r "$file" ]; then
         . "$file"
     fi
