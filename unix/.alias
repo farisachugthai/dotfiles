@@ -28,3 +28,5 @@ alias free='free -mt'
 
 #termux command with odd default of view not send
 alias termux-share="termux-share -a send"
+
+alias info="info --vi-keys"
