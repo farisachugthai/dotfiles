@@ -39,8 +39,9 @@ Plugin 'vimwiki/vimwiki'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'majutsushi/tagbar'
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'nvie/vim-flake8'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -89,7 +90,9 @@ set expandtab
 " operations, like inserting a <Tab> or using <BS>.
 set softtabstop=4
 " 80 characters before the line wraps
-set textwidth=80
+set textwidth=80 
+" Set column width of 80 lines
+set columns=120
 " enable all Python syntax highlighting features
 let python_highlight_all = 1
 
