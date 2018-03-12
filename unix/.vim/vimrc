@@ -20,7 +20,7 @@
 "   Jedi
 "   Vimwiki
 "   Fugitive
-""""""""""""""""""""""""""""""""" 
+"""""""""""""""""""""""""""""""""
 "
 "
 " Vundle, Plugins and Other Sourced Files
@@ -49,14 +49,17 @@ filetype plugin indent on    " required
 colorscheme solarized
 set background=dark
 
+"Activate 24 bit colorschemes. Currently works on Windows 10, Ubuntu and Termux
+set termguicolors
+
 "powerline installed via pip
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
 
-" if you wanna make local changes to your vimrc but don't want them to be 
+" if you wanna make local changes to your vimrc but don't want them to be
 " tracked changes, play around in your .vimrc.local!
-if filereadable(glob("~/.vimrc.local")) 
+if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
@@ -65,7 +68,7 @@ source ~/.vim/autocorrect.vim
 " }}}
 
 "Add a Vim cheat sheet with
-"cd ~/.vim 
+"cd ~/.vim
 "git clone https://github.com/lifepillar/vim-cheat40.git pack/bundle/start/cheat4
 
 
@@ -77,16 +80,16 @@ source ~/.vim/autocorrect.vim
 " But I like the way it looks!
 "
 " show existing tab with 4 spaces width
-set tabstop=4 
+set tabstop=4
 " when indenting with '>', use 4 spaces width
-set shiftwidth=4 
+set shiftwidth=4
 " On pressing tab, insert 4 spaces
-set expandtab 
+set expandtab
 " Number of spaces that a <Tab> counts for while performing editing
 " operations, like inserting a <Tab> or using <BS>.
-set softtabstop=4 
+set softtabstop=4
 " 80 characters before the line wraps
-set textwidth=80 
+set textwidth=80
 " enable all Python syntax highlighting features
 let python_highlight_all = 1
 
@@ -141,11 +144,13 @@ set mouse=a
 " Use the system clipboard
 set clipboard=unnamed
 
-" TODO: look up syntax for if (modifiable); do because these options cant be 
+" TODO: look up syntax for if (modifiable); do because these options cant be
 " set in RO mode
 " I think this needs to be turned off when run as vim -M
-set fileformat=unix
+
 "store in unix format to prevent conversion issues when checking into github
+"and be aware that that does happen! just ran into it on Windows 10 Subsystem
+set fileformat=unix
 set encoding=utf-8
 
 " Tab completion
@@ -171,7 +176,7 @@ set noerrorbells
 "look to see if a buffer is open before opening a new one
 set switchbuf=newtab
 "modified buffers are hidden and multiple buffers can be worked on without
-"forcing the user to save 
+"forcing the user to save
 set hidden
 "if i change a file in a different window, reload it
 set autoread
@@ -192,7 +197,7 @@ endif
 
 "set modelines to enable syntax highlighting even when the filename differs
 " heres an example of a modeline
-" /* vim: set syntax=md : */ 
+" /* vim: set syntax=md : */
 set modeline
 
 " Mappings
@@ -247,7 +252,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTReeQuitOnOpen = 1
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = "right"
-let NERDTreeShowHidden=0
+let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks=1
 
 "Syntastic
