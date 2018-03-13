@@ -6,3 +6,4 @@ fi
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 export PAGER="/bin/less"
+export COLORTERM="colorterm"

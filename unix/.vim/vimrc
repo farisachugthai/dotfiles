@@ -46,17 +46,6 @@ Plugin 'nvie/vim-flake8'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" Activate solarized colors
-colorscheme solarized
-set background=dark
-
-"Activate 24 bit colorschemes. Currently works on Windows 10, Ubuntu and Termux
-set termguicolors
-
-"powerline installed via pip
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
 
 " if you wanna make local changes to your vimrc but don't want them to be
 " tracked changes, play around in your .vimrc.local!
@@ -277,3 +266,11 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
 "TODO: Evaluating the line currently creates pyeval errors. Command should be
 "appended to line not erase old one, so set+= was used instead of set=
 " set statusline+=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
+
+" put fugitive info in statusline if available
+if exists('g:loaded_fugitive')
+   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
+else
+   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=(%l,%c)\ %y
+endif
