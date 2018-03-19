@@ -50,10 +50,6 @@ filetype plugin indent on    " required
 
 " currently using the local file for colorschemes and powerline.
 " WSL has very inconsistent colorschemes for sh and Vim
-if filereadable(glob("~/.vim/vimrc.local"))
-    source ~/.vim/vimrc.local
-" if you wanna make local changes to your vimrc but don't want them to be
-" tracked changes, play around in your .vimrc.local!
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
