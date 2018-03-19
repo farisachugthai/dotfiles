@@ -11,6 +11,7 @@
 "   Web Dev
 "   Markdown
 " Global Options
+" Buffers, Windows, and Tabs
 " Mappings
 " Plugin Configurations
 "   Built-In
@@ -20,6 +21,7 @@
 "   Jedi
 "   Vimwiki
 "   Fugitive
+"   Tagbar
 """""""""""""""""""""""""""""""""
 "
 "
@@ -46,7 +48,10 @@ Plugin 'nvie/vim-flake8'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-
+" currently using the local file for colorschemes and powerline.
+" WSL has very inconsistent colorschemes for sh and Vim
+if filereadable(glob("~/.vim/vimrc.local"))
+    source ~/.vim/vimrc.local
 " if you wanna make local changes to your vimrc but don't want them to be
 " tracked changes, play around in your .vimrc.local!
 if filereadable(glob("~/.vimrc.local"))
@@ -159,14 +164,29 @@ set tabpagemax=50
 set viminfo^=!
 set sessionoptions-=options
 
-set noerrorbells
 " don't ring or make noise
+set noerrorbells
 
+"more characters are sent to the screen for redrawing instead of using
+"insert/delete line commands. this makes Vim seem smoother
+set ttyfast
+
+" Vim only waits one second in between keystrokes before timing out
+" timeoutlen is measured in milliseconds for some reason, so set to 10s
+" set timeoutlen=10000
+" commented out because it also means you have to wait 10 seconds before a
+" keystroke is recognized
 
 "Buffers, Windows, and Tabs
 "
+"
 "look to see if a buffer is open before opening a new one
-set switchbuf=newtab
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
 "modified buffers are hidden and multiple buffers can be worked on without
 "forcing the user to save
 set hidden
@@ -191,6 +211,11 @@ endif
 " heres an example of a modeline
 " /* vim: set syntax=md : */
 set modeline
+
+if has('persistent_undo')
+    set undofile	" keep an undo file (undo changes after closing)
+endif
+
 
 " Mappings
 "
@@ -218,6 +243,14 @@ let g:ft_man_folding_enable = 0
 
 " filetype 596
 set keywordprg=:Man
+
+"Thanks tpope!
+
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
+
 
 "Vundle
 "Use git:// instead of https
@@ -267,6 +300,15 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
 "appended to line not erase old one, so set+= was used instead of set=
 " set statusline+=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
+"Tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" Flake8
+" Open a Python file
+" Press <F7> to run flake8 on it
+let g:flake8_show_quickfix=0
+let g:flake8_show_in_gutter=1
+autocmd BufWritePost *.py call Flake8()
 
 " put fugitive info in statusline if available
 if exists('g:loaded_fugitive')
