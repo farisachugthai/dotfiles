@@ -1,0 +1,25 @@
+#inputrc
+# includes all persistant modifications to GNU readline
+#
+# Maintained by Faris Chugthai
+
+# In an attempt to prevent RSI
+set editing-mode vi
+
+#From Arch Wiki
+#
+# When usnng TAB for completions, the double tab can be changed to a single tab
+# This also shows all partial completions
+set show-all-if-ambiguous on
+
+# Colorized completions
+# Color files by types
+set colored-stats On
+# Append char to indicate type
+set visible-stats On
+# Mark symlinked directories
+set mark-symlinked-directories On
+# Color the common prefix
+set colored-completion-prefix On
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix On
