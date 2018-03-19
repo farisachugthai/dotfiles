@@ -23,3 +23,14 @@ set mark-symlinked-directories On
 set colored-completion-prefix On
 # Color the common prefix in menu-complete
 set menu-complete-display-prefix On
+
+
+#If set to On, readline performs filename matching and completion
+#in a case-insensitive fashion.
+set completion-map-case 
+#If set to On, and completion-ignore-case is enabled, readline
+#trEats hyphens (-) and underscores (_) as equivalent when
+#performing case-insensitive filename matching and completion.
+set completion-ignore-case 
+#
+#
