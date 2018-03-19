@@ -49,10 +49,17 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 
+<<<<<<< HEAD
 " currently using the local file for colorschemes and powerline.
 " WSL has very inconsistent colorschemes for sh and Vim
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
+=======
+" if you wanna make local changes to your vimrc but don't want them to be
+" tracked changes, play around in your .vimrc.local!
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+>>>>>>> refs/remotes/origin/master
 endif
 
 " Common abbreviations / misspellings {{{
@@ -297,6 +304,7 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
 "appended to line not erase old one, so set+= was used instead of set=
 " set statusline+=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
+<<<<<<< HEAD
 "Tagbar
 nmap <F8> :TagbarToggle<CR>
 
@@ -306,3 +314,12 @@ nmap <F8> :TagbarToggle<CR>
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
 autocmd BufWritePost *.py call Flake8()
+=======
+
+" put fugitive info in statusline if available
+if exists('g:loaded_fugitive')
+   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
+else
+   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=(%l,%c)\ %y
+endif
+>>>>>>> refs/remotes/origin/master
