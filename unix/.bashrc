@@ -14,7 +14,12 @@ HISTCONTROL=ignoreboth
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
+
 HISTFILESIZE=2000
+
+#https://unix.stackexchange.com/a/174902
+HISTTIMEFORMAT="%F %T: "
+
 
 ###Shopt
 
