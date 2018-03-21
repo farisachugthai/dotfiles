@@ -81,7 +81,7 @@ set expandtab
 " operations, like inserting a <Tab> or using <BS>.
 set softtabstop=4
 " 80 characters before the line wraps
-set textwidth=80 
+set textwidth=80
 " Set column width of 80 lines
 set columns=120
 " enable all Python syntax highlighting features
