@@ -6,7 +6,8 @@ for file in ~/.bashrc.d/{alias,functions}; do
     if [ -r "$file" ]; then
         . "$file"
     fi
-done
+done;
+unset file
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -49,7 +50,7 @@ if ! shopt -oq posix; then
 fi
 
 # Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob 
+shopt -s nocaseglob
 
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
@@ -105,7 +106,7 @@ export EDITOR="$VISUAL"
 fi
 
 
-# Allow us to run executables for Go, JavaScript and Python 
+# Allow us to run executables for Go, JavaScript and Python
 export PATH=/usr/local/go/bin:$PATH
 
 
@@ -122,12 +123,12 @@ fi
 # Some plugins and libraries I enjoy.
 # tldr.py, cheat.py, fuzzy searches
 # for tldr.py
-export TLDR_COLOR_BLANK="white" 
-export TLDR_COLOR_NAME="white" 
+export TLDR_COLOR_BLANK="white"
+export TLDR_COLOR_NAME="white"
 export TLDR_COLOR_DESCRIPTION="white"
-export TLDR_COLOR_EXAMPLE="white" 
-export TLDR_COLOR_COMMAND="white" 
-export TLDR_COLOR_PARAMETER="white" 
+export TLDR_COLOR_EXAMPLE="white"
+export TLDR_COLOR_COMMAND="white"
+export TLDR_COLOR_PARAMETER="white"
 export TLDR_CACHE_ENABLED=1
 export TLDR_CACHE_MAX_AGE=24
 
