@@ -1,5 +1,7 @@
 # Configuration file for ipython.
-
+# https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
+c = get_config()
+c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
 #------------------------------------------------------------------------------
@@ -17,11 +19,6 @@
 #    - :meth:`init_gui_pylab`
 #    - :meth:`init_extensions`
 #    - :meth:`init_code`
-
-from powerline.bindings.ipython.since_5 import PowerlinePrompts
-
-c = get_config()
-#c.AliasManager.user_aliases = [ ('la', 'ls -al')('ll', 'ls -alF') ('l','ls -CF')('lx', 'ls -alX') ]
 
 ## Execute the given command string.
 #c.InteractiveShellApp.code_to_run = ''
@@ -128,11 +125,11 @@ c.BaseIPythonApplication.profile = 'default'
 #------------------------------------------------------------------------------
 
 ## Whether to display a banner upon starting IPython.
-#c.TerminalIPythonApp.display_banner = True
+c.TerminalIPythonApp.display_banner = True
 
 ## If a command or file is given via the command-line, e.g. 'ipython foo.py',
 #  start an interactive shell after executing the file or command.
-c.TerminalIPythonApp.force_interact = False
+#c.TerminalIPythonApp.force_interact = False
 
 ## Class to use to instantiate the TerminalInteractiveShell object. Useful for
 #  custom Frontends
@@ -167,10 +164,10 @@ c.TerminalIPythonApp.force_interact = False
 c.InteractiveShell.autoindent = True
 
 ## Enable magic commands to be called without the leading %.
-#c.InteractiveShell.automagic = True
+c.InteractiveShell.automagic = True
 
 ## The part of the banner to be printed before the profile
-#c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:53:53) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
+c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 ## The part of the banner to be printed after the profile
 #c.InteractiveShell.banner2 = ''
@@ -189,7 +186,7 @@ c.InteractiveShell.autoindent = True
 #c.InteractiveShell.color_info = True
 
 ## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-#c.InteractiveShell.colors = 'Neutral'
+c.InteractiveShell.colors = 'Neutral'
 
 ## 
 #c.InteractiveShell.debug = False
@@ -199,24 +196,24 @@ c.InteractiveShell.autoindent = True
 
 ## If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-#c.InteractiveShell.display_page = False
+c.InteractiveShell.display_page = False
 
 ## (Provisional API) enables html representation in mime bundles sent to pagers.
 #c.InteractiveShell.enable_html_pager = False
 
 ## Total length of command history
-#c.InteractiveShell.history_length = 10000
+c.InteractiveShell.history_length = 10000
 
 ## The number of saved history entries to be loaded into the history buffer at
 #  startup.
-#c.InteractiveShell.history_load_length = 1000
+c.InteractiveShell.history_load_length = 1000
 
 ## 
 #c.InteractiveShell.ipython_dir = ''
 
 ## Start logging to the given file in append mode. Use `logfile` to specify a log
 #  file to **overwrite** logs to.
-#c.InteractiveShell.logappend = ''
+#c.InteractiveShell.logappend = '~/.ipython/profile_default/log/logging-default'
 
 ## The name of the logfile to use.
 #c.InteractiveShell.logfile = ''
@@ -248,7 +245,7 @@ c.InteractiveShell.autoindent = True
 #c.InteractiveShell.prompts_pad_left = True
 
 ## 
-#c.InteractiveShell.quiet = False
+c.InteractiveShell.quiet = False
 
 ## 
 #c.InteractiveShell.separate_in = '\n'
@@ -267,7 +264,7 @@ c.InteractiveShell.autoindent = True
 #c.InteractiveShell.sphinxify_docstring = False
 
 ## 
-#c.InteractiveShell.wildcards_case_sensitive = True
+c.InteractiveShell.wildcards_case_sensitive = False
 
 ## Switch modes for the IPython exception handlers.
 #c.InteractiveShell.xmode = 'Context'
@@ -279,22 +276,22 @@ c.InteractiveShell.autoindent = True
 ## Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
 #  direct exit without any confirmation.
-#c.TerminalInteractiveShell.confirm_exit = True
+c.TerminalInteractiveShell.confirm_exit = True
 
 ## Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
 #  documentation for more information.
-c.TerminalInteractiveShell.display_completions = 'multicolumn'
+c.TerminalInteractiveShell.display_completions = 'column'
 
 ## Shortcut style to use at the prompt. 'vi' or 'emacs'.
 c.TerminalInteractiveShell.editing_mode = 'vi'
 
 ## Set the editor used by IPython (default to $EDITOR/vi/notepad).
-c.TerminalInteractiveShell.editor = '$VISUAL'
+c.TerminalInteractiveShell.editor = 'vi'
 
 ## Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor. This is
 #  in addition to the F2 binding, which is always enabled.
-c.TerminalInteractiveShell.extra_open_editor_shortcuts = False
+#c.TerminalInteractiveShell.extra_open_editor_shortcuts = False
 
 ## Provide an alternative handler to be called when the user presses Return. This
 #  is an advanced option intended for debugging, which may be changed or removed
@@ -317,7 +314,7 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 #c.TerminalInteractiveShell.mouse_support = False
 
 ## Class used to generate Prompt token for prompt_toolkit
-c.TerminalInteractiveShell.prompts_class = PowerlinePrompts
+#c.TerminalInteractiveShell.prompts_class = 'IPython.terminal.prompts.Prompts'
 
 ## Use `raw_input` for the REPL, without completion and prompt colors.
 #  
@@ -327,17 +324,17 @@ c.TerminalInteractiveShell.prompts_class = PowerlinePrompts
 #  
 #  This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
 #  variable is set, or the current terminal is not a tty.
-c.TerminalInteractiveShell.simple_prompt = False
+#c.TerminalInteractiveShell.simple_prompt = False
 
 ## Number of line at the bottom of the screen to reserve for the completion menu
-#c.TerminalInteractiveShell.space_for_menu = 6
+c.TerminalInteractiveShell.space_for_menu = 6
 
 ## Automatically set the terminal title
 c.TerminalInteractiveShell.term_title = True
 
 ## Customize the terminal title format.  This is a python format string.
 #  Available substitutions are: {cwd}.
-#c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
+c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
 
 ## Use 24bit colors instead of 256 colors in prompt highlighting. If your
 #  terminal supports true color, the following command should print 'TRUECOLOR'
@@ -393,7 +390,7 @@ c.TerminalInteractiveShell.true_color = True
 #c.HistoryManager.db_cache_size = 0
 
 ## Should the history database include output? (default: no)
-#c.HistoryManager.db_log_output = False
+c.HistoryManager.db_log_output = True
 
 #------------------------------------------------------------------------------
 # ProfileDir(LoggingConfigurable) configuration
@@ -481,13 +478,13 @@ c.TerminalInteractiveShell.true_color = True
 ## Truncate large collections (lists, dicts, tuples, sets) to this size.
 #  
 #  Set to 0 to disable truncation.
-c.PlainTextFormatter.max_seq_length = 30
+#c.PlainTextFormatter.max_seq_length = 1000
 
 ## 
-c.PlainTextFormatter.max_width = 79
+c.PlainTextFormatter.max_width = 100
 
 ## 
-#c.PlainTextFormatter.newline = '\n'
+c.PlainTextFormatter.newline = '\n'
 
 ## 
 c.PlainTextFormatter.pprint = True
@@ -518,11 +515,11 @@ c.PlainTextFormatter.pprint = True
 ## Experimental: restrict time (in milliseconds) during which Jedi can compute
 #  types. Set to 0 to stop computing types. Non-zero value lower than 100ms may
 #  hurt performance by preventing jedi to build its cache.
-#c.Completer.jedi_compute_type_timeout = 400
+c.Completer.jedi_compute_type_timeout = 400
 
 ## Experimental: Use Jedi to generate autocompletions. Default to True if jedi is
 #  installed
-#c.Completer.use_jedi = True
+c.Completer.use_jedi = True
 
 #------------------------------------------------------------------------------
 # IPCompleter(Completer) configuration
@@ -589,7 +586,7 @@ c.PlainTextFormatter.pprint = True
 ## Magics related to all logging machinery.
 
 ## Suppress output of log state when logging is enabled
-#c.LoggingMagics.quiet = False
+c.LoggingMagics.quiet = False
 
 #------------------------------------------------------------------------------
 # StoreMagics(Magics) configuration
@@ -601,4 +598,4 @@ c.PlainTextFormatter.pprint = True
 
 ## If True, any %store-d variables will be automatically restored when IPython
 #  starts.
-c.StoreMagics.autorestore = True
+#c.StoreMagics.autorestore = False
