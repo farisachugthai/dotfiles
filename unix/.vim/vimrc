@@ -82,8 +82,6 @@ set expandtab
 set softtabstop=4
 " 80 characters before the line wraps
 set textwidth=80
-" Set column width of 80 lines
-set columns=120
 " enable all Python syntax highlighting features
 let python_highlight_all = 1
 
@@ -196,6 +194,12 @@ set splitbelow
 set splitright
 " Last window gets a status line
 set laststatus=2
+
+" Set column width of 120. NERDTree fits in a 40 char block perfectly
+set columns=120
+"Also if you want standard POSIX windows here is an option to enable that
+"set lines=24
+
 
 "Syntax Highlighting Options
 "if we can have syntax recognition go for it
