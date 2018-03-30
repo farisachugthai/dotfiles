@@ -1,1 +1,5 @@
+# Vim Backup Files
 *.un~
+
+# KDE directory settings
+.directory
