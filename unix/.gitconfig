@@ -1,9 +1,12 @@
 [user]
 	email = farischugthai@gmail.com
 	name = farisachugthai
+
 [core]
 	editor = vim
-	pager = less
+    pager = less
+    autocrlf = input
+
 [color]
 	ui = true
 	pager = false
@@ -18,11 +21,27 @@
     guitool = gvimdiff3
 	tool = vimdiff3
 	color = auto
+
 [push]
 	default = simple
+
 [sequence]
 	editor = vim
+
 [branch]
     autosetupmerge = true
+
 [pager]
 	status = true
+
+[alias]
+# From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
+    last = log -1 HEAD
+    unstage = reset HEAD
+
+# From varying Gists
+    staged = diff --cached
+    unstaged = diff
+
+[help]
+    autocorrect = 1
