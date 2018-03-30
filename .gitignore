@@ -1,1 +1,8 @@
+# Vim Backup Files
 *.un~
+*.swp
+*.swo
+*~
+
+# KDE directory settings
+.directory
