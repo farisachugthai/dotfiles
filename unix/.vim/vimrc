@@ -55,13 +55,13 @@ if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
 endif
 
-" Common abbreviations / misspellings {{{
-source ~/.vim/autocorrect.vim
-" }}}
+" Common abbreviations / misspellings 
+if filereadable(glob("~/.vim.autocorrect.vim"))
+    source ~/.vim/autocorrect.vim
+endif
 
 "Add a Vim cheat sheet with
-"cd ~/.vim
-"git clone https://github.com/lifepillar/vim-cheat40.git pack/bundle/start/cheat4
+"git clone https://github.com/lifepillar/vim-cheat40.git ~/.vim/pack/bundle/start/cheat40
 
 
 " Filetype Specific Options
