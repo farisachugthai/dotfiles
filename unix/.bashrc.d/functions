@@ -3,6 +3,7 @@ function mk(){
 	mkdir -p "$@" && cd "$@"
 }
 
+
 # Handy Extract Program
 function extract()
 {
@@ -26,14 +27,27 @@ function extract()
  fi
 }
 
-# cd and ls at once
+
+# Run cd and ls at once
 function cs ()
 {
     cd "$@" && ls
 }
 
+
+# Decrypt the ssh priv key for the day
 function ssh-day ()
 {
     eval `ssh-agent -s`
     ssh-add -t 86400
+}
+
+
+# Adds an alias to the current shell and to the ~/.aliases file.
+add_alias ()
+{
+   local name=$1 value="$2"
+   echo alias $name=\'$value\' >> ~/.bashrc.d/alias
+   eval alias $name=\'$value\'
+   alias $name
 }
