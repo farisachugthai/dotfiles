@@ -146,7 +146,7 @@ c.TerminalIPythonApp.display_banner = True
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-#c.InteractiveShell.ast_node_interactivity = 'last_expr'
+c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
