@@ -214,7 +214,9 @@ endif
 set modeline
 
 if has('persistent_undo')
-    set undofile	" keep an undo file (undo changes after closing)
+    "set undofile	" keep an undo file (undo changes after closing)
+    "line 300 of :he undo is "You should keep undofile off"
+    set undodir+=~/.vim
 endif
 
 
