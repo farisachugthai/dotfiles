@@ -6,3 +6,6 @@
 
 # KDE directory settings
 .directory
+
+# PyCharm
+.idea
