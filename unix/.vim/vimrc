@@ -259,6 +259,7 @@ endif
 "Use git:// instead of https
 "let g:vundle_default_git_proto = 'git'
 
+
 "NERDTree
 "https://github.com/scrooloose/nerdtree
 "
@@ -283,6 +284,7 @@ let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks=1
 
+
 "Syntastic
 " Definitely annoying the hell out of me and apparently hasn't been
 " under active development for a few years!
@@ -293,20 +295,27 @@ let NERDTreeShowBookmarks=1
 "let g:syntastic_check_on_wq = 0
 "let g:syntastic_python_checkers = ['flake8']
 
+
 "Jedi. Great out of the box except for the import autofill
 let g:jedi#smart_auto_mappings = 0
+
 
 "Vimwiki
 let g:vimwiki_hl_cb_checked=1
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
 
+
 "Fugitive
-"TODO: Evaluating the line currently creates pyeval errors. Command should be
-"appended to line not erase old one, so set+= was used instead of set=
-" set statusline+=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+if exists('g:loaded_fugitive')
+   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
+else
+   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=(%l,%c)\ %y
+endif
+
 
 "Tagbar
 nmap <F8> :TagbarToggle<CR>
+
 
 " Flake8
 " Open a Python file
@@ -314,10 +323,3 @@ nmap <F8> :TagbarToggle<CR>
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
 autocmd BufWritePost *.py call Flake8()
-
-" put fugitive info in statusline if available
-if exists('g:loaded_fugitive')
-   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
-else
-   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=(%l,%c)\ %y
-endif
