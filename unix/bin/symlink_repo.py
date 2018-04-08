@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-# Objectives:
-# Clone dotfiles to a user's home directory and then symlink to the repo.
-# Assumes Linux only because it has only been tested on Ubuntuband Termux.
-# Maintained by Faris Chugthai
 
 import os
 import sys
 
 
 def symlink_repo(link):
+    '''
+    Symlink the dotfiles if nothing exists in the home directory.
+    '''
+
     src = os.path.join(repo, link)
     dest = os.path.join(home, link)
     try:
@@ -21,6 +21,12 @@ def symlink_repo(link):
 
 
 def main():
+    '''
+    Clone dotfiles to a user's home directory and then symlink to the repo.
+    Assumes Linux only because it has only been tested on Ubuntuband Termux.
+    Maintained by Faris Chugthai
+    '''
+
     if os.uname()[0] != 'Linux':
         raise OSError("This script assumes a Linux operating system.")
         sys.exit()

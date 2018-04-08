@@ -65,7 +65,6 @@ endif
 
 
 " Filetype Specific Options
-
 " PEP8
 "
 " Admittedly these are global options as well.
@@ -134,11 +133,7 @@ set noswapfile
 " simple is better than complex
 set mouse=a
 " Use the system clipboard
-set clipboard=unnamed
-
-" TODO: look up syntax for if (modifiable); do because these options cant be
-" set in RO mode
-" I think this needs to be turned off when run as vim -M
+set clipboard=quoteplus
 
 "store in unix format to prevent conversion issues when checking into github
 "and be aware that that does happen! just ran into it on Windows 10 Subsystem
@@ -173,8 +168,6 @@ set ttyfast
 " keystroke is recognized
 
 "Buffers, Windows, and Tabs
-"
-"
 "look to see if a buffer is open before opening a new one
 try
   set switchbuf=useopen,usetab,newtab
@@ -187,14 +180,12 @@ endtry
 set hidden
 "if i change a file in a different window, reload it
 set autoread
-" TODO: Executing :he still opens buffers above
 " Opening a window will place it below the current one
 set splitbelow
 " If vertical split is invoked put it on the right
 set splitright
 " Last window gets a status line
 set laststatus=2
-
 " Set column width of 120. NERDTree fits in a 40 char block perfectly
 set columns=120
 "Also if you want standard POSIX windows here is an option to enable that
@@ -202,8 +193,7 @@ set columns=120
 
 
 "Syntax Highlighting Options
-"if we can have syntax recognition go for it
-"this has to come after the colorscheme
+"if we can have syntax recognition,this has to come after the colorscheme
 if has("syntax")
     syntax on
 endif
@@ -221,7 +211,6 @@ endif
 
 
 " Mappings
-"
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -233,7 +222,6 @@ tnoremap <Esc> <C-W>N
 
 
 " Plugin Configuration
-"
 " Let's start with some builtins
 " Let Vim open manpages with ex cmd
 " :Man [cmd]
@@ -248,7 +236,6 @@ let g:ft_man_folding_enable = 0
 set keywordprg=:Man
 
 "Thanks tpope!
-
 " Load matchit.vim, but only if the user hasn't installed a newer version.
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
@@ -322,4 +309,4 @@ nmap <F8> :TagbarToggle<CR>
 " Press <F7> to run flake8 on it
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
-autocmd BufWritePost *.py call Flake8()
+autocmd BufReadPost *.py call Flake8()
