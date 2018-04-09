@@ -2,7 +2,7 @@
 #Bashrc. Assumes that the proper installation scripts have been run.
 # Maintained by Faris Chugthai
 
-for file in ~/.bashrc.d/{alias,functions}; do
+for file in ~/.bashrc.d/{alias,functions,git-completion.bash,git-prompt.sh}; do
     if [ -r "$file" ]; then
         . "$file"
     fi
@@ -111,22 +111,13 @@ fi
 
 
 # Allow us to run executables for Go, JavaScript and Python
-export PATH=/usr/local/go/bin:$PATH
-
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# TODO: create a list with anaconda2 anaconda3 miniconda2 and miniconda3.
-# iterate over the list and source conda
-if [ -f "$HOME/miniconda2/etc/profile.d/conda.sh" ]; then
-    . "$HOME/miniconda2/etc/profile.d/conda.sh"
-fi
-
 # Some plugins and libraries I enjoy.
-# tldr.py, cheat.py, fuzzy searches
-# for tldr.py
+# tldr, cheat.py, fuzzy searches
+# for tldr
 export TLDR_COLOR_BLANK="white"
 export TLDR_COLOR_NAME="white"
 export TLDR_COLOR_DESCRIPTION="white"
@@ -144,7 +135,7 @@ if [ -f ~/.fzf.bash ]; then
     . ~/.fzf.bash
 fi
 
-#Downloaded the Git PPA today and got some new tools
+# Add Hub to the path if it possible
 if [ -f "$GOPATH"/src/github.com/github/hub/etc/hub.bash_completion ]; then
     . "$GOPATH"/src/github.com/github/hub/etc.hub.bash_completion
 fi
@@ -158,4 +149,3 @@ if [ -f "~/.bashrc.d/git-prompt.sh" ]; then
     export GIT_PS1_SHOWDIRTYSTATE=1
     export PS1='\w$(__git_ps1 " (%s)")\$ '
 fi
-
