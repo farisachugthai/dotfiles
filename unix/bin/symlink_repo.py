@@ -23,7 +23,7 @@ def symlink_repo(link):
 def main():
     '''
     Clone dotfiles to a user's home directory and then symlink to the repo.
-    Assumes Linux only because it has only been tested on Ubuntuband Termux.
+    Assumes Linux only because it has only been tested on Ubuntu and Termux.
     Maintained by Faris Chugthai
     '''
 

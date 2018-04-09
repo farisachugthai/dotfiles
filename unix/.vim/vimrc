@@ -17,11 +17,11 @@
 "   Built-In
 "   Vundle
 "   NERDTree
-"   Syntastic
 "   Jedi
 "   Vimwiki
 "   Fugitive
 "   Tagbar
+"   Flake8
 """""""""""""""""""""""""""""""""
 "
 "
@@ -56,7 +56,7 @@ if filereadable(glob("~/.vim/vimrc.local"))
 endif
 
 " Common abbreviations / misspellings 
-if filereadable(glob("~/.vim.autocorrect.vim"))
+if filereadable(glob("~/.vim/autocorrect.vim"))
     source ~/.vim/autocorrect.vim
 endif
 
@@ -133,7 +133,7 @@ set noswapfile
 " simple is better than complex
 set mouse=a
 " Use the system clipboard
-set clipboard=quoteplus
+set clipboard=unnamed
 
 "store in unix format to prevent conversion issues when checking into github
 "and be aware that that does happen! just ran into it on Windows 10 Subsystem
@@ -205,7 +205,7 @@ set modeline
 
 if has('persistent_undo')
     "set undofile	" keep an undo file (undo changes after closing)
-    "line 300 of :he undo is "You should keep undofile off"
+    "line 300 of :he undo is 'You should keep undofile off'
     set undodir+=~/.vim
 endif
 
@@ -270,17 +270,6 @@ let NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks=1
-
-
-"Syntastic
-" Definitely annoying the hell out of me and apparently hasn't been
-" under active development for a few years!
-"https://github.com/vim-syntastic/syntastic
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_python_checkers = ['flake8']
 
 
 "Jedi. Great out of the box except for the import autofill
