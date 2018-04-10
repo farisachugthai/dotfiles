@@ -10,7 +10,7 @@ export PAGER="/bin/less"
 export COLORTERM="colorterm"
 
 # Add Conda to the path
-if [ -d "~/miniconda3" ]; then
+if [ -d ~/miniconda3 ]; then
    . ~/miniconda3/etc/profile.d/conda.sh
 fi
 
