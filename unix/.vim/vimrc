@@ -1,13 +1,13 @@
 """"""""""""""""""""""""""""""""
 " My Personal Vimrc            "
-" Maintained by Faris Chugthai "
+" Maintainer:   Faris Chugthai "
 """"""""""""""""""""""""""""""""
 
 " TABLE OF CONTENTS
 """"""""""""""""""""""""""""""""
 " Vundle, Plugins and Other Sourced Files
 " Filetype Specific Options
-"   PEP8
+"   Python
 "   Web Dev
 "   Markdown
 " Global Options
@@ -17,6 +17,7 @@
 "   Built-In
 "   Vundle
 "   NERDTree
+"   NERDTree Tabs
 "   Jedi
 "   Vimwiki
 "   Fugitive
@@ -65,10 +66,10 @@ endif
 
 
 " Filetype Specific Options
-" PEP8
+" Python
 "
-" Admittedly these are global options as well.
-" But I like the way it looks!
+" Insert a relevant header automatically for every new *.py file
+au BufNewFile *.py 0r ~/.vim/python.skel
 "
 " show existing tab with 4 spaces width
 set tabstop=4
@@ -98,7 +99,7 @@ autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 
 " Global Options
-" If you ever want to review these, hit :tab set
+" If you want to review all options at once, run :set
 "
 " cursorline. add a line underneath where your cursor is.
 " Doesn't appear to work with powerline installed
@@ -132,11 +133,16 @@ set smarttab
 set noswapfile
 " simple is better than complex
 set mouse=a
-" Use the system clipboard
-set clipboard=unnamed
 
-"store in unix format to prevent conversion issues when checking into github
-"and be aware that that does happen! just ran into it on Windows 10 Subsystem
+" Use the system clipboard. From vim-better-default
+if has('unnamedplus')
+  set clipboard=unnamedplus,unnamed
+else
+  set clipboard+=unnamed
+endif
+
+" Store in unix format to prevent conversion issues when checking into github
+" And be aware that that does happen! just ran into it on Windows 10 Subsystem
 set fileformat=unix
 set encoding=utf-8
 
@@ -167,6 +173,24 @@ set ttyfast
 " commented out because it also means you have to wait 10 seconds before a
 " keystroke is recognized
 
+" Syntax Highlighting
+"if we can have syntax recognition,this has to come after the colorscheme
+if has("syntax")
+    syntax on
+endif
+
+" set modelines to enable syntax highlighting even when the filename differs
+" heres an example of a modeline
+" /* vim: set syntax=md : */
+set modeline
+
+if has('persistent_undo')
+    "set undofile	" keep an undo file (undo changes after closing)
+    "line 300 of :he undo is 'You should keep undofile off'
+    set undodir+=~/.vim
+endif
+
+
 "Buffers, Windows, and Tabs
 "look to see if a buffer is open before opening a new one
 try
@@ -190,24 +214,6 @@ set laststatus=2
 set columns=120
 "Also if you want standard POSIX windows here is an option to enable that
 "set lines=24
-
-
-"Syntax Highlighting Options
-"if we can have syntax recognition,this has to come after the colorscheme
-if has("syntax")
-    syntax on
-endif
-
-"set modelines to enable syntax highlighting even when the filename differs
-" heres an example of a modeline
-" /* vim: set syntax=md : */
-set modeline
-
-if has('persistent_undo')
-    "set undofile	" keep an undo file (undo changes after closing)
-    "line 300 of :he undo is 'You should keep undofile off'
-    set undodir+=~/.vim
-endif
 
 
 " Mappings
@@ -242,12 +248,16 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
 endif
 
 
-"Vundle
+" Vundle
+" from: https://github.com/VundleVim/Vundle.vim/blob/master/README.md 
+" if you need to reinstall, run these commands
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"
 "Use git:// instead of https
 "let g:vundle_default_git_proto = 'git'
 
 
-"NERDTree
+" NERDTree
 "https://github.com/scrooloose/nerdtree
 "
 "Open NERDTree automatically
@@ -266,13 +276,31 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 "Close NERDTree if you open a file
 let NERDTReeQuitOnOpen = 1
+
+" Other recommended options
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks=1
 
 
+" NERDTree Tabs
+" Do not open NERDTree if vim starts in diff mode
+let g:nerdtree_tabs_no_startup_for_diff = 1
+
+" On startup - focus NERDTree when opening a directory, focus the file if 
+" editing a specified file. When set to `2`, always focus file after startup.
+let g:nerdtree_tabs_smart_startup_focus = 1
+
+" Unfocus NERDTree when leaving a tab for descriptive tab names
+let g:nerdtree_tabs_meaningful_tab_names = 1
+
+" Close current tab if there is only one window in it and it's NERDTree
+let g:nerdtree_tabs_autoclose = 1
+
 "Jedi. Great out of the box except for the import autofill
+"https://github.com/davidhalter/jedi-vim
+"jedi-vim is a vim binding to the autocompletion library jedi
 let g:jedi#smart_auto_mappings = 0
 
 
@@ -294,6 +322,10 @@ nmap <F8> :TagbarToggle<CR>
 
 
 " Flake8
+"https://github.com/nvie/vim-flake8
+"flake8 is a static syntax and style checker. wraps around pyflakes, pep8 and
+"ned's MacCabe script [complexity checker]
+"
 " Open a Python file
 " Press <F7> to run flake8 on it
 let g:flake8_show_quickfix=0
