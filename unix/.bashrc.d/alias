@@ -1,12 +1,18 @@
+# Aliases for a more functional bash environment
+# Maintainer: Faris Chugthai
+
+# Make navigation easier
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias cd..='cd ..'
 
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias lx='ls -alX'
+alias lt='ls -alt'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
