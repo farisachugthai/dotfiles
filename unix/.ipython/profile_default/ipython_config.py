@@ -146,7 +146,7 @@ c.TerminalIPythonApp.display_banner = True
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
+c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -167,7 +167,7 @@ c.InteractiveShell.autoindent = True
 c.InteractiveShell.automagic = True
 
 ## The part of the banner to be printed before the profile
-c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
+#c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 ## The part of the banner to be printed after the profile
 #c.InteractiveShell.banner2 = ''
