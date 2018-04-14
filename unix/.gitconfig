@@ -22,6 +22,11 @@
 	tool = vimdiff3
 	color = auto
 
+[diff]
+    guitool = gvimdiff3
+    tool = vimdiff3
+    color = auto
+
 [push]
 	default = simple
 
@@ -42,6 +47,9 @@
 # From varying Gists
     staged = diff --cached
     unstaged = diff
+
+# Fix unexpected behavior
+    ls = ls-files
 
 [help]
     autocorrect = 1
