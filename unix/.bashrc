@@ -1,13 +1,26 @@
 #!/bin/bash
-#Bashrc. Assumes that the proper installation scripts have been run.
-# Maintained by Faris Chugthai
+# Bashrc. Assumes that the proper installation scripts have been run.
+# Maintainer: Faris Chugthai
 
+### Source in .bashrc.d
 for file in ~/.bashrc.d/{alias,functions}; do
     if [ -r "$file" ]; then
         . "$file"
     fi
 done;
 unset file
+
+if [ -f "~/.bashrc.d/git-completion.bash" ]; then
+    . "~/.bashrc.d/git-completion.bash"
+fi
+
+if [ -f "~/.bashrc.d/git-prompt.sh" ]; then
+    . "~/.bashrc.d/git-prompt.sh";
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export PS1='\w$(__git_ps1 " (%s)")\$ '
+fi
+
+### History
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -109,26 +122,15 @@ else
 export EDITOR="$VISUAL"
 fi
 
+### JavaScript
+# Source npm completion if its installed
+if [ $(which npm) ]; then
+    source "~/.bashrc.d/npm-completion.bash"
+fi
 
-# Allow us to run executables for Go, JavaScript and Python
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Some plugins and libraries I enjoy.
-# tldr, cheat.py, fuzzy searches
-# for tldr
-export TLDR_COLOR_BLANK="white"
-export TLDR_COLOR_NAME="white"
-export TLDR_COLOR_DESCRIPTION="white"
-export TLDR_COLOR_EXAMPLE="white"
-export TLDR_COLOR_COMMAND="white"
-export TLDR_COLOR_PARAMETER="white"
-export TLDR_CACHE_ENABLED=1
-export TLDR_CACHE_MAX_AGE=24
-
-# for cheat.py
-export CHEATCOLORS=true
 
 # for quick, fuzzy searching in the shell
 if [ -f ~/.fzf.bash ]; then
@@ -140,81 +142,31 @@ if [ -f "$GOPATH"/src/github.com/github/hub/etc/hub.bash_completion ]; then
     . "$GOPATH"/src/github.com/github/hub/etc.hub.bash_completion
 fi
 
-if [ -f "~/.bashrc.d/git-completion.bash" ]; then
-    . "~/.bashrc.d/git-completion.bash"
+### Python
+# tldr
+export TLDR_COLOR_BLANK="white"
+export TLDR_COLOR_NAME="white"
+export TLDR_COLOR_DESCRIPTION="white"
+export TLDR_COLOR_EXAMPLE="white"
+export TLDR_COLOR_COMMAND="white"
+export TLDR_COLOR_PARAMETER="white"
+export TLDR_CACHE_ENABLED=1
+export TLDR_CACHE_MAX_AGE=24
+
+# cheat.py
+export CHEATCOLORS=true
+
+# Miniconda3 support
+if [ -d '~/miniconda3' ]; then
+    . '~/miniconda3/etc/profile.d/conda.sh'
 fi
-
-if [ -f "~/.bashrc.d/git-prompt.sh" ]; then
-    . "~/.bashrc.d/git-prompt.sh";
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    export PS1='\w$(__git_ps1 " (%s)")\$ '
-fi
-
-
-###-begin-npm-completion-###
-#
-# npm command completion script
-#
-# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
-# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
-#
-
-if type complete &>/dev/null; then
-  _npm_completion () {
-    local words cword
-    if type _get_comp_words_by_ref &>/dev/null; then
-      _get_comp_words_by_ref -n = -n @ -n : -w words -i cword
-    else
-      cword="$COMP_CWORD"
-      words=("${COMP_WORDS[@]}")
-    fi
-
-    local si="$IFS"
-    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$cword" \
-                           COMP_LINE="$COMP_LINE" \
-                           COMP_POINT="$COMP_POINT" \
-                           npm completion -- "${words[@]}" \
-                           2>/dev/null)) || return $?
-    IFS="$si"
-    if type __ltrim_colon_completions &>/dev/null; then
-      __ltrim_colon_completions "${words[cword]}"
-    fi
-  }
-  complete -o default -F _npm_completion npm
-elif type compdef &>/dev/null; then
-  _npm_completion() {
-    local si=$IFS
-    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
-                 COMP_LINE=$BUFFER \
-                 COMP_POINT=0 \
-                 npm completion -- "${words[@]}" \
-                 2>/dev/null)
-    IFS=$si
-  }
-  compdef _npm_completion npm
-elif type compctl &>/dev/null; then
-  _npm_completion () {
-    local cword line point words si
-    read -Ac words
-    read -cn cword
-    let cword-=1
-    read -l line
-    read -ln point
-    si="$IFS"
-    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-                       COMP_LINE="$line" \
-                       COMP_POINT="$point" \
-                       npm completion -- "${words[@]}" \
-                       2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  compctl -K _npm_completion npm
-fi
-###-end-npm-completion-###
-. /home/faris/miniconda3/etc/profile.d/conda.sh
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/faris/bin/google-cloud-sdk/path.bash.inc' ]; then source '/home/faris/bin/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '~/bin/google-cloud-sdk/path.bash.inc' ]; then 
+    source '~/bin/google-cloud-sdk/path.bash.inc'; 
+fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/faris/bin/google-cloud-sdk/completion.bash.inc' ]; then source '/home/faris/bin/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f '~/bin/google-cloud-sdk/completion.bash.inc' ]; then 
+    source '~/bin/google-cloud-sdk/completion.bash.inc'; 
+fi
