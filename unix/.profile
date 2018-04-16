@@ -17,7 +17,10 @@ elif [ -d $PREFIX/local/go ]; then
     export PATH="$PREFIX/local/go/bin:$PATH"
 fi
 
-# Utilize GOPATH. Use gofmt as a check for whether Go is installed or not.
+# Utilize GOPATH. 
+export GOPATH=$(go env GOPATH)
+
+#Use gofmt as a check for whether Go is installed or not.
 if [ $(which gofmt) ]; then
     export PATH=$PATH:$(go env GOPATH)/bin
 fi
@@ -25,11 +28,6 @@ fi
 # Define environment variables as we need them
 export PAGER="/bin/less"
 export COLORTERM="colorterm"
-
-# Add Conda to the path
-if [ -d ~/miniconda3 ]; then
-   . ~/miniconda3/etc/profile.d/conda.sh
-fi
 
 # Source the bashrc in last
 if [ -f ~/.bashrc ]; then

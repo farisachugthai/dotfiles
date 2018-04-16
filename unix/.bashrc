@@ -139,6 +139,12 @@ fi
 
 
 ### Python
+
+# Add Conda to the path
+if [ -d ~/miniconda3 ]; then
+   . ~/miniconda3/etc/profile.d/conda.sh
+fi
+
 # tldr
 export TLDR_COLOR_BLANK="white"
 export TLDR_COLOR_NAME="white"

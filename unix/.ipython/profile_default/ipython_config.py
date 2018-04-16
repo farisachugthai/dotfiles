@@ -178,7 +178,7 @@ c.InteractiveShell.automagic = True
 #  less than 3, it is reset to 0 and a warning is issued).  This limit is defined
 #  because otherwise you'll spend more time re-flushing a too small cache than
 #  working
-#c.InteractiveShell.cache_size = 1000
+c.InteractiveShell.cache_size = 100000
 
 ## Use colors for displaying information about objects. Because this information
 #  is passed through a pager (like 'less'), and some pagers get confused with
@@ -206,7 +206,7 @@ c.InteractiveShell.history_length = 10000
 
 ## The number of saved history entries to be loaded into the history buffer at
 #  startup.
-c.InteractiveShell.history_load_length = 1000
+c.InteractiveShell.history_load_length = 10000
 
 ## 
 #c.InteractiveShell.ipython_dir = ''
@@ -261,7 +261,7 @@ c.InteractiveShell.quiet = False
 
 ## Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-#c.InteractiveShell.sphinxify_docstring = False
+c.InteractiveShell.sphinxify_docstring = True
 
 ## 
 c.InteractiveShell.wildcards_case_sensitive = False
