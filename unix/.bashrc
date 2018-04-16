@@ -125,7 +125,7 @@ fi
 ### JavaScript
 # Source npm completion if its installed
 if [ $(which npm) ]; then
-    source "~/.bashrc.d/npm-completion.bash"
+    source ~/.bashrc.d/npm-completion.bash
 fi
 
 export NVM_DIR="$HOME/.nvm"
@@ -137,10 +137,6 @@ if [ -f ~/.fzf.bash ]; then
     . ~/.fzf.bash
 fi
 
-# Add Hub to the path if it possible
-if [ -f "$GOPATH"/src/github.com/github/hub/etc/hub.bash_completion ]; then
-    . "$GOPATH"/src/github.com/github/hub/etc.hub.bash_completion
-fi
 
 ### Python
 # tldr

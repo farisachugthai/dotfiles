@@ -7,10 +7,20 @@
 eval "`pip completion --bash`"
 
 # Set PATH so it includes user's private bin directories
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Add Go to the PATH
-PATH="/usr/local/go/bin:$PATH"
+### Go
+# Add the Go std lib to the PATH if that's where it was put
+if [ -d /usr/local/go ]; then
+    export PATH="/usr/local/go/bin:$PATH"
+elif [ -d $PREFIX/local/go ]; then
+    export PATH="$PREFIX/local/go/bin:$PATH"
+fi
+
+# Utilize GOPATH. Use gofmt as a check for whether Go is installed or not.
+if [ $(which gofmt) ]; then
+    export PATH=$PATH:$(go env GOPATH)/bin
+fi
 
 # Define environment variables as we need them
 export PAGER="/bin/less"
