@@ -12,6 +12,13 @@ repo = os.path.join(home, "projects", "dotfiles", "unix", "")
 def symlink_repo(file):
     '''
     Symlink the dotfiles if nothing exists in the home directory.
+
+    Parameters:
+        file --> A relative pathname that starts at the base of the Unix folder
+        in the repo
+
+    Output:
+        None
     '''
 
     src = os.path.join(repo, file)
