@@ -26,7 +26,15 @@ if [ $(which gofmt) ]; then
 fi
 
 # Define environment variables as we need them
-export PAGER="/bin/less"
+# You can do the below with simply:
+# [ -x /usr/bin/most ]; then
+# might be more "classic bash" to do it this way. use which when in venvs def
+if [ $(which most) ]; then
+    export PAGER="/usr/bin/most"
+else
+    export PAGER="less -r"
+fi
+
 export COLORTERM="colorterm"
 
 # Source the bashrc in last
