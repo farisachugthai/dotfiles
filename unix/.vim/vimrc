@@ -85,12 +85,19 @@ set textwidth=80
 " enable all Python syntax highlighting features
 let python_highlight_all = 1
 
+
+" IPython
+"
+au BufRead,BufNewFile *.ipy set filetype=python
+
+
 " Web Dev
 "
 autocmd BufNewFile,BufRead *.js, *.html, *.css
     \ set tabstop=2
     \ set softtabstop=2
     \ set shiftwidth=2
+
 
 " Markdown
 
@@ -102,7 +109,6 @@ autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " If you want to review all options at once, run :set
 "
 " cursorline. add a line underneath where your cursor is.
-" Doesn't appear to work with powerline installed
 set cul
 " shows the name of the file in the window title
 " also doesn't appear to work when vim is launched from tmux
@@ -167,11 +173,6 @@ set noerrorbells
 "insert/delete line commands. this makes Vim seem smoother
 set ttyfast
 
-" Vim only waits one second in between keystrokes before timing out
-" timeoutlen is measured in milliseconds for some reason, so set to 10s
-" set timeoutlen=10000
-" commented out because it also means you have to wait 10 seconds before a
-" keystroke is recognized
 
 " Syntax Highlighting
 "if we can have syntax recognition,this has to come after the colorscheme
