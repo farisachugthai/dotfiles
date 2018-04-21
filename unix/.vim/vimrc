@@ -8,9 +8,11 @@
 " Vundle, Plugins and Other Sourced Files
 " Filetype Specific Options
 "   Python
+"   IPython
 "   Web Dev
 "   Markdown
 " Global Options
+"   Viminfo
 " Buffers, Windows, and Tabs
 " Mappings
 " Plugin Configurations
@@ -106,8 +108,18 @@ autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 
 " Global Options
-" If you want to review all options at once, run :set
-"
+" If you want to review all options at once, run :set"
+
+
+" viminfo: 
+" in order we go:
+" '500 : marks will be remembered for the last 500 files
+" <1000 : Contents of registers up to 1000 lines each will be recorded
+" s1000 : Reigsters with more than 1000 Kbyte are not
+" put the viminfo file im the standard .vim dir
+set viminfo='500,<1000,s1000,n$HOME/.vim/viminfo
+
+
 " cursorline. add a line underneath where your cursor is.
 set cul
 " shows the name of the file in the window title
@@ -163,7 +175,7 @@ set display+=lastline
 set incsearch
 set history=1000
 set tabpagemax=50
-set viminfo^=!
+
 set sessionoptions-=options
 
 " don't ring or make noise
@@ -172,6 +184,9 @@ set noerrorbells
 "more characters are sent to the screen for redrawing instead of using
 "insert/delete line commands. this makes Vim seem smoother
 set ttyfast
+
+" which wrap allows hitting the right key and going to the next line
+set whichwrap+=<,>,h,l,[,]
 
 
 " Syntax Highlighting
@@ -188,7 +203,7 @@ set modeline
 if has('persistent_undo')
     "set undofile	" keep an undo file (undo changes after closing)
     "line 300 of :he undo is 'You should keep undofile off'
-    set undodir+=~/.vim
+    set undodir+=~/.vim/undodir
 endif
 
 
@@ -262,7 +277,10 @@ endif
 "https://github.com/scrooloose/nerdtree
 "
 "Open NERDTree automatically
-autocmd vimenter * NERDTree
+autocmd Vimenter * NERDTree
+
+" If Vim is opened with a file name as an argument, focus on the file
+autocmd VimEnter * wincmd w
 
 " How can I open a NERDTree automatically when vim starts up if no files were specified?
 autocmd StdinReadPre * let s:std_in=1
@@ -299,10 +317,17 @@ let g:nerdtree_tabs_meaningful_tab_names = 1
 " Close current tab if there is only one window in it and it's NERDTree
 let g:nerdtree_tabs_autoclose = 1
 
-"Jedi. Great out of the box except for the import autofill
-"https://github.com/davidhalter/jedi-vim
-"jedi-vim is a vim binding to the autocompletion library jedi
+
+" Jedi. Great out of the box except for the import autofill
+" https://github.com/davidhalter/jedi-vim
+" jedi-vim is a vim binding to the autocompletion library jedi
+"
+" When you start typing `from module.name<space>` jedi-vim automatically
+" adds the "import" statement and displays the autocomplete popup.
 let g:jedi#smart_auto_mappings = 0
+
+" if the autocomplete on dot slows things down too much try
+" let g:jedi#popup_on_dot = 0
 
 
 "Vimwiki
@@ -310,7 +335,8 @@ let g:vimwiki_hl_cb_checked=1
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
 
 
-"Fugitive
+" Fugitive
+" The following optioms clean up our statusline
 if exists('g:loaded_fugitive')
    set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
 else
