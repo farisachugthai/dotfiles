@@ -110,6 +110,11 @@ autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " Global Options
 " If you want to review all options at once, run :set"
 
+" Leader
+let mapleader = "\<Space>"
+
+" select all text in buffer 
+map <Leader>a ggVG
 
 " viminfo: 
 " in order we go:
