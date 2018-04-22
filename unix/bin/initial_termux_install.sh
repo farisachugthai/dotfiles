@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 # Maintainer: Faris Chugthai
 #
 # Assumes Termux
 
 
-#Help on the command-line
+#Help on the command-line. Termux comes with close to nothing out of the box.
 pkg install -y bash-completion
 pkg install -y binutils
 pkg install -y busybox
@@ -26,6 +26,7 @@ pkg install -y texinfo
 pkg install -y tmux
 pkg install -y tree
 
+
 #For development
 pkg install -y python-dev python2-dev
 pkg install -y git
@@ -34,25 +35,25 @@ pkg install -y make
 pkg install -y hub
 pkg install -y vim-python
 
-# Lets setup vundle
-#directly from https://github.com/VundleVim/Vundle.vim/blob/master/README.md
+# Setup vundle.
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-#now lets install
+# Install vundle and all relevant plugins.
 vim +PluginInstall +qall
 
-# fun ones
+# Packages that aren't necessary at all but fun.
 pkg install -y sl 
 pkg install -y neofetch  
 pkg install -y screenfetch 
 pkg install -y cowsay 
 pkg install -y fortune
 
-# we should use some apt-add-repositories and get stuff you want
 
+# Termux specific package
 pkg install -y termux-api
-#setup sd card support and public folders
+
+
+# Setup sd card support and access shared storage
 termux-setup-storage
 
-#TODO: add dropbox symlink or put in initialInstall.py. also make symlink in ~/bin/termux-file-editor and termux-url-opener
 
 exit 0
