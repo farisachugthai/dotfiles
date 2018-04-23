@@ -12,6 +12,7 @@
 "   Web Dev
 "   Markdown
 " Global Options
+"   Leader
 "   Viminfo
 " Buffers, Windows, and Tabs
 " Mappings
@@ -67,12 +68,30 @@ endif
 "git clone https://github.com/lifepillar/vim-cheat40.git ~/.vim/pack/bundle/start/cheat40
 
 
-" Filetype Specific Options
-" Python
+" Filetype Specific Options:
+" Python:
+"
 "
 " Insert a relevant header automatically for every new *.py file
-au BufNewFile *.py 0r ~/.vim/python.skel
-"
+au BufNewFile *.py,*.ipy 0r ~/.vim/skeleton.py
+
+" Found in :he skeleton
+" How to automatically update a line with the date the file was last modified.
+" Requires a line 'LAST MODIFIED: <date time>' in the first 20 lines
+autocmd BufWritePre,FileWritePre *.py,*.ipy   ks|call LastMod()|'s
+
+
+fun LastMod()
+    if line("$") > 20
+        let l = 20
+    else
+        let l = line("$")
+    endif
+    exe "1," . l . "g/LAST MODIFIED: /s/LAST MODIFIED: .*/LAST MODIFIED: " .
+  \ strftime("%Y %b %d")
+endfun
+
+
 " show existing tab with 4 spaces width
 set tabstop=4
 " when indenting with '>', use 4 spaces width
@@ -88,37 +107,37 @@ set textwidth=80
 let python_highlight_all = 1
 
 
-" IPython
+" IPython:
+"
 "
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
 
-" Web Dev
+" Web Dev:
 "
-"autocmd BufNewFile,BufRead *.js, *.html, *.css
-"    \ set tabstop=2
-"    \ set softtabstop=2
-"    \ set shiftwidth=2
-
+"
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 
+" TODO: Make skeleton template for JavaScript
+au BufWritePre,FileWritePre *.js ks|call LastMod()|'s
 
-" Markdown
-
+" Markdown:
+"
+"
 "gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 
-" Global Options
+" Global Options:
 " If you want to review all options at once, run :set"
 
-" Leader
+" Leader:
 let mapleader = "\<Space>"
 
 " select all text in buffer 
 map <Leader>a ggVG
 
-" viminfo: 
+" Viminfo: 
 " in order we go:
 " '500 : marks will be remembered for the last 500 files
 " <1000 : Contents of registers up to 1000 lines each will be recorded
@@ -196,7 +215,7 @@ set ttyfast
 set whichwrap+=<,>,h,l,[,]
 
 
-" Syntax Highlighting
+" Syntax Highlighting:
 "if we can have syntax recognition,this has to come after the colorscheme
 if has("syntax")
     syntax on
@@ -214,7 +233,7 @@ if has('persistent_undo')
 endif
 
 
-"Buffers, Windows, and Tabs
+" Buffers Windows Tabs:
 "look to see if a buffer is open before opening a new one
 try
   set switchbuf=useopen,usetab,newtab
@@ -239,7 +258,7 @@ set columns=120
 "set lines=24
 
 
-" Mappings
+" Mappings:
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -250,8 +269,10 @@ noremap <C-l> <C-w>l
 tnoremap <Esc> <C-W>N
 
 
-" Plugin Configuration
-" Let's start with some builtins
+" Plugin Configuration:
+" Builtins:
+"
+"
 " Let Vim open manpages with ex cmd
 " :Man [cmd]
 " From /usr/share/vim/vim80/doc/usr_12.txt
@@ -271,7 +292,7 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
 endif
 
 
-" Vundle
+" Vundle:
 " from: https://github.com/VundleVim/Vundle.vim/blob/master/README.md 
 " if you need to reinstall, run these commands
 " git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -280,7 +301,7 @@ endif
 "let g:vundle_default_git_proto = 'git'
 
 
-" NERDTree
+" NERDTree:
 "https://github.com/scrooloose/nerdtree
 "
 "Open NERDTree automatically
@@ -310,7 +331,7 @@ let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks=1
 
 
-" NERDTree Tabs
+" NERDTree Tabs:
 " Do not open NERDTree if vim starts in diff mode
 let g:nerdtree_tabs_no_startup_for_diff = 1
 
@@ -325,7 +346,8 @@ let g:nerdtree_tabs_meaningful_tab_names = 1
 let g:nerdtree_tabs_autoclose = 1
 
 
-" Jedi. Great out of the box except for the import autofill
+" Jedi:
+" Great out of the box except for the import autofill
 " https://github.com/davidhalter/jedi-vim
 " jedi-vim is a vim binding to the autocompletion library jedi
 "
@@ -337,12 +359,12 @@ let g:jedi#smart_auto_mappings = 0
 " let g:jedi#popup_on_dot = 0
 
 
-"Vimwiki
+" Vimwiki:
 let g:vimwiki_hl_cb_checked=1
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
 
 
-" Fugitive
+" Fugitive:
 " The following optioms clean up our statusline
 if exists('g:loaded_fugitive')
    set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
@@ -351,11 +373,11 @@ else
 endif
 
 
-"Tagbar
+" Tagbar:
 nmap <F8> :TagbarToggle<CR>
 
 
-" Flake8
+" Flake8:
 "https://github.com/nvie/vim-flake8
 "flake8 is a static syntax and style checker. wraps around pyflakes, pep8 and
 "ned's MacCabe script [complexity checker]
