@@ -90,21 +90,23 @@ let python_highlight_all = 1
 
 " IPython
 "
-au BufRead,BufNewFile *.ipy set filetype=python
+au BufRead,BufNewFile *.ipy setlocal filetype=python
 
 
 " Web Dev
 "
-autocmd BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
+"autocmd BufNewFile,BufRead *.js, *.html, *.css
+"    \ set tabstop=2
+"    \ set softtabstop=2
+"    \ set shiftwidth=2
+
+au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 
 
 " Markdown
 
 "gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
-autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 
 " Global Options
