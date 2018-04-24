@@ -26,18 +26,10 @@ if [ $(which gofmt) ]; then
 fi
 
 # Define environment variables as we need them
-# You can do the below with simply:
-# [ -x /usr/bin/most ]; then
-# might be more "classic bash" to do it this way. use which when in venvs def
-if [ $(which most) ]; then
-    export PAGER="/usr/bin/most"
-else
-    export PAGER="less -r"
-fi
+# Most doesn't even use vi style hotkeys???
+export PAGER="less -rL"
 
 export COLORTERM="colorterm"
 
-# Source the bashrc in last
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-fi
+# This is the default but for the sake of being explicit rather than implicit
+export XDG_CONFIG_HOME=~/.config
