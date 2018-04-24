@@ -158,11 +158,6 @@ export TLDR_CACHE_MAX_AGE=24
 # cheat.py
 export CHEATCOLORS=true
 
-# Miniconda3 support
-if [ -d '~/miniconda3' ]; then
-    . '~/miniconda3/etc/profile.d/conda.sh'
-fi
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then 
     source ~/bin/google-cloud-sdk/path.bash.inc; 
