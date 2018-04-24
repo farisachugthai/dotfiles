@@ -10,14 +10,16 @@ for file in ~/.bashrc.d/{alias,functions}; do
 done;
 unset file
 
-if [ -f "~/.bashrc.d/git-completion.bash" ]; then
-    . "~/.bashrc.d/git-completion.bash"
+if [ -f ~/.bashrc.d/git-completion.bash ]; then
+    . ~/.bashrc.d/git-completion.bash
 fi
 
-if [ -f "~/.bashrc.d/git-prompt.sh" ]; then
-    . "~/.bashrc.d/git-prompt.sh";
+# The following was sourced from this linknwith minor modification
+# There are still many more export GIT commands to explore!
+if [ -f "$HOME/.bashrc.d/git-prompt.sh" ]; then
+    . "$HOME/.bashrc.d/git-prompt.sh";
     export GIT_PS1_SHOWDIRTYSTATE=1
-    export PS1='\w$(__git_ps1 " (%s)")\$ '
+    PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
 fi
 
 ### History
@@ -75,25 +77,6 @@ set -o noclobber
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-
-    # If this is an xterm set the title to user@host:dir
-    case "$TERM" in
-    xterm*|rxvt*)
-        PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-        ;;
-    *)
-        ;;
-    esac
-fi
-
-# Debian Chroot isn't available on Termux; however we still want working dir
-if [ "$PS1"=="" ]; then
-    PS1="\u@\h:\w$ "
-fi
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -128,9 +111,12 @@ if [ $(which npm) ]; then
     source ~/.bashrc.d/npm-completion.bash
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Export nvm if the directory exists
+if [ -d "$HOME/.nvm" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    # Load nvm and bash completion
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+fi
 
 # for quick, fuzzy searching in the shell
 if [ -f ~/.fzf.bash ]; then
