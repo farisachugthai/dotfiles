@@ -27,8 +27,14 @@ fi
 
 # Define environment variables as we need them
 # Most doesn't even use vi style hotkeys???
-export PAGER="less -rL"
+# R is what we need for ansi colors
+# N for line numbers
+export PAGER="less -RN"
 
+# Man pages are difficult to read on Termux with line numbers
+export MANPAGER="less -R"
+
+# Allow a color terminal
 export COLORTERM="colorterm"
 
 # This is the default but for the sake of being explicit rather than implicit
