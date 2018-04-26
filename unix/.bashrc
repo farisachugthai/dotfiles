@@ -128,8 +128,8 @@ fi
 ### Python
 
 # Add Conda to the path
-if [ -d $CONDA_PREFIX ]; then
-   . "$CONDA_PREFIX/etc/profile.d/conda.sh";
+if [ -d "$HOME/miniconda3" ]; then
+   . "$HOME/miniconda3/etc/profile.d/conda.sh";
 fi
 
 # tldr
