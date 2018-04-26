@@ -29,9 +29,9 @@ fi
 HISTCONTROL=ignoreboth
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
+HISTSIZE=10000
 
-HISTFILESIZE=2000
+HISTFILESIZE=20000
 
 #https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
@@ -115,6 +115,7 @@ fi
 if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     # Load nvm and bash completion
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 fi
 
@@ -127,8 +128,8 @@ fi
 ### Python
 
 # Add Conda to the path
-if [ -d ~/miniconda3 ]; then
-   . ~/miniconda3/etc/profile.d/conda.sh
+if [ -d $CONDA_PREFIX ]; then
+   . "$CONDA_PREFIX/etc/profile.d/conda.sh";
 fi
 
 # tldr
