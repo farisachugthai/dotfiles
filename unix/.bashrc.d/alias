@@ -38,7 +38,6 @@ alias termux-share="termux-share -a send"
 alias info="info --vi-keys"
 
 #git aliases
-alias ga='git-add'
 alias ga='git add'
 alias gc='git clone'
 alias gcs='git clone --depth 1'
