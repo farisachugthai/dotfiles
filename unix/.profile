@@ -3,13 +3,16 @@
 # Maintainer: Faris Chugthai
 
 
+# Python
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 eval "`pip completion --bash`"
+
 
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-### Go
+
+# Go
 # Add the Go std lib to the PATH if that's where it was put
 if [ -d /usr/local/go ]; then
     export PATH="/usr/local/go/bin:$PATH"
@@ -25,11 +28,14 @@ if [ $(which gofmt) ]; then
     export PATH=$PATH:$(go env GOPATH)/bin
 fi
 
-# Define environment variables as we need them
-# Most doesn't even use vi style hotkeys???
-# R is what we need for ansi colors
-# N for line numbers
-export PAGER="less -RN"
+
+# Environment Variables
+#
+#
+# -J displays a status column at the left edge of the screen
+# -R is what we need for ansi colors
+# -N for line numbers
+export PAGER="less -JRN"
 
 # Less Colors for Man Pages 
 export LESS_TERMCAP_mb=$'\e[01;31m' # begin blinking
@@ -40,7 +46,6 @@ export LESS_TERMCAP_se=$'\e[0m' # end standout-mode
 export LESS_TERMCAP_so=$'\e[38;5;246m' # begin standout-mode info box 
 export LESS_TERMCAP_ue=$'\e[0m' # end underline 
 export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
-
 
 # Man pages are difficult to read on Termux with line numbers
 export MANPAGER="less -R"
