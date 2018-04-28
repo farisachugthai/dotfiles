@@ -4,19 +4,19 @@
 #
 #          FILE: test.py
 #
-#   DESCRIPTION:
-#
 #       OPTIONS: ---
 #  REQUIREMENTS: ---
 #          BUGS: ---
 #       CREATED: ___
-# LAST MODIFIED: 2018 Apr 23
+# LAST MODIFIED: 2018 Apr 27
 #    MAINTAINER: Faris Chugthai
 # ==============================================================================
 
 
 def main():
-    """docstring for main"""
+    """
+    Put your description of the module here.
+    """
 
 
 pass
