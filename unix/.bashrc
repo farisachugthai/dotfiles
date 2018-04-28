@@ -119,11 +119,16 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 fi
 
+### FZF
 # for quick, fuzzy searching in the shell
 if [ -f ~/.fzf.bash ]; then
     . ~/.fzf.bash
 fi
 
+if [[ $PREFIX ]]; then
+    . "$PREFIX/share/fzf/completion.bash"
+    . "$PREFIX/share/fzf/key-bindings.bash"
+fi
 
 ### Python
 
