@@ -45,8 +45,6 @@ Plugin 'vimwiki/vimwiki'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'majutsushi/tagbar'
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'w0rp/ale'
 
@@ -131,11 +129,10 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " Global Options:
 " If you want to review all options at once, run :set"
 
+
 " Leader:
 let mapleader = "\<Space>"
 
-" select all text in buffer 
-map <Leader>a ggVG
 
 " Viminfo: 
 " in order we go:
@@ -223,7 +220,7 @@ endif
 
 " set modelines to enable syntax highlighting even when the filename differs
 " heres an example of a modeline
-" /* vim: set syntax=md : */
+" /* vim: set filetype=markdown : */
 set modeline
 
 if has('persistent_undo')
@@ -259,6 +256,8 @@ set columns=120
 
 
 " Mappings:
+"
+"
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -268,6 +267,9 @@ noremap <C-l> <C-w>l
 " If running a terminal in Vim, go into Normal mode with Esc
 tnoremap <Esc> <C-W>N
 
+" select all text in buffer 
+map <Leader>a ggVG
+
 
 " Plugin Configuration:
 " Builtins:
@@ -276,7 +278,7 @@ tnoremap <Esc> <C-W>N
 " Let Vim open manpages with ex cmd
 " :Man [cmd]
 " From /usr/share/vim/vim80/doc/usr_12.txt
-" Invoke while in Vim by putting your cursor over a word and run \K
+" Invoke while in Vim by putting your cursor over a word and run [Leader]K
 runtime! ftplugin/man.vim
 
 " from filetype line 590
