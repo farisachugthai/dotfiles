@@ -17,6 +17,7 @@
 "   Pep8 Global Options
 "   Spell Checking
 "   Other Global Options
+"   Syntax Highlighting
 " Buffers, Windows, and Tabs
 " Mappings
 " Plugin Configurations
@@ -110,6 +111,7 @@ au BufWritePre,FileWritePre *.js ks|call LastMod()|'s
 " Markdown:
 "
 "
+" See more in ftplugin/markdown.vim
 "gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
@@ -246,6 +248,20 @@ set ttyfast
 set whichwrap+=<,>,h,l,[,]
 
 
+if has('persistent_undo')
+    "set undofile	" keep an undo file (undo changes after closing)
+    "line 300 of :he undo is 'You should keep undofile off'
+    set undodir+=~/.vim/undodir
+endif
+
+
+" Can be toggled in filetype specific situations
+set nowrap
+
+" Use one space not two after punctuation.
+set nojoinspaces
+
+
 " Syntax Highlighting:
 "if we can have syntax recognition,this has to come after the colorscheme
 if has("syntax")
@@ -256,12 +272,6 @@ endif
 " heres an example of a modeline
 " /* vim: set filetype=markdown : */
 set modeline
-
-if has('persistent_undo')
-    "set undofile	" keep an undo file (undo changes after closing)
-    "line 300 of :he undo is 'You should keep undofile off'
-    set undodir+=~/.vim/undodir
-endif
 
 
 " Buffers Windows Tabs:
@@ -289,9 +299,6 @@ set laststatus=2
 set columns=120
 "Also if you want standard POSIX windows here is an option to enable that
 "set lines=24
-
-" Can be toggled in filetype specific situations
-set nowrap
 
 
 " Mappings:
@@ -397,7 +404,7 @@ let g:nerdtree_tabs_autoclose = 1
 let g:jedi#smart_auto_mappings = 0
 
 " if the autocomplete on dot slows things down too much try
-" let g:jedi#popup_on_dot = 0
+let g:jedi#popup_on_dot = 0
 
 
 " Vimwiki:
@@ -425,5 +432,7 @@ nmap <F8> :TagbarToggle<CR>
 "
 " Open a Python file
 " Press <F7> to run flake8 on it
+"
+"
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
