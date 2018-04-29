@@ -14,6 +14,9 @@
 " Global Options
 "   Leader
 "   Viminfo
+"   Pep8 Global Options
+"   Spell Checking
+"   Other Global Options
 " Buffers, Windows, and Tabs
 " Mappings
 " Plugin Configurations
@@ -90,21 +93,6 @@ fun LastMod()
 endfun
 
 
-" show existing tab with 4 spaces width
-set tabstop=4
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" On pressing tab, insert 4 spaces
-set expandtab
-" Number of spaces that a <Tab> counts for while performing editing
-" operations, like inserting a <Tab> or using <BS>.
-set softtabstop=4
-" 80 characters before the line wraps
-set textwidth=80
-" enable all Python syntax highlighting features
-let python_highlight_all = 1
-
-
 " IPython:
 "
 "
@@ -143,35 +131,81 @@ let mapleader = "\<Space>"
 set viminfo='500,<1000,s1000,n$HOME/.vim/viminfo
 
 
+" Pep8 Global Options: 
+"
+"
+" show existing tab with 4 spaces width
+set tabstop=4
+
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+
+" On pressing tab, insert 4 spaces
+set expandtab
+
+" Number of spaces that a <Tab> counts for while performing editing
+" operations, like inserting a <Tab> or using <BS>.
+set softtabstop=4
+
+" enable all Python syntax highlighting features
+let python_highlight_all = 1
+
+
+" Spell Checker
+"
+"
+" Turn on spell checking
+" Let's do this in specific filetypes up until we get a better spellfile
+" :set spell spelllang=en_us
+"
+" Autocomplete in insert mode
+set complete+=kspell 
+
+" Other Global Options: 
+"
 " cursorline. add a line underneath where your cursor is.
 set cul
+
 " shows the name of the file in the window title
 " also doesn't appear to work when vim is launched from tmux
 set title
+
 "lets colorize the 80 char line for you
 set colorcolumn=+1
+
 " make the command line 2 lines high
 set ch=2
+
 " Switch on search pattern highlighting.
 set hlsearch
+
 " show line and column number
 set ruler
+
 " Give backspaces seemingly obvious behavior.
 set backspace=indent,eol,start
+
 " show (partial) command in status line
 set showcmd
+
 " show number lines on the left
 set number
+
 " show matching brackets
 set showmatch
+
 " do case insensitive matching
 set ignorecase
+
 " do smart autoindenting when starting a new line
 set smartindent
+
 " at <TAB> at beginning line inserts spaces set in shiftwidth
 set smarttab
+
 " they're annoying
 set noswapfile
+
 " simple is better than complex
 set mouse=a
 
@@ -231,6 +265,8 @@ endif
 
 
 " Buffers Windows Tabs:
+"
+"
 "look to see if a buffer is open before opening a new one
 try
   set switchbuf=useopen,usetab,newtab
@@ -253,6 +289,9 @@ set laststatus=2
 set columns=120
 "Also if you want standard POSIX windows here is an option to enable that
 "set lines=24
+
+" Can be toggled in filetype specific situations
+set nowrap
 
 
 " Mappings:
@@ -287,7 +326,7 @@ let g:ft_man_folding_enable = 0
 " filetype 596
 set keywordprg=:Man
 
-"Thanks tpope!
+" Thanks tpope!
 " Load matchit.vim, but only if the user hasn't installed a newer version.
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
@@ -388,4 +427,3 @@ nmap <F8> :TagbarToggle<CR>
 " Press <F7> to run flake8 on it
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
-autocmd BufReadPost *.py call Flake8()
