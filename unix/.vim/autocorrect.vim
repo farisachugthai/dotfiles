@@ -72,6 +72,7 @@ iab approrpiate appropriate
 iab approrpriate appropriate
 iab aquisition acquisition
 iab aquisitions acquisitions
+ia arent aren't
 iab arguement argument
 iab arguements arguments
 iab arond around
@@ -146,6 +147,7 @@ iab charector character
 iab cheif chief
 iab chekc check
 iab chnage change
+ia chugthai Chugthai
 iab cieling ceiling
 iab circut circuit
 iab claer clear
@@ -304,6 +306,7 @@ iab familair familiar
 iab familar familiar
 iab familliar familiar
 iab fammiliar familiar
+ia faris Faris
 iab feild field
 iab feilds fields
 iab fianlly finally
@@ -411,7 +414,9 @@ iab inteh in the
 iab interum interim
 iab inthe in the
 iab inwhich in which
+ia isnt isn't
 iab isthe is the
+ia itd it'd
 iab itis it is
 iab ititial initial
 iab itnerested interested
@@ -436,6 +441,7 @@ iab labratory laboratory
 iab lastyear last year
 iab learnign learning
 iab lenght length
+ia lets let's
 iab levle level
 iab libary library
 iab librarry library
@@ -735,9 +741,11 @@ iab transfered transferred
 iab truely truly
 iab truley truly
 iab tryed tried
+ia tryinf trying
 iab tthe the
 iab tyhat that
 iab tyhe the
+ia typinf typing
 iab udnerstand understand
 iab understnad understand
 iab UnitedStates United States
