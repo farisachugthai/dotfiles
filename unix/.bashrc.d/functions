@@ -46,7 +46,7 @@ function ssh-day ()
 
 
 # Adds an alias to the current shell and to ~/.bashrc.d/alias 
-add_alias ()
+add-alias ()
 {
    local name=$1 value="$2"
    echo alias $name=\'$value\' >> ~/.bashrc.d/alias

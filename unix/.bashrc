@@ -135,6 +135,7 @@ fi
 # Add Conda to the path
 if [ -d "$HOME/miniconda3" ]; then
    . "$HOME/miniconda3/etc/profile.d/conda.sh";
+   conda activate base
 fi
 
 # tldr
@@ -145,7 +146,7 @@ export TLDR_COLOR_EXAMPLE="white"
 export TLDR_COLOR_COMMAND="white"
 export TLDR_COLOR_PARAMETER="white"
 export TLDR_CACHE_ENABLED=1
-export TLDR_CACHE_MAX_AGE=24
+export TLDR_CACHE_MAX_AGE=168
 
 # cheat.py
 export CHEATCOLORS=true

@@ -41,3 +41,5 @@ alias info="info --vi-keys"
 alias ga='git add'
 alias gc='git clone'
 alias gcs='git clone --depth 1'
+alias gs='git status'
+alias gd='git diff'
