@@ -1,7 +1,15 @@
+# /* vim: set filetype=conf : */
 # Configuration file for ipython.
+# Heavily drawn from documentation at
 # https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
+# and source code found on GitHub.
+# Maintainer: Faris Chugthai
+
+
 c = get_config()
 c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
+
+
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
 #------------------------------------------------------------------------------
@@ -146,7 +154,7 @@ c.TerminalIPythonApp.display_banner = True
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'last_expr'
+c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -183,7 +191,7 @@ c.InteractiveShell.cache_size = 100000
 ## Use colors for displaying information about objects. Because this information
 #  is passed through a pager (like 'less'), and some pagers get confused with
 #  color codes, this capability can be turned off.
-#c.InteractiveShell.color_info = True
+c.InteractiveShell.color_info = True
 
 ## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
 c.InteractiveShell.colors = 'Neutral'
@@ -281,7 +289,7 @@ c.TerminalInteractiveShell.confirm_exit = True
 ## Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
 #  documentation for more information.
-c.TerminalInteractiveShell.display_completions = 'column'
+c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
 ## Shortcut style to use at the prompt. 'vi' or 'emacs'.
 c.TerminalInteractiveShell.editing_mode = 'vi'

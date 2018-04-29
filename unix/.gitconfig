@@ -1,55 +1,70 @@
 [user]
-	email = farischugthai@gmail.com
-	name = farisachugthai
+    email = farischugthai@gmail.com
+    name = farisachugthai
+
 
 [core]
-	editor = vim
-    pager = less
+    editor = vim
+    pager = less -rL
     autocrlf = input
 
+
 [color]
-	ui = true
-	pager = false
+    ui = true
+    pager = false
     interactive = auto
     diff = true
     branch = always
 
-# Man git-difftool: Line 85
-# git difftool falls back to git mergetool config variables when difftool
-# equivalents haven't been set.
-[merge]
-    guitool = gvimdiff3
-	tool = vimdiff3
-	color = auto
 
+# Man git-difftool: Line 85
+# If difftool settings havent been set, fall back to mergetool
 [diff]
     guitool = gvimdiff3
     tool = vimdiff3
     color = auto
+    strategy-option = patienece
+
+
+[merge]
+    guitool = gvimdiff3
+	tool = vimdiff3
+	color = auto
+    mergestyle = diff3
+    prompt = false
+    strategy-option = patience
+
 
 [push]
-	default = simple
+    default = simple
+
 
 [sequence]
-	editor = vim
+    editor = vim
+
 
 [branch]
     autosetupmerge = true
 
+
 [pager]
-	status = true
+    status = true
+
 
 [alias]
 # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
     last = log -1 HEAD
     unstage = reset HEAD
-
 # From varying Gists
     staged = diff --cached
     unstaged = diff
-
 # Fix unexpected behavior
     ls = ls-files
+
+# From: https://githowto.com/history
+# Run check git-log
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+
 
 [help]
     autocorrect = 1
