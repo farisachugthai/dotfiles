@@ -4,12 +4,41 @@
 # Objectives: Install the minimum number of packages required to create a
 # working python development environment
 # In addition, get the newest versions of each package.
-#
-# This script assumes a user with installation permissions
 
+
+if (( $EUID != 0 )); then
+    echo "Please run as root"
+    exit
+fi
+
+# Update the system
 apt update && apt upgrade -y && apt autoremove -y
 
+# Install OpenSSH
+apt install -y openssh
+
+# Setup a minimal firewall.
+apt install -y gufw
+
+# In case it's already running restart it
+ufw disable && ufw enable
+
+# Enable default deny
+ufw default deny incoming
+
+# Limit how often you get SSH requests
+ufw limit OpenSSH
+
+# Restart the firewall for changes to take effect
+ufw disable;
+ufw enable;
+
+# Before we start adding repositories, let's backup our old sources
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+
 # Get the newest version of Git and corresponding documentation
+# Adding repositories requires the user to hit 'Enter' to proceed which is
+# An acceptable amount of user interaction
 add-apt-repository ppa:git-core/ppa
 apt update
 apt install -y git git-man git-doc
@@ -20,12 +49,9 @@ add-apt-repository ppa:jonathonf/vim
 apt update
 apt install vim-gtk3
 
-# Then install Vundle
-# git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-# Install pip and conda.
-# Currently independent of x86 or x64 however still assumes Linux
-apt install python3-pip
+# Installing conda can be done without any special permissions
+# so once we make an initial_ubuntu_install.sh file throw this in here.
+# you can modify the call to run silently as well!
 # wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-`uname -m`.sh
 
-# TODO: Add in modifications so that downloading Conda is completely automated
+exit 0
