@@ -1,10 +1,11 @@
-#inputrc
-# includes all persistant modifications to GNU readline
+# inputrc
+# Includes all persistant modifications to GNU readline
 #
-# Maintained by Faris Chugthai
+# Maintainer: Faris Chugthai
 
 # In an attempt to prevent RSI
 set editing-mode vi
+set keymap vi
 
 #From Arch Wiki
 #
@@ -12,25 +13,26 @@ set editing-mode vi
 # This also shows all partial completions
 set show-all-if-ambiguous on
 
-# Colorized completions
 # Color files by types
 set colored-stats On
+#
 # Append char to indicate type
 set visible-stats On
+#
 # Mark symlinked directories
 set mark-symlinked-directories On
+#
 # Color the common prefix
 set colored-completion-prefix On
+#
 # Color the common prefix in menu-complete
 set menu-complete-display-prefix On
-
 
 #If set to On, readline performs filename matching and completion
 #in a case-insensitive fashion.
 set completion-map-case 
+
 #If set to On, and completion-ignore-case is enabled, readline
 #trEats hyphens (-) and underscores (_) as equivalent when
 #performing case-insensitive filename matching and completion.
 set completion-ignore-case 
-#
-#
