@@ -130,7 +130,11 @@ let mapleader = "\<Space>"
 " <1000 : Contents of registers up to 1000 lines each will be recorded
 " s1000 : Reigsters with more than 1000 Kbyte are not
 " put the viminfo file im the standard .vim dir
-set viminfo='500,<1000,s1000,n$HOME/.vim/viminfo
+
+" Also don't let neovim and vim use th same viminfo file
+if !has('nvim')
+    set viminfo='100,<200,s200,n$HOME/.vim/viminfo
+endif
 
 
 " Pep8 Global Options: 
