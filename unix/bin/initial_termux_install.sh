@@ -5,47 +5,49 @@
 
 p="pkg install -y"
 
-echo "First access and restore your ssh configs and lace them properly."
+echo 'First access and restore your ssh configs and place them in the proper folders.'
+
+echo 'Remember when creating the folders to run `chmod 700 ~/.ssh` and `chmod 600 ~/.ssh/*`'
 
 
 # Help on the command-line. Termux comes with close to nothing out of the box.
-pkg install -y bash-completion
-pkg install -y binutils
-pkg install -y busybox
-pkg install -y command-not-found
+$p bash-completion
+$p binutils
+$p busybox
+$p command-not-found
 $p curl
-pkg install -y hub
-pkg install -y file
-pkg install -y findutils
-pkg install -y fzf
-pkg install -y gawk
-pkg install -y gnupg2
-pkg install -y grep
-pkg install -y gzip
-pkg install -y htop 
-pkg install -y linux-man-pages
-pkg install -y mlocate
-pkg install -y openssh
-pkg install -y poppler
+$p hub
+$p file
+$p findutils
+$p fzf
+$p gawk
+$p gnupg2
+$p grep
+$p gzip
+$p htop 
+$p linux-man-pages
+$p mlocate
+$p openssh
+$p poppler
 $p rclone
-pkg install -y sed
-pkg install -y texinfo
-pkg install -y tmux
-pkg install -y tree
+$p sed
+$p texinfo
+$p tmux
+$p tree
 $p wget
-pkg install -y xz-utils
+$p xz-utils
 
 
 #For development
-pkg install -y gdb
-pkg install -y git
+$p gdb
+$p git
 $p go
-pkg install -y hub
-pkg install -y make
+$p hub
+$p make
 $p neovim
-pkg install -y nodejs
-pkg install -y python-dev python2-dev
-pkg install -y vim-python
+$p nodejs
+$p python-dev python2-dev
+$p vim-python
 
 # Setup vundle.
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -53,17 +55,17 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
 # Packages that aren't necessary at all but fun.
-pkg install -y sl 
-pkg install -y neofetch  
-pkg install -y screenfetch 
-pkg install -y cowsay 
-pkg install -y fortune
+$p sl 
+$p neofetch  
+$p screenfetch 
+$p cowsay 
+$p fortune
 
 
 # Termux specific packages
-pkg install -y termux-api;
+$p termux-api;
 # Termux-tools gives you bins like termux-fix-shebang
-pkg install -y termux-tools;
+$p termux-tools;
 
 # Fix bash's proclivity for global variables
 unset p
@@ -71,6 +73,5 @@ unset p
 # Setup sd card support and access shared storage
 termux-setup-storage;
 
-# TODO: Adding repos so that you can get packages like gcc and scipy
-
+# Should python_termux.sh get sourced directly?
 exit 0
