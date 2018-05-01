@@ -66,13 +66,14 @@ if filereadable(glob("~/.vim/autocorrect.vim"))
     source ~/.vim/autocorrect.vim
 endif
 
+" Cheat40:
+"
 "Add a Vim cheat sheet with
 "git clone https://github.com/lifepillar/vim-cheat40.git ~/.vim/pack/bundle/start/cheat40
 
 
 " Filetype Specific Options:
 " Python:
-"
 "
 " Insert a relevant header automatically for every new *.py file
 au BufNewFile *.py,*.ipy 0r ~/.vim/skeleton.py
@@ -96,12 +97,10 @@ endfun
 
 " IPython:
 "
-"
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
 
 " Web Dev:
-"
 "
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 
@@ -109,7 +108,6 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 au BufWritePre,FileWritePre *.js ks|call LastMod()|'s
 
 " Markdown:
-"
 "
 " See more in ftplugin/markdown.vim
 "gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
@@ -121,10 +119,12 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 
 " Leader:
+"
 let mapleader = "\<Space>"
 
 
-" Viminfo: 
+" Viminfo:
+"
 " in order we go:
 " '500 : marks will be remembered for the last 500 files
 " <1000 : Contents of registers up to 1000 lines each will be recorded
@@ -153,8 +153,7 @@ set softtabstop=4
 let python_highlight_all = 1
 
 
-" Spell Checker
-"
+" Spell Checker:
 "
 " Turn on spell checking
 " Let's do this in specific filetypes up until we get a better spellfile
@@ -162,6 +161,7 @@ let python_highlight_all = 1
 "
 " Autocomplete in insert mode
 set complete+=kspell 
+
 
 " Other Global Options: 
 "
@@ -213,7 +213,7 @@ set mouse=a
 
 " Use the system clipboard. From vim-better-default
 if has('unnamedplus')
-  set clipboard=unnamedplus,unnamed
+  set clipboard+=unnamedplus,unnamed
 else
   set clipboard+=unnamed
 endif
@@ -223,17 +223,22 @@ endif
 set fileformat=unix
 set encoding=utf-8
 
-" Tab completion
+" Command line autocomplete appears as a menu
 set wildmenu
+
 " fileignorecase ignores case usage in files.
 " wildignorecase does this but only for autocompletions
 set fileignorecase
+
+" List all matches and complete each full match
 set wildmode=list,full
+
 set display+=lastline
 
+" Display matching searches incrementally
 set incsearch
+
 set history=1000
-set tabpagemax=50
 
 set sessionoptions-=options
 
@@ -249,14 +254,13 @@ set whichwrap+=<,>,h,l,[,]
 
 
 if has('persistent_undo')
-    "set undofile	" keep an undo file (undo changes after closing)
+    set undodir=~/.vim/undodir
+    set undofile	" keep an undo file (undo changes after closing)
     "line 300 of :he undo is 'You should keep undofile off'
-    set undodir+=~/.vim/undodir
 endif
 
-
 " Can be toggled in filetype specific situations
-set nowrap
+" set nowrap
 
 " Use one space not two after punctuation.
 set nojoinspaces
@@ -276,7 +280,6 @@ set modeline
 
 " Buffers Windows Tabs:
 "
-"
 "look to see if a buffer is open before opening a new one
 try
   set switchbuf=useopen,usetab,newtab
@@ -287,18 +290,28 @@ endtry
 "modified buffers are hidden and multiple buffers can be worked on without
 "forcing the user to save
 set hidden
+
 "if i change a file in a different window, reload it
 set autoread
+
 " Opening a window will place it below the current one
 set splitbelow
+
 " If vertical split is invoked put it on the right
 set splitright
+
 " Last window gets a status line
 set laststatus=2
+
 " Set column width of 120. NERDTree fits in a 40 char block perfectly
-set columns=120
+" But I think messes up termux
+" set columns=120
+
 "Also if you want standard POSIX windows here is an option to enable that
 "set lines=24
+
+" Max out at 50 tabs
+set tabpagemax=50
 
 
 " Mappings:
@@ -316,10 +329,12 @@ tnoremap <Esc> <C-W>N
 " select all text in buffer 
 map <Leader>a ggVG
 
+" Map :NERDTreeTabsToggle to ease toggling the plugin
+map <Leader>n <plug>NERDTreeMirrorToggle<CR>
+
 
 " Plugin Configuration:
 " Builtins:
-"
 "
 " Let Vim open manpages with ex cmd
 " :Man [cmd]
@@ -340,8 +355,9 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
 endif
 
 
-" Vundle:
-" from: https://github.com/VundleVim/Vundle.vim/blob/master/README.md 
+" Vundle:"
+" https://github.com/VundleVim/Vundle.vim/blob/master/README.md 
+"
 " if you need to reinstall, run these commands
 " git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "
@@ -350,7 +366,7 @@ endif
 
 
 " NERDTree:
-"https://github.com/scrooloose/nerdtree
+" https://github.com/scrooloose/nerdtree
 "
 "Open NERDTree automatically
 autocmd Vimenter * NERDTree
@@ -374,12 +390,31 @@ let NERDTReeQuitOnOpen = 1
 
 " Other recommended options
 let NERDTreeDirArrows = 1
+
+" Where NERDTree starts by default
 let g:NERDTreeWinPos = "right"
-let NERDTreeShowHidden=1
-let NERDTreeShowBookmarks=1
+
+" Show hidden files by default. Can slow things down
+let NERDTreeShowHidden = 1
+
+" Need my bookmarks
+let NERDTreeShowBookmarks = 1
+
+" Put the NERDTreeBookmarksFile in the .vim folder
+let NERDTreeBookmarksFile = "$HOME/.vim/NERDTreeBookmark"
+
+" Sort nodes in a more obvious way (1,2,11,12,21,31) not (1,11,12,2,21,31)
+let NERDTreeNaturalSort = 1
+
+" Let NERDTree change your CWD
+let NERDTreeChDirMode = 2
+
+" Show line numbers
+let NERDTreeShowLineNumbers=1
 
 
 " NERDTree Tabs:
+"
 " Do not open NERDTree if vim starts in diff mode
 let g:nerdtree_tabs_no_startup_for_diff = 1
 
@@ -393,26 +428,42 @@ let g:nerdtree_tabs_meaningful_tab_names = 1
 " Close current tab if there is only one window in it and it's NERDTree
 let g:nerdtree_tabs_autoclose = 1
 
+" Open NERDTree on console vim startup
+let g:nerdtree_tabs_open_on_console_startup = 1 
+
+" When starting up with a directory name as a parameter, cd into it
+let g:nerdtree_tabs_startup_cd = 1
+
 
 " Jedi:
-" Great out of the box except for the import autofill
 " https://github.com/davidhalter/jedi-vim
+"
+" Great out of the box except for the import autofill
 " jedi-vim is a vim binding to the autocompletion library jedi
 "
 " When you start typing `from module.name<space>` jedi-vim automatically
 " adds the "import" statement and displays the autocomplete popup.
 let g:jedi#smart_auto_mappings = 0
 
-" if the autocomplete on dot slows things down too much try
+" if the autocomplete on dot slows things down too much set to 0
 let g:jedi#popup_on_dot = 0
 
 
 " Vimwiki:
-let g:vimwiki_hl_cb_checked=1
+"
+" Highlight checked list items with a special order
+let g:vimwiki_hl_cb_checked = 1
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
+
+" Use local mouse mappings from |vimwiki-local-mappings|.
+let g:vimwiki_use_mouse = 1
+
+" Whenever Vimwiki's opened, cd to the directory where the page belongs.
+" let g:vimwiki_auto_chdir
 
 
 " Fugitive:
+"
 " The following optioms clean up our statusline
 if exists('g:loaded_fugitive')
    set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
@@ -422,17 +473,18 @@ endif
 
 
 " Tagbar:
+"
 nmap <F8> :TagbarToggle<CR>
 
 
 " Flake8:
 "https://github.com/nvie/vim-flake8
+"
 "flake8 is a static syntax and style checker. wraps around pyflakes, pep8 and
 "ned's MacCabe script [complexity checker]
 "
 " Open a Python file
 " Press <F7> to run flake8 on it
-"
 "
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
