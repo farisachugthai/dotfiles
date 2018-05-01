@@ -1,14 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ==============================================================================
 #
 #          FILE: test.py
 #
-#       OPTIONS: ---
-#  REQUIREMENTS: ---
-#          BUGS: ---
 #       CREATED: ___
-# LAST MODIFIED: 2018 Apr 27
+# LAST MODIFIED: 2018 May 01
 #    MAINTAINER: Faris Chugthai
 # ==============================================================================
 
@@ -17,6 +14,3 @@ def main():
     """
     Put your description of the module here.
     """
-
-
-pass
