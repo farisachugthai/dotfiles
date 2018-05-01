@@ -15,7 +15,8 @@ fi
 apt update && apt upgrade -y && apt autoremove -y
 
 # Install OpenSSH
-apt install -y openssh
+apt install -y openssh-server 
+apt install -y openssh-client
 
 # Setup a minimal firewall.
 apt install -y gufw

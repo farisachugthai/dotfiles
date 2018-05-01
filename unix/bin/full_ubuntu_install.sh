@@ -3,59 +3,38 @@
 # Assumes Ubuntu
 # Maintainer: Faris Chugthai
 
-# Once again this requires root permissions and has vundle. 
-# Should there be a minimal root install and a "full" install. we can source root.
-# But then we're STILL gonna need to have a normal user install script. ergh.
 
-bash "root_ubuntu_install.sh"
+bash "minimal_ubuntu_install.sh"
 
 a="apt-get install -y"
 
-echo "First access and restore your ssh configs and replace them properly."
+echo 'First access and restore your ssh configs and place them in the proper folders.'
 
-# Security 
-$a gufw
-$a openssh-server
-$a openssh-client
+echo 'Remember when creating the folders to run `chmod 700 ~/.ssh` and `chmod 600 ~/.ssh/*`'
 
 # Utilities
 $a gparted
 
 # Help on the command-line. Termux comes with close to nothing out of the box.
-pkg install -y bash-completion
-pkg install -y binutils
-pkg install -y busybox
-pkg install -y command-not-found
-$p curl
+$a curl
 $a fzf
 $a gnupg2
-pkg install -y gzip
-pkg install -y htop 
-pkg install -y linux-man-pages
-pkg install -y mlocate
-pkg install -y poppler
+$a htop
 $a rclone
 $a tmux
 $a tree
 $p wget
-pkg install -y xz-utils
 
 
 #For development
 $a clang
-$a gcc
 $a gdb
 $a hub
 $a make
 $a neovim
 $a nodejs
 $a python3-dev python2-dev
-$a vim-gtk3
 
-# Setup vundle.
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-# Install vundle and all relevant plugins.
-vim +PluginInstall +qall
 
 # Packages that aren't necessary at all but fun.
 $a sl 
@@ -83,7 +62,7 @@ echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.li
 apt-get update
 
 # 4. Install Spotify
-apt-get install spotify-client
+$a spotify-client
 
 # TODO: ask if they want a few DE specific applications.
 # Mention there are dotfiles for KDE.
