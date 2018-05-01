@@ -53,3 +53,15 @@ add-alias ()
    eval alias $name=\'$value\'
    alias $name
 }
+
+# Update the python packages you care about most
+update-pip ()
+{
+    local pu="pip install -Uq"
+    $pu pip
+    $pu ipython
+    $pu virtualenv
+    $pu jedi
+    $pu flake8
+    $pu dropbox
+}
