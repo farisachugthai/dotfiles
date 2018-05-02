@@ -65,3 +65,9 @@ update-pip ()
     $pu flake8
     $pu dropbox
 }
+
+# I really don't like anything that smells like Emacs keybindings
+infovi ()
+{
+    info $1 | less
+}
