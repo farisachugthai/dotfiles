@@ -1,0 +1,36 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# Maintainer: Faris Chugthai
+
+# TODO: Also remember to print the name of the file as youre going!
+
+# Heres an example of using case in Bash.
+# From Greg's Wiki Bash Guide page 52
+
+echo "Hello. How would you like to download this URL?"
+echo "ENTER 1-5 TO SELECT YOUR RESPONSE"
+echo "    1. Single video"
+echo "    2. Single video (audio only)"
+echo "    3. Full playlist"
+echo "    4. Full playlist (audio only)"
+echo "    5. Other (not a video)"
+
+read -p "-> " response
+case $response in
+    1*) youtube-dl --no-mtime -o "/data/data/com.termux/files/home/storage/shared/Videos/%(title)s.%(ext)s" --metadata-from-title "%(artist)s - %(title)s" --add-metadata -f mp4 --prefer-ffmpeg $1;;
+    2*) youtube-dl --no-mtime -o "/data/data/com.termux/files/home/storage/shared/Music/%(title)s.%(ext)s" --metadata-from-title "%(artist)s - %(title)s" --add-metadata -x --audio-format mp3 --prefer-ffmpeg $1;;
+    3*) youtube-dl --no-mtime -o
+        "/data/data/com.termux/files/home/storage/shared/music/%(title)s.%(ext)s"
+        -f "bestaudio" --yes-playlist $1;;
+    4*) youtube-dl --no-mtime -o "/data/data/com.termux/files/home/storage/shared/music/%(title)s.%(ext)s" -f "bestaudio" --yes-playlist $1;;
+    5*) ipython termux-urls.ipy @;;
+    *) echo "I do not understand your choice.";; 
+esac
+
+# First things first test to make sure this behaves as expected
+# Then add in case 5.
+
+# 04/30/2018
+# Case 2 behaves as expected
+
+# 04/30/2018 ...that night
+# Case 1 behaves appropriately

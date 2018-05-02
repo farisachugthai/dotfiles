@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+# Scrapyard for working out something with youtube-dl, bs4, requests etc
+# Plus we can get some cool videos off the internet while were at it!
+# Maintainer: Faris Chugthai
+
+# and this script should probably be called with
+# ipython termux-urls.ipy $@
+
+# TODO:
+# 1. Download audio using the python module for youtube_dl
+# 2. Call it using a bash script (which may involve using $@ may involve $1)
+# amazingly 3 is done!
+# 3. Use an if elif for when there are playlists (wait how would the URL look
+# because you woildnt be sharing it from the yt app right? idk.
+# and amazingly this part just needs to be testedto make sure i don't need to
+# prettify my soup
+# 4. use an else and scrape the page
+
+import requests
+import youtube_dl
+import sys
+import urllib
+
+link = sys.argv[1]
+link_parser = urllib.parse.urlparse(link)
+
+
+# should figure out how to append "yes playlist as an option for the first bit
+# or maybe make it a class and then define whether the object has ytdl or
+# ytdl_playlist called on it?
+def ytdl(link):
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+        'output': 'TODO:'
+    }
+    ydl = youtube_dl.YoutubeDL(ydl_opts)
+    ydl.download(link)
+
+
+# thank god google formats their urls so consistently
+if link_parser[2] == "/playlist":
+    print("This seems like a video URL. Downloading. Press Ctrl-C to stop")
+elif link_parser[1] == "youtu.be":
+    ytdl(link)
+else:
+    source = requests.get(link)
+    source.raise_for_status()
+    # might not need bs4 if all im doing is downloading.
+    # could analyze at a later point
+    # soup = BeautifulSoup(source, "html.parser")
+
+    # should figure out how to parse the title of the page and save it
+    # as the filename
+    # should also choose a different file path then 'wherever we run this'
+    file = "web_page.txt"  # fix hard coded nonsense
+    with open(file, mode="ab") as f:
+        for chunk in source.iter_content(100000):
+            f.append(chunk)
+        f.close
+
+    print(f.closed)
