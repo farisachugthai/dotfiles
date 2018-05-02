@@ -11,7 +11,7 @@
 
 [color]
     ui = true
-    pager = false
+    pager = true
     interactive = auto
     diff = true
     branch = always
@@ -55,9 +55,11 @@
 # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
     last = log -1 HEAD
     unstage = reset HEAD
+
 # From varying Gists
     staged = diff --cached
     unstaged = diff
+
 # Fix unexpected behavior
     ls = ls-files
 
@@ -68,3 +70,7 @@
 
 [help]
     autocorrect = 1
+
+
+[credential]
+	helper = cache
