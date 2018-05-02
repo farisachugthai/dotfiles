@@ -16,6 +16,7 @@ $p binutils
 $p busybox
 $p command-not-found
 $p curl
+$p dnsutils     # we didn't have dig, nslookup or host before this
 $p hub
 $p file
 $p findutils
@@ -34,6 +35,7 @@ $p sed
 $p texinfo
 $p tmux
 $p tree
+$p util-linux
 $p wget
 $p xz-utils
 
@@ -49,17 +51,19 @@ $p nodejs
 $p python-dev python2-dev
 $p vim-python
 
+
 # Setup vundle.
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 # Install vundle and all relevant plugins.
 vim +PluginInstall +qall
 
+
 # Packages that aren't necessary at all but fun.
-$p sl 
-$p neofetch  
-$p screenfetch 
 $p cowsay 
 $p fortune
+$p neofetch  
+$p screenfetch 
+$p sl 
 
 
 # Termux specific packages
@@ -70,8 +74,13 @@ $p termux-tools;
 # Fix bash's proclivity for global variables
 unset p
 
+
 # Setup sd card support and access shared storage
 termux-setup-storage;
 
-# Should python_termux.sh get sourced directly?
+
+# Now let's set up our python environment
+bash python_termux.sh
+
+
 exit 0
