@@ -10,10 +10,9 @@ Installation scripts have been included to assist in setup.
 The installation scripts are all written in Bash and Python3. 
 As a result, the following is necessary.
 * Python3
-* IPython 6.2
 * Git
 
-Without these dependencies, basic config files should not be expected to work.
+Without these dependencies, the installation scripts should not be expected to work.
 
 
 ## Installation
@@ -24,16 +23,30 @@ Without these dependencies, basic config files should not be expected to work.
 Currently has only been tested on KDE Neon.
 
 To replicate the working environment, run the scripts as follows.
+
 1. Git clone the repository.
-1b. (Optional) Run unix/bin/root_ubuntu_install.sh to add repositories that receive more frequent updates for Vim and Git. In addition, installs software such as OpenSSH and configures ufw very minimally.
+    1a. (Optional) Run unix/bin/minimal_ubuntu_install.sh to add repositories that receive more frequent updates for Vim and Git. 
+    In addition, installs software such as OpenSSH and configures ufw minimally.
+    Be aware that this script requires root permissions. Therefore it's necessary to run
+
+```bash
+sudo bash unix/bin/minimal_ubuntu_install.sh
+```
+
+    1b. (Optional) Run unix/bin/full_ubuntu_install.sh for more software.
+    Currently adds spotify to apt's sources.
+    The full install runs the script for the minimal install so it's not necessary to run both scripts.
 2. Run unix/bin/symlink_repo.py to create directories and symlinks in appropriate sections of the user's home directory.
+3. (Optional) Run unix/bin/user_ubuntu
 
 ### Termux:
 
 1. Git clone the repository.
 2. Run unix/bin/symlink_repo.py to create directories and symlinks in appropriate sections of the user's home directory.
-3. Run unix/bin/initial_termux_install.sh to obtain necessary packages. Termux comes with almost nothing out of the box, and as a result, packages such as findutils, file, sed, gawk, and grep must be installed by the user.
-4. Execute unix/bin/python_termux.sh. This will download useful python applications like IPython, youtube-dl, flake8 and requests globally. It will also add a community repository that allows GCC, Jupyter Notebooks, and other packages to be downloaded.
+3. Run unix/bin/initial_termux_install.sh to obtain necessary packages. 
+Termux comes with almost nothing out of the box, and as a result, packages such as findutils, file, sed, gawk, and grep must be installed by the user.
+This script will also execute unix/bin/python_termux.sh which will download useful python applications like IPython, youtube-dl, flake8 and requests globally. 
+It will also add a community repository that allows GCC, Jupyter Notebooks, and other packages to be downloaded.
 
 
 ## TODO:
@@ -46,5 +59,5 @@ Those scripts will start in a platform and operating system dependent way; howev
 
 1. Create a minimal, functional working environment for both Termux and Ubuntu.
    (Done)
-2. Create a new user on an existing workstation that has all necessary packages installed. Run relevant scripts. Is the new user profile for all intents and purposes as useful as your usual daily driver? If not, then keep working.
+2. Create a new user on an existing workstation that has all necessary packages installed. Run relevant scripts. Is the new user profile as useful as your usual daily driver? If not, then keep working.
 3. Boot a new ISO, git clone the repo, run 1 script, and begin working as if it were your daily workstation.
