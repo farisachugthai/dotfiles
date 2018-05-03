@@ -159,12 +159,17 @@ let python_highlight_all = 1
 
 " Spell Checker:
 "
-" Turn on spell checking
-" Let's do this in specific filetypes up until we get a better spellfile
-" :set spell spelllang=en_us
-"
+" Turn on spell checks either by filetype or explicit buffers. To configure:
+set spelllang=en_us
+
 " Autocomplete in insert mode
 set complete+=kspell 
+
+" Limit the number of suggestions from 'spellsuggest'
+set spellsuggest=5
+
+" I wanna test out the effectiveness of this one
+map <Leader>s :setlocal spell!<CR>
 
 
 " Other Global Options: 
@@ -230,12 +235,15 @@ set encoding=utf-8
 " Command line autocomplete appears as a menu
 set wildmenu
 
-" fileignorecase ignores case usage in files.
-" wildignorecase does this but only for autocompletions
-set fileignorecase
+" Complete longest common string. If more than one, then list alternatives.
+set wildmode=longest,list:longest
 
-" List all matches and complete each full match
-set wildmode=list,full
+" What does the autocomplete pull from? This sets it to the current buffer,
+" any open ones and any tags you may have.
+set complete=.,b,u,]
+
+" fileignorecase ignores case usage in files.
+set fileignorecase
 
 set display+=lastline
 
@@ -260,11 +268,7 @@ set whichwrap+=<,>,h,l,[,]
 if has('persistent_undo')
     set undodir=~/.vim/undodir
     set undofile	" keep an undo file (undo changes after closing)
-    "line 300 of :he undo is 'You should keep undofile off'
 endif
-
-" Can be toggled in filetype specific situations
-" set nowrap
 
 " Use one space not two after punctuation.
 set nojoinspaces
@@ -336,6 +340,9 @@ map <Leader>a ggVG
 " Map :NERDTreeTabsToggle to ease toggling the plugin
 map <Leader>n <plug>NERDTreeMirrorToggle<CR>
 
+" Between the shell and IPython, autocomplete needs to be set to tab.e
+imap <Tab> <C-P>
+
 
 " Plugin Configuration:
 " Builtins:
@@ -405,7 +412,7 @@ let NERDTreeShowHidden = 1
 let NERDTreeShowBookmarks = 1
 
 " Put the NERDTreeBookmarksFile in the .vim folder
-let NERDTreeBookmarksFile = "$HOME/.vim/NERDTreeBookmark"
+let NERDTreeBookmarksFile = "$HOME/.vim/NERDTreeBookmarks"
 
 " Sort nodes in a more obvious way (1,2,11,12,21,31) not (1,11,12,2,21,31)
 let NERDTreeNaturalSort = 1
@@ -446,7 +453,7 @@ let g:nerdtree_tabs_startup_cd = 1
 " jedi-vim is a vim binding to the autocompletion library jedi
 "
 " When you start typing `from module.name<space>` jedi-vim automatically
-" adds the "import" statement and displays the autocomplete popup.
+" adds the 'import' statement and displays the autocomplete popup.
 let g:jedi#smart_auto_mappings = 0
 
 " if the autocomplete on dot slows things down too much set to 0
