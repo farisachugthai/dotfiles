@@ -1,3 +1,6 @@
+# Rope
+.ropeproject/
+
 # Vim Backup Files
 *.un~
 *.swp
