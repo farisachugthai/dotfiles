@@ -47,22 +47,27 @@ $a fortune
 # Fix bash's proclivity for global variables
 unset a
 
-# Add Spotify
+# Let's put all optional packages in one folder out of the way
 # TODO: Ask if the user wants it.
-# 
-# This wasn't put in the root script since it's a superfluous package.
-#
-# 1. Add the Spotify repository signing keys to be able to verify downloaded packages
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
 
-# 2. Add the Spotify repository
-echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list
+function opt-pkg()
+{
+    local instl=`bash "ubuntu-packages/$0"`
+    echo "Now we'll be installing $0"
+}
+# Add Spotify
+opt-pkg "spotify.sh"
 
-# 3. Update list of available packages
-apt-get update
 
-# 4. Install Spotify
-$a spotify-client
+# Neofetch for Ubuntu 16.10 >
+# Neofetch 17.04 < has Neofetch in the repos
+opt-pkg "neofetch.sh"
+
+# let's group all the stuff that requires a specific cpu archtogether
+if [[ `uname -m == x86_64` ]]; then
+    opt-pkg "vs-code.sh"
+fi
+
 
 # TODO: ask if they want a few DE specific applications.
 # Mention there are dotfiles for KDE.
