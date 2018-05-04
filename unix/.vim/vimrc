@@ -30,6 +30,7 @@
 "   Fugitive
 "   Tagbar
 "   Flake8
+"   Ale
 """""""""""""""""""""""""""""""""
 "
 "
@@ -76,7 +77,7 @@ endif
 " Python:
 "
 " Insert a relevant header automatically for every new *.py file
-au BufNewFile *.py,*.ipy 0r ~/.vim/skeleton.py
+" au BufNewFile *.py,*.ipy 0r ~/.vim/skeleton.py
 
 " Found in :he skeleton
 " How to automatically update a line with the date the file was last modified.
@@ -486,18 +487,18 @@ endif
 
 
 " Tagbar:
-"
+" https://github.com/majutsushi/tagbar
 nmap <F8> :TagbarToggle<CR>
 
 
 " Flake8:
-"https://github.com/nvie/vim-flake8
-"
-"flake8 is a static syntax and style checker. wraps around pyflakes, pep8 and
-"ned's MacCabe script [complexity checker]
-"
-" Open a Python file
-" Press <F7> to run flake8 on it
-"
+" https://github.com/nvie/vim-flake8
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
+
+
+" Ale:
+" https://github.com/w0rp/ale
+"
+" <Leader>a is already mapped so use l for lint
+nmap <Leader>l <Plug>(ale_toggle_buffer)
