@@ -1,0 +1,232 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+<<<<<<< Updated upstream
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+=======
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Path	unix/bin/mv_to_repo.py	/^from pathlib import Path$/;"	i
+__contains_word	unix/.bashrc.d/rclone-complete.bash	/^__contains_word()$/;"	f
+__debug	unix/.bashrc.d/rclone-complete.bash	/^__debug()$/;"	f
+__git	unix/.bashrc.d/git-completion.bash	/^__git ()$/;"	f
+__git_aliased_command	unix/.bashrc.d/git-completion.bash	/^__git_aliased_command ()$/;"	f
+__git_aliases	unix/.bashrc.d/git-completion.bash	/^__git_aliases ()$/;"	f
+__git_commands	unix/.bashrc.d/git-completion.bash	/^__git_commands () {$/;"	f
+__git_complete	unix/.bashrc.d/git-completion.bash	/^__git_complete ()$/;"	f
+__git_complete_fetch_refspecs	unix/.bashrc.d/git-completion.bash	/^__git_complete_fetch_refspecs ()$/;"	f
+__git_complete_file	unix/.bashrc.d/git-completion.bash	/^__git_complete_file ()$/;"	f
+__git_complete_force_with_lease	unix/.bashrc.d/git-completion.bash	/^__git_complete_force_with_lease ()$/;"	f
+__git_complete_index_file	unix/.bashrc.d/git-completion.bash	/^__git_complete_index_file ()$/;"	f
+__git_complete_refs	unix/.bashrc.d/git-completion.bash	/^__git_complete_refs ()$/;"	f
+__git_complete_remote_or_refspec	unix/.bashrc.d/git-completion.bash	/^__git_complete_remote_or_refspec ()$/;"	f
+__git_complete_revlist	unix/.bashrc.d/git-completion.bash	/^__git_complete_revlist ()$/;"	f
+__git_complete_revlist_file	unix/.bashrc.d/git-completion.bash	/^__git_complete_revlist_file ()$/;"	f
+__git_complete_strategy	unix/.bashrc.d/git-completion.bash	/^__git_complete_strategy ()$/;"	f
+__git_complete_symbol	unix/.bashrc.d/git-completion.bash	/^__git_complete_symbol () {$/;"	f
+__git_compute_all_commands	unix/.bashrc.d/git-completion.bash	/^__git_compute_all_commands ()$/;"	f
+__git_compute_merge_strategies	unix/.bashrc.d/git-completion.bash	/^__git_compute_merge_strategies ()$/;"	f
+__git_compute_porcelain_commands	unix/.bashrc.d/git-completion.bash	/^__git_compute_porcelain_commands ()$/;"	f
+__git_config_get_set_variables	unix/.bashrc.d/git-completion.bash	/^__git_config_get_set_variables ()$/;"	f
+__git_count_arguments	unix/.bashrc.d/git-completion.bash	/^__git_count_arguments ()$/;"	f
+__git_eread	unix/.bashrc.d/git-prompt.sh	/^__git_eread ()$/;"	f
+__git_find_on_cmdline	unix/.bashrc.d/git-completion.bash	/^__git_find_on_cmdline ()$/;"	f
+__git_find_repo_path	unix/.bashrc.d/git-completion.bash	/^__git_find_repo_path ()$/;"	f
+__git_func_wrap	unix/.bashrc.d/git-completion.bash	/^__git_func_wrap ()$/;"	f
+__git_get_config_variables	unix/.bashrc.d/git-completion.bash	/^__git_get_config_variables ()$/;"	f
+__git_get_option_value	unix/.bashrc.d/git-completion.bash	/^__git_get_option_value ()$/;"	f
+__git_has_doubledash	unix/.bashrc.d/git-completion.bash	/^__git_has_doubledash ()$/;"	f
+__git_heads	unix/.bashrc.d/git-completion.bash	/^__git_heads ()$/;"	f
+__git_index_files	unix/.bashrc.d/git-completion.bash	/^__git_index_files ()$/;"	f
+__git_is_configured_remote	unix/.bashrc.d/git-completion.bash	/^__git_is_configured_remote ()$/;"	f
+__git_list_all_commands	unix/.bashrc.d/git-completion.bash	/^__git_list_all_commands ()$/;"	f
+__git_list_merge_strategies	unix/.bashrc.d/git-completion.bash	/^__git_list_merge_strategies ()$/;"	f
+__git_list_porcelain_commands	unix/.bashrc.d/git-completion.bash	/^__git_list_porcelain_commands ()$/;"	f
+__git_ls_files_helper	unix/.bashrc.d/git-completion.bash	/^__git_ls_files_helper ()$/;"	f
+__git_main	unix/.bashrc.d/git-completion.bash	/^__git_main ()$/;"	f
+__git_match_ctag	unix/.bashrc.d/git-completion.bash	/^__git_match_ctag () {$/;"	f
+__git_pretty_aliases	unix/.bashrc.d/git-completion.bash	/^__git_pretty_aliases ()$/;"	f
+__git_ps1	unix/.bashrc.d/git-prompt.sh	/^__git_ps1 ()$/;"	f
+__git_ps1_colorize_gitstring	unix/.bashrc.d/git-prompt.sh	/^__git_ps1_colorize_gitstring ()$/;"	f
+__git_ps1_show_upstream	unix/.bashrc.d/git-prompt.sh	/^__git_ps1_show_upstream ()$/;"	f
+__git_reassemble_comp_words_by_ref	unix/.bashrc.d/git-completion.bash	/^__git_reassemble_comp_words_by_ref()$/;"	f
+__git_refs	unix/.bashrc.d/git-completion.bash	/^__git_refs ()$/;"	f
+__git_refs2	unix/.bashrc.d/git-completion.bash	/^__git_refs2 ()$/;"	f
+__git_refs_remotes	unix/.bashrc.d/git-completion.bash	/^__git_refs_remotes ()$/;"	f
+__git_remotes	unix/.bashrc.d/git-completion.bash	/^__git_remotes ()$/;"	f
+__git_tags	unix/.bashrc.d/git-completion.bash	/^__git_tags ()$/;"	f
+__gitcomp	unix/.bashrc.d/git-completion.bash	/^	__gitcomp ()$/;"	f
+__gitcomp	unix/.bashrc.d/git-completion.bash	/^__gitcomp ()$/;"	f
+__gitcomp_direct	unix/.bashrc.d/git-completion.bash	/^	__gitcomp_direct ()$/;"	f
+__gitcomp_direct	unix/.bashrc.d/git-completion.bash	/^__gitcomp_direct ()$/;"	f
+__gitcomp_file	unix/.bashrc.d/git-completion.bash	/^	__gitcomp_file ()$/;"	f
+__gitcomp_file	unix/.bashrc.d/git-completion.bash	/^__gitcomp_file ()$/;"	f
+__gitcomp_nl	unix/.bashrc.d/git-completion.bash	/^	__gitcomp_nl ()$/;"	f
+__gitcomp_nl	unix/.bashrc.d/git-completion.bash	/^__gitcomp_nl ()$/;"	f
+__gitcomp_nl_append	unix/.bashrc.d/git-completion.bash	/^__gitcomp_nl_append ()$/;"	f
+__gitcompadd	unix/.bashrc.d/git-completion.bash	/^__gitcompadd ()$/;"	f
+__gitcompappend	unix/.bashrc.d/git-completion.bash	/^__gitcompappend ()$/;"	f
+__gitdir	unix/.bashrc.d/git-completion.bash	/^__gitdir ()$/;"	f
+__gitk_main	unix/.bashrc.d/git-completion.bash	/^__gitk_main ()$/;"	f
+__handle_command	unix/.bashrc.d/rclone-complete.bash	/^__handle_command()$/;"	f
+__handle_filename_extension_flag	unix/.bashrc.d/rclone-complete.bash	/^__handle_filename_extension_flag()$/;"	f
+__handle_flag	unix/.bashrc.d/rclone-complete.bash	/^__handle_flag()$/;"	f
+__handle_noun	unix/.bashrc.d/rclone-complete.bash	/^__handle_noun()$/;"	f
+__handle_reply	unix/.bashrc.d/rclone-complete.bash	/^__handle_reply()$/;"	f
+__handle_subdirs_in_dir_flag	unix/.bashrc.d/rclone-complete.bash	/^__handle_subdirs_in_dir_flag()$/;"	f
+__handle_word	unix/.bashrc.d/rclone-complete.bash	/^__handle_word()$/;"	f
+__index_of_word	unix/.bashrc.d/rclone-complete.bash	/^__index_of_word()$/;"	f
+__my_init_completion	unix/.bashrc.d/rclone-complete.bash	/^__my_init_completion()$/;"	f
+__start_rclone	unix/.bashrc.d/rclone-complete.bash	/^__start_rclone()$/;"	f
+_get_comp_words_by_ref	unix/.bashrc.d/git-completion.bash	/^_get_comp_words_by_ref ()$/;"	f
+_git	unix/.bashrc.d/git-completion.bash	/^	_git ()$/;"	f
+_git	unix/.bashrc.d/git-completion.bash	/^_git ()$/;"	f
+_git_add	unix/.bashrc.d/git-completion.bash	/^_git_add ()$/;"	f
+_git_am	unix/.bashrc.d/git-completion.bash	/^_git_am ()$/;"	f
+_git_apply	unix/.bashrc.d/git-completion.bash	/^_git_apply ()$/;"	f
+_git_archive	unix/.bashrc.d/git-completion.bash	/^_git_archive ()$/;"	f
+_git_bisect	unix/.bashrc.d/git-completion.bash	/^_git_bisect ()$/;"	f
+_git_branch	unix/.bashrc.d/git-completion.bash	/^_git_branch ()$/;"	f
+_git_bundle	unix/.bashrc.d/git-completion.bash	/^_git_bundle ()$/;"	f
+_git_checkout	unix/.bashrc.d/git-completion.bash	/^_git_checkout ()$/;"	f
+_git_cherry	unix/.bashrc.d/git-completion.bash	/^_git_cherry ()$/;"	f
+_git_cherry_pick	unix/.bashrc.d/git-completion.bash	/^_git_cherry_pick ()$/;"	f
+_git_clean	unix/.bashrc.d/git-completion.bash	/^_git_clean ()$/;"	f
+_git_clone	unix/.bashrc.d/git-completion.bash	/^_git_clone ()$/;"	f
+_git_commit	unix/.bashrc.d/git-completion.bash	/^_git_commit ()$/;"	f
+_git_config	unix/.bashrc.d/git-completion.bash	/^_git_config ()$/;"	f
+_git_describe	unix/.bashrc.d/git-completion.bash	/^_git_describe ()$/;"	f
+_git_diff	unix/.bashrc.d/git-completion.bash	/^_git_diff ()$/;"	f
+_git_difftool	unix/.bashrc.d/git-completion.bash	/^_git_difftool ()$/;"	f
+_git_fetch	unix/.bashrc.d/git-completion.bash	/^_git_fetch ()$/;"	f
+_git_format_patch	unix/.bashrc.d/git-completion.bash	/^_git_format_patch ()$/;"	f
+_git_fsck	unix/.bashrc.d/git-completion.bash	/^_git_fsck ()$/;"	f
+_git_gc	unix/.bashrc.d/git-completion.bash	/^_git_gc ()$/;"	f
+_git_gitk	unix/.bashrc.d/git-completion.bash	/^_git_gitk ()$/;"	f
+_git_grep	unix/.bashrc.d/git-completion.bash	/^_git_grep ()$/;"	f
+_git_help	unix/.bashrc.d/git-completion.bash	/^_git_help ()$/;"	f
+_git_init	unix/.bashrc.d/git-completion.bash	/^_git_init ()$/;"	f
+_git_log	unix/.bashrc.d/git-completion.bash	/^_git_log ()$/;"	f
+_git_ls_files	unix/.bashrc.d/git-completion.bash	/^_git_ls_files ()$/;"	f
+_git_ls_remote	unix/.bashrc.d/git-completion.bash	/^_git_ls_remote ()$/;"	f
+_git_ls_tree	unix/.bashrc.d/git-completion.bash	/^_git_ls_tree ()$/;"	f
+_git_merge	unix/.bashrc.d/git-completion.bash	/^_git_merge ()$/;"	f
+_git_merge_base	unix/.bashrc.d/git-completion.bash	/^_git_merge_base ()$/;"	f
+_git_mergetool	unix/.bashrc.d/git-completion.bash	/^_git_mergetool ()$/;"	f
+_git_mv	unix/.bashrc.d/git-completion.bash	/^_git_mv ()$/;"	f
+_git_name_rev	unix/.bashrc.d/git-completion.bash	/^_git_name_rev ()$/;"	f
+_git_notes	unix/.bashrc.d/git-completion.bash	/^_git_notes ()$/;"	f
+_git_pull	unix/.bashrc.d/git-completion.bash	/^_git_pull ()$/;"	f
+_git_push	unix/.bashrc.d/git-completion.bash	/^_git_push ()$/;"	f
+_git_rebase	unix/.bashrc.d/git-completion.bash	/^_git_rebase ()$/;"	f
+_git_reflog	unix/.bashrc.d/git-completion.bash	/^_git_reflog ()$/;"	f
+_git_remote	unix/.bashrc.d/git-completion.bash	/^_git_remote ()$/;"	f
+_git_replace	unix/.bashrc.d/git-completion.bash	/^_git_replace ()$/;"	f
+_git_rerere	unix/.bashrc.d/git-completion.bash	/^_git_rerere ()$/;"	f
+_git_reset	unix/.bashrc.d/git-completion.bash	/^_git_reset ()$/;"	f
+_git_revert	unix/.bashrc.d/git-completion.bash	/^_git_revert ()$/;"	f
+_git_rm	unix/.bashrc.d/git-completion.bash	/^_git_rm ()$/;"	f
+_git_send_email	unix/.bashrc.d/git-completion.bash	/^_git_send_email ()$/;"	f
+_git_shortlog	unix/.bashrc.d/git-completion.bash	/^_git_shortlog ()$/;"	f
+_git_show	unix/.bashrc.d/git-completion.bash	/^_git_show ()$/;"	f
+_git_show_branch	unix/.bashrc.d/git-completion.bash	/^_git_show_branch ()$/;"	f
+_git_stage	unix/.bashrc.d/git-completion.bash	/^_git_stage ()$/;"	f
+_git_stash	unix/.bashrc.d/git-completion.bash	/^_git_stash ()$/;"	f
+_git_status	unix/.bashrc.d/git-completion.bash	/^_git_status ()$/;"	f
+_git_submodule	unix/.bashrc.d/git-completion.bash	/^_git_submodule ()$/;"	f
+_git_svn	unix/.bashrc.d/git-completion.bash	/^_git_svn ()$/;"	f
+_git_tag	unix/.bashrc.d/git-completion.bash	/^_git_tag ()$/;"	f
+_git_whatchanged	unix/.bashrc.d/git-completion.bash	/^_git_whatchanged ()$/;"	f
+_git_worktree	unix/.bashrc.d/git-completion.bash	/^_git_worktree ()$/;"	f
+_gitk	unix/.bashrc.d/git-completion.bash	/^_gitk ()$/;"	f
+_npm_completion	unix/.bashrc.d/npm-completion.bash	/^  _npm_completion () {$/;"	f
+_npm_completion	unix/.bashrc.d/npm-completion.bash	/^  _npm_completion() {$/;"	f
+_rclone	unix/.bashrc.d/rclone-complete.bash	/^_rclone()$/;"	f
+_rclone_authorize	unix/.bashrc.d/rclone-complete.bash	/^_rclone_authorize()$/;"	f
+_rclone_cachestats	unix/.bashrc.d/rclone-complete.bash	/^_rclone_cachestats()$/;"	f
+_rclone_cat	unix/.bashrc.d/rclone-complete.bash	/^_rclone_cat()$/;"	f
+_rclone_check	unix/.bashrc.d/rclone-complete.bash	/^_rclone_check()$/;"	f
+_rclone_cleanup	unix/.bashrc.d/rclone-complete.bash	/^_rclone_cleanup()$/;"	f
+_rclone_config	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config()$/;"	f
+_rclone_config_create	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_create()$/;"	f
+_rclone_config_delete	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_delete()$/;"	f
+_rclone_config_dump	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_dump()$/;"	f
+_rclone_config_edit	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_edit()$/;"	f
+_rclone_config_file	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_file()$/;"	f
+_rclone_config_password	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_password()$/;"	f
+_rclone_config_providers	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_providers()$/;"	f
+_rclone_config_show	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_show()$/;"	f
+_rclone_config_update	unix/.bashrc.d/rclone-complete.bash	/^_rclone_config_update()$/;"	f
+_rclone_copy	unix/.bashrc.d/rclone-complete.bash	/^_rclone_copy()$/;"	f
+_rclone_copyto	unix/.bashrc.d/rclone-complete.bash	/^_rclone_copyto()$/;"	f
+_rclone_cryptcheck	unix/.bashrc.d/rclone-complete.bash	/^_rclone_cryptcheck()$/;"	f
+_rclone_cryptdecode	unix/.bashrc.d/rclone-complete.bash	/^_rclone_cryptdecode()$/;"	f
+_rclone_dbhashsum	unix/.bashrc.d/rclone-complete.bash	/^_rclone_dbhashsum()$/;"	f
+_rclone_dedupe	unix/.bashrc.d/rclone-complete.bash	/^_rclone_dedupe()$/;"	f
+_rclone_delete	unix/.bashrc.d/rclone-complete.bash	/^_rclone_delete()$/;"	f
+_rclone_genautocomplete	unix/.bashrc.d/rclone-complete.bash	/^_rclone_genautocomplete()$/;"	f
+_rclone_genautocomplete_bash	unix/.bashrc.d/rclone-complete.bash	/^_rclone_genautocomplete_bash()$/;"	f
+_rclone_genautocomplete_zsh	unix/.bashrc.d/rclone-complete.bash	/^_rclone_genautocomplete_zsh()$/;"	f
+_rclone_gendocs	unix/.bashrc.d/rclone-complete.bash	/^_rclone_gendocs()$/;"	f
+_rclone_listremotes	unix/.bashrc.d/rclone-complete.bash	/^_rclone_listremotes()$/;"	f
+_rclone_ls	unix/.bashrc.d/rclone-complete.bash	/^_rclone_ls()$/;"	f
+_rclone_lsd	unix/.bashrc.d/rclone-complete.bash	/^_rclone_lsd()$/;"	f
+_rclone_lsf	unix/.bashrc.d/rclone-complete.bash	/^_rclone_lsf()$/;"	f
+_rclone_lsjson	unix/.bashrc.d/rclone-complete.bash	/^_rclone_lsjson()$/;"	f
+_rclone_lsl	unix/.bashrc.d/rclone-complete.bash	/^_rclone_lsl()$/;"	f
+_rclone_md5sum	unix/.bashrc.d/rclone-complete.bash	/^_rclone_md5sum()$/;"	f
+_rclone_mkdir	unix/.bashrc.d/rclone-complete.bash	/^_rclone_mkdir()$/;"	f
+_rclone_mount	unix/.bashrc.d/rclone-complete.bash	/^_rclone_mount()$/;"	f
+_rclone_move	unix/.bashrc.d/rclone-complete.bash	/^_rclone_move()$/;"	f
+_rclone_moveto	unix/.bashrc.d/rclone-complete.bash	/^_rclone_moveto()$/;"	f
+_rclone_ncdu	unix/.bashrc.d/rclone-complete.bash	/^_rclone_ncdu()$/;"	f
+_rclone_obscure	unix/.bashrc.d/rclone-complete.bash	/^_rclone_obscure()$/;"	f
+_rclone_purge	unix/.bashrc.d/rclone-complete.bash	/^_rclone_purge()$/;"	f
+_rclone_rc	unix/.bashrc.d/rclone-complete.bash	/^_rclone_rc()$/;"	f
+_rclone_rcat	unix/.bashrc.d/rclone-complete.bash	/^_rclone_rcat()$/;"	f
+_rclone_rmdir	unix/.bashrc.d/rclone-complete.bash	/^_rclone_rmdir()$/;"	f
+_rclone_rmdirs	unix/.bashrc.d/rclone-complete.bash	/^_rclone_rmdirs()$/;"	f
+_rclone_serve	unix/.bashrc.d/rclone-complete.bash	/^_rclone_serve()$/;"	f
+_rclone_serve_http	unix/.bashrc.d/rclone-complete.bash	/^_rclone_serve_http()$/;"	f
+_rclone_serve_restic	unix/.bashrc.d/rclone-complete.bash	/^_rclone_serve_restic()$/;"	f
+_rclone_serve_webdav	unix/.bashrc.d/rclone-complete.bash	/^_rclone_serve_webdav()$/;"	f
+_rclone_sha1sum	unix/.bashrc.d/rclone-complete.bash	/^_rclone_sha1sum()$/;"	f
+_rclone_size	unix/.bashrc.d/rclone-complete.bash	/^_rclone_size()$/;"	f
+_rclone_sync	unix/.bashrc.d/rclone-complete.bash	/^_rclone_sync()$/;"	f
+_rclone_touch	unix/.bashrc.d/rclone-complete.bash	/^_rclone_touch()$/;"	f
+_rclone_tree	unix/.bashrc.d/rclone-complete.bash	/^_rclone_tree()$/;"	f
+_rclone_version	unix/.bashrc.d/rclone-complete.bash	/^_rclone_version()$/;"	f
+c	unix/.ipython/profile_default/ipython_config.py	/^c = get_config()$/;"	v
+cwd	unix/bin/mv_to_repo.py	/^    cwd = Path.cwd()$/;"	v
+filename	unix/.ipython/profile_default/startup/05_log.py	/^filename = os.path.join(ldir, fname) $/;"	v
+fname	unix/.ipython/profile_default/startup/05_log.py	/^fname = 'log-' + ip.profile + '-' + strftime('%Y-%m-%d') + ".py" $/;"	v
+home	unix/bin/mv_to_repo.py	/^    home = Path.home()$/;"	v
+home	unix/bin/symlink_repo.py	/^home = os.path.join(os.path.expanduser("~"), "")$/;"	v
+inputted	unix/bin/mv_to_repo.py	/^    inputted = sys.argv[1] if len(sys.argv) else print("Takes one filename.")$/;"	v
+ip	unix/.ipython/profile_default/startup/05_log.py	/^ip = get_ipython() $/;"	v
+ldir	unix/.ipython/profile_default/startup/05_log.py	/^ldir = ip.profile_dir.log_dir $/;"	v
+main	unix/.vim/skeleton.py	/^def main():$/;"	f
+main	unix/bin/mv_to_repo.py	/^def main(rel_file):$/;"	f
+main	unix/bin/symlink_repo.py	/^def main():$/;"	f
+notnew	unix/.ipython/profile_default/startup/05_log.py	/^notnew = os.path.exists(filename) $/;"	v
+os	unix/.ipython/profile_default/startup/05_log.py	/^import os.path $/;"	i
+os	unix/bin/symlink_repo.py	/^import os$/;"	i
+path	unix/.ipython/profile_default/startup/05_log.py	/^import os.path $/;"	i
+project_opened	.ropeproject/config.py	/^def project_opened(project):$/;"	f
+rel_file	unix/bin/mv_to_repo.py	/^    rel_file = Path.joinpath(rel_path, src)$/;"	v
+rel_path	unix/bin/mv_to_repo.py	/^    rel_path = Path.relative_to(cwd, home)$/;"	v
+repo	unix/bin/mv_to_repo.py	/^    repo = Path.joinpath(home, "projects", "dotfiles", "unix", "")$/;"	v
+repo	unix/bin/symlink_repo.py	/^repo = os.path.join(home, "projects", "dotfiles", "unix", "")$/;"	v
+set_prefs	.ropeproject/config.py	/^def set_prefs(prefs):$/;"	f
+shutil	unix/bin/mv_to_repo.py	/^import shutil$/;"	i
+src	unix/bin/mv_to_repo.py	/^    src = Path(inputted)$/;"	v
+strftime	unix/.ipython/profile_default/startup/05_log.py	/^from time import strftime $/;"	i
+symlink_repo	unix/bin/symlink_repo.py	/^def symlink_repo(file):$/;"	f
+sys	unix/bin/mv_to_repo.py	/^import sys$/;"	i
+sys	unix/bin/symlink_repo.py	/^import sys$/;"	i
+>>>>>>> Stashed changes
