@@ -53,6 +53,10 @@ Plugin 'majutsushi/tagbar'
 Plugin 'nvie/vim-flake8'
 Plugin 'w0rp/ale'
 
+" So i'm just gonna test these out for the time being. Don't commit this.
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'godlygeek/tabular'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -175,9 +179,9 @@ map <Leader>s :setlocal spell!<CR>
 " To improve insert mode completion let's add a dictionary
 " Haven't found a folder with a words file on termux so this check is
 " necessary
-if isdirectory("/usr/share/dict/")
-    set dictionary+=/usr/share/dict/words
-endif
+" if isdirectory("/usr/share/dict/")
+    " set dictionary+=/usr/share/dict/words
+" endif
 
 
 " Other Global Options: 
@@ -236,7 +240,6 @@ else
 endif
 
 " Store in unix format to prevent conversion issues when checking into github
-" And be aware that that does happen! just ran into it on Windows 10 Subsystem
 set fileformat=unix
 set encoding=utf-8
 
@@ -281,6 +284,8 @@ endif
 
 " Use one space not two after punctuation.
 set nojoinspaces
+
+" Set vim to look for a tags file recursively until it finds one.
 
 
 " Syntax Highlighting:
