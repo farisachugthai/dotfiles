@@ -360,6 +360,7 @@ iab hasbeen has been
 iab hasnt hasn't
 iab havebeen have been
 iab haveing having
+ia havent haven't
 iab hda had
 iab hearign hearing
 iab helpfull helpful
@@ -386,6 +387,7 @@ iab idae idea
 iab idaes ideas
 iab identofy identify
 iab ihs his
+ia im I'm
 iab imediate immediate
 iab imediatly immediately
 iab immediatly immediately
