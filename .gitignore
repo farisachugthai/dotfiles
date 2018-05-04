@@ -1,3 +1,6 @@
+# Jupyter Notebooks / JupyterLab
+.ipynb_checkpoints
+
 # Rope
 .ropeproject/
 
