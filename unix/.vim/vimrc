@@ -128,17 +128,16 @@ let mapleader = "\<Space>"
 " in order we go:
 " '500 : marks will be remembered for the last 500 files
 " <1000 : Contents of registers up to 1000 lines each will be recorded
-" s1000 : Reigsters with more than 1000 Kbyte are not
+" s1000 : Registers with more than 1000 Kbyte are not
 " put the viminfo file im the standard .vim dir
 
-" Also don't let neovim and vim use th same viminfo file
+" Also don't let neovim and vim use the same viminfo file
 if !has('nvim')
     set viminfo='100,<200,s200,n$HOME/.vim/viminfo
 endif
 
 
 " Pep8 Global Options: 
-"
 "
 " show existing tab with 4 spaces width
 set tabstop=4
@@ -161,15 +160,23 @@ let python_highlight_all = 1
 "
 " Turn on spell checks either by filetype or explicit buffers. To configure:
 set spelllang=en_us
+set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 
 " Autocomplete in insert mode
 set complete+=kspell 
 
-" Limit the number of suggestions from 'spellsuggest'
+" Limit the number of suggestions from 'spell suggest'
 set spellsuggest=5
 
-" I wanna test out the effectiveness of this one
+" Loving this mapping. May end up saying spell checking is never on by default
 map <Leader>s :setlocal spell!<CR>
+
+" To improve insert mode completion let's add a dictionary
+" Haven't found a folder with a words file on termux so this check is
+" necessary
+if isdirectory("/usr/share/dict/")
+    set dictionary+=/usr/share/dict/words
+endif
 
 
 " Other Global Options: 
@@ -240,7 +247,7 @@ set wildmode=longest,list:longest
 
 " What does the autocomplete pull from? This sets it to the current buffer,
 " any open ones and any tags you may have.
-set complete=.,b,u,]
+set complete+=.,b,u,t
 
 " fileignorecase ignores case usage in files.
 set fileignorecase
@@ -268,6 +275,7 @@ set whichwrap+=<,>,h,l,[,]
 if has('persistent_undo')
     set undodir=~/.vim/undodir
     set undofile	" keep an undo file (undo changes after closing)
+
 endif
 
 " Use one space not two after punctuation.
@@ -281,7 +289,7 @@ if has("syntax")
 endif
 
 " set modelines to enable syntax highlighting even when the filename differs
-" heres an example of a modeline
+" here's an example of a modeline
 " /* vim: set filetype=markdown : */
 set modeline
 
@@ -311,18 +319,12 @@ set splitright
 " Last window gets a status line
 set laststatus=2
 
-" Set column width of 120. NERDTree fits in a 40 char block perfectly
-" But I think messes up termux
-" set columns=120
-
-"Also if you want standard POSIX windows here is an option to enable that
-"set lines=24
-
 " Max out at 50 tabs
 set tabpagemax=50
 
 
 " Mappings:
+" To see all current mappings run :map
 "
 "
 " Easy window navigation
@@ -340,14 +342,14 @@ map <Leader>a ggVG
 " Map :NERDTreeTabsToggle to ease toggling the plugin
 map <Leader>n <plug>NERDTreeMirrorToggle<CR>
 
-" Between the shell and IPython, autocomplete needs to be set to tab.e
+" Between the shell and IPython, autocomplete needs to be set to tab.
 imap <Tab> <C-P>
 
 
 " Plugin Configuration:
-" Builtins:
+" Builtin:
 "
-" Let Vim open manpages with ex cmd
+" Let Vim open Man pages with ex cmd
 " :Man [cmd]
 " From /usr/share/vim/vim80/doc/usr_12.txt
 " Invoke while in Vim by putting your cursor over a word and run [Leader]K
@@ -453,7 +455,7 @@ let g:nerdtree_tabs_startup_cd = 1
 " jedi-vim is a vim binding to the autocompletion library jedi
 "
 " When you start typing `from module.name<space>` jedi-vim automatically
-" adds the 'import' statement and displays the autocomplete popup.
+" adds the 'import' statement and displays the autocomplete pop-up.
 let g:jedi#smart_auto_mappings = 0
 
 " if the autocomplete on dot slows things down too much set to 0
@@ -475,7 +477,7 @@ let g:vimwiki_use_mouse = 1
 
 " Fugitive:
 "
-" The following optioms clean up our statusline
+" The following options clean up our statusline
 if exists('g:loaded_fugitive')
    set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
 else
