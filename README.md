@@ -12,41 +12,48 @@ As a result, the following is necessary.
 * Python3
 * Git
 
-Without these dependencies, the installation scripts should not be expected to work.
+Without these dependencies, the installation scripts are not guaranteed to work.
 
 
 ## Installation
-[TODO: MAKE ALL FILENAMES LINKS]
 
 ### Ubuntu:
-
-Currently has only been tested on KDE Neon.
 
 To replicate the working environment, run the scripts as follows.
 
 1. Git clone the repository.
-    1a. (Optional) Run unix/bin/minimal_ubuntu_install.sh to add repositories that receive more frequent updates for Vim and Git. 
-    In addition, installs software such as OpenSSH and configures ufw minimally.
-    Be aware that this script requires root permissions. Therefore it's necessary to run
 
 ```bash
-sudo bash unix/bin/minimal_ubuntu_install.sh
+git clone https://github.com/farisachugthai/dotfiles
 ```
 
-    1b. (Optional) Run unix/bin/full_ubuntu_install.sh for more software.
-    Currently adds spotify to apt's sources.
-    The full install runs the script for the minimal install so it's not necessary to run both scripts.
-2. Run unix/bin/symlink_repo.py to create directories and symlinks in appropriate sections of the user's home directory.
-3. (Optional) Run unix/bin/user_ubuntu
+  
+  - (Optional) Run [minimal_ubuntu_install.sh](https://github.com/farisachugthai/dotfiles/blob/master/unix/bin/minimal_ubuntu_install.sh) to add repositories that receive more frequent updates for Vim and Git. 
+  - In addition, this script installs software such as OpenSSH and configures ufw minimally.
+  - Be aware that this script requires root permissions. From the root of the repository, it's therefore necessary to run
+
+```bash
+sudo bash "unix/bin/minimal_ubuntu_install.sh"
+```
+
+- (Optional) Run [full_ubuntu_install.sh](https://github.com/farisachugthai/dotfiles/blob/master/unix/bin/full_ubuntu_install.sh) for more software.
+- Currently adds Spotify and VS Code to apt's sources.
+- Neofetch is currently added as well as it is not in the Ubuntu 16.04 repositories.
+- The full install is preprended by the minimal install script, so it's not necessary to run both.
+
+
+2. Run [symlink_repo.py](https://github.com/farisachugthai/dotfiles/blob/master/unix/bin/symlink_repo.py) to create directories and symlinks in appropriate sections of the user's home directory.
+3. (Optional) Run [user_ubuntu.sh](https://github.com/farisachugthai/dotfiles/blob/master/unix/bin/user_ubuntu.sh). This script does not require any special permissions and is intended to be run exclusively as a user with typical Unix permissions.
 
 ### Termux:
 
 1. Git clone the repository.
-2. Run unix/bin/symlink_repo.py to create directories and symlinks in appropriate sections of the user's home directory.
-3. Run unix/bin/initial_termux_install.sh to obtain necessary packages. 
-Termux comes with almost nothing out of the box, and as a result, packages such as findutils, file, sed, gawk, and grep must be installed by the user.
-This script will also execute unix/bin/python_termux.sh which will download useful python applications like IPython, youtube-dl, flake8 and requests globally. 
-It will also add a community repository that allows GCC, Jupyter Notebooks, and other packages to be downloaded.
+2. Run [symlink_repo.py](https://github.com/farisachugthai/dotfiles/blob/master/unix/bin/symlink_repo.py) to create directories and symlinks in appropriate sections of the user's home directory.
+3. Run [initial_termux_install.sh](https://github.com/farisachugthai/dotfiles/blob/master/unix/bin/initial_termux_install.sh) to obtain necessary packages. 
+
+  - Termux comes with almost nothing out of the box, and as a result, packages such as findutils, file, sed, gawk, and grep must be installed by the user. 
+  - This script will also execute [python_termux.sh](https://github.com/farisachugthai/dotfiles/blob/master/unix/bin/python_termux.sh) which will download useful python applications like IPython, youtube-dl, flake8 and requests globally. 
+  - It will also add a community repository that allows GCC, Jupyter Notebooks, and other packages to be downloaded.
 
 
 ## TODO:
