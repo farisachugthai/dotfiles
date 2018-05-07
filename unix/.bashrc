@@ -2,25 +2,28 @@
 # Bashrc. Assumes that the proper installation scripts have been run.
 # Maintainer: Faris Chugthai
 
-### Source in .bashrc.d
-for file in ~/.bashrc.d/{alias,functions}; do
-    if [ -r "$file" ]; then
-        . "$file"
-    fi
-done;
-unset file
+case $- in
+    *i*);;
+    *) return 0;;
+esac
 
-if [ -f ~/.bashrc.d/git-completion.bash ]; then
-    . ~/.bashrc.d/git-completion.bash
+### Source in .bashrc.d
+if [[ -r "$HOME/.bashrc.d/alias" ]]; then . "$HOME/.bashrc.d/alias"; fi
+
+if [[ -r "$HOME/.bashrc.d/functions" ]]; then . "$HOME/.bashrc.d/functions"; fi
+
+if [[ -f "$HOME/.bashrc.d/git-completion.bash" ]]; then
+    . "$HOME/.bashrc.d/git-completion.bash"
 fi
 
 # The following was sourced from this linknwith minor modification
 # There are still many more export GIT commands to explore!
-if [ -f "$HOME/.bashrc.d/git-prompt.sh" ]; then
+if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     . "$HOME/.bashrc.d/git-prompt.sh";
     export GIT_PS1_SHOWDIRTYSTATE=1
     PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
 fi
+
 
 ### History
 
@@ -98,16 +101,16 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 set -o vi
 
-if [ "$DISPLAY" ]; then
-    export VISUAL=gvim
+if [[ "$DISPLAY" ]]; then
+    export VISUAL="gvim"
 else
-    export VISUAL=vim
+    export VISUAL="vim"
 export EDITOR="$VISUAL"
 fi
 
 ### JavaScript
 # Source npm completion if its installed
-if [ $(which npm) ]; then
+if [[ $(which npm) ]]; then
     source ~/.bashrc.d/npm-completion.bash
 fi
 
@@ -121,8 +124,8 @@ fi
 
 ### FZF
 # for quick, fuzzy searching in the shell
-if [ -f ~/.fzf.bash ]; then
-    . ~/.fzf.bash
+if [[ -f ~/.fzf.bash ]]; then
+    . "$HOME/.fzf.bash"
 fi
 
 if [[ $PREFIX ]]; then
@@ -133,9 +136,9 @@ fi
 ### Python
 
 # Add Conda to the path
-if [ -d "$HOME/miniconda3" ]; then
+if [[ -x "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
    . "$HOME/miniconda3/etc/profile.d/conda.sh";
-   conda activate base
+   "conda activate base";
 fi
 
 # tldr
