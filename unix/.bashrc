@@ -142,6 +142,7 @@ if [[ -x "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
 fi
 
 # tldr
+# https://github.com/tldr-pages/tldr-python-client/
 export TLDR_COLOR_BLANK="white"
 export TLDR_COLOR_NAME="white"
 export TLDR_COLOR_DESCRIPTION="white"

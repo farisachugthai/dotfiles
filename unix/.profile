@@ -28,6 +28,10 @@ if [[ $(which gofmt) ]]; then
 fi
 
 
+## JavaScript
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+
 # Environment Variables
 #
 # -J displays a status column at the left edge of the screen
@@ -52,6 +56,6 @@ export MANPAGER="less -R"
 export COLORTERM="colorterm"
 
 # This is the default but for the sake of being explicit rather than implicit
-export XDG_CONFIG_HOME=~/.config
+export XDG_CONFIG_HOME="$HOME/.config"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export XDG_CACHE_HOME="$HOME/.cache"
