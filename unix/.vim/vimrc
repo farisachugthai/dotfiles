@@ -7,7 +7,6 @@
 """"""""""""""""""""""""""""""""
 " Vundle, Plugins and Other Sourced Files
 " Filetype Specific Options
-"   Python
 "   IPython
 "   Web Dev
 "   Markdown
@@ -22,6 +21,7 @@
 " Mappings
 " Plugin Configurations
 "   Built-In
+"   Cheat40
 "   Vundle
 "   NERDTree
 "   NERDTree Tabs
@@ -44,7 +44,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdTree'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'vimwiki/vimwiki'
 Plugin 'airblade/vim-gitgutter'
@@ -72,51 +71,20 @@ if filereadable(glob("~/.vim/autocorrect.vim"))
     source ~/.vim/autocorrect.vim
 endif
 
-" Cheat40:
-"
-"Add a Vim cheat sheet with
-"git clone https://github.com/lifepillar/vim-cheat40.git ~/.vim/pack/bundle/start/cheat40
-
-
 " Filetype Specific Options:
-" Python:
-"
-" Insert a relevant header automatically for every new *.py file
-" au BufNewFile *.py,*.ipy 0r ~/.vim/skeleton.py
-
-" Found in :he skeleton
-" How to automatically update a line with the date the file was last modified.
-" Requires a line 'LAST MODIFIED: <date time>' in the first 20 lines
-autocmd BufWritePre,FileWritePre *.py,*.ipy   ks|call LastMod()|'s
-
-
-fun LastMod()
-    if line("$") > 20
-        let l = 20
-    else
-        let l = line("$")
-    endif
-    exe "1," . l . "g/LAST MODIFIED: /s/LAST MODIFIED: .*/LAST MODIFIED: " .
-  \ strftime("%Y %b %d")
-endfun
-
 
 " IPython:
-"
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
 
 " Web Dev:
-"
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 
-" TODO: Make skeleton template for JavaScript
 au BufWritePre,FileWritePre *.js ks|call LastMod()|'s
 
 " Markdown:
-"
 " See more in ftplugin/markdown.vim
-"gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
+" gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 
@@ -125,16 +93,14 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 
 " Leader:
-"
 let mapleader = "\<Space>"
 
 
 " Viminfo:
-"
 " in order we go:
-" '500 : marks will be remembered for the last 500 files
-" <1000 : Contents of registers up to 1000 lines each will be recorded
-" s1000 : Registers with more than 1000 Kbyte are not
+" '100 : marks will be remembered for the last 500 files
+" <200 : Contents of registers up to 1000 lines each will be recorded
+" s200 : Registers with more than 1000 Kbyte are not
 " put the viminfo file im the standard .vim dir
 
 " Also don't let neovim and vim use the same viminfo file
@@ -165,7 +131,7 @@ let python_highlight_all = 1
 " Spell Checker:
 "
 " Turn on spell checks either by filetype or explicit buffers. To configure:
-set spelllang=en_us
+set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 
 " Autocomplete in insert mode
@@ -276,11 +242,9 @@ set ttyfast
 " which wrap allows hitting the right key and going to the next line
 set whichwrap+=<,>,h,l,[,]
 
-
 if has('persistent_undo')
     set undodir=~/.vim/undodir
     set undofile	" keep an undo file (undo changes after closing)
-
 endif
 
 " Use one space not two after punctuation.
@@ -350,7 +314,8 @@ map <Leader>a ggVG
 map <Leader>n <plug>NERDTreeMirrorToggle<CR>
 
 " Between the shell and IPython, autocomplete needs to be set to tab.
-imap <Tab> <C-P>
+" Actually Tab is sorely needed to set whitespace in Python and Markdown
+" imap <Tab> <C-P>
 
 
 " Plugin Configuration:
@@ -373,6 +338,11 @@ set keywordprg=:Man
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif
+
+
+" Cheat40:
+"Add a Vim cheat sheet with
+"git clone https://github.com/lifepillar/vim-cheat40.git ~/.vim/pack/bundle/start/cheat40
 
 
 " Vundle:"
@@ -457,8 +427,6 @@ let g:nerdtree_tabs_startup_cd = 1
 
 " Jedi:
 " https://github.com/davidhalter/jedi-vim
-"
-" Great out of the box except for the import autofill
 " jedi-vim is a vim binding to the autocompletion library jedi
 "
 " When you start typing `from module.name<space>` jedi-vim automatically
