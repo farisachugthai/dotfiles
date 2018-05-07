@@ -56,6 +56,7 @@ Plugin 'w0rp/ale'
 " So i'm just gonna test these out for the time being. Don't commit this.
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'godlygeek/tabular'
+Plugin 'joshdick/onedark.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
