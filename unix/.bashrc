@@ -136,9 +136,8 @@ fi
 ### Python
 
 # Add Conda to the path
-if [[ -x "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
+if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
    . "$HOME/miniconda3/etc/profile.d/conda.sh";
-   "conda activate base";
 fi
 
 # tldr
