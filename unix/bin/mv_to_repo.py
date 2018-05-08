@@ -6,7 +6,7 @@
 #
 #       OPTIONS: ---
 #  REQUIREMENTS: python3.4+
-#          BUGS: ---
+#          BUGS:
 #       CREATED: 2018 Apr 27
 # LAST MODIFIED: 2018 Apr 30
 #    MAINTAINER: Faris Chugthai
@@ -31,11 +31,15 @@ def main(rel_file):
         move. As a result a pathname cannot be given to a file.
     """
 
+    # Backup the file
     shutil.copy(src, str(src) + ".bak")
-    # TODO: Check that the directory exists in the repo and if not make one!
+
+    # Check that the directory exists and make one otherwise
     dest = Path.joinpath(repo, rel_path)
     if dest.is_dir() is not True:
-        pass
+        #  https://docs.python.org/3/library/pathlib.html#pathlib.Path.mkdir
+        # To mimic behavior of mkdir -p, use flags parents=True and exists_ok=True
+        dest.mkdir(parents=True, exist_ok=True)
 
     # Didnt realize this. shutil requires strings as inputs because it utilizes rstrip to return files
     shutil.move(str(src), str(dest))
@@ -45,7 +49,7 @@ def main(rel_file):
 
 if __name__ == '__main__':
 
-    inputted = sys.argv[1] if len(sys.argv) else print("Takes one filename.")
+    inputted = sys.argv[1] if len(sys.argv) == 2 else print("Takes one filename.")
     src = Path(inputted)
     if src.is_file() is not True:
         print("This is not a file. Aborting.")
