@@ -107,6 +107,7 @@ Tagbar
 statusline
 colorscheme
 termux
+<<<<<<< Updated upstream
 im
 url
 cmds
@@ -140,3 +141,10 @@ dont
 scp
 zcat
 jupyter
+zim
+linux
+http
+touch
+netstat
+nslookup
+hostname
