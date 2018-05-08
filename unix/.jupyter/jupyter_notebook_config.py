@@ -1,6 +1,8 @@
 # Configuration file for jupyter-notebook.
 
 c = get_config()
+# Created by running
+# $ jupyter notebook --generate-config
 
 #------------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
@@ -43,29 +45,29 @@ c = get_config()
 #c.NotebookApp.allow_credentials = False
 
 ## Set the Access-Control-Allow-Origin header
-#  
+#
 #  Use '*' to allow any origin to access your server.
-#  
+#
 #  Takes precedence over allow_origin_pat.
 #c.NotebookApp.allow_origin = ''
 
 ## Use a regular expression for the Access-Control-Allow-Origin header
-#  
+#
 #  Requests from an origin matching the expression will get replies with:
-#  
+#
 #      Access-Control-Allow-Origin: origin
-#  
+#
 #  where `origin` is the origin of the request.
-#  
+#
 #  Ignored if allow_origin is set.
 #c.NotebookApp.allow_origin_pat = ''
 
 ## Allow password to be changed at login for the notebook server.
-#  
+#
 #  While loggin in with a token, the notebook server UI will give the opportunity
 #  to the user to enter a new password at the same time that will replace the
 #  token login mechanism.
-#  
+#
 #  This can be set to false to prevent changing password from the UI/API.
 #c.NotebookApp.allow_password_change = True
 
@@ -76,7 +78,7 @@ c = get_config()
 #c.NotebookApp.base_project_url = '/'
 
 ## The base URL for the notebook server.
-#  
+#
 #  Leading and trailing slashes can be omitted, and will automatically be added.
 #c.NotebookApp.base_url = '/'
 
@@ -219,7 +221,7 @@ c.NotebookApp.enable_mathjax = True
 #  platform dependent and determined by the python standard library `webbrowser`
 #  module, unless it is overridden using the --browser (NotebookApp.browser)
 #  configuration option.
-c.NotebookApp.open_browser = False
+#c.NotebookApp.open_browser = True
 
 ## Hashed password to use for web authentication.
 #  
@@ -469,7 +471,7 @@ c.NotebookApp.open_browser = False
 #c.Session.unpacker = 'json'
 
 ## Username for the Session. Default is your system username.
-#c.Session.username = 'username'
+c.Session.username = 'faris'
 
 #------------------------------------------------------------------------------
 # MultiKernelManager(LoggingConfigurable) configuration
@@ -512,7 +514,6 @@ c.NotebookApp.open_browser = False
 #  culled. Values of 0 or lower disable culling. Very short timeouts may result
 #  in kernels being culled for users with poor network connections.
 c.MappingKernelManager.cull_idle_timeout = 600
-
 
 ## The interval (in seconds) on which to check for idle kernels exceeding the
 #  cull timeout value.
@@ -598,7 +599,8 @@ c.ContentsManager.hide_globs = []
 #c.ContentsManager.untitled_file = 'untitled'
 
 ## The base name used when creating untitled notebooks.
-c.ContentsManager.untitled_notebook = '%Y-%m-%d-%H-%M'
+# Unforunately this line doesn't get formatted and create a timestamped notebook.
+# c.ContentsManager.untitled_notebook = '%Y-%m-%d-%H-%M'
 
 #------------------------------------------------------------------------------
 # FileManagerMixin(Configurable) configuration
