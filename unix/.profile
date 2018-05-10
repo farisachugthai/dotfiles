@@ -39,16 +39,6 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # -N for line numbers
 export PAGER="less -JRN"
 
-# Less Colors for Man Pages 
-export LESS_TERMCAP_mb=$'\e[01;31m' # begin blinking
-# 
-export LESS_TERMCAP_md=$'\e[01;38;5;74m' # begin bold 
-export LESS_TERMCAP_me=$'\e[0m' # end mode 
-export LESS_TERMCAP_se=$'\e[0m' # end standout-mode 
-export LESS_TERMCAP_so=$'\e[38;5;246m' # begin standout-mode info box 
-export LESS_TERMCAP_ue=$'\e[0m' # end underline 
-export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
-
 # Man pages are difficult to read on Termux with line numbers
 export MANPAGER="less -R"
 
@@ -59,3 +49,31 @@ export COLORTERM="colorterm"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 export XDG_CACHE_HOME="$HOME/.cache"
+
+# tldr
+# https://github.com/tldr-pages/tldr-python-client/
+if [[ $(which tldr) ]]; then
+    export TLDR_COLOR_BLANK="white"
+    export TLDR_COLOR_NAME="white"
+    export TLDR_COLOR_DESCRIPTION="white"
+    export TLDR_COLOR_EXAMPLE="white"
+    export TLDR_COLOR_COMMAND="white"
+    export TLDR_COLOR_PARAMETER="white"
+    export TLDR_CACHE_ENABLED=1
+    export TLDR_CACHE_MAX_AGE=168
+fi
+
+# cheat.py
+if [[ $(which cheat) ]]; then
+    export CHEATCOLORS=true
+fi
+
+# For byobu and Termux specific configuration
+export BYOBU_CONFIG_DIR="$HOME/.config/byobu"
+
+if [[ "$PREFIX" ]]; then
+    export BYOBU_PREFIX="$PREFIX"
+fi
+
+# For tmux
+source ~/.bashrc
