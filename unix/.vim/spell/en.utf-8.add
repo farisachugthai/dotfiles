@@ -107,8 +107,6 @@ Tagbar
 statusline
 colorscheme
 termux
-<<<<<<< Updated upstream
-im
 url
 cmds
 zim
@@ -168,3 +166,4 @@ SCM
 whitespace
 cURL
 PPA
+uname

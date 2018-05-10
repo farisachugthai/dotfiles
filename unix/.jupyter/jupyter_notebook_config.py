@@ -45,29 +45,28 @@ c = get_config()
 #c.NotebookApp.allow_credentials = False
 
 ## Set the Access-Control-Allow-Origin header
-#
+#  
 #  Use '*' to allow any origin to access your server.
-#
+#  
 #  Takes precedence over allow_origin_pat.
 #c.NotebookApp.allow_origin = ''
 
-## Use a regular expression for the Access-Control-Allow-Origin header
-#
+#  
 #  Requests from an origin matching the expression will get replies with:
-#
+#  
 #      Access-Control-Allow-Origin: origin
-#
+#  
 #  where `origin` is the origin of the request.
-#
+#  
 #  Ignored if allow_origin is set.
 #c.NotebookApp.allow_origin_pat = ''
 
 ## Allow password to be changed at login for the notebook server.
-#
+#  
 #  While loggin in with a token, the notebook server UI will give the opportunity
 #  to the user to enter a new password at the same time that will replace the
 #  token login mechanism.
-#
+#  
 #  This can be set to false to prevent changing password from the UI/API.
 #c.NotebookApp.allow_password_change = True
 
@@ -79,6 +78,7 @@ c = get_config()
 
 ## The base URL for the notebook server.
 #
+#  
 #  Leading and trailing slashes can be omitted, and will automatically be added.
 #c.NotebookApp.base_url = '/'
 
@@ -571,6 +571,7 @@ c.ContentsManager.allow_hidden = True
 
 ## Glob patterns to hide in file and directory listings.
 c.ContentsManager.hide_globs = []
+#c.ContentsManager.hide_globs = ['__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*.so', '*.dylib', '*~']
 
 ## Python callable or importstring thereof
 #  
@@ -601,6 +602,7 @@ c.ContentsManager.hide_globs = []
 ## The base name used when creating untitled notebooks.
 # Unforunately this line doesn't get formatted and create a timestamped notebook.
 # c.ContentsManager.untitled_notebook = '%Y-%m-%d-%H-%M'
+#c.ContentsManager.untitled_notebook = 'Untitled'
 
 #------------------------------------------------------------------------------
 # FileManagerMixin(Configurable) configuration
