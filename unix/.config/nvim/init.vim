@@ -231,3 +231,9 @@ let g:flake8_show_in_gutter=1
 " https://github.com/w0rp/ale
 " <Leader>a is already mapped so use l for lint
 nmap <Leader>l <Plug>(ale_toggle_buffer)
+
+" May not be necessary if matchit stops trying to load
+" However this is an easy way to get nvim and vim more synced up
+if isdirectory('/usr/share/vim/vim80')
+    set packpath+=/usr/share/vim/vim80
+endif
