@@ -132,7 +132,10 @@ let python_highlight_all = 1
 "
 " Turn on spell checks either by filetype or explicit buffers. To configure:
 set spelllang=en
-set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+
+if !has('nvim')
+    set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+endif
 
 " Autocomplete in insert mode
 set complete+=kspell 
@@ -155,10 +158,6 @@ map <Leader>s :setlocal spell!<CR>
 "
 " cursorline. add a line underneath where your cursor is.
 set cul
-
-" shows the name of the file in the window title
-" also doesn't appear to work when vim is launched from tmux
-set title
 
 "lets colorize the 80 char line for you
 set colorcolumn=+1
@@ -333,12 +332,6 @@ let g:ft_man_folding_enable = 0
 " filetype 596
 set keywordprg=:Man
 
-" Thanks tpope!
-" Load matchit.vim, but only if the user hasn't installed a newer version.
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
-endif
-
 
 " Cheat40:
 "Add a Vim cheat sheet with
@@ -347,13 +340,6 @@ endif
 
 " Vundle:"
 " https://github.com/VundleVim/Vundle.vim/blob/master/README.md 
-"
-" if you need to reinstall, run these commands
-" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-"
-"Use git:// instead of https
-"let g:vundle_default_git_proto = 'git'
-
 
 " NERDTree:
 " https://github.com/scrooloose/nerdtree
