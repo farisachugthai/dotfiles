@@ -23,34 +23,6 @@ call plug#end()
 
 filetype plugin indent on    " required
 
-" https://github.com/liuchengxu/vim-better-default/blob/master/plugin/default.vim
-" Neovim has set these as default
-if !has('nvim')
-
-  set nocompatible
-
-  syntax on                      " Syntax highlighting
-  filetype plugin indent on      " Automatically detect file types
-  set autoindent                 " Indent at the same level of the previous line
-  set autoread                   " Automatically read a file changed outside of vim
-  set backspace=indent,eol,start " Backspace for dummies
-  set complete-=i                " Exclude files completion
-  set display=lastline           " Show as much as possible of the last line
-  set encoding=utf-8             " Set default encoding
-  set history=10000              " Maximum history record
-  set hlsearch                   " Highlight search terms
-  set incsearch                  " Find as you type search
-  set laststatus=2               " Always show status line
-  set mouse=a                    " Automatically enable mouse usage
-  set smarttab                   " Smart tab
-  set ttyfast                    " Faster redrawing
-  set viminfo+=!                 " Viminfo include !
-  set wildmenu                   " Show list instead of just completing
-
-  set ttymouse=xterm2
-
-endif
-
 " currently using the local file for colorschemes and powerline.
 " WSL has very inconsistent colorschemes for sh and Vim
 if filereadable(glob("~/.vim/vimrc.local"))
@@ -83,6 +55,8 @@ let mapleader = "\<Space>"
 if !has('nvim')
     set viminfo='100,<200,s200,n$HOME/.vim/viminfo
 endif
+set viminfo+=!                 " Viminfo include !
+set complete-=i                " Exclude files completion
 
 " Pep8 Global Options: 
 set tabstop=4
@@ -92,27 +66,35 @@ set softtabstop=4
 let python_highlight_all = 1
 
 " Spell Checker:
+set encoding=utf-8             " Set default encoding
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
+set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell 
 set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
 
 " Other Global Options: 
+set history=10000              " Maximum history record
+set autoindent                 " Indent at the same level of the previous line
+set autoread                   " Automatically read a file changed outside of vim
+set hlsearch                   " Highlight search terms
+set incsearch                  " Find as you type search
+set mouse=a                    " Automatically enable mouse usage
+set ttyfast                    " Faster redrawing
+
 set cul
 set colorcolumn=+1
 set ch=2
-set hlsearch
 set ruler
-set backspace=indent,eol,start
+set backspace=indent,eol,start " Backspace for dummies
 set showcmd
 set number
 set showmatch
 set ignorecase
 set smartindent
-set smarttab
 set noswapfile
-set mouse=a
 
 " Use the system clipboard. From vim-better-default
 if has('unnamedplus')
@@ -121,21 +103,16 @@ else
   set clipboard+=unnamed
 endif
 
-set encoding=utf-8
-set wildmenu
+set wildmenu                   " Show list instead of just completing
 set wildmode=longest,list:longest
 set complete+=.,b,u,t
 set fileignorecase
-set display+=lastline
-set incsearch
-set history=1000
 set sessionoptions-=options
 set noerrorbells
-set ttyfast
 set whichwrap+=<,>,h,l,[,]
 
 if has('persistent_undo')
-    set undodir=~/.vim/undodir
+    set undodir=~/.config/nvim/undodir
     set undofile	" keep an undo file (undo changes after closing)
 endif
 set nojoinspaces
@@ -154,11 +131,12 @@ try
 catch
 endtry
 set hidden
-set autoread
 set splitbelow
 set splitright
-set laststatus=2
 set tabpagemax=50
+set smarttab                   " Smart tab
+set laststatus=2               " Always show status line
+set display=lastline           " Show as much as possible of the last line
 
 " Mappings:
 noremap <C-h> <C-w>h
