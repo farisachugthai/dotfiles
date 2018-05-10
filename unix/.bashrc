@@ -27,7 +27,7 @@ if [[ "$DISPLAY" ]]; then
     fi
 fi
 
-if [[ $PS1=='$' ]]; then export $PS1='\u@h:\w $'; fi
+if [[ '$DISPLAY'=='' ]]; then export 'PS1'='\u@h:\w $'; fi
 
 # History
 # don't put duplicate lines or lines starting with space in the history.
