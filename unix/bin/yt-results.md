@@ -445,14 +445,14 @@ Print json is also nightmareish.
 So now were at...
 
 
-u0_a144@localhost:~$ youtube-dl -o "$HOME/storage/shared/Videos/%(title)s.%(ext)s" --add-metadata --metadata-from-title "%(artist)s - %(title)s" -f mp4 --prefer-ffmpeg --no-mtime --embed-subs --embed-thumbnail --restrict-filenames --no-call-home --youtube-skip-dash-manifest https://youtu.be/mXQuto1fMp4     
+u0_a144@localhost:~$ youtube-dl -o "$HOME/storage/shared/Videos/%(title)s.%(ext)s" --add-metadata --metadata-from-title "%(artist)s - %(title)s" -f mp4 --prefer-ffmpeg --no-mtime --embed-subs --embed-thumbnail --restrict-filenames --no-call-home --youtube-skip-dash-manifest https://youtu.be/mXQuto1fMp4
 [youtube] mXQuto1fMp4: Downloading webpage
 [youtube] mXQuto1fMp4: Extracting video information
-[youtube] mXQuto1fMp4: Downloading thumbnail ...  
+[youtube] mXQuto1fMp4: Downloading thumbnail ...
 [youtube] mXQuto1fMp4: Writing thumbnail to: /data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.jpg
-[download] /data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4 has already been downloaded  
-[download] 100% of 101.45MiB           
-[fromtitle] Could not interpret title of video as "%(artist)s - %(title)s"   
-[ffmpeg] Adding metadata to '/data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4'           
-[ffmpeg] There aren't any subtitles to embed  
+[download] /data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4 has already been downloaded
+[download] 100% of 101.45MiB
+[fromtitle] Could not interpret title of video as "%(artist)s - %(title)s"
+[ffmpeg] Adding metadata to '/data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4'
+[ffmpeg] There aren't any subtitles to embed
 [atomicparsley] Adding thumbnail to "/data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4"
