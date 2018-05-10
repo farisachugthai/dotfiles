@@ -4,7 +4,7 @@ So I'm pretty much gonna append the results of running different ytdl commands
 here. Make it easy to get the exact command i want.
 
 So far im thinking termux-url-opener is gonna be an if-elif chain with different
-youtube commands. 
+youtube commands.
 if they choose something else go to the termux-urls.ipy (or .py by then)
 
 So this is the command i have setup to download 1 url audio only
@@ -109,7 +109,21 @@ u0_a144@localhost:~/projects/dotfiles/unix/bin (master *)$ youtube-dl --no-mtime
 [youtube] xufJHc2EdBA: Downloading video info webpage
 [youtube] xufJHc2EdBA: Extracting video information
 [download] Destination: /data/data/com.termux/files/home/storage/shared/Music/Big Sean - Control f. Kendrick Lamar & Jay Electronica.webm
-[K[download]   0.0% of 7.26MiB at 241.62KiB/s ETA 00:31[K[download]   0.0% of 7.26MiB at 621.04KiB/s ETA 00:12[K[download]   0.1% of 7.26MiB at  1.30MiB/s ETA 00:05[K[download]   0.2% of 7.26MiB at  1.48MiB/s ETA 00:04[K[download]   0.4% of 7.26MiB at  1.74MiB/s ETA 00:04[K[download]   0.8% of 7.26MiB at  1.79MiB/s ETA 00:04[K[download]   1.7% of 7.26MiB at  2.55MiB/s ETA 00:02[K[download]   3.4% of 7.26MiB at  3.82MiB/s ETA 00:01[K[download]   6.9% of 7.26MiB at  5.28MiB/s ETA 00:01[K[download]  13.8% of 7.26MiB at  7.32MiB/s ETA 00:00[K[download]  27.5% of 7.26MiB at  8.81MiB/s ETA 00:00[K[download]  55.0% of 7.26MiB at 10.00MiB/s ETA 00:00[K[download] 100.0% of 7.26MiB at 10.39MiB/s ETA 00:00[K[download] 100% of 7.26MiB in 00:01
+
+[K[download]   0.0% of 7.26MiB at 241.62KiB/s ETA 00:31
+[K[download]   0.0% of 7.26MiB at 621.04KiB/s ETA 00:12
+[K[download]   0.1% of 7.26MiB at  1.30MiB/s ETA 00:05
+[K[download]   0.2% of 7.26MiB at  1.48MiB/s ETA 00:04
+[K[download]   0.4% of 7.26MiB at  1.74MiB/s ETA 00:04
+[K[download]   0.8% of 7.26MiB at  1.79MiB/s ETA 00:04
+[K[download]   1.7% of 7.26MiB at  2.55MiB/s ETA 00:02
+[K[download]   3.4% of 7.26MiB at  3.82MiB/s ETA 00:01
+[K[download]   6.9% of 7.26MiB at  5.28MiB/s ETA 00:01
+[K[download]  13.8% of 7.26MiB at  7.32MiB/s ETA 00:00
+[K[download]  27.5% of 7.26MiB at  8.81MiB/s ETA 00:00
+[K[download]  55.0% of 7.26MiB at 10.00MiB/s ETA 00:00
+[K[download] 100.0% of 7.26MiB at 10.39MiB/s ETA 00:00
+[K[download] 100% of 7.26MiB in 00:01
 [fromtitle] parsed artist: Big Sean
 [fromtitle] parsed title: Control f. Kendrick Lamar & Jay Electronica
 [ffmpeg] Destination: /data/data/com.termux/files/home/storage/shared/Music/Big Sean - Control f. Kendrick Lamar & Jay Electronica.ogg
@@ -155,9 +169,35 @@ format code  extension  resolution note
 [youtube] cykGnl1KvcM: Downloading video info webpage
 [youtube] cykGnl1KvcM: Extracting video information
 [download] Destination: /data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - I Feel Like Dying.f244.webm
-[K[download]   0.0% of 2.41MiB at 93.72KiB/s ETA 00:26[K[download]   0.1% of 2.41MiB at 258.15KiB/s ETA 00:09[K[download]   0.3% of 2.41MiB at 564.28KiB/s ETA 00:04[K[download]   0.6% of 2.41MiB at  1.05MiB/s ETA 00:02[K[download]   1.3% of 2.41MiB at  2.00MiB/s ETA 00:01[K[download]   2.6% of 2.41MiB at  1.75MiB/s ETA 00:01[K[download]   5.1% of 2.41MiB at  2.64MiB/s ETA 00:00[K[download]  10.3% of 2.41MiB at  3.60MiB/s ETA 00:00[K[download]  20.7% of 2.41MiB at  5.38MiB/s ETA 00:00[K[download]  41.4% of 2.41MiB at  8.60MiB/s ETA 00:00[K[download]  82.9% of 2.41MiB at 11.94MiB/s ETA 00:00[K[download] 100.0% of 2.41MiB at 13.11MiB/s ETA 00:00[K[download] 100% of 2.41MiB in 00:00
+
+[K[download]   0.0% of 2.41MiB at 93.72KiB/s ETA 00:26
+[K[download]   0.1% of 2.41MiB at 258.15KiB/s ETA 00:09
+[K[download]   0.3% of 2.41MiB at 564.28KiB/s ETA 00:04
+[K[download]   0.6% of 2.41MiB at  1.05MiB/s ETA 00:02
+[K[download]   1.3% of 2.41MiB at  2.00MiB/s ETA 00:01
+[K[download]   2.6% of 2.41MiB at  1.75MiB/s ETA 00:01
+[K[download]   5.1% of 2.41MiB at  2.64MiB/s ETA 00:00
+[K[download]  10.3% of 2.41MiB at  3.60MiB/s ETA 00:00
+[K[download]  20.7% of 2.41MiB at  5.38MiB/s ETA 00:00
+[K[download]  41.4% of 2.41MiB at  8.60MiB/s ETA 00:00
+[K[download]  82.9% of 2.41MiB at 11.94MiB/s ETA 00:00
+[K[download] 100.0% of 2.41MiB at 13.11MiB/s ETA 00:00
+[K[download] 100% of 2.41MiB in 00:00
 [download] Destination: /data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - I Feel Like Dying.f251.webm
-[K[download]   0.0% of 3.58MiB at 177.69KiB/s ETA 00:21[K[download]   0.1% of 3.58MiB at 398.47KiB/s ETA 00:09[K[download]   0.2% of 3.58MiB at 779.05KiB/s ETA 00:04[K[download]   0.4% of 3.58MiB at 1013.30KiB/s ETA 00:03[K[download]   0.8% of 3.58MiB at  1.88MiB/s ETA 00:01[K[download]   1.7% of 3.58MiB at  2.66MiB/s ETA 00:01[K[download]   3.5% of 3.58MiB at  3.15MiB/s ETA 00:01[K[download]   7.0% of 3.58MiB at  4.63MiB/s ETA 00:00[K[download]  13.9% of 3.58MiB at  6.79MiB/s ETA 00:00[K[download]  27.9% of 3.58MiB at  9.01MiB/s ETA 00:00[K[download]  55.8% of 3.58MiB at 12.01MiB/s ETA 00:00[K[download] 100.0% of 3.58MiB at 13.77MiB/s ETA 00:00[K[download] 100% of 3.58MiB in 00:00
+
+[K[download]   0.0% of 3.58MiB at 177.69KiB/s ETA 00:21
+[K[download]   0.1% of 3.58MiB at 398.47KiB/s ETA 00:09
+[K[download]   0.2% of 3.58MiB at 779.05KiB/s ETA 00:04
+[K[download]   0.4% of 3.58MiB at 1013.30KiB/s ETA 00:03
+[K[download]   0.8% of 3.58MiB at  1.88MiB/s ETA 00:01
+[K[download]   1.7% of 3.58MiB at  2.66MiB/s ETA 00:01
+[K[download]   3.5% of 3.58MiB at  3.15MiB/s ETA 00:01
+[K[download]   7.0% of 3.58MiB at  4.63MiB/s ETA 00:00
+[K[download]  13.9% of 3.58MiB at  6.79MiB/s ETA 00:00
+[K[download]  27.9% of 3.58MiB at  9.01MiB/s ETA 00:00
+[K[download]  55.8% of 3.58MiB at 12.01MiB/s ETA 00:00
+[K[download] 100.0% of 3.58MiB at 13.77MiB/s ETA 00:00
+[K[download] 100% of 3.58MiB in 00:00
 [ffmpeg] Merging formats into "/data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - I Feel Like Dying.webm"
 Deleting original file /data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - I Feel Like Dying.f244.webm (pass -k to keep)
 Deleting original file /data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - I Feel Like Dying.f251.webm (pass -k to keep)
@@ -176,9 +216,93 @@ Deleting original file /data/data/com.termux/files/home/storage/shared/Music/Lil
 [youtube] skN5U4dlmrE: Extracting video information
 [youtube] skN5U4dlmrE: Downloading js player vfluI_BcD
 [download] Destination: /data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - Hollyweezy (Official Music Video).f137.mp4
-[K[download]   0.0% of 46.79MiB at 303.61KiB/s ETA 02:46[K[download]   0.0% of 46.79MiB at 543.12KiB/s ETA 01:30[K[download]   0.0% of 46.79MiB at 803.90KiB/s ETA 01:08[K[download]   0.0% of 46.79MiB at 787.12KiB/s ETA 01:01[K[download]   0.1% of 46.79MiB at  1.42MiB/s ETA 00:32[K[download]   0.1% of 46.79MiB at  2.24MiB/s ETA 00:20[K[download]   0.3% of 46.79MiB at  3.14MiB/s ETA 00:14[K[download]   0.5% of 46.79MiB at  4.24MiB/s ETA 00:10[K[download]   1.1% of 46.79MiB at  5.91MiB/s ETA 00:07[K[download]   2.1% of 46.79MiB at  8.23MiB/s ETA 00:05[K[download]   4.3% of 46.79MiB at  9.24MiB/s ETA 00:04[K[download]   8.5% of 46.79MiB at 10.79MiB/s ETA 00:03[K[download]  17.1% of 46.79MiB at 12.67MiB/s ETA 00:03[K[download]  21.1% of 46.79MiB at 11.99MiB/s ETA 00:03[K[download]  21.1% of 46.79MiB at Unknown speed ETA Unknown ETA[K[download]  21.1% of 46.79MiB at Unknown speed ETA Unknown ETA[K[download]  21.1% of 46.79MiB at  4.79MiB/s ETA 00:07[K[download]  21.2% of 46.79MiB at  5.83MiB/s ETA 00:06[K[download]  21.2% of 46.79MiB at  1.83MiB/s ETA 00:20[K[download]  21.3% of 46.79MiB at  1.94MiB/s ETA 00:19[K[download]  21.4% of 46.79MiB at  2.36MiB/s ETA 00:15[K[download]  21.7% of 46.79MiB at  3.68MiB/s ETA 00:09[K[download]  22.2% of 46.79MiB at  4.06MiB/s ETA 00:08[K[download]  23.3% of 46.79MiB at  6.08MiB/s ETA 00:05[K[download]  25.4% of 46.79MiB at  7.82MiB/s ETA 00:04[K[download]  29.7% of 46.79MiB at  9.73MiB/s ETA 00:03[K[download]  38.2% of 46.79MiB at  9.64MiB/s ETA 00:02[K[download]  41.5% of 46.79MiB at  9.60MiB/s ETA 00:02[K[download]  41.5% of 46.79MiB at 890.70KiB/s ETA 00:37[K[download]  41.5% of 46.79MiB at 904.07KiB/s ETA 00:32[K[download]  41.5% of 46.79MiB at  1.27MiB/s ETA 00:22[K[download]  41.5% of 46.79MiB at  1.26MiB/s ETA 00:21[K[download]  41.5% of 46.79MiB at  1.75MiB/s ETA 00:15[K[download]  41.6% of 46.79MiB at  1.95MiB/s ETA 00:14[K[download]  41.7% of 46.79MiB at  3.09MiB/s ETA 00:08[K[download]  42.0% of 46.79MiB at  4.25MiB/s ETA 00:06[K[download]  42.5% of 46.79MiB at  6.38MiB/s ETA 00:04[K[download]  43.6% of 46.79MiB at  8.98MiB/s ETA 00:02[K[download]  45.8% of 46.79MiB at 10.74MiB/s ETA 00:02[K[download]  50.0% of 46.79MiB at 11.79MiB/s ETA 00:01[K[download]  58.6% of 46.79MiB at 11.08MiB/s ETA 00:01[K[download]  62.3% of 46.79MiB at 10.68MiB/s ETA 00:01[K[download]  62.3% of 46.79MiB at Unknown speed ETA Unknown ETA[K[download]  62.3% of 46.79MiB at  2.24MiB/s ETA 00:08[K[download]  62.3% of 46.79MiB at  3.19MiB/s ETA 00:05[K[download]  62.3% of 46.79MiB at  4.61MiB/s ETA 00:03[K[download]  62.3% of 46.79MiB at  1.71MiB/s ETA 00:10[K[download]  62.4% of 46.79MiB at  1.83MiB/s ETA 00:09[K[download]  62.5% of 46.79MiB at  2.73MiB/s ETA 00:06[K[download]  62.8% of 46.79MiB at  3.69MiB/s ETA 00:04[K[download]  63.3% of 46.79MiB at  5.25MiB/s ETA 00:03[K[download]  64.4% of 46.79MiB at  7.89MiB/s ETA 00:02[K[download]  66.5% of 46.79MiB at  9.96MiB/s ETA 00:01[K[download]  70.8% of 46.79MiB at 11.33MiB/s ETA 00:01[K[download]  79.4% of 46.79MiB at 10.84MiB/s ETA 00:00[K[download]  83.4% of 46.79MiB at 10.70MiB/s ETA 00:00[K[download]  83.4% of 46.79MiB at Unknown speed ETA Unknown ETA[K[download]  83.4% of 46.79MiB at  1.12MiB/s ETA 00:07[K[download]  83.4% of 46.79MiB at  1.72MiB/s ETA 00:04[K[download]  83.5% of 46.79MiB at  2.74MiB/s ETA 00:02[K[download]  83.5% of 46.79MiB at  1.88MiB/s ETA 00:04[K[download]  83.6% of 46.79MiB at  2.06MiB/s ETA 00:03[K[download]  83.7% of 46.79MiB at  2.82MiB/s ETA 00:02[K[download]  84.0% of 46.79MiB at  4.11MiB/s ETA 00:01[K[download]  84.5% of 46.79MiB at  6.32MiB/s ETA 00:01[K[download]  85.6% of 46.79MiB at  8.96MiB/s ETA 00:00[K[download]  87.7% of 46.79MiB at  9.23MiB/s ETA 00:00[K[download]  92.0% of 46.79MiB at 10.06MiB/s ETA 00:00[K[download] 100.0% of 46.79MiB at  9.95MiB/s ETA 00:00[K[download] 100% of 46.79MiB in 00:04
+
+[K[download]   0.0% of 46.79MiB at 303.61KiB/s ETA 02:46
+[K[download]   0.0% of 46.79MiB at 543.12KiB/s ETA 01:30
+[K[download]   0.0% of 46.79MiB at 803.90KiB/s ETA 01:08
+[K[download]   0.0% of 46.79MiB at 787.12KiB/s ETA 01:01
+[K[download]   0.1% of 46.79MiB at  1.42MiB/s ETA 00:32
+[K[download]   0.1% of 46.79MiB at  2.24MiB/s ETA 00:20
+[K[download]   0.3% of 46.79MiB at  3.14MiB/s ETA 00:14
+[K[download]   0.5% of 46.79MiB at  4.24MiB/s ETA 00:10
+[K[download]   1.1% of 46.79MiB at  5.91MiB/s ETA 00:07
+[K[download]   2.1% of 46.79MiB at  8.23MiB/s ETA 00:05
+[K[download]   4.3% of 46.79MiB at  9.24MiB/s ETA 00:04
+[K[download]   8.5% of 46.79MiB at 10.79MiB/s ETA 00:03
+[K[download]  17.1% of 46.79MiB at 12.67MiB/s ETA 00:03
+[K[download]  21.1% of 46.79MiB at 11.99MiB/s ETA 00:03
+[K[download]  21.1% of 46.79MiB at Unknown speed ETA Unknown ETA
+[K[download]  21.1% of 46.79MiB at Unknown speed ETA Unknown ETA
+[K[download]  21.1% of 46.79MiB at  4.79MiB/s ETA 00:07
+[K[download]  21.2% of 46.79MiB at  5.83MiB/s ETA 00:06
+[K[download]  21.2% of 46.79MiB at  1.83MiB/s ETA 00:20
+[K[download]  21.3% of 46.79MiB at  1.94MiB/s ETA 00:19
+[K[download]  21.4% of 46.79MiB at  2.36MiB/s ETA 00:15
+[K[download]  21.7% of 46.79MiB at  3.68MiB/s ETA 00:09
+[K[download]  22.2% of 46.79MiB at  4.06MiB/s ETA 00:08
+[K[download]  23.3% of 46.79MiB at  6.08MiB/s ETA 00:05
+[K[download]  25.4% of 46.79MiB at  7.82MiB/s ETA 00:04
+[K[download]  29.7% of 46.79MiB at  9.73MiB/s ETA 00:03
+[K[download]  38.2% of 46.79MiB at  9.64MiB/s ETA 00:02
+[K[download]  41.5% of 46.79MiB at  9.60MiB/s ETA 00:02
+[K[download]  41.5% of 46.79MiB at 890.70KiB/s ETA 00:37
+[K[download]  41.5% of 46.79MiB at 904.07KiB/s ETA 00:32
+[K[download]  41.5% of 46.79MiB at  1.27MiB/s ETA 00:22
+[K[download]  41.5% of 46.79MiB at  1.26MiB/s ETA 00:21
+[K[download]  41.5% of 46.79MiB at  1.75MiB/s ETA 00:15
+[K[download]  41.6% of 46.79MiB at  1.95MiB/s ETA 00:14
+[K[download]  41.7% of 46.79MiB at  3.09MiB/s ETA 00:08
+[K[download]  42.0% of 46.79MiB at  4.25MiB/s ETA 00:06
+[K[download]  42.5% of 46.79MiB at  6.38MiB/s ETA 00:04
+[K[download]  43.6% of 46.79MiB at  8.98MiB/s ETA 00:02
+[K[download]  45.8% of 46.79MiB at 10.74MiB/s ETA 00:02
+[K[download]  50.0% of 46.79MiB at 11.79MiB/s ETA 00:01
+[K[download]  58.6% of 46.79MiB at 11.08MiB/s ETA 00:01
+[K[download]  62.3% of 46.79MiB at 10.68MiB/s ETA 00:01
+[K[download]  62.3% of 46.79MiB at Unknown speed ETA Unknown ETA
+[K[download]  62.3% of 46.79MiB at  2.24MiB/s ETA 00:08
+[K[download]  62.3% of 46.79MiB at  3.19MiB/s ETA 00:05
+[K[download]  62.3% of 46.79MiB at  4.61MiB/s ETA 00:03
+[K[download]  62.3% of 46.79MiB at  1.71MiB/s ETA 00:10
+[K[download]  62.4% of 46.79MiB at  1.83MiB/s ETA 00:09
+[K[download]  62.5% of 46.79MiB at  2.73MiB/s ETA 00:06
+[K[download]  62.8% of 46.79MiB at  3.69MiB/s ETA 00:04
+[K[download]  63.3% of 46.79MiB at  5.25MiB/s ETA 00:03
+[K[download]  64.4% of 46.79MiB at  7.89MiB/s ETA 00:02
+[K[download]  66.5% of 46.79MiB at  9.96MiB/s ETA 00:01
+[K[download]  70.8% of 46.79MiB at 11.33MiB/s ETA 00:01
+[K[download]  79.4% of 46.79MiB at 10.84MiB/s ETA 00:00
+[K[download]  83.4% of 46.79MiB at 10.70MiB/s ETA 00:00
+[K[download]  83.4% of 46.79MiB at Unknown speed ETA Unknown ETA
+[K[download]  83.4% of 46.79MiB at  1.12MiB/s ETA 00:07
+[K[download]  83.4% of 46.79MiB at  1.72MiB/s ETA 00:04
+[K[download]  83.5% of 46.79MiB at  2.74MiB/s ETA 00:02
+[K[download]  83.5% of 46.79MiB at  1.88MiB/s ETA 00:04
+[K[download]  83.6% of 46.79MiB at  2.06MiB/s ETA 00:03
+[K[download]  83.7% of 46.79MiB at  2.82MiB/s ETA 00:02
+[K[download]  84.0% of 46.79MiB at  4.11MiB/s ETA 00:01
+[K[download]  84.5% of 46.79MiB at  6.32MiB/s ETA 00:01
+[K[download]  85.6% of 46.79MiB at  8.96MiB/s ETA 00:00
+[K[download]  87.7% of 46.79MiB at  9.23MiB/s ETA 00:00
+[K[download]  92.0% of 46.79MiB at 10.06MiB/s ETA 00:00
+[K[download] 100.0% of 46.79MiB at  9.95MiB/s ETA 00:00
+[K[download] 100% of 46.79MiB in 00:04
 [download] Destination: /data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - Hollyweezy (Official Music Video).f251.webm
-[K[download]   0.0% of 5.30MiB at 126.74KiB/s ETA 00:43[K[download]   0.1% of 5.30MiB at 233.63KiB/s ETA 00:23[K[download]   0.1% of 5.30MiB at 436.84KiB/s ETA 00:12[K[download]   0.3% of 5.30MiB at 702.73KiB/s ETA 00:07[K[download]   0.6% of 5.30MiB at  1.35MiB/s ETA 00:03[K[download]   1.2% of 5.30MiB at  2.56MiB/s ETA 00:02[K[download]   2.3% of 5.30MiB at  3.02MiB/s ETA 00:01[K[download]   4.7% of 5.30MiB at  4.21MiB/s ETA 00:01[K[download]   9.4% of 5.30MiB at  5.84MiB/s ETA 00:00[K[download]  18.8% of 5.30MiB at  8.01MiB/s ETA 00:00[K[download]  37.7% of 5.30MiB at 10.02MiB/s ETA 00:00[K[download]  75.5% of 5.30MiB at 10.73MiB/s ETA 00:00[K[download] 100.0% of 5.30MiB at 11.21MiB/s ETA 00:00[K[download] 100% of 5.30MiB in 00:00
+
+[K[download]   0.0% of 5.30MiB at 126.74KiB/s ETA 00:43
+[K[download]   0.1% of 5.30MiB at 233.63KiB/s ETA 00:23
+[K[download]   0.1% of 5.30MiB at 436.84KiB/s ETA 00:12
+[K[download]   0.3% of 5.30MiB at 702.73KiB/s ETA 00:07
+[K[download]   0.6% of 5.30MiB at  1.35MiB/s ETA 00:03
+[K[download]   1.2% of 5.30MiB at  2.56MiB/s ETA 00:02
+[K[download]   2.3% of 5.30MiB at  3.02MiB/s ETA 00:01
+[K[download]   4.7% of 5.30MiB at  4.21MiB/s ETA 00:01
+[K[download]   9.4% of 5.30MiB at  5.84MiB/s ETA 00:00
+[K[download]  18.8% of 5.30MiB at  8.01MiB/s ETA 00:00
+[K[download]  37.7% of 5.30MiB at 10.02MiB/s ETA 00:00
+[K[download]  75.5% of 5.30MiB at 10.73MiB/s ETA 00:00
+[K[download] 100.0% of 5.30MiB at 11.21MiB/s ETA 00:00
+[K[download] 100% of 5.30MiB in 00:00
 [ffmpeg] Merging formats into "/data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - Hollyweezy (Official Music Video).mkv"
 Deleting original file /data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - Hollyweezy (Official Music Video).f137.mp4 (pass -k to keep)
 Deleting original file /data/data/com.termux/files/home/storage/shared/Music/Lil Wayne - Hollyweezy (Official Music Video).f251.webm (pass -k to keep)
@@ -189,7 +313,7 @@ Deleting original file /data/data/com.termux/files/home/storage/shared/Music/Lil
 
 # COMMAND THAT WORKS
 # DOWNLOAD MP3 WITH PROPER METADATA
-Now that we have a functional command it'll be trivial to remove 
+Now that we have a functional command it'll be trivial to remove
 "-x --audio-format mp3" so we download a video [test if we need to pass -k or
 not] and then we can get a playlist version and we're gucci!
 
@@ -200,7 +324,55 @@ u0_a144@localhost:~/projects/dotfiles/unix/bin (termux *)$ youtube-dl --no-mtime
 [youtube] Y4QVpt0Ikdg: Downloading video info webpage
 [youtube] Y4QVpt0Ikdg: Extracting video information
 [download] Destination: /data/data/com.termux/files/home/storage/shared/Music/kendrick lamar & J. cole - Black Friday (lyrics).webm
-[K[download]   0.0% of 6.83MiB at 96.35KiB/s ETA 01:14[K[download]   0.0% of 6.83MiB at 240.87KiB/s ETA 00:29[K[download]   0.1% of 6.83MiB at 482.34KiB/s ETA 00:14[K[download]   0.2% of 6.83MiB at 912.51KiB/s ETA 00:07[K[download]   0.4% of 6.83MiB at 932.19KiB/s ETA 00:07[K[download]   0.9% of 6.83MiB at 949.28KiB/s ETA 00:07[K[download]   1.8% of 6.83MiB at  1.06MiB/s ETA 00:06[K[download]   3.6% of 6.83MiB at 467.70KiB/s ETA 00:14[K[download]   7.3% of 6.83MiB at 258.01KiB/s ETA 00:25[K[download]   9.9% of 6.83MiB at 223.52KiB/s ETA 00:28[K[download]  12.2% of 6.83MiB at 211.07KiB/s ETA 00:29[K[download]  14.6% of 6.83MiB at 207.57KiB/s ETA 00:28[K[download]  17.3% of 6.83MiB at 201.36KiB/s ETA 00:28[K[download]  19.8% of 6.83MiB at 196.97KiB/s ETA 00:28[K[download]  22.3% of 6.83MiB at 193.15KiB/s ETA 00:28[K[download]  24.6% of 6.83MiB at 191.59KiB/s ETA 00:27[K[download]  27.2% of 6.83MiB at 189.16KiB/s ETA 00:26[K[download]  29.6% of 6.83MiB at 188.05KiB/s ETA 00:26[K[download]  32.1% of 6.83MiB at 187.25KiB/s ETA 00:25[K[download]  34.7% of 6.83MiB at 186.07KiB/s ETA 00:24[K[download]  37.1% of 6.83MiB at 184.80KiB/s ETA 00:23[K[download]  39.5% of 6.83MiB at 184.52KiB/s ETA 00:22[K[download]  42.1% of 6.83MiB at 182.87KiB/s ETA 00:22[K[download]  44.4% of 6.83MiB at 183.03KiB/s ETA 00:21[K[download]  47.1% of 6.83MiB at 182.90KiB/s ETA 00:20[K[download]  49.7% of 6.83MiB at 181.40KiB/s ETA 00:19[K[download]  51.9% of 6.83MiB at 180.98KiB/s ETA 00:18[K[download]  54.4% of 6.83MiB at 180.48KiB/s ETA 00:17[K[download]  56.8% of 6.83MiB at 180.48KiB/s ETA 00:16[K[download]  59.4% of 6.83MiB at 180.22KiB/s ETA 00:15[K[download]  61.9% of 6.83MiB at 179.72KiB/s ETA 00:14[K[download]  64.3% of 6.83MiB at 179.03KiB/s ETA 00:13[K[download]  66.6% of 6.83MiB at 179.70KiB/s ETA 00:12[K[download]  69.5% of 6.83MiB at 179.79KiB/s ETA 00:11[K[download]  72.1% of 6.83MiB at 179.17KiB/s ETA 00:10[K[download]  74.4% of 6.83MiB at 179.21KiB/s ETA 00:09[K[download]  77.0% of 6.83MiB at 179.20KiB/s ETA 00:08[K[download]  79.6% of 6.83MiB at 179.01KiB/s ETA 00:07[K[download]  82.1% of 6.83MiB at 178.68KiB/s ETA 00:07[K[download]  84.5% of 6.83MiB at 178.50KiB/s ETA 00:06[K[download]  86.9% of 6.83MiB at 178.15KiB/s ETA 00:05[K[download]  89.3% of 6.83MiB at 178.35KiB/s ETA 00:04[K[download]  92.0% of 6.83MiB at 177.75KiB/s ETA 00:03[K[download]  94.3% of 6.83MiB at 177.83KiB/s ETA 00:02[K[download]  96.8% of 6.83MiB at 177.81KiB/s ETA 00:01[K[download]  99.4% of 6.83MiB at 177.37KiB/s ETA 00:00[K[download] 100.0% of 6.83MiB at 177.94KiB/s ETA 00:00[K[download] 100% of 6.83MiB in 00:39
+
+[K[download]   0.0% of 6.83MiB at 96.35KiB/s ETA 01:14
+[K[download]   0.0% of 6.83MiB at 240.87KiB/s ETA 00:29
+[K[download]   0.1% of 6.83MiB at 482.34KiB/s ETA 00:14
+[K[download]   0.2% of 6.83MiB at 912.51KiB/s ETA 00:07
+[K[download]   0.4% of 6.83MiB at 932.19KiB/s ETA 00:07
+[K[download]   0.9% of 6.83MiB at 949.28KiB/s ETA 00:07
+[K[download]   1.8% of 6.83MiB at  1.06MiB/s ETA 00:06
+[K[download]   3.6% of 6.83MiB at 467.70KiB/s ETA 00:14
+[K[download]   7.3% of 6.83MiB at 258.01KiB/s ETA 00:25
+[K[download]   9.9% of 6.83MiB at 223.52KiB/s ETA 00:28
+[K[download]  12.2% of 6.83MiB at 211.07KiB/s ETA 00:29
+[K[download]  14.6% of 6.83MiB at 207.57KiB/s ETA 00:28
+[K[download]  17.3% of 6.83MiB at 201.36KiB/s ETA 00:28
+[K[download]  19.8% of 6.83MiB at 196.97KiB/s ETA 00:28
+[K[download]  22.3% of 6.83MiB at 193.15KiB/s ETA 00:28
+[K[download]  24.6% of 6.83MiB at 191.59KiB/s ETA 00:27
+[K[download]  27.2% of 6.83MiB at 189.16KiB/s ETA 00:26
+[K[download]  29.6% of 6.83MiB at 188.05KiB/s ETA 00:26
+[K[download]  32.1% of 6.83MiB at 187.25KiB/s ETA 00:25
+[K[download]  34.7% of 6.83MiB at 186.07KiB/s ETA 00:24
+[K[download]  37.1% of 6.83MiB at 184.80KiB/s ETA 00:23
+[K[download]  39.5% of 6.83MiB at 184.52KiB/s ETA 00:22
+[K[download]  42.1% of 6.83MiB at 182.87KiB/s ETA 00:22
+[K[download]  44.4% of 6.83MiB at 183.03KiB/s ETA 00:21
+[K[download]  47.1% of 6.83MiB at 182.90KiB/s ETA 00:20
+[K[download]  49.7% of 6.83MiB at 181.40KiB/s ETA 00:19
+[K[download]  51.9% of 6.83MiB at 180.98KiB/s ETA 00:18
+[K[download]  54.4% of 6.83MiB at 180.48KiB/s ETA 00:17
+[K[download]  56.8% of 6.83MiB at 180.48KiB/s ETA 00:16
+[K[download]  59.4% of 6.83MiB at 180.22KiB/s ETA 00:15
+[K[download]  61.9% of 6.83MiB at 179.72KiB/s ETA 00:14
+[K[download]  64.3% of 6.83MiB at 179.03KiB/s ETA 00:13
+[K[download]  66.6% of 6.83MiB at 179.70KiB/s ETA 00:12
+[K[download]  69.5% of 6.83MiB at 179.79KiB/s ETA 00:11
+[K[download]  72.1% of 6.83MiB at 179.17KiB/s ETA 00:10
+[K[download]  74.4% of 6.83MiB at 179.21KiB/s ETA 00:09
+[K[download]  77.0% of 6.83MiB at 179.20KiB/s ETA 00:08
+[K[download]  79.6% of 6.83MiB at 179.01KiB/s ETA 00:07
+[K[download]  82.1% of 6.83MiB at 178.68KiB/s ETA 00:07
+[K[download]  84.5% of 6.83MiB at 178.50KiB/s ETA 00:06
+[K[download]  86.9% of 6.83MiB at 178.15KiB/s ETA 00:05
+[K[download]  89.3% of 6.83MiB at 178.35KiB/s ETA 00:04
+[K[download]  92.0% of 6.83MiB at 177.75KiB/s ETA 00:03
+[K[download]  94.3% of 6.83MiB at 177.83KiB/s ETA 00:02
+[K[download]  96.8% of 6.83MiB at 177.81KiB/s ETA 00:01
+[K[download]  99.4% of 6.83MiB at 177.37KiB/s ETA 00:00
+[K[download] 100.0% of 6.83MiB at 177.94KiB/s ETA 00:00
+[K[download] 100% of 6.83MiB in 00:39
 [fromtitle] parsed artist: kendrick lamar & J. cole
 [fromtitle] parsed title: Black Friday (lyrics)
 [ffmpeg] Destination: /data/data/com.termux/files/home/storage/shared/Music/kendrick lamar & J. cole - Black Friday (lyrics).mp3
@@ -216,7 +388,38 @@ Deleting original file /data/data/com.termux/files/home/storage/shared/Music/ken
 [youtube] abrcJ9MpF60: Downloading video info webpage
 [youtube] abrcJ9MpF60: Extracting video information
 [download] Destination: /data/data/com.termux/files/home/storage/shared/Videos/Al Sweigart   Yes, It's Time to Learn Regular Expressions   PyCon 2017.mp4
-[K[download]   0.0% of 74.79MiB at 191.51KiB/s ETA 06:49[K[download]   0.0% of 74.79MiB at 466.53KiB/s ETA 02:46[K[download]   0.0% of 74.79MiB at 929.91KiB/s ETA 01:23[K[download]   0.0% of 74.79MiB at  1.59MiB/s ETA 00:48[K[download]   0.0% of 74.79MiB at  1.68MiB/s ETA 00:44[K[download]   0.1% of 74.79MiB at  1.73MiB/s ETA 00:43[K[download]   0.2% of 74.79MiB at  2.34MiB/s ETA 00:31[K[download]   0.3% of 74.79MiB at  3.51MiB/s ETA 00:21[K[download]   0.7% of 74.79MiB at  5.35MiB/s ETA 00:13[K[download]   1.3% of 74.79MiB at  7.91MiB/s ETA 00:09[K[download]   2.7% of 74.79MiB at 10.15MiB/s ETA 00:07[K[download]   5.3% of 74.79MiB at 10.72MiB/s ETA 00:06[K[download]  10.7% of 74.79MiB at  9.92MiB/s ETA 00:06[K[download]  16.0% of 74.79MiB at  9.91MiB/s ETA 00:06[K[download]  21.4% of 74.79MiB at  9.85MiB/s ETA 00:05[K[download]  26.7% of 74.79MiB at  9.87MiB/s ETA 00:05[K[download]  32.1% of 74.79MiB at 10.13MiB/s ETA 00:05[K[download]  37.4% of 74.79MiB at 10.51MiB/s ETA 00:04[K[download]  42.8% of 74.79MiB at 10.90MiB/s ETA 00:03[K[download]  48.1% of 74.79MiB at 10.84MiB/s ETA 00:03[K[download]  53.5% of 74.79MiB at 10.80MiB/s ETA 00:03[K[download]  58.8% of 74.79MiB at 10.87MiB/s ETA 00:02[K[download]  64.2% of 74.79MiB at 10.36MiB/s ETA 00:02[K[download]  69.5% of 74.79MiB at  9.94MiB/s ETA 00:02[K[download]  74.9% of 74.79MiB at  9.82MiB/s ETA 00:01[K[download]  80.2% of 74.79MiB at  9.87MiB/s ETA 00:01[K[download]  85.6% of 74.79MiB at  9.74MiB/s ETA 00:01[K[download]  90.9% of 74.79MiB at  9.55MiB/s ETA 00:00[K[download]  96.3% of 74.79MiB at  9.33MiB/s ETA 00:00[K[download] 100.0% of 74.79MiB at  9.21MiB/s ETA 00:00[K[download] 100% of 74.79MiB in 00:08
+
+[K[download]   0.0% of 74.79MiB at 191.51KiB/s ETA 06:49
+[K[download]   0.0% of 74.79MiB at 466.53KiB/s ETA 02:46
+[K[download]   0.0% of 74.79MiB at 929.91KiB/s ETA 01:23
+[K[download]   0.0% of 74.79MiB at  1.59MiB/s ETA 00:48
+[K[download]   0.0% of 74.79MiB at  1.68MiB/s ETA 00:44
+[K[download]   0.1% of 74.79MiB at  1.73MiB/s ETA 00:43
+[K[download]   0.2% of 74.79MiB at  2.34MiB/s ETA 00:31
+[K[download]   0.3% of 74.79MiB at  3.51MiB/s ETA 00:21
+[K[download]   0.7% of 74.79MiB at  5.35MiB/s ETA 00:13
+[K[download]   1.3% of 74.79MiB at  7.91MiB/s ETA 00:09
+[K[download]   2.7% of 74.79MiB at 10.15MiB/s ETA 00:07
+[K[download]   5.3% of 74.79MiB at 10.72MiB/s ETA 00:06
+[K[download]  10.7% of 74.79MiB at  9.92MiB/s ETA 00:06
+[K[download]  16.0% of 74.79MiB at  9.91MiB/s ETA 00:06
+[K[download]  21.4% of 74.79MiB at  9.85MiB/s ETA 00:05
+[K[download]  26.7% of 74.79MiB at  9.87MiB/s ETA 00:05
+[K[download]  32.1% of 74.79MiB at 10.13MiB/s ETA 00:05
+[K[download]  37.4% of 74.79MiB at 10.51MiB/s ETA 00:04
+[K[download]  42.8% of 74.79MiB at 10.90MiB/s ETA 00:03
+[K[download]  48.1% of 74.79MiB at 10.84MiB/s ETA 00:03
+[K[download]  53.5% of 74.79MiB at 10.80MiB/s ETA 00:03
+[K[download]  58.8% of 74.79MiB at 10.87MiB/s ETA 00:02
+[K[download]  64.2% of 74.79MiB at 10.36MiB/s ETA 00:02
+[K[download]  69.5% of 74.79MiB at  9.94MiB/s ETA 00:02
+[K[download]  74.9% of 74.79MiB at  9.82MiB/s ETA 00:01
+[K[download]  80.2% of 74.79MiB at  9.87MiB/s ETA 00:01
+[K[download]  85.6% of 74.79MiB at  9.74MiB/s ETA 00:01
+[K[download]  90.9% of 74.79MiB at  9.55MiB/s ETA 00:00
+[K[download]  96.3% of 74.79MiB at  9.33MiB/s ETA 00:00
+[K[download] 100.0% of 74.79MiB at  9.21MiB/s ETA 00:00
+[K[download] 100% of 74.79MiB in 00:08
 [fromtitle] Could not interpret title of video as "%(artist)s - %(title)s"
 [ffmpeg] Adding metadata to '/data/data/com.termux/files/home/storage/shared/Videos/Al Sweigart   Yes, It's Time to Learn Regular Expressions   PyCon 2017.mp4'
 
@@ -253,4 +456,3 @@ u0_a144@localhost:~$ youtube-dl -o "$HOME/storage/shared/Videos/%(title)s.%(ext)
 [ffmpeg] Adding metadata to '/data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4'           
 [ffmpeg] There aren't any subtitles to embed  
 [atomicparsley] Adding thumbnail to "/data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4"
-
