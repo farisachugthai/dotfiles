@@ -219,3 +219,38 @@ Deleting original file /data/data/com.termux/files/home/storage/shared/Music/ken
 [K[download]   0.0% of 74.79MiB at 191.51KiB/s ETA 06:49[K[download]   0.0% of 74.79MiB at 466.53KiB/s ETA 02:46[K[download]   0.0% of 74.79MiB at 929.91KiB/s ETA 01:23[K[download]   0.0% of 74.79MiB at  1.59MiB/s ETA 00:48[K[download]   0.0% of 74.79MiB at  1.68MiB/s ETA 00:44[K[download]   0.1% of 74.79MiB at  1.73MiB/s ETA 00:43[K[download]   0.2% of 74.79MiB at  2.34MiB/s ETA 00:31[K[download]   0.3% of 74.79MiB at  3.51MiB/s ETA 00:21[K[download]   0.7% of 74.79MiB at  5.35MiB/s ETA 00:13[K[download]   1.3% of 74.79MiB at  7.91MiB/s ETA 00:09[K[download]   2.7% of 74.79MiB at 10.15MiB/s ETA 00:07[K[download]   5.3% of 74.79MiB at 10.72MiB/s ETA 00:06[K[download]  10.7% of 74.79MiB at  9.92MiB/s ETA 00:06[K[download]  16.0% of 74.79MiB at  9.91MiB/s ETA 00:06[K[download]  21.4% of 74.79MiB at  9.85MiB/s ETA 00:05[K[download]  26.7% of 74.79MiB at  9.87MiB/s ETA 00:05[K[download]  32.1% of 74.79MiB at 10.13MiB/s ETA 00:05[K[download]  37.4% of 74.79MiB at 10.51MiB/s ETA 00:04[K[download]  42.8% of 74.79MiB at 10.90MiB/s ETA 00:03[K[download]  48.1% of 74.79MiB at 10.84MiB/s ETA 00:03[K[download]  53.5% of 74.79MiB at 10.80MiB/s ETA 00:03[K[download]  58.8% of 74.79MiB at 10.87MiB/s ETA 00:02[K[download]  64.2% of 74.79MiB at 10.36MiB/s ETA 00:02[K[download]  69.5% of 74.79MiB at  9.94MiB/s ETA 00:02[K[download]  74.9% of 74.79MiB at  9.82MiB/s ETA 00:01[K[download]  80.2% of 74.79MiB at  9.87MiB/s ETA 00:01[K[download]  85.6% of 74.79MiB at  9.74MiB/s ETA 00:01[K[download]  90.9% of 74.79MiB at  9.55MiB/s ETA 00:00[K[download]  96.3% of 74.79MiB at  9.33MiB/s ETA 00:00[K[download] 100.0% of 74.79MiB at  9.21MiB/s ETA 00:00[K[download] 100% of 74.79MiB in 00:08
 [fromtitle] Could not interpret title of video as "%(artist)s - %(title)s"
 [ffmpeg] Adding metadata to '/data/data/com.termux/files/home/storage/shared/Videos/Al Sweigart   Yes, It's Time to Learn Regular Expressions   PyCon 2017.mp4'
+
+# 04/30/2018
+Case 2 behaves as expected
+
+# 04/30/2018 ...that night
+Case 1 behaves appropriately
+
+
+# 05/07/18
+
+Heres case 1 as one giant command for testing
+
+```bash
+youtube-dl -o "$HOME/storage/shared/Videos/%(title)s.%(ext)s" --add-metadata --metadata-from-title "%(artist)s - %(title)s" --xattrs -f mp4 --prefer-ffmpeg --no-mtime --write-auto-sub --embed-subs --write-thumbnail --embed-thumbnail --restrict-filenames --no-call-home --print-json --youtube-skip-dash-manifest --verbose
+```
+
+To embed thumbnails you need atomicparsley
+To use xttr you have to download attr, and then it told me the filesystem doesn't
+Support it and I may need to configure it in /etc/fstab. No.
+Print json is also nightmareish.
+So now were at...
+
+
+u0_a144@localhost:~$ youtube-dl -o "$HOME/storage/shared/Videos/%(title)s.%(ext)s" --add-metadata --metadata-from-title "%(artist)s - %(title)s" -f mp4 --prefer-ffmpeg --no-mtime --embed-subs --embed-thumbnail --restrict-filenames --no-call-home --youtube-skip-dash-manifest https://youtu.be/mXQuto1fMp4     
+[youtube] mXQuto1fMp4: Downloading webpage
+[youtube] mXQuto1fMp4: Extracting video information
+[youtube] mXQuto1fMp4: Downloading thumbnail ...  
+[youtube] mXQuto1fMp4: Writing thumbnail to: /data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.jpg
+[download] /data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4 has already been downloaded  
+[download] 100% of 101.45MiB           
+[fromtitle] Could not interpret title of video as "%(artist)s - %(title)s"   
+[ffmpeg] Adding metadata to '/data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4'           
+[ffmpeg] There aren't any subtitles to embed  
+[atomicparsley] Adding thumbnail to "/data/data/com.termux/files/home/storage/shared/Videos/Rudy_Giuliani_-_Last_Week_Tonight_with_John_Oliver_HBO.mp4"
+
