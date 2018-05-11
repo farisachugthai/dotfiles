@@ -52,7 +52,7 @@ def main():
     repo_dir_check()
 
     # Backup the file
-    shutil.copy(src, str(src) + ".bak")
+    shutil.copy(str(src), str(src) + ".bak")
 
     # Didnt realize this. shutil requires strings as inputs because it utilizes rstrip to return files
     shutil.move(str(src), str(dest))
