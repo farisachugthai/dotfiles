@@ -2,50 +2,55 @@
 # Bashrc. Assumes that the proper installation scripts have been run.
 # Maintainer: Faris Chugthai
 
-### Source in .bashrc.d
-for file in ~/.bashrc.d/{alias,functions}; do
-    if [ -r "$file" ]; then
-        . "$file"
+# Don't run if not interactive
+case $- in
+    *i*);;
+    *) return 0;;
+esac
+
+# Source in .bashrc.d
+if [[ -r "$HOME/.bashrc.d/alias" ]]; then . "$HOME/.bashrc.d/alias"; fi
+
+if [[ -r "$HOME/.bashrc.d/functions" ]]; then . "$HOME/.bashrc.d/functions"; fi
+
+if [[ -f "$HOME/.bashrc.d/git-completion.bash" ]]; then
+    . "$HOME/.bashrc.d/git-completion.bash"
+fi
+
+# This shows the git state. This also prevents us from seeing what venv or conda env we're in.
+# This occurs because PS1 gets locked and won't display. On Termux that's challenging.
+if [[ "$DISPLAY" ]]; then
+    if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
+        . "$HOME/.bashrc.d/git-prompt.sh";
+        export GIT_PS1_SHOWDIRTYSTATE=1
+        PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
     fi
-done;
-unset file
-
-if [ -f ~/.bashrc.d/git-completion.bash ]; then
-    . ~/.bashrc.d/git-completion.bash
 fi
 
-# The following was sourced from this linknwith minor modification
-# There are still many more export GIT commands to explore!
-if [ -f "$HOME/.bashrc.d/git-prompt.sh" ]; then
-    . "$HOME/.bashrc.d/git-prompt.sh";
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-fi
+if [[ '$DISPLAY'=='' ]]; then export 'PS1'='\u@h:\w $'; fi
 
-### History
-
+# History
 # don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 HISTCONTROL=ignoreboth
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
 
+# TODO: What are the units on either of these?
 HISTFILESIZE=20000
 
 #https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
 
 
-###Shopt
-
-#Be notified of asynchronous jobs completing in the background
+# Shopt
+# Be notified of asynchronous jobs completing in the background
 set -o notify
 
-# append to the history file, don't overwrite it
+# Append to the history file, don't overwrite it
 shopt -s histappend
 
-# check the window size after each command and, if necessary,
+# Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
@@ -70,9 +75,8 @@ shopt -s nocaseglob
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
 
-#still don't want to clobber things
+# Still don't want to clobber things
 set -o noclobber
-
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -92,22 +96,15 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-
-### Vim
-# I want vim set to be everything
-
+# Vim
 set -o vi
 
-if [ "$DISPLAY" ]; then
-    export VISUAL=gvim
-else
-    export VISUAL=vim
+export VISUAL="vim"
 export EDITOR="$VISUAL"
-fi
 
-### JavaScript
+# JavaScript
 # Source npm completion if its installed
-if [ $(which npm) ]; then
+if [[ $(which npm) ]]; then
     source ~/.bashrc.d/npm-completion.bash
 fi
 
@@ -115,14 +112,13 @@ fi
 if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     # Load nvm and bash completion
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 fi
 
-### FZF
-# for quick, fuzzy searching in the shell
-if [ -f ~/.fzf.bash ]; then
-    . ~/.fzf.bash
+# FZF
+if [[ -f ~/.fzf.bash ]]; then
+    . "$HOME/.fzf.bash"
 fi
 
 if [[ $PREFIX ]]; then
@@ -130,26 +126,11 @@ if [[ $PREFIX ]]; then
     . "$PREFIX/share/fzf/key-bindings.bash"
 fi
 
-### Python
-
+# Python
 # Add Conda to the path
-if [ -d "$HOME/miniconda3" ]; then
+if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
    . "$HOME/miniconda3/etc/profile.d/conda.sh";
-   conda activate base
 fi
-
-# tldr
-export TLDR_COLOR_BLANK="white"
-export TLDR_COLOR_NAME="white"
-export TLDR_COLOR_DESCRIPTION="white"
-export TLDR_COLOR_EXAMPLE="white"
-export TLDR_COLOR_COMMAND="white"
-export TLDR_COLOR_PARAMETER="white"
-export TLDR_CACHE_ENABLED=1
-export TLDR_CACHE_MAX_AGE=168
-
-# cheat.py
-export CHEATCOLORS=true
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then 

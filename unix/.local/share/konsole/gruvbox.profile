@@ -1,27 +1,20 @@
 [Appearance]
-ColorScheme=One Half Dark
+ColorScheme=gruvbox
 Font=Fira Code,14,-1,5,50,0,0,0,0,0,Regular
 UseFontLineChararacters=true
-
-[Encoding Options]
-DefaultEncoding=UTF-8
 
 [General]
 Directory=~/
 Environment=COLORTERM=truecolor
-Name=shell
+Name=gruvbox
 Parent=FALLBACK/
-SilenceSeconds=10
 StartInCurrentSessionDir=false
 TerminalColumns=120
 
 [Interaction Options]
 CtrlRequiredForDrag=false
-MiddleClickPasteMode=0
-MouseWheelZoomEnabled=false
-OpenLinksByDirectClickEnabled=false
+MouseWheelZoomEnabled=true
 TrimTrailingSpacesInSelectedText=true
-UnderlineFilesEnabled=false
 UnderlineLinksEnabled=false
 
 [Keyboard]

@@ -506,6 +506,7 @@ iab ofits of its
 iab ofthe of the
 iab oging going
 iab ohter other
+ia oit out
 iab omre more
 iab oneof one of
 iab onepoint one point
@@ -804,6 +805,7 @@ iab yera year
 iab yersa years
 iab yoiu you
 iab youare you are
+ia youre you're
 iab youve you've
 iab ytou you
 iab yuor your

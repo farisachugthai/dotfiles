@@ -12,24 +12,27 @@ echo 'First access and restore your ssh configs and place them in the proper fol
 
 echo 'Remember when creating the folders to run `chmod 700 ~/.ssh` and `chmod 600 ~/.ssh/*`'
 
-# Utilities
+# Utilities. OpenSSH and gufw are installed by minimal.
 $a gparted
+$a keepassx
+$a synaptic
 
-# Help on the command-line. Termux comes with close to nothing out of the box.
+# Help on the command-line. Vim and Git are installed from minimal.
 $a curl
-$a fzf
+$a fzf      # Not in the Ubuntu repos. Needs a git install.
+$a gnupg
 $a gnupg2
 $a htop
-$a rclone
+$a rclone   # Not in repo. go get?
 $a tmux
 $a tree
-$p wget
+$a wget
 
 
 #For development
 $a clang
 $a gdb
-$a hub
+$a hub      # go get i think
 $a make
 $a neovim
 $a nodejs
@@ -37,8 +40,11 @@ $a python3-dev python2-dev
 
 
 # Packages that aren't necessary at all but fun.
+$a mpd
+$a ncmpcpp
+$a vlc
 $a sl 
-$a neofetch  
+$a neofetch     # PPA but script already provided.
 $a screenfetch 
 $a cowsay 
 $a fortune
@@ -55,6 +61,8 @@ function opt-pkg()
     local instl=`bash "ubuntu-packages/$0"`
     echo "Now we'll be installing $0"
 }
+
+
 # Add Spotify
 opt-pkg "spotify.sh"
 
@@ -63,14 +71,14 @@ opt-pkg "spotify.sh"
 # Neofetch 17.04 < has Neofetch in the repos
 opt-pkg "neofetch.sh"
 
-# let's group all the stuff that requires a specific cpu archtogether
+# Group all the stuff that requires a specific CPU arch together
 if [[ `uname -m == x86_64` ]]; then
     opt-pkg "vs-code.sh"
 fi
 
 
-# TODO: ask if they want a few DE specific applications.
-# Mention there are dotfiles for KDE.
-
+# TODO: ask if they want a few DE specific applications IE Would you like to
+# download some KDE software? Or maybe even, I noticed you're running Lubuntu, would you like to download Thunar? Or something.
+# Mention there are dotfiles for KDE?
 
 exit 0
