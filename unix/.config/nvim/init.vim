@@ -18,15 +18,16 @@ Plug 'w0rp/ale'
 Plug 'scrooloose/nerdcommenter'
 Plug 'godlygeek/tabular'
 Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
 filetype plugin indent on    " required
 
 " currently using the local file for colorschemes and powerline.
-" WSL has very inconsistent colorschemes for sh and Vim
-if filereadable(glob("~/.vim/vimrc.local"))
-    source ~/.vim/vimrc.local
+if filereadable(glob("~/.config/nvim/init.vim.local"))
+    source ~/.config/nvim/init.vim.local
 endif
 
 " Common abbreviations / misspellings 
@@ -168,7 +169,6 @@ let NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden = 1
 let NERDTreeShowBookmarks = 1
-let NERDTreeBookmarksFile = "$HOME/.vim/NERDTreeBookmarks"
 let NERDTreeNaturalSort = 1
 let NERDTreeChDirMode = 2
 let NERDTreeShowLineNumbers=1
@@ -215,3 +215,8 @@ nmap <Leader>l <Plug>(ale_toggle_buffer)
 if isdirectory('/usr/share/vim/vim80')
     set packpath+=/usr/share/vim/vim80
 endif
+
+
+" Gruvbox:
+"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
+let g:gruvbox_contrast_dark = 'hard'
