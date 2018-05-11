@@ -1,6 +1,6 @@
 [Appearance]
-ColorScheme=DarkPastels
-Font=Fira Code,10,-1,5,50,0,0,0,0,0,Regular
+ColorScheme=One Half Dark
+Font=Fira Code,14,-1,5,50,0,0,0,0,0,Regular
 UseFontLineChararacters=true
 
 [Encoding Options]
@@ -8,7 +8,7 @@ DefaultEncoding=UTF-8
 
 [General]
 Directory=~/
-Environment=TERM=xterm-256color,COLORTERM=truecolor
+Environment=COLORTERM=truecolor
 Name=shell
 Parent=FALLBACK/
 SilenceSeconds=10
