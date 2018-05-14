@@ -76,6 +76,8 @@ if [[ `uname -m == x86_64` ]]; then
     opt-pkg "vs-code.sh"
 fi
 
+# snap install --channel=edge shellcheck        # should test a little more
+
 
 # TODO: ask if they want a few DE specific applications IE Would you like to
 # download some KDE software? Or maybe even, I noticed you're running Lubuntu, would you like to download Thunar? Or something.
