@@ -51,8 +51,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'majutsushi/tagbar'
 Plugin 'nvie/vim-flake8'
 Plugin 'w0rp/ale'
-
-" So i'm just gonna test these out for the time being. Don't commit this.
+Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'godlygeek/tabular'
 Plugin 'joshdick/onedark.vim'
