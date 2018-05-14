@@ -73,7 +73,8 @@ export BYOBU_CONFIG_DIR="$HOME/.config/byobu"
 
 if [[ "$PREFIX" ]]; then
     export BYOBU_PREFIX="$PREFIX"
+    export SHELL="$PREFIX/bin/bash"
 fi
 
-# For tmux
-source ~/.bashrc
+# Set locale if it isn't explicitly stated elsewhere
+export LC_ALL=en_US.UTF-8
