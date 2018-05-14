@@ -20,6 +20,10 @@ Plug 'godlygeek/tabular'
 Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
+if executable('node')
+    Plug  'suan/vim-instant-markdown', {'do': 'npm -g install instant-markdown-d' }
+endif
+
 
 call plug#end()
 
@@ -220,3 +224,10 @@ endif
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 let g:gruvbox_contrast_dark = 'hard'
+
+" Markdown
+if executable('node')
+  let g:instant_markdown_slow = 1
+  let g:instant_markdown_autostart = 0
+  map <leader>md :InstantMarkdownPreview<CR>
+endif
