@@ -7,6 +7,12 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias cd..='cd ..'
 
+# maybe this is obnoxious. idk.
+alias cd...="cd ../.."
+alias cd....="cd ../../.."
+alias cd.....="cd ../../../.."
+alias cd......="cd ../../../../.." 
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'

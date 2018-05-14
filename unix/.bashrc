@@ -99,7 +99,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # Vim
 set -o vi
 
-export VISUAL="vim"
+export VISUAL="nvim"
 export EDITOR="$VISUAL"
 
 # JavaScript
