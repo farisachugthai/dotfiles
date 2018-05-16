@@ -3,6 +3,11 @@
 # Deleted the 3 off because this might be 2.7 compliant! 
 # Well there's still the print statements. from __future__ import print
 
+# TODO: Check that the user has the dotfiles repo, and fail loudly if not
+# Ran as root and nothing happened. Idk where it failed at or what happened
+# But because it was silent i actually assumed correct behavior.
+# Also generalize so that we can input A) what repo we want so we can reuse it in the future, B) accept an argument that would allow the user to specify what folder they want to symlink to.
+
 import os
 import sys
 

@@ -45,17 +45,16 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdTree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'davidhalter/jedi-vim'
-Plugin 'vimwiki/vimwiki'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'majutsushi/tagbar'
 Plugin 'nvie/vim-flake8'
 Plugin 'w0rp/ale'
-
-" So i'm just gonna test these out for the time being. Don't commit this.
+Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'godlygeek/tabular'
 Plugin 'joshdick/onedark.vim'
+Plugin 'itchyny/lightline.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -376,9 +375,6 @@ let NERDTreeShowHidden = 1
 " Need my bookmarks
 let NERDTreeShowBookmarks = 1
 
-" Put the NERDTreeBookmarksFile in the .vim folder
-let NERDTreeBookmarksFile = "$HOME/.vim/NERDTreeBookmarks"
-
 " Sort nodes in a more obvious way (1,2,11,12,21,31) not (1,11,12,2,21,31)
 let NERDTreeNaturalSort = 1
 
@@ -422,22 +418,8 @@ let g:jedi#smart_auto_mappings = 0
 " if the autocomplete on dot slows things down too much set to 0
 let g:jedi#popup_on_dot = 0
 
-
-" Vimwiki:
-"
-" Highlight checked list items with a special order
-let g:vimwiki_hl_cb_checked = 1
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_toc': 1}]
-
-" Use local mouse mappings from |vimwiki-local-mappings|.
-let g:vimwiki_use_mouse = 1
-
-" Whenever Vimwiki's opened, cd to the directory where the page belongs.
-" let g:vimwiki_auto_chdir
-
-
 " Fugitive:
-"
+" https://github.com/tpope/vim-fugitive
 " The following options clean up our statusline
 if exists('g:loaded_fugitive')
    set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
@@ -445,17 +427,14 @@ else
    set statusline=%f\ %m\ (%L\ lines)\ %r\ %=(%l,%c)\ %y
 endif
 
-
 " Tagbar:
 " https://github.com/majutsushi/tagbar
 nmap <F8> :TagbarToggle<CR>
-
 
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
-
 
 " Ale:
 " https://github.com/w0rp/ale

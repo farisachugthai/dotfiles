@@ -20,30 +20,28 @@ Plug 'godlygeek/tabular'
 Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
+if executable('node')
+    Plug  'suan/vim-instant-markdown', {'do': 'npm -g install instant-markdown-d' }
+endif
 
 call plug#end()
 
-filetype plugin indent on    " required
+filetype plugin indent on    " required from Vundle. Residually here.
 
-" currently using the local file for colorschemes and powerline.
 if filereadable(glob("~/.config/nvim/init.vim.local"))
     source ~/.config/nvim/init.vim.local
 endif
 
-" Common abbreviations / misspellings 
-if filereadable(glob("~/.vim/autocorrect.vim"))
-    source ~/.vim/autocorrect.vim
+if filereadable(glob("~/.config/nvim/autocorrect.vim"))
+    source ~/.config/nvim/autocorrect.vim
 endif
 
 " Filetype Specific Options:
-
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
 " Web Dev:
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-
-au BufWritePre,FileWritePre *.js ks|call LastMod()|'s
 
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
@@ -97,10 +95,9 @@ set ignorecase
 set smartindent
 set noswapfile
 
-" Use the system clipboard. From vim-better-default
-if has('unnamedplus')
+if has('unnamedplus')           " Use the system clipboard.
   set clipboard+=unnamedplus,unnamed
-else
+else                            " Accomodate Termux
   set clipboard+=unnamed
 endif
 
@@ -110,20 +107,19 @@ set complete+=.,b,u,t
 set fileignorecase
 set sessionoptions-=options
 set noerrorbells
-set whichwrap+=<,>,h,l,[,]
+set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
 
 if has('persistent_undo')
     set undodir=~/.config/nvim/undodir
-    set undofile	" keep an undo file (undo changes after closing)
+    set undofile	            " keep an undo file
 endif
 set nojoinspaces
 
 " Syntax Highlighting:
-"if we can have syntax recognition,this has to come after the colorscheme
-if has("syntax")
-    syntax on
+if has("syntax")                " if we can have syntax recognition
+    syntax on                   " this has to come after the colorscheme
 endif
-set modeline
+set modeline                    " easy to set filetype with modeline
 
 " Buffers Windows Tabs:
 try
@@ -148,7 +144,6 @@ tnoremap <Esc> <C-W>N
 map <Leader>a ggVG
 map <Leader>n <plug>NERDTreeMirrorToggle<CR>
 
-
 " Plugin Configuration:
 " Builtin:
 "
@@ -157,12 +152,6 @@ let g:ft_man_folding_enable = 0
 set keywordprg=:Man
 
 " NERDTree:
-autocmd Vimenter * NERDTree
-autocmd VimEnter * wincmd w
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTReeQuitOnOpen = 1
 let NERDTreeDirArrows = 1
@@ -176,17 +165,15 @@ let NERDTreeShowLineNumbers=1
 
 " NERDTree Tabs:
 let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_smart_startup_focus = 1
 let g:nerdtree_tabs_meaningful_tab_names = 1
 let g:nerdtree_tabs_autoclose = 1
-let g:nerdtree_tabs_open_on_console_startup = 1 
-let g:nerdtree_tabs_startup_cd = 1
 
 " Jedi:
 " adds the 'import' statement and displays the autocomplete pop-up.
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#popup_on_dot = 0
 
+" Jedi clobbers my mapping for toggling NERDTree!
 map <Leader>u *@:call jedi#usages()<CR>
 
 " Fugitive:
@@ -220,3 +207,10 @@ endif
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 let g:gruvbox_contrast_dark = 'hard'
+
+" Markdown:
+if executable('node')
+  let g:instant_markdown_slow = 1
+  let g:instant_markdown_autostart = 0
+  map <leader>md :InstantMarkdownPreview<CR>
+endif

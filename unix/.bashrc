@@ -27,35 +27,31 @@ if [[ "$DISPLAY" ]]; then
     fi
 fi
 
-if [[ '$DISPLAY'=='' ]]; then export 'PS1'='\u@h:\w $'; fi
+if [ -z "$DISPLAY" ]; then export 'PS1'='\u@\h:\w$ '; fi
 
 # History
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
-
 # TODO: What are the units on either of these?
 HISTFILESIZE=20000
-
 #https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
-
+# Ignore all the damn cds, ls's its a waste to have pollute the history
+HISTIGNORE='exit:ls:cd:history:ll:la'
 
 # Shopt
 # Be notified of asynchronous jobs completing in the background
 set -o notify
-
 # Append to the history file, don't overwrite it
 shopt -s histappend
-
 # Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
+# Only Bash4+ but thats no problem. Should add a test though.
 shopt -s globstar
 
 # enable programmable completion features (you don't need to enable
@@ -71,12 +67,9 @@ fi
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
-
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
-
-# Still don't want to clobber things
-set -o noclobber
+set -o noclobber        # Still dont want to clobber things
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -98,8 +91,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 # Vim
 set -o vi
-
-export VISUAL="vim"
+export VISUAL="nvim"
 export EDITOR="$VISUAL"
 
 # JavaScript
@@ -129,7 +121,8 @@ fi
 # Python
 # Add Conda to the path
 if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
-   . "$HOME/miniconda3/etc/profile.d/conda.sh";
+    . "$HOME/miniconda3/etc/profile.d/conda.sh";
+    if [ "$CONDASHLVL"==0 ]; then "conda activate base"; fi
 fi
 
 # The next line updates PATH for the Google Cloud SDK.

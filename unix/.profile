@@ -47,7 +47,7 @@ export COLORTERM="colorterm"
 
 # These are the defaults but for the sake of being explicit rather than implicit
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_DIRS="$HOME/.local/share"
+export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # tldr
@@ -73,7 +73,8 @@ export BYOBU_CONFIG_DIR="$HOME/.config/byobu"
 
 if [[ "$PREFIX" ]]; then
     export BYOBU_PREFIX="$PREFIX"
+    export SHELL="$PREFIX/bin/bash"
 fi
 
-# For tmux
-source ~/.bashrc
+# Set locale if it isn't explicitly stated elsewhere
+export LC_ALL=en_US.UTF-8

@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#          FILE: mv_to_repo.py
-# LAST MODIFIED: 2018 Apr 30
-#    MAINTAINER: Faris Chugthai
+# Maintainer: Faris Chugthai
 
 import sys
 import shutil
 from pathlib import Path
 import os
+
+# These need to be up here. In the if __name__ block they never get run.
+# Even if we import something like repo_dir_check we still need a lot of these
+# Just left off the ones that require user input [which we might not be guaranteed
+# to get if imported
+home = Path.home()
+repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
+cwd = Path.cwd()
+rel_path = Path.relative_to(cwd, home)
+dest = Path.joinpath(repo, rel_path)
 
 
 def sys_checks():
@@ -51,22 +59,18 @@ def main():
     sys_checks()
     repo_dir_check()
 
-    # Backup the file
     shutil.copy(str(src), str(src) + ".bak")
 
-    # Didnt realize this. shutil requires strings as inputs because it utilizes rstrip to return files
     shutil.move(str(src), str(dest))
     src.symlink_to(dest_file)
 
 
 if __name__ == '__main__':
+    # It might be smarter to change this list comprehension into a try except block
+    # Actually that's definitely better because if we generalize this to where it
+    # takes a different path as the destination repo we need a full block
     inputted = sys.argv[1] if len(sys.argv) == 2 else print("Takes one filename.")
-    home = Path.home()
-    repo = Path.joinpath(home, 'projects', 'dotfiles', 'unix', '')
     src = Path(inputted)
-    cwd = Path.cwd()
-    rel_path = Path.relative_to(cwd, home)
-    dest = Path.joinpath(repo, rel_path)
     dest_file = Path.joinpath(dest, sys.argv[1])
 
     main()

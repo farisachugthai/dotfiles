@@ -44,11 +44,11 @@ add_pip_as_python_dependency: true
 #   latest possible version.
 # 
 aggressive_update_packages:
-   - ca-certificates
-   - certifi
-   - openssl
-   - ipython
-   - conda
+  - ca-certificates
+  - certifi
+  - openssl
+  - ipython
+  - conda
 
 
 # allow_non_channel_urls (bool)
@@ -202,10 +202,10 @@ create_default_packages: [flake8, jedi, ipython]
 # Unfortunately haven't learned R yet.
 # 
 default_channels:
-   - https://repo.anaconda.com/pkgs/main
-   - https://repo.anaconda.com/pkgs/free
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/free
 #   - https://repo.anaconda.com/pkgs/r
-   - https://repo.anaconda.com/pkgs/pro
+  - https://repo.anaconda.com/pkgs/pro
 
 
 # disallowed_packages (sequence: str)
