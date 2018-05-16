@@ -39,7 +39,7 @@ HISTFILESIZE=20000
 #https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
-HISTIGNORE='exit:ls:cd:history'
+HISTIGNORE='exit:ls:cd:history:ll:la'
 
 # Shopt
 # Be notified of asynchronous jobs completing in the background
@@ -121,7 +121,8 @@ fi
 # Python
 # Add Conda to the path
 if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
-   . "$HOME/miniconda3/etc/profile.d/conda.sh";
+    . "$HOME/miniconda3/etc/profile.d/conda.sh";
+    if [ "$CONDASHLVL" == 0 ]; then "conda activate base"; fi
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
