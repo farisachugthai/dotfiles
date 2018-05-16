@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=gruvbox
-Font=Fira Code,14,-1,5,50,0,0,0,0,0,Regular
+Font=MaterialDesignIcons,14,-1,5,50,0,0,0,0,0,Regular
 UseFontLineChararacters=true
 
 [General]
