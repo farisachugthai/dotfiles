@@ -122,7 +122,7 @@ fi
 # Add Conda to the path
 if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
     . "$HOME/miniconda3/etc/profile.d/conda.sh";
-    if [ "$CONDASHLVL" == 0 ]; then "conda activate base"; fi
+    if [ "$CONDASHLVL"==0 ]; then "conda activate base"; fi
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
