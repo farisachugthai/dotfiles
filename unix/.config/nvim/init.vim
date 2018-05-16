@@ -152,12 +152,6 @@ let g:ft_man_folding_enable = 0
 set keywordprg=:Man
 
 " NERDTree:
-autocmd Vimenter * NERDTree
-autocmd VimEnter * wincmd w
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTReeQuitOnOpen = 1
 let NERDTreeDirArrows = 1
@@ -171,11 +165,8 @@ let NERDTreeShowLineNumbers=1
 
 " NERDTree Tabs:
 let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_smart_startup_focus = 1
 let g:nerdtree_tabs_meaningful_tab_names = 1
 let g:nerdtree_tabs_autoclose = 1
-let g:nerdtree_tabs_open_on_console_startup = 1 
-let g:nerdtree_tabs_startup_cd = 1
 
 " Jedi:
 " adds the 'import' statement and displays the autocomplete pop-up.
