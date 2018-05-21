@@ -1,3 +1,0 @@
-set -g default-shell "$PREFIX/bin/bash"
-
-# Vim: set filetype=tmux :
