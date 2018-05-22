@@ -1,12 +1,8 @@
 #!/usr/bin/env python
 # Maintainer: Faris Chugthai
-# Deleted the 3 off because this might be 2.7 compliant! 
-# Well there's still the print statements. from __future__ import print
 
-# TODO: Check that the user has the dotfiles repo, and fail loudly if not
-# Ran as root and nothing happened. Idk where it failed at or what happened
-# But because it was silent i actually assumed correct behavior.
-# Also generalize so that we can input A) what repo we want so we can reuse it in the future, B) accept an argument that would allow the user to specify what folder they want to symlink to.
+# TODO: Generalize this script to accept arguments instead of hard coded paths.
+# Accomplish this by breaking each step down into smaller pieces.
 
 import os
 import sys
@@ -31,18 +27,12 @@ def symlink_repo(src):
     dest = os.path.join(home, src)
     try:
         os.symlink(src, dest)
-        # gonna need to learn what this command returns at some point so that we can figure out how to write the return value to a logfile. probably just returns 0 right?
     except FileExistsError:
         if os.path.islink(dest):
-            # TODO: Learn logging methods and write to that. Probably wanna do
-            # something to the effect of 'make note of every symlink that's 
-            # created and everything that's already a file because if it's a 
-            # link we don't care we did our job right? But if it's a file then 
-            # we never moved it. 
-            # print("Sorry but a symlink to {0} already exists".format(dest))
             pass
         elif os.path.isfile(dest):
             print("Sorry but a file to {0} already exists".format(dest))
+# TODO: suggest to backit up and make the symlink
 
 
 def main():
@@ -56,8 +46,6 @@ def main():
         sys.exit()
 
     for root, dirs, files in os.walk(repo):
-        # The "." path separator gets prepended to the link so splice it
-        root = root[2:]
         if not os.path.isdir(root):
             os.makedirs(root, exist_ok=True)
 
