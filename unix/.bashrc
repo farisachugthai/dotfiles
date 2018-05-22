@@ -19,7 +19,7 @@ fi
 
 # This shows the git state. This also prevents us from seeing what venv or conda env we're in.
 # This occurs because PS1 gets locked and won't display. On Termux that's challenging.
-if [[ "$DISPLAY" ]]; then
+if [[ -z "$DISPLAY" ]]; then
     if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
         . "$HOME/.bashrc.d/git-prompt.sh";
         export GIT_PS1_SHOWDIRTYSTATE=1
@@ -27,15 +27,15 @@ if [[ "$DISPLAY" ]]; then
     fi
 fi
 
-if [ -z "$DISPLAY" ]; then export 'PS1'='\u@\h:\w$ '; fi
+if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
 
 # History
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
+HISTSIZE=50000
 # TODO: What are the units on either of these?
-HISTFILESIZE=20000
+HISTFILESIZE=50000
 #https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
@@ -113,7 +113,7 @@ if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-if [[ $PREFIX ]]; then
+if [[ -n $PREFIX ]]; then
     . "$PREFIX/share/fzf/completion.bash"
     . "$PREFIX/share/fzf/key-bindings.bash"
 fi

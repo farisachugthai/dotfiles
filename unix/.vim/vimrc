@@ -75,25 +75,19 @@ endif
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
-
 " Web Dev:
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-
 au BufWritePre,FileWritePre *.js ks|call LastMod()|'s
 
 " Markdown:
-" See more in ftplugin/markdown.vim
 " gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
-
 
 " Global Options:
 " If you want to review all options at once, run :set"
 
-
 " Leader:
 let mapleader = "\<Space>"
-
 
 " Viminfo:
 " in order we go:
@@ -110,15 +104,9 @@ endif
 
 " Pep8 Global Options: 
 "
-" show existing tab with 4 spaces width
-set tabstop=4
-
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
-
-" On pressing tab, insert 4 spaces
-set expandtab
-
+set tabstop=4                   " show existing tab with 4 spaces width
+set shiftwidth=4                " when indenting with '>', use 4 spaces width
+set expandtab                   " On pressing tab, insert 4 spaces
 " Number of spaces that a <Tab> counts for while performing editing
 " operations, like inserting a <Tab> or using <BS>.
 set softtabstop=4

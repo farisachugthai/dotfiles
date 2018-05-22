@@ -71,9 +71,15 @@ fi
 # For byobu and Termux specific configuration
 export BYOBU_CONFIG_DIR="$HOME/.config/byobu"
 
-if [[ "$PREFIX" ]]; then
+# kinda hacky but this is a real easy way to determine
+# if were using termux or ubuntu. termux defines prefix.
+if [[ -n "$PREFIX" ]]; then
     export BYOBU_PREFIX="$PREFIX"
     export SHELL="$PREFIX/bin/bash"
+    export BROWSER="w3m"
+else
+    export SHELL="/bin/bash"
+    export BROWSER="firefox"
 fi
 
 # Set locale if it isn't explicitly stated elsewhere

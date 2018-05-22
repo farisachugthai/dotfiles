@@ -15,8 +15,8 @@ pip install -U pip
 pip install -U ipython
 pip install -U virtualenv
 pip install -U tldr
-pip install -U cheat 
-pip install -U youtube-dl 
+pip install -U cheat
+pip install -U youtube-dl
 pip install -U flake8
 pip install -U neovim
 
@@ -30,22 +30,22 @@ curl -so cheat.bash https://raw.githubusercontent.com/chrisallenlane/cheat/maste
 # The following is copy/pasted with modifications from:
 # https://raw.githubusercontent.com/its-pointless/gcc_termux/master/setup-pointless-repo.sh
 
-# Make the sources.list.d directory 
-mkdir $PREFIX/etc/apt/sources.list.d 
+# Make the sources.list.d directory
+mkdir -pv $PREFIX/etc/apt/sources.list.d
 
-# Write the needed source file 
-echo "deb [trusted=yes] https://its-pointless.github.io/files/ termux extras" > $PREFIX/etc/apt/sources.list.d/pointless.list 
+# Write the needed source file
+# should add a test to ensure no file exists there or that the repo isn't in their sources.list
+echo "deb [trusted=yes] https://its-pointless.github.io/files/ termux extras" >> $PREFIX/etc/apt/sources.list.d/pointless.list
 
 # Download signing key from https://its-pointless.github.io/pointless.gpg 
-wget https://its-pointless.github.io/pointless.gpg 
-apt-key add pointless.gpg
-
+wget -O "pointless.gpg" https://its-pointless.github.io/pointless.gpg 
+apt-key add pointless.gpg 
 
 # Now lets install all the necessary dependecies
-pkg install -y clang fftw libzmq libzmq-dev freetype freetype-dev libpng libpng-dev pkg-conf        
+pkg install -y clang fftw libzmq libzmq-dev freetype freetype-dev libpng libpng-dev pkg-conf   
 
 # Setup the compiler
-LDFLAGS=" -lm -lcompiler_rt" 
+LDFLAGS=" -lm -lcompiler_rt"
 
 # Install pip packages
 pi="pip install -U"
