@@ -1,20 +1,13 @@
 #!/usr/bin/env python3
-# Scrapyard for working out something with youtube-dl, bs4, requests etc
-# Plus we can get some cool videos off the internet while were at it!
 # Maintainer: Faris Chugthai
 
-# and this script should probably be called with
+# this script should be called with
 # ipython termux-urls.ipy $@
 
 # TODO:
-# 1. Download audio using the python module for youtube_dl
-# 2. Call it using a bash script (which may involve using $@ may involve $1)
-# amazingly 3 is done!
-# 3. Use an if elif for when there are playlists (wait how would the URL look
-# because you woildnt be sharing it from the yt app right? idk.
-# and amazingly this part just needs to be testedto make sure i don't need to
-# prettify my soup
-# 4. use an else and scrape the page
+# 1. Assume that the youtubedl scriptb functions. Then double chsck we werent given a file
+# ytdl knows how to handle. if not, then scrape with bs4. possibly extend to
+# writing prettified json (as in json.dumps("",tab=4)) to a file.
 
 import requests
 import youtube_dl
@@ -25,9 +18,7 @@ link = sys.argv[1]
 link_parser = urllib.parse.urlparse(link)
 
 
-# should figure out how to append "yes playlist as an option for the first bit
-# or maybe make it a class and then define whether the object has ytdl or
-# ytdl_playlist called on it?
+# possibly makes sense to make this a class. playlists are a subclass, objects with variable sizes are others etc...
 def ytdl(link):
     ydl_opts = {
         'format': 'bestaudio/best',
@@ -42,10 +33,11 @@ def ytdl(link):
     ydl.download(link)
 
 
-# thank god google formats their urls so consistently
+# should also check that the beginning of the link is youtu.be
 if link_parser[2] == "/playlist":
-    print("This seems like a video URL. Downloading. Press Ctrl-C to stop")
+    print("This seems like a YouTube playlist. Downloading. Press Ctrl-C to stop")
 elif link_parser[1] == "youtu.be":
+    print(
     ytdl(link)
 else:
     source = requests.get(link)
