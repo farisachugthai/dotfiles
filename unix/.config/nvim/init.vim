@@ -7,7 +7,7 @@ let &packpath = &runtimepath
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'scrooloose/nerdTree'
+Plug 'scrooloose/nerdTree',
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'davidhalter/jedi-vim'
 Plug 'airblade/vim-gitgutter'
@@ -169,12 +169,10 @@ let g:nerdtree_tabs_meaningful_tab_names = 1
 let g:nerdtree_tabs_autoclose = 1
 
 " Jedi:
-" adds the 'import' statement and displays the autocomplete pop-up.
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#popup_on_dot = 0
-
-" Jedi clobbers my mapping for toggling NERDTree!
-map <Leader>u *@:call jedi#usages()<CR>
+let g:jedi#smart_auto_mappings = 0      " if you see from immediately create
+let g:jedi#popup_on_dot = 0             " import. slows things down too mucb.
+let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
+let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
 
 " Fugitive:
 if exists('g:loaded_fugitive')
@@ -202,7 +200,6 @@ nmap <Leader>l <Plug>(ale_toggle_buffer)
 if isdirectory('/usr/share/vim/vim80')
     set packpath+=/usr/share/vim/vim80
 endif
-
 
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
