@@ -1,8 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # Maintainer: Faris Chugthai
 
-# TODO: Also remember to print the name of the file as youre going!
-
 # Heres an example of using case in Bash.
 # From Greg's Wiki Bash Guide page 52
 
@@ -16,8 +14,7 @@ echo "    5. Other (not YouTube)"
 
 read -p "-> " response
 
-# pull more info from: https://github.com/addy-dclxvi/almighty-dotfiles/blob/master/.utility/ytmp3
-
+# TODO: We should either display progress or repeat their response back witb an echo "$@" type thing
 case $response in
     1*) youtube-dl \
         -o "$HOME/storage/shared/Videos/%(title)s.%(ext)s" \
@@ -29,14 +26,13 @@ case $response in
         -o "$HOME/storage/shared/Music/%(title)s.%(ext)s" \
         --add-metadata --metadata-from-title "%(artist)s - %(title)s" \
         -x --audio-format mp3 --audio-quality 0 --prefer-ffmpeg --no-mtime \
-        --write-auto-sub --embed-subs --embed-thumbnail \
-        --restrict-filenames $1;;
+        --embed-thumbnail --restrict-filenames $1;;
+    # TODO: Playlists.
     3*) youtube-dl $1;;
     4*) youtube-dl $1;;
-    5*) ipython termux-urls.ipy "$@";;
+    5*) python termux-urls.py "$@";;
     *) echo "I do not understand your choice.";; 
 esac
 
-# First things first test to make sure this behaves as expected
-# Then add in case 5.
-
+# no subtitles in 2 because only videos get them.
+exit 0
