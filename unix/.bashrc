@@ -134,3 +134,9 @@ fi
 if [ -f ~/bin/google-cloud-sdk/completion.bash.inc ]; then 
     source ~/bin/google-cloud-sdk/completion.bash.inc; 
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/path.bash.inc' ]; then source '/data/data/com.termux/files/usr/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc' ]; then source '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc'; fi
