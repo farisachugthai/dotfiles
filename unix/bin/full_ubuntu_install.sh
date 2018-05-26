@@ -74,7 +74,7 @@ $a byobu
 # $a i3wm
 $a rxvt-unicode-256color
 $a tmux
-$a yakuake          # love the dropdown
+$a yakuake          # love the dropdown. move to kde specific.
 
 
 #For development
