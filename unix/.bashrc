@@ -67,10 +67,15 @@ fi
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell
+
 set -o noclobber        # Still dont want to clobber things
 
+shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
+
+shopt -s dirspell       # Autocorrect the spelling if it can
+shopt -s cdspell
+
+# Defaults in Ubuntu bashrcs
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
