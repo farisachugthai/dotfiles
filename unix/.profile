@@ -36,8 +36,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 #
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
-# -N for line numbers
-export PAGER="less -JRN"
+export PAGER="less -JR"
 
 # Man pages are difficult to read on Termux with line numbers
 export MANPAGER="less -R"
