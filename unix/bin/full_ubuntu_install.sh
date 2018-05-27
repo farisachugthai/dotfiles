@@ -2,7 +2,6 @@
 # Assumes Ubuntu
 # Maintainer: Faris Chugthai
 
-
 bash "minimal_ubuntu_install.sh"
 
 a="apt-get install -y"
@@ -26,22 +25,18 @@ $a avahi-discover
 $a bleachbit
 $a gnupg gnupg-doc
 $a gnupg2
-$a gparted
-$a grsync
-$a keepassx
-$a synaptic
+$a keepassxc		# So KeePassXC is in the official 18.04 repos which I'm crazy excited about. Check the OS version
 $a xdotool
-# qapt or gdebi depending on DE.
 
 
 # Help on the command-line. Vim and Git are installed from minimal.
 $a bash-completion
 $a file
-$a fzf      # Not in the Ubuntu repos. Needs a git install.
-$a htop
+$a fzf      		# Not in the Ubuntu repos. Needs a git install.
+$a htop			# Interestingly now a snap
 $a ncdu
 $a ntfs-3g
-$a rclone   # Not in repo. go get?
+# $a rclone   # Not in repo. go get?
 $a tree
 $a virt-manager
 $a xclip
@@ -71,7 +66,7 @@ $a texinfo
 
 # Terminal specific
 $a byobu
-# $a i3wm
+# $a i3wm		# alrady installed just nervous about setup
 $a rxvt-unicode-256color
 $a tmux
 $a yakuake          # love the dropdown. move to kde specific.
@@ -85,25 +80,20 @@ $a exuberant-ctags
 $a gdb
 $a git-hub              # go get i think
 $a make
-$a neovim
-$a nodejs
-$a python3-dev python2-dev python3-pip
-
 
 # Internet. Add firefox nightly below.
 $a chromium-browser
 $a chromium-browser-l10n
 $a chromium-chromedriver
 $a chromium-codecs-ffmpeg-extra
-$a curl
+# $a curl		# already installed
 $a deluge
 $a network-manager
 $a sockstat         # gotta thank the BSD boys
 $a torbrowser-launcher
 $a w3m
-$a wget
+# $a wget		# already installed
 $a wpasupplicant
-
 
 # Packages that aren't necessary at all but fun and/or convenient.
 $a cherrytree
@@ -129,10 +119,15 @@ f="$a fonts"
 "$f-noto"
 
 
+# DE Specific [is definitely gonna end up it's own file soon enough]
+# if GNOME
+$a gparted
+$a grsync
+$a gdebi
+$a synaptic		# Move to a gtk focused script along with gparted. kde has partitionmanager and qapt
+
 # Fix bash's proclivity for global variables
 unset a f
-
-# Let's put all optional packages in one folder out of the way
 
 function opt-pkg()
 {
@@ -156,9 +151,24 @@ fi
 
 # add docker, atom, ffnightly, virtualbox, gitter, dropbox, powershell, signal-desktop, skypeforlinux, tails-installer
 
-
+# Now snap's
+sudo snap refresh
 # maybe try if [ command -v snap ]; then 
-snap install --channel=edge shellcheck
+sudo snap install --channel=edge shellcheck        # should test a little more
+    					           # wonderful choice
+# sudo snap install signal-desktop
+# sudo snap install pycharm-community --channel=edge --classic
+# sudo snap install rclone 			# is an option. idk if it's better to get as a snap or not
+# same thing with firefox but we don't get nightly sooooo
+
+# huh so i just ran a blank `snap search` and it responded with 'interesting packages'
+# htop has one. apt installs version 2.1. termux has 2.2. snap stable is 2.2. edge is 3.0?
+# i realize it's dumb to need the newest version of htop but that was just interesting to me
+# other notable things are nextcloud, docker and hugo. like not bad! 
+# i'm assuming these installations are WAY bigger than the usual one would be but it's....idk more portable? i get packages i don't
+# get otherwise? what is the benefit of a snap? autoupdate i guess?
+# but i wouldn't want vscode from a snap. actually i shouldn't even get it from my own script i need to get it from miniconda fuck.
+
 
 if ask "Would you like to install optional KDE-specific software?" N; then
     bash "ubuntu-packages/kde-specific.sh"

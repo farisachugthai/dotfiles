@@ -1,1 +1,1 @@
-/data/data/com.termux/files/home/projects/dotfiles/unix/.vim/ftplugin/markdown.vim
+/home/faris/projects/dotfiles/unix/.vim/ftplugin/markdown.vim
