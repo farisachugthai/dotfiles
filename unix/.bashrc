@@ -115,6 +115,7 @@ if [ -d "$HOME/.nvm" ]; then
 fi
 
 # FZF
+# Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
@@ -128,7 +129,9 @@ fi
 # Add Conda to the path
 if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
     . "$HOME/miniconda3/etc/profile.d/conda.sh";
-    if [ "$CONDASHLVL"==0 ]; then "conda activate base"; fi
+    # The line below works when run in the shell, and i modified conda to "$(echo "$CONDA_EXE")"
+    # but i still can't start a new shell in a conda environment :/
+    if [ "$CONDASHLVL" == 0 ]; then "conda activate base"; fi
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
