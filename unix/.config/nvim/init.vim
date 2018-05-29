@@ -7,6 +7,8 @@ let &packpath = &runtimepath
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/seoul256.vim'
 Plug 'scrooloose/nerdTree',
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'davidhalter/jedi-vim'
@@ -20,6 +22,7 @@ Plug 'godlygeek/tabular'
 Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
+
 if executable('node')
     Plug  'suan/vim-instant-markdown', {'do': 'npm -g install instant-markdown-d' }
 endif
@@ -50,10 +53,6 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " Leader:
 let mapleader = "\<Space>"
 
-" Viminfo:
-if !has('nvim')
-    set viminfo='100,<200,s200,n$HOME/.vim/viminfo
-endif
 set viminfo+=!                 " Viminfo include !
 set complete-=i                " Exclude files completion
 
@@ -82,10 +81,10 @@ set hlsearch                   " Highlight search terms
 set incsearch                  " Find as you type search
 set mouse=a                    " Automatically enable mouse usage
 set ttyfast                    " Faster redrawing
-
-set cul
+set background=dark            
+set cul                         " Cursorline so i know where I am
 set colorcolumn=+1
-set ch=2
+set ch=2                        " Command line is 2 char high
 set ruler
 set backspace=indent,eol,start " Backspace for dummies
 set showcmd
@@ -102,8 +101,8 @@ else                            " Accomodate Termux
 endif
 
 set wildmenu                   " Show list instead of just completing
-set wildmode=longest,list:longest
-set complete+=.,b,u,t
+set wildmode=longest,list:longest       " Longest string or list alternatives
+set complete+=.,b,u,t           " open buffer, open buffers, and tags
 set fileignorecase
 set sessionoptions-=options
 set noerrorbells
@@ -167,6 +166,7 @@ let NERDTreeShowLineNumbers=1
 let g:nerdtree_tabs_no_startup_for_diff = 1
 let g:nerdtree_tabs_meaningful_tab_names = 1
 let g:nerdtree_tabs_autoclose = 1
+let g:nerdtree_tabs_startup_cd = 1
 
 " Jedi:
 let g:jedi#smart_auto_mappings = 0      " if you see from immediately create

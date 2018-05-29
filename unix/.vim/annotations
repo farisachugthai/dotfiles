@@ -330,6 +330,20 @@ set keywordprg=:Man
 
 " NERDTree:
 " https://github.com/scrooloose/nerdtree
+"
+"Open NERDTree automatically
+autocmd Vimenter * NERDTree
+
+" If Vim is opened with a file name as an argument, focus on the file
+autocmd VimEnter * wincmd w
+
+" How can I open a NERDTree automatically when vim starts up if no files were specified?
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+"How can I open NERDTree automatically when vim starts up on opening a directory?
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 "Close vim if the only window left is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -358,15 +372,25 @@ let NERDTreeChDirMode = 2
 " Show line numbers
 let NERDTreeShowLineNumbers=1
 
+
 " NERDTree Tabs:
+"
 " Do not open NERDTree if vim starts in diff mode
 let g:nerdtree_tabs_no_startup_for_diff = 1
+
+" On startup - focus NERDTree when opening a directory, focus the file if 
+" editing a specified file. When set to `2`, always focus file after startup.
+let g:nerdtree_tabs_smart_startup_focus = 1
 
 " Unfocus NERDTree when leaving a tab for descriptive tab names
 let g:nerdtree_tabs_meaningful_tab_names = 1
 
 " Close current tab if there is only one window in it and it's NERDTree
 let g:nerdtree_tabs_autoclose = 1
+
+" Open NERDTree on console vim startup
+let g:nerdtree_tabs_open_on_console_startup = 1 
+
 " When starting up with a directory name as a parameter, cd into it
 let g:nerdtree_tabs_startup_cd = 1
 
@@ -381,9 +405,6 @@ let g:jedi#smart_auto_mappings = 0
 
 " if the autocomplete on dot slows things down too much set to 0
 let g:jedi#popup_on_dot = 0
-
-let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
-let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
 
 " Fugitive:
 " https://github.com/tpope/vim-fugitive
@@ -408,7 +429,3 @@ let g:flake8_show_in_gutter=1
 "
 " <Leader>a is already mapped so use l for lint
 nmap <Leader>l <Plug>(ale_toggle_buffer)
-
-" Gruvbox:
-"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
-let g:gruvbox_contrast_dark = 'hard'
