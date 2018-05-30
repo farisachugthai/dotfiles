@@ -118,11 +118,6 @@ if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-if [[ -n $PREFIX ]]; then
-    . "$PREFIX/share/fzf/completion.bash"
-    . "$PREFIX/share/fzf/key-bindings.bash"
-fi
-
 # Python
 # Add Conda to the path
 if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then

@@ -226,3 +226,4 @@ init
 vim
 vimrc
 spellchecker
+autocomplete
