@@ -10,6 +10,7 @@ eval "$(pip completion --bash)"
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 
 # Go
 # Add the Go std lib to the PATH if that's where it was put
@@ -50,18 +51,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-# tldr
-# https://github.com/tldr-pages/tldr-python-client/
-if [[ $(which tldr) ]]; then
-    export TLDR_COLOR_BLANK="white"
-    export TLDR_COLOR_NAME="white"
-    export TLDR_COLOR_DESCRIPTION="white"
-    export TLDR_COLOR_EXAMPLE="white"
-    export TLDR_COLOR_COMMAND="white"
-    export TLDR_COLOR_PARAMETER="white"
-    export TLDR_CACHE_ENABLED=1
-    export TLDR_CACHE_MAX_AGE=168
-fi
 
 # cheat.py
 if [[ $(which cheat) ]]; then
@@ -85,7 +74,11 @@ fi
 # Set locale if it isn't explicitly stated elsewhere
 export LC_ALL=en_US.UTF-8
 
-if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
+# Manpath. Apparently this also may be unnecessary if not counter productive
+# because of the file /etc/manpath.config
+# if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
 # Tmux the culprit as usual
-source ~/.bashrc
+if [[ -n "$TMUX" ]]; then
+    source ~/.bashrc
+fi

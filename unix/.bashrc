@@ -68,11 +68,8 @@ fi
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
-
 set -o noclobber        # Still dont want to clobber things
-
 shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
-
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 
@@ -80,17 +77,6 @@ shopt -s cdspell
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -114,25 +100,31 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 fi
 
+# Yarn
+export PATH="$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin"
+
 # FZF
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-if [[ -n $PREFIX ]]; then
-    . "$PREFIX/share/fzf/completion.bash"
-    . "$PREFIX/share/fzf/key-bindings.bash"
-fi
-
 # Python
-# Add Conda to the path
-if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
-    . "$HOME/miniconda3/etc/profile.d/conda.sh";
-    # The line below works when run in the shell, and i modified conda to "$(echo "$CONDA_EXE")"
-    # but i still can't start a new shell in a conda environment :/
-    if [ "$CONDASHLVL" == 0 ]; then "conda activate base"; fi
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/faris/miniconda3/bin:$PATH"
+    fi
 fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then 
