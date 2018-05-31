@@ -240,3 +240,4 @@ uninstall
 plugin
 PyCharm
 mypy
+gitignore
