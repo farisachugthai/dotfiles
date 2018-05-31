@@ -133,7 +133,7 @@ c.BaseIPythonApplication.profile = 'updated'
 #------------------------------------------------------------------------------
 
 ## Whether to display a banner upon starting IPython.
-c.TerminalIPythonApp.display_banner = True
+#c.TerminalIPythonApp.display_banner = True
 
 ## If a command or file is given via the command-line, e.g. 'ipython foo.py',
 #  start an interactive shell after executing the file or command.
@@ -169,13 +169,13 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #c.InteractiveShell.autocall = 0
 
 ## Autoindent IPython code entered interactively.
-c.InteractiveShell.autoindent = True
+#c.InteractiveShell.autoindent = True
 
 ## Enable magic commands to be called without the leading %.
-c.InteractiveShell.automagic = True
+#c.InteractiveShell.automagic = True
 
 ## The part of the banner to be printed before the profile
-#c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
+#c.InteractiveShell.banner1 = "Python 3.6.5 |Anaconda, Inc.| (default, Apr 29 2018, 16:14:56) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.4.0 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 ## The part of the banner to be printed after the profile
 #c.InteractiveShell.banner2 = ''
@@ -191,10 +191,10 @@ c.InteractiveShell.cache_size = 100000
 ## Use colors for displaying information about objects. Because this information
 #  is passed through a pager (like 'less'), and some pagers get confused with
 #  color codes, this capability can be turned off.
-c.InteractiveShell.color_info = True
+#c.InteractiveShell.color_info = True
 
 ## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-c.InteractiveShell.colors = 'Neutral'
+c.InteractiveShell.colors = 'Linux'
 
 ## 
 #c.InteractiveShell.debug = False
@@ -204,13 +204,13 @@ c.InteractiveShell.colors = 'Neutral'
 
 ## If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-c.InteractiveShell.display_page = False
+#c.InteractiveShell.display_page = False
 
 ## (Provisional API) enables html representation in mime bundles sent to pagers.
 #c.InteractiveShell.enable_html_pager = False
 
 ## Total length of command history
-c.InteractiveShell.history_length = 10000
+#c.InteractiveShell.history_length = 10000
 
 ## The number of saved history entries to be loaded into the history buffer at
 #  startup.
@@ -253,7 +253,7 @@ c.InteractiveShell.history_load_length = 10000
 #c.InteractiveShell.prompts_pad_left = True
 
 ## 
-c.InteractiveShell.quiet = False
+#c.InteractiveShell.quiet = False
 
 ## 
 #c.InteractiveShell.separate_in = '\n'
@@ -340,14 +340,14 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 #c.TerminalInteractiveShell.simple_prompt = False
 
 ## Number of line at the bottom of the screen to reserve for the completion menu
-c.TerminalInteractiveShell.space_for_menu = 6
+#c.TerminalInteractiveShell.space_for_menu = 6
 
 ## Automatically set the terminal title
-c.TerminalInteractiveShell.term_title = True
+#c.TerminalInteractiveShell.term_title = True
 
 ## Customize the terminal title format.  This is a python format string.
 #  Available substitutions are: {cwd}.
-c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
+#c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
 
 ## Use 24bit colors instead of 256 colors in prompt highlighting. If your
 #  terminal supports true color, the following command should print 'TRUECOLOR'
@@ -366,7 +366,7 @@ c.TerminalInteractiveShell.true_color = True
 ## Options for configuring the SQLite connection
 #  
 #  These options are passed as keyword args to sqlite3.connect when establishing
-#  database conenctions.
+#  database connections.
 #c.HistoryAccessor.connection_options = {}
 
 ## enable the SQLite history
@@ -497,10 +497,10 @@ c.HistoryManager.db_log_output = True
 c.PlainTextFormatter.max_width = 100
 
 ## 
-c.PlainTextFormatter.newline = '\n'
+#c.PlainTextFormatter.newline = '\n'
 
 ## 
-c.PlainTextFormatter.pprint = True
+#c.PlainTextFormatter.pprint = True
 
 ## 
 #c.PlainTextFormatter.verbose = False
@@ -528,7 +528,7 @@ c.PlainTextFormatter.pprint = True
 ## Experimental: restrict time (in milliseconds) during which Jedi can compute
 #  types. Set to 0 to stop computing types. Non-zero value lower than 100ms may
 #  hurt performance by preventing jedi to build its cache.
-c.Completer.jedi_compute_type_timeout = 400
+#c.Completer.jedi_compute_type_timeout = 400
 
 ## Experimental: Use Jedi to generate autocompletions. Default to True if jedi is
 #  installed
@@ -599,7 +599,7 @@ c.Completer.use_jedi = True
 ## Magics related to all logging machinery.
 
 ## Suppress output of log state when logging is enabled
-c.LoggingMagics.quiet = False
+#c.LoggingMagics.quiet = False
 
 #------------------------------------------------------------------------------
 # StoreMagics(Magics) configuration

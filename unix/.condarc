@@ -1,6 +1,6 @@
 channels:
-  - conda-canary
   - defaults
+  - conda-canary
   - conda-forge
 ssl_verify: true
 verbosity: 0
@@ -166,7 +166,7 @@ changeps1: true
 #   string delimiter: ','
 #   Packages that are by default added to a newly created environments.
 # 
-create_default_packages: [flake8, jedi, ipython]
+create_default_packages: [flake8, ipython]
 
 
 # custom_channels (map: str)
