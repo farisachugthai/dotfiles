@@ -28,11 +28,11 @@ call plug#end()
 
 filetype plugin indent on    " required from Vundle. Residually here.
 
-if filereadable(glob("~/.config/nvim/init.vim.local"))
+if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
 
-if filereadable(glob("~/.config/nvim/autocorrect.vim"))
+if filereadable(glob('~/.config/nvim/autocorrect.vim'))
     source ~/.config/nvim/autocorrect.vim
 endif
 
@@ -48,7 +48,7 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 " Global Options:
 " Leader:
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 " Viminfo:
 if !has('nvim')
@@ -62,7 +62,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
-let python_highlight_all = 1
+let g:python_highlight_all = 1
 
 " Spell Checker:
 set encoding=utf-8             " Set default encoding
@@ -116,7 +116,7 @@ endif
 set nojoinspaces
 
 " Syntax Highlighting:
-if has("syntax")                " if we can have syntax recognition
+if has('syntax')                " if we can have syntax recognition
     syntax on                   " this has to come after the colorscheme
 endif
 set modeline                    " easy to set filetype with modeline
@@ -124,7 +124,7 @@ set modeline                    " easy to set filetype with modeline
 " Buffers Windows Tabs:
 try
   set switchbuf=useopen,usetab,newtab
-  set stal=2
+  set showtabline=2
 catch
 endtry
 set hidden
@@ -153,14 +153,14 @@ set keywordprg=:Man
 
 " NERDTree:
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTReeQuitOnOpen = 1
-let NERDTreeDirArrows = 1
-let g:NERDTreeWinPos = "right"
-let NERDTreeShowHidden = 1
-let NERDTreeShowBookmarks = 1
-let NERDTreeNaturalSort = 1
-let NERDTreeChDirMode = 2
-let NERDTreeShowLineNumbers=1
+let g:NERDTReeQuitOnOpen = 1
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeWinPos = 'right'
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeShowBookmarks = 1
+let g:NERDTreeNaturalSort = 1
+let g:NERDTreeChDirMode = 2
+let g:NERDTreeShowLineNumbers=1
 
 
 " NERDTree Tabs:
