@@ -141,3 +141,7 @@ if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/path.bash.inc' ]; then
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc' ]; then source '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc'; fi
+
+
+# Byobu
+[ -r "$HOME/.config/byobu/prompt" ] && . "$HOME/.config/byobu/prompt"   #byobu-prompt#

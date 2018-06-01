@@ -71,6 +71,8 @@ else
     export BROWSER="firefox"
 fi
 
+_byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
+
 # Set locale if it isn't explicitly stated elsewhere
 export LC_ALL=en_US.UTF-8
 

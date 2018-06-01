@@ -1,4 +1,3 @@
-# /* vim: set filetype=conf : */
 # Configuration file for ipython.
 # Heavily drawn from documentation at
 # https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
@@ -122,7 +121,7 @@ c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
 #c.BaseIPythonApplication.overwrite = False
 
 ## The IPython profile to use.
-c.BaseIPythonApplication.profile = 'updated'
+# c.BaseIPythonApplication.profile = 'updated'
 
 ## Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback

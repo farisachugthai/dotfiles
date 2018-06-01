@@ -1,13 +1,4 @@
 # Configuration file for ipython.
-# Heavily drawn from documentation at
-# https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
-# and source code found on GitHub.
-# Maintainer: Faris Chugthai
-
-
-c = get_config()
-c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
-
 
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -121,7 +112,7 @@ c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
 #c.BaseIPythonApplication.overwrite = False
 
 ## The IPython profile to use.
-c.BaseIPythonApplication.profile = 'updated'
+#c.BaseIPythonApplication.profile = 'default'
 
 ## Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback
@@ -153,7 +144,7 @@ c.BaseIPythonApplication.profile = 'updated'
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
+#c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -185,7 +176,7 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #  less than 3, it is reset to 0 and a warning is issued).  This limit is defined
 #  because otherwise you'll spend more time re-flushing a too small cache than
 #  working
-c.InteractiveShell.cache_size = 100000
+#c.InteractiveShell.cache_size = 1000
 
 ## Use colors for displaying information about objects. Because this information
 #  is passed through a pager (like 'less'), and some pagers get confused with
@@ -193,7 +184,7 @@ c.InteractiveShell.cache_size = 100000
 #c.InteractiveShell.color_info = True
 
 ## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-c.InteractiveShell.colors = 'Linux'
+#c.InteractiveShell.colors = 'Neutral'
 
 ## 
 #c.InteractiveShell.debug = False
@@ -213,14 +204,14 @@ c.InteractiveShell.colors = 'Linux'
 
 ## The number of saved history entries to be loaded into the history buffer at
 #  startup.
-c.InteractiveShell.history_load_length = 10000
+#c.InteractiveShell.history_load_length = 1000
 
 ## 
 #c.InteractiveShell.ipython_dir = ''
 
 ## Start logging to the given file in append mode. Use `logfile` to specify a log
 #  file to **overwrite** logs to.
-#c.InteractiveShell.logappend = '~/.ipython/profile_default/log/logging-default'
+#c.InteractiveShell.logappend = ''
 
 ## The name of the logfile to use.
 #c.InteractiveShell.logfile = ''
@@ -268,10 +259,10 @@ c.InteractiveShell.history_load_length = 10000
 
 ## Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-c.InteractiveShell.sphinxify_docstring = True
+#c.InteractiveShell.sphinxify_docstring = False
 
 ## 
-c.InteractiveShell.wildcards_case_sensitive = False
+#c.InteractiveShell.wildcards_case_sensitive = True
 
 ## Switch modes for the IPython exception handlers.
 #c.InteractiveShell.xmode = 'Context'
@@ -283,15 +274,15 @@ c.InteractiveShell.wildcards_case_sensitive = False
 ## Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
 #  direct exit without any confirmation.
-c.TerminalInteractiveShell.confirm_exit = True
+#c.TerminalInteractiveShell.confirm_exit = True
 
 ## Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
 #  documentation for more information.
-c.TerminalInteractiveShell.display_completions = 'multicolumn'
+#c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
 ## Shortcut style to use at the prompt. 'vi' or 'emacs'.
-c.TerminalInteractiveShell.editing_mode = 'vi'
+#c.TerminalInteractiveShell.editing_mode = 'emacs'
 
 ## Set the editor used by IPython (default to $EDITOR/vi/notepad).
 #c.TerminalInteractiveShell.editor = 'nvim'
@@ -301,7 +292,7 @@ c.TerminalInteractiveShell.editing_mode = 'vi'
 
 ## Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor. This is
 #  in addition to the F2 binding, which is always enabled.
-c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
+#c.TerminalInteractiveShell.extra_open_editor_shortcuts = False
 
 ## Provide an alternative handler to be called when the user presses Return. This
 #  is an advanced option intended for debugging, which may be changed or removed
@@ -309,13 +300,10 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 #c.TerminalInteractiveShell.handle_return = None
 
 ## Highlight matching brackets.
-c.TerminalInteractiveShell.highlight_matching_brackets = True
+#c.TerminalInteractiveShell.highlight_matching_brackets = True
 
 ## The name or class of a Pygments style to use for syntax highlighting. To see
 #  available styles, run `pygmentize -L styles`.
-## The name or class of a Pygments style to use for syntax
-#         highlighting: 
-#  default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc, pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor, paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
 #c.TerminalInteractiveShell.highlighting_style = traitlets.Undefined
 
 ## Override highlighting format for specific tokens
@@ -351,7 +339,7 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 ## Use 24bit colors instead of 256 colors in prompt highlighting. If your
 #  terminal supports true color, the following command should print 'TRUECOLOR'
 #  in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
-c.TerminalInteractiveShell.true_color = True
+#c.TerminalInteractiveShell.true_color = False
 
 #------------------------------------------------------------------------------
 # HistoryAccessor(HistoryAccessorBase) configuration
@@ -402,7 +390,7 @@ c.TerminalInteractiveShell.true_color = True
 #c.HistoryManager.db_cache_size = 0
 
 ## Should the history database include output? (default: no)
-c.HistoryManager.db_log_output = True
+#c.HistoryManager.db_log_output = False
 
 #------------------------------------------------------------------------------
 # ProfileDir(LoggingConfigurable) configuration
@@ -493,7 +481,7 @@ c.HistoryManager.db_log_output = True
 #c.PlainTextFormatter.max_seq_length = 1000
 
 ## 
-c.PlainTextFormatter.max_width = 100
+#c.PlainTextFormatter.max_width = 79
 
 ## 
 #c.PlainTextFormatter.newline = '\n'
@@ -529,9 +517,8 @@ c.PlainTextFormatter.max_width = 100
 #  hurt performance by preventing jedi to build its cache.
 #c.Completer.jedi_compute_type_timeout = 400
 
-## Experimental: Use Jedi to generate autocompletions. Default to True if jedi is
-#  installed
-c.Completer.use_jedi = True
+## Experimental: Use Jedi to generate autocompletions. Off by default.
+#c.Completer.use_jedi = False
 
 #------------------------------------------------------------------------------
 # IPCompleter(Completer) configuration
