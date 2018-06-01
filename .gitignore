@@ -16,6 +16,28 @@
 # PyCharm
 .idea
 
+# Also probably unnecessary to commit tag files
+# From:
+# https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
+
+
+# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+TAGS
+.TAGS
+!TAGS/
+tags
+.tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+GSYMS
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
+
 # Visual Studio ran away with this one.
 # Can't pretend you didn't copy paste it either.
 # From:
