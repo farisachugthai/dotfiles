@@ -80,6 +80,9 @@ export LC_ALL=en_US.UTF-8
 # because of the file /etc/manpath.config
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
+# cdpath. Just to make moving around a little easier
+export CDPATH=.:~:/etc/:"$HOME/projects"
+
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then
     source ~/.bashrc
