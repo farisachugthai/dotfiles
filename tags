@@ -1,17 +1,48 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-<<<<<<< Updated upstream
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-=======
-!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
-!_TAG_PROGRAM_NAME	Exuberant Ctags	//
-!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
-!_TAG_PROGRAM_VERSION	5.8	//
-Path	unix/bin/mv_to_repo.py	/^from pathlib import Path$/;"	i
+<C-h>	unix/.config/nvim/init.vim	/^noremap <C-h> <C-w>h$/;"	m
+<C-h>	unix/.vim/vimrc	/^noremap <C-h> <C-w>h$/;"	m
+<C-j>	unix/.config/nvim/init.vim	/^noremap <C-j> <C-w>j$/;"	m
+<C-j>	unix/.vim/vimrc	/^noremap <C-j> <C-w>j$/;"	m
+<C-k>	unix/.config/nvim/init.vim	/^noremap <C-k> <C-w>k$/;"	m
+<C-k>	unix/.vim/vimrc	/^noremap <C-k> <C-w>k$/;"	m
+<C-l>	unix/.config/nvim/init.vim	/^noremap <C-l> <C-w>l$/;"	m
+<C-l>	unix/.vim/vimrc	/^noremap <C-l> <C-w>l$/;"	m
+<F8>	unix/.config/nvim/init.vim	/^nmap <F8> :TagbarToggle<CR>$/;"	m
+<F8>	unix/.vim/vimrc	/^nmap <F8> :TagbarToggle<CR>$/;"	m
+<Leader>a	unix/.config/nvim/init.vim	/^map <Leader>a ggVG$/;"	m
+<Leader>a	unix/.vim/vimrc	/^map <Leader>a ggVG$/;"	m
+<Leader>l	unix/.config/nvim/init.vim	/^nmap <Leader>l <Plug>(ale_toggle_buffer)$/;"	m
+<Leader>l	unix/.vim/vimrc	/^nmap <Leader>l <Plug>(ale_toggle_buffer)$/;"	m
+<Leader>n	unix/.config/nvim/init.vim	/^map <Leader>n <plug>NERDTreeMirrorToggle<CR>$/;"	m
+<Leader>n	unix/.vim/vimrc	/^map <Leader>n <plug>NERDTreeMirrorToggle<CR>$/;"	m
+<Leader>s	unix/.config/nvim/init.vim	/^map <Leader>s :setlocal spell!<CR>$/;"	m
+<Leader>s	unix/.vim/vimrc	/^map <Leader>s :setlocal spell!<CR>$/;"	m
+<leader>md	unix/.config/nvim/init.vim	/^  map <leader>md :InstantMarkdownPreview<CR>$/;"	m
+COMPREPLY=	unix/.bashrc.d/git-completion.bash	/^	COMPREPLY=()$/;"	f
+COMPREPLY=	unix/.bashrc.d/rclone-complete.bash	/^                COMPREPLY=()$/;"	f
+COMPREPLY=	unix/.bashrc.d/rclone-complete.bash	/^    COMPREPLY=()$/;"	f
+Dependencies:	README.md	/^## Dependencies:$/;"	s
+Dotfiles	README.md	/^# Dotfiles$/;"	c
+Editor	unix/.jupyter/nbconfig/edit.json	/^  "Editor": {$/;"	o
+H	unix/.tmux.conf	/^set -g status-right " %H:%M %d-%b-%y "$/;"	k
+Installation	README.md	/^## Installation$/;"	s
+NERDTReeQuitOnOpen	unix/.vim/vimrc	/^let NERDTReeQuitOnOpen = 1$/;"	v
+NERDTreeChDirMode	unix/.vim/vimrc	/^let NERDTreeChDirMode = 2$/;"	v
+NERDTreeDirArrows	unix/.vim/vimrc	/^let NERDTreeDirArrows = 1$/;"	v
+NERDTreeNaturalSort	unix/.vim/vimrc	/^let NERDTreeNaturalSort = 1$/;"	v
+NERDTreeShowBookmarks	unix/.vim/vimrc	/^let NERDTreeShowBookmarks = 1$/;"	v
+NERDTreeShowHidden	unix/.vim/vimrc	/^let NERDTreeShowHidden = 1$/;"	v
+NERDTreeShowLineNumbers	unix/.vim/vimrc	/^let NERDTreeShowLineNumbers=1$/;"	v
+Roadmap:	README.md	/^## Roadmap:$/;"	s
+TODO:	README.md	/^## TODO:$/;"	s
+Termux:	README.md	/^### Termux:$/;"	S
+Ubuntu:	README.md	/^### Ubuntu:$/;"	S
 __contains_word	unix/.bashrc.d/rclone-complete.bash	/^__contains_word()$/;"	f
 __debug	unix/.bashrc.d/rclone-complete.bash	/^__debug()$/;"	f
 __git	unix/.bashrc.d/git-completion.bash	/^__git ()$/;"	f
@@ -201,32 +232,164 @@ _rclone_sync	unix/.bashrc.d/rclone-complete.bash	/^_rclone_sync()$/;"	f
 _rclone_touch	unix/.bashrc.d/rclone-complete.bash	/^_rclone_touch()$/;"	f
 _rclone_tree	unix/.bashrc.d/rclone-complete.bash	/^_rclone_tree()$/;"	f
 _rclone_version	unix/.bashrc.d/rclone-complete.bash	/^_rclone_version()$/;"	f
+ascii_bold	unix/.config/neofetch/config.conf	/^ascii_bold="on"$/;"	k
+ascii_colors	unix/.config/neofetch/config.conf	/^ascii_colors=(distro)$/;"	k
+ascii_distro	unix/.config/neofetch/config.conf	/^ascii_distro="auto"$/;"	k
+background	unix/.termux/colors.properties	/^background: #1d2021$/;"	k
+background_color	unix/.config/neofetch/config.conf	/^background_color=$/;"	k
+bar_border	unix/.config/neofetch/config.conf	/^bar_border="on"$/;"	k
+bar_char_elapsed	unix/.config/neofetch/config.conf	/^bar_char_elapsed="-"$/;"	k
+bar_char_total	unix/.config/neofetch/config.conf	/^bar_char_total="="$/;"	k
+bar_color_elapsed	unix/.config/neofetch/config.conf	/^bar_color_elapsed="distro"$/;"	k
+bar_color_total	unix/.config/neofetch/config.conf	/^bar_color_total="distro"$/;"	k
+bar_length	unix/.config/neofetch/config.conf	/^bar_length=15$/;"	k
+battery_display	unix/.config/neofetch/config.conf	/^battery_display="off"$/;"	k
+block_height	unix/.config/neofetch/config.conf	/^block_height=1$/;"	k
+block_range	unix/.config/neofetch/config.conf	/^block_range=(0 7)$/;"	k
+block_width	unix/.config/neofetch/config.conf	/^block_width=3$/;"	k
+bold	unix/.config/neofetch/config.conf	/^bold="on"$/;"	k
 c	unix/.ipython/profile_default/ipython_config.py	/^c = get_config()$/;"	v
-cwd	unix/bin/mv_to_repo.py	/^    cwd = Path.cwd()$/;"	v
+c	unix/.jupyter/jupyter_notebook_config.py	/^c = get_config()$/;"	v
+codemirror_options	unix/.jupyter/nbconfig/edit.json	/^    "codemirror_options": {$/;"	o	object:Editor
+color0	unix/.termux/colors.properties	/^color0:  #282828$/;"	k
+color1	unix/.termux/colors.properties	/^color1:  #cc241d$/;"	k
+color10	unix/.termux/colors.properties	/^color10: #b8bb26$/;"	k
+color11	unix/.termux/colors.properties	/^color11: #fabd2f$/;"	k
+color12	unix/.termux/colors.properties	/^color12: #83a598$/;"	k
+color13	unix/.termux/colors.properties	/^color13: #d3869b$/;"	k
+color14	unix/.termux/colors.properties	/^color14: #8ec07c$/;"	k
+color15	unix/.termux/colors.properties	/^color15: #ebdbb2/;"	k
+color2	unix/.termux/colors.properties	/^color2:  #98971a$/;"	k
+color3	unix/.termux/colors.properties	/^color3:  #d79921$/;"	k
+color4	unix/.termux/colors.properties	/^color4:  #458588$/;"	k
+color5	unix/.termux/colors.properties	/^color5:  #b16286$/;"	k
+color6	unix/.termux/colors.properties	/^color6:  #689d6a$/;"	k
+color7	unix/.termux/colors.properties	/^color7:  #a89984$/;"	k
+color8	unix/.termux/colors.properties	/^color8:  #928374$/;"	k
+color9	unix/.termux/colors.properties	/^color9:  #fb4934$/;"	k
+color_blocks	unix/.config/neofetch/config.conf	/^color_blocks="on"$/;"	k
+colors	unix/.config/neofetch/config.conf	/^colors=(distro)$/;"	k
+commands=	unix/.bashrc.d/rclone-complete.bash	/^            commands=()$/;"	f
+commands=	unix/.bashrc.d/rclone-complete.bash	/^      commands=()$/;"	f
+commands=	unix/.bashrc.d/rclone-complete.bash	/^    commands=()$/;"	f
+config_version	unix/.config/neofetch/config.conf	/^config_version="3.4.0"$/;"	k
+cpu_brand	unix/.config/neofetch/config.conf	/^cpu_brand="on"$/;"	k
+cpu_cores	unix/.config/neofetch/config.conf	/^cpu_cores="logical"$/;"	k
+cpu_display	unix/.config/neofetch/config.conf	/^cpu_display="off"$/;"	k
+cpu_speed	unix/.config/neofetch/config.conf	/^cpu_speed="on"$/;"	k
+cpu_temp	unix/.config/neofetch/config.conf	/^cpu_temp="off"$/;"	k
+crop_mode	unix/.config/neofetch/config.conf	/^crop_mode="normal"$/;"	k
+crop_offset	unix/.config/neofetch/config.conf	/^crop_offset="center"$/;"	k
+definition	unix/.bashrc.d/git-completion.bash	/^		\\(\\))   : skip parens of shell function definition ;;$/;"	f
+disk_display	unix/.config/neofetch/config.conf	/^disk_display="off"$/;"	k
+disk_show	unix/.config/neofetch/config.conf	/^disk_show=('\/')$/;"	k
+disk_subtitle	unix/.config/neofetch/config.conf	/^disk_subtitle="mount"$/;"	k
+distro_shorthand	unix/.config/neofetch/config.conf	/^distro_shorthand="off"$/;"	k
 filename	unix/.ipython/profile_default/startup/05_log.py	/^filename = os.path.join(ldir, fname) $/;"	v
+flags=	unix/.bashrc.d/rclone-complete.bash	/^    flags=()$/;"	f
+flags=	unix/.bashrc.d/rclone-complete.bash	/^    local flags=()$/;"	f
+flags_completion=	unix/.bashrc.d/rclone-complete.bash	/^    flags_completion=()$/;"	f
+flags_completion=	unix/.bashrc.d/rclone-complete.bash	/^    local flags_completion=()$/;"	f
+flags_with_completion=	unix/.bashrc.d/rclone-complete.bash	/^    flags_with_completion=()$/;"	f
+flags_with_completion=	unix/.bashrc.d/rclone-complete.bash	/^    local flags_with_completion=()$/;"	f
 fname	unix/.ipython/profile_default/startup/05_log.py	/^fname = 'log-' + ip.profile + '-' + strftime('%Y-%m-%d') + ".py" $/;"	v
-home	unix/bin/mv_to_repo.py	/^    home = Path.home()$/;"	v
-home	unix/bin/symlink_repo.py	/^home = os.path.join(os.path.expanduser("~"), "")$/;"	v
-inputted	unix/bin/mv_to_repo.py	/^    inputted = sys.argv[1] if len(sys.argv) else print("Takes one filename.")$/;"	v
+foreground	unix/.termux/colors.properties	/^foreground: #ebdbb2$/;"	k
+format	unix/.config/pip/pip.conf	/^format=freeze$/;"	k	section:list
+g:NERDTReeQuitOnOpen	unix/.config/nvim/init.vim	/^let g:NERDTReeQuitOnOpen = 1$/;"	v
+g:NERDTreeChDirMode	unix/.config/nvim/init.vim	/^let g:NERDTreeChDirMode = 2$/;"	v
+g:NERDTreeDirArrows	unix/.config/nvim/init.vim	/^let g:NERDTreeDirArrows = 1$/;"	v
+g:NERDTreeNaturalSort	unix/.config/nvim/init.vim	/^let g:NERDTreeNaturalSort = 1$/;"	v
+g:NERDTreeShowBookmarks	unix/.config/nvim/init.vim	/^let g:NERDTreeShowBookmarks = 1$/;"	v
+g:NERDTreeShowHidden	unix/.config/nvim/init.vim	/^let g:NERDTreeShowHidden = 1$/;"	v
+g:NERDTreeShowLineNumbers	unix/.config/nvim/init.vim	/^let g:NERDTreeShowLineNumbers=1$/;"	v
+g:NERDTreeWinPos	unix/.config/nvim/init.vim	/^let g:NERDTreeWinPos = 'right'$/;"	v
+g:NERDTreeWinPos	unix/.vim/vimrc	/^let g:NERDTreeWinPos = "right"$/;"	v
+g:flake8_show_in_gutter	unix/.config/nvim/init.vim	/^let g:flake8_show_in_gutter=1$/;"	v
+g:flake8_show_in_gutter	unix/.vim/vimrc	/^let g:flake8_show_in_gutter=1$/;"	v
+g:flake8_show_quickfix	unix/.config/nvim/init.vim	/^let g:flake8_show_quickfix=0$/;"	v
+g:flake8_show_quickfix	unix/.vim/vimrc	/^let g:flake8_show_quickfix=0$/;"	v
+g:ft_man_folding_enable	unix/.config/nvim/init.vim	/^let g:ft_man_folding_enable = 0$/;"	v
+g:ft_man_folding_enable	unix/.vim/vimrc	/^let g:ft_man_folding_enable = 0$/;"	v
+g:gruvbox_contrast_dark	unix/.config/nvim/init.vim	/^let g:gruvbox_contrast_dark = 'hard'$/;"	v
+g:instant_markdown_autostart	unix/.config/nvim/init.vim	/^  let g:instant_markdown_autostart = 0$/;"	v
+g:instant_markdown_slow	unix/.config/nvim/init.vim	/^  let g:instant_markdown_slow = 1$/;"	v
+g:jedi#popup_on_dot	unix/.config/nvim/init.vim	/^let g:jedi#popup_on_dot = 0             " import. slows things down too mucb.$/;"	v
+g:jedi#popup_on_dot	unix/.vim/vimrc	/^let g:jedi#popup_on_dot = 0$/;"	v
+g:jedi#smart_auto_mappings	unix/.config/nvim/init.vim	/^let g:jedi#smart_auto_mappings = 0      " if you see from immediately create$/;"	v
+g:jedi#smart_auto_mappings	unix/.vim/vimrc	/^let g:jedi#smart_auto_mappings = 0$/;"	v
+g:jedi#usages_command	unix/.config/nvim/init.vim	/^let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!$/;"	v
+g:jedi#use_tabs_not_buffers	unix/.config/nvim/init.vim	/^let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces$/;"	v
+g:mapleader	unix/.config/nvim/init.vim	/^let g:mapleader = "\\<Space>"$/;"	v
+g:nerdtree_tabs_autoclose	unix/.config/nvim/init.vim	/^let g:nerdtree_tabs_autoclose = 1$/;"	v
+g:nerdtree_tabs_autoclose	unix/.vim/vimrc	/^let g:nerdtree_tabs_autoclose = 1$/;"	v
+g:nerdtree_tabs_meaningful_tab_names	unix/.config/nvim/init.vim	/^let g:nerdtree_tabs_meaningful_tab_names = 1$/;"	v
+g:nerdtree_tabs_meaningful_tab_names	unix/.vim/vimrc	/^let g:nerdtree_tabs_meaningful_tab_names = 1$/;"	v
+g:nerdtree_tabs_no_startup_for_diff	unix/.config/nvim/init.vim	/^let g:nerdtree_tabs_no_startup_for_diff = 1$/;"	v
+g:nerdtree_tabs_no_startup_for_diff	unix/.vim/vimrc	/^let g:nerdtree_tabs_no_startup_for_diff = 1$/;"	v
+g:nerdtree_tabs_open_on_console_startup	unix/.vim/vimrc	/^let g:nerdtree_tabs_open_on_console_startup = 1 $/;"	v
+g:nerdtree_tabs_smart_startup_focus	unix/.vim/vimrc	/^let g:nerdtree_tabs_smart_startup_focus = 1$/;"	v
+g:nerdtree_tabs_startup_cd	unix/.vim/vimrc	/^let g:nerdtree_tabs_startup_cd = 1$/;"	v
+g:python_highlight_all	unix/.config/nvim/init.vim	/^let g:python_highlight_all = 1$/;"	v
+gap	unix/.config/neofetch/config.conf	/^gap=3$/;"	k
+gpu_brand	unix/.config/neofetch/config.conf	/^gpu_brand="on"$/;"	k
+gpu_type	unix/.config/neofetch/config.conf	/^gpu_type="all"$/;"	k
+gtk2	unix/.config/neofetch/config.conf	/^gtk2="on"$/;"	k
+gtk3	unix/.config/neofetch/config.conf	/^gtk3="on"$/;"	k
+gtk_shorthand	unix/.config/neofetch/config.conf	/^gtk_shorthand="off"$/;"	k
+image_backend	unix/.config/neofetch/config.conf	/^image_backend="ascii"$/;"	k
+image_host	unix/.config/neofetch/config.conf	/^image_host="teknik"$/;"	k
+image_loop	unix/.config/neofetch/config.conf	/^image_loop="off"$/;"	k
+image_size	unix/.config/neofetch/config.conf	/^image_size="auto"$/;"	k
+image_source	unix/.config/neofetch/config.conf	/^image_source="auto"$/;"	k
+install_time	unix/.config/neofetch/config.conf	/^install_time="on"$/;"	k
+install_time_format	unix/.config/neofetch/config.conf	/^install_time_format="12h"$/;"	k
 ip	unix/.ipython/profile_default/startup/05_log.py	/^ip = get_ipython() $/;"	v
+jedi	unix/.config/nvim/after/jedi.vim	/^augroup jedi$/;"	a
+kernel_shorthand	unix/.config/neofetch/config.conf	/^kernel_shorthand="on"$/;"	k
+keyMap	unix/.jupyter/nbconfig/edit.json	/^      "keyMap": "vim"$/;"	s	object:Editor.codemirror_options
 ldir	unix/.ipython/profile_default/startup/05_log.py	/^ldir = ip.profile_dir.log_dir $/;"	v
+link	unix/bin/termux-url.py	/^link = sys.argv[1]$/;"	v
+link_parser	unix/bin/termux-url.py	/^link_parser = urllib.parse.urlparse(link)$/;"	v
+list	unix/.config/pip/pip.conf	/^[list]$/;"	s
+local_nonpersistent_flags=	unix/.bashrc.d/rclone-complete.bash	/^    local local_nonpersistent_flags=()$/;"	f
+local_nonpersistent_flags=	unix/.bashrc.d/rclone-complete.bash	/^    local_nonpersistent_flags=()$/;"	f
+main	unix/.config/nvim/skeleton.py	/^def main():$/;"	f
 main	unix/.vim/skeleton.py	/^def main():$/;"	f
-main	unix/bin/mv_to_repo.py	/^def main(rel_file):$/;"	f
-main	unix/bin/symlink_repo.py	/^def main():$/;"	f
+mapleader	unix/.vim/vimrc	/^let mapleader = "\\<Space>"$/;"	v
+memory_display	unix/.config/neofetch/config.conf	/^memory_display="off"$/;"	k
+music_player	unix/.config/neofetch/config.conf	/^music_player="auto"$/;"	k
+must_have_one_flag=	unix/.bashrc.d/rclone-complete.bash	/^        must_have_one_flag=()$/;"	f
+must_have_one_flag=	unix/.bashrc.d/rclone-complete.bash	/^    local must_have_one_flag=()$/;"	f
+must_have_one_flag=	unix/.bashrc.d/rclone-complete.bash	/^    must_have_one_flag=()$/;"	f
+must_have_one_noun=	unix/.bashrc.d/rclone-complete.bash	/^        must_have_one_noun=()$/;"	f
+must_have_one_noun=	unix/.bashrc.d/rclone-complete.bash	/^    local must_have_one_noun=()$/;"	f
+must_have_one_noun=	unix/.bashrc.d/rclone-complete.bash	/^    must_have_one_noun=()$/;"	f
 notnew	unix/.ipython/profile_default/startup/05_log.py	/^notnew = os.path.exists(filename) $/;"	v
-os	unix/.ipython/profile_default/startup/05_log.py	/^import os.path $/;"	i
-os	unix/bin/symlink_repo.py	/^import os$/;"	i
-path	unix/.ipython/profile_default/startup/05_log.py	/^import os.path $/;"	i
-project_opened	.ropeproject/config.py	/^def project_opened(project):$/;"	f
-rel_file	unix/bin/mv_to_repo.py	/^    rel_file = Path.joinpath(rel_path, src)$/;"	v
-rel_path	unix/bin/mv_to_repo.py	/^    rel_path = Path.relative_to(cwd, home)$/;"	v
-repo	unix/bin/mv_to_repo.py	/^    repo = Path.joinpath(home, "projects", "dotfiles", "unix", "")$/;"	v
-repo	unix/bin/symlink_repo.py	/^repo = os.path.join(home, "projects", "dotfiles", "unix", "")$/;"	v
-set_prefs	.ropeproject/config.py	/^def set_prefs(prefs):$/;"	f
-shutil	unix/bin/mv_to_repo.py	/^import shutil$/;"	i
-src	unix/bin/mv_to_repo.py	/^    src = Path(inputted)$/;"	v
-strftime	unix/.ipython/profile_default/startup/05_log.py	/^from time import strftime $/;"	i
-symlink_repo	unix/bin/symlink_repo.py	/^def symlink_repo(file):$/;"	f
-sys	unix/bin/mv_to_repo.py	/^import sys$/;"	i
-sys	unix/bin/symlink_repo.py	/^import sys$/;"	i
->>>>>>> Stashed changes
+noun_aliases=	unix/.bashrc.d/rclone-complete.bash	/^    noun_aliases=()$/;"	f
+nouns=	unix/.bashrc.d/rclone-complete.bash	/^    local nouns=()$/;"	f
+os_arch	unix/.config/neofetch/config.conf	/^os_arch="on"$/;"	k
+public_ip_host	unix/.config/neofetch/config.conf	/^public_ip_host="http:\/\/ident.me"$/;"	k
+python_highlight_all	unix/.config/nvim/ftplugin/python.vim	/^let python_highlight_all = 1$/;"	v
+python_highlight_all	unix/.vim/ftplugin/python.vim	/^let python_highlight_all = 1$/;"	v
+python_highlight_all	unix/.vim/vimrc	/^let python_highlight_all = 1$/;"	v
+refresh_rate	unix/.config/neofetch/config.conf	/^refresh_rate="off"$/;"	k
+scrot	unix/.config/neofetch/config.conf	/^scrot="off"$/;"	k
+scrot_cmd	unix/.config/neofetch/config.conf	/^scrot_cmd="auto"$/;"	k
+scrot_name	unix/.config/neofetch/config.conf	/^scrot_name="neofetch-$(date +%F-%I-%M-%S-${RANDOM}).png"$/;"	k
+shell_path	unix/.config/neofetch/config.conf	/^shell_path="off"$/;"	k
+shell_version	unix/.config/neofetch/config.conf	/^shell_version="on"$/;"	k
+song_shorthand	unix/.config/neofetch/config.conf	/^song_shorthand="off"$/;"	k
+speed_shorthand	unix/.config/neofetch/config.conf	/^speed_shorthand="off"$/;"	k
+speed_type	unix/.config/neofetch/config.conf	/^speed_type="bios_limit"$/;"	k
+stdout	unix/.config/neofetch/config.conf	/^stdout="off"$/;"	k
+svn_remote=	unix/.bashrc.d/git-prompt.sh	/^	svn_remote=()$/;"	f
+thumbnail_dir	unix/.config/neofetch/config.conf	/^thumbnail_dir="${XDG_CACHE_HOME:-${HOME}\/.cache}\/thumbnails\/neofetch"$/;"	k
+two_word_flags=	unix/.bashrc.d/rclone-complete.bash	/^    local two_word_flags=()$/;"	f
+two_word_flags=	unix/.bashrc.d/rclone-complete.bash	/^    two_word_flags=()$/;"	f
+underline_char	unix/.config/neofetch/config.conf	/^underline_char="-"$/;"	k
+underline_enabled	unix/.config/neofetch/config.conf	/^underline_enabled="on"$/;"	k
+uptime_shorthand	unix/.config/neofetch/config.conf	/^uptime_shorthand="on"$/;"	k
+vimMode	unix/.jupyter/nbconfig/edit.json	/^      "vimMode": true,$/;"	b	object:Editor.codemirror_options
+xoffset	unix/.config/neofetch/config.conf	/^xoffset=0$/;"	k
+yoffset	unix/.config/neofetch/config.conf	/^yoffset=0$/;"	k
+ytdl	unix/bin/termux-url.py	/^def ytdl(link):$/;"	f
