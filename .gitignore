@@ -22,6 +22,16 @@
 
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+*tags
+/tags*tags
+/tags*tags
+/tags*tags
+/tags*tags
+/tags*tags
+/tags*tags
+/tags*tags
+/tags*tags
+/tags/
 TAGS
 .TAGS
 !TAGS/
@@ -255,8 +265,8 @@ _pkginfo.txt
 
 # Others
 ClientBin/
-~$*
-*~
+#~$*
+#*~
 *.dbmdl
 *.dbproj.schemaview
 *.jfm

@@ -50,10 +50,6 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " Leader:
 let g:mapleader = "\<Space>"
 
-" Viminfo:
-if !has('nvim')
-    set viminfo='100,<200,s200,n$HOME/.vim/viminfo
-endif
 set viminfo+=!                 " Viminfo include !
 set complete-=i                " Exclude files completion
 
@@ -70,6 +66,11 @@ set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
+" Made on termux with
+" mkspell ~/.config/nvim/spell/en.hun.spl $PREFIX/share/hunspell/en_US.aff
+if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
+    set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
+endif
 set complete+=kspell 
 set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
@@ -171,7 +172,7 @@ let g:nerdtree_tabs_autoclose = 1
 " Jedi:
 let g:jedi#smart_auto_mappings = 0      " if you see from immediately create
 let g:jedi#popup_on_dot = 0             " import. slows things down too mucb.
-let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
+let g:jedi#usages_command=0             " Jedi clobbers me toggling NERDTree!
 let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
 
 " Fugitive:
