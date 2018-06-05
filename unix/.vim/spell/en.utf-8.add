@@ -227,3 +227,8 @@ vim
 vimrc
 spellchecker
 autocomplete
+fallback
+w3m
+keymap
+hyperlink
+stderr
