@@ -1,0 +1,1 @@
+/home/faris/projects/dotfiles/unix/.config/nvim/after/jedi.vim

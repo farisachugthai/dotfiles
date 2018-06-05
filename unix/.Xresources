@@ -1,0 +1,8 @@
+URxvt.geometry: 80x35
+URxvt.saveLines: 10000
+URxvt.scrollBar: false
+URxvt.foreground: black
+URxvt.background: white
+URxvt.secondaryScroll: true
+URxvt.font: xft:liberation mono:size=11
+URxvt.cursorBlink: false
