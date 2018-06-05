@@ -23,13 +23,7 @@
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 *tags
 /tags*tags
-/tags*tags
-/tags*tags
-/tags*tags
-/tags*tags
-/tags*tags
-/tags*tags
-/tags*tags
+*[Tt]ags*
 /tags/
 TAGS
 .TAGS
