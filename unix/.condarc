@@ -166,7 +166,8 @@ changeps1: true
 #   string delimiter: ','
 #   Packages that are by default added to a newly created environments.
 # 
-create_default_packages: [flake8, ipython]
+# create_default_packages: [flake8, ipython]
+# These should just have their own jupyter environment and not interfere with others
 
 
 # custom_channels (map: str)
