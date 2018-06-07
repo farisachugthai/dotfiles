@@ -23,9 +23,10 @@ Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 
-if executable('node')
-    Plug  'suan/vim-instant-markdown', {'do': 'npm -g install instant-markdown-d' }
-endif
+" don't know why. doesn't work.
+"if executable('node')
+    "Plug  'suan/vim-instant-markdown', {'do': 'npm -g install instant-markdown-d' }
+"endif
 
 call plug#end()
 

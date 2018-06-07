@@ -1,3 +1,9 @@
+[Appearance]
+BackgroundColorOpacity=20
+Skin=breeze-gruvbox-dark
+SkinInstalledWithKns=true
+Translucency=true
+
 [Desktop Entry]
 DefaultProfile=shell.profile
 
@@ -36,3 +42,6 @@ split-top-bottom=Ctrl+)
 toggle-session-monitor-activity=Ctrl+Shift+A
 toggle-session-monitor-silence=Ctrl+Shift+I
 view-full-screen=Ctrl+Shift+F11
+
+[Window]
+Width=80
