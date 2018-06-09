@@ -10,4 +10,8 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
-let python_highlight_all = 1
+let g:python_highlight_all = 1
+
+" For use with AleFix
+
+let b:ale_fixers = {'python': ['flake8', 'autopep', 'pyls', 'mypy', 'pycodestyle', 'pyflakes', 'pylint']}
