@@ -17,14 +17,14 @@
 # Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
 [diff]
-    guitool = gvimdiff3
-    tool = vimdiff3
+    # guitool = gvimdiff3
+    tool = nvim -d
     color = auto
     strategy-option = patienece
 
 [merge]
-    guitool = gvimdiff3
-	tool = vimdiff3
+    # guitool = gvimdiff3
+	tool = nvim -d
 	color = auto
     mergestyle = diff3
     prompt = false

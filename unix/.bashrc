@@ -10,9 +10,9 @@ esac
 
 # Source in .bashrc.d
 if [[ -r "$HOME/.bashrc.d/tmux-completion.bash" ]]; then . "$HOME/.bashrc.d/tmux-completion.bash"; fi
-if [[ -r "$HOME/.bashrc.d/alias" ]]; then . "$HOME/.bashrc.d/alias"; fi
+if [[ -r "$HOME/.bashrc.d/alias.bash" ]]; then . "$HOME/.bashrc.d/alias.bash"; fi
 
-if [[ -r "$HOME/.bashrc.d/functions" ]]; then . "$HOME/.bashrc.d/functions"; fi
+if [[ -r "$HOME/.bashrc.d/functions.bash" ]]; then . "$HOME/.bashrc.d/functions.bash"; fi
 
 if [[ -f "$HOME/.bashrc.d/git-completion.bash" ]]; then
     . "$HOME/.bashrc.d/git-completion.bash"

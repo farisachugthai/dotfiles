@@ -71,3 +71,7 @@ infovi ()
 {
     info $1 | less
 }
+
+
+# From byobu
+byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
