@@ -9,9 +9,12 @@ case $- in
 esac
 
 # Source in .bashrc.d
-if [[ -r "$HOME/.bashrc.d/alias" ]]; then . "$HOME/.bashrc.d/alias"; fi
+# TODO: This could easily be turned into a for loop and save a couple lines.
+if [[ -r "$HOME/.bashrc.d/tmux-completion.bash" ]]; then . "$HOME/.bashrc.d/tmux-completion.bash"; fi
 
-if [[ -r "$HOME/.bashrc.d/functions" ]]; then . "$HOME/.bashrc.d/functions"; fi
+if [[ -r "$HOME/.bashrc.d/alias.bash" ]]; then . "$HOME/.bashrc.d/alias.bash"; fi
+
+if [[ -r "$HOME/.bashrc.d/functions.bash" ]]; then . "$HOME/.bashrc.d/functions.bash"; fi
 
 if [[ -f "$HOME/.bashrc.d/git-completion.bash" ]]; then
     . "$HOME/.bashrc.d/git-completion.bash"
@@ -51,8 +54,9 @@ shopt -s histappend
 shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-# Only Bash4+ but thats no problem. Should add a test though.
-shopt -s globstar
+if [[ $BASH_VERSINFO -gt 3 ]]; then
+    shopt -s globstar
+fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -67,11 +71,8 @@ fi
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
-
 set -o noclobber        # Still dont want to clobber things
-
 shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
-
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 
@@ -136,9 +137,9 @@ if [ -f ~/bin/google-cloud-sdk/completion.bash.inc ]; then
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/path.bash.inc' ]; then source '/data/data/com.termux/files/usr/google-cloud-sdk/path.bash.inc'; fi
+if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc' ]; then source '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc'; fi
+if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
 source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
