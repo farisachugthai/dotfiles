@@ -232,3 +232,7 @@ w3m
 keymap
 hyperlink
 stderr
+autocorrect
+vim
+Gitignore
+vim
