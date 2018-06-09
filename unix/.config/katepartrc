@@ -9,7 +9,7 @@ End of Line=0
 Indent On Backspace=true
 Indent On Tab=true
 Indent On Text Paste=false
-Indentation Mode=normal
+Indentation Mode=python
 Indentation Width=4
 Keep Extra Spaces=false
 Line Length Limit=4096
@@ -17,7 +17,7 @@ Newline at End of File=false
 On-The-Fly Spellcheck=false
 Overwrite Mode=false
 PageUp/PageDown Moves Cursor=false
-Remove Spaces=0
+Remove Spaces=2
 ReplaceTabsDyn=true
 Show Spaces=true
 Show Tabs=true
@@ -28,8 +28,8 @@ Swap Sync Interval=15
 Tab Handling=2
 Tab Width=4
 Trailing Marker Size=1
-Word Wrap=false
-Word Wrap Column=80
+Word Wrap=true
+Word Wrap Column=120
 
 [Editor]
 Encoding Prober Type=1
@@ -37,10 +37,10 @@ Fallback Encoding=ISO-8859-15
 
 [Renderer]
 Animate Bracket Matching=true
-Schema=Normal
+Schema=Breeze Dark
 Show Indentation Lines=true
 Show Whole Bracket Expression=false
-Word Wrap Marker=false
+Word Wrap Marker=true
 
 [View]
 Allow Mark Menu=true

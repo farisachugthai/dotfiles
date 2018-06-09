@@ -23,20 +23,15 @@ Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 
-" don't know why. doesn't work.
-"if executable('node')
-    "Plug  'suan/vim-instant-markdown', {'do': 'npm -g install instant-markdown-d' }
-"endif
-
 call plug#end()
 
 filetype plugin indent on    " required from Vundle. Residually here.
 
-if filereadable(glob("~/.config/nvim/init.vim.local"))
+if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
 
-if filereadable(glob("~/.config/nvim/autocorrect.vim"))
+if filereadable(glob('~/.config/nvim/autocorrect.vim'))
     source ~/.config/nvim/autocorrect.vim
 endif
 
@@ -52,7 +47,7 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 " Global Options:
 " Leader:
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 set viminfo+=!                 " Viminfo include !
 set complete-=i                " Exclude files completion
@@ -62,14 +57,21 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
-let python_highlight_all = 1
+let g:python_highlight_all = 1
 
 " Spell Checker:
 set encoding=utf-8             " Set default encoding
+
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
+
+" Can be set with sudo select-default-wordlist. I opted for american insane
+if filereadable('/usr/share/dict/words')
+    set dictionary='/usr/share/dict/words'
+endif
+
 set complete+=kspell 
 set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
@@ -83,9 +85,9 @@ set incsearch                  " Find as you type search
 set mouse=a                    " Automatically enable mouse usage
 set ttyfast                    " Faster redrawing
 set background=dark            
-set cul                         " Cursorline so i know where I am
+set cursorline                         " Cursorline so i know where I am
 set colorcolumn=+1
-set ch=2                        " Command line is 2 char high
+set cmdheight=2                        " Command line is 2 char high
 set ruler
 set backspace=indent,eol,start " Backspace for dummies
 set showcmd
@@ -116,7 +118,7 @@ endif
 set nojoinspaces
 
 " Syntax Highlighting:
-if has("syntax")                " if we can have syntax recognition
+if has('syntax')                " if we can have syntax recognition
     syntax on                   " this has to come after the colorscheme
 endif
 set modeline                    " easy to set filetype with modeline
@@ -124,7 +126,7 @@ set modeline                    " easy to set filetype with modeline
 " Buffers Windows Tabs:
 try
   set switchbuf=useopen,usetab,newtab
-  set stal=2
+  set showtabline=2
 catch
 endtry
 set hidden
@@ -142,7 +144,7 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 tnoremap <Esc> <C-W>N
 map <Leader>a ggVG
-map <Leader>n <plug>NERDTreeMirrorToggle<CR>
+map <Leader>nt <plug>NERDTreeMirrorToggle<CR>
 
 " Plugin Configuration:
 " Builtin:
@@ -153,14 +155,14 @@ set keywordprg=:Man
 
 " NERDTree:
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTReeQuitOnOpen = 1
-let NERDTreeDirArrows = 1
-let g:NERDTreeWinPos = "right"
-let NERDTreeShowHidden = 1
-let NERDTreeShowBookmarks = 1
-let NERDTreeNaturalSort = 1
-let NERDTreeChDirMode = 2
-let NERDTreeShowLineNumbers=1
+let g:NERDTReeQuitOnOpen = 1
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeWinPos = 'right'
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeShowBookmarks = 1
+let g:NERDTreeNaturalSort = 1
+let g:NERDTreeChDirMode = 2
+let g:NERDTreeShowLineNumbers=1
 
 
 " NERDTree Tabs:
@@ -174,13 +176,7 @@ let g:jedi#smart_auto_mappings = 0      " if you see from immediately create
 let g:jedi#popup_on_dot = 0             " import. slows things down too mucb.
 let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
 let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
-
-" Fugitive:
-if exists('g:loaded_fugitive')
-   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
-else
-   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=(%l,%c)\ %y
-endif
+map <leader>n Call#JediUsages
 
 " Tagbar:
 " https://github.com/majutsushi/tagbar
@@ -196,19 +192,7 @@ let g:flake8_show_in_gutter=1
 " <Leader>a is already mapped so use l for lint
 nmap <Leader>l <Plug>(ale_toggle_buffer)
 
-" May not be necessary if matchit stops trying to load
-" However this is an easy way to get nvim and vim more synced up
-if isdirectory('/usr/share/vim/vim80')
-    set packpath+=/usr/share/vim/vim80
-endif
 
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 let g:gruvbox_contrast_dark = 'hard'
-
-" Markdown:
-if executable('node')
-  let g:instant_markdown_slow = 1
-  let g:instant_markdown_autostart = 0
-  map <leader>md :InstantMarkdownPreview<CR>
-endif

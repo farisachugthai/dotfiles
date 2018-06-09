@@ -2,15 +2,15 @@
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
 
-
 # Python
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 eval "$(pip completion --bash)"
 
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-
-export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
+if [[ -d "$HOME/.gem/ruby/2.5.0/bin" ]]; then
+    export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
+fi
 
 # Go
 # Add the Go std lib to the PATH if that's where it was put
@@ -26,16 +26,14 @@ if [[ $(which go) ]]; then
     export PATH="$PATH:$GOPATH/bin"
 fi
 
-# JavaScript
-
+# JavaScript 
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
     export PATH="$PATH:$YARNPATH"
 fi
 
 
-# Environment Variables
-#
+# Environment Variables 
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 export PAGER="less -JR"
@@ -57,13 +55,9 @@ if [[ $(which cheat) ]]; then
     export CHEATCOLORS=true
 fi
 
-# For byobu and Termux specific configuration
-export BYOBU_CONFIG_DIR="$HOME/.config/byobu"
-
 # kinda hacky but this is a real easy way to determine
 # if were using termux or ubuntu. termux defines prefix.
 if [[ -n "$PREFIX" ]]; then
-    export BYOBU_PREFIX="$PREFIX"
     export SHELL="$PREFIX/bin/bash"
     export BROWSER="w3m"
 else
@@ -71,19 +65,18 @@ else
     export BROWSER="firefox"
 fi
 
-_byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
-
 # Set locale if it isn't explicitly stated elsewhere
 export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8                 # gathered from localectl
 
 # Manpath. Apparently this also may be unnecessary if not counter productive
 # because of the file /etc/manpath.config
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
 # cdpath. Just to make moving around a little easier
-export CDPATH=.:~:/etc/:"$HOME/projects"
+export CDPATH=.:~:"$HOME/projects"
 
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then
-    source ~/.bashrc
+    source "$HOME/.bashrc"
 fi
