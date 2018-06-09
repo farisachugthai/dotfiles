@@ -22,7 +22,7 @@ pip install -U neovim
 
 
 #Now lets add some color to cheat
-cd $PREFIX/etc/bash_completion.d/
+cd "$PREFIX/etc/bash_completion.d/" || exit
 curl -so cheat.bash https://raw.githubusercontent.com/chrisallenlane/cheat/master/cheat/autocompletion/cheat.bash
 
 
@@ -31,18 +31,19 @@ curl -so cheat.bash https://raw.githubusercontent.com/chrisallenlane/cheat/maste
 # https://raw.githubusercontent.com/its-pointless/gcc_termux/master/setup-pointless-repo.sh
 
 # Make the sources.list.d directory
-mkdir -pv $PREFIX/etc/apt/sources.list.d
+mkdir -pv "$PREFIX/etc/apt/sources.list.d"
 
 # Write the needed source file
 # should add a test to ensure no file exists there or that the repo isn't in their sources.list
-echo "deb [trusted=yes] https://its-pointless.github.io/files/ termux extras" >> $PREFIX/etc/apt/sources.list.d/pointless.list
+echo "deb [trusted=yes] https://its-pointless.github.io/files/ termux extras" >> "$PREFIX/etc/apt/sources.list.d/pointless.list"
 
 # Download signing key from https://its-pointless.github.io/pointless.gpg 
 wget -O "pointless.gpg" https://its-pointless.github.io/pointless.gpg 
-apt-key add pointless.gpg 
+apt-key add pointless.gpg
+
 
 # Now lets install all the necessary dependecies
-pkg install -y clang fftw libzmq libzmq-dev freetype freetype-dev libpng libpng-dev pkg-conf   
+pkg install -y clang fftw libzmq libzmq-dev freetype freetype-dev libpng libpng-dev pkg-conf
 
 # Setup the compiler
 LDFLAGS=" -lm -lcompiler_rt"
