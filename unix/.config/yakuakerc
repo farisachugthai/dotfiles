@@ -1,7 +1,8 @@
 [Appearance]
-BackgroundColorOpacity=20
+BackgroundColorOpacity=15
 Skin=breeze-gruvbox-dark
 SkinInstalledWithKns=true
+TerminalHighlightOnManualActivation=true
 Translucency=true
 
 [Desktop Entry]
