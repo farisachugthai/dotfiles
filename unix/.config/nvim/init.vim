@@ -176,7 +176,7 @@ let g:jedi#smart_auto_mappings = 0      " if you see from immediately create
 let g:jedi#popup_on_dot = 0             " import. slows things down too mucb.
 let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
 let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
-map <leader>n Call#JediUsages
+nnoremap <leader>n :call jedi#usages()<cr>
 
 " Tagbar:
 " https://github.com/majutsushi/tagbar
