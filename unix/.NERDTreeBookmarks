@@ -1,0 +1,5 @@
+dotfiles ~/projects/dotfiles/unix
+jedi-docs ~/.local/share/nvim/plugged/jedi-vim/pythonx/jedi/docs/docs
+nvim ~/.config/nvim
+
+pydocs ~/Dropbox/python/pydocs
