@@ -136,10 +136,10 @@ if [ -f ~/bin/google-cloud-sdk/completion.bash.inc ]; then
     source ~/bin/google-cloud-sdk/completion.bash.inc; 
 fi
 
+source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
+
 # The next line updates PATH for the Google Cloud SDK.
 if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
 # The next line enables shell command completion for gcloud.
 if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
-
-source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
