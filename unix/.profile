@@ -80,3 +80,5 @@ export CDPATH=.:~:"$HOME/projects"
 if [[ -n "$TMUX" ]]; then
     source "$HOME/.bashrc"
 fi
+
+export PATH="$HOME/.cargo/bin:$PATH"
