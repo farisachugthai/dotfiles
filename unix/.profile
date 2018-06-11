@@ -69,16 +69,16 @@ fi
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8                 # gathered from localectl
 
-# Manpath. Apparently this also may be unnecessary if not counter productive
-# because of the file /etc/manpath.config
+# TODO: Read through /etc/manpath.conf and figure out what needs to be done
+# to understand manpath and configure it when needed
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
 # cdpath. Just to make moving around a little easier
 export CDPATH=.:~:"$HOME/projects"
 
+if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
+
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then
     source "$HOME/.bashrc"
 fi
-
-export PATH="$HOME/.cargo/bin:$PATH"

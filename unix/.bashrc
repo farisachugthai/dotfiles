@@ -9,14 +9,10 @@ case $- in
 esac
 
 # Source in .bashrc.d
-if [[ -r "$HOME/.bashrc.d/tmux-completion.bash" ]]; then . "$HOME/.bashrc.d/tmux-completion.bash"; fi
-if [[ -r "$HOME/.bashrc.d/alias.bash" ]]; then . "$HOME/.bashrc.d/alias.bash"; fi
-
-if [[ -r "$HOME/.bashrc.d/functions.bash" ]]; then . "$HOME/.bashrc.d/functions.bash"; fi
-
-if [[ -f "$HOME/.bashrc.d/git-completion.bash" ]]; then
-    . "$HOME/.bashrc.d/git-completion.bash"
-fi
+for config in ~/.bashrc.d/*.bash; do
+    source "$config"
+done
+unset -v config
 
 # This shows the git state. This also prevents us from seeing what venv or conda env we're in.
 # This occurs because PS1 gets locked and won't display. On Termux that's challenging.
@@ -143,4 +139,6 @@ if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc' ]
 
 
 # Byobu
-[ -r "$HOME/.config/byobu/prompt" ] && . "$HOME/.config/byobu/prompt"   #byobu-prompt#
+if [[ "$(command -v byobu)" ]]; then
+    [ -r "$HOME/.config/byobu/prompt" ] && . "$HOME/.config/byobu/prompt"   #byobu-prompt#
+fi
