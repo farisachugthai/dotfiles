@@ -30,6 +30,8 @@ URxvt*scrollWithBuffer: false
 URxvt*scrollTtyOutput: false
 URxvt*scrollTtyKeypress: true
 
+
+! as a heads up the URLs are impossible to read so fix that
 URxvt.perl-ext-common: default,matcher,tabbed
 URxvt.urlLauncher: xdg-open
 URxvt*url-select.launcher: /usr/bin/firefox

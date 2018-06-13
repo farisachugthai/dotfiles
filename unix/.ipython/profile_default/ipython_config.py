@@ -51,7 +51,7 @@ c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
 
 ## Enable GUI event loop integration with any of ('glut', 'gtk', 'gtk2', 'gtk3',
 #  'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'tk', 'wx', 'gtk2', 'qt4').
-#c.InteractiveShellApp.gui = None
+c.InteractiveShellApp.gui ='qt5'
 
 ## Should variables loaded at startup (by startup files, exec_lines, etc.) be
 #  hidden from tools like %who?
@@ -121,7 +121,7 @@ c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
 #c.BaseIPythonApplication.overwrite = False
 
 ## The IPython profile to use.
-# c.BaseIPythonApplication.profile = 'updated'
+c.BaseIPythonApplication.profile = 'default'
 
 ## Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback
@@ -203,7 +203,7 @@ c.InteractiveShell.colors = 'Neutral'
 
 ## If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-c.InteractiveShell.display_page = False
+c.InteractiveShell.display_page = True
 
 ## (Provisional API) enables html representation in mime bundles sent to pagers.
 #c.InteractiveShell.enable_html_pager = False
@@ -316,7 +316,7 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 ## The name or class of a Pygments style to use for syntax
 #         highlighting: 
 #  default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc, pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor, paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
-#c.TerminalInteractiveShell.highlighting_style = traitlets.Undefined
+c.TerminalInteractiveShell.highlighting_style ='tango'
 
 ## Override highlighting format for specific tokens
 #c.TerminalInteractiveShell.highlighting_style_overrides = {}

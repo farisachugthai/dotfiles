@@ -14,6 +14,11 @@ for config in ~/.bashrc.d/*.bash; do
 done
 unset -v config
 
+# For the secrets
+if [[ -f "$HOME/.bashrc.local" ]]; then
+    . "$HOME/.bashrc.local"
+fi
+
 # This shows the git state. This also prevents us from seeing what venv or conda env we're in.
 # This occurs because PS1 gets locked and won't display. On Termux that's challenging.
 if [[ -z "$DISPLAY" ]]; then
