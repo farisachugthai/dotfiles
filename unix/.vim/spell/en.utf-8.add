@@ -227,6 +227,7 @@ vim
 vimrc
 spellchecker
 autocomplete
+<<<<<<< HEAD
 https
 vim
 docstring
@@ -245,3 +246,31 @@ ubuntu
 kate
 vim
 api
+=======
+fallback
+w3m
+keymap
+hyperlink
+stderr
+autocorrect
+vim
+Gitignore
+vim
+bashrc
+Diffs
+diffs
+vim
+windo
+diffthis
+wiki
+diff
+makes
+diffoff
+Tabularize
+diffupdate
+byobu
+chmod
+tmp
+>>>>>>> termux
+vimscript
+vint

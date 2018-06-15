@@ -30,6 +30,7 @@ fi
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
     export PATH="$PATH:$YARNPATH"
+    source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
 fi
 
 
@@ -48,6 +49,9 @@ export COLORTERM="colorterm"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 
 # cheat.py
@@ -69,12 +73,7 @@ fi
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8                 # gathered from localectl
 
-# TODO: Read through /etc/manpath.conf and figure out what needs to be done
-# to understand manpath and configure it when needed
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
-
-# cdpath. Just to make moving around a little easier
-export CDPATH=.:~:"$HOME/projects"
 
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 

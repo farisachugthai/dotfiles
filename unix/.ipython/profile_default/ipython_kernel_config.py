@@ -219,7 +219,11 @@
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
+<<<<<<< HEAD
 c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
+=======
+#c.InteractiveShell.ast_node_interactivity = 'last_expr'
+>>>>>>> termux
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -234,10 +238,17 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #c.InteractiveShell.autocall = 0
 
 ## Autoindent IPython code entered interactively.
+<<<<<<< HEAD
 c.InteractiveShell.autoindent = True
 
 ## Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True
+=======
+#c.InteractiveShell.autoindent = True
+
+## Enable magic commands to be called without the leading %.
+#c.InteractiveShell.automagic = True
+>>>>>>> termux
 
 ## The part of the banner to be printed before the profile
 #c.InteractiveShell.banner1 = "Python 3.6.5 |Anaconda, Inc.| (default, Apr 29 2018, 16:14:56) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.4.0 -- An enhanced Interactive Python. Type '?' for help.\n"
@@ -251,7 +262,11 @@ c.InteractiveShell.automagic = True
 #  less than 3, it is reset to 0 and a warning is issued).  This limit is defined
 #  because otherwise you'll spend more time re-flushing a too small cache than
 #  working
+<<<<<<< HEAD
 c.InteractiveShell.cache_size = 100000
+=======
+#c.InteractiveShell.cache_size = 1000
+>>>>>>> termux
 
 ## Use colors for displaying information about objects. Because this information
 #  is passed through a pager (like 'less'), and some pagers get confused with
@@ -259,7 +274,11 @@ c.InteractiveShell.cache_size = 100000
 #c.InteractiveShell.color_info = True
 
 ## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
+<<<<<<< HEAD
 c.InteractiveShell.colors = 'Linux'
+=======
+#c.InteractiveShell.colors = 'Neutral'
+>>>>>>> termux
 
 ## 
 #c.InteractiveShell.debug = False
@@ -269,17 +288,29 @@ c.InteractiveShell.colors = 'Linux'
 
 ## If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
+<<<<<<< HEAD
 c.InteractiveShell.display_page = True
+=======
+#c.InteractiveShell.display_page = False
+>>>>>>> termux
 
 ## (Provisional API) enables html representation in mime bundles sent to pagers.
 #c.InteractiveShell.enable_html_pager = False
 
 ## Total length of command history
+<<<<<<< HEAD
 c.InteractiveShell.history_length = 100000
 
 ## The number of saved history entries to be loaded into the history buffer at
 #  startup.
 c.InteractiveShell.history_load_length = 10000
+=======
+#c.InteractiveShell.history_length = 10000
+
+## The number of saved history entries to be loaded into the history buffer at
+#  startup.
+#c.InteractiveShell.history_load_length = 1000
+>>>>>>> termux
 
 ## 
 #c.InteractiveShell.ipython_dir = ''
