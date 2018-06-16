@@ -250,7 +250,7 @@ let g:lightline.colorscheme = 'seoul256'
 "let g:deoplete#enable_smart_case = 1
 
 "" disable autocomplete by default
-let b:deoplete_disable_auto_complete=1 
+let b:deoplete_disable_auto_complete=1
 let g:deoplete_disable_auto_complete=1
 
 "" Disable the candidates in Comment/String syntaxes.
@@ -274,6 +274,6 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Language Server
 let g:LanguageClient_serverCommands = {
-            \'sh': ['bash-language-server', 'start'], 
-            \ 'python': ['pyls', 'start'] 
+            \'sh': ['bash-language-server', 'start'],
+            \ 'python': ['pyls', 'start']
             \ }

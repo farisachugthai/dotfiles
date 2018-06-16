@@ -3,7 +3,7 @@ cheat /storage/emulated/0/Android/data/com.dropbox.android/files/u730416625/scra
 dotrepo ~/projects/dotfiles/unix
 nvim ~/.config/nvim
 prefix /data/data/com.termux/files/usr
-vim ~/.vim
 word-freq ~/projects/word-freq
 
+vim ~/.vim
 pydoc3 ~/python/python-3.6.4-docs-text
