@@ -24,8 +24,8 @@
     strategy-option = patienece
 
 [merge]
-    guitool = gvimdiff3
-	tool = vimdiff3
+    # guitool = gvimdiff3
+	tool = nvim -d
 	color = auto
     mergestyle = diff3
     prompt = false

@@ -1,3 +1,5 @@
+# gitignore
+.mypy_cache/
 # Jupyter Notebooks / JupyterLab
 .ipynb_checkpoints
 
@@ -16,8 +18,7 @@
 # PyCharm
 .idea
 
-# Also probably unnecessary to commit tag files
-# From:
+# From: 
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
@@ -27,10 +28,10 @@
 /tags/
 TAGS
 .TAGS
-!TAGS/
+TAGS/
 tags
 .tags
-!tags/
+tags/
 gtags.files
 GTAGS
 GRTAGS

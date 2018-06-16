@@ -1,40 +1,3 @@
-""""""""""""""""""""""""""""""""
-" My Personal Vimrc            "
-" Maintainer:   Faris Chugthai "
-""""""""""""""""""""""""""""""""
-
-" TABLE OF CONTENTS
-""""""""""""""""""""""""""""""""
-" Vundle, Plugins and Other Sourced Files
-" Filetype Specific Options
-"   IPython
-"   Web Dev
-"   Markdown
-" Global Options
-"   Leader
-"   Viminfo
-"   Pep8 Global Options
-"   Spell Checking
-"   Other Global Options
-"   Syntax Highlighting
-" Buffers, Windows, and Tabs
-" Mappings
-" Plugin Configurations
-"   Built-In
-"   Cheat40
-"   Vundle
-"   NERDTree
-"   NERDTree Tabs
-"   Jedi
-"   Vimwiki
-"   Fugitive
-"   Tagbar
-"   Flake8
-"   Ale
-"""""""""""""""""""""""""""""""""
-"
-"
-" Vundle, Plugins and Other Sourced Files
 set nocompatible
 filetype off
 
@@ -59,19 +22,15 @@ Plugin 'itchyny/lightline.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" currently using the local file for colorschemes and powerline.
-" WSL has very inconsistent colorschemes for sh and Vim
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
 endif
 
-" Common abbreviations / misspellings 
 if filereadable(glob("~/.vim/autocorrect.vim"))
     source ~/.vim/autocorrect.vim
 endif
 
 " Filetype Specific Options:
-
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
@@ -80,22 +39,12 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 au BufWritePre,FileWritePre *.js ks|call LastMod()|'s
 
 " Markdown:
-" gvim requires an additional BufFilePre in the autocommand line for Markdown file type recognition with the Save As… :sav command
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
-
-" Global Options:
-" If you want to review all options at once, run :set"
 
 " Leader:
 let mapleader = "\<Space>"
 
 " Viminfo:
-" in order we go:
-" '100 : marks will be remembered for the last 500 files
-" <200 : Contents of registers up to 1000 lines each will be recorded
-" s200 : Registers with more than 1000 Kbyte are not
-" put the viminfo file im the standard .vim dir
-
 " Also don't let neovim and vim use the same viminfo file
 if !has('nvim')
     set viminfo='100,<200,s200,n$HOME/.vim/viminfo
@@ -103,187 +52,91 @@ endif
 
 
 " Pep8 Global Options: 
-"
 set tabstop=4                   " show existing tab with 4 spaces width
 set shiftwidth=4                " when indenting with '>', use 4 spaces width
 set expandtab                   " On pressing tab, insert 4 spaces
-" Number of spaces that a <Tab> counts for while performing editing
-" operations, like inserting a <Tab> or using <BS>.
 set softtabstop=4
-
-" enable all Python syntax highlighting features
 let python_highlight_all = 1
 
 
 " Spell Checker:
-"
-" Turn on spell checks either by filetype or explicit buffers. To configure:
 set spelllang=en
 
 if !has('nvim')
     set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 endif
 
-" Autocomplete in insert mode
-set complete+=kspell 
+set complete+=kspell                    " Autocomplete in insert mode
 
-" Limit the number of suggestions from 'spell suggest'
-set spellsuggest=5
+set spellsuggest=5                      " Limit the number of suggestions from 'spell suggest'
 
-" Loving this mapping. May end up saying spell checking is never on by default
 map <Leader>s :setlocal spell!<CR>
 
-" To improve insert mode completion let's add a dictionary
-" Haven't found a folder with a words file on termux so this check is
-" necessary
-" if isdirectory("/usr/share/dict/")
-    " set dictionary+=/usr/share/dict/words
-" endif
+if isdirectory("/usr/share/dict/")
+    set dictionary+=/usr/share/dict/words
+endif
 
 
-" Other Global Options: 
-"
-" cursorline. add a line underneath where your cursor is.
 set cul
-
-"lets colorize the 80 char line for you
 set colorcolumn=+1
-
-" make the command line 2 lines high
 set ch=2
-
-" Switch on search pattern highlighting.
 set hlsearch
-
-" show line and column number
 set ruler
-
-" Give backspaces seemingly obvious behavior.
 set backspace=indent,eol,start
-
-" show (partial) command in status line
 set showcmd
-
-" show number lines on the left
 set number
-
-" show matching brackets
 set showmatch
-
-" do case insensitive matching
 set ignorecase
-
-" do smart autoindenting when starting a new line
 set smartindent
-
-" at <TAB> at beginning line inserts spaces set in shiftwidth
 set smarttab
-
-" they're annoying
 set noswapfile
-
-" simple is better than complex
 set mouse=a
-
-" Use the system clipboard. From vim-better-default
 if has('unnamedplus')
   set clipboard+=unnamedplus,unnamed
 else
   set clipboard+=unnamed
 endif
-
-" Store in unix format to prevent conversion issues when checking into github
 set fileformat=unix
 set encoding=utf-8
-
-" Command line autocomplete appears as a menu
 set wildmenu
-
-" Complete longest common string. If more than one, then list alternatives.
 set wildmode=longest,list:longest
-
-" What does the autocomplete pull from? This sets it to the current buffer,
-" any open ones and any tags you may have.
 set complete+=.,b,u,t
-
-" fileignorecase ignores case usage in files.
 set fileignorecase
-
 set display+=lastline
-
-" Display matching searches incrementally
 set incsearch
 
 set history=1000
 
 set sessionoptions-=options
-
-" don't ring or make noise
 set noerrorbells
-
-"more characters are sent to the screen for redrawing instead of using
 "insert/delete line commands. this makes Vim seem smoother
 set ttyfast
-
-" which wrap allows hitting the right key and going to the next line
 set whichwrap+=<,>,h,l,[,]
 
 if has('persistent_undo')
     set undodir=~/.vim/undodir
     set undofile	" keep an undo file (undo changes after closing)
 endif
-
-" Use one space not two after punctuation.
 set nojoinspaces
 
-" Set vim to look for a tags file recursively until it finds one.
-
-
-" Syntax Highlighting:
-"if we can have syntax recognition,this has to come after the colorscheme
 if has("syntax")
     syntax on
 endif
 
-" set modelines to enable syntax highlighting even when the filename differs
-" here's an example of a modeline
-" /* vim: set filetype=markdown : */
 set modeline
-
-
-" Buffers Windows Tabs:
-"
 "look to see if a buffer is open before opening a new one
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
 catch
 endtry
-
-"modified buffers are hidden and multiple buffers can be worked on without
 "forcing the user to save
 set hidden
-
-"if i change a file in a different window, reload it
 set autoread
-
-" Opening a window will place it below the current one
 set splitbelow
-
-" If vertical split is invoked put it on the right
 set splitright
-
-" Last window gets a status line
 set laststatus=2
-
-" Max out at 50 tabs
 set tabpagemax=50
-
-
-" Mappings:
-" To see all current mappings run :map
-"
-"
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -298,99 +151,25 @@ map <Leader>a ggVG
 
 " Map :NERDTreeTabsToggle to ease toggling the plugin
 map <Leader>n <plug>NERDTreeMirrorToggle<CR>
-
-" Between the shell and IPython, autocomplete needs to be set to tab.
-" Actually Tab is sorely needed to set whitespace in Python and Markdown
-" imap <Tab> <C-P>
-
-
-" Plugin Configuration:
-" Builtin:
-"
-" Let Vim open Man pages with ex cmd
-" :Man [cmd]
-" From /usr/share/vim/vim80/doc/usr_12.txt
 " Invoke while in Vim by putting your cursor over a word and run [Leader]K
 runtime! ftplugin/man.vim
-
-" from filetype line 590
 let g:ft_man_folding_enable = 0
-
-" filetype 596
 set keywordprg=:Man
-
-
-" Cheat40:
-"Add a Vim cheat sheet with
-"git clone https://github.com/lifepillar/vim-cheat40.git ~/.vim/pack/bundle/start/cheat40
-
-
-" Vundle:"
-" https://github.com/VundleVim/Vundle.vim/blob/master/README.md 
-
-" NERDTree:
-" https://github.com/scrooloose/nerdtree
-"
-"Open NERDTree automatically
-autocmd Vimenter * NERDTree
-
-" If Vim is opened with a file name as an argument, focus on the file
-autocmd VimEnter * wincmd w
-
-" How can I open a NERDTree automatically when vim starts up if no files were specified?
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-"How can I open NERDTree automatically when vim starts up on opening a directory?
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 "Close vim if the only window left is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"Close NERDTree if you open a file
 let NERDTReeQuitOnOpen = 1
-
-" Other recommended options
 let NERDTreeDirArrows = 1
-
-" Where NERDTree starts by default
 let g:NERDTreeWinPos = "right"
-
-" Show hidden files by default. Can slow things down
 let NERDTreeShowHidden = 1
-
-" Need my bookmarks
 let NERDTreeShowBookmarks = 1
-
-" Sort nodes in a more obvious way (1,2,11,12,21,31) not (1,11,12,2,21,31)
 let NERDTreeNaturalSort = 1
-
-" Let NERDTree change your CWD
 let NERDTreeChDirMode = 2
-
-" Show line numbers
 let NERDTreeShowLineNumbers=1
-
-
-" NERDTree Tabs:
-"
 " Do not open NERDTree if vim starts in diff mode
 let g:nerdtree_tabs_no_startup_for_diff = 1
-
-" On startup - focus NERDTree when opening a directory, focus the file if 
-" editing a specified file. When set to `2`, always focus file after startup.
-let g:nerdtree_tabs_smart_startup_focus = 1
-
-" Unfocus NERDTree when leaving a tab for descriptive tab names
 let g:nerdtree_tabs_meaningful_tab_names = 1
-
-" Close current tab if there is only one window in it and it's NERDTree
 let g:nerdtree_tabs_autoclose = 1
-
-" Open NERDTree on console vim startup
-let g:nerdtree_tabs_open_on_console_startup = 1 
-
 " When starting up with a directory name as a parameter, cd into it
 let g:nerdtree_tabs_startup_cd = 1
 
@@ -406,6 +185,9 @@ let g:jedi#smart_auto_mappings = 0
 " if the autocomplete on dot slows things down too much set to 0
 let g:jedi#popup_on_dot = 0
 
+let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
+let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
+
 " Fugitive:
 " https://github.com/tpope/vim-fugitive
 " The following options clean up our statusline
@@ -415,17 +197,11 @@ else
    set statusline=%f\ %m\ (%L\ lines)\ %r\ %=(%l,%c)\ %y
 endif
 
-" Tagbar:
-" https://github.com/majutsushi/tagbar
 nmap <F8> :TagbarToggle<CR>
-
-" Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
 
-" Ale:
-" https://github.com/w0rp/ale
-"
-" <Leader>a is already mapped so use l for lint
 nmap <Leader>l <Plug>(ale_toggle_buffer)
+"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
+let g:gruvbox_contrast_dark = 'hard'

@@ -1,9 +1,11 @@
-chatistics ~/projects/chatistics
-cheat /storage/emulated/0/Android/data/com.dropbox.android/files/u730416625/scratch/.cheat
-dotrepo ~/projects/dotfiles/unix
+dotfiles ~/projects/dotfiles/unix
+jedi-docs ~/.local/share/nvim/plugged/jedi-vim/pythonx/jedi/docs/docs
 nvim ~/.config/nvim
 prefix /data/data/com.termux/files/usr
 word-freq ~/projects/word-freq
+chatistics ~/projects/chatistics
+cheat /storage/emulated/0/Android/data/com.dropbox.android/files/u730416625/scratch/.cheat
+prefix /data/data/com.termux/files/usr
 
+pydocs ~/Dropbox/python/pydocs
 vim ~/.vim
-pydoc3 ~/python/python-3.6.4-docs-text

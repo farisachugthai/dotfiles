@@ -1,1 +1,1 @@
-/data/data/com.termux/files/home/projects/dotfiles/unix/.vim/ftplugin/python.vim
+/home/faris/projects/dotfiles/unix/.vim/ftplugin/python.vim
