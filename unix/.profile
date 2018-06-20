@@ -8,7 +8,8 @@ eval "$(pip completion --bash)"
 
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-if [[ -d "$HOME/.gem/ruby/2.5.0/bin" ]]; then
+
+if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 fi
 

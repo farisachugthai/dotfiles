@@ -6,6 +6,6 @@ word-freq ~/projects/word-freq
 chatistics ~/projects/chatistics
 cheat /storage/emulated/0/Android/data/com.dropbox.android/files/u730416625/scratch/.cheat
 prefix /data/data/com.termux/files/usr
+vim ~/.vim
 
 pydocs ~/Dropbox/python/pydocs
-vim ~/.vim
