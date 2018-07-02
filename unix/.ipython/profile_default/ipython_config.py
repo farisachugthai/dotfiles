@@ -153,7 +153,7 @@ c.TerminalIPythonApp.display_banner = True
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
+c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -316,8 +316,9 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 ## The name or class of a Pygments style to use for syntax
 #         highlighting: 
 #  default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc, pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor, paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
-c.TerminalInteractiveShell.highlighting_style = 'default'
+c.TerminalInteractiveShell.highlighting_style = 'monokai'
 # I'm sure tango is plenty configurable but out of the box it's completely illegible
+# default has impossible to read strings and in a truncated sense just led to my first rm -r mistake
 
 ## Override highlighting format for specific tokens
 #c.TerminalInteractiveShell.highlighting_style_overrides = {}

@@ -104,7 +104,7 @@ fi
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
-export FZF_DEFAULT_OPTS='--preview="head -n 30 {}" --preview-window=right:80%:wrap --cycle'
+export FZF_DEFAULT_OPTS='--preview="head -n 30 {}" --preview-window=right:50%:wrap --cycle'
 
 # Python
 # >>> conda initialize >>>

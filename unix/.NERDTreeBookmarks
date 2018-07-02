@@ -1,11 +1,12 @@
 dotfiles ~/projects/dotfiles/unix
 jedi-docs ~/.local/share/nvim/plugged/jedi-vim/pythonx/jedi/docs/docs
 nvim ~/.config/nvim
-prefix /data/data/com.termux/files/usr
+vim ~/.vim
 word-freq ~/projects/word-freq
+py_tut ~/python/tutorials
+
+pydocs ~/Dropbox/python/pydocs
+prefix /data/data/com.termux/files/usr
 chatistics ~/projects/chatistics
 cheat /storage/emulated/0/Android/data/com.dropbox.android/files/u730416625/scratch/.cheat
 prefix /data/data/com.termux/files/usr
-vim ~/.vim
-
-pydocs ~/Dropbox/python/pydocs
