@@ -33,6 +33,7 @@ Plug 'zchee/deoplete-jedi'
 Plug 'maximbaz/lightline-ale'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
+Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
 
@@ -95,6 +96,12 @@ set complete+=kspell
 set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
 
+" Tags
+set foldenable
+set foldlevelstart=10               " Enables most folds
+set foldnestmax=5                   " Why would anything be folded this much
+set foldmethod=indent               " Gotta love Python
+
 " Other Global Options: 
 set background=dark
 set mouse=a                    " Automatically enable mouse usage
@@ -117,13 +124,14 @@ set noswapfile
 set guifont='Fira\ Code\ Mono:h11'
 
 if has('unnamedplus')           " Use the system clipboard.
-  set clipboard+=unnamedplus,unnamed
+  set clipboard+=unnamed,unnamedplus
 else                            " Accomodate Termux
   set clipboard+=unnamed
 endif
 
 set wildmenu                   " Show list instead of just completing
 set wildmode=longest,list:longest       " Longest string or list alternatives
+set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
 set complete+=.,b,u,t           " open buffer, open buffers, and tags
 set fileignorecase
 set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
@@ -191,8 +199,7 @@ let g:NERDTreeShowBookmarks = 1
 let g:NERDTreeNaturalSort = 1
 let g:NERDTreeChDirMode = 2
 let g:NERDTreeShowLineNumbers=1
-let g:NERDTreeMouseMode=2           " Give more functionality to the mouse
-                                    " while navigating NERDTree
+let g:NERDTreeMouseMode=2           " Give more functionality to the mouse while navigating NERDTree
 
 " NERDTree Tabs:
 let g:nerdtree_tabs_no_startup_for_diff = 1
@@ -200,35 +207,28 @@ let g:nerdtree_tabs_meaningful_tab_names = 1
 let g:nerdtree_tabs_autoclose = 1
 let g:nerdtree_tabs_startup_cd = 1
 
+" NERDCom:
+let g:NERDSpaceDelims = 1
+
 " Jedi:
-let g:jedi#smart_auto_mappings = 0      " if you see from immediately create
-let g:jedi#popup_on_dot = 0             " import. slows things down too mucb.
+let g:jedi#smart_auto_mappings = 0          " if you see from immediately create
+let g:jedi#popup_on_dot = 0                 " import. slows things down too much
 let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
-nnoremap <leader>n :call jedi#usages()<cr>
-" HOW IN THE WORLD IS JEDI GLOBERRING 0 THAT IS SO INCONVENIENT
+"nnoremap <leader>n :call jedi#usages()<cr>             " not clobberig!
 
-
-" Adapted largely from:
-" https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/jedi.vim
-function! StartJedi()
-    let g:jedi#completions_enabled = 0
-    let g:jedi#auto_vim_configuration = 0
-
-    let g:jedi#use_splits_not_buffers = 'right'
-    let g:jedi#documentation_command = '<leader>h'
-    let g:jedi#usages_command = '<leader>u'
-    let g:jedi#completions_command = '<C-N>'
-    " Improve performance by setting this to 0:
-    " https://github.com/davidhalter/jedi-vim/issues/163#issuecomment-73343003
-    let g:jedi#show_call_signatures = 2
-
-    augroup PreviewOnBottom
-        autocmd InsertEnter * set splitbelow
-        autocmd InsertLeave * set splitbelow!
-    augroup END
-endfunction
-
-" call PlugOnLoad('jedi-vim', 'call StartJedi()')       " code doesn't work
+" Fugitive:
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>ge :Gedit<CR>
+nnoremap <silent> <leader>gE :Gedit<space>
+nnoremap <silent> <leader>gr :Gread<CR>
+nnoremap <silent> <leader>gR :Gread<space>
+nnoremap <silent> <leader>gw :Gwrite<CR>
+nnoremap <silent> <leader>gW :Gwrite!<CR>
+nnoremap <silent> <leader>gq :Gwq<CR>
+nnoremap <silent> <leader>gQ :Gwq!<CR>
 
 " Tagbar:
 " https://github.com/majutsushi/tagbar
@@ -247,7 +247,7 @@ nmap <Leader>l <Plug>(ale_toggle_buffer)
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 let g:gruvbox_contrast_dark = 'hard'
 
-" Lightline
+" Lightline:
 let g:lightline = {
 			\ 'active': {
 			\   'left': [ [ 'mode', 'paste' ],
@@ -260,22 +260,27 @@ let g:lightline = {
 
 let g:lightline.colorscheme = 'seoul256'
 
-
-" Language Servers
+" Language Servers:
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'python': ['pyls'],
     \ 'sh': ['bash-language-server', 'start']
     \ }
 
-
-"" deoplete options
+" Deoplete:
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
-" Under the assmption we're in the right virtualenv
-" Might need to do a try catch and cathc with a list of providers
-let g:python3_host_prog = '$HOME/miniconda/envs/neovim_vscode/bin/python'
+if has('python3')
+    " Termux's hardcoded python interpreter
+    if filereadable('$PREFIX/bin/python')
+        let g:python3_host_prog = '$PREFIX/bin/python'
+    endif
+
+    " should probably put some logic somewhere to ensure that this is working
+    " correctly, that i activated conda, i'm in the right environment etc
+    let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
+endif
 
 "" disable autocomplete by default
 let b:deoplete_disable_auto_complete=1
@@ -286,10 +291,6 @@ call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
 
 "" Close the autocompleter when we leave insert mode
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-"" set sources aka really still trying to figure out how tf language clientworks
-"" let g:deoplete#custom#sources.python = ['LanguageClient']
-"" let g:deoplete#custom#sources.python3 = ['LanguageClient']
 
 "" Autoselect feature
 set completeopt+=noinsert
@@ -302,7 +303,6 @@ set completeopt+=noinsert
 "sources.
 " call deoplete#custom#source('jedi', 'is_debug_enabled', 1)
 
-" Deoplete going crazy with the dictionary completions
 " Sample configuration for dictionary source with multiple
 " dictionary files.
 
@@ -315,10 +315,7 @@ set completeopt+=noinsert
 "\ 'dictionary', 'sorters', [])
 
 "" Do not complete too short words
-"call deoplete#custom#source(
-"\ 'dictionary', 'min_pattern_length', 4)
-"
-" Quite honestly I don't know what most of these commands do but I'm damn sure
-" I'm gonna figure it out
-" Still getting a weird error about my remote plugins and checkhealth is
-" saying that something is set wrong and that i need to enable debugging. Pft
+call deoplete#custom#source(
+\ 'dictionary', 'min_pattern_length', 4)
+
+" Vim: set foldmethod=marker :

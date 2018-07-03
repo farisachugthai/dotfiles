@@ -148,7 +148,6 @@ iab Charector Character
 iab Cheif Chief
 iab Chekc Check
 iab Chnage Change
-ia Chugthai Chugthai
 iab Cieling Ceiling
 iab Circut Circuit
 iab Claer Clear
@@ -307,7 +306,6 @@ iab Familair Familiar
 iab Familar Familiar
 iab Familliar Familiar
 iab Fammiliar Familiar
-ia Faris Faris
 iab Feild Field
 iab Feilds Fields
 iab Fianlly Finally
@@ -963,7 +961,6 @@ iab charector character
 iab cheif chief
 iab chekc check
 iab chnage change
-ia chugthai Chugthai
 iab cieling ceiling
 iab circut circuit
 iab claer clear
@@ -1122,7 +1119,6 @@ iab familair familiar
 iab familar familiar
 iab familliar familiar
 iab fammiliar familiar
-ia faris Faris
 iab feild field
 iab feilds fields
 iab fianlly finally
