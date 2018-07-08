@@ -7,6 +7,7 @@ if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
     call system('curl  ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ --proto=https https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
     " normal PlugInstall +UpdateRemotePlugins :clo
+    " Above didn't work. Unsure why.
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -34,6 +35,8 @@ Plug 'maximbaz/lightline-ale'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'nanotech/jellybeans.vim'
+Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }         " Better markdown support 
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -50,6 +53,10 @@ set inccommand=split                " This alone is enough to never go back
 set termguicolors
 
 " Filetype Specific Options:
+" Python:
+" Should wrap in a func. Dont want to have happen every time.
+" au BufNewFile *.py 0r ~/.config/nvim/skeleton.py
+
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
@@ -88,6 +95,7 @@ if filereadable('/usr/share/dict/american-english')
 endif
 
 " Made on termux with
+" TODO: Check if termux and if not readable run the command below
 " mkspell ~/.config/nvim/spell/en.hun.spl $PREFIX/share/hunspell/en_US.aff
 if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
@@ -96,24 +104,17 @@ set complete+=kspell
 set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
 
-" Tags
+" Folds
 set foldenable
 set foldlevelstart=10               " Enables most folds
 set foldnestmax=5                   " Why would anything be folded this much
 set foldmethod=indent               " Gotta love Python
 
 " Other Global Options: 
+set tags=./tags,./../tags,./*/tags      " usr_29
 set background=dark
 set mouse=a                    " Automatically enable mouse usage
 set cursorline
-" don't know what i'm doing wrong here but only recently started learning viml
-"if g:textwidth == 0             " Basically saying is it ever unset? Set it 100
-    "setlocal colorcolumn = 100
-"elseif                          " how do we check that a variable is set to a non-zero integer?
-    "setlocal colorcolumn+=1
-"else                            " Don't actually think this part does anything?
-    "setlocal colorcolumn=+1
-"endif
 set cmdheight=2
 set number
 set showmatch
@@ -122,6 +123,8 @@ set smartcase
 set smartindent
 set noswapfile
 set guifont='Fira\ Code\ Mono:h11'
+set path+=**        			" Make autocomplete for filenames work
+set autochdir
 
 if has('unnamedplus')           " Use the system clipboard.
   set clipboard+=unnamed,unnamedplus
@@ -162,13 +165,22 @@ noremap <C-l> <C-w>l
 tnoremap <Esc> <C-W>N
 map <Leader>a ggVG
 map <Leader>nt <plug>NERDTreeMirrorToggle<CR>
+imap <F5> <Esc>:w<CR>:!clear;python %<CR>       " f5 to run py file
 
 " Plugin Configuration:
-"
 " fzf
 " Adapted from:
 " https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/fzf.vim
+
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
 let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
@@ -191,15 +203,16 @@ let g:fzf_colors =
 
 " NERDTree:
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTReeQuitOnOpen = 1
+let g:NERDTreeQuitOnOpen = 1            " If only NERDTree is open, close Vim
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeNaturalSort = 1
+let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. default is 1, 10, 11...100...2
 let g:NERDTreeChDirMode = 2
 let g:NERDTreeShowLineNumbers=1
 let g:NERDTreeMouseMode=2           " Give more functionality to the mouse while navigating NERDTree
+let g:NERDTreeIgnore=['\.pyc$', '\.pyo$', '__pycache__$']     " Ignore files in NERDTree
 
 " NERDTree Tabs:
 let g:nerdtree_tabs_no_startup_for_diff = 1
@@ -208,13 +221,14 @@ let g:nerdtree_tabs_autoclose = 1
 let g:nerdtree_tabs_startup_cd = 1
 
 " NERDCom:
-let g:NERDSpaceDelims = 1
+let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
+let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
+let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
 
 " Jedi:
-let g:jedi#smart_auto_mappings = 0          " if you see from immediately create
-let g:jedi#popup_on_dot = 0                 " import. slows things down too much
-let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
-"nnoremap <leader>n :call jedi#usages()<cr>             " not clobberig!
+let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
+let g:jedi#popup_on_dot = 1                 " 'import'. slows things down too much
+let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
 
 " Fugitive:
 nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -233,6 +247,11 @@ nnoremap <silent> <leader>gQ :Gwq!<CR>
 " Tagbar:
 " https://github.com/majutsushi/tagbar
 nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 0  " do not automatically jump to tagbar when opened
+let g:tagbar_autoclose = 1  " when you jump to a tag close tagbar
+" autocmd FileType python nested :TagbarOpen  " open tagbar when you see .py
+" autocmd BufWinLeave python nested :TagbarClose
+let g:tagbar_show_linenumbers = 1
 
 " Flake8:
 " https://github.com/nvie/vim-flake8
@@ -243,57 +262,90 @@ let g:flake8_show_in_gutter=1
 " <Leader>a is already mapped so use l for lint
 nmap <Leader>l <Plug>(ale_toggle_buffer)
 
+
+function! LinterStatus() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  return l:counts.total == 0 ? '' : printf(
+        \   '%dW %dE',
+        \   all_non_errors,
+        \   all_errors
+        \)
+endfunction
+
+set statusline+=%#ALEWarningSign#                      " Warning color
+set statusline+=%{LinterStatus()}    
+
+
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
+" TODO: Check if gruvbox is the colorscheme
 let g:gruvbox_contrast_dark = 'hard'
+
 
 " Lightline:
 let g:lightline = {
-			\ 'active': {
-			\   'left': [ [ 'mode', 'paste' ],
-			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-			\ },
-			\ 'component_function': {
-			\   'gitbranch': 'fugitive#head'
-			\ },
-			\ }
+	\ 'active': {
+	\   'left': [ [ 'mode', 'paste' ],
+	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+	\ },
+	\ 'component_function': {
+	\   'gitbranch': 'fugitive#head'
+	\ },
+	\ }
 
 let g:lightline.colorscheme = 'seoul256'
 
-" Language Servers:
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start']
-    \ }
 
-" Deoplete:
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
 
+" Setup Python remote plugins
 if has('python3')
-    " Termux's hardcoded python interpreter
-    if filereadable('$PREFIX/bin/python')
-        let g:python3_host_prog = '$PREFIX/bin/python'
+    if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
+        let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
     endif
 
-    " should probably put some logic somewhere to ensure that this is working
-    " correctly, that i activated conda, i'm in the right environment etc
-    let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
+    if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
+        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
+    endif
 endif
 
-"" disable autocomplete by default
-let b:deoplete_disable_auto_complete=1
-let g:deoplete_disable_auto_complete=1
 
-"" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+" Language Servers:
+let g:LanguageClient_serverCommands = { 'python': ['pyls']  }
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_selectionUI = 'fzf'
+let g:loaded_python_provider = 1        " disable py2 support
+
+" Deoplete:
+
+"" disable autocomplete by default
+let g:deoplete_disable_auto_complete = 1
+let g:deoplete#enable_smart_case = 1
 
 "" Close the autocompleter when we leave insert mode
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 "" Autoselect feature
 set completeopt+=noinsert
+
+let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
+autocmd InsertEnter * call deoplete#enable()    " if i enter insert mode go for it
+call deoplete#custom#option('smart_case', v:true)
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return deoplete#close_popup() . "\<CR>"
+endfunction
+
+"" Disable the candidates in Comment/String syntaxes.
+call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+
+"" Close the autocompleter when we leave insert mode
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Enable jedi source debug messages
 " call deoplete#custom#option('profile', v:true)
@@ -303,19 +355,23 @@ set completeopt+=noinsert
 "sources.
 " call deoplete#custom#source('jedi', 'is_debug_enabled', 1)
 
-" Sample configuration for dictionary source with multiple
-" dictionary files.
-
-" Remove this if you'd like to use fuzzy search
-"call deoplete#custom#source(
-"\ 'dictionary', 'matchers', ['matcher_head'])
-
-"" If dictionary is already sorted, no need to sort it again.
-"call deoplete#custom#source(
-"\ 'dictionary', 'sorters', [])
-
 "" Do not complete too short words
 call deoplete#custom#source(
 \ 'dictionary', 'min_pattern_length', 4)
+
+" Collect keywords from buffer path not directory Nvim was launched from
+call deoplete#custom#source(
+\ 'file', 'enable_buffer_path', 'True')
+
+" Setting up the omnifuncs
+set omnifunc=LanguageClient#complete
+
+autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
+
+" Devicons
+let g:webdevicons_enable = 1
+
+" adding the flags to NERDTree 
+let g:webdevicons_enable_nerdtree = 1
 
 " Vim: set foldmethod=marker :

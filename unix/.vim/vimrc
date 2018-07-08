@@ -2,9 +2,8 @@
 " vim configuration
 " Maintainer: Faris Chugthai
 " 
-set nocompatible
+set nocompatible " noqa
 
-" Poop if ~/.vim/autoload doesn't exist as a folder then this fails silently
 if !filereadable('~/.vim/autoload/plug.vim')
     call system('wget -O ~/.vim/autoload/plug.vim 
                 \ http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
@@ -39,11 +38,12 @@ Plug 'roxma/vim-hug-neovim-rpc'
 
 call plug#end()
 
-if filereadable(glob('~/.vim/vimrc.local'))
+
+if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
 endif
 
-if filereadable(glob('~/.vim/autocorrect.vim'))
+if filereadable(glob("~/.vim/autocorrect.vim"))
     source ~/.vim/autocorrect.vim
 endif
 
@@ -58,7 +58,7 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 " Leader:
-let g:mapleader = '\<Space>'
+let g:mapleader = "\<Space>"
 
 " Viminfo:
 " Also don't let neovim and vim use the same viminfo file
@@ -88,14 +88,14 @@ set spellsuggest=5                      " Limit the number of suggestions from '
 
 map <Leader>s :setlocal spell!<CR>
 
-if isdirectory('/usr/share/dict/')
+if filereadable('/usr/share/dict/words')
     set dictionary+=/usr/share/dict/words
 endif
 
 
-set cursorline
+set cul
 set colorcolumn=+1
-set cmdheight=2
+set ch=2
 set hlsearch
 set ruler
 set backspace=indent,eol,start
@@ -135,7 +135,7 @@ if has('persistent_undo')
 endif
 set nojoinspaces
 
-if has('syntax')
+if has("syntax")
     syntax on
 endif
 
@@ -143,16 +143,17 @@ set modeline
 "look to see if a buffer is open before opening a new one
 try
   set switchbuf=useopen,usetab,newtab
-  set showtabline=2
+  set stal=2
 catch
 endtry
-"forcing the user to save
+
 set hidden
 set autoread
 set splitbelow
 set splitright
 set laststatus=2
 set tabpagemax=50
+
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -174,14 +175,14 @@ set keywordprg=:Man
 
 "Close vim if the only window left is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTReeQuitOnOpen = 1
-let g:NERDTreeDirArrows = 1
-let g:NERDTreeWinPos = 'right'
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeNaturalSort = 1
-let g:NERDTreeChDirMode = 2
-let g:NERDTreeShowLineNumbers=1
+let NERDTReeQuitOnOpen = 1
+let NERDTreeDirArrows = 1
+let g:NERDTreeWinPos = "right"
+let NERDTreeShowHidden = 1
+let NERDTreeShowBookmarks = 1
+let NERDTreeNaturalSort = 1
+let NERDTreeChDirMode = 2
+let NERDTreeShowLineNumbers=1
 " Do not open NERDTree if vim starts in diff mode
 let g:nerdtree_tabs_no_startup_for_diff = 1
 let g:nerdtree_tabs_meaningful_tab_names = 1

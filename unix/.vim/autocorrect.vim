@@ -690,6 +690,7 @@ iab Tecnical Technical
 iab Teh The
 iab Tehy They
 iab Termoil Turmoil
+ia Tge The
 iab Tghe The
 iab Tghis This
 iab Thansk Thanks
@@ -1503,6 +1504,7 @@ iab tecnical technical
 iab teh the
 iab tehy they
 iab termoil turmoil
+ia tge the
 iab tghe the
 iab tghis this
 iab thansk thanks
