@@ -1,4 +1,4 @@
-# From: 
+# From:
 # http://linuxcommand.org/lc3_adv_termmux.php
 
 #####
@@ -21,7 +21,9 @@ new-window -d -n htop htop
 # Give focus to the first window in the session
 select-window -t 0
 
-# Since this configuration creates a new session, we should launch tmux by 
-# entering the command tmux attach to avoid the default behavior of 
+# Since this configuration creates a new session, we should launch tmux by
+# entering the command tmux attach to avoid the default behavior of
 # automatically creating a new session. Otherwise, we end up with an additional
 # and unwanted session.
+
+# Vim: set ft=tmux :

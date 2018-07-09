@@ -1,5 +1,6 @@
 # Configuration file for ipython-kernel.
 
+c = get_config()
 #------------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
 #------------------------------------------------------------------------------
@@ -205,7 +206,14 @@
 #------------------------------------------------------------------------------
 
 ## 
-#c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3.6'}, {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'}, {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'}, {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'}, {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'}, {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'}, {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}]
+c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3.6'},
+        {'text': 'Python3.7 Reference', 'url': 'https://docs.python.org/3.7'}
+        {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'},
+        {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'},
+        {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'},
+        {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'},
+        {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'},
+        {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}]
 
 ## Set this flag to False to deactivate the use of experimental IPython
 #  completion APIs.
@@ -219,7 +227,7 @@
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-#c.InteractiveShell.ast_node_interactivity = 'last_expr'
+c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -234,10 +242,10 @@
 #c.InteractiveShell.autocall = 0
 
 ## Autoindent IPython code entered interactively.
-#c.InteractiveShell.autoindent = True
+c.InteractiveShell.autoindent = True
 
 ## Enable magic commands to be called without the leading %.
-#c.InteractiveShell.automagic = True
+c.InteractiveShell.automagic = True
 
 ## The part of the banner to be printed before the profile
 #c.InteractiveShell.banner1 = "Python 3.6.5 |Anaconda, Inc.| (default, Apr 29 2018, 16:14:56) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.4.0 -- An enhanced Interactive Python. Type '?' for help.\n"
@@ -251,7 +259,7 @@
 #  less than 3, it is reset to 0 and a warning is issued).  This limit is defined
 #  because otherwise you'll spend more time re-flushing a too small cache than
 #  working
-#c.InteractiveShell.cache_size = 1000
+c.InteractiveShell.cache_size = 100000
 
 ## Use colors for displaying information about objects. Because this information
 #  is passed through a pager (like 'less'), and some pagers get confused with
@@ -259,7 +267,7 @@
 #c.InteractiveShell.color_info = True
 
 ## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-#c.InteractiveShell.colors = 'Neutral'
+c.InteractiveShell.colors = 'Linux'
 
 ## 
 #c.InteractiveShell.debug = False
@@ -269,17 +277,17 @@
 
 ## If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-#c.InteractiveShell.display_page = False
+c.InteractiveShell.display_page = True
 
 ## (Provisional API) enables html representation in mime bundles sent to pagers.
 #c.InteractiveShell.enable_html_pager = False
 
 ## Total length of command history
-#c.InteractiveShell.history_length = 10000
+c.InteractiveShell.history_length = 100000
 
 ## The number of saved history entries to be loaded into the history buffer at
 #  startup.
-#c.InteractiveShell.history_load_length = 1000
+c.InteractiveShell.history_load_length = 10000
 
 ## 
 #c.InteractiveShell.ipython_dir = ''

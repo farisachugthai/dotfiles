@@ -3,7 +3,6 @@ function mk(){
     mkdir -p "$@" && cd "$@"
 }
 
-
 # Handy Extract Program
 function extract()
 {
@@ -70,4 +69,26 @@ update-pip ()
 infovi ()
 {
     info $1 | less
+}
+
+
+# From byobu
+byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
+
+
+# Trying to get more out of fzf
+
+# commits in a repo
+fzf_commits() {
+  git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
+}
+
+# for existing man pages
+fzf_apropos() {
+  apropos '' | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs man' | cut -f 1 -d " "
+}
+
+# view EVERYTHING set in your env
+fzf_env() {
+    set | tr = "\t" | fzf | cut -f 1
 }

@@ -9,15 +9,14 @@ case $- in
 esac
 
 # Source in .bashrc.d
-# TODO: This could easily be turned into a for loop and save a couple lines.
-if [[ -r "$HOME/.bashrc.d/tmux-completion.bash" ]]; then . "$HOME/.bashrc.d/tmux-completion.bash"; fi
+for config in ~/.bashrc.d/*.bash; do
+    source "$config"
+done
+unset -v config
 
-if [[ -r "$HOME/.bashrc.d/alias.bash" ]]; then . "$HOME/.bashrc.d/alias.bash"; fi
-
-if [[ -r "$HOME/.bashrc.d/functions.bash" ]]; then . "$HOME/.bashrc.d/functions.bash"; fi
-
-if [[ -f "$HOME/.bashrc.d/git-completion.bash" ]]; then
-    . "$HOME/.bashrc.d/git-completion.bash"
+# For the secrets
+if [[ -f "$HOME/.bashrc.local" ]]; then
+    . "$HOME/.bashrc.local"
 fi
 
 # This shows the git state. This also prevents us from seeing what venv or conda env we're in.
@@ -42,7 +41,7 @@ HISTFILESIZE=50000
 #https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
-HISTIGNORE='exit:ls:cd:history:ll:la'
+HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
 # Shopt
 # Be notified of asynchronous jobs completing in the background
@@ -80,20 +79,6 @@ shopt -s cdspell
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Vim
 set -o vi
@@ -115,16 +100,30 @@ if [ -d "$HOME/.nvm" ]; then
 fi
 
 # FZF
+# Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
+export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
 
 # Python
-# Add Conda to the path
-if [[ -s "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
-    . "$HOME/miniconda3/etc/profile.d/conda.sh";
-    if [ "$CONDASHLVL"==0 ]; then "conda activate base"; fi
+if [[ -d "$HOME/miniconda3/bin/" ]];
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/home/faris/miniconda3/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+    # <<< conda initialize <<<
 fi
+
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then 
@@ -132,14 +131,17 @@ if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then
 fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f ~/bin/google-cloud-sdk/completion.bash.inc ]; then 
+if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then 
     source ~/bin/google-cloud-sdk/completion.bash.inc; 
 fi
 
-source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
-# The next line enables shell command completion for gcloud.
-if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
+if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then 
+    source "$PREFIX/google-cloud-sdk/completion.bash.inc"; 
+fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

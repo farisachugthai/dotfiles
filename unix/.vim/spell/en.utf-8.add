@@ -227,6 +227,26 @@ vim
 vimrc
 spellchecker
 autocomplete
+<<<<<<< HEAD
+https
+vim
+docstring
+org
+dev
+function
+autocompletion
+Uninstallation
+gem
+uninstall
+plugin
+PyCharm
+mypy
+gitignore
+ubuntu
+kate
+vim
+api
+=======
 fallback
 w3m
 keymap
@@ -251,3 +271,8 @@ diffupdate
 byobu
 chmod
 tmp
+>>>>>>> termux
+vimscript
+vint
+google
+npm

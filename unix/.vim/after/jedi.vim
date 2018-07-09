@@ -1,1 +1,0 @@
-/data/data/com.termux/files/home/projects/dotfiles/unix/.config/nvim/after/jedi.vim
