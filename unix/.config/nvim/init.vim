@@ -2,7 +2,7 @@
 " Neovim configuration
 " Maintainer: Faris Chugthai
 
-
+" Vim-plug {{{
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
     call system('curl  ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ --proto=https https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
@@ -39,7 +39,7 @@ Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }         " Better markdo
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
-
+" }}}
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
@@ -166,6 +166,34 @@ tnoremap <Esc> <C-W>N
 map <Leader>a ggVG
 map <Leader>nt <plug>NERDTreeMirrorToggle<CR>
 imap <F5> <Esc>:w<CR>:!clear;python %<CR>       " f5 to run py file
+
+" All in one compiler. Gonna rewrite to make my own
+" map <F5> :call CompileRunGcc()<CR>
+" func! CompileRunGcc()
+"     exec "w"
+"     if &filetype == 'c'
+"         exec "!g++ % -o %<"
+"         exec "!time ./%<"
+"     elseif &filetype == 'cpp'
+"         exec "!g++ % -o %<"
+"         exec "!time ./%<"
+"     elseif &filetype == 'java'
+"         exec "!javac %"
+"         exec "!time java %<"
+"     elseif &filetype == 'sh'
+"         :!time bash %
+"     elseif &filetype == 'python'
+"         exec "!time python2.7 %"
+"     elseif &filetype == 'html'
+"         exec "!firefox % &"
+"     elseif &filetype == 'go'
+"         exec "!go build %<"
+"         exec "!time go run %"
+"     elseif &filetype == 'mkd'
+"         exec "!~/.vim/markdown.pl % > %.html &"
+"         exec "!firefox %.html &"
+"     endif
+" endfunc
 
 " Plugin Configuration:
 " fzf
@@ -300,8 +328,8 @@ let g:lightline = {
 let g:lightline.colorscheme = 'seoul256'
 
 
-
 " Setup Python remote plugins
+" pyls
 if has('python3')
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
