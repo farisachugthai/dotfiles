@@ -6,7 +6,7 @@
 
 
 c = get_config()
-c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
+c.AliasManager.user_aliases = [('la', 'ls -al')]
 
 
 #------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ c.AliasManager.user_aliases = [ ('la', 'ls -al') ]
 
 ## Enable GUI event loop integration with any of ('glut', 'gtk', 'gtk2', 'gtk3',
 #  'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'tk', 'wx', 'gtk2', 'qt4').
-c.InteractiveShellApp.gui ='qt5'
+# c.InteractiveShellApp.gui ='qt5'
 
 ## Should variables loaded at startup (by startup files, exec_lines, etc.) be
 #  hidden from tools like %who?
@@ -153,7 +153,7 @@ c.TerminalIPythonApp.display_banner = True
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
+c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -193,7 +193,7 @@ c.InteractiveShell.cache_size = 100000
 c.InteractiveShell.color_info = True
 
 ## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-c.InteractiveShell.colors = 'Neutral'
+c.InteractiveShell.colors = 'Linux'
 
 ## 
 #c.InteractiveShell.debug = False
@@ -316,7 +316,9 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 ## The name or class of a Pygments style to use for syntax
 #         highlighting: 
 #  default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc, pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor, paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
-c.TerminalInteractiveShell.highlighting_style ='tango'
+c.TerminalInteractiveShell.highlighting_style = 'monokai'
+# I'm sure tango is plenty configurable but out of the box it's completely illegible
+# default has impossible to read strings and in a truncated sense just led to my first rm -r mistake
 
 ## Override highlighting format for specific tokens
 #c.TerminalInteractiveShell.highlighting_style_overrides = {}
@@ -399,7 +401,7 @@ c.TerminalInteractiveShell.true_color = True
 
 ## Write to database every x commands (higher values save disk access & power).
 #  Values of 1 or less effectively disable caching.
-#c.HistoryManager.db_cache_size = 0
+c.HistoryManager.db_cache_size = 100
 
 ## Should the history database include output? (default: no)
 c.HistoryManager.db_log_output = True
@@ -490,7 +492,7 @@ c.HistoryManager.db_log_output = True
 ## Truncate large collections (lists, dicts, tuples, sets) to this size.
 #  
 #  Set to 0 to disable truncation.
-#c.PlainTextFormatter.max_seq_length = 1000
+c.PlainTextFormatter.max_seq_length = 100
 
 ## 
 c.PlainTextFormatter.max_width = 100

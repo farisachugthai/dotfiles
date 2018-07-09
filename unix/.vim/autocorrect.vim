@@ -73,7 +73,7 @@ iab Approrpiate Appropriate
 iab Approrpriate Appropriate
 iab Aquisition Acquisition
 iab Aquisitions Acquisitions
-ia Arent Aren'T
+ia Arent Aren't
 iab Arguement Argument
 iab Arguements Arguments
 iab Arond Around
@@ -148,7 +148,6 @@ iab Charector Character
 iab Cheif Chief
 iab Chekc Check
 iab Chnage Change
-ia Chugthai Chugthai
 iab Cieling Ceiling
 iab Circut Circuit
 iab Claer Clear
@@ -201,7 +200,7 @@ iab Corproations Corporations
 iab Corruptable Corruptible
 iab Cotten Cotton
 iab Coudl Could
-iab Couldnt Couldn'T
+iab Couldnt Couldn't
 iab Couldthe Could The
 iab Cpoy Copy
 iab Ctaegory Category
@@ -238,9 +237,9 @@ iab Developor Developer
 iab Developors Developers
 iab Develpment Development
 iab Diaplay Display
-iab Didint Didn'T
+iab Didint Didn't
 iab Didnot Did Not
-iab Didnt Didn'T
+iab Didnt Didn't
 iab Difefrent Different
 iab Diferences Differences
 iab Differance Difference
@@ -265,14 +264,14 @@ iab Documetn Document
 iab Documnet Document
 iab Documnets Documents
 iab Doese Does
-iab Doesnt Doesn'T
+iab Doesnt Doesn't
 iab Doign Doing
 iab Doimg Doing
 iab Doind Doing
 iab Doller Dollars
 iab Dollers Dollars
 iab Donig Doing
-iab Dont Don'T
+iab Dont Don't
 iab Driveing Driving
 iab Drnik Drink
 iab Efel Feel
@@ -307,7 +306,6 @@ iab Familair Familiar
 iab Familar Familiar
 iab Familliar Familiar
 iab Fammiliar Familiar
-ia Faris Faris
 iab Feild Field
 iab Feilds Fields
 iab Fianlly Finally
@@ -358,10 +356,10 @@ iab Hapening Happening
 iab Hapens Happens
 iab Happend Happened
 iab Hasbeen Has Been
-iab Hasnt Hasn'T
+iab Hasnt Hasn't
 iab Havebeen Have Been
 iab Haveing Having
-ia Havent Haven'T
+ia Havent Haven't
 iab Hda Had
 iab Hearign Hearing
 iab Helpfull Helpful
@@ -388,7 +386,7 @@ iab Idae Idea
 iab Idaes Ideas
 iab Identofy Identify
 iab Ihs His
-ia Im I'M
+ia Im I'm
 iab Imediate Immediate
 iab Imediatly Immediately
 iab Immediatly Immediately
@@ -417,9 +415,9 @@ iab Inteh In The
 iab Interum Interim
 iab Inthe In The
 iab Inwhich In Which
-ia Isnt Isn'T
+ia Isnt Isn't
 iab Isthe Is The
-ia Itd It'D
+ia Itd It'd
 iab Itis It Is
 iab Ititial Initial
 ia Itll It Will
@@ -445,7 +443,7 @@ iab Labratory Laboratory
 iab Lastyear Last Year
 iab Learnign Learning
 iab Lenght Length
-ia Lets Let'S
+ia Lets Let's
 iab Levle Level
 iab Libary Library
 iab Librarry Library
@@ -637,8 +635,8 @@ iab Shesaid She Said
 iab Shineing Shining
 iab Shiped Shipped
 iab Shoudl Should
-iab Shouldent Shouldn'T
-iab Shouldnt Shouldn'T
+iab Shouldent Shouldn't
+iab Shouldnt Shouldn't
 iab Showinf Showing
 iab Signifacnt Significant
 iab Simalar Similar
@@ -692,10 +690,11 @@ iab Tecnical Technical
 iab Teh The
 iab Tehy They
 iab Termoil Turmoil
+ia Tge The
 iab Tghe The
 iab Tghis This
 iab Thansk Thanks
-iab Thats That'S
+iab Thats That's
 iab Thatthe That The
 iab Thecompany The Company
 iab Thefirst The First
@@ -706,8 +705,8 @@ iab Thenew The New
 iab Theri Their
 iab Thesame The Same
 iab Thetwo The Two
-iab Theyll They'Ll
-iab Theyve They'Ve
+iab Theyll They'll
+iab Theyve They've
 iab Thgat That
 iab Thge The
 iab Thier Their
@@ -765,7 +764,7 @@ iab Vrey Very
 iab Vulnerible Vulnerable
 iab Waht What
 iab Warrent Warrant
-iab Wasnt Wasn'T
+iab Wasnt Wasn't
 iab Watn Want
 iab Wehn When
 iab Werre Were
@@ -793,7 +792,7 @@ iab Woh Who
 iab Wokr Work
 iab Woudl Would
 iab Wouldbe Would Be
-iab Wouldnt Wouldn'T
+iab Wouldnt Wouldn't
 iab Wriet Write
 iab Writting Writing
 iab Wrod Word
@@ -809,9 +808,9 @@ iab Yera Year
 iab Yersa Years
 iab Yoiu You
 iab Youare You Are
-ia Youll You'Ll
-ia Youre You'Re
-iab Youve You'Ve
+ia Youll You'll
+ia Youre You're
+iab Youve You've
 iab Ytou You
 iab Yuor Your
 iab Yuo You
@@ -963,7 +962,6 @@ iab charector character
 iab cheif chief
 iab chekc check
 iab chnage change
-ia chugthai Chugthai
 iab cieling ceiling
 iab circut circuit
 iab claer clear
@@ -1122,7 +1120,6 @@ iab familair familiar
 iab familar familiar
 iab familliar familiar
 iab fammiliar familiar
-ia faris Faris
 iab feild field
 iab feilds fields
 iab fianlly finally
@@ -1507,6 +1504,7 @@ iab tecnical technical
 iab teh the
 iab tehy they
 iab termoil turmoil
+ia tge the
 iab tghe the
 iab tghis this
 iab thansk thanks

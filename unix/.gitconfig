@@ -6,6 +6,7 @@
     editor = nvim
     pager = less -rL
     autocrlf = input
+	excludesfile = "$HOME/.gitignore_global"
 
 [color]
     ui = true

@@ -1,4 +1,6 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator
+# font size is line 82
+# background opacity is 188
 
 
 # Any items in the `env` entry below will be added as
@@ -78,7 +80,7 @@ font:
     # style: Italic
 
   # Point size of the font
-  size: 14
+  size: 11
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.

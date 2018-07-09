@@ -1,5 +1,6 @@
 # Configuration file for ipython-kernel.
 
+c = get_config()
 #------------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
 #------------------------------------------------------------------------------
@@ -205,7 +206,14 @@
 #------------------------------------------------------------------------------
 
 ## 
-#c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3.6'}, {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'}, {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'}, {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'}, {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'}, {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'}, {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}]
+c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3.6'},
+        {'text': 'Python3.7 Reference', 'url': 'https://docs.python.org/3.7'}
+        {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'},
+        {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'},
+        {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'},
+        {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'},
+        {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'},
+        {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}]
 
 ## Set this flag to False to deactivate the use of experimental IPython
 #  completion APIs.
@@ -219,7 +227,7 @@
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
+c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.

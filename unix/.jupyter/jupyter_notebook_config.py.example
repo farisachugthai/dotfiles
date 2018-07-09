@@ -1,9 +1,5 @@
 # Configuration file for jupyter-notebook.
 
-c = get_config()
-# Created by running
-# $ jupyter notebook --generate-config
-
 #------------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
 #------------------------------------------------------------------------------
@@ -51,6 +47,7 @@ c = get_config()
 #  Takes precedence over allow_origin_pat.
 #c.NotebookApp.allow_origin = ''
 
+## Use a regular expression for the Access-Control-Allow-Origin header
 #  
 #  Requests from an origin matching the expression will get replies with:
 #  
@@ -77,7 +74,6 @@ c = get_config()
 #c.NotebookApp.base_project_url = '/'
 
 ## The base URL for the notebook server.
-#
 #  
 #  Leading and trailing slashes can be omitted, and will automatically be added.
 #c.NotebookApp.base_url = '/'
@@ -140,7 +136,7 @@ c = get_config()
 #  connection, or for offline use of the notebook.
 #  
 #  When disabled, equations etc. will appear as their untransformed TeX source.
-c.NotebookApp.enable_mathjax = True
+#c.NotebookApp.enable_mathjax = True
 
 ## extra paths to look for Javascript notebook extensions
 #c.NotebookApp.extra_nbextensions_path = []
@@ -321,6 +317,38 @@ c.NotebookApp.enable_mathjax = True
 #c.NotebookApp.websocket_url = ''
 
 #------------------------------------------------------------------------------
+# LabApp(NotebookApp) configuration
+#------------------------------------------------------------------------------
+
+## The app directory to launch JupyterLab from.
+#c.LabApp.app_dir = '/data/data/com.termux/files/home/virtualenvs/jupyterlab/share/jupyter/lab'
+
+## Whether to start the app in core mode. In this mode, JupyterLab will run using
+#  the JavaScript assets that are within the installed JupyterLab Python package.
+#  In core mode, third party extensions are disabled. The `--dev-mode` flag is an
+#  alias to this to be used when the Python package itself is installed in
+#  development mode (`pip install -e .`).
+#c.LabApp.core_mode = False
+
+## The default URL to redirect to from `/`
+#c.LabApp.default_url = '/lab'
+
+## Whether to start the app in dev mode. Uses the unpublished local JavaScript
+#  packages in the `dev_mode` folder.  In this case JupyterLab will show a red
+#  stripe at the top of the page.  It can only be used if JupyterLab is installed
+#  as `pip install -e .`.
+#c.LabApp.dev_mode = False
+
+## The directory for user settings.
+#c.LabApp.user_settings_dir = '/data/data/com.termux/files/home/.jupyter/lab/user-settings'
+
+## Whether to serve the app in watch mode
+#c.LabApp.watch = False
+
+## The directory for workspaces
+#c.LabApp.workspaces_dir = '/data/data/com.termux/files/home/.jupyter/lab/workspaces'
+
+#------------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
 #------------------------------------------------------------------------------
 
@@ -471,7 +499,7 @@ c.NotebookApp.enable_mathjax = True
 #c.Session.unpacker = 'json'
 
 ## Username for the Session. Default is your system username.
-c.Session.username = 'faris'
+#c.Session.username = 'username'
 
 #------------------------------------------------------------------------------
 # MultiKernelManager(LoggingConfigurable) configuration
@@ -513,7 +541,7 @@ c.Session.username = 'faris'
 ## Timeout (in seconds) after which a kernel is considered idle and ready to be
 #  culled. Values of 0 or lower disable culling. Very short timeouts may result
 #  in kernels being culled for users with poor network connections.
-c.MappingKernelManager.cull_idle_timeout = 600
+#c.MappingKernelManager.cull_idle_timeout = 0
 
 ## The interval (in seconds) on which to check for idle kernels exceeding the
 #  cull timeout value.
@@ -541,7 +569,7 @@ c.MappingKernelManager.cull_idle_timeout = 600
 #    indicating the root path.
 
 ## Allow access to hidden files
-c.ContentsManager.allow_hidden = True
+#c.ContentsManager.allow_hidden = False
 
 ## 
 #c.ContentsManager.checkpoints = None
@@ -570,7 +598,6 @@ c.ContentsManager.allow_hidden = True
 #c.ContentsManager.files_handler_params = {}
 
 ## Glob patterns to hide in file and directory listings.
-c.ContentsManager.hide_globs = []
 #c.ContentsManager.hide_globs = ['__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*.so', '*.dylib', '*~']
 
 ## Python callable or importstring thereof
@@ -600,8 +627,6 @@ c.ContentsManager.hide_globs = []
 #c.ContentsManager.untitled_file = 'untitled'
 
 ## The base name used when creating untitled notebooks.
-# Unforunately this line doesn't get formatted and create a timestamped notebook.
-# c.ContentsManager.untitled_notebook = '%Y-%m-%d-%H-%M'
 #c.ContentsManager.untitled_notebook = 'Untitled'
 
 #------------------------------------------------------------------------------

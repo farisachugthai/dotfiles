@@ -1,26 +1,43 @@
-set nocompatible
-filetype off
+" vimrc
+" vim configuration
+" Maintainer: Faris Chugthai
+" 
+set nocompatible " noqa
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+if !filereadable('~/.vim/autoload/plug.vim')
+    call system('wget -O ~/.vim/autoload/plug.vim 
+                \ http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+    " normal PlugInstall +UpdateRemotePlugins :clo
+endif
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdTree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'majutsushi/tagbar'
-Plugin 'nvie/vim-flake8'
-Plugin 'w0rp/ale'
-Plugin 'morhetz/gruvbox'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'godlygeek/tabular'
-Plugin 'joshdick/onedark.vim'
-Plugin 'itchyny/lightline.vim'
+call plug#begin('~/.vim/plugged')
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'scrooloose/nerdTree',
+Plug 'scrooloose/nerdcommenter'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'davidhalter/jedi-vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'majutsushi/tagbar'
+Plug 'nvie/vim-flake8'
+Plug 'w0rp/ale'
+Plug 'godlygeek/tabular'
+Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+Plug 'itchyny/lightline.vim'
+Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'} 
+Plug 'maximbaz/lightline-ale'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ryanoasis/vim-devicons'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+
+
+call plug#end()
+
 
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
@@ -36,13 +53,12 @@ au BufRead,BufNewFile *.ipy setlocal filetype=python
 
 " Web Dev:
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-au BufWritePre,FileWritePre *.js ks|call LastMod()|'s
 
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
 " Leader:
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 " Viminfo:
 " Also don't let neovim and vim use the same viminfo file
@@ -56,7 +72,7 @@ set tabstop=4                   " show existing tab with 4 spaces width
 set shiftwidth=4                " when indenting with '>', use 4 spaces width
 set expandtab                   " On pressing tab, insert 4 spaces
 set softtabstop=4
-let python_highlight_all = 1
+let g:python_highlight_all = 1
 
 
 " Spell Checker:
@@ -72,7 +88,7 @@ set spellsuggest=5                      " Limit the number of suggestions from '
 
 map <Leader>s :setlocal spell!<CR>
 
-if isdirectory("/usr/share/dict/")
+if filereadable('/usr/share/dict/words')
     set dictionary+=/usr/share/dict/words
 endif
 
@@ -130,13 +146,14 @@ try
   set stal=2
 catch
 endtry
-"forcing the user to save
+
 set hidden
 set autoread
 set splitbelow
 set splitright
 set laststatus=2
 set tabpagemax=50
+
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -175,33 +192,42 @@ let g:nerdtree_tabs_startup_cd = 1
 
 
 " Jedi:
-" https://github.com/davidhalter/jedi-vim
-" jedi-vim is a vim binding to the autocompletion library jedi
-"
-" When you start typing `from module.name<space>` jedi-vim automatically
-" adds the 'import' statement and displays the autocomplete pop-up.
 let g:jedi#smart_auto_mappings = 0
-
-" if the autocomplete on dot slows things down too much set to 0
 let g:jedi#popup_on_dot = 0
-
 let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
 let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
 
-" Fugitive:
-" https://github.com/tpope/vim-fugitive
-" The following options clean up our statusline
-if exists('g:loaded_fugitive')
-   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=%{fugitive#statusline()}\ (%l,%c)\ %y
-else
-   set statusline=%f\ %m\ (%L\ lines)\ %r\ %=(%l,%c)\ %y
-endif
-
+" Tagbar:
 nmap <F8> :TagbarToggle<CR>
+
+" Flake8
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
 
+" Ale
 nmap <Leader>l <Plug>(ale_toggle_buffer)
+
+" Gruvbox
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 let g:gruvbox_contrast_dark = 'hard'
+
+" Lightline:
+let g:lightline = {
+			\ 'active': {
+			\   'left': [ [ 'mode', 'paste' ],
+			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+			\ },
+			\ 'component_function': {
+			\   'gitbranch': 'fugitive#head'
+			\ },
+			\ }
+
+let g:lightline.colorscheme = 'seoul256'
+
+" Language Servers:
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['pyls'],
+    \ 'sh': ['bash-language-server', 'start']
+    \ }

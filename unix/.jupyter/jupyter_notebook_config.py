@@ -1,5 +1,9 @@
 # Configuration file for jupyter-notebook.
 
+c = get_config()
+# Created by running
+# $ jupyter notebook --generate-config
+
 #------------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
 #------------------------------------------------------------------------------
@@ -47,7 +51,6 @@
 #  Takes precedence over allow_origin_pat.
 #c.NotebookApp.allow_origin = ''
 
-## Use a regular expression for the Access-Control-Allow-Origin header
 #  
 #  Requests from an origin matching the expression will get replies with:
 #  
@@ -74,6 +77,7 @@
 #c.NotebookApp.base_project_url = '/'
 
 ## The base URL for the notebook server.
+#
 #  
 #  Leading and trailing slashes can be omitted, and will automatically be added.
 #c.NotebookApp.base_url = '/'
@@ -136,7 +140,7 @@
 #  connection, or for offline use of the notebook.
 #  
 #  When disabled, equations etc. will appear as their untransformed TeX source.
-#c.NotebookApp.enable_mathjax = True
+c.NotebookApp.enable_mathjax = True
 
 ## extra paths to look for Javascript notebook extensions
 #c.NotebookApp.extra_nbextensions_path = []
@@ -245,10 +249,6 @@
 ## DISABLED: use %pylab or %matplotlib in the notebook to enable matplotlib.
 #c.NotebookApp.pylab = 'disabled'
 
-## If True, display a button in the dashboard to quit (shutdown the notebook
-#  server).
-#c.NotebookApp.quit_button = True
-
 ## (sec) Time window used to  check the message and data rate limits.
 #c.NotebookApp.rate_limit_window = 3
 
@@ -275,15 +275,6 @@
 ## Supply overrides for terminado. Currently only supports "shell_command".
 #c.NotebookApp.terminado_settings = {}
 
-## Set to False to disable terminals.
-#  
-#  This does *not* make the notebook server more secure by itself. Anything the
-#  user can in a terminal, they can also do in a notebook.
-#  
-#  Terminals may also be automatically disabled if the terminado package is not
-#  available.
-#c.NotebookApp.terminals_enabled = True
-
 ## Token used for authenticating first-time connections to the server.
 #  
 #  When no password is enabled, the default is to generate a new, random token.
@@ -304,14 +295,13 @@
 ## DEPRECATED, use tornado_settings
 #c.NotebookApp.webapp_settings = {}
 
-## Specify Where to open the notebook on startup. This is the `new` argument
-#  passed to the standard library method `webbrowser.open`. The behaviour is not
-#  guaranteed, but depends on browser support. Valid values are:
-#  
-#   - 2 opens a new tab,
-#   - 1 opens a new window,
-#   - 0 opens in an existing window.
-#  
+## Specify Where to open the notebook on startup. This is the
+#  `new` argument passed to the standard library method `webbrowser.open`.
+#  The behaviour is not guaranteed, but depends on browser support. Valid
+#  values are:
+#      2 opens a new tab,
+#      1 opens a new window,
+#      0 opens in an existing window.
 #  See the `webbrowser.open` documentation for details.
 #c.NotebookApp.webbrowser_open_new = 2
 
@@ -329,38 +319,6 @@
 #  
 #  Should be in the form of an HTTP origin: ws[s]://hostname[:port]
 #c.NotebookApp.websocket_url = ''
-
-#------------------------------------------------------------------------------
-# LabApp(NotebookApp) configuration
-#------------------------------------------------------------------------------
-
-## The app directory to launch JupyterLab from.
-#c.LabApp.app_dir = '/home/faris/miniconda3/envs/working_env/share/jupyter/lab'
-
-## Whether to start the app in core mode. In this mode, JupyterLab will run using
-#  the JavaScript assets that are within the installed JupyterLab Python package.
-#  In core mode, third party extensions are disabled. The `--dev-mode` flag is an
-#  alias to this to be used when the Python package itself is installed in
-#  development mode (`pip install -e .`).
-#c.LabApp.core_mode = False
-
-## The default URL to redirect to from `/`
-#c.LabApp.default_url = '/lab'
-
-## Whether to start the app in dev mode. Uses the unpublished local JavaScript
-#  packages in the `dev_mode` folder.  In this case JupyterLab will show a red
-#  stripe at the top of the page.  It can only be used if JupyterLab is installed
-#  as `pip install -e .`.
-#c.LabApp.dev_mode = False
-
-## The directory for user settings.
-#c.LabApp.user_settings_dir = '/home/faris/.jupyter/lab/user-settings'
-
-## Whether to serve the app in watch mode
-#c.LabApp.watch = False
-
-## The directory for workspaces
-#c.LabApp.workspaces_dir = '/home/faris/.jupyter/lab/workspaces'
 
 #------------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
@@ -513,7 +471,7 @@
 #c.Session.unpacker = 'json'
 
 ## Username for the Session. Default is your system username.
-#c.Session.username = 'faris'
+c.Session.username = 'faris'
 
 #------------------------------------------------------------------------------
 # MultiKernelManager(LoggingConfigurable) configuration
@@ -555,7 +513,7 @@
 ## Timeout (in seconds) after which a kernel is considered idle and ready to be
 #  culled. Values of 0 or lower disable culling. Very short timeouts may result
 #  in kernels being culled for users with poor network connections.
-#c.MappingKernelManager.cull_idle_timeout = 0
+c.MappingKernelManager.cull_idle_timeout = 600
 
 ## The interval (in seconds) on which to check for idle kernels exceeding the
 #  cull timeout value.
@@ -583,7 +541,7 @@
 #    indicating the root path.
 
 ## Allow access to hidden files
-#c.ContentsManager.allow_hidden = False
+c.ContentsManager.allow_hidden = True
 
 ## 
 #c.ContentsManager.checkpoints = None
@@ -612,6 +570,7 @@
 #c.ContentsManager.files_handler_params = {}
 
 ## Glob patterns to hide in file and directory listings.
+c.ContentsManager.hide_globs = []
 #c.ContentsManager.hide_globs = ['__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*.so', '*.dylib', '*~']
 
 ## Python callable or importstring thereof
@@ -641,6 +600,8 @@
 #c.ContentsManager.untitled_file = 'untitled'
 
 ## The base name used when creating untitled notebooks.
+# Unforunately this line doesn't get formatted and create a timestamped notebook.
+# c.ContentsManager.untitled_notebook = '%Y-%m-%d-%H-%M'
 #c.ContentsManager.untitled_notebook = 'Untitled'
 
 #------------------------------------------------------------------------------

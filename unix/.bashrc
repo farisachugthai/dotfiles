@@ -41,7 +41,7 @@ HISTFILESIZE=50000
 #https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
-HISTIGNORE='exit:ls:cd:history:ll:la'
+HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
 # Shopt
 # Be notified of asynchronous jobs completing in the background
@@ -53,8 +53,9 @@ shopt -s histappend
 shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-# Only Bash4+ but thats no problem. Should add a test though.
-shopt -s globstar
+if [[ $BASH_VERSINFO -gt 3 ]]; then
+    shopt -s globstar
+fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -78,9 +79,6 @@ shopt -s cdspell
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # Vim
 set -o vi
@@ -106,8 +104,7 @@ fi
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
-
-export FZF_DEFAULT_OPTS='--preview="head -n 30 {}" --preview-window=right:80%:wrap --cycle'
+export FZF_DEFAULT_OPTS='--preview="head -n 30 {}" --preview-window=right:50%:wrap --cycle'
 
 # Python
 # >>> conda initialize >>>
@@ -132,18 +129,17 @@ if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then
 fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f ~/bin/google-cloud-sdk/completion.bash.inc ]; then 
+if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then 
     source ~/bin/google-cloud-sdk/completion.bash.inc; 
 fi
 
+
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/path.bash.inc' ]; then source '/data/data/com.termux/files/usr/google-cloud-sdk/path.bash.inc'; fi
+if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc' ]; then source '/data/data/com.termux/files/usr/google-cloud-sdk/completion.bash.inc'; fi
-
-
-# Byobu
-if [[ "$(command -v byobu)" ]]; then
-    [ -r "$HOME/.config/byobu/prompt" ] && . "$HOME/.config/byobu/prompt"   #byobu-prompt#
+if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then 
+    source "$PREFIX/google-cloud-sdk/completion.bash.inc"; 
 fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

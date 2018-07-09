@@ -8,9 +8,16 @@ eval "$(pip completion --bash)"
 
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-if [[ -d "$HOME/.gem/ruby/2.5.0/bin" ]]; then
+
+# Ruby
+if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Go
 # Add the Go std lib to the PATH if that's where it was put
@@ -30,6 +37,7 @@ fi
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
     export PATH="$PATH:$YARNPATH"
+    source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
 fi
 
 
@@ -48,6 +56,9 @@ export COLORTERM="colorterm"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 
 # cheat.py
@@ -69,14 +80,12 @@ fi
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8                 # gathered from localectl
 
-# TODO: Read through /etc/manpath.conf and figure out what needs to be done
-# to understand manpath and configure it when needed
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
-# cdpath. Just to make moving around a little easier
-export CDPATH=.:~:"$HOME/projects"
-
+# Rust
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
+
+export TMUXP_CONFIGDIR='$HOME/.tmux'
 
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then
