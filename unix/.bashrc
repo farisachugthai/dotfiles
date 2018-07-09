@@ -142,3 +142,6 @@ if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/googl
 if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then 
     source "$PREFIX/google-cloud-sdk/completion.bash.inc"; 
 fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
