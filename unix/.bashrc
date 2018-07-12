@@ -8,17 +8,6 @@ case $- in
     *) return 0;;
 esac
 
-# Source in .bashrc.d
-for config in ~/.bashrc.d/*.bash; do
-    source "$config"
-done
-unset -v config
-
-# For the secrets
-if [[ -f "$HOME/.bashrc.local" ]]; then
-    . "$HOME/.bashrc.local"
-fi
-
 # This shows the git state. This also prevents us from seeing what venv or conda env we're in.
 # This occurs because PS1 gets locked and won't display. On Termux that's challenging.
 if [[ -z "$DISPLAY" ]]; then
@@ -104,10 +93,10 @@ fi
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
-export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
+export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle --multi'
 
 # Python
-if [[ -d "$HOME/miniconda3/bin/" ]];
+if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
     __conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
@@ -145,3 +134,14 @@ fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# Source in .bashrc.d
+for config in ~/.bashrc.d/*.bash; do
+    source "$config"
+done
+unset -v config
+
+# For the secrets
+if [[ -f "$HOME/.bashrc.local" ]]; then
+    . "$HOME/.bashrc.local"
+fi
