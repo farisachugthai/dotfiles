@@ -19,9 +19,9 @@
 # If difftool settings havent been set, fall back to mergetool
 [diff]
     # guitool = gvimdiff3
-    tool = nvim -d
+    tool = vimdiff
     color = auto
-    strategy-option = patienece
+    strategy-option = patience
 
 [merge]
     # guitool = gvimdiff3

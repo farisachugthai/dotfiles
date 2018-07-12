@@ -9,9 +9,13 @@ eval "$(pip completion --bash)"
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Ruby
+# Ruby: This is gonna need a for loop soon.
 if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
+fi
+
+if [[ -d ~/.gem/ruby/2.6.0/bin ]]; then
+    export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
 fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -40,7 +44,6 @@ if [[ $(command -v yarn) ]]; then
     source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
 fi
 
-
 # Environment Variables 
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
@@ -59,7 +62,6 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
 
 # cheat.py
 if [[ $(which cheat) ]]; then

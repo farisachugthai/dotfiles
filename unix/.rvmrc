@@ -7,22 +7,25 @@
 # Beware that currently that file is overwritten on install so
 # back it up if you change anything.
 #
+#
+# Non-standard contributions
+rvm_silence_path_mismatch_check_flag=1
 
 # rvm Path
 #   This is where rvm installs and manages everything in by default.
 #
-#export rvm_path="$HOME/.rvm"
+export rvm_path="$HOME/.rvm"
 
 # Source Path
 #   This is where rvm extracts to for compiling & installing.
 #
-#export rvm_source_path="${rvm_path}/src"
+export rvm_source_path="${rvm_path}/src"
 
 # Log Path
 #   This is where rvm logs all of it's actions to
 #   (not including the 'do' actions)
 #
-#export rvm_log_path="${rvm_path}/log"
+export rvm_log_path="${rvm_path}/log"
 
 # Bin Path
 #   This is where rvm places all of it's executable/wrapper scripts.
