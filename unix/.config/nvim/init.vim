@@ -167,6 +167,8 @@ noremap <C-l> <C-w>l
 
 " Select all text quickly
 nmap <Leader>a ggVG
+
+" the 2 nerdtree mappings below don't working but i'm not sure why :/
 " turn on NERDTree [and remember to not inline comments on map cmds!!
 nmap <Leader>nt <plug>NERDTree<CR>
 "o for on/off

@@ -29,6 +29,7 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -pv'
+alias rm='rm -i'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
