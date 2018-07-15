@@ -29,6 +29,7 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -pv'
+alias rm='rm -i'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -43,10 +44,11 @@ alias termux-share="termux-share -a send"
 
 alias info="info --vi-keys"
 
-#git aliases
+#git aliases. for complicated git log calls funcs are better
 alias ga='git add'
 alias gc='git clone'
 alias gcs='git clone --depth 1'
+alias gci='git commit'
 alias gs='git status'
 alias gd='git diff'
 
@@ -62,3 +64,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
+# alias for easier profiling of nvim. probs wanna change backticks and date format
+alias prof="--startuptime $DOT/.config/nvim/profiling/`date`"
+# Usage: nvim prof [filename to edit]
