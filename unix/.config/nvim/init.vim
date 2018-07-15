@@ -5,7 +5,7 @@
 " Full fold: {{{
 " Vim-plug {{{
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
-    call system('curl  ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    call system('curl ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ --proto=https https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
     " normal PlugInstall +UpdateRemotePlugins :clo
     " Above didn't work. Unsure why.
@@ -15,24 +15,16 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/seoul256.vim'
 Plug 'scrooloose/nerdTree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'davidhalter/jedi-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'majutsushi/tagbar'
 Plug 'nvie/vim-flake8'
 Plug 'w0rp/ale'
-Plug 'godlygeek/tabular'
-Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'} 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'maximbaz/lightline-ale'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'nanotech/jellybeans.vim'
@@ -392,57 +384,6 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_selectionUI = 'fzf'
 let g:loaded_python_provider = 1        " disable py2 support
 
-" Deoplete: {{{
-"" disable autocomplete by default
-let g:deoplete_disable_auto_complete = 1
-let g:deoplete#enable_smart_case = 1
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-"" Autoselect feature
-set completeopt+=noinsert
-
-let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
-autocmd InsertEnter * call deoplete#enable()    " if i enter insert mode go for it
-call deoplete#custom#option('smart_case', v:true)
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
-endfunction
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-"" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" Enable jedi source debug messages
-" call deoplete#custom#option('profile', v:true)
-" call deoplete#enable_logging('DEBUG', 'deoplete.log')
-"Note: You must enable
-"|deoplete-source-attribute-is_debug_enabled| to debug the
-"sources.
-" call deoplete#custom#source('jedi', 'is_debug_enabled', 1)
-
-"" Do not complete too short words
-call deoplete#custom#source(
-\ 'dictionary', 'min_pattern_length', 4)
-
-" Collect keywords from buffer path not directory Nvim was launched from
-call deoplete#custom#source(
-\ 'file', 'enable_buffer_path', 'True')
-
-" Setting up the omnifuncs
-set omnifunc=LanguageClient#complete
-
-autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
-" }}}
 " Devicons
 let g:webdevicons_enable = 1
 
