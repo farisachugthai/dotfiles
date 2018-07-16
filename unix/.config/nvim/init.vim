@@ -158,11 +158,11 @@ noremap <C-l> <C-w>l
 " Select all text quickly
 nmap <Leader>a ggVG
 " turn on NERDTree [and remember to not inline comments on map cmds!!!
-nmap <Leader>nt <plug>NERDTree<CR>           
+nmap <Leader>nt <plug>NERDTree<CR> 
 "o for on/off
-nmap <Leader>no <plug>NERDTreeToggle<CR>     
+nmap <Leader>no <plug>NERDTreeToggle<CR>
 " f5 to run py file
-imap <F5> <Esc>:w<CR>:!clear;python %<CR>       
+imap <F5> <Esc>:w<CR>:!clear;python %<CR>
 
 " Terminal
 tnoremap <Esc> <C-W>N
@@ -177,35 +177,6 @@ tnoremap <Esc> <C-W>N
 " endfun
 " }}}
 
-" Compiler Func: {{{
-" All in one compiler. Gonna rewrite to make my own
-" map <F5> :call CompileRunGcc()<CR>
-" func! CompileRunGcc()
-"     exec "w"
-"     if &filetype == 'c'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'cpp'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'java'
-"         exec "!javac %"
-"         exec "!time java %<"
-"     elseif &filetype == 'sh'
-"         :!time bash %
-"     elseif &filetype == 'python'
-"         exec "!time python2.7 %"
-"     elseif &filetype == 'html'
-"         exec "!firefox % &"
-"     elseif &filetype == 'go'
-"         exec "!go build %<"
-"         exec "!time go run %"
-"     elseif &filetype == 'mkd'
-"         exec "!~/.vim/markdown.pl % > %.html &"
-"         exec "!firefox %.html &"
-"     endif
-" endfunc
-" }}}
 " Plugin Configuration: {{{
 " fzf: {{{
 " Adapted from:

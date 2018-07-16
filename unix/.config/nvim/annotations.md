@@ -6,6 +6,15 @@ performance, results of profiling, changes I need to make, Vimscript I
 
 Gonna house modifications I don't want to delete or traverse a git history for.
 
+# TODO
+
+first things first let's jot down some thoughts.
+fix ntree mappings
+get a better handle of jedi flake ale and pyls before adding anything else.
+already a  pretty sizeable stack of stuff
+fix up skeleton.py so it has some pep257 compliant example docstrings. if they
+had pep484 type hints too thatd be sweet.
+
 ## Jedi Function
 
 Not really ready to do away with this completely.
@@ -112,6 +121,7 @@ Plugins to shave off
 i desperately need nvim moving faster
 
 
+## Lightline
 
 " Lightline: {{{
 let g:lightline = {
@@ -139,7 +149,7 @@ let g:lightline.colorscheme = 'seoul256'
 " }}}
 
 
-
+## Tagbar
 
 " Tagbar:
 " https://github.com/majutsushi/tagbar
@@ -153,10 +163,43 @@ let g:tagbar_show_linenumbers = 1
 
 
 
-
+## NERDTree Tabs
+I feel like airline could handle this by itself
 " NERDTree Tabs:
 let g:nerdtree_tabs_no_startup_for_diff = 1
 let g:nerdtree_tabs_meaningful_tab_names = 1
 let g:nerdtree_tabs_autoclose = 1
 let g:nerdtree_tabs_startup_cd = 1
 
+
+## compiler fxn
+
+" Compiler Func: {{{
+" All in one compiler. Gonna rewrite to make my own
+" map <F5> :call CompileRunGcc()<CR>
+" func! CompileRunGcc()
+"     exec "w"
+"     if &filetype == 'c'
+"         exec "!g++ % -o %<"
+"         exec "!time ./%<"
+"     elseif &filetype == 'cpp'
+"         exec "!g++ % -o %<"
+"         exec "!time ./%<"
+"     elseif &filetype == 'java'
+"         exec "!javac %"
+"         exec "!time java %<"
+"     elseif &filetype == 'sh'
+"         :!time bash %
+"     elseif &filetype == 'python'
+"         exec "!time python2.7 %"
+"     elseif &filetype == 'html'
+"         exec "!firefox % &"
+"     elseif &filetype == 'go'
+"         exec "!go build %<"
+"         exec "!time go run %"
+"     elseif &filetype == 'mkd'
+"         exec "!~/.vim/markdown.pl % > %.html &"
+"         exec "!firefox %.html &"
+"     endif
+" endfunc
+" }}}
