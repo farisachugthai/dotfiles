@@ -42,6 +42,11 @@ Thumbs.db
 
 # Personal
 
+## Python
+
+# mypy
+.mypy_cache
+
 # Jupyter Notebooks / JupyterLab
 .ipynb_checkpoints
 

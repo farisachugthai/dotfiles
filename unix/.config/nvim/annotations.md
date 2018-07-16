@@ -203,3 +203,131 @@ let g:nerdtree_tabs_startup_cd = 1
 "     endif
 " endfunc
 " }}}
+
+
+
+## Diff between nvim and vim
+
+2. Defaults					            *nvim-defaults*
+
+- Syntax highlighting is enabled by default
+- ":filetype plugin indent on" is enabled by default
+
+- 'autoindent' is set by default
+- 'autoread' is set by default
+- 'backspace' defaults to "indent,eol,start"
+- 'backupdir' defaults to .,~/.local/share/nvim/backup (|xdg|)
+- 'belloff' defaults to "all"
+- 'complete' doesn't include "i"
+- 'cscopeverbose' is enabled
+- 'directory' defaults to ~/.local/share/nvim/swap// (|xdg|), auto-created
+- 'display' defaults to "lastline,msgsep"
+- 'fillchars' defaults (in effect) to "vert:│,fold:·"
+- 'formatoptions' defaults to "tcqj"
+- 'history' defaults to 10000 (the maximum)
+- 'hlsearch' is set by default
+- 'incsearch' is set by default
+- 'langnoremap' is enabled by default
+- 'langremap' is disabled by default
+- 'laststatus' defaults to 2 (statusline is always shown)
+- 'listchars' defaults to "tab:> ,trail:-,nbsp:+"
+- 'nocompatible' is always set
+- 'nrformats' defaults to "bin,hex"
+- 'ruler' is set by default
+- 'sessionoptions' doesn't include "options"
+- 'showcmd' is set by default
+- 'sidescroll' defaults to 1
+- 'smarttab' is set by default
+- 'tabpagemax' defaults to 50
+- 'tags' defaults to "./tags;,tags"
+- 'ttyfast' is always set
+- 'undodir' defaults to ~/.local/share/nvim/undo (|xdg|), auto-created
+- 'viminfo' includes "!"
+- 'wildmenu' is set by default
+
+==============================================================================
+3. New Features						       *nvim-features*
+-1-1
+
+
+
+" Deoplete: {{{
+"" disable autocomplete by default
+let g:deoplete_disable_auto_complete = 1
+let g:deoplete#enable_smart_case = 1
+
+"" Close the autocompleter when we leave insert mode
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+"" Autoselect feature
+set completeopt+=noinsert
+
+let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
+autocmd InsertEnter * call deoplete#enable()    " if i enter insert mode go for it
+call deoplete#custom#option('smart_case', v:true)
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return deoplete#close_popup() . "\<CR>"
+endfunction
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+
+"" Disable the candidates in Comment/String syntaxes.
+call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+
+"" Close the autocompleter when we leave insert mode
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" Enable jedi source debug messages
+" call deoplete#custom#option('profile', v:true)
+" call deoplete#enable_logging('DEBUG', 'deoplete.log')
+"Note: You must enable
+"|deoplete-source-attribute-is_debug_enabled| to debug the
+"sources.
+" call deoplete#custom#source('jedi', 'is_debug_enabled', 1)
+
+"" Do not complete too short words
+call deoplete#custom#source(
+\ 'dictionary', 'min_pattern_length', 4)
+
+" Collect keywords from buffer path not directory Nvim was launched from
+call deoplete#custom#source(
+\ 'file', 'enable_buffer_path', 'True')
+
+" Setting up the omnifuncs
+set omnifunc=LanguageClient#complete
+
+autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
+" }}}
+
+
+
+
+" Lightline: {{{
+let g:lightline = {
+	\ 'active': {
+	\   'left': [ [ 'mode', 'paste' ],
+	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+	\ },
+	\ 'component_function': {
+	\   'gitbranch': 'fugitive#head',
+    \   'filetype': 'MyFiletype',
+    \   'fileformat': 'MyFileformat',
+    \ },
+    \ }
+
+
+function! MyFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+
+function! MyFileformat()
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+let g:lightline.colorscheme = 'seoul256'
+" }}}

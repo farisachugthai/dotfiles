@@ -7,7 +7,6 @@ set nocompatible
 if !filereadable('~/.vim/autoload/plug.vim')
     call system('wget -O ~/.vim/autoload/plug.vim 
                 \ http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-    " normal PlugInstall +UpdateRemotePlugins :clo
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -28,9 +27,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 
-
 call plug#end()
-
 
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
@@ -41,7 +38,9 @@ if filereadable(glob("~/.vim/autocorrect.vim"))
 endif
 
 " Filetype Specific Options:
+
 " IPython:
+" [i wonder if this could just get moved to an ftdetect folder]
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
 " Web Dev:
