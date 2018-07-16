@@ -21,7 +21,7 @@ fi
 
 # This shows the git state. This also prevents us from seeing what venv or conda env we're in.
 # This occurs because PS1 gets locked and won't display. On Termux that's challenging.
-if [[ -z "$DISPLAY" ]]; then
+if [[ -z "PREFIX" ]]; then
     if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
         . "$HOME/.bashrc.d/git-prompt.sh";
         export GIT_PS1_SHOWDIRTYSTATE=1
