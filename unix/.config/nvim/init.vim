@@ -15,32 +15,21 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/seoul256.vim'
 Plug 'scrooloose/nerdTree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'davidhalter/jedi-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'majutsushi/tagbar'
 Plug 'nvie/vim-flake8'
 Plug 'w0rp/ale'
-Plug 'godlygeek/tabular'
-Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
-Plug 'itchyny/lightline.vim'
 Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'} 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'maximbaz/lightline-ale'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
-Plug 'nanotech/jellybeans.vim'
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }
-Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
-
+" }}}
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
@@ -181,42 +170,6 @@ tnoremap <Esc> <C-W>N
 " tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " from he term. rewrite for fzf
 
-" From he map
-"
-" com -nargs=1 -bang -complete=customlist,EditFileComplete  EditFile edit<bang> <args>
-" fun EditFileComplete(A,L,P)
-"     return split(globpath(&path, a:A), '\n')
-" endfun
-" }}}
-
-" Compiler Func: {{{
-" All in one compiler. Gonna rewrite to make my own
-" map <F5> :call CompileRunGcc()<CR>
-" func! CompileRunGcc()
-"     exec "w"
-"     if &filetype == 'c'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'cpp'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'java'
-"         exec "!javac %"
-"         exec "!time java %<"
-"     elseif &filetype == 'sh'
-"         :!time bash %
-"     elseif &filetype == 'python'
-"         exec "!time python2.7 %"
-"     elseif &filetype == 'html'
-"         exec "!firefox % &"
-"     elseif &filetype == 'go'
-"         exec "!go build %<"
-"         exec "!time go run %"
-"     elseif &filetype == 'mkd'
-"         exec "!~/.vim/markdown.pl % > %.html &"
-"         exec "!firefox %.html &"
-"     endif
-" endfunc
 " }}}
 " Plugin Configuration: {{{
 " fzf: {{{
@@ -270,12 +223,6 @@ let g:NERDTreeMouseMode = 2         " open dir on mouse click
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
 let g:NERDTreeRespectWildIgnore = 1
 
-" NERDTree Tabs:            " Might comment out and let airline take over
-let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_meaningful_tab_names = 1
-let g:nerdtree_tabs_autoclose = 1
-let g:nerdtree_tabs_startup_cd = 1
-
 " NERDCom:
 let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
@@ -303,16 +250,6 @@ nnoremap <silent> <leader>gW :Gwrite!<CR>
 nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
-" Tagbar:
-" https://github.com/majutsushi/tagbar
-" Termux uses Universal Ctags and apparently tagbar doesn't like that.
-nmap <F8> :TagbarToggle<CR>
-let g:tagbar_autofocus = 0  " do not automatically jump to tagbar when opened
-let g:tagbar_autoclose = 1  " when you jump to a tag close tagbar
-" autocmd FileType python nested :TagbarOpen  " open tagbar when you see .py
-" autocmd BufWinLeave python nested :TagbarClose
-let g:tagbar_show_linenumbers = 1
-
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_in_gutter=1
@@ -342,33 +279,6 @@ set statusline+=%{LinterStatus()}
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 " TODO: Check if gruvbox is the colorscheme
 let g:gruvbox_contrast_dark = 'hard'
-
-" Lightline: {{{
-let g:lightline = {
-	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-	\ },
-	\ 'component_function': {
-	\   'gitbranch': 'fugitive#head',
-    \   'filetype': 'MyFiletype',
-    \   'fileformat': 'MyFileformat',
-    \ },
-    \ }
-
-
-function! MyFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
-
-
-function! MyFileformat()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-let g:lightline.colorscheme = 'seoul256'
-" }}}
-
 " pyls
 if has('python3')
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
@@ -392,57 +302,6 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_selectionUI = 'fzf'
 let g:loaded_python_provider = 1        " disable py2 support
 
-" Deoplete: {{{
-"" disable autocomplete by default
-let g:deoplete_disable_auto_complete = 1
-let g:deoplete#enable_smart_case = 1
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-"" Autoselect feature
-set completeopt+=noinsert
-
-let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
-autocmd InsertEnter * call deoplete#enable()    " if i enter insert mode go for it
-call deoplete#custom#option('smart_case', v:true)
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
-endfunction
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-"" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" Enable jedi source debug messages
-" call deoplete#custom#option('profile', v:true)
-" call deoplete#enable_logging('DEBUG', 'deoplete.log')
-"Note: You must enable
-"|deoplete-source-attribute-is_debug_enabled| to debug the
-"sources.
-" call deoplete#custom#source('jedi', 'is_debug_enabled', 1)
-
-"" Do not complete too short words
-call deoplete#custom#source(
-\ 'dictionary', 'min_pattern_length', 4)
-
-" Collect keywords from buffer path not directory Nvim was launched from
-call deoplete#custom#source(
-\ 'file', 'enable_buffer_path', 'True')
-
-" Setting up the omnifuncs
-set omnifunc=LanguageClient#complete
-
-autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
-" }}}
 " Devicons
 let g:webdevicons_enable = 1
 
