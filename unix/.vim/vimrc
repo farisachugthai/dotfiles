@@ -2,7 +2,7 @@
 " vim configuration
 " Maintainer: Faris Chugthai
 " 
-set nocompatible " noqa
+set nocompatible
 
 if !filereadable('~/.vim/autoload/plug.vim')
     call system('wget -O ~/.vim/autoload/plug.vim 
@@ -14,22 +14,15 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/seoul256.vim'
 Plug 'scrooloose/nerdTree',
 Plug 'scrooloose/nerdcommenter'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'davidhalter/jedi-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'majutsushi/tagbar'
 Plug 'nvie/vim-flake8'
 Plug 'w0rp/ale'
-Plug 'godlygeek/tabular'
-Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
-Plug 'itchyny/lightline.vim'
 Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'} 
-Plug 'maximbaz/lightline-ale'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'roxma/nvim-yarp'
@@ -173,6 +166,11 @@ runtime! ftplugin/man.vim
 let g:ft_man_folding_enable = 0
 set keywordprg=:Man
 
+
+" Plugins:
+"
+" NERDTree:
+"
 "Close vim if the only window left is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTReeQuitOnOpen = 1
@@ -184,12 +182,6 @@ let NERDTreeNaturalSort = 1
 let NERDTreeChDirMode = 2
 let NERDTreeShowLineNumbers=1
 " Do not open NERDTree if vim starts in diff mode
-let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_meaningful_tab_names = 1
-let g:nerdtree_tabs_autoclose = 1
-" When starting up with a directory name as a parameter, cd into it
-let g:nerdtree_tabs_startup_cd = 1
-
 
 " Jedi:
 let g:jedi#smart_auto_mappings = 0
@@ -197,37 +189,19 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
 let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
 
-" Tagbar:
-nmap <F8> :TagbarToggle<CR>
-
-" Flake8
+" Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
 
-" Ale
+" Ale:
 nmap <Leader>l <Plug>(ale_toggle_buffer)
 
-" Gruvbox
+" Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 let g:gruvbox_contrast_dark = 'hard'
 
-" Lightline:
-let g:lightline = {
-			\ 'active': {
-			\   'left': [ [ 'mode', 'paste' ],
-			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-			\ },
-			\ 'component_function': {
-			\   'gitbranch': 'fugitive#head'
-			\ },
-			\ }
-
-let g:lightline.colorscheme = 'seoul256'
-
 " Language Servers:
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start']
     \ }

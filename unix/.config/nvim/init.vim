@@ -7,49 +7,29 @@
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
     call system('curl  ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ --proto=https https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-    " normal PlugInstall +UpdateRemotePlugins :clo
-    " Above didn't work. Unsure why.
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/seoul256.vim'
 Plug 'scrooloose/nerdTree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'majutsushi/tagbar'
 Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
 Plug 'w0rp/ale'
-Plug 'godlygeek/tabular'
-Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
-Plug 'itchyny/lightline.vim'
 Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh', 'for': ['python', 'python3', 'bash', 'rust' ] }
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'zchee/deoplete-jedi'
-Plug 'maximbaz/lightline-ale'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
-Plug 'nanotech/jellybeans.vim'
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }         " Better markdown support 
-" Multiple Plug commands can be written in a single line using | separators 
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' , { 'on': [] }
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'plytophogy/vim-virtualenv', { 'for': ['python', 'python3'] }
 
 call plug#end()
 " }}}
-" load deop and ultisnips after entering insert mode. note plugin confs for
-" loading deop after first enter. redundant?
-" augroup load_us_deop
-"     autocmd!
-"     autocmd InsertEnter * call plug#load('ultisnips', 'deoplete'
-"                 \| autocmd! load_us_deop)
-" augroup END
 
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
@@ -276,12 +256,6 @@ let g:NERDTreeMouseMode = 2           " Give more functionality to the mouse whi
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     " Ignore files in NERDTree. Has a default so append to it
 let g:NERDTreeRespectWildIgnore = 1         "yeah i meant those ones too
 
-" NERDTree Tabs:
-let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_meaningful_tab_names = 1
-let g:nerdtree_tabs_autoclose = 1
-let g:nerdtree_tabs_startup_cd = 1
-
 " NERDCom:
 let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
@@ -307,15 +281,6 @@ nnoremap <silent> <leader>gW :Gwrite!<CR>
 nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
-" Tagbar:
-" https://github.com/majutsushi/tagbar
-" Termux uses Universal Ctags and apparently tagbar doesn't like that.
-nmap <F8> :TagbarToggle<CR>
-let g:tagbar_autofocus = 0  " do not automatically jump to tagbar when opened
-let g:tagbar_autoclose = 1  " when you jump to a tag close tagbar
-" autocmd FileType python nested :TagbarOpen  " open tagbar when you see .py
-" autocmd BufWinLeave python nested :TagbarClose
-let g:tagbar_show_linenumbers = 1
 
 " Flake8:
 " https://github.com/nvie/vim-flake8
@@ -347,32 +312,7 @@ set statusline+=%{LinterStatus()}
 " TODO: Check if gruvbox is the colorscheme
 let g:gruvbox_contrast_dark = 'hard'
 
-" Lightline: {{{
-let g:lightline = {
-	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-	\ },
-	\ 'component_function': {
-	\   'gitbranch': 'fugitive#head',
-    \   'filetype': 'MyFiletype',
-    \   'fileformat': 'MyFileformat',
-    \ },
-    \ }
-
-
-function! MyFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
-
-function! MyFileformat()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-let g:lightline.colorscheme = 'seoul256'
-" }}}
-
-" pyls
+" Pyls: 
 if has('python3')
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'

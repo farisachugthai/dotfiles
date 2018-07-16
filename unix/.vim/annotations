@@ -429,3 +429,57 @@ let g:flake8_show_in_gutter=1
 "
 " <Leader>a is already mapped so use l for lint
 nmap <Leader>l <Plug>(ale_toggle_buffer)
+
+
+
+
+07/16/18
+
+trying to clean vim and nvim a lot. heres what ive deleted out kf there not including plugins
+
+
+
+
+# Vim TODO
+
+## 07/11/18
+
+### Nvim startup
+
+With the number of autocompleters i have on nvim is moving slower than i can
+type. its horrible.
+
+### Vars for different OSEes
+
+make something like 
+
+```viml
+if (system(uname -o) == 'Android')
+  let g:OS = 'Termux'
+elseif
+  let Unix
+elseif
+  let NT
+elseif
+  raise error
+```
+
+
+## 05/23/18
+I left a symbolic link in the nvim config folder. Use it to configure lightline
+if you want ap0arently rheres like 8 colorschemes it comes with out of the box.
+
+fix python.vim syntax file so that it recognizes an ipython command like
+var = %ls -al
+as a valid command.
+
+how to source your skel.py in again.
+
+probably read more of the docs honestly but not even close to a priority.
+
+also if you type in :hi at the vim ex cmd line, you'll eventually see
+
+Comment        xxx ctermfg=245 guifg=#928374
+
+and that line is probably why your comments are so fucking hard to read.
+

@@ -83,3 +83,80 @@ endif
 "else                            " Don't actually think this part does anything?
     "setlocal colorcolumn=+1
 "endif
+
+
+### Vimscript making syscalls
+
+    " normal PlugInstall +UpdateRemotePlugins :clo
+    " Above didn't work. Unsure why.
+
+
+Was originally after the sys curl  call to download vimplug and above the endif
+
+## vim-plug
+
+got rid of like 6 or 7 very heavy plugins and also ditched this
+immediately after call plug#end
+
+" load deop and ultisnips after entering insert mode. note plugin confs for
+" loading deop after first enter. redundant?
+" augroup load_us_deop
+"     autocmd!
+"     autocmd InsertEnter * call plug#load('ultisnips', 'deoplete'
+"                 \| autocmd! load_us_deop)
+" augroup END
+
+
+
+Plugins to shave off
+i desperately need nvim moving faster
+
+
+
+" Lightline: {{{
+let g:lightline = {
+	\ 'active': {
+	\   'left': [ [ 'mode', 'paste' ],
+	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+	\ },
+	\ 'component_function': {
+	\   'gitbranch': 'fugitive#head',
+    \   'filetype': 'MyFiletype',
+    \   'fileformat': 'MyFileformat',
+    \ },
+    \ }
+
+
+function! MyFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! MyFileformat()
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+let g:lightline.colorscheme = 'seoul256'
+" }}}
+
+
+
+
+" Tagbar:
+" https://github.com/majutsushi/tagbar
+" Termux uses Universal Ctags and apparently tagbar doesn't like that.
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 0  " do not automatically jump to tagbar when opened
+let g:tagbar_autoclose = 1  " when you jump to a tag close tagbar
+" autocmd FileType python nested :TagbarOpen  " open tagbar when you see .py
+" autocmd BufWinLeave python nested :TagbarClose
+let g:tagbar_show_linenumbers = 1
+
+
+
+
+" NERDTree Tabs:
+let g:nerdtree_tabs_no_startup_for_diff = 1
+let g:nerdtree_tabs_meaningful_tab_names = 1
+let g:nerdtree_tabs_autoclose = 1
+let g:nerdtree_tabs_startup_cd = 1
+
