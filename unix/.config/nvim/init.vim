@@ -218,17 +218,16 @@ let g:NERDTreeShowLineNumbers = 1
 let g:NERDTreeMouseMode = 2         " open dir on mouse click
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
 let g:NERDTreeRespectWildIgnore = 1
-
 " NERDCom:
 let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
 " }}}
-
 " Jedi:
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
 let g:jedi#popup_on_dot = 1                 " 'import'. slows things down too much
 let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
+let g:jedi#completions_enabled = 0          " we all know they based their work off you anyway
 " Fugitive: {{{
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -277,8 +276,6 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 set omnifunc=LanguageClient#complete
 set completefunc=LanguageClient#complete
 
-
-<<<<<<< HEAD
 " Deoplete: {{{
 "" disable autocomplete by default
 let g:deoplete_disable_auto_complete = 1
@@ -287,8 +284,7 @@ let g:deoplete#enable_smart_case = 1
 "" Close the autocompleter when we leave insert mode
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-"" Autoselect feature
-set completeopt+=noinsert
+set completeopt+=noinsert                    "" Autoselect feature
 
 let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
 autocmd InsertEnter * call deoplete#enable()    " if i enter insert mode go for it
