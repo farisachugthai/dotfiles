@@ -26,6 +26,7 @@
 /tags*tags
 *[Tt]ags*
 /tags/
+*/tags/*
 TAGS
 .TAGS
 TAGS/

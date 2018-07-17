@@ -31,7 +31,7 @@ Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
 " branch next and 'master' is 80 commits behind :(
 
 call plug#end()
-
+" }}}
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
@@ -278,6 +278,7 @@ set omnifunc=LanguageClient#complete
 set completefunc=LanguageClient#complete
 
 
+<<<<<<< HEAD
 " Deoplete: {{{
 "" disable autocomplete by default
 let g:deoplete_disable_auto_complete = 1
@@ -315,9 +316,6 @@ call deoplete#custom#source(
 " Collect keywords from buffer path not directory Nvim was launched from
 call deoplete#custom#source(
 \ 'file', 'enable_buffer_path', 'True')
-
-" Setting up the omnifuncs
-set omnifunc=LanguageClient#complete
 
 autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
 " }}}

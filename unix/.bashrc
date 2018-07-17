@@ -21,7 +21,7 @@ fi
 
 # This shows the git state. This also prevents us from seeing what venv or conda env we're in.
 # This occurs because PS1 gets locked and won't display. On Termux that's challenging.
-if [[ -z "$DISPLAY" ]]; then
+if [[ -z "PREFIX" ]]; then
     if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
         . "$HOME/.bashrc.d/git-prompt.sh";
         export GIT_PS1_SHOWDIRTYSTATE=1
@@ -104,23 +104,25 @@ fi
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
-export FZF_DEFAULT_OPTS='--preview="head -n 30 {}" --preview-window=right:50%:wrap --cycle'
+export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
 
 # Python
+if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+    __conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="/home/faris/miniconda3/bin:$PATH"
+        if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/home/faris/miniconda3/bin:$PATH"
+        fi
     fi
+    unset __conda_setup
+    # <<< conda initialize <<<
 fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 
 # The next line updates PATH for the Google Cloud SDK.
