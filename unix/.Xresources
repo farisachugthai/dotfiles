@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 ! From the man himself Shotts.
 URxvt.geometry: 120x36
 URxvt.saveLines: 10000
@@ -13,16 +11,17 @@ URxvt*transparent:       true
 URxvt*shading:       50
 URxvt*visualBell:  true
 URxvt*fading:  30
-URxvt*colorUL:  blue
+URxvt*colorUL:  cyan
 
-URxvt.font: xft:Fira Code Light:autohint=true:pixelsize=16
+# URxvt.font: xft:Fira Code Mono Light:autohint=true:pixelsize=16
+URxvt.font: DejaVu Sans Mono Book: size=14
 URxvt.letterSpace: -2
 
 
 URxvt*italicFont:  xft:Bitstream Vera Sans Mono:italic:autohint=true:pixelsize=12
 URxvt*boldItalicFont:  xft:Bitstream Vera Sans Mono:bold:italic:autohint=true:pixelsize=12
 
-URxvt*termName:  tmux-256color
+URxvt*termName: xterm-256color
 
 *antialias:  true
 *autohint:   true
@@ -87,41 +86,3 @@ URxvt.color245: #928374
 URxvt.color246: #a89984
 URxvt.color248: #bdae93
 URxvt.color250: #d5c4a1
-
-
-! -----------------------------------------------------------------------------
-! File: gruvbox-dark.xresources
-! Description: Retro groove colorscheme generalized
-! Author: morhetz <morhetz@gmail.com>
-! Source: https://github.com/morhetz/gruvbox-generalized
-! Last Modified: 6 Sep 2014
-! -----------------------------------------------------------------------------
-
-! hard contrast: *background: #1d2021
-*background: #282828
-! soft contrast: *background: #32302f
-*foreground: #ebdbb2
-! Black + DarkGrey
-*color0:  #282828
-*color8:  #928374
-! DarkRed + Red
-*color1:  #cc241d
-*color9:  #fb4934
-! DarkGreen + Green
-*color2:  #98971a
-*color10: #b8bb26
-! DarkYellow + Yellow
-*color3:  #d79921
-*color11: #fabd2f
-! DarkBlue + Blue
-*color4:  #458588
-*color12: #83a598
-! DarkMagenta + Magenta
-*color5:  #b16286
-*color13: #d3869b
-! DarkCyan + Cyan
-*color6:  #689d6a
-*color14: #8ec07c
-! LightGrey + White
-*color7:  #a89984
-*color15: #ebdbb2

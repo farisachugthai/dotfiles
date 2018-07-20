@@ -7,10 +7,10 @@ case $- in
     *i*);;
     *) return 0;;
 esac
-
-# This shows the git state. This also prevents us from seeing what venv or conda env we're in.
+# Prompt: {{{
+# This also prevents us from seeing what venv or conda env we're in.
 # This occurs because PS1 gets locked and won't display. On Termux that's challenging.
-if [[ -z "$DISPLAY" ]]; then
+if [[ -z "$PREFIX" ]]; then
     if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
         . "$HOME/.bashrc.d/git-prompt.sh";
         export GIT_PS1_SHOWDIRTYSTATE=1
@@ -19,8 +19,8 @@ if [[ -z "$DISPLAY" ]]; then
 fi
 
 if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
-
-# History
+# }}}
+# History: {{{
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -31,8 +31,8 @@ HISTFILESIZE=50000
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
-
-# Shopt
+# }}}
+# Shopt: {{{
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -63,18 +63,17 @@ set -o noclobber        # Still dont want to clobber things
 shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
-
+# }}}
 # Defaults in Ubuntu bashrcs
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-
-# Vim
+# Vim: {{{
 set -o vi
 export VISUAL="nvim"
 export EDITOR="$VISUAL"
-
-# JavaScript
+# }}}
+# JavaScript: {{{
 # Source npm completion if its installed
 if [[ $(which npm) ]]; then
     source ~/.bashrc.d/npm-completion.bash
@@ -87,15 +86,22 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 fi
-
-# FZF
+# }}}
+# FZF:{{{
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
-export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle --multi'
+# spice fzf up with ripgrep
+if [[ "$(command -v rg)" ]]; then
+    export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{.git,node_modules,__pycache__,*.tmp}/*" 2> /dev/null'
+fi
 
-# Python
+bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
+
+export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle --multi'
+# }}}
+# Python: {{{
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -112,8 +118,8 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     unset __conda_setup
     # <<< conda initialize <<<
 fi
-
-
+# }}}
+# gcloud: {{{
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then 
     source ~/bin/google-cloud-sdk/path.bash.inc; 
@@ -124,17 +130,17 @@ if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then
     source ~/bin/google-cloud-sdk/completion.bash.inc; 
 fi
 
-
 # The next line updates PATH for the Google Cloud SDK.
 if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
 if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then 
     source "$PREFIX/google-cloud-sdk/completion.bash.inc"; 
 fi
-
+# }}}
+# Ruby: {{{
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-
+# }}}
 # Source in .bashrc.d
 for config in ~/.bashrc.d/*.bash; do
     source "$config"

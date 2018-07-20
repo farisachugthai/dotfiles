@@ -2,7 +2,6 @@
 " Neovim configuration
 " Maintainer: Faris Chugthai
 
-" Full fold: {{{
 " Vim-plug {{{
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
     call system('curl  ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -39,7 +38,7 @@ if filereadable(glob('~/.config/nvim/autocorrect.vim'))
     source ~/.config/nvim/autocorrect.vim
 endif
 
-" Nvim Specific Options
+" Nvim Specific Options:
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
 
@@ -96,7 +95,7 @@ set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
 " }}}
 
-" Folds
+" Folds:
 set foldenable
 set foldlevelstart=10               " Enables most folds
 set foldnestmax=5                   " Why would anything be folded this much
@@ -117,12 +116,7 @@ set noswapfile
 set guifont='Fira\ Code\ Mono:h11'
 set path+=**        			" Make autocomplete for filenames work
 set autochdir
-
-if has('unnamedplus')           " Use the system clipboard.
-  set clipboard+=unnamed,unnamedplus
-else                            " Accomodate Termux
-  set clipboard+=unnamed
-endif
+set modeline                    " easy to set filetype with modeline
 
 set wildmenu                   " Show list instead of just completing
 set wildmode=longest,list:longest       " Longest string or list alternatives
@@ -137,7 +131,6 @@ set nojoinspaces
 if has('syntax')                " if we can have syntax recognition
     syntax on                   " this has to come after the colorscheme
 endif
-set modeline                    " easy to set filetype with modeline
 
 " Buffers Windows Tabs:
 try
@@ -148,6 +141,32 @@ endtry
 set hidden
 set splitbelow
 set splitright
+
+" Fun With Clipboards: {{{
+if has('unnamedplus')           " Use the system clipboard.
+  set clipboard+=unnamed,unnamedplus
+else                            " Accomodate Termux
+  set clipboard+=unnamed
+endif
+
+" fun trick from he provider. Before i uncomment, how do i check if I'm in
+" tmux? lol just run py3 import vim, os; py3 if os.environ.get('TMUX'):
+" let g:clipboard = {
+"           \   'name': 'myClipboard',
+"           \   'copy': {
+"           \      '+': 'tmux load-buffer -',
+"           \      '*': 'tmux load-buffer -',
+"           \    },
+"           \   'paste': {
+"           \      '+': 'tmux save-buffer -',
+"           \      '*': 'tmux save-buffer -',
+"           \   },
+"           \   'cache_enabled': 1,
+"           \ }
+
+" If `cache_enabled` is |TRUE| then when a selection is copied, Nvim will cache
+" the selection until the copy command process dies. When pasting, if the copy
+" process has not died, the cached selection is applied.
 " }}}
 " Mappings: {{{
 noremap <C-h> <C-w>h
@@ -157,14 +176,10 @@ noremap <C-l> <C-w>l
 
 " Select all text quickly
 nmap <Leader>a ggVG
-" turn on NERDTree [and remember to not inline comments on map cmds!!!
-nmap <Leader>nt <plug>NERDTree<CR> 
-"o for on/off
-nmap <Leader>no <plug>NERDTreeToggle<CR>
 " f5 to run py file
 imap <F5> <Esc>:w<CR>:!clear;python %<CR>
 
-" Terminal
+" Terminal:
 tnoremap <Esc> <C-W>N
 " tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " from he term. rewrite for fzf
@@ -184,7 +199,7 @@ tnoremap <Esc> <C-W>N
 
 " An action can be a reference to a function that processes selected lines
 function! s:build_quickfix_list(lines)
-  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))   " noqa
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
   copen
   cc
 endfunction
@@ -210,6 +225,10 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" Here's a ripgrep integration for ya
+
+let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " }}}
 " NERDTree: {{{
 " If only NERDTree is open, close Vim
@@ -262,25 +281,7 @@ let g:flake8_show_in_gutter=1
 " <Leader>a is already mapped so use l for lint
 nmap <Leader>l <Plug>(ale_toggle_buffer)
 
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-
-  return l:counts.total == 0 ? '' : printf(
-        \   '%dW %dE',
-        \   all_non_errors,
-        \   all_errors
-        \)
-endfunction
-
-set statusline+=%#ALEWarningSign#                      " Warning color
-set statusline+=%{LinterStatus()}    
-
 " Gruvbox:
-"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
-" TODO: Check if gruvbox is the colorscheme
 let g:gruvbox_contrast_dark = 'hard'
 
 " Pyls: 
@@ -302,14 +303,11 @@ let g:LanguageClient_serverCommands = {
     \ }
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_selectionUI = 'fzf'
-let g:loaded_python_provider = 1        " disable py2 support
+" let g:loaded_python_provider = 1        " disable py2 support
 " location of bls on termux
 " /data/data/com.termux/files/home/.local/share/yarn/global/node_modules/bash-language-server/bin/main.js
 
-" Devicons
+" Devicons:
 let g:webdevicons_enable = 1
-
-" adding the flags to NERDTree 
-let g:webdevicons_enable_nerdtree = 1
-" }}}
+let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
 " Vim: set foldmethod=marker :

@@ -50,7 +50,7 @@ export PAGER="less -JR"
 export MANPAGER="less -R"
 
 # Allow a color terminal. Oddly it seems like Konsole sets this for us.
-export COLORTERM="colorterm"
+export COLORTERM="truecolor"
 
 # These are the defaults but for the sake of being explicit rather than implicit
 export XDG_CONFIG_HOME="$HOME/.config"
