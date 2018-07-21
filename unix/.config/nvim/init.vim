@@ -2,7 +2,8 @@
 " Neovim configuration
 " Maintainer: Faris Chugthai
 
-" Vim-plug {{{
+" {{{ 1
+" Vim-plug {{{ 2
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
     call system('curl  ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ --proto=https https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
@@ -26,10 +27,11 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }         " Better markdown support 
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'plytophogy/vim-virtualenv', { 'for': ['python', 'python3'] }
+Plug 'vim-airline/vim-airline'
 
 call plug#end()
 " }}}
-
+" Nvim specific: {{{ 2
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
@@ -41,8 +43,8 @@ endif
 " Nvim Specific Options:
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
-
-" Filetype Specific Options: {{{
+" }}}
+" Filetype Specific Options: {{{ 2
 " Python:
 " Should wrap in a func. Dont want to have happen every time.
 " au BufNewFile *.py 0r ~/.config/nvim/skeleton.py
@@ -56,7 +58,7 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
-" Global Options: {{{
+" Global Options: {{{ 2
 " Leader:
 let g:mapleader = "\<Space>"
 
@@ -67,7 +69,7 @@ set expandtab
 set softtabstop=4
 let g:python_highlight_all = 1
 
-" Spell Checker: {{{
+" Spell Checker: {{{ 3
 set encoding=utf-8             " Set default encoding
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
@@ -101,7 +103,7 @@ set foldlevelstart=10               " Enables most folds
 set foldnestmax=5                   " Why would anything be folded this much
 set foldmethod=indent               " Gotta love Python
 
-" Other Global Options: 
+" Other Global Options: {{{ 3
 set tags+=./tags,./../tags,./*/tags      " usr_29
 set background=dark
 set mouse=a                    " Automatically enable mouse usage
@@ -126,7 +128,7 @@ set fileignorecase
 set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
 
 set nojoinspaces
-
+" }}}
 " Syntax Highlighting:
 if has('syntax')                " if we can have syntax recognition
     syntax on                   " this has to come after the colorscheme
@@ -142,7 +144,7 @@ set hidden
 set splitbelow
 set splitright
 
-" Fun With Clipboards: {{{
+" Fun With Clipboards: {{{ 3
 if has('unnamedplus')           " Use the system clipboard.
   set clipboard+=unnamed,unnamedplus
 else                            " Accomodate Termux
@@ -168,7 +170,7 @@ endif
 " the selection until the copy command process dies. When pasting, if the copy
 " process has not died, the cached selection is applied.
 " }}}
-" Mappings: {{{
+" Mappings: {{{ 3
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
@@ -192,8 +194,8 @@ tnoremap <Esc> <C-W>N
 " endfun
 " }}}
 
-" Plugin Configuration: {{{
-" fzf: {{{
+" Plugin Configuration: {{{ 3
+" fzf: {{{ 4
 " Adapted from:
 " https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/fzf.vim
 
@@ -230,7 +232,7 @@ let g:fzf_colors =
 
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " }}}
-" NERDTree: {{{
+" NERDTree: {{{ 4
 " If only NERDTree is open, close Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -251,13 +253,12 @@ let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
 " }}}
-
-" Jedi:
+" Jedi: {{{ 4
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
 let g:jedi#popup_on_dot = 1                 " 'import'. slows things down too much
 let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
-
-" Fugitive: {{{
+" }}}
+" Fugitive: {{{ 4
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -284,7 +285,7 @@ nmap <Leader>l <Plug>(ale_toggle_buffer)
 " Gruvbox:
 let g:gruvbox_contrast_dark = 'hard'
 
-" Pyls: 
+" Pyls: {{{ 4
 if has('python3')
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
@@ -294,8 +295,8 @@ if has('python3')
         let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
     endif
 endif
-
-" Language Servers:
+" }}}
+" Language Servers: {{{ 4
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'python': ['pyls'],
@@ -306,8 +307,9 @@ let g:LanguageClient_selectionUI = 'fzf'
 " let g:loaded_python_provider = 1        " disable py2 support
 " location of bls on termux
 " /data/data/com.termux/files/home/.local/share/yarn/global/node_modules/bash-language-server/bin/main.js
-
+" }}}
 " Devicons:
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
+" }}}
 " Vim: set foldmethod=marker :

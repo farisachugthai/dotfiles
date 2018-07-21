@@ -1,5 +1,4 @@
 #!/bin/bash
-# Bashrc. Assumes that the proper installation scripts have been run.
 # Maintainer: Faris Chugthai
 
 # Don't run if not interactive
@@ -8,17 +7,11 @@ case $- in
     *) return 0;;
 esac
 # Prompt: {{{
-# This also prevents us from seeing what venv or conda env we're in.
-# This occurs because PS1 gets locked and won't display. On Termux that's challenging.
-if [[ -z "$PREFIX" ]]; then
-    if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
-        . "$HOME/.bashrc.d/git-prompt.sh";
-        export GIT_PS1_SHOWDIRTYSTATE=1
-        PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-    fi
+if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
+    . "$HOME/.bashrc.d/git-prompt.sh";
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
 fi
-
-if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
 # }}}
 # History: {{{
 # don't put duplicate lines or lines starting with space in the history.
@@ -141,6 +134,7 @@ fi
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 # }}}
+# Sourced files: {{{
 # Source in .bashrc.d
 for config in ~/.bashrc.d/*.bash; do
     source "$config"
@@ -151,3 +145,5 @@ unset -v config
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
+# }}}
+# Vim: set foldmethod=marker :

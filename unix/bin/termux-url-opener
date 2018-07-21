@@ -1,5 +1,16 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Assumes Termux
+#
+# Script that utilizes the "Share link" feature of the YouTube app.
+# Until everything works exactly as desired, all options will be visible here.
+# Afterwards the script will have a "case ... esac" thwt refers to different
+# config files specified in this repo.
+#
+# Assumes Termux and Android OS.
+#
+# TODO: Fix download path. Need to review output formatting.
+# Subtitles aren't embedding correctly.
+# Use more robust regex for metadata and title.
+#
 # Maintainer: Faris Chugthai
 
 # mp3
@@ -9,6 +20,12 @@
         #-x --audio-format mp3 --audio-quality 0 --prefer-ffmpeg --no-mtime \
         #--embed-thumbnail --restrict-filenames $1
 
+# mp3 playlist
+#youtube-dl \
+        #-o "$HOME/storage/shared/Music/%(title)s.%(ext)s" \
+        #--add-metadata --metadata-from-title "%(artist)s - %(title)s" \
+        #-x --audio-format mp3 --audio-quality 0 --prefer-ffmpeg --no-mtime \
+        #--embed-thumbnail --restrict-filenames --yes-playlist $1
 
 # mp4
 youtube-dl \

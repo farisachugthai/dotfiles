@@ -6,7 +6,13 @@ performance, results of profiling, changes I need to make, Vimscript I
 
 Gonna house modifications I don't want to delete or traverse a git history for.
 
-# TODO
+## Fonts
+
+So outside of the realization that ~/.fonts was deprecated for
+.local/share/fonts, termux doesn't follow it. Overwrite the files at
+~/.termux/font.{otf.ttf} and you'll see a font change on app restart.
+
+## TODO
 
 first things first let's jot down some thoughts.
 fix ntree mappings
