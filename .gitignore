@@ -1,4 +1,11 @@
 # gitignore
+#
+# Maintainer: Faris Chugthai
+
+# Personal Files
+*.local
+
+# mypy
 .mypy_cache/
 # Jupyter Notebooks / JupyterLab
 .ipynb_checkpoints
