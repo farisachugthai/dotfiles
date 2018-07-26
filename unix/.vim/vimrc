@@ -15,8 +15,10 @@ else
     let g:conf = '~/.vim/vimrc'
 endif
 " Vim-plug {{{2
+" use curl because A) the --create-dirs option is nice and B) why make them
+" different in your init and vimrc?
 if !filereadable('~/.vim/autoload/plug.vim')
-    call system('wget -O ~/.vim/autoload/plug.vim
+    call system('curl -o ~/.vim/autoload/plug.vim
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
@@ -31,13 +33,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
-Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'}
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }
 Plug 'ryanoasis/vim-devicons'
+Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'}
 
 if !has('nvim')
-"    Plug 'roxma/nvim-yarp' swear this doesn't do anything
+    Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
@@ -66,13 +69,15 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 let g:mapleader = "\<Space>"
 
 " Viminfo:
+" At some point I should aggregate all of the !has(nvim)s together to keep
+" them at least in one spot
 " Also don't let neovim and vim use the same viminfo file
 if !has('nvim')
     set viminfo='100,<200,s200,n$HOME/.vim/viminfo
 endif
 
 " Pep8 Global Options: 
-set tabstop=4                   " show existing tab with 4 spaces width
+set tabstop=8                   " show existing tab with 4 spaces width
 set shiftwidth=4                " when indenting with '>', use 4 spaces width
 set expandtab                   " On pressing tab, insert 4 spaces
 set softtabstop=4
@@ -88,13 +93,13 @@ set spellsuggest=5                      " Limit the number of suggestions from '
 map <Leader>s :setlocal spell!<CR>
 
 if filereadable('/usr/share/dict/words')
-    setlocal dictionary+=/usr/share/dict/words
+    set dictionary+=/usr/share/dict/words
     " Replace the default dictionary completion with fzf-based fuzzy completion 
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
 
 if filereadable('/usr/share/dict/american-english')
-    setlocal dictionary+=/usr/share/dict/american-english
+    set dictionary+=/usr/share/dict/american-english
 endif
 " }}}
 
@@ -102,9 +107,9 @@ endif
 set foldenable
 set foldlevelstart=10               " Enables most folds
 set foldnestmax=5                   " Why would anything be folded this much
-set foldmethod=indent               " Gotta love Python
+set foldmethod=marker
 
-set tags+=./tags,./../tags,./*/tags      " usr_29
+set tags+=./tags,./k./tags,./*/tags      " usr_29
 set cursorline
 set cmdheight=2
 set colorcolumn=+1

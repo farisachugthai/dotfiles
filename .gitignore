@@ -4,6 +4,10 @@
 
 # Personal Files
 *.local
+# OTOH should any .local files be in here in the first place? I guess this
+# is a good preventative measure
+tmux-history
+history.sqlite
 
 # mypy
 .mypy_cache/

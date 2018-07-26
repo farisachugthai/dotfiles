@@ -7,6 +7,10 @@
 # idk the stuff you always do but never remember how to do
 
 
+# nope. now the TODO is to simply replace this into snippets. get a snippet plugin
+# and manage things that way
+
+
 def main():
     """
     Put your description of the module here.

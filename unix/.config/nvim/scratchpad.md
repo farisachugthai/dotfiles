@@ -50,9 +50,6 @@ I feel like just running :call StartJedi() should work though...
     " should probably put some logic somewhere to ensure that this is working
     " correctly, that i activated conda, i'm in the right environment etc
 
-
-
-
 " Under the assmption we're in the right virtualenv
 " Might need to do a try catch and cathc with a list of providers
 if isdirectory('$HOME/miniconda/envs/neovim_vscode/bin')
@@ -61,7 +58,6 @@ else
     let g:python3_host_prog = '$HOME/virtualenvs/nvim/bin/python3'
 endif
 
-
 " Remove this if you'd like to use fuzzy search
 "call deoplete#custom#source(
 "\ 'dictionary', 'matchers', ['matcher_head'])
@@ -69,7 +65,6 @@ endif
 "" If dictionary is already sorted, no need to sort it again.
 "call deoplete#custom#source(
 "\ 'dictionary', 'sorters', [])
-
 
 ## VimScript Struggles
 
@@ -82,11 +77,9 @@ endif
     "setlocal colorcolumn=+1
 "endif
 
-
 07/15/18
 
 dumping deoplete
-
 
 " Deoplete: {{{
 "" disable autocomplete by default
@@ -141,8 +134,6 @@ autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
 " }}}
 
 
-
-
 As stupid as this sounds, if pyls is registering as an rplugin for nvim....
 trying running the pyls executable from your shell. then in a separate window
 nvim +UpdateRemotePlugins
@@ -172,9 +163,6 @@ nvim +UpdateRemotePlugins
 
 " let g:lightline.colorscheme = 'seoul256'
 " " }}}
-
-
-
 
 " Compiler Func: {{{
 " All in one compiler. Gonna rewrite to make my own
@@ -238,9 +226,6 @@ Unnecessary ale function
 
 "   return l:counts.total == 0 ? '' : printf( '%dW %dE', l:all_non_errors, l:all_errors )
 " endfunction
-
-
-
 
 # DEBUGGING DEOPLETE
 

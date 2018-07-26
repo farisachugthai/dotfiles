@@ -5,7 +5,7 @@
 " Full fold: {{{
 " Vim-plug {{{
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
-    call system('curl ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    call system('curl -o ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
@@ -27,9 +27,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
 
-" There it is. All of those problems I was having was because I wasn't on
-" branch next and 'master' is 80 commits behind :(
-
 call plug#end()
 " }}}
 if filereadable(glob('~/.config/nvim/init.vim.local'))
@@ -45,10 +42,6 @@ set inccommand=split                " This alone is enough to never go back
 set termguicolors
 
 " Filetype Specific Options: {{{2
-" Python:
-" Should wrap in a func. Dont want to have happen every time.
-" au BufNewFile *.py 0r ~/.config/nvim/skeleton.py
-
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
@@ -63,7 +56,7 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 let g:mapleader = "\<Space>"
 
 " Pep8 Global Options: 
-set tabstop=4
+set tabstop=8
 set shiftwidth=4
 set expandtab
 set softtabstop=4
@@ -72,7 +65,7 @@ let g:python_highlight_all = 1
 " Spell Checker: {{{3
 set encoding=utf-8             " Set default encoding
 set spelllang=en
-set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+" set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
@@ -80,13 +73,13 @@ set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
 " Can be set with sudo select-default-wordlist. I opted for american insane
 if filereadable('/usr/share/dict/words')
-    setlocal dictionary='/usr/share/dict/words'
+    set dictionary='/usr/share/dict/words'
     " Replace the default dictionary completion with fzf-based fuzzy completion 
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
 
 if filereadable('/usr/share/dict/american-english')
-    setlocal dictionary+=/usr/share/dict/american-english
+    set dictionary+=/usr/share/dict/american-english
 endif
 
 " Made on termux with
@@ -102,7 +95,7 @@ endif
 set foldenable
 set foldlevelstart=10               " Enables most folds
 set foldnestmax=5                   " Why would anything be folded this much
-set foldmethod=indent               " Gotta love Python
+set foldmethod=marker
 
 " Other Global Options:{{{
 set tags+=./tags,./../tags,./*/tags      " usr_29
@@ -165,7 +158,13 @@ let g:ft_man_folding_enable = 0     " Pretty sure this is default enabled
 set keywordprg=:Man
 
 " Run a py file only in insert mode. In normal mode activate pyls
+"
 imap <F5> <Esc>:w<CR>:!clear;python %<CR>
+" Dude read this genius way to run python files
+"https://stackoverflow.com/a/501698
+:vnoremap <f5> :!python<CR>
+" now simply highlight the 'cells' you wanna run!
+
 
 " Terminal
 tnoremap <Esc> <C-W>N
@@ -223,11 +222,6 @@ let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
 " }}}
-" Jedi:
-let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
-let g:jedi#popup_on_dot = 1                 " 'import'. slows things down too much
-let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
-let g:jedi#completions_enabled = 0          " we all know they based their work off you anyway
 " Fugitive: {{{
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -250,71 +244,7 @@ nmap <Leader>l <Plug>(ale_toggle_buffer)
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 let g:gruvbox_contrast_dark = 'hard'
-
-" Pyls:
-if has('python3')
-    if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
-        let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
-    endif
-
-    " Something like if has($VIRTUAL_ENV) evaluates to 0 but we could also
-    " try something like that
-    if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
-        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
-    endif
-endif
-
-" Language Servers:
-let g:LanguageClient_serverCommands = { 'python': ['pyls'] }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_selectionUI = 'fzf'
-" let g:loaded_python_provider = 1        " disable py2 support
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-set omnifunc=LanguageClient#complete
-set completefunc=LanguageClient#complete
-
-" Deoplete: {{{
-"" disable autocomplete by default
-let g:deoplete_disable_auto_complete = 1
-let g:deoplete#enable_smart_case = 1
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-set completeopt+=noinsert                    "" Autoselect feature
-
-let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
-autocmd InsertEnter * call deoplete#enable()    " if i enter insert mode go for it
-call deoplete#custom#option('smart_case', v:true)
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
-endfunction
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-"" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-"" Do not complete too short words
-call deoplete#custom#source(
-\ 'dictionary', 'min_pattern_length', 4)
-
-" Collect keywords from buffer path not directory Nvim was launched from
-call deoplete#custom#source(
-\ 'file', 'enable_buffer_path', 'True')
-
-autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
-" }}}
+" Putting deoplete in after now
 " Devicons:
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1

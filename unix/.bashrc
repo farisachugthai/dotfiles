@@ -31,7 +31,7 @@ fi
 
 if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
 
-# History
+# History: {{{
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -42,8 +42,9 @@ HISTFILESIZE=50000
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
+# }}}
 
-# Shopt
+# Shopt: {{{
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -74,7 +75,7 @@ set -o noclobber        # Still dont want to clobber things
 shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
-
+# }}}
 # Defaults in Ubuntu bashrcs
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -106,7 +107,7 @@ if [[ -f ~/.fzf.bash ]]; then
 fi
 export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
 
-# Python
+# Python: {{{
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -123,8 +124,9 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     unset __conda_setup
     # <<< conda initialize <<<
 fi
+# }}}
 
-
+# gcloud: {{{
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then 
     source ~/bin/google-cloud-sdk/path.bash.inc; 
@@ -135,10 +137,26 @@ if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then
     source ~/bin/google-cloud-sdk/completion.bash.inc; 
 fi
 
-
 # The next line updates PATH for the Google Cloud SDK.
 if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
 if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then 
     source "$PREFIX/google-cloud-sdk/completion.bash.inc"; 
 fi
+# }}}
+
+PATH="/home/faris/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/faris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/faris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/faris/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/faris/perl5"; export PERL_MM_OPT;
+
+
+# so i know this should go in ~/.Xinitrc but the last time I created that file
+# my OS broke so this is gonna hang here for a lil
+# if [[ -f ~/.Xmodmap ]]; then
+#     if [[ "$(command -v xmodmap)" ]]; then
+#         xmodmap ~/.Xmodmap
+#     fi
+# fi
+# i'm getting errors about this so at some point its gotta go into xinitrc
