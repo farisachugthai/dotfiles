@@ -2,10 +2,6 @@
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
 
-# Python
-# https://pip.pypa.io/en/stable/user_guide/#command-completion
-eval "$(pip completion --bash)"
-
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
@@ -76,7 +72,7 @@ else
 fi
 
 # Set locale if it isn't explicitly stated elsewhere
-export LC_ALL=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8                 # gathered from localectl
 
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
