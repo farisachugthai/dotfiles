@@ -21,7 +21,9 @@ already a  pretty sizeable stack of stuff
 fix up skeleton.py so it has some pep257 compliant example docstrings. if they
 had pep484 type hints too thatd be sweet.
 
-## Jedi Function
+## Plugins
+
+### Jedi Function
 
 Not really ready to do away with this completely.
 If I ever set Jedi to not start at startup, then I think a StartJedi() func
@@ -49,12 +51,9 @@ endfunction
 
 " call PlugOnLoad('jedi-vim', 'call StartJedi()')       " code doesn't work
 
-
 I feel like just running :call StartJedi() should work though...
 
-
-## Deoplete
-
+### Deoplete
 
 " Termux's hardcoded python interpreter
     " if executable('$PREFIX/bin/python')
@@ -66,8 +65,6 @@ I feel like just running :call StartJedi() should work though...
     " correctly, that i activated conda, i'm in the right environment etc
 
 
-
-
 " Under the assmption we're in the right virtualenv
 " Might need to do a try catch and cathc with a list of providers
 if isdirectory('$HOME/miniconda/envs/neovim_vscode/bin')
@@ -77,8 +74,6 @@ else
 endif
 
 
-
-
 " Remove this if you'd like to use fuzzy search
 "call deoplete#custom#source(
 "\ 'dictionary', 'matchers', ['matcher_head'])
@@ -86,7 +81,6 @@ endif
 "" If dictionary is already sorted, no need to sort it again.
 "call deoplete#custom#source(
 "\ 'dictionary', 'sorters', [])
-
 
 ## VimScript Struggles
 
@@ -108,7 +102,7 @@ endif
 
 Was originally after the sys curl  call to download vimplug and above the endif
 
-## vim-plug
+### vim-plug
 
 got rid of like 6 or 7 very heavy plugins and also ditched this
 immediately after call plug#end
@@ -121,13 +115,11 @@ immediately after call plug#end
 "                 \| autocmd! load_us_deop)
 " augroup END
 
-
-
-Plugins to shave off
+### Plugins to shave off
 i desperately need nvim moving faster
 
 
-## Lightline
+#### Lightline
 
 " Lightline: {{{
 let g:lightline = {
@@ -155,7 +147,7 @@ let g:lightline.colorscheme = 'seoul256'
 " }}}
 
 
-## Tagbar
+#### Tagbar
 
 " Tagbar:
 " https://github.com/majutsushi/tagbar
@@ -169,7 +161,8 @@ let g:tagbar_show_linenumbers = 1
 
 
 
-## NERDTree Tabs
+#### NERDTree Tabs
+
 I feel like airline could handle this by itself
 " NERDTree Tabs:
 let g:nerdtree_tabs_no_startup_for_diff = 1
@@ -256,6 +249,7 @@ let g:nerdtree_tabs_startup_cd = 1
 -1-1
 
 
+#### Deoplete again?
 
 " Deoplete: {{{
 "" disable autocomplete by default
@@ -310,7 +304,7 @@ autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
 " }}}
 
 
-
+#### Lightline....again?
 
 " Lightline: {{{
 let g:lightline = {
@@ -337,3 +331,37 @@ endfunction
 
 let g:lightline.colorscheme = 'seoul256'
 " }}}
+
+
+
+### Ale
+
+I was reading the help docs for ale.
+What do these types refer to?
+
+
+g:ale_set_highlights                                     *g:ale_set_highlights*
+
+  Type: |Number|
+  Default: `has('syntax')`
+
+  When this option is set to `1`, highlights will be set for problems.
+
+  ALE will use the following highlight groups for problems:
+
+  |ALEError|        - Items with `'type': 'E'`
+  |ALEWarning|      - Items with `'type': 'W'`
+  |ALEInfo.|        - Items with `'type': 'I'`
+  |ALEStyleError|   - Items with `'type': 'E'` and `'sub_type': 'style'`
+  |ALEStyleWarning| - Items with `'type': 'W'` and `'sub_type': 'style'`
+
+  When |g:ale_set_signs| is set to `0`, the following highlights for entire
+  lines will be set.
+
+  |ALEErrorLine|   - All items with `'type': 'E'`
+  |ALEWarningLine| - All items with `'type': 'W'`
+  |ALEInfoLine|    - All items with `'type': 'I'`
+
+  Vim can only highlight the characters up to the last column in a buffer for
+  match highlights, whereas the line highlights when signs are enabled will
+  run to the edge of the screen.

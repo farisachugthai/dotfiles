@@ -9,8 +9,8 @@ let g:python_highlight_all = 1
 
 " For use with AleFix...also all supported linters
 " let b:ale_fixers = {'python': ['flake8', 'autopep', 'pyls', 'mypy', 'pycodestyle', 'pyflakes', 'pylint']}
-
-let b:ale_fixers = {'python3': ['flake8', 'pyls', 'pylint']}
+" maybe add pylint or mypy when we're more comfortable with them
+let b:ale_linters = {'python3': ['flake8', 'pyls']}
 
 
 " Cinwords =
