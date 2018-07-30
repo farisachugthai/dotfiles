@@ -11,7 +11,7 @@ alias cd..='cd ..'
 alias cd...="cd ../.."
 alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
-alias cd......="cd ../../../../.." 
+alias cd......="cd ../../../../.."
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -48,9 +48,10 @@ alias info="info --vi-keys"
 alias ga='git add'
 alias gc='git clone'
 alias gcs='git clone --depth 1'
-alias gci='git commit'
+alias gco='git commit'
 alias gs='git status'
 alias gd='git diff'
+alias gds='git diff --staged'
 
 
 # enable color support of ls and also add handy aliases

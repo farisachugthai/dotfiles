@@ -87,12 +87,10 @@ if [[ -f ~/.fzf.bash ]]; then
 fi
 # spice fzf up with ripgrep
 if [[ "$(command -v rg)" ]]; then
-    export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{.git,node_modules,__pycache__,*.tmp}/*" 2> /dev/null'
+    export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 5 .'
 fi
-
+export FZF_DEFAULT_OPTS='--preview-window=right:50%:wrap --cycle --multi'
 bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
-
-export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle --multi'
 # }}}
 # Python: {{{
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
@@ -114,26 +112,37 @@ fi
 # }}}
 # gcloud: {{{
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then 
-    source ~/bin/google-cloud-sdk/path.bash.inc; 
+if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then
+    source ~/bin/google-cloud-sdk/path.bash.inc;
 fi
 
 # The next line enables shell command completion for gcloud.
-if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then 
-    source ~/bin/google-cloud-sdk/completion.bash.inc; 
+if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then
+    source ~/bin/google-cloud-sdk/completion.bash.inc;
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
-if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
+if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then
+    source "$PREFIX/google-cloud-sdk/path.bash.inc";
+fi
 
-if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then 
-    source "$PREFIX/google-cloud-sdk/completion.bash.inc"; 
+if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then
+    source "$PREFIX/google-cloud-sdk/completion.bash.inc";
 fi
 # }}}
 # Ruby: {{{
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 # }}}
+
+# Perl: {{{
+PATH="/data/data/com.termux/files/home/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/data/data/com.termux/files/home/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/data/data/com.termux/files/home/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/data/data/com.termux/files/home/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/data/data/com.termux/files/home/perl5"; export PERL_MM_OPT;
+# }}}
+
 # Sourced files: {{{
 # Source in .bashrc.d
 for config in ~/.bashrc.d/*.bash; do
@@ -146,4 +155,3 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
 # }}}
-# Vim: set foldmethod=marker :

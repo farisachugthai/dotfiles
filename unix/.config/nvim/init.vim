@@ -2,11 +2,11 @@
 " Neovim configuration
 " Maintainer: Faris Chugthai
 
-" All {{{ 1
-" Vim-plug {{{ 2
+" All: {{{ 1
+" Vim Plug: {{{ 2
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
     call system('curl -o ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ --proto=https https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -21,12 +21,13 @@ Plug 'tpope/vim-fugitive'
 Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
-Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh', 'for': ['python', 'python3', 'bash', 'rust' ] }
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }
 Plug 'ryanoasis/vim-devicons'
-Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }         " Better markdown support
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
+    \ 'do': 'bash install.sh' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'plytophogy/vim-virtualenv', { 'for': ['python', 'python3'] }
+Plug 'plytophogy/vim-virtualenv'
 Plug 'vim-airline/vim-airline'
 
 call plug#end()
@@ -69,8 +70,8 @@ set softtabstop=4
 let g:python_highlight_all = 1
 " }}}
 " Syntax Highlighting: {{{ 3
-if has('syntax')                " if we can have syntax recognition
-    syntax on                   " this has to come after the colorscheme
+if has('syntax')                    " if we can have syntax recognition
+    syntax on                       " this has to come after the colorscheme
 endif
 " }}}
 " Folds: {{{ 3
@@ -79,7 +80,7 @@ set foldlevelstart=10               " Enables most folds
 set foldnestmax=5                   " Why would anything be folded this much
 set foldmethod=marker
 " }}}
-" Buffers Windows Tabs:
+" Buffers Windows Tabs: {{{ 3
 try
   set switchbuf=useopen,usetab,newtab
   set showtabline=2
@@ -88,13 +89,17 @@ endtry
 set hidden
 set splitbelow
 set splitright
+" }}}
 " Spell Checker: {{{ 3
 set encoding=utf-8             " Set default encoding
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
-" Can be set with sudo select-default-wordlist. I opted for american insane
+set complete+=kspell
+set spellsuggest=5
+map <Leader>s :setlocal spell!<CR>
+" Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
     setlocal dictionary='/usr/share/dict/words'
     " Replace the default dictionary completion with fzf-based fuzzy completion
@@ -108,6 +113,7 @@ endif
 " Made on termux with
 " TODO: Check if termux and if not readable run the command below
 " mkspell ~/.config/nvim/spell/en.hun.spl $PREFIX/share/hunspell/en_US.aff
+" TODO2: Also are you supposed to end the spellfile with .add?
 if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
 endif
@@ -115,10 +121,16 @@ set complete+=kspell
 set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
 " }}}
+" Folds: {{{ 3
+set foldenable
+set foldlevelstart=10                   " Enables most folds
+set foldnestmax=10                      " Why would anything be folded this much
+set foldmethod=marker
+" }}}
 " Other Global Options: {{{ 3
-set tags+=./tags,./../tags,./*/tags      " usr_29
+set tags+=./tags,./../tags,./*/tags     " usr_29
 set background=dark
-set mouse=a                    " Automatically enable mouse usage
+set mouse=a                             " Automatically enable mouse usage
 set cursorline
 set cmdheight=2
 set number
@@ -127,19 +139,28 @@ set ignorecase
 set smartcase
 set smartindent
 set noswapfile
-set guifont='Fira\ Code\ Mono:h11'
+if has('gui_running')
+    set guifont='Fira\ Code\ Mono:11'
+endif
 set path+=**        			" Make autocomplete for filenames work
 set autochdir
-set modeline                    " easy to set filetype with modeline
-
-set wildmenu                   " Show list instead of just completing
+set wildmenu                            " Show list instead of just completing
 set wildmode=longest,list:longest       " Longest string or list alternatives
 set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
 set complete+=.,b,u,t           " open buffer, open buffers, and tags
 set fileignorecase
 set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
-
 set nojoinspaces
+" }}}
+" Buffers Windows Tabs: {{{ 3
+try
+  set switchbuf=useopen,usetab,newtab
+  set showtabline=2
+catch
+endtry
+set hidden
+set splitbelow
+set splitright
 " }}}
 " Fun With Clipboards: {{{ 3
 if has('unnamedplus')           " Use the system clipboard.
@@ -169,16 +190,19 @@ endif
 " }}}
 " }}}
 " Mappings: {{{ 2
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Select all text quickly
-nmap <Leader>a ggVG
+nnoremap <Leader>a ggVG
 " f5 to run py file
-imap <F5> <Esc>:w<CR>:!clear;python %<CR>
-
+inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
+" It should be easier to get help
+nnoremap <leader>he :helpgrep<space>
+" It should also be easier to edit the config
+noremap <F9> :e $MYVIMRC<CR>
 " Terminal: {{{ 3
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
@@ -225,36 +249,45 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+" Here's a ripgrep integration for ya
+" With :F you can now speed through file searches
+let g:rg_command = '
+    \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+    \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+    \ -g "!*.{min.js,swp,o,zip}" \ -g "!{.git,node_modules,vendor}/*" '
+
+
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 
 " }}}
 " NERDTree: {{{ 3
 " If only NERDTree is open, close Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-let g:NERDTreeQuitOnOpen = 1           " close NT after opening a file with o, i or t
+" let g:NERDTreeQuitOnOpen = 1           " close NT after opening a file with o, i or t
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. default is 1, 10, 11...100...2
-let g:NERDTreeChDirMode = 2         " change cwd every time NT root changes
+let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
+let g:NERDTreeChDirMode = 2             " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
-let g:NERDTreeMouseMode = 2           " Give more functionality to the mouse while navigating NERDTree
-let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     " Ignore files in NERDTree. Has a default so append to it
-let g:NERDTreeRespectWildIgnore = 1         "yeah i meant those ones too
-
-" NERDCom:
-let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
-let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
-let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
+let g:NERDTreeMouseMode = 1             " Open dirs with 1 click files with 2
+let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
+let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
+" }}}
+" NERDCom: {{{ 3
+let g:NERDSpaceDelims = 1                   " can we give the code some room to breathe?
+let g:NERDDefaultAlign = 'left'             " Align line-wise comment delimiters flush left
+let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when uncommenting
 " }}}
 " Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
-let g:jedi#popup_on_dot = 1                 " 'import'. slows things down too much
-let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
+let g:jedi#popup_on_dot = 1
+let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
 " }}}
-" Fugitive: {{{ 4
+" Fugitive: {{{ 3
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -268,8 +301,9 @@ nnoremap <silent> <leader>gW :Gwrite!<CR>
 nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
-
 " Flake8, Ale and Gruvbox: {{{ 3
+
+" Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_in_gutter=1
 
@@ -281,14 +315,16 @@ nmap <Leader>l <Plug>(ale_toggle_buffer)
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
-
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
-
 let g:ale_set_signs = 1 " what is the default
-" Gruvbox:
-let g:gruvbox_contrast_dark = 'hard'
 
+" Gruvbox:
+"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
+" TODO: syntax is wrong but the idea is to run check before eval
+" if &colorscheme=gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+" }}}
 " Python Executables: {{{ 3
 if has('python3')
     " Termux settings
@@ -301,30 +337,25 @@ if has('python3')
         let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
     endif
 
-endif
-
-if isdirectory("$HOME/virtualenvs")
-    let g:ale_virtualenv_dir_names+="virtualenvs"
-else
-    call mkdir($HOME . "/tmp/foo/bar", "p", 0700)
-
+    if isdirectory("$HOME/virtualenvs")
+        let g:ale_virtualenv_dir_names+="virtualenvs"
+    else
+        " so i found this in the help docs
+        " wth is the syntax for the path? have i been doing this all wrong?
+        " call mkdir($HOME . \"/tmp/foo/bar", \"p", 0700)
+    endif
 endif
 " }}}
 " Language Servers: {{{ 3
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start']
+    \ 'sh': ['bash-language-server', 'start'],
     \ }
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_selectionUI = 'fzf'
-" let g:loaded_python_provider = 1        " disable py2 support
-" location of bls on termux
-" /data/data/com.termux/files/home/.local/share/yarn/global/node_modules/bash-language-server/bin/main.js
 " }}}
-" Devicons: {{{
+" Devicons: {{{ 3
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
 " }}}
 " }}}
-" Vim: set foldmethod=marker :

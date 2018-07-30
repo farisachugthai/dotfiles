@@ -5,7 +5,7 @@ Copy this file to ~/.ptpython/config.py
 """
 from __future__ import unicode_literals
 from prompt_toolkit.filters import ViInsertMode
-from prompt_toolkit.key_binding.key_processor import KeyPress
+# from prompt_toolkit.key_binding.key_processor import KeyPress
 from prompt_toolkit.keys import Keys
 from pygments.token import Token
 
@@ -118,32 +118,26 @@ def configure(repl):
 
     # Add custom key binding for PDB.
     # holy hell this is genius. py3.7 just got breakpoint but this wouldve been a great addition to my ipy conf
-    """
     @repl.add_key_binding(Keys.ControlB)
     def _(event):
         ' Pressing Control-B will insert "pdb.set_trace()" '
         event.cli.current_buffer.insert_text('\nimport pdb; pdb.set_trace()\n')
-    """
 
     # Typing ControlE twice should also execute the current command.
     # (Alternative for Meta-Enter.)
-    """
     @repl.add_key_binding(Keys.ControlE, Keys.ControlE)
     def _(event):
         b = event.current_buffer
         if b.accept_action.is_returnable:
             b.accept_action.validate_and_handle(event.cli, b)
-    """
 
 
     # Typing 'jj' in Vi Insert mode, should send escape. (Go back to navigation
     # mode.)
-    """
     @repl.add_key_binding('j', 'j', filter=ViInsertMode())
     def _(event):
         " Map 'jj' to Escape. "
         event.cli.input_processor.feed(KeyPress(Keys.Escape))
-    """
 
     # Custom key binding for some simple autocorrection while typing.
     # TODO: Observe how much this slows stuff down because if its a quick lookup then you could add your autocorrect.vim

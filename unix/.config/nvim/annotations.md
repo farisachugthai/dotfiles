@@ -22,6 +22,7 @@ fix up skeleton.py so it has some pep257 compliant example docstrings. if they
 had pep484 type hints too thatd be sweet.
 
 ## Plugins
+=======
 
 ### Jedi Function
 
@@ -82,25 +83,6 @@ endif
 "call deoplete#custom#source(
 "\ 'dictionary', 'sorters', [])
 
-## VimScript Struggles
-
-" don't know what i'm doing wrong here but only recently started learning viml
-"if g:textwidth == 0             " Basically saying is it ever unset? Set it 100
-    "setlocal colorcolumn = 100
-"elseif                          " how do we check that a variable is set to a non-zero integer?
-    "setlocal colorcolumn+=1
-"else                            " Don't actually think this part does anything?
-    "setlocal colorcolumn=+1
-"endif
-
-
-### Vimscript making syscalls
-
-    " normal PlugInstall +UpdateRemotePlugins :clo
-    " Above didn't work. Unsure why.
-
-
-Was originally after the sys curl  call to download vimplug and above the endif
 
 ### vim-plug
 
@@ -115,141 +97,8 @@ immediately after call plug#end
 "                 \| autocmd! load_us_deop)
 " augroup END
 
-### Plugins to shave off
-i desperately need nvim moving faster
 
 
-#### Lightline
-
-" Lightline: {{{
-let g:lightline = {
-	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-	\ },
-	\ 'component_function': {
-	\   'gitbranch': 'fugitive#head',
-    \   'filetype': 'MyFiletype',
-    \   'fileformat': 'MyFileformat',
-    \ },
-    \ }
-
-
-function! MyFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
-
-function! MyFileformat()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-let g:lightline.colorscheme = 'seoul256'
-" }}}
-
-
-#### Tagbar
-
-" Tagbar:
-" https://github.com/majutsushi/tagbar
-" Termux uses Universal Ctags and apparently tagbar doesn't like that.
-nmap <F8> :TagbarToggle<CR>
-let g:tagbar_autofocus = 0  " do not automatically jump to tagbar when opened
-let g:tagbar_autoclose = 1  " when you jump to a tag close tagbar
-" autocmd FileType python nested :TagbarOpen  " open tagbar when you see .py
-" autocmd BufWinLeave python nested :TagbarClose
-let g:tagbar_show_linenumbers = 1
-
-
-
-#### NERDTree Tabs
-
-I feel like airline could handle this by itself
-" NERDTree Tabs:
-let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_meaningful_tab_names = 1
-let g:nerdtree_tabs_autoclose = 1
-let g:nerdtree_tabs_startup_cd = 1
-
-
-## compiler fxn
-
-" Compiler Func: {{{
-" All in one compiler. Gonna rewrite to make my own
-" map <F5> :call CompileRunGcc()<CR>
-" func! CompileRunGcc()
-"     exec "w"
-"     if &filetype == 'c'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'cpp'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'java'
-"         exec "!javac %"
-"         exec "!time java %<"
-"     elseif &filetype == 'sh'
-"         :!time bash %
-"     elseif &filetype == 'python'
-"         exec "!time python2.7 %"
-"     elseif &filetype == 'html'
-"         exec "!firefox % &"
-"     elseif &filetype == 'go'
-"         exec "!go build %<"
-"         exec "!time go run %"
-"     elseif &filetype == 'mkd'
-"         exec "!~/.vim/markdown.pl % > %.html &"
-"         exec "!firefox %.html &"
-"     endif
-" endfunc
-" }}}
-
-
-
-## Diff between nvim and vim
-
-2. Defaults					            *nvim-defaults*
-
-- Syntax highlighting is enabled by default
-- ":filetype plugin indent on" is enabled by default
-
-- 'autoindent' is set by default
-- 'autoread' is set by default
-- 'backspace' defaults to "indent,eol,start"
-- 'backupdir' defaults to .,~/.local/share/nvim/backup (|xdg|)
-- 'belloff' defaults to "all"
-- 'complete' doesn't include "i"
-- 'cscopeverbose' is enabled
-- 'directory' defaults to ~/.local/share/nvim/swap// (|xdg|), auto-created
-- 'display' defaults to "lastline,msgsep"
-- 'fillchars' defaults (in effect) to "vert:│,fold:·"
-- 'formatoptions' defaults to "tcqj"
-- 'history' defaults to 10000 (the maximum)
-- 'hlsearch' is set by default
-- 'incsearch' is set by default
-- 'langnoremap' is enabled by default
-- 'langremap' is disabled by default
-- 'laststatus' defaults to 2 (statusline is always shown)
-- 'listchars' defaults to "tab:> ,trail:-,nbsp:+"
-- 'nocompatible' is always set
-- 'nrformats' defaults to "bin,hex"
-- 'ruler' is set by default
-- 'sessionoptions' doesn't include "options"
-- 'showcmd' is set by default
-- 'sidescroll' defaults to 1
-- 'smarttab' is set by default
-- 'tabpagemax' defaults to 50
-- 'tags' defaults to "./tags;,tags"
-- 'ttyfast' is always set
-- 'undodir' defaults to ~/.local/share/nvim/undo (|xdg|), auto-created
-- 'viminfo' includes "!"
-- 'wildmenu' is set by default
-
-==============================================================================
-3. New Features						       *nvim-features*
--1-1
-
-
-#### Deoplete again?
 
 " Deoplete: {{{
 "" disable autocomplete by default
@@ -303,8 +152,38 @@ set omnifunc=LanguageClient#complete
 autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
 " }}}
 
+### More options
 
-#### Lightline....again?
+" Termux's hardcoded python interpreter
+    " if executable('$PREFIX/bin/python')
+        " let g:python3_host_prog = '$PREFIX/bin/python'
+    " endif
+    " evals to 0 outside venv on termux
+
+    " should probably put some logic somewhere to ensure that this is working
+    " correctly, that i activated conda, i'm in the right environment etc
+
+" Under the assmption we're in the right virtualenv
+" Might need to do a try catch and cathc with a list of providers
+if isdirectory('$HOME/miniconda/envs/neovim_vscode/bin')
+    let g:python3_host_prog = '$HOME/miniconda/envs/neovim_vscode/bin/python'
+else
+    let g:python3_host_prog = '$HOME/virtualenvs/nvim/bin/python3'
+endif
+
+" Remove this if you'd like to use fuzzy search
+"call deoplete#custom#source(
+"\ 'dictionary', 'matchers', ['matcher_head'])
+
+"" If dictionary is already sorted, no need to sort it again.
+"call deoplete#custom#source(
+"\ 'dictionary', 'sorters', [])
+
+
+
+
+
+### Lightline
 
 " Lightline: {{{
 let g:lightline = {
@@ -319,11 +198,9 @@ let g:lightline = {
     \ },
     \ }
 
-
 function! MyFiletype()
     return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
-
 
 function! MyFileformat()
     return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
@@ -332,7 +209,68 @@ endfunction
 let g:lightline.colorscheme = 'seoul256'
 " }}}
 
+### Tagbar
 
+" Tagbar:
+" https://github.com/majutsushi/tagbar
+" Termux uses Universal Ctags and apparently tagbar doesn't like that.
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 0  " do not automatically jump to tagbar when opened
+let g:tagbar_autoclose = 1  " when you jump to a tag close tagbar
+" autocmd FileType python nested :TagbarOpen  " open tagbar when you see .py
+" autocmd BufWinLeave python nested :TagbarClose
+let g:tagbar_show_linenumbers = 1
+
+#### NERDTree Tabs
+I feel like airline could handle this by itself
+" NERDTree Tabs:
+let g:nerdtree_tabs_no_startup_for_diff = 1
+let g:nerdtree_tabs_meaningful_tab_names = 1
+let g:nerdtree_tabs_autoclose = 1
+let g:nerdtree_tabs_startup_cd = 1
+
+## compiler fxn
+
+" Compiler Func: {{{
+" All in one compiler. Gonna rewrite to make my own
+" map <F5> :call CompileRunGcc()<CR>
+" func! CompileRunGcc()
+"     exec "w"
+"     if &filetype == 'c'
+"         exec "!g++ % -o %<"
+"         exec "!time ./%<"
+"     elseif &filetype == 'cpp'
+"         exec "!g++ % -o %<"
+"         exec "!time ./%<"
+"     elseif &filetype == 'java'
+"         exec "!javac %"
+"         exec "!time java %<"
+"     elseif &filetype == 'sh'
+"         :!time bash %
+"     elseif &filetype == 'python'
+"         exec "!time python2.7 %"
+"     elseif &filetype == 'html'
+"         exec "!firefox % &"
+"     elseif &filetype == 'go'
+"         exec "!go build %<"
+"         exec "!time go run %"
+"     elseif &filetype == 'mkd'
+"         exec "!~/.vim/markdown.pl % > %.html &"
+"         exec "!firefox %.html &"
+"     endif
+" endfunc
+" }}}
+
+
+
+### Language Client Option to set
+
+2.16 g:LanguageClient_fzfOptions                *g:LanguageClient_fzfOptions*
+
+Customize fzf. Check fzf documentation for available options.
+
+Default: v:null
+Valid option: Array<String> | String
 
 ### Ale
 
@@ -365,3 +303,96 @@ g:ale_set_highlights                                     *g:ale_set_highlights*
   Vim can only highlight the characters up to the last column in a buffer for
   match highlights, whereas the line highlights when signs are enabled will
   run to the edge of the screen.
+=======
+
+#### Virtualenv.vim
+
+CONFIGURATION                                    *virtualenv-configuration*
+
+g:virtualenv_loaded                              *g:virtualenv_loaded*
+    If set in your |vimrc|, virtualenv.vim is not loaded.
+
+g:virtualenv_directory                           *g:virtualenv_directory*
+    The directory that contains the virtualenvs. If you're a virtualenvwrapper
+    user and you have $WORKON_HOME set, it will default to this. Otherwise it
+    will default to ~/.virtualenvs.
+
+g:virtualenv_auto_activate                       *g:virtualenv_auto_activate*
+    If set, an attempt will be made to detect any active virtualenv, and
+    activate it.
+
+Example: >
+    let g:virtualenv_directory = '/path/to/virtualenvs'
+<
+g:virtualenv_stl_format                          *g:virtualenv_stl_format*
+    Format string for the statusline function.
+
+Example: >
+    let g:virtualenv_stl_format = '[%n]'
+<
+To use the statusline flag, this must appear in your |'statusline'| setting: >
+    %{virtualenv#statusline()}
+<
+The content is derived from the |g:virtualenv_stl_format| variable.
+
+Powerline users can see their statuslines too. After configuring powerline
+according to its documentation to support a virtualenv segment, Powerline will
+read the value of $VIRTUAL_ENV and display it.
+## Diff between nvim and vim
+
+2. Defaults					            *nvim-defaults*
+
+- Syntax highlighting is enabled by default
+- ":filetype plugin indent on" is enabled by default
+
+- 'autoindent' is set by default
+- 'autoread' is set by default
+- 'backspace' defaults to "indent,eol,start"
+- 'backupdir' defaults to .,~/.local/share/nvim/backup (|xdg|)
+- 'belloff' defaults to "all"
+- 'complete' doesn't include "i"
+- 'cscopeverbose' is enabled
+- 'directory' defaults to ~/.local/share/nvim/swap// (|xdg|), auto-created
+- 'display' defaults to "lastline,msgsep"
+- 'fillchars' defaults (in effect) to "vert:│,fold:·"
+- 'formatoptions' defaults to "tcqj"
+- 'history' defaults to 10000 (the maximum)
+- 'hlsearch' is set by default
+- 'incsearch' is set by default
+- 'langnoremap' is enabled by default
+- 'langremap' is disabled by default
+- 'laststatus' defaults to 2 (statusline is always shown)
+- 'listchars' defaults to "tab:> ,trail:-,nbsp:+"
+- 'nocompatible' is always set
+- 'nrformats' defaults to "bin,hex"
+- 'ruler' is set by default
+- 'sessionoptions' doesn't include "options"
+- 'showcmd' is set by default
+- 'sidescroll' defaults to 1
+- 'smarttab' is set by default
+- 'tabpagemax' defaults to 50
+- 'tags' defaults to "./tags;,tags"
+- 'ttyfast' is always set
+- 'undodir' defaults to ~/.local/share/nvim/undo (|xdg|), auto-created
+- 'viminfo' includes "!"
+- 'wildmenu' is set by default
+
+
+
+## VimScript Struggles
+
+" don't know what i'm doing wrong here but only recently started learning viml
+"if g:textwidth == 0             " Basically saying is it ever unset? Set it 100
+    "setlocal colorcolumn = 100
+"elseif                          " how do we check that a variable is set to a non-zero integer?
+    "setlocal colorcolumn+=1
+"else                            " Don't actually think this part does anything?
+    "setlocal colorcolumn=+1
+"endif
+
+### Vimscript making syscalls
+
+    " normal PlugInstall +UpdateRemotePlugins :clo
+    " Above didn't work. Unsure why.
+
+Was originally after the sys curl  call to download vimplug and above the endif
