@@ -9,8 +9,13 @@ esac
 # Prompt: {{{
 if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     . "$HOME/.bashrc.d/git-prompt.sh";
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWCOLORHINTS=1
+    GIT_PS1_SHOWSTASHSTATE=1
+    GIT_PS1_SHOWUPSTREAM="auto"
+    Color_Off="\[\033[0m\]"
+    Yellow="\[\033[0;33m\]"
+    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h:\w \\\$ " "[%s]"'
 fi
 # }}}
 # History: {{{
@@ -89,7 +94,6 @@ fi
 if [[ "$(command -v rg)" ]]; then
     export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 5 .'
 fi
-export FZF_DEFAULT_OPTS='--preview-window=right:50%:wrap --cycle --multi'
 bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
 # }}}
 # Python: {{{
