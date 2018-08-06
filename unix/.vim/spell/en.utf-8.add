@@ -290,3 +290,4 @@ REPL
 OpenSSH
 deian
 sudo
+shopt

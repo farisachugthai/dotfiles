@@ -51,7 +51,7 @@ function ssh-day ()
 add-alias ()
 {
    local name=$1 value="$2"
-   echo alias $name=\'$value\' >> ~/.bashrc.d/alias
+   echo alias $name=\'$value\' >> ~/.bashrc.d/alias.bash
    eval alias $name=\'$value\'
    alias $name
 }

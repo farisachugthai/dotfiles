@@ -27,21 +27,20 @@ elif [[ -d "$PREFIX/local/go" ]]; then
     export PATH="$PATH:$PREFIX/local/go/bin"
 fi
 
-# Utilize GOPATH. 
+# Utilize GOPATH.
 if [[ $(which go) ]]; then
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
 
-# JavaScript 
+# JavaScript
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
     export PATH="$PATH:$YARNPATH"
     source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
 fi
 
-
-# Environment Variables 
+# Environment Variables
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 export PAGER="less -JR"
@@ -56,11 +55,12 @@ export COLORTERM="truecolor"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+# dropping these but don't use them yet
+# export XDG_CONFIG_DIRS="/etc/xdg"
+# export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-export DOT="$HOME/projects/dotfiles/unix" # save time getting to dot repo
 
 # cheat.py
 if [[ $(which cheat) ]]; then
@@ -86,7 +86,9 @@ export LANG=en_US.UTF-8                 # gathered from localectl
 # Rust
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
+# Configs / dotfiles / tmux scripts
 export TMUXP_CONFIGDIR='$HOME/.tmux'
+export DOT="$HOME/projects/dotfiles/unix" # save time getting to dot repo
 
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then

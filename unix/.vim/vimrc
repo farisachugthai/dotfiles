@@ -1,11 +1,13 @@
 " vimrc
 " vim configuration
 " Maintainer: Faris Chugthai
-" 
+"
+" All: {{{ 1
+" Vim Plug: {{{ 2
 set nocompatible
 
 if !filereadable('~/.vim/autoload/plug.vim')
-    call system('wget -O ~/.vim/autoload/plug.vim 
+    call system('wget -O ~/.vim/autoload/plug.vim
                 \ http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
@@ -21,14 +23,20 @@ Plug 'tpope/vim-fugitive'
 Plug 'nvie/vim-flake8'
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
-Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'} 
+Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'}
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
+    \ 'do': 'bash install.sh' }
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'plytophogy/vim-virtualenv'
+Plug 'vim-airline/vim-airline'
 
 call plug#end()
-
+" }}}
+" Vim Specific: {{{
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
 endif
@@ -37,10 +45,9 @@ if filereadable(glob("~/.vim/autocorrect.vim"))
     source ~/.vim/autocorrect.vim
 endif
 
-" Filetype Specific Options:
+" Filetype Specific Options: {{{
 
 " IPython:
-" [i wonder if this could just get moved to an ftdetect folder]
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
 " Web Dev:
@@ -48,7 +55,8 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
-
+" }}}
+" Global Options: {{{ 2
 " Leader:
 let g:mapleader = "\<Space>"
 
@@ -58,45 +66,89 @@ if !has('nvim')
     set viminfo='100,<200,s200,n$HOME/.vim/viminfo
 endif
 
-
-" Pep8 Global Options: 
-set tabstop=4                   " show existing tab with 4 spaces width
+" Pep8 Global Options:
+set tabstop=8                 " show existing tab with 4 spaces width
 set shiftwidth=4                " when indenting with '>', use 4 spaces width
 set expandtab                   " On pressing tab, insert 4 spaces
 set softtabstop=4
 let g:python_highlight_all = 1
-
-
-" Spell Checker:
+" }}}
+" Syntax Highlighting: {{{ 3
+if has('syntax')                    " if we can have syntax recognition
+    syntax on                       " this has to come after the colorscheme
+endif
+" }}}
+" Folds: {{{ 3
+set foldenable
+set foldlevelstart=10               " Enables most folds
+set foldnestmax=5                   " Why would anything be folded this much
+set foldmethod=marker
+" }}}
+" Buffers Windows Tabs: {{{ 3
+try
+  set switchbuf=useopen,usetab,newtab
+  set showtabline=2
+catch
+endtry
+set hidden
+set splitbelow
+set splitright
+" }}}
+" Spell Checker: {{{ 3
 set spelllang=en
-
 if !has('nvim')
     set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 endif
-
 set complete+=kspell                    " Autocomplete in insert mode
-
 set spellsuggest=5                      " Limit the number of suggestions from 'spell suggest'
-
 map <Leader>s :setlocal spell!<CR>
-
+" Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
     set dictionary+=/usr/share/dict/words
 endif
+" }}}
+" all the nonsense nvim freed you of: {{{
+if !has('nvim'):
+    set autoread
+    set autoindent
+    set backspace=indent,eol,start
+    set display+=lastline,msgsep
+    set history=10000
+    set hlsearch
+    set incsearch
+    set laststatus=2
+    set noerrorbells
+    set ruler
+    set sessionoptions-=options
+    set showcmd
+    set smarttab
+    set tabpagemax=50
+    set ttyfast         "insert/delete line commands. this makes Vim seem smoother
+endif
 
+- 'backupdir' defaults to .,~/.local/share/nvim/backup (|xdg|)
+- 'belloff' defaults to "all"
+- 'complete' doesn't include "i"
+- 'cscopeverbose' is enabled
+- 'directory' defaults to ~/.local/share/nvim/swap// (|xdg|), auto-created
+- 'fillchars' defaults (in effect) to "vert:│,fold:·"
+- 'formatoptions' defaults to "tcqj"
+- 'langnoremap' is enabled by default
+- 'langremap' is disabled by default
+- 'listchars' defaults to "tab:> ,trail:-,nbsp:+"
+- 'nrformats' defaults to "bin,hex"
+- 'sidescroll' defaults to 1
+- 'smarttab' is set by default
+- 'tags' defaults to "./tags;,tags"
 
-set cul
+set cursorline
 set colorcolumn=+1
 set ch=2
-set hlsearch
-set ruler
-set backspace=indent,eol,start
-set showcmd
 set number
 set showmatch
 set ignorecase
+set smartcase
 set smartindent
-set smarttab
 set noswapfile
 set mouse=a
 if has('unnamedplus')
@@ -110,15 +162,6 @@ set wildmenu
 set wildmode=longest,list:longest
 set complete+=.,b,u,t
 set fileignorecase
-set display+=lastline
-set incsearch
-
-set history=1000
-
-set sessionoptions-=options
-set noerrorbells
-"insert/delete line commands. this makes Vim seem smoother
-set ttyfast
 set whichwrap+=<,>,h,l,[,]
 
 if has('persistent_undo')
@@ -126,26 +169,7 @@ if has('persistent_undo')
     set undofile	" keep an undo file (undo changes after closing)
 endif
 set nojoinspaces
-
-if has("syntax")
-    syntax on
-endif
-
 set modeline
-"look to see if a buffer is open before opening a new one
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
-
-set hidden
-set autoread
-set splitbelow
-set splitright
-set laststatus=2
-set tabpagemax=50
-
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -155,46 +179,41 @@ noremap <C-l> <C-w>l
 " If running a terminal in Vim, go into Normal mode with Esc
 tnoremap <Esc> <C-W>N
 
-" select all text in buffer 
+" select all text in buffer
 map <Leader>a ggVG
 
 " Map :NERDTreeTabsToggle to ease toggling the plugin
-map <Leader>n <plug>NERDTreeMirrorToggle<CR>
-" Invoke while in Vim by putting your cursor over a word and run [Leader]K
+map <Leader>nt <plug>NERDTreeMirrorToggle<CR>
+" Invoke while in Vim by putting your cursor over a word and run <Leader>k
 runtime! ftplugin/man.vim
 let g:ft_man_folding_enable = 0
-set keywordprg=:Man
+setlocal keywordprg=:Man
 
-
-" Plugins:
-"
-" NERDTree:
-"
+" Plugins: {{{ 2
+" NERDTree: {{{ 3
 "Close vim if the only window left is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTReeQuitOnOpen = 1
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden = 1
 let NERDTreeShowBookmarks = 1
 let NERDTreeNaturalSort = 1
-let NERDTreeChDirMode = 2
+let NERDTreeChDirMode = 1
 let NERDTreeShowLineNumbers=1
-" Do not open NERDTree if vim starts in diff mode
-
-" Jedi:
+" Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#usages_command=0             "Jedi clobbers me toggling NERDTree!
+let g:jedi#popup_on_dot = 1
 let g:jedi#use_tabs_not_buffers=1           " easy to maintain workspaces
-
+" }}}
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
-
+" let g:ale_python_flake8_options='--config
 " Ale:
-nmap <Leader>l <Plug>(ale_toggle_buffer)
+nmap <Leader>l <Plug>(ale_toggle_buffer)<CR>
+let g:ale_fix_on_save = 1
+let g:ale_fixers = [ '*' : 'remove_trailing_lines', 'trim_whitespace']
 
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark

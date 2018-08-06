@@ -1,26 +1,5 @@
 # Scratchpad
 
-This is going to serve largely as a place to leave myself reminders about Nvim
-performance, results of profiling, changes I need to make, Vimscript I
-[begrudingly] want to learn and other things.
-
-Gonna house modifications I don't want to delete or traverse a git history for.
-
-## Fonts
-
-So outside of the realization that ~/.fonts was deprecated for
-.local/share/fonts, termux doesn't follow it. Overwrite the files at
-~/.termux/font.{otf.ttf} and you'll see a font change on app restart.
-
-## TODO
-
-first things first let's jot down some thoughts.
-fix ntree mappings
-get a better handle of jedi flake ale and pyls before adding anything else.
-already a  pretty sizeable stack of stuff
-fix up skeleton.py so it has some pep257 compliant example docstrings. if they
-had pep484 type hints too thatd be sweet.
-
 ## Plugins
 =======
 
@@ -56,24 +35,6 @@ I feel like just running :call StartJedi() should work though...
 
 ### Deoplete
 
-" Termux's hardcoded python interpreter
-    " if executable('$PREFIX/bin/python')
-        " let g:python3_host_prog = '$PREFIX/bin/python'
-    " endif
-    " evals to 0 outside venv on termux
-
-    " should probably put some logic somewhere to ensure that this is working
-    " correctly, that i activated conda, i'm in the right environment etc
-
-
-" Under the assmption we're in the right virtualenv
-" Might need to do a try catch and cathc with a list of providers
-if isdirectory('$HOME/miniconda/envs/neovim_vscode/bin')
-    let g:python3_host_prog = '$HOME/miniconda/envs/neovim_vscode/bin/python'
-else
-    let g:python3_host_prog = '$HOME/virtualenvs/nvim/bin/python3'
-endif
-
 
 " Remove this if you'd like to use fuzzy search
 "call deoplete#custom#source(
@@ -84,11 +45,6 @@ endif
 "\ 'dictionary', 'sorters', [])
 
 
-### vim-plug
-
-got rid of like 6 or 7 very heavy plugins and also ditched this
-immediately after call plug#end
-
 " load deop and ultisnips after entering insert mode. note plugin confs for
 " loading deop after first enter. redundant?
 " augroup load_us_deop
@@ -96,9 +52,6 @@ immediately after call plug#end
 "     autocmd InsertEnter * call plug#load('ultisnips', 'deoplete'
 "                 \| autocmd! load_us_deop)
 " augroup END
-
-
-
 
 " Deoplete: {{{
 "" disable autocomplete by default
@@ -171,18 +124,6 @@ else
     let g:python3_host_prog = '$HOME/virtualenvs/nvim/bin/python3'
 endif
 
-" Remove this if you'd like to use fuzzy search
-"call deoplete#custom#source(
-"\ 'dictionary', 'matchers', ['matcher_head'])
-
-"" If dictionary is already sorted, no need to sort it again.
-"call deoplete#custom#source(
-"\ 'dictionary', 'sorters', [])
-
-
-
-
-
 ### Lightline
 
 " Lightline: {{{
@@ -231,6 +172,8 @@ let g:nerdtree_tabs_startup_cd = 1
 
 ## compiler fxn
 
+Now out of curiosity would this go in .config/nvim/compilers?
+
 " Compiler Func: {{{
 " All in one compiler. Gonna rewrite to make my own
 " map <F5> :call CompileRunGcc()<CR>
@@ -265,47 +208,20 @@ let g:nerdtree_tabs_startup_cd = 1
 
 ### Language Client Option to set
 
-2.16 g:LanguageClient_fzfOptions                *g:LanguageClient_fzfOptions*
+# 2.16 g:LanguageClient_fzfOptions                *g:LanguageClient_fzfOptions*
 
-Customize fzf. Check fzf documentation for available options.
+**Customize fzf. Check fzf documentation for available options.**
 
 Default: v:null
 Valid option: Array<String> | String
 
-### Ale
-
-I was reading the help docs for ale.
-What do these types refer to?
+This sounds like fun.
 
 
-g:ale_set_highlights                                     *g:ale_set_highlights*
 
-  Type: |Number|
-  Default: `has('syntax')`
-
-  When this option is set to `1`, highlights will be set for problems.
-
-  ALE will use the following highlight groups for problems:
-
-  |ALEError|        - Items with `'type': 'E'`
-  |ALEWarning|      - Items with `'type': 'W'`
-  |ALEInfo.|        - Items with `'type': 'I'`
-  |ALEStyleError|   - Items with `'type': 'E'` and `'sub_type': 'style'`
-  |ALEStyleWarning| - Items with `'type': 'W'` and `'sub_type': 'style'`
-
-  When |g:ale_set_signs| is set to `0`, the following highlights for entire
-  lines will be set.
-
-  |ALEErrorLine|   - All items with `'type': 'E'`
-  |ALEWarningLine| - All items with `'type': 'W'`
-  |ALEInfoLine|    - All items with `'type': 'I'`
-
-  Vim can only highlight the characters up to the last column in a buffer for
-  match highlights, whereas the line highlights when signs are enabled will
-  run to the edge of the screen.
-=======
-
-#### Virtualenv.vim
+### Virtualenv.vim
+TODO:
+Ugh fuck i gotta configure this.
 
 CONFIGURATION                                    *virtualenv-configuration*
 
@@ -338,6 +254,7 @@ The content is derived from the |g:virtualenv_stl_format| variable.
 Powerline users can see their statuslines too. After configuring powerline
 according to its documentation to support a virtualenv segment, Powerline will
 read the value of $VIRTUAL_ENV and display it.
+
 ## Diff between nvim and vim
 
 2. Defaults					            *nvim-defaults*
@@ -373,7 +290,11 @@ read the value of $VIRTUAL_ENV and display it.
 - 'tabpagemax' defaults to 50
 - 'tags' defaults to "./tags;,tags"
 - 'ttyfast' is always set
-- 'undodir' defaults to ~/.local/share/nvim/undo (|xdg|), auto-created
+
+
+**- 'undodir' defaults to ~/.local/share/nvim/undo (|xdg|), auto-created**
+Undodir is in the wrong spkt.
+
 - 'viminfo' includes "!"
 - 'wildmenu' is set by default
 
@@ -396,3 +317,38 @@ read the value of $VIRTUAL_ENV and display it.
     " Above didn't work. Unsure why.
 
 Was originally after the sys curl  call to download vimplug and above the endif
+
+
+## Fun with clipboards
+
+
+" fun trick from he provider. Before i uncomment, how do i check if I'm in
+" tmux? lol just run py3 import vim, os; py3 if os.environ.get('TMUX'):
+" let g:clipboard = {
+"           \   'name': 'myClipboard',
+"           \   'copy': {
+"           \      '+': 'tmux load-buffer -',
+"           \      '*': 'tmux load-buffer -',
+"           \    },
+"           \   'paste': {
+"           \      '+': 'tmux save-buffer -',
+"           \      '*': 'tmux save-buffer -',
+"           \   },
+"           \   'cache_enabled': 1,
+"           \ }
+
+" If `cache_enabled` is |TRUE| then when a selection is copied, Nvim will cache
+" the selection until the copy command process dies. When pasting, if the copy
+" process has not died, the cached selection is applied.
+
+
+Map function
+
+
+" From he map
+" com -nargs=1 -bang -complete=customlist,EditFileComplete  EditFile edit<bang> <args>
+" fun EditFileComplete(A,L,P)
+"     return split(globpath(&path, a:A), '\n')
+" endfun
+" }}}
+" }}}

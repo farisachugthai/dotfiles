@@ -6,7 +6,7 @@
     editor = nvim
     pager = less -rL
     autocrlf = input
-	excludesfile = "$HOME/.gitignore_global"
+    excludesfile = "$HOME/.config/git/ignore"
 
 [color]
     ui = true
@@ -25,15 +25,14 @@
 
 [merge]
     # guitool = gvimdiff3
-	tool = nvim -d
-	color = auto
+    tool = nvim -d
+    color = auto
     mergestyle = diff3
     prompt = false
     strategy-option = patience
 
 [push]
     default = simple
-
 
 [sequence]
     editor = nvim
@@ -53,7 +52,7 @@
     staged = diff --cached
     unstaged = diff
 
-# Fix unexpected behavior
+# Fix unexpected behavior. Just found ls-tree wtf is this UX????
     ls = ls-files
 
 # From: https://githowto.com/history
@@ -64,4 +63,4 @@
     autocorrect = 1
 
 [credential]
-	helper = cache
+    helper = cache

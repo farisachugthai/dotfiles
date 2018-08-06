@@ -22,13 +22,13 @@ Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'plytophogy/vim-virtualenv'
 Plug 'vim-airline/vim-airline'
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 " }}}
@@ -45,9 +45,6 @@ set inccommand=split                " This alone is enough to never go back
 set termguicolors
 " }}}
 " Filetype Specific Options: {{{ 2
-" Python:
-" Should wrap in a func. Dont want to have happen every time.
-" au BufNewFile *.py 0r ~/.config/nvim/skeleton.py
 
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
@@ -63,7 +60,7 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 let g:mapleader = "\<Space>"
 
 " Pep8 Global Options: {{{ 3
-set tabstop=8
+set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
@@ -91,6 +88,8 @@ set splitbelow
 set splitright
 " }}}
 " Spell Checker: {{{ 3
+" Quite confident this isn't setup rightbas it doesn't work on parrot.
+" However man 5 hunspell seems informative
 set encoding=utf-8             " Set default encoding
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
@@ -168,25 +167,6 @@ if has('unnamedplus')           " Use the system clipboard.
 else                            " Accomodate Termux
   set clipboard+=unnamed
 endif
-
-" fun trick from he provider. Before i uncomment, how do i check if I'm in
-" tmux? lol just run py3 import vim, os; py3 if os.environ.get('TMUX'):
-" let g:clipboard = {
-"           \   'name': 'myClipboard',
-"           \   'copy': {
-"           \      '+': 'tmux load-buffer -',
-"           \      '*': 'tmux load-buffer -',
-"           \    },
-"           \   'paste': {
-"           \      '+': 'tmux save-buffer -',
-"           \      '*': 'tmux save-buffer -',
-"           \   },
-"           \   'cache_enabled': 1,
-"           \ }
-
-" If `cache_enabled` is |TRUE| then when a selection is copied, Nvim will cache
-" the selection until the copy command process dies. When pasting, if the copy
-" process has not died, the cached selection is applied.
 " }}}
 " }}}
 " Mappings: {{{ 2
@@ -207,14 +187,6 @@ noremap <F9> :e $MYVIMRC<CR>
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-
-" From he map
-" com -nargs=1 -bang -complete=customlist,EditFileComplete  EditFile edit<bang> <args>
-" fun EditFileComplete(A,L,P)
-"     return split(globpath(&path, a:A), '\n')
-" endfun
-" }}}
-" }}}
 " Plugin Configuration: {{{ 2
 " FZF: {{{ 3
 " Adapted from:
@@ -265,7 +237,6 @@ let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " NERDTree: {{{ 3
 " If only NERDTree is open, close Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" let g:NERDTreeQuitOnOpen = 1           " close NT after opening a file with o, i or t
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
@@ -310,7 +281,7 @@ let g:flake8_show_in_gutter=1
 " Ale:
 " https://github.com/w0rp/ale
 " <Leader>a is already mapped so use l for lint
-nmap <Leader>l <Plug>(ale_toggle_buffer)
+nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 " Theres never a good excuse for having these in a file
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
@@ -357,5 +328,11 @@ let g:LanguageClient_selectionUI = 'fzf'
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
+" }}}
+" Ultisnips: {{{ 3
+" let g:UltiSnipsUsePythonVersion = 3
+" }}}
+" Vim_Startify: {{{ 3
+let g:startify_session_sort = 1
 " }}}
 " }}}
