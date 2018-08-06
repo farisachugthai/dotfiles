@@ -5,20 +5,6 @@
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Ruby: This is gonna need a for loop soon.
-if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
-    export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
-fi
-
-if [[ -d ~/.gem/ruby/2.6.0/bin ]]; then
-    export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
-fi
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 # Go
 # Add the Go std lib to the PATH if that's where it was put
 if [[ -d "/usr/local/go" ]]; then
@@ -37,7 +23,9 @@ fi
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
     export PATH="$PATH:$YARNPATH"
-    source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
+    if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
+        source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
+    fi
 fi
 
 # Environment Variables
@@ -71,16 +59,36 @@ else
     export BROWSER="firefox"
 fi
 
-# Set locale if it isn't explicitly stated elsewhere
-# export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8                 # gathered from localectl
 
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
 # Rust
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
+
+# Ruby: This is gonna need a for loop soon.
+
+if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
+    export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
+fi
+
+if [[ -d ~/.gem/ruby/2.6.0/bin ]]; then
+    export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
+fi
+
+if [[ "$(command -v rvm)" ]]; then
+    # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+    export PATH="$PATH:$HOME/.rvm/bin"
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+fi
+
 export TMUXP_CONFIGDIR='$HOME/.tmux'
+
+# Set locale if it isn't explicitly stated elsewhere. What in the world have
+# i done that this isn't working
+# export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8                 # gathered from localectl
+export LANGUAGE=en_US.UTF-8
 
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then

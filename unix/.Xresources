@@ -1,4 +1,6 @@
 ! Xresources
+! So the terminal isn't completely illegible but it doesn't look very good and
+! URLs are impossible to read
 
 ! From the man himself Shotts.
 URxvt.geometry                 : 120x36
@@ -20,17 +22,11 @@ urxvt*font: xft:Terminus
 Urxvt*font: FiraCode: autohint=True: pixelsize=24
 ! URxvt.letterSpace    : -2
 
-! URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=12
-! URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=12
-! I dont know why I thought that made sense. Should really set to something
-! at least similar to urxvt and let tmux work out the rest
-!
-! let rxvt set itself
-! URxvt*termName                 : tmux-256color
+URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=12
+URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=12
 
-
-! *antialias                     : true
-! *autohint                      : true
+*antialias                     : true
+*autohint                      : true
 
 URxvt*scrollWithBuffer         : false
 URxvt*scrollTtyOutput          : false
@@ -43,13 +39,13 @@ URxvt*url-select.launcher      : /usr/bin/firefox
 URxvt*url-select.underline     : true
 URxvt.matcher.pattern.1        : \\bwww\\.[\\w-]\\.[\\w./?&@#-\[\]]*[\\w/-]
 
-! -----------------------------------------------------------------------------
-! File: gruvbox-urxvt256.xresources
-! Description: Retro groove colorscheme generalized
-! Author: morhetz <morhetz@gmail.com>
-! Source: https://github.com/morhetz/gruvbox-generalized
-! Last Modified: 13 Dec 2013
-! -----------------------------------------------------------------------------
+! ! -----------------------------------------------------------------------------
+! ! File: gruvbox-urxvt256.xresources
+! ! Description: Retro groove colorscheme generalized
+! ! Author: morhetz <morhetz@gmail.com>
+! ! Source: https://github.com/morhetz/gruvbox-generalized
+! ! Last Modified: 13 Dec 2013
+! ! -----------------------------------------------------------------------------
 
 URxvt.color24  : #076678
 URxvt.color66  : #427b58
@@ -81,3 +77,40 @@ URxvt.color245 : #928374
 URxvt.color246 : #a89984
 URxvt.color248 : #bdae93
 URxvt.color250 : #d5c4a1
+
+! special
+*.foreground:   #e8dfd6
+*.background:   #021b21
+*.cursorColor:  #e8dfd6
+
+! black
+*.color0:       #032c36
+*.color8:       #065f73
+
+! red
+*.color1:       #c2454e
+*.color9:       #ef5847
+
+! green
+*.color2:       #7cbf9e
+*.color10:      #a2d9b1
+
+! yellow
+*.color3:       #8a7a63
+*.color11:      #beb090
+
+! blue
+*.color4:       #2e3340
+*.color12:      #61778d
+
+! magenta
+*.color5:       #ff5879
+*.color13:      #ff99a1
+
+! cyan
+*.color6:       #44b5b1
+*.color14:      #9ed9d8
+
+! white
+*.color7:       #f2f1b9
+*.color15:      #f6f6c9
