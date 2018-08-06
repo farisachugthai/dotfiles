@@ -30,7 +30,7 @@ floating_modifier $mod
 
 # start a terminal. and while using parrot OS i'm actually really enjoying
 # their mods to MATE terminal.
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec kitty
 bindsym $mod+u+Return exec urxvt
 bindsym $mod+k+Return exec konsole
 bindsym $mod+m+Return exec mate-terminal

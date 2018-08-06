@@ -1,5 +1,6 @@
 " Enable spellchecking
-setlocal spell
+" setlocal spell
+" This needs to be disabled until I get spelling set back up on this OS
 
 " Automatically wrap at 80 characters
 setlocal textwidth=80

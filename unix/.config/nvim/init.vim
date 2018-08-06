@@ -22,10 +22,12 @@ Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
+Plug 'edkolev/tmuxline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 " }}}
@@ -55,40 +57,40 @@ autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " Leader:
 let g:mapleader = "\<Space>"
 
-" Pep8 Global Options: 
+" Pep8 Global Options:
 set tabstop=8
 set shiftwidth=4
 set expandtab
 set softtabstop=4
 let g:python_highlight_all = 1
 
+" temp
+set nospell
 " Spell Checker: {{{3
-set encoding=utf-8             " Set default encoding
-set spelllang=en
-" set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
-set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
-set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
-set complete+=kspell
-set spellsuggest=5
-map <Leader>s :setlocal spell!<CR>
-" Can be set with sudo select-default-wordlist. I opted for american insane
-if filereadable('/usr/share/dict/words')
-    set dictionary='/usr/share/dict/words'
-    " Replace the default dictionary completion with fzf-based fuzzy completion 
-    inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
-endif
-
-if filereadable('/usr/share/dict/american-english')
-    set dictionary+=/usr/share/dict/american-english
-endif
-
-" Made on termux with
-" TODO: Check if termux and if not readable run the command below
-" mkspell ~/.config/nvim/spell/en.hun.spl $PREFIX/share/hunspell/en_US.aff
-" TODO2: Also are you supposed to end the spellfile with .add?
-if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
-    set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
-endif
+" set encoding=utf-8             " Set default encoding
+" set spelllang=en
+" " set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+" set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
+" set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
+" set complete+=kspell
+" set spellsuggest=5
+" map <Leader>s :setlocal spell!<CR>
+" " Can be set with sudo select-default-wordlist. I opted for american insane
+" if filereadable('/usr/share/dict/words')
+"     set dictionary='/usr/share/dict/words'
+"     " Replace the default dictionary completion with fzf-based fuzzy completion
+"     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
+" endif
+" if filereadable('/usr/share/dict/american-english')
+"     set dictionary+=/usr/share/dict/american-english
+" endif
+" " Made on termux with
+" " TODO: Check if termux and if not readable run the command below
+" " mkspell ~/.config/nvim/spell/en.hun.spl $PREFIX/share/hunspell/en_US.aff
+" " TODO2: Also are you supposed to end the spellfile with .add?
+" if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
+"     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
+" endif
 " }}}
 
 " Folds:
@@ -239,7 +241,9 @@ nnoremap <silent> <leader>gQ :Gwq!<CR>
 " Ale:
 " https://github.com/w0rp/ale
 " <Leader>a is already mapped so use l for lint
-nmap <Leader>l <Plug>(ale_toggle_buffer)
+nmap <Leader>l <Plug>(ale_toggle_buffer)<CR>
+let g:ale_fixers = ['remove_trailing_lines', 'trim_whitespace']
+let g:ale_fix_on_save = 1
 
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
