@@ -233,13 +233,10 @@ let g:rg_command = '
     \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
     \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
     \ -g "!*.{min.js,swp,o,zip}" \ -g "!{.git,node_modules,vendor}/*" '
-
-
-command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+let g:fd_command = 'fd'
+command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>), 1, <bang>0)
 " could also use set grepprg here
-
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
-
 " }}}
 " NERDTree: {{{ 3
 " If only NERDTree is open, close Vim
@@ -281,11 +278,9 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 " Flake8, Ale and Gruvbox: {{{ 3
-
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_in_gutter=1
-
 " Ale:
 " https://github.com/w0rp/ale
 nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
@@ -332,7 +327,6 @@ let g:LanguageClient_serverCommands = {
 let g:LanguageClient_selectionUI = 'fzf'
 " set completefunc=LanguageClient#complete      already set as omnifunc
 let g:LanguageClient_diagnosticsSignsMax = 10
-let g:LanguageClient_loggingFile = '$HOME/.local/share/nvim/lang_client.log'
 " }}}
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
