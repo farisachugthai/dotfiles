@@ -4,9 +4,10 @@
 # and source code found on GitHub.
 # Maintainer: Faris Chugthai
 
+from pygments.token import Comment
 
 c = get_config()
-c.AliasManager.user_aliases = [('la', 'ls -al')]
+c.AliasManager.user_aliases = [('la', 'ls -AlFh')]
 
 
 #------------------------------------------------------------------------------
@@ -153,7 +154,11 @@ c.TerminalIPythonApp.display_banner = True
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'last_expr'
+try:
+    c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
+except Exception:
+    c.InteractiveShell.ast_node_interactivity = 'last_expr'
+
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -268,7 +273,7 @@ c.InteractiveShell.quiet = False
 
 ## Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-c.InteractiveShell.sphinxify_docstring = True
+c.InteractiveShell.sphinxify_docstring = False
 
 ##
 c.InteractiveShell.wildcards_case_sensitive = False
@@ -323,7 +328,7 @@ c.TerminalInteractiveShell.highlighting_style = 'monokai'
 # default has impossible to read strings and in a truncated sense just led to my first rm -r mistake
 
 ## Override highlighting format for specific tokens
-#c.TerminalInteractiveShell.highlighting_style_overrides = {}
+c.TerminalInteractiveShell.highlighting_style_overrides = { Comment: '#ffffff'}
 
 ## Enable mouse support in the prompt (Note: prevents selecting text with the
 #  mouse)
@@ -403,7 +408,7 @@ c.TerminalInteractiveShell.true_color = True
 
 ## Write to database every x commands (higher values save disk access & power).
 #  Values of 1 or less effectively disable caching.
-c.HistoryManager.db_cache_size = 100
+c.HistoryManager.db_cache_size = 20
 
 ## Should the history database include output? (default: no)
 c.HistoryManager.db_log_output = True

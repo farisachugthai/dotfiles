@@ -86,3 +86,86 @@ URxvt.color245: #928374
 URxvt.color246: #a89984
 URxvt.color248: #bdae93
 URxvt.color250: #d5c4a1
+
+
+
+!!Source http://github.com/altercation/solarized
+/* *background: #002b36 */
+/* *foreground: #657b83 */
+/* *fading: 40 */
+/* *fadeColor: #002b36 */
+/* *cursorColor: #93a1a1 */
+/* *pointerColorBackground: #586e75 */
+/* *pointerColorForeground: #93a1a1 */
+
+/* !! black dark/light */
+/* *color0: #073642 */
+/* *color8: #002b36 */
+
+/* !! red dark/light */
+/* *color1: #dc322f */
+/* *color9: #cb4b16 */
+
+/* !! green dark/light */
+/* *color2: #859900 */
+/* *color10: #586e75 */
+
+/* !! yellow dark/light */
+/* *color3: #b58900 */
+/* *color11: #657b83 */
+
+/* !! blue dark/light */
+/* *color4: #268bd2 */
+/* *color12: #839496 */
+
+/* !! magenta dark/light */
+/* *color5: #d33682 */
+/* *color13: #6c71c4 */
+
+/* !! cyan dark/light */
+/* *color6: #2aa198 */
+/* *color14: #93a1a1 */
+
+/* !! white dark/light */
+/* *color7: #eee8d5 */
+/* *color15: #fdf6e3 */
+
+
+
+! One Dark
+! ! special
+! *.foreground:   #ABB2BF
+! *.background:   #282C34
+! *.cursorColor:  #ABB2BF
+
+! ! black
+! *.color0:       #282C34
+! *.color8:       #3E4452
+
+! ! red
+! *.color1:       #E06C75
+! *.color9:       #BE5046
+
+! ! green
+! *.color2:       #98C379
+! *.color10:      #98C379
+
+! ! yellow
+! *.color3:       #E5C07B
+! *.color11:      #D19A66
+
+! ! blue
+! *.color4:       #61AFEF
+! *.color12:      #61AFEF
+
+! ! magenta
+! *.color5:       #C678DD
+! *.color13:      #C678DD
+
+! ! cyan
+! *.color6:       #56B6C2
+! *.color14:      #56B6C2
+
+! ! white
+! *.color7:       #ABB2BF
+! *.color15:      #5C6370

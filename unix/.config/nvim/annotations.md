@@ -6,8 +6,6 @@
 ### Jedi Function
 
 Not really ready to do away with this completely.
-If I ever set Jedi to not start at startup, then I think a StartJedi() func
-would be great.
 
 " Adapted largely from:
 " https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/jedi.vim
@@ -28,10 +26,6 @@ function! StartJedi()
         autocmd InsertLeave * set splitbelow!
     augroup END
 endfunction
-
-" call PlugOnLoad('jedi-vim', 'call StartJedi()')       " code doesn't work
-
-I feel like just running :call StartJedi() should work though...
 
 ### Deoplete
 
@@ -124,52 +118,6 @@ else
     let g:python3_host_prog = '$HOME/virtualenvs/nvim/bin/python3'
 endif
 
-### Lightline
-
-" Lightline: {{{
-let g:lightline = {
-	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-	\ },
-	\ 'component_function': {
-	\   'gitbranch': 'fugitive#head',
-    \   'filetype': 'MyFiletype',
-    \   'fileformat': 'MyFileformat',
-    \ },
-    \ }
-
-function! MyFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
-
-function! MyFileformat()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-let g:lightline.colorscheme = 'seoul256'
-" }}}
-
-### Tagbar
-
-" Tagbar:
-" https://github.com/majutsushi/tagbar
-" Termux uses Universal Ctags and apparently tagbar doesn't like that.
-nmap <F8> :TagbarToggle<CR>
-let g:tagbar_autofocus = 0  " do not automatically jump to tagbar when opened
-let g:tagbar_autoclose = 1  " when you jump to a tag close tagbar
-" autocmd FileType python nested :TagbarOpen  " open tagbar when you see .py
-" autocmd BufWinLeave python nested :TagbarClose
-let g:tagbar_show_linenumbers = 1
-
-#### NERDTree Tabs
-I feel like airline could handle this by itself
-" NERDTree Tabs:
-let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_meaningful_tab_names = 1
-let g:nerdtree_tabs_autoclose = 1
-let g:nerdtree_tabs_startup_cd = 1
-
 ## compiler fxn
 
 Now out of curiosity would this go in .config/nvim/compilers?
@@ -204,56 +152,6 @@ Now out of curiosity would this go in .config/nvim/compilers?
 " endfunc
 " }}}
 
-
-
-### Language Client Option to set
-
-# 2.16 g:LanguageClient_fzfOptions                *g:LanguageClient_fzfOptions*
-
-**Customize fzf. Check fzf documentation for available options.**
-
-Default: v:null
-Valid option: Array<String> | String
-
-This sounds like fun.
-
-
-
-### Virtualenv.vim
-TODO:
-Ugh fuck i gotta configure this.
-
-CONFIGURATION                                    *virtualenv-configuration*
-
-g:virtualenv_loaded                              *g:virtualenv_loaded*
-    If set in your |vimrc|, virtualenv.vim is not loaded.
-
-g:virtualenv_directory                           *g:virtualenv_directory*
-    The directory that contains the virtualenvs. If you're a virtualenvwrapper
-    user and you have $WORKON_HOME set, it will default to this. Otherwise it
-    will default to ~/.virtualenvs.
-
-g:virtualenv_auto_activate                       *g:virtualenv_auto_activate*
-    If set, an attempt will be made to detect any active virtualenv, and
-    activate it.
-
-Example: >
-    let g:virtualenv_directory = '/path/to/virtualenvs'
-<
-g:virtualenv_stl_format                          *g:virtualenv_stl_format*
-    Format string for the statusline function.
-
-Example: >
-    let g:virtualenv_stl_format = '[%n]'
-<
-To use the statusline flag, this must appear in your |'statusline'| setting: >
-    %{virtualenv#statusline()}
-<
-The content is derived from the |g:virtualenv_stl_format| variable.
-
-Powerline users can see their statuslines too. After configuring powerline
-according to its documentation to support a virtualenv segment, Powerline will
-read the value of $VIRTUAL_ENV and display it.
 
 ## Diff between nvim and vim
 
@@ -340,15 +238,3 @@ Was originally after the sys curl  call to download vimplug and above the endif
 " If `cache_enabled` is |TRUE| then when a selection is copied, Nvim will cache
 " the selection until the copy command process dies. When pasting, if the copy
 " process has not died, the cached selection is applied.
-
-
-Map function
-
-
-" From he map
-" com -nargs=1 -bang -complete=customlist,EditFileComplete  EditFile edit<bang> <args>
-" fun EditFileComplete(A,L,P)
-"     return split(globpath(&path, a:A), '\n')
-" endfun
-" }}}
-" }}}

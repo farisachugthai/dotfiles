@@ -64,7 +64,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
-let g:python_highlight_all = 1
+let g:python_highlight_ald = 1
 " }}}
 " Syntax Highlighting: {{{ 3
 if has('syntax')                    " if we can have syntax recognition
@@ -174,7 +174,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
+nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
 nnoremap <Leader>a ggVG
 " f5 to run py file
@@ -187,6 +187,12 @@ noremap <F9> :e $MYVIMRC<CR>
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+" }}}
+" pyls: {{{ 3
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" }}}
+" }}}
 " Plugin Configuration: {{{ 2
 " FZF: {{{ 3
 " Adapted from:
@@ -230,6 +236,7 @@ let g:rg_command = '
 
 
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+" could also use set grepprg here
 
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 
@@ -244,7 +251,7 @@ let g:NERDTreeShowBookmarks = 1
 let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
 let g:NERDTreeChDirMode = 2             " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
-let g:NERDTreeMouseMode = 1             " Open dirs with 1 click files with 2
+let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
 let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
 " }}}
@@ -255,8 +262,9 @@ let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when unco
 " }}}
 " Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
-let g:jedi#popup_on_dot = 1
 let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
+let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
+let g:jedi#completions_enabled = 0          " pyls
 " }}}
 " Fugitive: {{{ 3
 nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -280,15 +288,14 @@ let g:flake8_show_in_gutter=1
 
 " Ale:
 " https://github.com/w0rp/ale
-" <Leader>a is already mapped so use l for lint
 nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
-" Theres never a good excuse for having these in a file
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
 let g:ale_set_signs = 1 " what is the default
+let g:ale_python_flake8_options = '--config ~/.config/flake8'
 
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
@@ -322,8 +329,10 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'sh': ['bash-language-server', 'start'],
     \ }
-let g:LanguageClient_autoStart = 1
 let g:LanguageClient_selectionUI = 'fzf'
+" set completefunc=LanguageClient#complete      already set as omnifunc
+let g:LanguageClient_diagnosticsSignsMax = 10
+let g:LanguageClient_loggingFile = '$HOME/.local/share/nvim/lang_client.log'
 " }}}
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
@@ -334,5 +343,9 @@ let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
 " }}}
 " Vim_Startify: {{{ 3
 let g:startify_session_sort = 1
+" }}}
+" Virtualenvs: {{{ 3
+let g:virtualenv_directory = '~/virtualenvs'
+let g:virtualenv_auto_activate = 1
 " }}}
 " }}}
