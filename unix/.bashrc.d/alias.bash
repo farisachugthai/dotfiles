@@ -13,7 +13,7 @@ alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
 alias cd......="cd ../../../../.." 
 
-# some more ls aliases
+# some more ls aliases. should converge these with the ipython ones
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -34,10 +34,11 @@ alias rm='rm -i'
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
-#options i use every time i run these commands
+# options i use every time i run these commands
 alias du='du -d 1 -h'
 alias df='df -aht --total'
 alias free='free -mt'
+alias tree='tree -CahF --filelimit 50'           # could also add in --du to get dir sizes
 
 #termux command with odd default of view not send
 alias termux-share="termux-share -a send"
@@ -50,7 +51,7 @@ alias gc='git clone'
 alias gcs='git clone --depth 1'
 alias gs='git status'
 alias gd='git diff'
-
+alias gds='git diff --staged'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
