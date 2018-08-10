@@ -6,7 +6,7 @@
 " Vim Plug: {{{ 2
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
     call system('curl -o ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -18,14 +18,15 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
-Plug 'w0rp/ale'
+" Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
+" Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips'  ultisnips set a file priority to -50 and it keeps crashing
+Plug 'honza/vim-snippets'
 Plug 'plytophogy/vim-virtualenv'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
@@ -36,22 +37,17 @@ call plug#end()
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
-
 if filereadable(glob('~/.config/nvim/autocorrect.vim'))
     source ~/.config/nvim/autocorrect.vim
 endif
-
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
 " }}}
 " Filetype Specific Options: {{{ 2
-
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
-
 " Web Dev:
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
@@ -88,13 +84,11 @@ set splitbelow
 set splitright
 " }}}
 " Spell Checker: {{{ 3
-" Quite confident this isn't setup rightbas it doesn't work on parrot.
-" However man 5 hunspell seems informative
 set encoding=utf-8             " Set default encoding
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
-set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
+set spelllang=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
 set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
@@ -104,15 +98,9 @@ if filereadable('/usr/share/dict/words')
     " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
-
 if filereadable('/usr/share/dict/american-english')
     setlocal dictionary+=/usr/share/dict/american-english
 endif
-
-" Made on termux with
-" TODO: Check if termux and if not readable run the command below
-" mkspell ~/.config/nvim/spell/en.hun.spl $PREFIX/share/hunspell/en_US.aff
-" TODO2: Also are you supposed to end the spellfile with .add?
 if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
 endif
