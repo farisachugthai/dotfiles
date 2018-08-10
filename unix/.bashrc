@@ -1,5 +1,4 @@
-#!/bin/bash
-# Bashrc. Assumes that the proper installation scripts have been run.
+#!/usr/bin/env bash
 # Maintainer: Faris Chugthai
 
 # Don't run if not interactive
@@ -7,29 +6,6 @@ case $- in
     *i*);;
     *) return 0;;
 esac
-
-# Source in .bashrc.d
-for config in ~/.bashrc.d/*.bash; do
-    source "$config"
-done
-unset -v config
-
-# For the secrets
-if [[ -f "$HOME/.bashrc.local" ]]; then
-    . "$HOME/.bashrc.local"
-fi
-
-# This shows the git state. This also prevents us from seeing what venv or conda env we're in.
-# This occurs because PS1 gets locked and won't display. On Termux that's challenging.
-if [[ -z "PREFIX" ]]; then
-    if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
-        . "$HOME/.bashrc.d/git-prompt.sh";
-        export GIT_PS1_SHOWDIRTYSTATE=1
-        PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-    fi
-fi
-
-if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
 
 # History: {{{
 # don't put duplicate lines or lines starting with space in the history.
@@ -77,11 +53,9 @@ shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 # }}}
 
-
-# Defaults in Ubuntu bashrcs
+# Defaults in Ubuntu bashrcs: {{{
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -89,10 +63,12 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
+# TODO: add rxvt case
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
+# Prompt: {{{
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
@@ -109,10 +85,23 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# TODO: Check that your prompt_command works
+# https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
 if [ "$color_prompt" = yes ]; then
-    PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
+    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
 else
-    PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
+    TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
+fi
+
+if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
+    . "$HOME/.bashrc.d/git-prompt.sh";
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWCOLORHINTS=1
+    GIT_PS1_SHOWSTASHSTATE=1
+    GIT_PS1_SHOWUPSTREAM="auto"
+    Color_Off="\[\033[0m\]"
+    Yellow="\[\033[0;33m\]"
+    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1 \\\$ " "[%s]"'
 fi
 
 # Set 'man' colors
@@ -130,14 +119,21 @@ if [ "$color_prompt" = yes ]; then
 	}
 fi
 
-unset color_prompt force_color_prompt
+unset color_prompt force_color_prompt tmp_ps1
 
-# Vim
+# If everything failed just go with something simple
+if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
+
+# }}}
+# }}}
+
+# Vim: {{{
 set -o vi
 export VISUAL="nvim"
 export EDITOR="$VISUAL"
+# }}}
 
-# JavaScript
+# JavaScript: {{{
 # Source npm completion if its installed
 if [[ $(which npm) ]]; then
     source ~/.bashrc.d/npm-completion.bash
@@ -150,13 +146,23 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 fi
+# }}}
 
-# FZF
+# FZF: {{{
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
+
+# spice fzf up with ripgrep
+if [[ "$(command -v rg)" ]]; then
+    export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 5 .'
+fi
+
 export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
+
+bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
+# }}}
 
 # Python: {{{
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
@@ -181,10 +187,9 @@ if [[ -d "$HOME/miniconda3/etc/profile.d" ]]; then
     . "/home/faris/miniconda3/etc/profile.d/conda.sh"
     conda activate base
 fi
-# Honestly not sure why I had this set as the first thing to evaluate in my
-# profile. Easier and cleaner for it to just be set in bashrc
+
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-# eval "$(pip completion --bash)"
+eval "$(pip completion --bash)"
 # }}}
 
 # gcloud: {{{
@@ -206,13 +211,6 @@ if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then
 fi
 # }}}
 
-PATH="/home/faris/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/faris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/faris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/faris/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/faris/perl5"; export PERL_MM_OPT;
-
-
 # so i know this should go in ~/.Xinitrc but the last time I created that file
 # my OS broke so this is gonna hang here for a lil
 # if [[ -f ~/.Xmodmap ]]; then
@@ -220,4 +218,28 @@ PERL_MM_OPT="INSTALL_BASE=/home/faris/perl5"; export PERL_MM_OPT;
 #         xmodmap ~/.Xmodmap
 #     fi
 # fi
+
+# Ruby: {{{
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+# }}}
+
+# Perl: {{{
+PATH="/home/faris/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/faris/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/faris/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/faris/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/faris/perl5"; export PERL_MM_OPT;
+# }}}
+
 # i'm getting errors about this so at some point its gotta go into xinitrc
+# Source in .bashrc.d
+for config in ~/.bashrc.d/*.bash; do
+    source "$config"
+done
+unset -v config
+
+# For the secrets
+if [[ -f "$HOME/.bashrc.local" ]]; then
+    . "$HOME/.bashrc.local"
+fi
