@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Maintainer: Faris Chugthai
 
 # Don't run if not interactive
@@ -6,18 +6,7 @@ case $- in
     *i*);;
     *) return 0;;
 esac
-# Prompt: {{{
-if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
-    . "$HOME/.bashrc.d/git-prompt.sh";
-    GIT_PS1_SHOWDIRTYSTATE=1
-    GIT_PS1_SHOWCOLORHINTS=1
-    GIT_PS1_SHOWSTASHSTATE=1
-    GIT_PS1_SHOWUPSTREAM="auto"
-    Color_Off="\[\033[0m\]"
-    Yellow="\[\033[0;33m\]"
-    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h:\w \\\$ " "[%s]"'
-fi
-# }}}
+
 # History: {{{
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
@@ -30,6 +19,7 @@ HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 # }}}
+
 # Shopt: {{{
 # Be notified of asynchronous jobs completing in the background
 set -o notify
@@ -62,15 +52,84 @@ shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 # }}}
-# Defaults in Ubuntu bashrcs
+
+# Defaults in Ubuntu bashrcs: {{{
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color) color_prompt=yes;;
+esac
+
+# Prompt: {{{
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
+    . "$HOME/.bashrc.d/git-prompt.sh";
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWCOLORHINTS=1
+    GIT_PS1_SHOWSTASHSTATE=1
+    GIT_PS1_SHOWUPSTREAM="auto"
+    Color_Off="\[\033[0m\]"
+    Yellow="\[\033[0;33m\]"
+    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h:\w \\\$ " "[%s]"'
+fi
+
+# break this up and merge it into the prompt
+# if [ "$color_prompt" = yes ]; then
+    # PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
+# else
+    # PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
+# fi
+
+# Set 'man' colors
+if [ "$color_prompt" = yes ]; then
+	man() {
+	env \
+	LESS_TERMCAP_mb=$'\e[01;31m' \
+	LESS_TERMCAP_md=$'\e[01;31m' \
+	LESS_TERMCAP_me=$'\e[0m' \
+	LESS_TERMCAP_se=$'\e[0m' \
+	LESS_TERMCAP_so=$'\e[01;44;33m' \
+	LESS_TERMCAP_ue=$'\e[0m' \
+	LESS_TERMCAP_us=$'\e[01;32m' \
+	man "$@"
+	}
+fi
+
+unset color_prompt force_color_prompt
+
+# If everything failed just go with something simple
+if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
+# }}}
+# }}}
 
 # Vim: {{{
 set -o vi
 export VISUAL="nvim"
 export EDITOR="$VISUAL"
 # }}}
+
 # JavaScript: {{{
 # Source npm completion if its installed
 if [[ $(which npm) ]]; then
@@ -85,17 +144,23 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 fi
 # }}}
+
 # FZF:{{{
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
+
 # spice fzf up with ripgrep
 if [[ "$(command -v rg)" ]]; then
     export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 5 .'
 fi
+
+export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
+
 bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
 # }}}
+
 # Python: {{{
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
@@ -113,7 +178,11 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     unset __conda_setup
     # <<< conda initialize <<<
 fi
+
+# https://pip.pypa.io/en/stable/user_guide/#command-completion
+# eval "$(pip completion --bash)"
 # }}}
+
 # gcloud: {{{
 # The next line updates PATH for the Google Cloud SDK.
 if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then
@@ -134,6 +203,7 @@ if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then
     source "$PREFIX/google-cloud-sdk/completion.bash.inc";
 fi
 # }}}
+
 # Ruby: {{{
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
