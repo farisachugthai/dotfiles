@@ -14,6 +14,9 @@
 #   author
 #    - display (enum) [no|full|abbreviated|email|email-user]
 #					: Show author information?
+#    - width (int)			: Fixed width when nonzero
+#    - maxwidth (int)			: Autosize limit
+#
 #   commit-title
 #    - display (bool)			: Show the commit title?
 #    - graph (enum) [no|v2|v1]		: Show the commit graph? (main view only)
@@ -26,6 +29,8 @@
 #    - local (bool)			: Show local dates?
 #    - format (string)			: Custom strftime(3) format
 #
+#					  Note: %Z is formatted as %z
+#    - width (int)			: Fixed width when nonzero
 #   file-name
 #    - display (enum) [no|always|auto]	: Show file names?
 #
@@ -136,6 +141,8 @@ set mouse-wheel-cursor		= no		# Prefer moving the cursor to scrolling the view?
 #   @	Run the command in the background with no output.
 #   ?	Prompt the user before executing the command.
 #   <	Exit Tig after executing the command.
+#   >	Re-open Tig instantly in the last displayed view after executing the command.
+
 #
 # User-defined commands can optionally refer to Tig's internal state
 # using the following variable names, which are substituted before
