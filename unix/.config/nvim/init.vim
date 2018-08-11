@@ -15,22 +15,21 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdTree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
-Plug 'w0rp/ale'
+" Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
+" Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips'  ultisnips set a file priority to -50 and it keeps crashing
+Plug 'honza/vim-snippets'
 Plug 'plytophogy/vim-virtualenv'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
-Plug 'rust-lang/rust.vim'
 
 call plug#end()
 " }}}
@@ -38,22 +37,17 @@ call plug#end()
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
-
 if filereadable(glob('~/.config/nvim/autocorrect.vim'))
     source ~/.config/nvim/autocorrect.vim
 endif
-
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
 " }}}
 " Filetype Specific Options: {{{ 2
-
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
-
 " Web Dev:
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
@@ -66,7 +60,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
-let g:python_highlight_all = 1
+let g:python_highlight_ald = 1
 " }}}
 " Syntax Highlighting: {{{ 3
 if has('syntax')                    " if we can have syntax recognition
@@ -90,13 +84,11 @@ set splitbelow
 set splitright
 " }}}
 " Spell Checker: {{{ 3
-" Quite confident this isn't setup rightbas it doesn't work on parrot.
-" However man 5 hunspell seems informative
 set encoding=utf-8             " Set default encoding
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
-set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
+set spelllang=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
 set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
@@ -106,15 +98,9 @@ if filereadable('/usr/share/dict/words')
     " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
-
 if filereadable('/usr/share/dict/american-english')
     setlocal dictionary+=/usr/share/dict/american-english
 endif
-
-" Made on termux with
-" TODO: Check if termux and if not readable run the command below
-" mkspell ~/.config/nvim/spell/en.hun.spl $PREFIX/share/hunspell/en_US.aff
-" TODO2: Also are you supposed to end the spellfile with .add?
 if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
 endif
@@ -145,18 +131,13 @@ if has('gui_running')
 endif
 set path+=**        			" Make autocomplete for filenames work
 set autochdir
-set wildmenu                   " Show list instead of just completing
+set wildmenu                            " Show list instead of just completing
 set wildmode=longest,list:longest       " Longest string or list alternatives
 set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
 set complete+=.,b,u,t           " open buffer, open buffers, and tags
 set fileignorecase
 set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
 set nojoinspaces
-" Syntax Highlighting: {{{ 3
-if has('syntax')                " if we can have syntax recognition
-    syntax on                   " this has to come after the colorscheme
-endif
-set modeline                    " easy to set filetype with modeline
 " }}}
 " Buffers Windows Tabs: {{{ 3
 try
@@ -181,46 +162,23 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-" Use Alt+{h,j,k,l} to navigate windows from any mode
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
-inoremap <A-h> <C-\><C-N><C-w>h
-inoremap <A-j> <C-\><C-N><C-w>j
-inoremap <A-k> <C-\><C-N><C-w>k
-inoremap <A-l> <C-\><C-N><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
 nnoremap <Leader>a ggVG
-" Run a py file only in insert mode. In normal mode activate pyls
+" f5 to run py file
 inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
-" https://stackoverflow.com/a/501698
-" now simply highlight the 'cells' you wanna run!
-:vnoremap <f5> :!python<CR>
 " It should be easier to get help
 nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
 noremap <F9> :e $MYVIMRC<CR>
 " Terminal: {{{ 3
-" To map <Esc> to exit terminal-mode:
-tnoremap <Esc> <C-\><C-n>
-" from he term. rewrite for fzf. Simulates insert mode Ctrl-R
+tnoremap <Esc> <C-W>N
+" from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " }}}
-" From he map
-" com -nargs=1 -bang -complete=customlist,EditFileComplete  EditFile edit<bang> <args>
-" fun EditFileComplete(A,L,P)
-"     return split(globpath(&path, a:A), '\n')
-" endfun
-" }}}
-" Pack: {{  2
-runtime! ftplugin/man.vim           " Access man pages inside nvim
-let g:ft_man_folding_enable = 0     " Pretty sure this is default enabled
-set keywordprg=:Man
+" pyls: {{{ 3
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 " }}}
 " Plugin Configuration: {{{ 2
@@ -263,8 +221,9 @@ let g:rg_command = '
     \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
     \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
     \ -g "!*.{min.js,swp,o,zip}" \ -g "!{.git,node_modules,vendor}/*" '
-command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
-
+let g:fd_command = 'fd'
+command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>), 1, <bang>0)
+" could also use set grepprg here
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " }}}
 " NERDTree: {{{ 3
@@ -277,7 +236,7 @@ let g:NERDTreeShowBookmarks = 1
 let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
 let g:NERDTreeChDirMode = 2             " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
-let g:NERDTreeMouseMode = 1             " Open dirs with 1 click files with 2
+let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
 let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
 " }}}
@@ -288,8 +247,9 @@ let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when unco
 " }}}
 " Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
-let g:jedi#popup_on_dot = 1
 let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
+let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
+let g:jedi#completions_enabled = 0          " pyls
 " }}}
 " Fugitive: {{{ 3
 nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -306,24 +266,24 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 " Flake8, Ale and Gruvbox: {{{ 3
-
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_in_gutter=1
-
 " Ale:
 " https://github.com/w0rp/ale
-" <Leader>a is already mapped so use l for lint
-nnoremap <Leader>l <Plug>(ale_toggle_buffer)<CR>
-let g:ale_fixers = ['remove_trailing_lines', 'trim_whitespace']
+nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
 let g:ale_set_signs = 1 " what is the default
+let g:ale_python_flake8_options = '--config ~/.config/flake8'
 
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
+" TODO: syntax is wrong but the idea is to run check before eval
+" if &colorscheme=gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 " }}}
 " Python Executables: {{{ 3
@@ -332,13 +292,18 @@ if has('python3')
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
     endif
+
     " Desktop
     if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
         let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
     endif
-    " Virtualenv dir check
+
     if isdirectory("$HOME/virtualenvs")
         let g:ale_virtualenv_dir_names+="virtualenvs"
+    else
+        " so i found this in the help docs
+        " wth is the syntax for the path? have i been doing this all wrong?
+        " call mkdir($HOME . \"/tmp/foo/bar", \"p", 0700)
     endif
 endif
 " }}}
@@ -347,8 +312,9 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'sh': ['bash-language-server', 'start'],
     \ }
-let g:LanguageClient_autoStart = 1
 let g:LanguageClient_selectionUI = 'fzf'
+" set completefunc=LanguageClient#complete      already set as omnifunc
+let g:LanguageClient_diagnosticsSignsMax = 10
 " }}}
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
@@ -360,8 +326,8 @@ let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
 " Vim_Startify: {{{ 3
 let g:startify_session_sort = 1
 " }}}
-" Airline: {{{ 3
-let g:airline_highlighting_cache = 0
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+" Virtualenvs: {{{ 3
+let g:virtualenv_directory = '~/virtualenvs'
+let g:virtualenv_auto_activate = 1
 " }}}
 " }}}

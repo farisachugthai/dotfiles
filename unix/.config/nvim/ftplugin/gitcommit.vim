@@ -1,1 +1,1 @@
-/home/faris/projects/dotfiles/unix/.vim/ftplugin/gitcommit.vim
+../../../.vim/ftplugin/gitcommit.vim
