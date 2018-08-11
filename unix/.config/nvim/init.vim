@@ -2,154 +2,77 @@
 " Neovim configuration
 " Maintainer: Faris Chugthai
 
-" Full fold: {{{
-" Vim-plug {{{
+set foldlevel=2
+" All: {{{ 1
+
+" Vim Plug: {{{ 2
 if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
-    call system('curl  ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ --proto=https https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-    " normal PlugInstall +UpdateRemotePlugins :clo
-    " Above didn't work. Unsure why.
+    call system('curl -o ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/seoul256.vim'
 Plug 'scrooloose/nerdTree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'majutsushi/tagbar'
-Plug 'nvie/vim-flake8'
+" Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
 Plug 'w0rp/ale'
-Plug 'godlygeek/tabular'
-Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
-Plug 'itchyny/lightline.vim'
-Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'} 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'maximbaz/lightline-ale'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
-Plug 'nanotech/jellybeans.vim'
-Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }
-Plug 'ryanoasis/vim-devicons'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
+    \ 'do': 'bash install.sh' }
+"Plug 'SirVer/ultisnips'  ultisnips set a file priority to -50 and it keeps crashing
+Plug 'honza/vim-snippets'
+Plug 'plytophogy/vim-virtualenv'
+Plug 'vim-airline/vim-airline'
+Plug 'mhinz/vim-startify'
 
 call plug#end()
+" }}}
 
+" Nvim Specific: {{{ 2
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
-
 if filereadable(glob('~/.config/nvim/autocorrect.vim'))
     source ~/.config/nvim/autocorrect.vim
 endif
-
-" Nvim Specific Options
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
-
-" Filetype Specific Options: {{{
-" Python:
-" Should wrap in a func. Dont want to have happen every time.
-" au BufNewFile *.py 0r ~/.config/nvim/skeleton.py
-
+" }}}
+"
+" Filetype Specific Options: {{{ 2
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
-
 " Web Dev:
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
-" Global Options: {{{
+
+" Global Options: {{{ 2
 " Leader:
 let g:mapleader = "\<Space>"
 
-" Pep8 Global Options: 
+" Pep8 Global Options: {{{ 3
 set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
 let g:python_highlight_all = 1
-
-" Spell Checker: {{{
-set encoding=utf-8             " Set default encoding
-set spelllang=en
-set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
-set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
-set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
-" Can be set with sudo select-default-wordlist. I opted for american insane
-if filereadable('/usr/share/dict/words')
-    setlocal dictionary='/usr/share/dict/words'
-    " Replace the default dictionary completion with fzf-based fuzzy completion 
-    inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
-endif
-
-if filereadable('/usr/share/dict/american-english')
-    setlocal dictionary+=/usr/share/dict/american-english
-endif
-
-" Made on termux with
-" TODO: Check if termux and if not readable run the command below
-" mkspell ~/.config/nvim/spell/en.hun.spl $PREFIX/share/hunspell/en_US.aff
-if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
-    set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
-endif
-set complete+=kspell
-set spellsuggest=5
-map <Leader>s :setlocal spell!<CR>
 " }}}
-
-" Folds
-set foldenable
-set foldlevelstart=10               " Enables most folds
-set foldnestmax=5                   " Why would anything be folded this much
-set foldmethod=indent               " Gotta love Python
-
-" Other Global Options: 
-set tags+=./tags,./../tags,./*/tags      " usr_29
-set background=dark
-set mouse=a                    " Automatically enable mouse usage
-set cursorline
-set cmdheight=2
-set number
-set showmatch
-set ignorecase
-set smartcase
-set smartindent
-set noswapfile
-set guifont='Fira\ Code\ Mono:h11'
-set path+=**        			" Make autocomplete for filenames work
-set autochdir
-
-if has('unnamedplus')           " Use the system clipboard.
-  set clipboard+=unnamed,unnamedplus
-else                            " Accomodate Termux
-  set clipboard+=unnamed
+" Syntax Highlighting: {{{ 3
+if has('syntax')                    " if we can have syntax recognition
+    syntax on                       " this has to come after the colorscheme
 endif
-
-set wildmenu                   " Show list instead of just completing
-set wildmode=longest,list:longest       " Longest string or list alternatives
-set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
-set complete+=.,b,u,t           " open buffer, open buffers, and tags
-set fileignorecase
-set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
-
-set nojoinspaces
-
-" Syntax Highlighting:
-if has('syntax')                " if we can have syntax recognition
-    syntax on                   " this has to come after the colorscheme
-endif
-set modeline                    " easy to set filetype with modeline
-
-" Buffers Windows Tabs:
+" }}}
+" Buffers Windows Tabs: {{{ 3
 try
   set switchbuf=useopen,usetab,newtab
   set showtabline=2
@@ -158,68 +81,111 @@ endtry
 set hidden
 set splitbelow
 set splitright
+" }}}
+" Spell Checker: {{{ 3
+set encoding=utf-8             " Set default encoding
+set spelllang=en
+set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
+set spelllang=$HOME/.config/nvim/spell/en.utf-8.add.spl
+set complete+=kspell
+set spellsuggest=5
+map <Leader>s :setlocal spell!<CR>
+" Can be set with sudo select-default-wordlist. I opted for American insane
+if filereadable('/usr/share/dict/words')
+    setlocal dictionary='/usr/share/dict/words'
+    " Replace the default dictionary completion with fzf-based fuzzy completion
+    inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
+endif
+if filereadable('/usr/share/dict/american-english')
+    setlocal dictionary+=/usr/share/dict/american-english
+endif
+if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
+    set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
+endif
+set complete+=kspell
+set spellsuggest=5
+map <Leader>s :setlocal spell!<CR>
+" }}}
 
-" Mappings:
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+" Folds: {{{ 3
+set foldenable
+set foldlevelstart=10                   " Enables most folds
+set foldnestmax=10                      " Why would anything be folded this much
+set foldmethod=marker
+" }}}
 
+" Other Global Options: {{{ 3
+set tags+=./tags,./../tags,./*/tags     " usr_29
+set background=dark
+set mouse=a                             " Automatically enable mouse usage
+set cursorline
+set cmdheight=2
+set number
+set showmatch
+set ignorecase
+set smartcase
+set smartindent
+set noswapfile
+if has('gui_running')
+    set guifont='Fira\ Code\ Mono:11'
+endif
+set path+=**        			" Make autocomplete for filenames work
+set autochdir
+set wildmenu                            " Show list instead of just completing
+set wildmode=longest,list:longest       " Longest string or list alternatives
+set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
+set complete+=.,b,u,t           " open buffer, open buffers, and tags
+set fileignorecase
+set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
+set nojoinspaces
+" }}}
+" Buffers Windows Tabs: {{{ 3
+try
+  set switchbuf=useopen,usetab,newtab
+  set showtabline=2
+catch
+endtry
+set hidden
+set splitbelow
+set splitright
+" }}}
+" Fun With Clipboards: {{{ 3
+if has('unnamedplus')           " Use the system clipboard.
+  set clipboard+=unnamed,unnamedplus
+else                            " Accomodate Termux
+  set clipboard+=unnamed
+endif
+" }}}
+" }}}
+
+" Mappings: {{{ 2
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
-nmap <Leader>a ggVG
-
-" the 2 nerdtree mappings below don't working but i'm not sure why :/
-" turn on NERDTree [and remember to not inline comments on map cmds!!
-nmap <Leader>nt <plug>NERDTree<CR>
-"o for on/off
-nmap <Leader>no <plug>NERDTreeToggle<CR>
+nnoremap <Leader>a ggVG
 " f5 to run py file
-imap <F5> <Esc>:w<CR>:!clear;python %<CR>
-
-" Terminal
+inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
+" It should be easier to get help
+nnoremap <leader>he :helpgrep<space>
+" It should also be easier to edit the config
+noremap <F9> :e $MYVIMRC<CR>
+" Terminal: {{{ 3
 tnoremap <Esc> <C-W>N
-" tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " from he term. rewrite for fzf
-
-" From he map
-"
-" com -nargs=1 -bang -complete=customlist,EditFileComplete  EditFile edit<bang> <args>
-" fun EditFileComplete(A,L,P)
-"     return split(globpath(&path, a:A), '\n')
-" endfun
+tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+" }}}
+" pyls: {{{ 3
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" }}}
 " }}}
 
-" Compiler Func: {{{
-" All in one compiler. Gonna rewrite to make my own
-" map <F5> :call CompileRunGcc()<CR>
-" func! CompileRunGcc()
-"     exec "w"
-"     if &filetype == 'c'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'cpp'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'java'
-"         exec "!javac %"
-"         exec "!time java %<"
-"     elseif &filetype == 'sh'
-"         :!time bash %
-"     elseif &filetype == 'python'
-"         exec "!time python2.7 %"
-"     elseif &filetype == 'html'
-"         exec "!firefox % &"
-"     elseif &filetype == 'go'
-"         exec "!go build %<"
-"         exec "!time go run %"
-"     elseif &filetype == 'mkd'
-"         exec "!~/.vim/markdown.pl % > %.html &"
-"         exec "!firefox %.html &"
-"     endif
-" endfunc
-" }}}
-" Plugin Configuration: {{{
-" fzf: {{{
+" Plugin Configuration: {{{ 2
+" FZF: {{{ 3
 " Adapted from:
 " https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/fzf.vim
 
@@ -251,45 +217,45 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" Here's a ripgrep integration for ya
+" With :F you can now speed through file searches
+let g:rg_command = '
+    \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+    \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+    \ -g "!*.{min.js,swp,o,zip}" \ -g "!{.git,node_modules,vendor}/*" '
+let g:fd_command = 'fd'
+let g:ag_command = 'ag --smart-case --hidden'
+command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>), 1, <bang>0)
+" could also use set grepprg here
+let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " }}}
-" NERDTree: {{{
+" NERDTree: {{{ 3
 " If only NERDTree is open, close Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" NERDTree:
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTreeQuitOnOpen = 1            " If only NERDTree is open, close Vim
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeNaturalSort = 1
-let g:NERDTreeChDirMode = 2         " change cwd every time NT root changes
+let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
+let g:NERDTreeChDirMode = 2             " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
-let g:NERDTreeMouseMode = 2         " open dir on mouse click
-let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
-let g:NERDTreeRespectWildIgnore = 1
-
-" NERDTree Tabs:            " Might comment out and let airline take over
-let g:nerdtree_tabs_no_startup_for_diff = 1
-let g:nerdtree_tabs_meaningful_tab_names = 1
-let g:nerdtree_tabs_autoclose = 1
-let g:nerdtree_tabs_startup_cd = 1
-
-" NERDCom:
-let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
-let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
-let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
+let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
+let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
+let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
 " }}}
-
-" Jedi:
+" NERDCom: {{{ 3
+let g:NERDSpaceDelims = 1                   " can we give the code some room to breathe?
+let g:NERDDefaultAlign = 'left'             " Align line-wise comment delimiters flush left
+let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when uncommenting
+" }}}
+" Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
-let g:jedi#popup_on_dot = 1                 " 'import'. slows things down too much
 let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
-" However in comparison to the deoplete, pyls, mypy clusterf* i had it might
-" feel smooth as butter
-
-" Fugitive: {{{
+let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
+let g:jedi#completions_enabled = 0          " pyls
+" }}}
+" Fugitive: {{{ 3
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -303,151 +269,69 @@ nnoremap <silent> <leader>gW :Gwrite!<CR>
 nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
-" Tagbar:
-" https://github.com/majutsushi/tagbar
-" Termux uses Universal Ctags and apparently tagbar doesn't like that.
-nmap <F8> :TagbarToggle<CR>
-let g:tagbar_autofocus = 0  " do not automatically jump to tagbar when opened
-let g:tagbar_autoclose = 1  " when you jump to a tag close tagbar
-" autocmd FileType python nested :TagbarOpen  " open tagbar when you see .py
-" autocmd BufWinLeave python nested :TagbarClose
-let g:tagbar_show_linenumbers = 1
-
+" Flake8, Ale and Gruvbox: {{{ 3
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_in_gutter=1
-
 " Ale:
 " https://github.com/w0rp/ale
-" <Leader>a is already mapped so use l for lint
-nmap <Leader>l <Plug>(ale_toggle_buffer)
-
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-
-  return l:counts.total == 0 ? '' : printf(
-        \   '%dW %dE',
-        \   all_non_errors,
-        \   all_errors
-        \)
-endfunction
-
-set statusline+=%#ALEWarningSign#                      " Warning color
-set statusline+=%{LinterStatus()}    
+nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ], }
+let g:ale_fix_on_save = 1
+let g:ale_sign_column_always = 1
+" Default: `'%code: %%s'`
+let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
+let g:ale_set_signs = 1 " what is the default
+let g:ale_python_flake8_options = '--config ~/.config/flake8'
 
 " Gruvbox:
 "https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
-" TODO: Check if gruvbox is the colorscheme
+" TODO: syntax is wrong but the idea is to run check before eval
+" if &colorscheme=gruvbox
 let g:gruvbox_contrast_dark = 'hard'
-
-" Lightline: {{{
-let g:lightline = {
-	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-	\ },
-	\ 'component_function': {
-	\   'gitbranch': 'fugitive#head',
-    \   'filetype': 'MyFiletype',
-    \   'fileformat': 'MyFileformat',
-    \ },
-    \ }
-
-
-function! MyFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
-
-
-function! MyFileformat()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-let g:lightline.colorscheme = 'seoul256'
 " }}}
-
-" pyls
+" Python Executables: {{{ 3
 if has('python3')
+    " Termux settings
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
     endif
 
-    " Something like if has($VIRTUAL_ENV) evaluates to 0 but we could also
-    " try something like that
+    " Desktop
     if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
         let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
     endif
+
+    if isdirectory("$HOME/virtualenvs")
+        let g:ale_virtualenv_dir_names+="virtualenvs"
+    else
+        " so i found this in the help docs
+        " wth is the syntax for the path? have i been doing this all wrong?
+        " call mkdir($HOME . \"/tmp/foo/bar", \"p", 0700)
+    endif
 endif
-
-" Language Servers:
+" }}}
+" Language Servers: {{{ 3
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start']
+    \ 'sh': ['bash-language-server', 'start'],
     \ }
-let g:LanguageClient_autoStart = 1
 let g:LanguageClient_selectionUI = 'fzf'
-let g:loaded_python_provider = 1        " disable py2 support
-
-" Deoplete: {{{
-"" disable autocomplete by default
-let g:deoplete_disable_auto_complete = 1
-let g:deoplete#enable_smart_case = 1
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-"" Autoselect feature
-set completeopt+=noinsert
-
-let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
-autocmd InsertEnter * call deoplete#enable()    " if i enter insert mode go for it
-call deoplete#custom#option('smart_case', v:true)
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
-endfunction
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-"" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" Enable jedi source debug messages
-" call deoplete#custom#option('profile', v:true)
-" call deoplete#enable_logging('DEBUG', 'deoplete.log')
-"Note: You must enable
-"|deoplete-source-attribute-is_debug_enabled| to debug the
-"sources.
-" call deoplete#custom#source('jedi', 'is_debug_enabled', 1)
-
-"" Do not complete too short words
-call deoplete#custom#source(
-\ 'dictionary', 'min_pattern_length', 4)
-
-" Collect keywords from buffer path not directory Nvim was launched from
-call deoplete#custom#source(
-\ 'file', 'enable_buffer_path', 'True')
-
-" Setting up the omnifuncs
-set omnifunc=LanguageClient#complete
-
-autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
+" set completefunc=LanguageClient#complete      already set as omnifunc
+let g:LanguageClient_diagnosticsSignsMax = 10
 " }}}
-" Devicons
+" Devicons: {{{ 3
 let g:webdevicons_enable = 1
-
-" adding the flags to NERDTree 
-let g:webdevicons_enable_nerdtree = 1
+let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
+" }}}
+" Ultisnips: {{{ 3
+" let g:UltiSnipsUsePythonVersion = 3
+" }}}
+" Vim_Startify: {{{ 3
+let g:startify_session_sort = 1
+" }}}
+" Virtualenvs: {{{ 3
+let g:virtualenv_directory = '~/virtualenvs'
+let g:virtualenv_auto_activate = 1
 " }}}
 " }}}
-" Vim: set foldmethod=marker :

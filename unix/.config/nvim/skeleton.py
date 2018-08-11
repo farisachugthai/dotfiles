@@ -1,1 +1,1 @@
-/home/faris/projects/dotfiles/unix/.vim/skeleton.py
+../../.vim/skeleton.py

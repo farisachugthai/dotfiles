@@ -26,11 +26,11 @@
 
 [merge]
     # guitool = gvimdiff3
-	tool = nvim -d
-	color = auto
+    color = auto
     mergestyle = diff3
     prompt = false
     strategy-option = resolve
+    tool = nvim -d
 
 [push]
     default = simple

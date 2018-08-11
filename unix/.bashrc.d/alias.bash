@@ -17,8 +17,8 @@ alias cd......="cd ../../../../.."
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias lx='ls -alX'
-alias lt='ls -alt'
+alias lx='ls -AlX'
+alias lt='ls -Alt'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -29,7 +29,6 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -pv'
-alias rm='rm -i'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -57,8 +56,13 @@ alias gco='git commit'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gdt='git difftool'
+alias glo='git log'
 alias gls='git ls-tree'
 alias gs='git status'
+alias gst='git diff --stat'
+
+# not explicitly git but for git. feels extreme but w/e
+alias vimdiff='nvim -d'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -76,3 +80,4 @@ fi
 # alias prof="--startuptime $DOT/.config/nvim/profiling/`date`"
 # Usage: nvim prof [filename to edit]
 # this needs to be a function nvim thinks its a filename
+alias echo='echo -e'

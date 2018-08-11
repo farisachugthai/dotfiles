@@ -84,7 +84,6 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-
 if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     . "$HOME/.bashrc.d/git-prompt.sh";
     GIT_PS1_SHOWDIRTYSTATE=1
@@ -93,7 +92,7 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     GIT_PS1_SHOWUPSTREAM="auto"
     Color_Off="\[\033[0m\]"
     Yellow="\[\033[0;33m\]"
-    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h: \w \\\$ " "[%s]"'
+    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h:\w \\\$ " "[%s]"'
 fi
 
 # Set 'man' colors
@@ -113,9 +112,6 @@ fi
 
 unset color_prompt force_color_prompt tmp_ps1
 
-# If everything failed just go with something simple
-if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
-unset -v color_prompt force_color_prompt TMP_PS1
 # }}}
 # }}}
 
@@ -185,25 +181,15 @@ eval "$(pip completion --bash)"
 # gcloud: {{{
 # The next line updates PATH for the Google Cloud SDK.
 # can we do if "{$PREFIX,/bin}/g...{completion,path}.b..." and make this all one line?
-if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then
-    source ~/bin/google-cloud-sdk/path.bash.inc;
-fi
-
+if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then source ~/bin/google-cloud-sdk/path.bash.inc; fi
 # The next line enables shell command completion for gcloud.
-if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then
-    source ~/bin/google-cloud-sdk/completion.bash.inc;
+if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc;
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
-if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then
-    source "$PREFIX/google-cloud-sdk/path.bash.inc";
-fi
+if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
+if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
-if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then
-    source "$PREFIX/google-cloud-sdk/completion.bash.inc";
-fi
-<<<<<<< .merge_file_rKtYrA
-=======
 # }}}
 
 # Ruby: {{{
@@ -231,4 +217,3 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
 # }}}
->>>>>>> .merge_file_aapVPK
