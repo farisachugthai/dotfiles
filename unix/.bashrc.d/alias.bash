@@ -11,9 +11,9 @@ alias cd..='cd ..'
 alias cd...="cd ../.."
 alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
-alias cd......="cd ../../../../.." 
+alias cd......="cd ../../../../.."
 
-# some more ls aliases. should converge these with the ipython ones
+# some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -34,21 +34,21 @@ alias rm='rm -i'
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
-# options i use every time i run these commands
+#options i use every time i run these commands
 alias du='du -d 1 -h'
 alias df='df -aht --total'
 alias free='free -mt'
-alias tree='tree -CahF --filelimit 50'           # could also add in --du to get dir sizes
 
 #termux command with odd default of view not send
 alias termux-share="termux-share -a send"
 
 alias info="info --vi-keys"
 
-#git aliases
+#git aliases. for complicated git log calls funcs are better
 alias ga='git add'
 alias gc='git clone'
 alias gcs='git clone --depth 1'
+alias gco='git commit'
 alias gs='git status'
 alias gd='git diff'
 alias gds='git diff --staged'
@@ -64,3 +64,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
+# alias for easier profiling of nvim. probs wanna change backticks and date format
+# alias prof="--startuptime $DOT/.config/nvim/profiling/`date`"
+# Usage: nvim prof [filename to edit]
+# this needs to be a function nvim thinks its a filename
