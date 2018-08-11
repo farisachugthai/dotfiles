@@ -1,5 +1,4 @@
-#!/bin/bash
-# Bashrc. Assumes that the proper installation scripts have been run.
+#!/usr/bin/env bash
 # Maintainer: Faris Chugthai
 
 # Don't run if not interactive
@@ -8,30 +7,7 @@ case $- in
     *) return 0;;
 esac
 
-# Source in .bashrc.d
-for config in ~/.bashrc.d/*.bash; do
-    source "$config"
-done
-unset -v config
-
-# For the secrets
-if [[ -f "$HOME/.bashrc.local" ]]; then
-    . "$HOME/.bashrc.local"
-fi
-
-# This shows the git state. This also prevents us from seeing what venv or conda env we're in.
-# This occurs because PS1 gets locked and won't display. On Termux that's challenging.
-if [[ -z "$DISPLAY" ]]; then
-    if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
-        . "$HOME/.bashrc.d/git-prompt.sh";
-        export GIT_PS1_SHOWDIRTYSTATE=1
-        PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-    fi
-fi
-
-if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
-
-# History
+# History: {{{
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -42,8 +18,9 @@ HISTFILESIZE=50000
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
+# }}}
 
-# Shopt
+# Shopt: {{{
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -74,18 +51,85 @@ set -o noclobber        # Still dont want to clobber things
 shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
+# }}}
 
-# Defaults in Ubuntu bashrcs
+# Defaults in Ubuntu bashrcs: {{{
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
 
-# Vim
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color*) color_prompt=yes;;
+esac
+
+# Prompt: {{{
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x "$PREFIX/bin/tput" ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+
+if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
+    . "$HOME/.bashrc.d/git-prompt.sh";
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWCOLORHINTS=1
+    GIT_PS1_SHOWSTASHSTATE=1
+    GIT_PS1_SHOWUPSTREAM="auto"
+    Color_Off="\[\033[0m\]"
+    Yellow="\[\033[0;33m\]"
+    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h: \w \\\$ " "[%s]"'
+fi
+
+# Set 'man' colors
+if [ "$color_prompt" = yes ]; then
+	man() {
+	env \
+	LESS_TERMCAP_mb=$'\e[01;31m' \
+	LESS_TERMCAP_md=$'\e[01;31m' \
+	LESS_TERMCAP_me=$'\e[0m' \
+	LESS_TERMCAP_se=$'\e[0m' \
+	LESS_TERMCAP_so=$'\e[01;44;33m' \
+	LESS_TERMCAP_ue=$'\e[0m' \
+	LESS_TERMCAP_us=$'\e[01;32m' \
+	man "$@"
+	}
+fi
+
+unset color_prompt force_color_prompt tmp_ps1
+
+# If everything failed just go with something simple
+if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
+unset -v color_prompt force_color_prompt TMP_PS1
+# }}}
+# }}}
+
+# Vim: {{{
 set -o vi
-export VISUAL="nvim"
+if [[ "$(command -v nvim)" ]]; then
+    export VISUAL="nvim"
+else
+    export VISUAL="vim"
+fi
 export EDITOR="$VISUAL"
+# }}}
 
-# JavaScript
+# JavaScript: {{{
 # Source npm completion if its installed
 if [[ $(which npm) ]]; then
     source ~/.bashrc.d/npm-completion.bash
@@ -98,45 +142,93 @@ if [ -d "$HOME/.nvm" ]; then
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 fi
+# }}}
 
-# FZF
+# FZF:{{{
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
-export FZF_DEFAULT_OPTS='--preview="head -n 30 {}" --preview-window=right:50%:wrap --cycle'
 
-# Python
+# spice fzf up with ripgrep
+if [[ "$(command -v rg)" ]]; then
+    export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 5 .'
+fi
+
+export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
+
+bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
+# }}}
+
+# Python: {{{
+if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+    __conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="/home/faris/miniconda3/bin:$PATH"
+        if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/home/faris/miniconda3/bin:$PATH"
+        fi
     fi
+    unset __conda_setup
+    # <<< conda initialize <<<
 fi
-unset __conda_setup
-# <<< conda initialize <<<
 
+# https://pip.pypa.io/en/stable/user_guide/#command-completion
+eval "$(pip completion --bash)"
+# }}}
 
+# gcloud: {{{
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f ~/bin/google-cloud-sdk/path.bash.inc ]; then 
-    source ~/bin/google-cloud-sdk/path.bash.inc; 
+# can we do if "{$PREFIX,/bin}/g...{completion,path}.b..." and make this all one line?
+if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then
+    source ~/bin/google-cloud-sdk/path.bash.inc;
 fi
 
 # The next line enables shell command completion for gcloud.
-if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then 
-    source ~/bin/google-cloud-sdk/completion.bash.inc; 
+if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then
+    source ~/bin/google-cloud-sdk/completion.bash.inc;
 fi
-
 
 # The next line updates PATH for the Google Cloud SDK.
-if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
-
-if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then 
-    source "$PREFIX/google-cloud-sdk/completion.bash.inc"; 
+if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then
+    source "$PREFIX/google-cloud-sdk/path.bash.inc";
 fi
+
+if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then
+    source "$PREFIX/google-cloud-sdk/completion.bash.inc";
+fi
+<<<<<<< .merge_file_rKtYrA
+=======
+# }}}
+
+# Ruby: {{{
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+# }}}
+
+# Perl: {{{
+PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+# }}}
+
+# Sourced files: {{{
+# Source in .bashrc.d
+for config in ~/.bashrc.d/*.bash; do
+    source "$config"
+done
+unset -v config
+
+# For the secrets
+if [[ -f "$HOME/.bashrc.local" ]]; then
+    . "$HOME/.bashrc.local"
+fi
+# }}}
+>>>>>>> .merge_file_aapVPK

@@ -1,1 +1,1 @@
-/home/faris/projects/dotfiles/unix/.vim/ftplugin/markdown.vim
+../../../.vim/ftplugin/markdown.vim

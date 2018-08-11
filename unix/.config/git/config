@@ -6,7 +6,7 @@
     editor = nvim
     pager = less -rL
     autocrlf = input
-	excludesfile = "$HOME/.gitignore_global"
+	excludesfile = "$HOME/.config/git/ignore"
 
 [color]
     ui = true
@@ -19,9 +19,10 @@
 # If difftool settings havent been set, fall back to mergetool
 [diff]
     # guitool = gvimdiff3
-    tool = vimdiff
     color = auto
+    prompt = false
     strategy-option = patience
+    tool = nvim -d
 
 [merge]
     # guitool = gvimdiff3
@@ -29,11 +30,10 @@
 	color = auto
     mergestyle = diff3
     prompt = false
-    strategy-option = patience
+    strategy-option = resolve
 
 [push]
     default = simple
-
 
 [sequence]
     editor = nvim

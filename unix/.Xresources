@@ -1,4 +1,9 @@
 ! Xresources
+<<<<<<< .merge_file_qYu26d
+=======
+! So the terminal isn't completely illegible but it doesn't look very good and
+! URLs are impossible to read
+>>>>>>> .merge_file_5ru1GE
 
 ! From the man himself Shotts.
 URxvt.geometry                 : 120x36
@@ -15,6 +20,7 @@ URxvt*visualBell               : true
 URxvt*fading                   : 30
 URxvt*colorUL                  : blue
 
+<<<<<<< .merge_file_qYu26d
 URxvt.font           : xft : Fira Code Light          : autohint=true : pixelsize=16
 URxvt.letterSpace    : -2
 
@@ -26,10 +32,31 @@ URxvt*termName                 : tmux-256color
 
 *antialias                     : true
 *autohint                      : true
+=======
+urxvt*font: xft:Terminus
+! URxvt.font           : xft : Fira Code Light          : autohint=true : pixelsize=12
+Urxvt*font: FiraCode: autohint=True: pixelsize=24
+! URxvt.letterSpace    : -2
+
+URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=12
+URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=12
+
+! ------------------------------------------------------------------------------
+! Xft Font Configuration
+! --------------------------------------------------------------------------
+Xft.antialias   : true
+Xft.autohint    : true
+Xft.lcdfilter   : lcddefault
+Xft.hintstyle   : hintslight
+Xft.hinting     : 1
+Xft.rgba        : rgb
+
+>>>>>>> .merge_file_5ru1GE
 
 URxvt*scrollWithBuffer         : false
 URxvt*scrollTtyOutput          : false
 URxvt*scrollTtyKeypress        : true
+<<<<<<< .merge_file_qYu26d
 
 ! as a heads up the URLs are impossible to read so fix that
 URxvt.perl-ext-common          : default,matcher,tabbed
@@ -114,3 +141,161 @@ URxvt.color250 : #d5c4a1
 ! LightGrey + White
 *color7                 : #a89984
 <F2><F3><F4>color15     : #ebdbb2
+=======
+
+! as a heads up the URLs are impossible to read so fix that
+URxvt.perl-ext-common          : default,matcher,tabbed
+URxvt.urlLauncher              : xdg-open
+URxvt*url-select.launcher      : /usr/bin/firefox
+URxvt*url-select.underline     : true
+URxvt.matcher.pattern.1        : \\bwww\\.[\\w-]\\.[\\w./?&@#-\[\]]*[\\w/-]
+
+! ! -----------------------------------------------------------------------------
+! ! File: gruvbox-urxvt256.xresources
+! ! Description: Retro groove colorscheme generalized
+! ! Author: morhetz <morhetz@gmail.com>
+! ! Source: https://github.com/morhetz/gruvbox-generalized
+! ! Last Modified: 13 Dec 2013
+! ! -----------------------------------------------------------------------------
+
+URxvt.color24  : #076678
+URxvt.color66  : #427b58
+URxvt.color88  : #9d0006
+URxvt.color96  : #8f3f71
+URxvt.color100 : #79740e
+URxvt.color108 : #8ec07c
+URxvt.color109 : #83a598
+URxvt.color130 : #af3a03
+URxvt.color136 : #b57614
+URxvt.color142 : #b8bb26
+URxvt.color167 : #fb4934
+URxvt.color175 : #d3869b
+URxvt.color208 : #fe8019
+URxvt.color214 : #fabd2f
+URxvt.color223 : #ebdbb2
+URxvt.color228 : #f2e5bc
+URxvt.color229 : #fbf1c7
+URxvt.color230 : #f9f5d7
+URxvt.color234 : #1d2021
+URxvt.color235 : #282828
+URxvt.color236 : #32302f
+URxvt.color237 : #3c3836
+URxvt.color239 : #504945
+URxvt.color241 : #665c54
+URxvt.color243 : #7c6f64
+URxvt.color244 : #928374
+URxvt.color245 : #928374
+URxvt.color246 : #a89984
+URxvt.color248 : #bdae93
+URxvt.color250 : #d5c4a1
+
+! special
+*.foreground:   #e8dfd6
+*.background:   #021b21
+*.cursorColor:  #e8dfd6
+
+! black
+*.color0:       #032c36
+*.color8:       #065f73
+
+! red
+*.color1:       #c2454e
+*.color9:       #ef5847
+
+! green
+*.color2:       #7cbf9e
+*.color10:      #a2d9b1
+
+! yellow
+*.color3:       #8a7a63
+*.color11:      #beb090
+
+! blue
+*.color4:       #2e3340
+*.color12:      #61778d
+
+! magenta
+*.color5:       #ff5879
+*.color13:      #ff99a1
+
+! cyan
+*.color6:       #44b5b1
+*.color14:      #9ed9d8
+
+! white
+*.color7:       #f2f1b9
+*.color15:      #f6f6c9
+
+
+
+! https://github.com/addy-dclxvi/i3-starterpack/blob/master/.Xresources
+
+URxvt*iso14755:			false
+URxvt*termName:			rxvt-256color
+URxvt.lineSpace:		0
+
+
+! ------------------------------------------------------------------------------
+! Rofi configs
+! ------------------------------------------------------------------------------
+
+rofi.color-enabled: true
+rofi.color-window: #2e3440, #2e3440, #2e3440
+rofi.color-normal: #2e3440, #d8dee9, #2e3440, #2e3440, #bf616a
+rofi.color-active: #2e3440, #b48ead, #2e3440, #2e3440, #93e5cc
+rofi.color-urgent: #2e3440, #ebcb8b, #2e3440, #2e3440, #ebcb8b
+rofi.modi: run,drun,window
+
+! ------------------------------------------------------------------------------
+! Dmenu configs
+! ------------------------------------------------------------------------------
+
+dmenu.selforeground:	    #d8dee9
+dmenu.background:	        #2e3440
+dmenu.selbackground:	    #bf616a
+dmenu.foreground:	        #d8dee9
+
+! Addys config
+!
+! ------------------------------------------------------------------------------
+! Colour Configuration
+! ------------------------------------------------------------------------------
+
+! ! special
+! *.foreground:   #d8dee8
+! *.background:   #2f343f
+! *.cursorColor:  #b48ead
+
+! ! black
+! *.color0  : #4b5262
+! *.color8  : #434a5a
+
+! ! red
+! *.color1  : #bf616a
+! *.color9  : #b3555e
+
+! ! green
+! *.color2  : #a3be8c
+! *.color10 : #93ae7c
+
+! ! yellow
+! *.color3  : #ebcb8b
+! *.color11 : #dbbb7b
+
+! ! blue
+! *.color4  : #81a1c1
+! *.color12 : #7191b1
+
+! ! magenta
+! *.color5  : #b48ead
+! *.color13 : #a6809f
+
+! ! cyan
+! *.color6  : #89d0bA
+! *.color14 : #7dbba8
+
+! ! white
+! *.color7  : #e5e9f0
+! *.color15 : #d1d5dc
+
+>>>>>>> .merge_file_5ru1GE
