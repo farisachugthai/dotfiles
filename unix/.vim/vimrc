@@ -7,8 +7,8 @@
 set nocompatible
 
 if !filereadable('~/.vim/autoload/plug.vim')
-    call system('wget -O ~/.vim/autoload/plug.vim
-                \ http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+    call system('curl -o ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -126,20 +126,20 @@ if !has('nvim'):
     set ttyfast         "insert/delete line commands. this makes Vim seem smoother
 endif
 
-- 'backupdir' defaults to .,~/.local/share/nvim/backup (|xdg|)
-- 'belloff' defaults to "all"
-- 'complete' doesn't include "i"
-- 'cscopeverbose' is enabled
-- 'directory' defaults to ~/.local/share/nvim/swap// (|xdg|), auto-created
-- 'fillchars' defaults (in effect) to "vert:│,fold:·"
-- 'formatoptions' defaults to "tcqj"
-- 'langnoremap' is enabled by default
-- 'langremap' is disabled by default
-- 'listchars' defaults to "tab:> ,trail:-,nbsp:+"
-- 'nrformats' defaults to "bin,hex"
-- 'sidescroll' defaults to 1
-- 'smarttab' is set by default
-- 'tags' defaults to "./tags;,tags"
+" - 'backupdir' defaults to .,~/.local/share/nvim/backup (|xdg|)
+" - 'belloff' defaults to "all"
+" - 'complete' doesn't include "i"
+" - 'cscopeverbose' is enabled
+" - 'directory' defaults to ~/.local/share/nvim/swap// (|xdg|), auto-created
+" - 'fillchars' defaults (in effect) to "vert:│,fold:·"
+" - 'formatoptions' defaults to "tcqj"
+" - 'langnoremap' is enabled by default
+" - 'langremap' is disabled by default
+" - 'listchars' defaults to "tab:> ,trail:-,nbsp:+"
+" - 'nrformats' defaults to "bin,hex"
+" - 'sidescroll' defaults to 1
+" - 'smarttab' is set by default
+" - 'tags' defaults to "./tags;,tags"
 
 set cursorline
 set colorcolumn=+1

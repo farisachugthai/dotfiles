@@ -84,6 +84,12 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+if [ "$color_prompt" = yes ]; then
+    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
+else
+    TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
+fi
+
 if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     . "$HOME/.bashrc.d/git-prompt.sh";
     GIT_PS1_SHOWDIRTYSTATE=1
@@ -92,15 +98,8 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     GIT_PS1_SHOWUPSTREAM="auto"
     Color_Off="\[\033[0m\]"
     Yellow="\[\033[0;33m\]"
-    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h:\w \\\$ " "[%s]"'
+    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1 \\\$" "[%s]"'
 fi
-
-# break this up and merge it into the prompt
-# if [ "$color_prompt" = yes ]; then
-    # PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
-# else
-    # PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
-# fi
 
 # Set 'man' colors
 if [ "$color_prompt" = yes ]; then
@@ -117,16 +116,17 @@ if [ "$color_prompt" = yes ]; then
 	}
 fi
 
-unset color_prompt force_color_prompt
-
-# If everything failed just go with something simple
-if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
+unset -v color_prompt force_color_prompt TMP_PS1
 # }}}
 # }}}
 
 # Vim: {{{
 set -o vi
-export VISUAL="nvim"
+if [[ "$(command -v nvim)" ]]; then
+    export VISUAL="nvim"
+else
+    export VISUAL="vim"
+fi
 export EDITOR="$VISUAL"
 # }}}
 
@@ -180,11 +180,12 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-# eval "$(pip completion --bash)"
+eval "$(pip completion --bash)"
 # }}}
 
 # gcloud: {{{
 # The next line updates PATH for the Google Cloud SDK.
+# can we do if "{$PREFIX,/bin}/g...{completion,path}.b..." and make this all one line?
 if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then
     source ~/bin/google-cloud-sdk/path.bash.inc;
 fi
@@ -210,11 +211,11 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # }}}
 
 # Perl: {{{
-PATH="/data/data/com.termux/files/home/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/data/data/com.termux/files/home/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/data/data/com.termux/files/home/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/data/data/com.termux/files/home/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/data/data/com.termux/files/home/perl5"; export PERL_MM_OPT;
+PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 # }}}
 
 # Sourced files: {{{

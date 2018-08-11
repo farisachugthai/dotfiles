@@ -9,7 +9,8 @@ if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
-call plug#begin('~/.local/share/nvim/plugged')
+" let's have these share a directory since i don't use different plugins
+call plug#begin('~/.vim/plugged') 
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -19,7 +20,7 @@ Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 " Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
@@ -60,7 +61,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
-let g:python_highlight_ald = 1
+let g:python_highlight_all = 1
 " }}}
 " Syntax Highlighting: {{{ 3
 if has('syntax')                    " if we can have syntax recognition
@@ -233,17 +234,17 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
-let g:NERDTreeChDirMode = 2             " change cwd every time NT root changes
+let g:NERDTreeNaturalSort = 1                       " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
+let g:NERDTreeChDirMode = 2                         " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
-let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
+let g:NERDTreeMouseMode = 2                         " Open dirs with 1 click files with 2
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
-let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
+let g:NERDTreeRespectWildIgnore = 1                 " yeah i meant those ones too
 " }}}
 " NERDCom: {{{ 3
-let g:NERDSpaceDelims = 1                   " can we give the code some room to breathe?
-let g:NERDDefaultAlign = 'left'             " Align line-wise comment delimiters flush left
-let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when uncommenting
+let g:NERDSpaceDelims = 1                           " can we give the code some room to breathe?
+let g:NERDDefaultAlign = 'left'                     " Align line-wise comment delimiters flush left
+let g:NERDTrimTrailingWhitespace = 1                " Trim trailing whitespace when uncommenting
 " }}}
 " Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
@@ -271,17 +272,17 @@ nnoremap <silent> <leader>gQ :Gwq!<CR>
 let g:flake8_show_in_gutter=1
 " Ale:
 " https://github.com/w0rp/ale
-nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
-let g:ale_set_signs = 1 " what is the default
+let g:ale_set_signs = 1                             " what is the default
 let g:ale_python_flake8_options = '--config ~/.config/flake8'
 
 " Gruvbox:
-"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
+" https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 " TODO: syntax is wrong but the idea is to run check before eval
 " if &colorscheme=gruvbox
 let g:gruvbox_contrast_dark = 'hard'
@@ -292,12 +293,11 @@ if has('python3')
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
     endif
-
     " Desktop
     if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
         let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
     endif
-
+    " Let nvim/ale check out the virtualenvs and source the right files
     if isdirectory("$HOME/virtualenvs")
         let g:ale_virtualenv_dir_names+="virtualenvs"
     else
@@ -313,7 +313,7 @@ let g:LanguageClient_serverCommands = {
     \ 'sh': ['bash-language-server', 'start'],
     \ }
 let g:LanguageClient_selectionUI = 'fzf'
-" set completefunc=LanguageClient#complete      already set as omnifunc
+" set completefunc=LanguageClient#complete      " already set as omnifunc
 let g:LanguageClient_diagnosticsSignsMax = 10
 " }}}
 " Devicons: {{{ 3

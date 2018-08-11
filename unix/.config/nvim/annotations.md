@@ -1,5 +1,11 @@
 # Scratchpad
 
+## todo
+
+nvim crashes on some :Man commands.
+Need to figure out if its consistent when I have nvim open and don't care if it
+crashes
+
 ## Plugins
 =======
 

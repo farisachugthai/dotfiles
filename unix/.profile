@@ -1,10 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
-
-# Python
-# https://pip.pypa.io/en/stable/user_guide/#command-completion
-eval "$(pip completion --bash)"
 
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
