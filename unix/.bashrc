@@ -64,7 +64,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    xterm-color*) color_prompt=yes;;
 esac
 
 # Prompt: {{{
@@ -74,7 +74,7 @@ esac
 force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    if [ -x "$PREFIX/bin/tput" ] && tput setaf 1 >&/dev/null; then
 	# We have color support; assume it's compliant with Ecma-48
 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
 	# a case would tend to support setf rather than setaf.)
@@ -84,11 +84,6 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
-else
-    TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
-fi
 
 if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     . "$HOME/.bashrc.d/git-prompt.sh";
@@ -98,7 +93,7 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     GIT_PS1_SHOWUPSTREAM="auto"
     Color_Off="\[\033[0m\]"
     Yellow="\[\033[0;33m\]"
-    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1 \\\$" "[%s]"'
+    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h: \w \\\$ " "[%s]"'
 fi
 
 # Set 'man' colors
@@ -116,6 +111,10 @@ if [ "$color_prompt" = yes ]; then
 	}
 fi
 
+unset color_prompt force_color_prompt tmp_ps1
+
+# If everything failed just go with something simple
+if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
 unset -v color_prompt force_color_prompt TMP_PS1
 # }}}
 # }}}
