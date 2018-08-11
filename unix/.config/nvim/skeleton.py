@@ -1,1 +1,1 @@
-/data/data/com.termux/files/home/projects/dotfiles/unix/.vim/skeleton.py
+../../.vim/skeleton.py

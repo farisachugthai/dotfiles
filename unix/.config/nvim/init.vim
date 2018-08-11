@@ -9,7 +9,7 @@ if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -18,14 +18,14 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-" Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
-" Plug 'w0rp/ale'
+Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
+Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
-"Plug 'SirVer/ultisnips'  ultisnips set a file priority to -50 and it keeps crashing
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'plytophogy/vim-virtualenv'
 Plug 'vim-airline/vim-airline'
@@ -33,6 +33,7 @@ Plug 'mhinz/vim-startify'
 
 call plug#end()
 " }}}
+
 " Nvim Specific: {{{ 2
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
@@ -43,6 +44,7 @@ endif
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
 " }}}
+
 " Filetype Specific Options: {{{ 2
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
@@ -51,6 +53,7 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
+
 " Global Options: {{{ 2
 " Leader:
 let g:mapleader = "\<Space>"
@@ -62,27 +65,32 @@ set expandtab
 set softtabstop=4
 let g:python_highlight_ald = 1
 " }}}
+
 " Syntax Highlighting: {{{ 3
 if has('syntax')                    " if we can have syntax recognition
     syntax on                       " this has to come after the colorscheme
 endif
 " }}}
+
 " Folds: {{{ 3
 set foldenable
 set foldlevelstart=10               " Enables most folds
 set foldnestmax=5                   " Why would anything be folded this much
 set foldmethod=marker
 " }}}
+
 " Buffers Windows Tabs: {{{ 3
 try
   set switchbuf=useopen,usetab,newtab
   set showtabline=2
 catch
 endtry
+
 set hidden
 set splitbelow
 set splitright
 " }}}
+
 " Spell Checker: {{{ 3
 set encoding=utf-8             " Set default encoding
 set spelllang=en
@@ -90,8 +98,6 @@ set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
-set spellsuggest=5
-map <Leader>s :setlocal spell!<CR>
 " Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
     setlocal dictionary='/usr/share/dict/words'
@@ -106,8 +112,9 @@ if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
 endif
 set complete+=kspell
 set spellsuggest=5
-map <Leader>s :setlocal spell!<CR>
+nnoremap <Leader>s :setlocal spell!<CR>
 " }}}
+
 " Folds: {{{ 3
 set foldenable
 set foldlevelstart=10                   " Enables most folds
@@ -129,26 +136,29 @@ set noswapfile
 if has('gui_running')
     set guifont='Fira\ Code\ Mono:11'
 endif
-set path+=**        			" Make autocomplete for filenames work
+set path+=**        			        " Make autocomplete for filenames work
 set autochdir
 set wildmenu                            " Show list instead of just completing
 set wildmode=longest,list:longest       " Longest string or list alternatives
 set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
-set complete+=.,b,u,t           " open buffer, open buffers, and tags
+set complete+=.,b,u,t                   " open buffer, open buffers, and tags
 set fileignorecase
-set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
+set whichwrap+=<,>,h,l,[,]              " Give reasonable line wrapping behaviour
 set nojoinspaces
 " }}}
+
 " Buffers Windows Tabs: {{{ 3
 try
   set switchbuf=useopen,usetab,newtab
   set showtabline=2
 catch
 endtry
+
 set hidden
 set splitbelow
 set splitright
 " }}}
+
 " Fun With Clipboards: {{{ 3
 if has('unnamedplus')           " Use the system clipboard.
   set clipboard+=unnamed,unnamedplus
@@ -157,6 +167,7 @@ else                            " Accomodate Termux
 endif
 " }}}
 " }}}
+
 " Mappings: {{{ 2
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -171,17 +182,21 @@ inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
 nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
 noremap <F9> :e $MYVIMRC<CR>
+
 " Terminal: {{{ 3
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " }}}
+
 " pyls: {{{ 3
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 " }}}
+
 " Plugin Configuration: {{{ 2
+
 " FZF: {{{ 3
 " Adapted from:
 " https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/fzf.vim
@@ -226,6 +241,7 @@ command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>),
 " could also use set grepprg here
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " }}}
+
 " NERDTree: {{{ 3
 " If only NERDTree is open, close Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -240,17 +256,20 @@ let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
 let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
 " }}}
+
 " NERDCom: {{{ 3
 let g:NERDSpaceDelims = 1                   " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left'             " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when uncommenting
 " }}}
+
 " Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
 let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
 let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
 let g:jedi#completions_enabled = 0          " pyls
 " }}}
+
 " Fugitive: {{{ 3
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -265,6 +284,7 @@ nnoremap <silent> <leader>gW :Gwrite!<CR>
 nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
+
 " Flake8, Ale and Gruvbox: {{{ 3
 " Flake8:
 " https://github.com/nvie/vim-flake8
@@ -307,18 +327,19 @@ if has('python3')
     endif
 endif
 " }}}
+
 " Language Servers: {{{ 3
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'sh': ['bash-language-server', 'start'],
     \ }
 let g:LanguageClient_selectionUI = 'fzf'
-" set completefunc=LanguageClient#complete      already set as omnifunc
+" set completefunc=LanguageClient#complete          " already set as omnifunc
 let g:LanguageClient_diagnosticsSignsMax = 10
 " }}}
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
-let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
+let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTree
 " }}}
 " Ultisnips: {{{ 3
 " let g:UltiSnipsUsePythonVersion = 3

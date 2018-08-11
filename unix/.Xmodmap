@@ -1,5 +1,13 @@
 !
-! This is an `xmodmap' input file for 
+! so i know this should go in ~/.Xinitrc but the last time I created that file
+! my OS broke so this is gonna hang here for a lil
+! if [[ -f ~/.Xmodmap ]]; then
+!     if [[ "$(command -v xmodmap)" ]]; then
+!         xmodmap ~/.Xmodmap
+!     fi
+! fi
+
+! This is an `xmodmap' input file for
 !   PC 102 key, thin Delete, tall Enter (XFree86; United Kingdom) keyboards.
 ! Automatically generated on Mon Jun 11 23:53:31 2018 by faris with
 ! XKeyCaps 2.47; Copyright (c) 1991-1999 Jamie Zawinski; 2005-2006 Christoph Berg.

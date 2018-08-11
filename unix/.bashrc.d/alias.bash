@@ -46,12 +46,16 @@ alias info="info --vi-keys"
 
 #git aliases. for complicated git log calls funcs are better
 alias ga='git add'
-alias gc='git clone'
-alias gcs='git clone --depth 1'
+alias gb='git blame'
+alias gcl='git clone'
+alias gcls='git clone --depth 1'
+alias gch='git checkout'
 alias gco='git commit'
-alias gs='git status'
 alias gd='git diff'
 alias gds='git diff --staged'
+alias gdt='git difftool'
+alias gls='git ls-tree'
+alias gs='git status'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
