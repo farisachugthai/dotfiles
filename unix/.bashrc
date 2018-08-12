@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
+# Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
-# Don't run if not interactive
+# Don't run if not interactive: {{{
 case $- in
     *i*);;
     *) return 0;;
 esac
+# }}}
 
 # History: {{{
 # don't put duplicate lines or lines starting with space in the history.
@@ -65,8 +67,9 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 # TODO: add rxvt case
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    xterm-color*) color_prompt=yes;;
 esac
+# }}}
 
 # Prompt: {{{
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -76,16 +79,17 @@ force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
     else
-	color_prompt=
+    color_prompt=
     fi
 fi
 
 # https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
+# at some point you moved the \$\ back one [] on termux so i guess todo
 if [ "$color_prompt" = yes ]; then
     TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\\$\[\e[01;33m\]\[\e[0m\] "
 else
@@ -105,25 +109,20 @@ fi
 
 # Set 'man' colors
 if [ "$color_prompt" = yes ]; then
-	man() {
-	env \
-	LESS_TERMCAP_mb=$'\e[01;31m' \
-	LESS_TERMCAP_md=$'\e[01;31m' \
-	LESS_TERMCAP_me=$'\e[0m' \
-	LESS_TERMCAP_se=$'\e[0m' \
-	LESS_TERMCAP_so=$'\e[01;44;33m' \
-	LESS_TERMCAP_ue=$'\e[0m' \
-	LESS_TERMCAP_us=$'\e[01;32m' \
-	man "$@"
-	}
+    man() {
+    env \
+    LESS_TERMCAP_mb=$'\e[01;31m' \
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    man "$@"
+    }
 fi
 
-unset color_prompt force_color_prompt
-
-# If everything failed just go with something simple
-if [ -z "$PS1" ]; then export 'PS1'='\u@\h:\w$ '; fi
-
-# }}}
+unset color_prompt force_color_prompt TMP_PS1
 # }}}
 
 # Vim: {{{
@@ -185,10 +184,14 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     # <<< conda initialize <<<
 fi
 
-# And because this isn't working for some reason let's try simplifying?
-if [[ -d "$HOME/miniconda3/etc/profile.d" ]]; then
-    . "$HOME/miniconda3/etc/profile.d/conda.sh"
-    conda activate base
+# If this env var isn't set it will equal 0. So also run a check that we have conda
+if [[ $CONDA_SHLVL -eq 0 ]]; then
+    if [[ -d "$HOME/miniconda3/etc/profile.d" ]]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+        conda activate base
+    fi
+elif [[ $CONDA_SHLVL -eq 1 ]]; then
+    echo -e "Conda base environment successfully activated."
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
@@ -201,7 +204,7 @@ if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then source ~/bin/google-cloud
 # The next line enables shell command completion for gcloud.
 if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
 
-if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi 
+if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
 if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 # }}}
@@ -221,8 +224,7 @@ PERL_MB_OPT="--install_base \""$HOME/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 # }}}
 
-# i'm getting errors about this so at some point its gotta go into xinitrc
-# Source in .bashrc.d
+# Sourced files: {{{
 for config in ~/.bashrc.d/*.bash; do
     source "$config"
 done
@@ -232,3 +234,4 @@ unset -v config
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
+# }}}

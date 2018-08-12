@@ -17,8 +17,8 @@ alias cd......="cd ../../../../.."
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias lx='ls -alX'
-alias lt='ls -alt'
+alias lx='ls -AlX'
+alias lt='ls -Alt'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -29,7 +29,6 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -pv'
-alias rm='rm -i'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -38,6 +37,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias du='du -d 1 -h'
 alias df='df -aht --total'
 alias free='free -mt'
+alias echo='echo -e'
 
 #termux command with odd default of view not send
 alias termux-share="termux-share -a send"
@@ -54,8 +54,10 @@ alias gco='git commit'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gdt='git difftool'
+alias glo='git log'
 alias gls='git ls-tree'
 alias gs='git status'
+alias gst='git diff --stat'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
