@@ -1,15 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
-
-# Python
-# https://pip.pypa.io/en/stable/user_guide/#command-completion
-eval "$(pip completion --bash)"
 
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Ruby: This is gonna need a for loop soon.
+# Ruby: {{{
+# This is gonna need a for loop soon.
 if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 fi
@@ -22,8 +19,9 @@ fi
 export PATH="$PATH:$HOME/.rvm/bin"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# }}}
 
-# Go
+# Go: {{{
 # Add the Go std lib to the PATH if that's where it was put
 if [[ -d "/usr/local/go" ]]; then
     export PATH="$PATH:/usr/local/go/bin"
@@ -31,20 +29,23 @@ elif [[ -d "$PREFIX/local/go" ]]; then
     export PATH="$PATH:$PREFIX/local/go/bin"
 fi
 
-# Utilize GOPATH. 
+# Utilize GOPATH.
 if [[ $(which go) ]]; then
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
+# }}}
 
-# JavaScript 
+# JavaScript: {{{
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
     export PATH="$PATH:$YARNPATH"
     source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
 fi
 
-# Environment Variables 
+# }}}
+
+# Environment Variables: {{{
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 export PAGER="less -JR"
@@ -84,10 +85,16 @@ export LANG=en_US.UTF-8                 # gathered from localectl
 
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
-# Rust
+export TMUXP_CONFIGDIR='$HOME/.tmux'
+
+export CURL_HOME="$HOME/.config/curl/curlrc"
+# }}}
+
+# Rust: {{{
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
-export TMUXP_CONFIGDIR='$HOME/.tmux'
+# }}}
+
 
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then

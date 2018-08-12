@@ -327,6 +327,11 @@ c.TerminalInteractiveShell.highlighting_style = 'monokai'
 # I'm sure tango is plenty configurable but out of the box it's completely illegible
 # default has impossible to read strings and in a truncated sense just led to my first rm -r mistake
 
+# Actually coming back to that above comment tangos src code is clearly marked up
+# Even monokai, based off of tango, has values for half of its tokens plain empty!
+# So actually do go back and check it out
+
+
 # Override highlighting format for specific tokens
 c.TerminalInteractiveShell.highlighting_style_overrides = { Comment: '#ffffff'}
 
@@ -604,7 +609,7 @@ c.Completer.use_jedi = True
 # LoggingMagics(Magics) configuration
 #------------------------------------------------------------------------------
 
-## Magics related to all logging machinery.
+# Magics related to all logging machinery.
 
 # Suppress output of log state when logging is enabled
 c.LoggingMagics.quiet = False

@@ -2,7 +2,7 @@
 " Neovim configuration
 " Maintainer: Faris Chugthai
 
-set foldlevel=2
+setlocal foldlevel=2
 " All: {{{ 1
 
 " Vim Plug: {{{ 2
@@ -15,7 +15,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdTree'
+Plug 'scrooloose/nerdTree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
@@ -29,7 +29,7 @@ Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
 "Plug 'SirVer/ultisnips'  ultisnips set a file priority to -50 and it keeps crashing
 Plug 'honza/vim-snippets'
-Plug 'plytophogy/vim-virtualenv'
+Plug 'plytophogy/vim-virtualenv', { 'for': ['python', 'python3'] }
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
 
@@ -45,6 +45,8 @@ if filereadable(glob('~/.config/nvim/autocorrect.vim'))
 endif
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
+set background=dark
+colorscheme gruvbox
 " }}}
 "
 " Filetype Specific Options: {{{ 2
@@ -67,11 +69,13 @@ set expandtab
 set softtabstop=4
 let g:python_highlight_all = 1
 " }}}
+
 " Syntax Highlighting: {{{ 3
 if has('syntax')                    " if we can have syntax recognition
     syntax on                       " this has to come after the colorscheme
 endif
 " }}}
+
 " Buffers Windows Tabs: {{{ 3
 try
   set switchbuf=useopen,usetab,newtab
@@ -82,6 +86,7 @@ set hidden
 set splitbelow
 set splitright
 " }}}
+
 " Spell Checker: {{{ 3
 set encoding=utf-8             " Set default encoding
 set spelllang=en
@@ -140,6 +145,7 @@ set fileignorecase
 set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
 set nojoinspaces
 " }}}
+
 " Buffers Windows Tabs: {{{ 3
 try
   set switchbuf=useopen,usetab,newtab
@@ -150,6 +156,7 @@ set hidden
 set splitbelow
 set splitright
 " }}}
+
 " Fun With Clipboards: {{{ 3
 if has('unnamedplus')           " Use the system clipboard.
   set clipboard+=unnamed,unnamedplus
@@ -157,9 +164,10 @@ else                            " Accomodate Termux
   set clipboard+=unnamed
 endif
 " }}}
-" }}}
 
 " Mappings: {{{ 2
+
+" Global Mappings: {{{ 3
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -183,8 +191,10 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 " }}}
+" }}}
 
 " Plugin Configuration: {{{ 2
+
 " FZF: {{{ 3
 " Adapted from:
 " https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/fzf.vim
@@ -230,6 +240,7 @@ command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>),
 " could also use set grepprg here
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " }}}
+
 " NERDTree: {{{ 3
 " If only NERDTree is open, close Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -244,17 +255,20 @@ let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
 let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
 " }}}
+
 " NERDCom: {{{ 3
 let g:NERDSpaceDelims = 1                   " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left'             " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when uncommenting
 " }}}
+
 " Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
 let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
 let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
 let g:jedi#completions_enabled = 0          " pyls
 " }}}
+
 " Fugitive: {{{ 3
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -269,6 +283,7 @@ nnoremap <silent> <leader>gW :Gwrite!<CR>
 nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
+
 " Flake8, Ale and Gruvbox: {{{ 3
 " Flake8:
 " https://github.com/nvie/vim-flake8
@@ -290,6 +305,7 @@ let g:ale_python_flake8_options = '--config ~/.config/flake8'
 " if &colorscheme=gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 " }}}
+
 " Python Executables: {{{ 3
 if has('python3')
     " Termux settings
@@ -311,6 +327,7 @@ if has('python3')
     endif
 endif
 " }}}
+
 " Language Servers: {{{ 3
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
@@ -320,18 +337,23 @@ let g:LanguageClient_selectionUI = 'fzf'
 " set completefunc=LanguageClient#complete      already set as omnifunc
 let g:LanguageClient_diagnosticsSignsMax = 10
 " }}}
+
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
 " }}}
+
 " Ultisnips: {{{ 3
 " let g:UltiSnipsUsePythonVersion = 3
 " }}}
+
 " Vim_Startify: {{{ 3
 let g:startify_session_sort = 1
 " }}}
+
 " Virtualenvs: {{{ 3
 let g:virtualenv_directory = '~/virtualenvs'
 let g:virtualenv_auto_activate = 1
+" }}}
 " }}}
 " }}}

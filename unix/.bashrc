@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
+# Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
-# Don't run if not interactive
+# Don't run if not interactive: {{{
 case $- in
     *i*);;
     *) return 0;;
 esac
+# }}}
 
 # History: {{{
 # don't put duplicate lines or lines starting with space in the history.
@@ -67,6 +69,8 @@ case "$TERM" in
     xterm-color*) color_prompt=yes;;
 esac
 
+# }}}
+
 # Prompt: {{{
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
@@ -84,6 +88,13 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
+if [ "$color_prompt" = yes ]; then
+    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
+else
+    TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
+fi
+
 if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     . "$HOME/.bashrc.d/git-prompt.sh";
     GIT_PS1_SHOWDIRTYSTATE=1
@@ -92,7 +103,7 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     GIT_PS1_SHOWUPSTREAM="auto"
     Color_Off="\[\033[0m\]"
     Yellow="\[\033[0;33m\]"
-    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "\u@\h:\w \\\$ " "[%s]"'
+    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
 # Set 'man' colors
@@ -112,7 +123,6 @@ fi
 
 unset color_prompt force_color_prompt tmp_ps1
 
-# }}}
 # }}}
 
 # Vim: {{{
@@ -140,7 +150,7 @@ if [ -d "$HOME/.nvm" ]; then
 fi
 # }}}
 
-# FZF:{{{
+# FZF: {{{
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
