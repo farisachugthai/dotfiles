@@ -1,1 +1,1 @@
-/home/faris/projects/dotfiles/unix/.vim/autocorrect.vim
+../../.vim/autocorrect.vim

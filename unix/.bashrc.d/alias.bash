@@ -37,6 +37,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias du='du -d 1 -h'
 alias df='df -aht --total'
 alias free='free -mt'
+alias echo='echo -e'
 
 #termux command with odd default of view not send
 alias termux-share="termux-share -a send"
@@ -61,9 +62,6 @@ alias gls='git ls-tree'
 alias gs='git status'
 alias gst='git diff --stat'
 
-# not explicitly git but for git. feels extreme but w/e
-alias vimdiff='nvim -d'
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -80,4 +78,3 @@ fi
 # alias prof="--startuptime $DOT/.config/nvim/profiling/`date`"
 # Usage: nvim prof [filename to edit]
 # this needs to be a function nvim thinks its a filename
-alias echo='echo -e'

@@ -159,7 +159,6 @@ try:
 except Exception:
     c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
-
 # A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
 # c.InteractiveShell.ast_transformers = []
@@ -202,7 +201,6 @@ c.InteractiveShell.colors = 'Linux'
 
 #
 # c.InteractiveShell.debug = False
-
 # Don't call post-execute functions that have failed in the past.
 # c.InteractiveShell.disable_failing_post_execute = False
 
@@ -220,7 +218,6 @@ c.InteractiveShell.history_length = 10000
 #  startup.
 c.InteractiveShell.history_load_length = 10000
 
-#
 # c.InteractiveShell.ipython_dir = ''
 
 # Start logging to the given file in append mode. Use `logfile` to specify a log
@@ -234,7 +231,6 @@ c.InteractiveShell.history_load_length = 10000
 #  specify a log file to **append** logs to.
 # c.InteractiveShell.logstart = False
 
-#
 # c.InteractiveShell.object_info_string_level = 0
 
 # Automatically call the pdb debugger after every exception.
@@ -256,7 +252,6 @@ c.InteractiveShell.history_load_length = 10000
 #  TerminalInteractiveShell.prompts object directly.
 # c.InteractiveShell.prompts_pad_left = True
 
-#
 c.InteractiveShell.quiet = False
 
 #
@@ -268,6 +263,12 @@ c.InteractiveShell.quiet = False
 #
 # c.InteractiveShell.separate_out2 = ''
 
+#c.InteractiveShell.separate_in = '\n'
+
+#c.InteractiveShell.separate_out = ''
+
+#c.InteractiveShell.separate_out2 = ''
+
 # Show rewritten input, e.g. for autocall.
 # c.InteractiveShell.show_rewritten_input = True
 
@@ -275,7 +276,6 @@ c.InteractiveShell.quiet = False
 #  module).
 c.InteractiveShell.sphinxify_docstring = False
 
-#
 c.InteractiveShell.wildcards_case_sensitive = False
 
 # Switch modes for the IPython exception handlers.
@@ -377,6 +377,7 @@ c.TerminalInteractiveShell.true_color = True
 #  HistoryManager, below, which is a subclass of this.
 
 # Options for configuring the SQLite connection
+## Options for configuring the SQLite connection
 #
 #  These options are passed as keyword args to sqlite3.connect when establishing
 #  database conenctions.
@@ -423,6 +424,7 @@ c.HistoryManager.db_log_output = True
 #------------------------------------------------------------------------------
 
 # An object to manage the profile directory and its resources.
+## An object to manage the profile directory and its resources.
 #
 #  The profile directory is used by all IPython applications, to manage
 #  configuration, logging and security.
@@ -471,6 +473,17 @@ c.HistoryManager.db_log_output = True
 
 #
 # c.BaseFormatter.type_printers = {}
+#
+#c.BaseFormatter.deferred_printers = {}
+
+#
+#c.BaseFormatter.enabled = True
+
+#
+#c.BaseFormatter.singleton_printers = {}
+
+#
+#c.BaseFormatter.type_printers = {}
 
 #------------------------------------------------------------------------------
 # PlainTextFormatter(BaseFormatter) configuration
@@ -503,6 +516,10 @@ c.HistoryManager.db_log_output = True
 
 # Truncate large collections (lists, dicts, tuples, sets) to this size.
 #
+#c.PlainTextFormatter.float_precision = ''
+
+# Truncate large collections (lists, dicts, tuples, sets) to this size.
+#
 #  Set to 0 to disable truncation.
 c.PlainTextFormatter.max_seq_length = 100
 
@@ -517,6 +534,16 @@ c.PlainTextFormatter.pprint = True
 
 #
 # c.PlainTextFormatter.verbose = False
+c.PlainTextFormatter.max_width = 100
+
+#
+c.PlainTextFormatter.newline = '\n'
+
+#
+c.PlainTextFormatter.pprint = True
+
+#
+#c.PlainTextFormatter.verbose = False
 
 #------------------------------------------------------------------------------
 # Completer(Configurable) configuration

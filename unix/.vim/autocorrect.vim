@@ -714,7 +714,7 @@ iab Thigsn Things
 iab Thisyear This Year
 iab Thme Them
 iab Thna Than
-iab Thna Than 
+iab Thna Than
 iab Thne Then
 iab Thnigs Things
 iab Thnig Thing
@@ -773,7 +773,7 @@ iab Wherre Where
 iab Whic Which
 iab Whihc Which
 iab Whta What
-iab Whta What 
+iab Whta What
 iab Wief Wife
 iab Wierd Weird
 iab Wihch Which
@@ -1528,7 +1528,7 @@ iab thigsn things
 iab thisyear this year
 iab thme them
 iab thna than
-iab thna than 
+iab thna than
 iab thne then
 iab thnigs things
 iab thnig thing
@@ -1587,7 +1587,7 @@ iab wherre where
 iab whic which
 iab whihc which
 iab whta what
-iab whta what 
+iab whta what
 iab wief wife
 iab wierd weird
 iab wihch which

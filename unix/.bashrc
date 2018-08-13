@@ -2,6 +2,7 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
+# All: {{{ 1
 # Don't run if not interactive: {{{
 case $- in
     *i*);;
@@ -66,7 +67,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color*) color_prompt=yes;;
+    xterm-color) color_prompt=yes;;
 esac
 
 # }}}
@@ -121,8 +122,7 @@ if [ "$color_prompt" = yes ]; then
 	}
 fi
 
-unset color_prompt force_color_prompt tmp_ps1
-
+unset color_prompt force_color_prompt
 # }}}
 
 # Vim: {{{
@@ -150,20 +150,23 @@ if [ -d "$HOME/.nvm" ]; then
 fi
 # }}}
 
-# FZF: {{{
+# FZF:{{{
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
 # spice fzf up with ripgrep
-if [[ "$(command -v rg)" ]]; then
-    export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 5 .'
+if [[ "$(command -v ag)" ]]; then
+    export FZF_DEFAULT_COMMAND='ag --count --hidden -smart-case --max-count 10'
+else [[ "$(command -v rg)" ]]; then
+    export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
 fi
 
 export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
 
 bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
+# TODO: add one for enter
 # }}}
 
 # Python: {{{
@@ -226,4 +229,6 @@ unset -v config
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
+# }}}
+
 # }}}

@@ -11,6 +11,7 @@ if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
+" let's have these share a directory since i don't use different plugins
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -25,10 +26,10 @@ Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
 "Plug 'SirVer/ultisnips'  ultisnips set a file priority to -50 and it keeps crashing
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 Plug 'plytophogy/vim-virtualenv', { 'for': ['python', 'python3'] }
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
@@ -37,6 +38,7 @@ call plug#end()
 " }}}
 
 " Nvim Specific: {{{ 2
+set background=dark
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
@@ -45,10 +47,8 @@ if filereadable(glob('~/.config/nvim/autocorrect.vim'))
 endif
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
-set background=dark
-colorscheme gruvbox
 " }}}
-"
+
 " Filetype Specific Options: {{{ 2
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
@@ -70,10 +70,11 @@ set softtabstop=4
 let g:python_highlight_all = 1
 " }}}
 
-" Syntax Highlighting: {{{ 3
-if has('syntax')                    " if we can have syntax recognition
-    syntax on                       " this has to come after the colorscheme
-endif
+" Folds: {{{ 3
+set foldenable
+set foldlevelstart=10               " Enables most folds
+set foldnestmax=5                   " Why would anything be folded this much
+set foldmethod=marker
 " }}}
 
 " Buffers Windows Tabs: {{{ 3
@@ -113,11 +114,12 @@ set spellsuggest=5
 map <Leader>s :setlocal spell!<CR>
 " }}}
 
-" Folds: {{{ 3
-set foldenable
-set foldlevelstart=10                   " Enables most folds
-set foldnestmax=10                      " Why would anything be folded this much
-set foldmethod=marker
+" Fun With Clipboards: {{{ 3
+if has('unnamedplus')           " Use the system clipboard.
+  set clipboard+=unnamed,unnamedplus
+else                            " Accomodate Termux
+  set clipboard+=unnamed
+endif
 " }}}
 
 " Other Global Options: {{{ 3
@@ -146,28 +148,11 @@ set whichwrap+=<,>,h,l,[,]      " Give reasonable line wrapping behaviour
 set nojoinspaces
 " }}}
 
-" Buffers Windows Tabs: {{{ 3
-try
-  set switchbuf=useopen,usetab,newtab
-  set showtabline=2
-catch
-endtry
-set hidden
-set splitbelow
-set splitright
-" }}}
-
-" Fun With Clipboards: {{{ 3
-if has('unnamedplus')           " Use the system clipboard.
-  set clipboard+=unnamed,unnamedplus
-else                            " Accomodate Termux
-  set clipboard+=unnamed
-endif
 " }}}
 
 " Mappings: {{{ 2
 
-" Global Mappings: {{{ 3
+" General Mappings: {{{ 3
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -181,15 +166,17 @@ inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
 nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
 noremap <F9> :e $MYVIMRC<CR>
+" }}}
+
 " Terminal: {{{ 3
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " }}}
+
 " pyls: {{{ 3
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-" }}}
 " }}}
 " }}}
 
@@ -236,7 +223,7 @@ let g:rg_command = '
     \ -g "!*.{min.js,swp,o,zip}" \ -g "!{.git,node_modules,vendor}/*" '
 let g:fd_command = 'fd'
 let g:ag_command = 'ag --smart-case --hidden'
-command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* F call fzf#vim#grep(g:ag_command .shellescape(<q-args>), 1, <bang>0)
 " could also use set grepprg here
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " }}}
@@ -248,18 +235,18 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
-let g:NERDTreeChDirMode = 2             " change cwd every time NT root changes
+let g:NERDTreeNaturalSort = 1                       " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
+let g:NERDTreeChDirMode = 2                         " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
-let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
-let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
-let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
+let g:NERDTreeMouseMode = 2                         " Open dirs with 1 click files with 2
+let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
+let g:NERDTreeRespectWildIgnore = 1                 " yeah i meant those ones too
 " }}}
 
 " NERDCom: {{{ 3
-let g:NERDSpaceDelims = 1                   " can we give the code some room to breathe?
-let g:NERDDefaultAlign = 'left'             " Align line-wise comment delimiters flush left
-let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when uncommenting
+let g:NERDSpaceDelims = 1                           " can we give the code some room to breathe?
+let g:NERDDefaultAlign = 'left'                     " Align line-wise comment delimiters flush left
+let g:NERDTrimTrailingWhitespace = 1                " Trim trailing whitespace when uncommenting
 " }}}
 
 " Jedi: {{{ 3
@@ -284,23 +271,23 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
-" Flake8, Ale and Gruvbox: {{{ 3
+" Flake8 Ale Gruvbox: {{{ 3
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_in_gutter=1
 " Ale:
 " https://github.com/w0rp/ale
-nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ], }
+nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
-let g:ale_set_signs = 1 " what is the default
 let g:ale_python_flake8_options = '--config ~/.config/flake8'
+let g:ale_set_signs = 1                             " what is the default
 
 " Gruvbox:
-"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
+" https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 " TODO: syntax is wrong but the idea is to run check before eval
 " if &colorscheme=gruvbox
 let g:gruvbox_contrast_dark = 'hard'
@@ -312,12 +299,11 @@ if has('python3')
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
     endif
-
     " Desktop
     if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
         let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
     endif
-
+    " Let nvim/ale check out the virtualenvs and source the right files
     if isdirectory("$HOME/virtualenvs")
         let g:ale_virtualenv_dir_names+="virtualenvs"
     else
@@ -355,5 +341,16 @@ let g:startify_session_sort = 1
 let g:virtualenv_directory = '~/virtualenvs'
 let g:virtualenv_auto_activate = 1
 " }}}
+
 " }}}
+
+" Speed up init by saving syntax /colo for last: {{{ 2
+colorscheme gruvbox
+" Syntax Highlighting: {{{ 3
+if has('syntax')                    " if we can have syntax recognition
+    syntax on                       " this has to come after the colorscheme
+endif
+" }}}
+" }}}
+
 " }}}

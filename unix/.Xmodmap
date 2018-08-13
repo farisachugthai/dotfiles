@@ -1,16 +1,17 @@
 !
 ! This is an `xmodmap' input file for 
-!   PC 102 key, thin Delete, tall Enter (XFree86; United Kingdom) keyboards.
-! Automatically generated on Mon Jun 11 23:53:31 2018 by faris with
+!   PC 105 key, wide Delete, tall Enter (XFree86; US) keyboards.
+! Automatically generated on Mon Jun 11 10:44:05 2018 by faris with
 ! XKeyCaps 2.47; Copyright (c) 1991-1999 Jamie Zawinski; 2005-2006 Christoph Berg.
 ! http://www.jwz.org/xkeycaps/
 !
 ! This file presupposes that the keyboard is in the default state, and
 ! may malfunction if it is not.
 !
-remove Lock    = Caps_Lock
 remove Control = Control_R
 remove Mod1    = Alt_R
+remove Mod4    = Meta_L Meta_R
+remove Mod5    = Scroll_Lock
 
 keycode 0x09 =	Escape	NoSymbol	Escape	NoSymbol	Escape
 keycode 0x43 =	F1	F1	F1	F1	F1	F1	XF86Switch_VT_1
@@ -41,7 +42,6 @@ keycode 0x12 =	9	parenleft	9	parenleft	9	parenleft
 keycode 0x13 =	0	parenright	0	parenright	0	parenright
 keycode 0x14 =	minus	underscore	minus	underscore	minus	underscore
 keycode 0x15 =	equal	plus	equal	plus	equal	plus
-keycode 0x33 =	backslash	bar	backslash	bar	backslash	bar
 keycode 0x16 =	BackSpace	BackSpace	BackSpace	BackSpace	BackSpace	BackSpace
 keycode 0x6A =	KP_Divide	KP_Divide	KP_Divide	KP_Divide	KP_Divide	KP_Divide	XF86Ungrab
 keycode 0x61 =	NoSymbol
@@ -83,6 +83,7 @@ keycode 0x2D =	k	K	k	K	k	K
 keycode 0x2E =	l	L	l	L	l	L
 keycode 0x2F =	semicolon	colon	semicolon	colon	semicolon	colon
 keycode 0x30 =	apostrophe	quotedbl	apostrophe	quotedbl	apostrophe	quotedbl
+keycode 0x33 =	backslash	bar	backslash	bar	backslash	bar
 keycode 0x53 =	KP_Left	KP_4	KP_Left	KP_4	KP_Left	KP_4
 keycode 0x54 =	KP_Begin	KP_5	KP_Begin	KP_5	KP_Begin	KP_5
 keycode 0x55 =	KP_Right	KP_6	KP_Right	KP_6	KP_Right	KP_6
@@ -105,9 +106,12 @@ keycode 0x58 =	KP_Down	KP_2	KP_Down	KP_2	KP_Down	KP_2
 keycode 0x59 =	KP_Next	KP_3	KP_Next	KP_3	KP_Next	KP_3
 keycode 0x6C =	Alt_R	Meta_R	Alt_R	Meta_R	Alt_R	Meta_R
 keycode 0x25 =	Control_L	NoSymbol	Control_L	NoSymbol	Control_L
+keycode 0x73 =	End	NoSymbol	End	NoSymbol	End
 keycode 0x40 =	Alt_L	Meta_L	Alt_L	Meta_L	Alt_L	Meta_L
 keycode 0x41 =	space	NoSymbol	space	NoSymbol	space
 keycode 0x71 =	Left	NoSymbol	Left	NoSymbol	Left
+keycode 0x74 =	Down	NoSymbol	Down	NoSymbol	Down
+keycode 0x75 =	Next	NoSymbol	Next	NoSymbol	Next
 keycode 0x6D =	Linefeed	NoSymbol	Linefeed	NoSymbol	Linefeed
 keycode 0x64 =	Henkan_Mode	NoSymbol	Henkan_Mode	NoSymbol	Henkan_Mode
 keycode 0x68 =	KP_Enter	NoSymbol	KP_Enter	NoSymbol	KP_Enter
@@ -117,6 +121,5 @@ keycode 0x5B =	KP_Delete	KP_Decimal	KP_Delete	KP_Decimal	KP_Delete	KP_Decimal
 
 add    Control = Control_L Control_R
 add    Mod1    = Alt_R 0x00CD
-add    Mod2    = Num_Lock
 add    Mod4    = Super_L Super_R 0x00CE 0x00CF
 add    Mod5    = ISO_Level3_Shift Mode_switch

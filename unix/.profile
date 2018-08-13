@@ -2,17 +2,14 @@
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
 
+# All: {{{
+
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Ruby: {{{
-# This is gonna need a for loop soon.
 if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
-fi
-
-if [[ -d ~/.gem/ruby/2.6.0/bin ]]; then
-    export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
 fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -54,12 +51,15 @@ export PAGER="less -JR"
 export MANPAGER="less -R"
 
 # Allow a color terminal. Oddly it seems like Konsole sets this for us.
-export COLORTERM="colorterm"
+export COLORTERM="truecolor"
 
 # These are the defaults but for the sake of being explicit rather than implicit
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+# dropping these but don't use them yet
+# export XDG_CONFIG_DIRS="/etc/xdg"
+# export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -95,8 +95,15 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
 # }}}
 
+# Sourced files: {{{
+export TMUXP_CONFIGDIR='$HOME/.tmux'
+export DOT="$HOME/projects/dotfiles/unix" # save time getting to dot repo
 
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then
     source "$HOME/.bashrc"
 fi
+
+# }}}
+
+# }}}

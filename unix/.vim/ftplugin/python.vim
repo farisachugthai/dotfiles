@@ -11,45 +11,52 @@ let g:python_highlight_all = 1
 
 setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
 
+" Highlight characters after 120 chars
+augroup vimrc_autocmds
+    autocmd!
+    autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
+    autocmd FileType python match Excess /\%120v.*/
+    autocmd FileType python set nowrap
+augroup END
+
+
+" Uncomment to free up the main init.vim
+" =============================================================
 " Admittedly the following is stuff from the nvimrc that only focused on
 " python and really didn't need to be in the main file
-"
 
 " Jedi:
-let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
-let g:jedi#popup_on_dot = 1                 " 'import'. slows things down too much
-let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
-let g:jedi#completions_enabled = 0          " we all know they based their work off you anyway
-
-
-
+" let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
+" let g:jedi#popup_on_dot = 1                 " 'import'. slows things down too much
+" let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
+" let g:jedi#completions_enabled = 0          " we all know they based their work off you anyway
 
 " Pyls:
-if has('python3')
-    if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
-        let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
-    endif
+" if has('python3')
+"     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
+"         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
+"     endif
 
-    " Something like if has($VIRTUAL_ENV) evaluates to 0 but we could also
-    " try something like that
-    if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
-        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
-    endif
-endif
+"     " Something like if has($VIRTUAL_ENV) evaluates to 0 but we could also
+"     " try something like that
+"     if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
+"         let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
+"     endif
+" endif
 
 " Language Servers:
-let g:LanguageClient_serverCommands = { 'python': ['pyls'] }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_selectionUI = 'fzf'
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-set omnifunc=LanguageClient#complete
-set completefunc=LanguageClient#complete
-
+" let g:LanguageClient_serverCommands = { 'python': ['pyls'] }
+" let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_selectionUI = 'fzf'
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" set omnifunc=LanguageClient#complete
+" set completefunc=LanguageClient#complete
 
 " Below is the global ftplugin for python for context
+" =====================================================
 "
 " Directly below are things I wanna incorporate
 "
@@ -69,20 +76,14 @@ set completefunc=LanguageClient#complete
 " let b:next_end='\v\S\n*(%$\|^(\s*\n*)*(class\|def\|async def)\|^\S)'
 " let b:prev_end='\v\S\n*(^(\s*\n*)*(class\|def\|async def)\|^\S)'
 
-
-
+" Text objects
+" =====================================================
 " I feel like i would learn word text objects so much faster if i knew
 " thethings that vim counted as a text object in the language i care about ya
 " know
 "
 "btw be careful with these i had to demolish the quotes to make sure that they
 " were commented out. just go to /usr/share/nvim/runtime/ftplugin/python.vim
-
-
-
-
-
-
 
 " " execute 'nnoremap <silent> <buffer> ]] :call <SID>Python_jump('n', ''. b:next_toplevel.'', 'W', v:count1)<cr>'
 " " execute 'nnoremap <silent> <buffer> [[ :call <SID>Python_jump('n', ''. b:prev_toplevel.'', 'Wb', v:count1)<cr>'
@@ -113,6 +114,7 @@ set completefunc=LanguageClient#complete
 
 
 " So can we incorporate pydoc3?
+" =====================================================
 
 " First time: try finding pydoc
 " if !exists('g:pydoc_executable')
@@ -130,15 +132,12 @@ set completefunc=LanguageClient#complete
 " let &cpo = s:keepcpo
 " unlet s:keepcpo
 
-
-
-
-
-" " Vim filetype plugin file
-" " Language:	python
-" " Maintainer:	Tom Picton <tom@tompicton.co.uk>
-" " Previous Maintainer: James Sully <sullyj3@gmail.com>
-" " Previous Maintainer: Johannes Zellner <johannes@zellner.org>
+" Vim filetype plugin file
+" ====================================================
+" Language:	python
+" Maintainer:	Tom Picton <tom@tompicton.co.uk>
+" Previous Maintainer: James Sully <sullyj3@gmail.com>
+" Previous Maintainer: Johannes Zellner <johannes@zellner.org>
 " " Last Change:	Sun, 15 April 2018
 " " https://github.com/tpict/vim-ftplugin-python
 

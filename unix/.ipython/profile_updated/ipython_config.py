@@ -168,7 +168,7 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #c.InteractiveShell.autocall = 0
 
 ## Autoindent IPython code entered interactively.
-c.InteractiveShell.autoindent = True
+#c.InteractiveShell.autoindent = True
 
 ## Enable magic commands to be called without the leading %.
 #c.InteractiveShell.automagic = True
@@ -203,13 +203,13 @@ c.InteractiveShell.colors = 'Linux'
 
 ## If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-c.InteractiveShell.display_page = True
+#c.InteractiveShell.display_page = False
 
 ## (Provisional API) enables html representation in mime bundles sent to pagers.
 #c.InteractiveShell.enable_html_pager = False
 
 ## Total length of command history
-c.InteractiveShell.history_length = 100000
+#c.InteractiveShell.history_length = 10000
 
 ## The number of saved history entries to be loaded into the history buffer at
 #  startup.
@@ -294,7 +294,7 @@ c.TerminalInteractiveShell.display_completions = 'multicolumn'
 c.TerminalInteractiveShell.editing_mode = 'vi'
 
 ## Set the editor used by IPython (default to $EDITOR/vi/notepad).
-c.TerminalInteractiveShell.editor = 'nvim'
+#c.TerminalInteractiveShell.editor = 'nvim'
 
 ## Allows to enable/disable the prompt toolkit history search
 #c.TerminalInteractiveShell.enable_history_search = True
@@ -316,7 +316,7 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 ## The name or class of a Pygments style to use for syntax
 #         highlighting: 
 #  default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc, pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor, paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
-c.TerminalInteractiveShell.highlighting_style =  monokai
+#c.TerminalInteractiveShell.highlighting_style = traitlets.Undefined
 
 ## Override highlighting format for specific tokens
 #c.TerminalInteractiveShell.highlighting_style_overrides = {}
@@ -339,7 +339,7 @@ c.TerminalInteractiveShell.highlighting_style =  monokai
 #c.TerminalInteractiveShell.simple_prompt = False
 
 ## Number of line at the bottom of the screen to reserve for the completion menu
-c.TerminalInteractiveShell.space_for_menu = 6
+#c.TerminalInteractiveShell.space_for_menu = 6
 
 ## Automatically set the terminal title
 #c.TerminalInteractiveShell.term_title = True
@@ -366,14 +366,14 @@ c.TerminalInteractiveShell.true_color = True
 #  
 #  These options are passed as keyword args to sqlite3.connect when establishing
 #  database connections.
-c.HistoryAccessor.connection_options = {}
+#c.HistoryAccessor.connection_options = {}
 
 ## enable the SQLite history
 #  
 #  set enabled=False to disable the SQLite history, in which case there will be
 #  no stored history, no SQLite connection, and no background saving thread.
 #  This may be necessary in some threaded environments where IPython is embedded.
-c.HistoryAccessor.enabled = True
+#c.HistoryAccessor.enabled = True
 
 ## Path to file to use for SQLite history database.
 #  
@@ -399,7 +399,7 @@ c.HistoryAccessor.enabled = True
 
 ## Write to database every x commands (higher values save disk access & power).
 #  Values of 1 or less effectively disable caching.
-c.HistoryManager.db_cache_size = 20
+#c.HistoryManager.db_cache_size = 0
 
 ## Should the history database include output? (default: no)
 c.HistoryManager.db_log_output = True
@@ -527,7 +527,7 @@ c.PlainTextFormatter.max_width = 100
 ## Experimental: restrict time (in milliseconds) during which Jedi can compute
 #  types. Set to 0 to stop computing types. Non-zero value lower than 100ms may
 #  hurt performance by preventing jedi to build its cache.
-c.Completer.jedi_compute_type_timeout = 400
+#c.Completer.jedi_compute_type_timeout = 400
 
 ## Experimental: Use Jedi to generate autocompletions. Default to True if jedi is
 #  installed
