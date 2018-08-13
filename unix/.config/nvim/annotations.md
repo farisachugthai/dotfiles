@@ -1,4 +1,27 @@
-# Scratchpad
+# Annotations
+
+## TODO:
+
+For 08-12-18
+
+Add in i3.vim into syntax and ftdetect [check them out from termux branch]
+
+use curl to get juneguun's vim profiling script, then rework it so it works for
+you
+
+  - also that'll allow you to check that the curlrc you checked out from
+    termux works
+
+then roll through init.vim and get yours to generally kinda match termux's.
+don't sweat it too much if it really isn't that similar.
+
+then go to gdrive and make the mods that you wrote down in there.
+
+and then possibly use :Glog or something to ensure that you didn't wipe out any
+historical changes because there's a bunch of shit missing tmk.
+
+Just way easier to fix it here than on my phone.
+
 
 ## Plugins
 =======
@@ -27,79 +50,10 @@ function! StartJedi()
     augroup END
 endfunction
 
-### Deoplete
-
-
-" Remove this if you'd like to use fuzzy search
-"call deoplete#custom#source(
-"\ 'dictionary', 'matchers', ['matcher_head'])
-
-"" If dictionary is already sorted, no need to sort it again.
-"call deoplete#custom#source(
-"\ 'dictionary', 'sorters', [])
-
-
-" load deop and ultisnips after entering insert mode. note plugin confs for
-" loading deop after first enter. redundant?
-" augroup load_us_deop
-"     autocmd!
-"     autocmd InsertEnter * call plug#load('ultisnips', 'deoplete'
-"                 \| autocmd! load_us_deop)
-" augroup END
-
-" Deoplete: {{{
-"" disable autocomplete by default
-let g:deoplete_disable_auto_complete = 1
-let g:deoplete#enable_smart_case = 1
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-"" Autoselect feature
-set completeopt+=noinsert
-
-let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
-autocmd InsertEnter * call deoplete#enable()    " if i enter insert mode go for it
-call deoplete#custom#option('smart_case', v:true)
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
-endfunction
-
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-"" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" Enable jedi source debug messages
-" call deoplete#custom#option('profile', v:true)
-" call deoplete#enable_logging('DEBUG', 'deoplete.log')
-"Note: You must enable
-"|deoplete-source-attribute-is_debug_enabled| to debug the
-"sources.
-" call deoplete#custom#source('jedi', 'is_debug_enabled', 1)
-
-"" Do not complete too short words
-call deoplete#custom#source(
-\ 'dictionary', 'min_pattern_length', 4)
-
-" Collect keywords from buffer path not directory Nvim was launched from
-call deoplete#custom#source(
-\ 'file', 'enable_buffer_path', 'True')
-
-" Setting up the omnifuncs
-set omnifunc=LanguageClient#complete
-
-autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
-" }}}
 
 ### More options
+
+{ Still kinda related to deoplete / pyls}
 
 " Termux's hardcoded python interpreter
     " if executable('$PREFIX/bin/python')
@@ -118,39 +72,82 @@ else
     let g:python3_host_prog = '$HOME/virtualenvs/nvim/bin/python3'
 endif
 
-## compiler fxn
+### lightline
+
+" Lightline: {{{
+let g:lightline = {
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'fugitive#head',
+    \   'filetype': 'MyFiletype',
+    \   'fileformat': 'MyFileformat',
+    \ },
+    \ }
+
+
+" function! MyFiletype()
+"     return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+" endfunction
+
+
+" function! MyFileformat()
+"     return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+" endfunction
+
+" let g:lightline.colorscheme = 'seoul256'
+" " }}}
+
+## functions
+
+### compilers
 
 Now out of curiosity would this go in .config/nvim/compilers?
 
-" Compiler Func: {{{
-" All in one compiler. Gonna rewrite to make my own
-" map <F5> :call CompileRunGcc()<CR>
-" func! CompileRunGcc()
-"     exec "w"
-"     if &filetype == 'c'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'cpp'
-"         exec "!g++ % -o %<"
-"         exec "!time ./%<"
-"     elseif &filetype == 'java'
-"         exec "!javac %"
-"         exec "!time java %<"
-"     elseif &filetype == 'sh'
-"         :!time bash %
-"     elseif &filetype == 'python'
-"         exec "!time python2.7 %"
-"     elseif &filetype == 'html'
-"         exec "!firefox % &"
-"     elseif &filetype == 'go'
-"         exec "!go build %<"
-"         exec "!time go run %"
-"     elseif &filetype == 'mkd'
-"         exec "!~/.vim/markdown.pl % > %.html &"
-"         exec "!firefox %.html &"
-"     endif
-" endfunc
-" }}}
+Compiler Func: {{{
+All in one compiler. Gonna rewrite to make my own
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        exec "!time python2.7 %"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
+    elseif &filetype == 'go'
+        exec "!go build %<"
+        exec "!time go run %"
+    elseif &filetype == 'mkd'
+        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!firefox %.html &"
+    endif
+endfunc
+}}}
+
+
+### ALE
+
+
+function! LinterStatus() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  return l:counts.total == 0 ? '' : printf( '%dW %dE', l:all_non_errors, l:all_errors )
+endfunction
 
 
 ## Diff between nvim and vim
@@ -201,13 +198,13 @@ Undodir is in the wrong spkt.
 ## VimScript Struggles
 
 " don't know what i'm doing wrong here but only recently started learning viml
-"if g:textwidth == 0             " Basically saying is it ever unset? Set it 100
-    "setlocal colorcolumn = 100
-"elseif                          " how do we check that a variable is set to a non-zero integer?
-    "setlocal colorcolumn+=1
-"else                            " Don't actually think this part does anything?
-    "setlocal colorcolumn=+1
-"endif
+if g:textwidth == 0             " Basically saying is it ever unset? Set it 100
+   "setlocal colorcolumn = 100
+elseif                          " how do we check that a variable is set to a non-zero integer?
+   "setlocal colorcolumn+=1
+else                            " Don't actually think this part does anything?
+   "setlocal colorcolumn=+1
+endif
 
 ### Vimscript making syscalls
 
@@ -220,21 +217,21 @@ Was originally after the sys curl  call to download vimplug and above the endif
 ## Fun with clipboards
 
 
-" fun trick from he provider. Before i uncomment, how do i check if I'm in
-" tmux? lol just run py3 import vim, os; py3 if os.environ.get('TMUX'):
-" let g:clipboard = {
-"           \   'name': 'myClipboard',
-"           \   'copy': {
-"           \      '+': 'tmux load-buffer -',
-"           \      '*': 'tmux load-buffer -',
-"           \    },
-"           \   'paste': {
-"           \      '+': 'tmux save-buffer -',
-"           \      '*': 'tmux save-buffer -',
-"           \   },
-"           \   'cache_enabled': 1,
-"           \ }
+fun trick from he provider. Before i uncomment, how do i check if I'm in
+tmux? lol just run py3 import vim, os; py3 if os.environ.get('TMUX'):
+let g:clipboard = {
+          \   'name': 'myClipboard',
+          \   'copy': {
+          \      '+': 'tmux load-buffer -',
+          \      '*': 'tmux load-buffer -',
+          \    },
+          \   'paste': {
+          \      '+': 'tmux save-buffer -',
+          \      '*': 'tmux save-buffer -',
+          \   },
+          \   'cache_enabled': 1,
+          \ }
 
-" If `cache_enabled` is |TRUE| then when a selection is copied, Nvim will cache
-" the selection until the copy command process dies. When pasting, if the copy
-" process has not died, the cached selection is applied.
+If `cache_enabled` is |TRUE| then when a selection is copied, Nvim will cache
+the selection until the copy command process dies. When pasting, if the copy
+process has not died, the cached selection is applied.

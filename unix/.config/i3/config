@@ -6,8 +6,9 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Roboto Sans Mono 14
-font pango: Noto Sans 14
+# font pango:Roboto Sans Mono 14
+font pango:Fira Code 14
+# font pango:Noto Sans 14
 
 # yo lemme keep trying to give you help on fonts
 #font pango:DejaVu Sans Mono 10
@@ -16,7 +17,7 @@ font pango: Noto Sans 14
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 14
+# font pango:DejaVu Sans Mono 14
 
 # Before i3 v4.8, we used to recommend this one as the default:
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -29,9 +30,9 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 floating_modifier $mod
 
 bindsym $mod+Return exec kitty
-bindsym $mod+u+Return exec urxvt
-bindsym $mod+k+Return exec konsole
-bindsym $mod+m+Return exec mate-terminal
+# bindsym $mod+u+Return exec urxvt
+# bindsym $mod+k+Return exec konsole
+# bindsym $mod+m+Return exec mate-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -101,12 +102,6 @@ bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -188,12 +183,12 @@ bindsym $mod+Shift+Escape exec "Mate System Monitor"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	colors {
+    colors {
         background #2f343f
         statusline #2f343f
         separator #4b5262
 
-		# colour of border, background, and text
+        # colour of border, background, and text
         focused_workspace	#2f343f	#bf616a	#d8dee8
         active_workspace	#2f343f	#2f343f	#d8dee8
         inactive_workspace	#2f343f	#2f343f	#d8dee8
@@ -204,11 +199,11 @@ bar {
 
 # genuinely taking everything from this guy.
 # window rules, you can find the window class using xprop
-for_window [class=".*"] border pixel 4
-assign [class=URxvt|kitty|alacritty|Konsole|Terminology|Parrot Terminal|MATE Terminal|Guake|Yakuake|tmux] 1
-assign [class=Firefox|nvim|Neovim|GVim|Vim] 2
-assign [class=Dolphin|Caja|Thunar|File-roller] 3
-for_window [class=URxvt|Firefox|Vlc|] focus
+# for_window [class=".*"] border pixel 4
+# assign [class=URxvt|kitty|alacritty|Konsole|Terminology|Parrot Terminal|MATE Terminal|Guake|Yakuake|tmux] 1
+# assign [class=Firefox|nvim|Neovim|GVim|Vim] 2
+# assign [class=Dolphin|Caja|Thunar|File-roller] 3
+# for_window [class=URxvt|Firefox|Vlc|] focus
 
 # colour of border, background, text, indicator, and child_border
 client.focused			#bf616a #2f343f #d8dee8 #bf616a #d8dee8

@@ -1,7 +1,7 @@
 " vimrc
 " Maintainer: Faris Chugthai
 
-" Full fold: {{{1
+" All: {{{ 1
 " Gonna start seriously consolidating vimrc and init.vim this is so hard
 " to maintain
 " Let's setup all the global vars we need
@@ -14,11 +14,11 @@ else
     let g:root = '~/.vim'
     let g:conf = '~/.vim/vimrc'
 endif
-" Vim-plug {{{2
+" Vim Plug: {{{ 2
 " use curl because A) the --create-dirs option is nice and B) why make them
 " different in your init and vimrc?
 if !filereadable('~/.vim/autoload/plug.vim')
-    call system('curl -o ~/.vim/autoload/plug.vim
+    call system('curl -o ~/.vim/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
 
@@ -26,35 +26,45 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdTree',
+Plug 'scrooloose/nerdTree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-markdown', { 'for': ['md', 'markdown'] }
 Plug 'ryanoasis/vim-devicons'
-Plug 'autozimu/LanguageClient-neovim', {'do': 'bash install.sh'}
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
+    \ 'do': 'bash install.sh' }
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'plytophogy/vim-virtualenv'
+Plug 'vim-airline/vim-airline'
+Plug 'mhinz/vim-startify'
+" Possibly wanna wrap in an if executable() or something. possibly wanna lazy
+" load this too but idk how the ftdetect is gonna work
+"
+" Well something's not right because now ipynb files don't load at all.
+Plug 'szymonmaszke/vimpyter'
 
-if !has('nvim')
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 call plug#end()
+" }}}
 
 if filereadable(glob('~/.vim/vimrc.local'))
     source ~/.vim/vimrc.local
 endif
 
-if filereadable(glob('~/.vim/autocorrect.vim'))
-    source ~/.vim/autocorrect.vim
-endif
-
-" Filetype Specific Options:{{{2
+" Filetype Specific Options: {{{ 2
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 
@@ -64,51 +74,96 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
-" Global Options: {{{2
+
+" Global Options: {{{ 2
 " Leader:
 let g:mapleader = "\<Space>"
 
-" Viminfo:
-" At some point I should aggregate all of the !has(nvim)s together to keep
-" them at least in one spot
+" Viminfo: {{{ 3
+" TODO: At some point I should aggregate all of the !has(nvim)s together to
+" keep them at least in one spot
 " Also don't let neovim and vim use the same viminfo file
+" TODO: What is the syntax for nvim's shada file?
 if !has('nvim')
     set viminfo='100,<200,s200,n$HOME/.vim/viminfo
 endif
+" }}}
 
-" Pep8 Global Options: 
-set tabstop=8                   " show existing tab with 4 spaces width
+" Pep8 Global Options: {{{ 3
+set tabstop=4                   " show existing tab with 4 spaces width
 set shiftwidth=4                " when indenting with '>', use 4 spaces width
 set expandtab                   " On pressing tab, insert 4 spaces
 set softtabstop=4
 let g:python_highlight_all = 1
+" }}}
 
+" Syntax Highlighting: {{{ 3
+if has('syntax')                    " if we can have syntax recognition
+    syntax on                       " this has to come after the colorscheme
+endif
+" }}}
+
+" Folds: {{{ 3
+set foldenable
+set foldlevelstart=10               " Enables most folds
+set foldnestmax=5                   " Why would anything be folded this much
+set foldmethod=marker
+" }}}
+
+" Buffers Windows Tabs: {{{ 3
+try
+  set switchbuf=useopen,usetab,newtab
+  set showtabline=2
+catch
+endtry
+
+set hidden
+set splitbelow
+set splitright
+" }}}
 
 " Spell Checker:{{{3
 set encoding=utf-8
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
+set spelllang=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell                    " Autocomplete in insert mode
 set spellsuggest=5                      " Limit the number of suggestions from 'spell suggest'
-map <Leader>s :setlocal spell!<CR>
+nnoremap <Leader>s :setlocal spell!<CR>
 
 if filereadable('/usr/share/dict/words')
     set dictionary+=/usr/share/dict/words
-    " Replace the default dictionary completion with fzf-based fuzzy completion 
+    " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
 
 if filereadable('/usr/share/dict/american-english')
     set dictionary+=/usr/share/dict/american-english
 endif
+
+if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
+    set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
+endif
+
+if filereadable(glob('~/.vim/autocorrect.vim'))
+    source ~/.vim/autocorrect.vim
+endif
 " }}}
 
-" Folds:
-set foldenable
-set foldlevelstart=10               " Enables most folds
-set foldnestmax=5                   " Why would anything be folded this much
-set foldmethod=marker
+" Fun With Clipboards: {{{ 3
+if has('unnamedplus')           " Use the system clipboard.
+  set clipboard+=unnamed,unnamedplus
+else                            " Accomodate Termux
+  set clipboard+=unnamed
+endif
 
+" Here's a new option I found out about today 08-12-18. I suppose F7 is as
+" good as any other key?
+set pastetoggle=<F7>
+" }}}
+
+" Other Global Options: {{{ 3
 set tags+=./tags,./k./tags,./*/tags      " usr_29
 set cursorline
 set cmdheight=2
@@ -127,11 +182,6 @@ set guifont='Fira\ Code\ Mono:h11'
 set path+=**        			" Make autocomplete for filenames work
 set autochdir
 set mouse=a
-if has('unnamedplus')
-  set clipboard+=unnamedplus,unnamed
-else
-  set clipboard+=unnamed
-endif
 set fileformat=unix
 set wildmenu
 set wildmode=longest,list:longest
@@ -140,61 +190,80 @@ set complete+=.,b,u,t
 set fileignorecase
 set display+=lastline
 set incsearch
-
-set history=1000
-
+set history=10000
 set sessionoptions-=options
 set noerrorbells
-"insert/delete line commands. this makes Vim seem smoother
-set ttyfast
+set ttyfast         " insert/delete line commands. this makes Vim seem smoother
 set whichwrap+=<,>,h,l,[,]
+set modeline
 
 if has('persistent_undo')
+    " TODO: if !isdirectory(~/.vim/undodir); call system(mkdir ...); endif
+    " check if that syntax is right.
+    " or just make a vim-setup.sh or vim-setup.py
     set undodir=~/.vim/undodir
     set undofile	" keep an undo file (undo changes after closing)
 endif
 set nojoinspaces
 
-if has('syntax')
-    syntax on
-endif
+"}}}
+" }}}
 
-set modeline
-"look to see if a buffer is open before opening a new one
-try
-  set switchbuf=useopen,usetab,newtab
-  set showtabline=2
-catch
-endtry
-
-set hidden
-set autoread
-set splitbelow
-set splitright
-set laststatus=2
-set tabpagemax=50
-
+" Mappings: {{{ 2
+"
+" General Mappings: {{{ 3
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+" select all text in buffer
+nnoremap <Leader>a ggVG
+" Map :NERDTreeTabsToggle to ease toggling the plugin
+nnoremap <Leader>nt <plug>NERDTreeMirrorToggle<CR>
+" f5 to run py file
+inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
+" It should be easier to get help
+nnoremap <leader>he :helpgrep<space>
+" It should also be easier to edit the config
+nnoremap <F9> :e $MYVIMRC<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <C-Left> :tabprev<CR>
+" }}}
 
+" Terminal: {{{ 3
 " If running a terminal in Vim, go into Normal mode with Esc
 tnoremap <Esc> <C-W>N
+" from he term. rewrite for fzf
+tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+" }}}
 
-" select all text in buffer 
-map <Leader>a ggVG
+" Python Language Server: {{{ 3
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" }}}
+" }}}
 
-" Map :NERDTreeTabsToggle to ease toggling the plugin
-map <Leader>n <plug>NERDTreeMirrorToggle<CR>
+" Plugin Configurations: {{{ 2
+" In nvim I think this gets loaded automatically
 " Invoke while in Vim by putting your cursor over a word and run [Leader]K
 runtime! ftplugin/man.vim
 let g:ft_man_folding_enable = 0
 set keywordprg=:Man
 
-" fzf: {{{
+" FZF: {{{ 3
+" Adapted from:
+" https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/fzf.vim
+
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
 let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
@@ -214,12 +283,27 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" Here's a ripgrep integration for ya
+" With :F you can now speed through file searches
+let g:rg_command = '
+    \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+    \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+    \ -g "!*.{min.js,swp,o,zip}" \ -g "!{.git,node_modules,vendor}/*" '
+
+let g:fd_command = 'fd'
+
+command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>), 1, <bang>0)
+
+" could also use set grepprg here
+
+let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
+
 " }}}
 
-" NERDTree: {{{
+" NERDTree: {{{ 3
 " If only NERDTree is open, close Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTreeQuitOnOpen = 1            " If only NERDTree is open, close Vim
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
@@ -231,17 +315,19 @@ let g:NERDTreeMouseMode = 2         " open dir on mouse click
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
 let g:NERDTreeRespectWildIgnore = 1
 
-" NERDCom:
+" NERDCom: {{{ 3
 let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
 " }}}
-" Jedi:
+
+" Jedi: {{{ 3
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
+" }}}
 
-" Fugitive: {{{
+" Fugitive: {{{ 3
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -256,6 +342,7 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
+" Flake8 Ale Gruvbox: {{{ 3
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_quickfix = 0
@@ -278,5 +365,60 @@ let g:LanguageClient_serverCommands = {
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1
 " }}}
+
+" Python Executables: {{{ 3
+if has('python3')
+    " Termux settings
+    if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
+        let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
+    endif
+
+    " Desktop
+    if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
+        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
+    endif
+
+    if isdirectory("$HOME/virtualenvs")
+        let g:ale_virtualenv_dir_names+="virtualenvs"
+    else
+        " so i found this in the help docs
+        " wth is the syntax for the path? have i been doing this all wrong?
+        " call mkdir($HOME . \"/tmp/foo/bar", \"p", 0700)
+    endif
+endif
 " }}}
-" Vim: set foldmethod=marker :
+
+" Language Servers: {{{ 3
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ 'sh': ['bash-language-server', 'start'],
+    \ }
+let g:LanguageClient_selectionUI = 'fzf'
+" set completefunc=LanguageClient#complete          " already set as omnifunc
+let g:LanguageClient_diagnosticsSignsMax = 10
+" }}}
+
+" Devicons: {{{ 3
+let g:webdevicons_enable = 1
+let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTree
+" }}}
+
+" Ultisnips: {{{ 3
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/snippets']
+" }}}
+
+" Vim_Startify: {{{ 3
+let g:startify_session_sort = 1
+" }}}
+
+" Virtualenvs: {{{ 3
+let g:virtualenv_directory = '~/virtualenvs'
+let g:virtualenv_auto_activate = 1
+" }}}
+
+" Deoplete: {{{
+let g:deoplete#enable_at_startup = 1
+" }}}
+
+" }}}

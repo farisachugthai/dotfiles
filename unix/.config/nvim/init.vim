@@ -4,7 +4,7 @@
 
 " All: {{{ 1
 " Vim Plug: {{{ 2
-if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
+if !filereadable('~/.vim/autoload/plug.vim')
     call system('curl -o ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 endif
@@ -13,7 +13,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdTree'
+Plug 'scrooloose/nerdTree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
@@ -30,6 +30,19 @@ Plug 'honza/vim-snippets'
 Plug 'plytophogy/vim-virtualenv'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
+" Possibly wanna wrap in an if executable() or something. possibly wanna lazy
+" load this too but idk how the ftdetect is gonna work
+"
+" Well something's not right because now ipynb files don't load at all.
+Plug 'szymonmaszke/vimpyter'
+
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 call plug#end()
 " }}}
@@ -37,9 +50,6 @@ call plug#end()
 " Nvim Specific: {{{ 2
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
-endif
-if filereadable(glob('~/.config/nvim/autocorrect.vim'))
-    source ~/.config/nvim/autocorrect.vim
 endif
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
@@ -98,29 +108,41 @@ set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
+set spellsuggest=5
+nnoremap <Leader>s :setlocal spell!<CR>
+
 " Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
-    setlocal dictionary='/usr/share/dict/words'
+    set dictionary='/usr/share/dict/words'
     " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
+
 if filereadable('/usr/share/dict/american-english')
-    setlocal dictionary+=/usr/share/dict/american-english
+    set dictionary+=/usr/share/dict/american-english
 endif
+
 if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
 endif
-set complete+=kspell
-set spellsuggest=5
-nnoremap <Leader>s :setlocal spell!<CR>
+
+if filereadable(glob('~/.config/nvim/autocorrect.vim'))
+    source ~/.config/nvim/autocorrect.vim
+endif
 " }}}
 
-" Folds: {{{ 3
-set foldenable
-set foldlevelstart=10                   " Enables most folds
-set foldnestmax=10                      " Why would anything be folded this much
-set foldmethod=marker
+" Fun With Clipboards: {{{ 3
+if has('unnamedplus')           " Use the system clipboard.
+  set clipboard+=unnamed,unnamedplus
+else                            " Accomodate Termux
+  set clipboard+=unnamed
+endif
+
+" Here's a new option I found out about today 08-12-18. I suppose F7 is as
+" good as any other key?
+set pastetoggle=<F7>
 " }}}
+
 " Other Global Options: {{{ 3
 set tags+=./tags,./../tags,./*/tags     " usr_29
 set background=dark
@@ -146,29 +168,11 @@ set fileignorecase
 set whichwrap+=<,>,h,l,[,]              " Give reasonable line wrapping behaviour
 set nojoinspaces
 " }}}
-
-" Buffers Windows Tabs: {{{ 3
-try
-  set switchbuf=useopen,usetab,newtab
-  set showtabline=2
-catch
-endtry
-
-set hidden
-set splitbelow
-set splitright
-" }}}
-
-" Fun With Clipboards: {{{ 3
-if has('unnamedplus')           " Use the system clipboard.
-  set clipboard+=unnamed,unnamedplus
-else                            " Accomodate Termux
-  set clipboard+=unnamed
-endif
-" }}}
 " }}}
 
 " Mappings: {{{ 2
+
+" General Mappings: {{{ 3
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -181,7 +185,12 @@ inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
 " It should be easier to get help
 nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
-noremap <F9> :e $MYVIMRC<CR>
+nnoremap <F9> :e $MYVIMRC<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <C-Left> :tabprev<CR>
+
+" what happened to that mapping i had for running a python file in visual mode
+" }}}
 
 " Terminal: {{{ 3
 tnoremap <Esc> <C-W>N
@@ -189,13 +198,13 @@ tnoremap <Esc> <C-W>N
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " }}}
 
-" pyls: {{{ 3
+" Python Language Server: {{{ 3
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 " }}}
 
-" Plugin Configuration: {{{ 2
+" Plugin Configurations: {{{ 2
 
 " FZF: {{{ 3
 " Adapted from:
@@ -236,9 +245,13 @@ let g:rg_command = '
     \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
     \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
     \ -g "!*.{min.js,swp,o,zip}" \ -g "!{.git,node_modules,vendor}/*" '
+
 let g:fd_command = 'fd'
+
 command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>), 1, <bang>0)
+
 " could also use set grepprg here
+
 let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
 " }}}
 
@@ -285,7 +298,7 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
-" Flake8, Ale and Gruvbox: {{{ 3
+" Flake8 Ale Gruvbox: {{{ 3
 " Flake8:
 " https://github.com/nvie/vim-flake8
 let g:flake8_show_in_gutter=1
@@ -337,18 +350,28 @@ let g:LanguageClient_selectionUI = 'fzf'
 " set completefunc=LanguageClient#complete          " already set as omnifunc
 let g:LanguageClient_diagnosticsSignsMax = 10
 " }}}
+
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTree
 " }}}
+
 " Ultisnips: {{{ 3
-" let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/snippets']
 " }}}
+
 " Vim_Startify: {{{ 3
 let g:startify_session_sort = 1
 " }}}
+
 " Virtualenvs: {{{ 3
 let g:virtualenv_directory = '~/virtualenvs'
 let g:virtualenv_auto_activate = 1
 " }}}
+
+" Deoplete: {{{
+let g:deoplete#enable_at_startup = 1
+" }}}
+
 " }}}

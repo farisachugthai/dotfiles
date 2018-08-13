@@ -82,6 +82,17 @@ else
     export BROWSER="firefox"
 fi
 
+# Enough vim plugins use either $TMPDIR or $TMP that this became necessary
+# Also because termux doesn't set $TMPDIR to /tmp/
+if [[ -n "$TMPDIR" ]]; then
+    TMP="$TMPDIR"
+else
+    if [[ -d "/tmp" ]]; then
+        TMPDIR="/tmp"
+        TMP="$TMPDIR"
+    fi
+fi
+
 # Set locale if it isn't explicitly stated elsewhere. Commented because locale is messed up on this workstation
 # export LC_ALL=en_US.UTF-8
 # export LANG=en_US.UTF-8                 # gathered from localectl
@@ -95,7 +106,7 @@ export CURL_HOME="$HOME/.config/curl/curlrc"
 # }}}
 
 # Rust: {{{
-if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
+if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$PATH:$HOME/.cargo/bin"; fi
 
 # }}}
 
