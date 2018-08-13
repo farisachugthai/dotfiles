@@ -14,11 +14,7 @@
 # Maintainer: Faris Chugthai
 
 # mp3
-youtube-dl \
-        -o "$HOME/storage/shared/Music/%(title)s.%(ext)s" \
-        --add-metadata --metadata-from-title "%(artist)s - %(title)s" \
-        -x --audio-format mp3 --audio-quality 0 --prefer-ffmpeg --no-mtime \
-        --embed-thumbnail --restrict-filenames $1
+youtube-dl --config-location "$HOME/.config/youtube-dl/config-mp3 $1"
 
 # mp3 playlist
 #youtube-dl \

@@ -6,11 +6,6 @@ setlocal foldlevel=2
 " All: {{{ 1
 
 " Vim Plug: {{{ 2
-if !filereadable('~/.local/share/nvim/site/autoload/plug.vim')
-    call system('curl -o ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-endif
-
 " let's have these share a directory since i don't use different plugins
 call plug#begin('~/.vim/plugged')
 
@@ -27,10 +22,10 @@ Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
-    \ 'do': 'bash install.sh' }
+"    \ 'do': 'bash install.sh' }
 "Plug 'SirVer/ultisnips'  ultisnips set a file priority to -50 and it keeps crashing
 " Plug 'honza/vim-snippets'
-Plug 'plytophogy/vim-virtualenv', { 'for': ['python', 'python3'] }
+" Plug 'plytophogy/vim-virtualenv', { 'for': ['python', 'python3'] }
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
 
@@ -73,7 +68,7 @@ let g:python_highlight_all = 1
 " Folds: {{{ 3
 set foldenable
 set foldlevelstart=10               " Enables most folds
-set foldnestmax=5                   " Why would anything be folded this much
+set foldnestmax=10                   " Why would anything be folded this much
 set foldmethod=marker
 " }}}
 
@@ -124,7 +119,6 @@ endif
 
 " Other Global Options: {{{ 3
 set tags+=./tags,./../tags,./*/tags     " usr_29
-set background=dark
 set mouse=a                             " Automatically enable mouse usage
 set cursorline
 set cmdheight=2
@@ -172,11 +166,6 @@ noremap <F9> :e $MYVIMRC<CR>
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-" }}}
-
-" pyls: {{{ 3
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 " }}}
 
@@ -254,6 +243,7 @@ let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately crea
 let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
 let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
 let g:jedi#completions_enabled = 0          " pyls
+let g:jedi#force_py_version = 3
 " }}}
 
 " Fugitive: {{{ 3
@@ -315,13 +305,13 @@ endif
 " }}}
 
 " Language Servers: {{{ 3
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start'],
-    \ }
-let g:LanguageClient_selectionUI = 'fzf'
-" set completefunc=LanguageClient#complete      already set as omnifunc
-let g:LanguageClient_diagnosticsSignsMax = 10
+" let g:LanguageClient_serverCommands = {
+"     \ 'python': ['pyls'],
+"     \ 'sh': ['bash-language-server', 'start'],
+"     \ }
+" let g:LanguageClient_selectionUI = 'fzf'
+" " set completefunc=LanguageClient#complete      already set as omnifunc
+" let g:LanguageClient_diagnosticsSignsMax = 10
 " }}}
 
 " Devicons: {{{ 3
@@ -338,19 +328,14 @@ let g:startify_session_sort = 1
 " }}}
 
 " Virtualenvs: {{{ 3
-let g:virtualenv_directory = '~/virtualenvs'
-let g:virtualenv_auto_activate = 1
+" let g:virtualenv_directory = '~/virtualenvs'
+" let g:virtualenv_auto_activate = 1
 " }}}
 
 " }}}
 
 " Speed up init by saving syntax /colo for last: {{{ 2
 colorscheme gruvbox
-" Syntax Highlighting: {{{ 3
-if has('syntax')                    " if we can have syntax recognition
-    syntax on                       " this has to come after the colorscheme
-endif
-" }}}
 " }}}
 
 " }}}

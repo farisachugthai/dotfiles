@@ -6,7 +6,14 @@
 # Based on the situation using `--config-location`
 # Be aware you can use `--no-config
 
-# mp3
+# mp3 playlist
+
+# playlist. simple as that. output template updated to reflect playlist pos
+--yes-playlist
+
+# download archive. if the script is rerun on the same playlist only download
+# new videos
+--download-archive "$HOME/storage/shared/Music/archive/%(playlist)s.txt"
 
 # Filetype
 -f mp3
@@ -15,7 +22,7 @@
 --restrict-filenames
 
 # Output location
--o "$HOME/storage/shared/Music/%(artist)s/%(title)s.%(ext)s"
+-o "$HOME/storage/shared/Music/%(artist)s/%(playlist_index)s-%(title)s.%(ext)s"
 
 # Metadata
 --add-metadata

@@ -80,12 +80,12 @@ force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x "$PREFIX/bin/tput" ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
     else
-	color_prompt=
+    color_prompt=
     fi
 fi
 
@@ -109,17 +109,17 @@ fi
 
 # Set 'man' colors
 if [ "$color_prompt" = yes ]; then
-	man() {
-	env \
-	LESS_TERMCAP_mb=$'\e[01;31m' \
-	LESS_TERMCAP_md=$'\e[01;31m' \
-	LESS_TERMCAP_me=$'\e[0m' \
-	LESS_TERMCAP_se=$'\e[0m' \
-	LESS_TERMCAP_so=$'\e[01;44;33m' \
-	LESS_TERMCAP_ue=$'\e[0m' \
-	LESS_TERMCAP_us=$'\e[01;32m' \
-	man "$@"
-	}
+    man() {
+    env \
+    LESS_TERMCAP_mb=$'\e[01;31m' \
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    man "$@"
+    }
 fi
 
 unset color_prompt force_color_prompt
@@ -159,7 +159,7 @@ fi
 # spice fzf up with ripgrep
 if [[ "$(command -v ag)" ]]; then
     export FZF_DEFAULT_COMMAND='ag --count --hidden -smart-case --max-count 10'
-else [[ "$(command -v rg)" ]]; then
+elif [[ "$(command -v rg)" ]]; then
     export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
 fi
 
@@ -173,14 +173,14 @@ bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+    __conda_setup="$('$HOME/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
     if [ $? -eq 0 ]; then
         eval "$__conda_setup"
     else
-        if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "$HOME/miniconda3/etc/profile.d/conda.sh"
         else
-            export PATH="/home/faris/miniconda3/bin:$PATH"
+            export PATH="$HOME/miniconda3/bin:$PATH"
         fi
     fi
     unset __conda_setup
