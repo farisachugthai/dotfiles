@@ -158,14 +158,16 @@ fi
 
 # spice fzf up with ripgrep
 if [[ "$(command -v ag)" ]]; then
-    export FZF_DEFAULT_COMMAND='ag --count --hidden -smart-case --max-count 10'
+    export FZF_DEFAULT_COMMAND='ag -u -smart-case -g " "'
+    export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
 elif [[ "$(command -v rg)" ]]; then
     export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
+    export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
 fi
 
-export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
-
 bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
+
+
 # TODO: add one for enter
 # }}}
 

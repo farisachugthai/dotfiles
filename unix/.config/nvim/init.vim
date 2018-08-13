@@ -23,7 +23,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
 "    \ 'do': 'bash install.sh' }
-"Plug 'SirVer/ultisnips'  ultisnips set a file priority to -50 and it keeps crashing
+" Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
 " Plug 'plytophogy/vim-virtualenv', { 'for': ['python', 'python3'] }
 Plug 'vim-airline/vim-airline'
@@ -320,7 +320,8 @@ let g:webdevicons_enable_nerdtree = 1       " adding the flags to NERDTree
 " }}}
 
 " Ultisnips: {{{ 3
-" let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/snippets']
 " }}}
 
 " Vim_Startify: {{{ 3

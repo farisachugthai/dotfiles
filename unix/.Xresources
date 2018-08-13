@@ -28,6 +28,17 @@ URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic  
 *autohint                      : true
 urxvt*font: xft:Terminus
 
+URxvt*depth:            32
+!URxvt*background:      rgba:0000/0000/0000/AAAA
+!URxvt*background:      [80]#404552
+URxvt*background:       [100]#2f343f
+URxvt*foreground:       #F8F8FF
+URxvt.underlineColor:   #4682B4
+URxvt.highlightColor:   #4682B4
+URxvt.throughColor:     Blue
+URxvt*cursorColor:      #dc8cc3
+URxvt*cursorColor2:     Black
+
 ! ------------------------------------------------------------------------------
 ! Xft Font Configuration
 ! --------------------------------------------------------------------------
@@ -258,45 +269,71 @@ dmenu.background:	        #2e3440
 dmenu.selbackground:	    #bf616a
 dmenu.foreground:	        #d8dee9
 
-! Addys config
+! ------------------------------------------------------------------------------
+! ! Espresso color scheme by Addy
+! ! Based On Mocha
+! ! ------------------------------------------------------------------------------
 !
-! ------------------------------------------------------------------------------
-! Colour Configuration
-! ------------------------------------------------------------------------------
-
+!
 ! ! special
-! *.foreground:   #d8dee8
+! *.foreground:   #f5f8f6
 ! *.background:   #2f343f
-! *.cursorColor:  #b48ead
-
+! *.cursorColor:  #dc8cc3
+!
 ! ! black
-! *.color0  : #4b5262
-! *.color8  : #434a5a
-
+! *.color0  : #5b4848
+! *.color8  : #736060
+!
 ! ! red
-! *.color1  : #bf616a
-! *.color9  : #b3555e
-
+! *.color1  : #cb6077
+! *.color9  : #e3788f
+!
 ! ! green
-! *.color2  : #a3be8c
-! *.color10 : #93ae7c
-
+! *.color2  : #bec55b
+! *.color10 : #d6ed73
+!
 ! ! yellow
-! *.color3  : #ebcb8b
-! *.color11 : #dbbb7b
-
+! *.color3  : #e4bc87
+! *.color11 : #fcd49f
+!
 ! ! blue
-! *.color4  : #81a1c1
-! *.color12 : #7191b1
-
+! *.color4  : #8ab3d5
+! *.color12 : #a2cbed
+!
 ! ! magenta
-! *.color5  : #b48ead
-! *.color13 : #a6809f
-
+! *.color5  : #a89bb9
+! *.color13 : #c0b3d1
+!
 ! ! cyan
-! *.color6  : #89d0bA
-! *.color14 : #7dbba8
-
+! *.color6  : #7bcdb4
+! *.color14 : #93e5cc
+!
 ! ! white
-! *.color7  : #e5e9f0
-! *.color15 : #d1d5dc
+! *.color7  : #e0d8d6
+! *.color15 : #f8f0ee
+
+
+! ------------------------------------------------------------------------------
+! UXTerm configs
+! ------------------------------------------------------------------------------
+
+
+! termtype
+UXTerm*termName: xterm-256color
+UXTerm*VT100.geometry:     92x16
+UXTerm*font:               M+ 1mn
+UXTerm*faceSize:		   12
+UXTerm*dynamicColors:      true
+UXTerm*utf8:               2
+UXTerm*eightBitInput:      true
+UXTerm*saveLines:          10000
+UXTerm*scrollKey:          true
+UXTerm*scrollTtyOutput:    false
+UXTerm*scrollBar:          false
+UXTerm*rightScrollBar:     false
+UXTerm*jumpScroll:         true
+UXTerm*multiScroll:        true
+UXTerm*toolBar:            false
+UXTerm*boldMode: false
+UXTerm*colorBDMode: true
+UXTerm*colorBD: rgb:3f/3f/3f

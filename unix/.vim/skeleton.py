@@ -24,22 +24,53 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }}}
+
+Below is the MIT license
+MIT: {{{
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+}}}
+
 """
 
 __author__ = 'Faris Chugthai'
 __copyright__ = 'Copyright (C) 2018 Faris Chugthai'
-__license__ = 'MIT'
 __email__ = 'farischugthai@gmail.com'
+__license__ = 'MIT'
+__requires__ = 'flake8==3.5.0'
 
 
-def main():
-    """Put your description of the function here.
+def main(pos_args, kw_args, *args, **kwargs):
+    """Put your summary of the function here.
 
-    Arguments:
+    Provide a more detailed explanation if necessary. Returns and raises
+    signatures from pandas.core.checked_add_with_arr
 
-    Returns:
+    Parameters
+    ----------
+    var : type
 
-    Raises:
+    Returns
+    -------
+    sum : An array for elements x + b for each element x in arr if b is
+          a scalar or an array for elements x + y for each element pair
+          (x, y) in (arr, b).
+
+    Raises
+    ------
+    OverflowError if any x + y exceeds the maximum or minimum int64 value.
 
     """
 
