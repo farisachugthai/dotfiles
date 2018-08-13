@@ -34,7 +34,7 @@ Plug 'mhinz/vim-startify'
 " load this too but idk how the ftdetect is gonna work
 "
 " Well something's not right because now ipynb files don't load at all.
-Plug 'szymonmaszke/vimpyter'
+Plug 'szymonmaszke/vimpyter', {'for': ['python', 'python3', 'ipynb'] }
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }

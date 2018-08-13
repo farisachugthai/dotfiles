@@ -36,7 +36,7 @@ bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
-bindsym $alt+F4 kill
+bindsym alt+F4 kill
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec dmenu_run
@@ -50,7 +50,8 @@ bindsym $mod+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun 
 # https://github.com/addy-dclxvi/i3-starterpack/blob/master/.config/i3/config
 # common apps keybinds
 bindsym Print exec scrot 'Cheese_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
-bindsym $mod+l exec i3lock -i ~/.wallpaper.png
+# this clobbers the move up keybinding
+# bindsym $mod+l exec i3lock -i ~/.wallpaper.png
 bindsym $mod+Shift+w exec firefox
 bindsym $mod+Shift+f exec thunar;workspace 3;focus
 

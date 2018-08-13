@@ -32,6 +32,7 @@ shopt -s histappend
 shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
+# SC2128 ...how do we silence this?
 if [[ $BASH_VERSINFO -gt 3 ]]; then
     shopt -s globstar
 fi
@@ -67,7 +68,7 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 # TODO: add rxvt case
 case "$TERM" in
-    xterm-color*) color_prompt=yes;;
+    xterm-color) color_prompt=yes;;
 esac
 # }}}
 
@@ -122,7 +123,7 @@ if [ "$color_prompt" = yes ]; then
     }
 fi
 
-unset color_prompt force_color_prompt TMP_PS1
+unset color_prompt force_color_prompt
 # }}}
 
 # Vim: {{{
@@ -217,11 +218,11 @@ fi
 # }}}
 
 # Perl: {{{
-PATH=""$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB=""$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT=""$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \""$HOME/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+# PATH=""$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+# PERL5LIB=""$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT=""$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \""$HOME/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 # }}}
 
 # Sourced files: {{{
