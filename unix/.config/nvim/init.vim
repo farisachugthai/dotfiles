@@ -17,19 +17,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
-" Plug 'lifepillar/vim-gruvbox8'      " colorscheme gruvbox8_hard
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" Plug 'plytophogy/vim-virtualenv'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
-" Possibly wanna wrap in an if executable() or something. possibly wanna lazy
-" load this too but idk how the ftdetect is gonna work
-"
+
 " Well something's not right because now ipynb files don't load at all.
 " Plug 'szymonmaszke/vimpyter', {'for': ['python', 'python3', 'ipynb'] }
 
