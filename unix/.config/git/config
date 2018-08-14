@@ -1,67 +1,67 @@
 [user]
-    email = farischugthai@gmail.com
-    name = farisachugthai
+  email = farischugthai@gmail.com
+  name = farisachugthai
 
 [core]
-    autocrlf = input
-    editor = nvim
-	excludesfile = "$HOME/.config/git/ignore"
-    pager = less -rL
+  autocrlf = input
+  editor = nvim
+  excludesfile = "$HOME/.config/git/ignore"
+  pager = less -rL
 
 [color]
-    branch = always
-    diff = true
-    interactive = auto
-    pager = true
-    ui = true
+  branch = always
+  diff = true
+  interactive = auto
+  pager = true
+  ui = true
 
 # Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
 [diff]
-    # guitool = gvimdiff3
-    color = auto
-    prompt = false
-    strategy-option = patience
-    tool = difftool
+  color = auto
+  prompt = false
+  strategy-option = patience
+  tool = difftool
 
 [merge]
-    # guitool = gvimdiff3
-	color = auto
-    mergestyle = diff3
-    prompt = false
-    strategy-option = patience
-    tool = nvim -d
+  color = auto
+  mergestyle = diff3
+  prompt = false
+  strategy-option = patience
+  tool = nvim -d
 
 [push]
-    default = simple
+  default = simple
 
 [sequence]
-    editor = nvim
+  editor = nvim
 
 [branch]
-    autosetupmerge = true
+  autosetupmerge = true
 
 [pager]
-    status = true
+  status = true
 
 [alias]
-# From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
-    last = log -1 HEAD
-    unstage = reset HEAD
+  # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
+  last = log -1 HEAD
+  unstage = reset HEAD
 
-# From varying Gists
-    staged = diff --cached
-    unstaged = diff
+  # From varying Gists
+  staged = diff --cached
+  unstaged = diff
 
-# Fix unexpected behavior
-    ls = ls-files
+  # Fix unexpected behavior
+  ls = ls-files
 
-# From: https://githowto.com/history
-# Run check git-log
-    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  # From: https://githowto.com/history
+  # Run check git-log
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 
 [help]
-    autocorrect = 1
+  autocorrect = 1
 
 [credential]
-	helper = cache
+  helper = cache
+
+# Vim: set ft:gitconfig :

@@ -18,7 +18,6 @@
 !
 remove Lock    = Caps_Lock
 remove Control = Control_R
-remove Mod1    = Alt_R
 
 keycode 0x09 =	Escape	NoSymbol	Escape	NoSymbol	Escape
 keycode 0x43 =	F1	F1	F1	F1	F1	F1	XF86Switch_VT_1

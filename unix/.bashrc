@@ -32,7 +32,6 @@ shopt -s histappend
 shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-# SC2128 ...how do we silence this?
 if [[ $BASH_VERSINFO -gt 3 ]]; then
     shopt -s globstar
 fi
@@ -82,7 +81,7 @@ if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
+    # a case would tend to support setf rather than setaf.
     color_prompt=yes
     else
     color_prompt=
@@ -99,10 +98,10 @@ fi
 
 if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     . "$HOME/.bashrc.d/git-prompt.sh";
-    GIT_PS1_SHOWDIRTYSTATE=1
-    GIT_PS1_SHOWCOLORHINTS=1
-    GIT_PS1_SHOWSTASHSTATE=1
-    GIT_PS1_SHOWUPSTREAM="auto"
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWCOLORHINTS=1
+    export GIT_PS1_SHOWSTASHSTATE=1
+    export GIT_PS1_SHOWUPSTREAM="auto"
     Color_Off="\[\033[0m\]"
     Yellow="\[\033[0;33m\]"
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'

@@ -1,30 +1,40 @@
 # Annotations
 
-## TODO:
+## speeding nvim up
 
-For 08-12-18
+I've managed to shave off 3/4s of the time nvim takes to start up with a few
+simple modifications
 
-Add in i3.vim into syntax and ftdetect [check them out from termux branch]
+minimizing the number of times syntax coloring gets called by not enabling it
+really at any point
 
-use curl to get juneguun's vim profiling script, then rework it so it works for
-you
+LSP, deoplete even gruvbox activate it. so if you set a theme, make sure it's
+the last line executed [or as close as possible]
 
-  - also that'll allow you to check that the curlrc you checked out from
-    termux works
+so far jedi is responsible for around 1/3 of startup time but i'm not sure what
+would need to change for that to stop. however, the python3 host not getting set
+screws things up tremendously.
 
-then roll through init.vim and get yours to generally kinda match termux's.
-don't sweat it too much if it really isn't that similar.
+so outside of remembering to do that, it's maybe possible to utilize the conda
+api to do a check yourself.
 
-then go to gdrive and make the mods that you wrote down in there.
+┌─[faris@parrot]─[~]
+└──╼ $ echo $CONDA_PREFIX
+/home/faris/miniconda3/envs/neovim
 
-and then possibly use :Glog or something to ensure that you didn't wipe out any
-historical changes because there's a bunch of shit missing tmk.
+┌─[faris@parrot]─[~]
+└──╼ $ conda --version
+conda 4.5.9
 
-Just way easier to fix it here than on my phone.
+as of conda 4.5.9 the only indication of what conda env you're in seems to be
+that env-var right there. the api changes constantly so don't bank on it;
+however, that might be of use.
 
+Actually i just tried running with nvim -i NONE [to disable the ShaDa file] and
+it shaved over 30% off of my startuptime. dude nvim is getting so snappy!
 
 ## Plugins
-=======
+=====================================================================
 
 ### Jedi Function
 
@@ -50,27 +60,6 @@ function! StartJedi()
     augroup END
 endfunction
 
-
-### More options
-
-{ Still kinda related to deoplete / pyls}
-
-" Termux's hardcoded python interpreter
-    " if executable('$PREFIX/bin/python')
-        " let g:python3_host_prog = '$PREFIX/bin/python'
-    " endif
-    " evals to 0 outside venv on termux
-
-    " should probably put some logic somewhere to ensure that this is working
-    " correctly, that i activated conda, i'm in the right environment etc
-
-" Under the assmption we're in the right virtualenv
-" Might need to do a try catch and cathc with a list of providers
-if isdirectory('$HOME/miniconda/envs/neovim_vscode/bin')
-    let g:python3_host_prog = '$HOME/miniconda/envs/neovim_vscode/bin/python'
-else
-    let g:python3_host_prog = '$HOME/virtualenvs/nvim/bin/python3'
-endif
 
 ### lightline
 

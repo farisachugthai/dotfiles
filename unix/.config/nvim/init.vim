@@ -4,10 +4,6 @@
 
 " All: {{{ 1
 " Vim Plug: {{{ 2
-if !filereadable('~/.vim/autoload/plug.vim')
-    call system('curl -o ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-endif
 
 call plug#begin('~/.vim/plugged')
 
@@ -21,20 +17,21 @@ Plug 'tpope/vim-fugitive'
 Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
+" Plug 'lifepillar/vim-gruvbox8'      " colorscheme gruvbox8_hard
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'plytophogy/vim-virtualenv'
+" Plug 'plytophogy/vim-virtualenv'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
 " Possibly wanna wrap in an if executable() or something. possibly wanna lazy
 " load this too but idk how the ftdetect is gonna work
 "
 " Well something's not right because now ipynb files don't load at all.
-Plug 'szymonmaszke/vimpyter', {'for': ['python', 'python3', 'ipynb'] }
+" Plug 'szymonmaszke/vimpyter', {'for': ['python', 'python3', 'ipynb'] }
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -76,16 +73,10 @@ set softtabstop=4
 let g:python_highlight_ald = 1
 " }}}
 
-" Syntax Highlighting: {{{ 3
-if has('syntax')                    " if we can have syntax recognition
-    syntax on                       " this has to come after the colorscheme
-endif
-" }}}
-
 " Folds: {{{ 3
 set foldenable
 set foldlevelstart=10               " Enables most folds
-set foldnestmax=5                   " Why would anything be folded this much
+set foldnestmax=10                   " Why would anything be folded this much
 set foldmethod=marker
 " }}}
 
@@ -239,7 +230,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" Here's a ripgrep integration for ya
+"" TODO: get changes from termux
 " With :F you can now speed through file searches
 let g:rg_command = '
     \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
@@ -281,6 +272,10 @@ let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately crea
 let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
 let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
 let g:jedi#completions_enabled = 0          " pyls
+let g:jedi#documentation_command = '<leader>h'
+let g:jedi#usages_command = '<leader>u'
+let g:jedi#completions_command = '<C-N>'
+let g:jedi#show_call_signatures = 0
 " }}}
 
 " Fugitive: {{{ 3
@@ -327,8 +322,8 @@ if has('python3')
     endif
 
     " Desktop
-    if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
-        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
+    if executable('/home/faris/miniconda3/envs/neovim/bin/python')
+        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim/bin/python'
     endif
 
     if isdirectory("$HOME/virtualenvs")
@@ -344,7 +339,6 @@ endif
 " Language Servers: {{{ 3
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start'],
     \ }
 let g:LanguageClient_selectionUI = 'fzf'
 " set completefunc=LanguageClient#complete          " already set as omnifunc
@@ -374,4 +368,5 @@ let g:virtualenv_auto_activate = 1
 let g:deoplete#enable_at_startup = 1
 " }}}
 
+colorscheme gruvbox
 " }}}
