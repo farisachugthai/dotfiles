@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 # YouTube Downloader Configuration
 # Maintainer: Faris Chugthai
 
@@ -7,6 +7,8 @@
 # Be aware you can use `--no-config
 
 # mp3
+
+# All configs: {{{
 
 # Filetype
 -f mp3
@@ -33,10 +35,6 @@
 # Modification time
 --no-mtime
 
-# Subtitles
---write-auto-sub
---embed-subs
-
 # Thumbnails
 --embed-thumbnail
 
@@ -45,3 +43,5 @@
 
 # Don't use proprietary encodings
 --youtube-skip-dash-manifest
+
+# }}}

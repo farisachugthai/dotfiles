@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 # YouTube Downloader Configuration
 # Maintainer: Faris Chugthai
 
@@ -8,12 +8,7 @@
 
 # mp3 playlist
 
-# playlist. simple as that. output template updated to reflect playlist pos
---yes-playlist
-
-# download archive. if the script is rerun on the same playlist only download
-# new videos
---download-archive "$HOME/storage/shared/Music/archive/%(playlist)s.txt"
+# All configs: {{{
 
 # Filetype
 -f mp3
@@ -52,3 +47,13 @@
 
 # Don't use proprietary encodings
 --youtube-skip-dash-manifest
+
+# }}}
+
+# Playlist specific: {{{
+# playlist. simple as that. output template updated to reflect playlist pos
+--yes-playlist
+
+# download archive. if the script is rerun on the same playlist only download
+# new videos
+--download-archive "$HOME/storage/shared/Music/archive/%(playlist)s.txt"

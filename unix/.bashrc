@@ -159,6 +159,7 @@ fi
 # spice fzf up with ripgrep
 if [[ "$(command -v ag)" ]]; then
     export FZF_DEFAULT_COMMAND='ag -u -smart-case -g " "'
+    # the bind command makes searching files 1000x better and searching history non functional
     export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
 elif [[ "$(command -v rg)" ]]; then
     export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'

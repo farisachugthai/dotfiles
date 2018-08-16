@@ -1,13 +1,18 @@
 " python.vim
 " Maintainer: Faris Chugthai
 
-setlocal tabstop=8 shiftwidth=4 expandtab softtabstop=4
-let g:python_highlight_all = 1
+" Guard that should be at the top of all ftplugins
+if exists("b:did_ftplugin") | finish | endif
+let b:did_ftplugin = 1
+let s:keepcpo= &cpo
+set cpo&vim
 
+setlocal tabstop=4 shiftwidth=4 expandtab softtabstop=4
+let g:python_highlight_all = 1
 
 " Before we get too complicated let's just get rid of the necessaries.
 " Actually those fixers are probably ones I can set globally
-" let b:ale_fixers = [ 'remove_trailing_lines', 'trim_whitespace' ]
+let b:ale_fixers = [ 'remove_trailing_lines', 'trim_whitespace' ]
 
 setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
 
@@ -19,11 +24,40 @@ augroup vimrc_autocmds
     autocmd FileType python set nowrap
 augroup END
 
+try
+    set omnifunc=LanguageClient#complete
+    set completefunc=LanguageClient#complete
+catch
+    setlocal omnifunc=python3complete#Complete
+
+" maybe setup jedi completions idk?
+
+
+
 
 " Uncomment to free up the main init.vim
 " =============================================================
-" Admittedly the following is stuff from the nvimrc that only focused on
-" python and really didn't need to be in the main file
+
+" Python Executables: {{{ 3
+"
+"     " Something like if has($VIRTUAL_ENV) evaluates to 0 but we could also
+"     " try something like that
+"
+if has('python3')
+    " Termux settings
+    if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
+        let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
+    endif
+    " Desktop
+    if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
+        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
+    endif
+    " Let nvim/ale check out the virtualenvs and source the right files
+    if isdirectory("$HOME/virtualenvs")
+        let g:ale_virtualenv_dir_names+="virtualenvs"
+    endif
+endif
+" }}}
 
 " Jedi:
 " let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
@@ -37,8 +71,6 @@ augroup END
 "         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
 "     endif
 
-"     " Something like if has($VIRTUAL_ENV) evaluates to 0 but we could also
-"     " try something like that
 "     if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
 "         let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
 "     endif
@@ -52,8 +84,6 @@ augroup END
 " nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 " nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 " nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-" set omnifunc=LanguageClient#complete
-" set completefunc=LanguageClient#complete
 
 " Below is the global ftplugin for python for context
 " =====================================================

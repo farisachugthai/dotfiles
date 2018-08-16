@@ -98,3 +98,9 @@ fzf_nvim() {
   file=$(fzf --query="$1" --select-1 --exit-0)
   [ -n "$file" ] && ${EDITOR:-nvim} "$file"
 }
+
+
+# test before pushing!
+tldrbox() {
+    tldr -m $1 >> "$HOME/.cheat/$1" && termux-share $1
+}

@@ -43,6 +43,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }}}
 
+Around here would be an appropriate place to put:
+    :copyright: (c) 2018 Faris Chugthai
+    :license: MIT
+
 """
 
 __author__ = 'Faris Chugthai'
@@ -50,13 +54,14 @@ __copyright__ = 'Copyright (C) 2018 Faris Chugthai'
 __email__ = 'farischugthai@gmail.com'
 __license__ = 'MIT'
 __requires__ = 'flake8==3.5.0'
+__url__ = 'https://github.com/farisachugthai'
 
 
 def main(pos_args, kw_args, *args, **kwargs):
     """Put your summary of the function here.
 
     Provide a more detailed explanation if necessary. Returns and raises
-    signatures from pandas.core.checked_add_with_arr
+    signatures are from pandas.core.checked_add_with_arr
 
     Parameters
     ----------
@@ -73,6 +78,7 @@ def main(pos_args, kw_args, *args, **kwargs):
     OverflowError if any x + y exceeds the maximum or minimum int64 value.
 
     """
+    pass
 
 
 if __name__ == '__main__':
