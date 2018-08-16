@@ -156,14 +156,14 @@ if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-# spice fzf up with ripgrep
-if [[ "$(command -v rg)" ]]; then
-    export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 5 .'
+# spice fzf up with silversearcher
+if [[ "$(command -v ag)" ]]; then
+    export FZF_DEFAULT_COMMAND='ag  --hidden --smart-case --max-count 5 -g --'
+    export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle '
+# edit your selected file in fzf with C-e. proba ly wrong syntax
+# --bind -x "\C-e": nvim $(fzf);"
+
 fi
-
-export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
-
-bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
 # }}}
 
 # Python: {{{
@@ -214,14 +214,6 @@ if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then source "$PREFIX/g
 if [[ -d "$HOME/.rvm/bin" ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
-# }}}
-
-# Perl: {{{
-# PATH=""$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
-# PERL5LIB=""$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-# PERL_LOCAL_LIB_ROOT=""$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-# PERL_MB_OPT="--install_base \""$HOME/perl5\""; export PERL_MB_OPT;
-# PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 # }}}
 
 # Sourced files: {{{

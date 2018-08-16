@@ -14,7 +14,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'nvie/vim-flake8', { 'for': ['python', 'python3'] }
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
@@ -26,13 +25,9 @@ Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
 
-" Well something's not right because now ipynb files don't load at all.
-" Plug 'szymonmaszke/vimpyter', {'for': ['python', 'python3', 'ipynb'] }
-
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-    Plug 'Shougo/deoplete.nvim'
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
@@ -66,12 +61,12 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set softtabstop=4
-let g:python_highlight_ald = 1
+let g:python_highlight_all = 1
 " }}}
 
 " Folds: {{{ 3
 set foldenable
-set foldlevelstart=10               " Enables most folds
+set foldlevelstart=1               " Enables most folds
 set foldnestmax=10                   " Why would anything be folded this much
 set foldmethod=marker
 " }}}
@@ -93,7 +88,7 @@ set encoding=utf-8             " Set default encoding
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
-set spelllang=$HOME/.config/nvim/spell/en.utf-8.add.spl
+set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
 set spellsuggest=5
 nnoremap <Leader>s :setlocal spell!<CR>

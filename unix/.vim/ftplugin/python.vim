@@ -1,6 +1,11 @@
 " python.vim
 " Maintainer: Faris Chugthai
 
+if exists("b:did_ftplugin") | finish | endif
+let b:did_ftplugin = 1
+let s:keepcpo= &cpo
+set cpo&vim
+
 setlocal tabstop=8 shiftwidth=4 expandtab softtabstop=4
 let g:python_highlight_all = 1
 
