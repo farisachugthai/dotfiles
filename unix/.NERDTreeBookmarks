@@ -3,6 +3,7 @@ jedi-docs ~/.local/share/nvim/plugged/jedi-vim/pythonx/jedi/docs/docs
 nvim ~/.config/nvim
 vim ~/.vim
 py_tut ~/python/tutorials
+
 pyls ~/.local/share/nvim/plugged/LanguageClient-neovim/rplugin/python3/LanguageClient
 word-freq ~/projects/word-freq
 chatistics ~/projects/chatistics
@@ -11,5 +12,4 @@ nvim-rtp /data/data/com.termux/files/usr/share/nvim/runtime
 prefix /data/data/com.termux/files/usr
 pyroot /data/data/com.termux/files/usr/lib/python3.6
 usr-lib-pyls /data/data/com.termux/files/usr/lib/python3.6/site-packages/pyls
-
 pydocs ~/Dropbox/python/pydocs

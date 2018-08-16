@@ -57,7 +57,7 @@ export PAGER="less -JR"
 export MANPAGER="less -R"
 
 # still not 100% sure if it's supposed to be colorterm or truecolor or what
-export COLORTERM="colorterm"
+export COLORTERM="truecolor"
 
 # These are the defaults but for the sake of being explicit rather than implicit
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -103,6 +103,9 @@ fi
 export TMUXP_CONFIGDIR='$HOME/.tmux'
 # is this syntax right or should i just specify the dir?
 export CURL_HOME="$HOME/.config/curl/curlrc"
+
+# Help find your dotfiles faster
+export DOT="$HOME/projects/dotfiles"
 # }}}
 
 # Rust: {{{

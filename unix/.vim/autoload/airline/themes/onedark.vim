@@ -1,0 +1,1 @@
+../../../../.config/nvim/autoload/airline/themes/onedark.vim

@@ -1,17 +1,14 @@
 " Deoplete: {{{
-"" disable autocomplete by default
-" let g:deoplete#enable_at_startup = 0 " don't start right away let everything load
-" let g:deoplete_disable_auto_complete = 1
 let g:deoplete#enable_smart_case = 1
+
+" if i enter insert mode, then we're off to the races
+autocmd InsertEnter * call deoplete#enable()
+call deoplete#custom#option('smart_case', v:true)
 
 "" Close the autocompleter when we leave insert mode
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 set completeopt+=noinsert                    " Autoselect feature
-
-"" if i enter insert mode go for it
-" autocmd InsertEnter * call deoplete#enable()
-" call deoplete#custom#option('smart_case', v:true)
 
 "" On <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -48,7 +45,7 @@ augroup END
 call deoplete#custom#source(
 \ 'dictionary', 'sorters', [])
 
-"" Setting up the omnifuncs
+" Setting up the omnifuncs
 " set omnifunc=LanguageClient#complete
 
 " Enable jedi source debug messages

@@ -20,14 +20,12 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
+if !has('nvim')
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
@@ -221,7 +219,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-"" TODO: get changes from termux
+" TODO: get changes from termux: Need to get ag commands.
 " With :F you can now speed through file searches
 let g:rg_command = '
     \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
@@ -234,7 +232,7 @@ command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>),
 
 " could also use set grepprg here
 
-let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
+let g:fzf_history_dir = '$HOME/.local/share/fzf-history'
 " }}}
 
 " NERDTree: {{{ 3
@@ -248,7 +246,7 @@ let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. Defau
 let g:NERDTreeChDirMode = 2             " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
 let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
-let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']     "
+let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$', '\.git$']
 let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
 " }}}
 
@@ -256,17 +254,6 @@ let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
 let g:NERDSpaceDelims = 1                   " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left'             " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when uncommenting
-" }}}
-
-" Jedi: {{{ 3
-let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
-let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
-let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
-let g:jedi#completions_enabled = 0          " pyls
-let g:jedi#documentation_command = '<leader>h'
-let g:jedi#usages_command = '<leader>u'
-let g:jedi#completions_command = '<C-N>'
-let g:jedi#show_call_signatures = 0
 " }}}
 
 " Fugitive: {{{ 3
@@ -284,13 +271,9 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
-" Flake8 Ale Gruvbox: {{{ 3
-" Flake8:
-" https://github.com/nvie/vim-flake8
-let g:flake8_show_in_gutter=1
-" Ale:
+" ALE: {{{ 3
 " https://github.com/w0rp/ale
-nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
@@ -299,43 +282,9 @@ let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
 let g:ale_set_signs = 1 " what is the default
 let g:ale_python_flake8_options = '--config ~/.config/flake8'
 
-" Gruvbox:
-"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
-" TODO: syntax is wrong but the idea is to run check before eval
-" if &colorscheme=gruvbox
-let g:gruvbox_contrast_dark = 'hard'
-" }}}
-" Python Executables: {{{ 3
-if has('python3')
-    " Termux settings
-    if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
-        let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
-    endif
-
-    " Desktop
-    if executable('/home/faris/miniconda3/envs/neovim/bin/python')
-        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim/bin/python'
-    endif
-
-    if isdirectory("$HOME/virtualenvs")
-        let g:ale_virtualenv_dir_names+="virtualenvs"
-    else
-        " so i found this in the help docs
-        " wth is the syntax for the path? have i been doing this all wrong?
-        " call mkdir($HOME . \"/tmp/foo/bar", \"p", 0700)
-    endif
-endif
 " }}}
 
-" Language Servers: {{{ 3
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ }
-let g:LanguageClient_selectionUI = 'fzf'
-" set completefunc=LanguageClient#complete          " already set as omnifunc
-let g:LanguageClient_diagnosticsSignsMax = 10
-" }}}
-
+" Deleted the whole section on python executables. Check your ftplugin!
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTree
@@ -343,21 +292,28 @@ let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTr
 
 " Ultisnips: {{{ 3
 let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/snippets']
+" still haven't decided on nvim or vim dir
+let g:UltiSnipsSnippetDir=[$HOME.'/.config/nvim/UltiSnips']
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 " }}}
 
 " Vim_Startify: {{{ 3
 let g:startify_session_sort = 1
 " }}}
 
-" Virtualenvs: {{{ 3
-let g:virtualenv_directory = '~/virtualenvs'
-let g:virtualenv_auto_activate = 1
-" }}}
-
 " Deoplete: {{{
 let g:deoplete#enable_at_startup = 1
 " }}}
 
+" Gruvbox:{{{
 colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+" }}}
+" }}}
+
+
 " }}}

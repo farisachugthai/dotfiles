@@ -64,16 +64,6 @@ if filereadable(glob('~/.vim/vimrc.local'))
     source ~/.vim/vimrc.local
 endif
 
-" Filetype Specific Options: {{{ 2
-" IPython:
-au BufRead,BufNewFile *.ipy setlocal filetype=python
-
-" Web Dev:
-au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-
-" Markdown:
-autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
-" }}}
 
 " Global Options: {{{ 2
 " Leader:
@@ -421,4 +411,14 @@ let g:virtualenv_auto_activate = 1
 let g:deoplete#enable_at_startup = 1
 " }}}
 
+" Filetype Specific Options: {{{ 2
+" IPython:
+au BufRead,BufNewFile *.ipy setlocal filetype=python
+
+" Web Dev:
+au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
+
+" Markdown:
+autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
+" }}}
 " }}}

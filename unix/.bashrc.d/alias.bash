@@ -75,3 +75,9 @@ fi
 # alias prof="--startuptime $DOT/.config/nvim/profiling/`date`"
 # Usage: nvim prof [filename to edit]
 # this needs to be a function nvim thinks its a filename
+
+# here's a good one
+alias redo='fc -s'
+# or even:
+alias r='fc -s'
+# wait could we do C-r like in vim?
