@@ -78,3 +78,6 @@ fi
 # alias prof="--startuptime $DOT/.config/nvim/profiling/`date`"
 # Usage: nvim prof [filename to edit]
 # this needs to be a function nvim thinks its a filename
+
+# someone should let facebook know this is how typical CLI commands work
+alias yarn='yarn --help'

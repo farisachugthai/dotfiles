@@ -4,6 +4,8 @@
 # Maintainer: Faris Chugthai
 
 # TODO: Use more robust regex for metadata and title.
+# Then start using 3rd party packages to fill in gaps. id3tag, picard, eyeD3
+# hopefully whatever requires the least effort so that might rule out ffmpeg...
 
 # mp3
 youtube-dl --config-location "$HOME/.config/youtube-dl/config-mp3" "$1"

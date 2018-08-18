@@ -2,7 +2,10 @@
 " Maintainer: Faris Chugthai
 
 " Guard that should be at the top of all ftplugins
-if exists("b:did_ftplugin") | finish | endif
+if exists("b:did_ftplugin")
+    finish
+endif
+
 let b:did_ftplugin = 1
 let s:keepcpo= &cpo
 set cpo&vim
@@ -25,14 +28,38 @@ augroup vimrc_autocmds
 augroup END
 
 try
-    set omnifunc=LanguageClient#complete
-    set completefunc=LanguageClient#complete
+    setlocal omnifunc=LanguageClient#complete
+    setlocal completefunc=LanguageClient#complete
 catch
     setlocal omnifunc=python3complete#Complete
+endtry
 
 " maybe setup jedi completions idk?
 
+" Put the below in if you wanna mark a color column at a certain textwidth
+" could have 2 highlights one at 80 and 120 and make them different colors.
+"
 
+" *'colorcolumn'* *'cc'*
+" 'colorcolumn' 'cc'	string	(default "")
+"             local to window
+"             {not available when compiled without the |+syntax|
+"             feature}
+"     'colorcolumn' is a comma separated list of screen columns that are
+"     highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
+"     text.  Will make screen redrawing slower.
+"     The screen column can be an absolute number, or a number preceded with
+"     '+' or '-', which is added to or subtracted from 'textwidth'. >
+
+"         :set cc=+1  highlight column after 'textwidth'
+"         :set cc=+1,+2,+3  highlight three columns after 'textwidth'
+"         :hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+" <
+"     When 'textwidth' is zero then the items with '-' and '+' are not used.
+"     a maximum of 256 columns are highlighted.
+"
+"
+"
 
 
 " Uncomment to free up the main init.vim
@@ -90,7 +117,6 @@ endif
 "
 " Directly below are things I wanna incorporate
 "
-" setlocal omnifunc=pythoncomplete#Complete
 " if has('python3')
 "        setlocal omnifunc=python3complete#Complete
 " endif

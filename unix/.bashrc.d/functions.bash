@@ -2,7 +2,8 @@
 # Useful snippets and tricks to work in the shell more easily .
 
 # Create a new directory and enter it
-function mk(){
+function mk()
+{
     mkdir -p "$@" && cd "$@"
 }
 
@@ -75,32 +76,43 @@ infovi ()
 }
 
 # From byobu
-byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
+byobu_prompt_status()
+{
+    local e=$?; [ $e != 0 ] && echo -e "$e ";
+}
 
 # Trying to get more out of fzf
 # commits in a repo
-fzf_commits() {
+fzf_commits()
+{
   git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
 }
 
 # for existing man pages
-fzf_apropos() {
+fzf_apropos()
+{
   apropos '' | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs man' | cut -f 1 -d " "
 }
 
 # view EVERYTHING set in your env
-fzf_env() {
+fzf_env()
+{
     set | tr = "\t" | fzf | cut -f 1
 }
 
-fzf_nvim() {
+fzf_nvim()
+{
   local file
   file=$(fzf --query="$1" --select-1 --exit-0)
   [ -n "$file" ] && ${EDITOR:-nvim} "$file"
 }
 
-
-# test before pushing!
-tldrbox() {
+tldrbox_cheat()
+{
     tldr -m $1 >> "$HOME/.cheat/$1" && termux-share $1
+}
+
+tldropbox_dir()
+{
+    tldr -m $1 >> "$PWD/$1" && termux-share $1
 }

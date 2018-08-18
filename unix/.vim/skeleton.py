@@ -56,6 +56,24 @@ __license__ = 'MIT'
 __requires__ = 'flake8==3.5.0'
 __url__ = 'https://github.com/farisachugthai'
 
+class MyClass(object):
+
+    """Docstring for MyClass. """
+
+    def __init__(self, a, b, c):
+        """TODO: to be defined1.
+
+        :a: TODO
+        :b: TODO
+        :c: TODO
+
+        """
+        self._a = a
+        self._b = b
+        self._c = c
+
+        pass            # code
+
 
 def main(pos_args, kw_args, *args, **kwargs):
     """Put your summary of the function here.

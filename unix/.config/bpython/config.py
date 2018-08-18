@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Bpython config
+
 # This is a standard python config file
 # Valid values can be True, False, integer numbers, strings
 # By default bpython will look for $XDG_CONFIG_HOME/bpython/config
@@ -7,28 +12,33 @@
 # see http://docs.bpython-interpreter.org/configuration.html
 # for all configurable options
 
+import time
+
+LOG_TIMESTAMP=time.ctime()
+
 # General section tag
 [general]
 
 # Display the autocomplete list as you type (default: True).
 # When this is off, you can hit tab to see the suggestions.
-# auto_display_list = True
+auto_display_list = True
 
 # Syntax highlighting as you type (default: True).
-# syntax = True
+syntax = True
 
 # Display the arg spec (list of arguments) for callables,
 # when possible (default: True).
-# arg_spec = True
+arg_spec = True
 
 # History file (default: ~/.pythonhist):
-# hist_file = ~/.pythonhist
+try:
+    hist_file = ~/local/share/bpython/
 
 # Number of lines to store in history (set to 0 to disable) (default: 100):
-# hist_length = 100
+hist_length = 10000
 
 # Soft tab size (default: 4, see pep-8):
-# tab_length = 4
+tab_length = 4
 
 # Color schemes should be put in $XDG_CONFIG_HOME/bpython/ e.g. to use the theme
 # $XDG_CONFIG_HOME/bpython/foo.theme set color_scheme = foo. Leave blank or set
@@ -38,7 +48,7 @@
 # External editor to use for editing the current line, block, or full history
 # Default is to try $EDITOR and $VISUAL, then vi - but if you uncomment
 # the line below that will take precedence
-# editor = vi
+editor = nvim
 
 # Whether to append .py to the filename while saving session to a file.
 # (default: False)
@@ -79,6 +89,8 @@
 # show_source = F2
 # exit = C-d
 # external_editor = F7
+
+# should duplicate in ipython
 # edit_config = F3
 # reverse_incremental_search = M-r
 # incremental_search = M-s
@@ -89,8 +101,9 @@
 # (default: False)
 # list_above = False
 
+# AND BTW HOW DID YOU DO IT!
 # Enables two fish (the shell) style features:
 # Previous line key will search for the current line (like reverse incremental
 # search) and right arrow will complete the current line with the first match
 # from history. (default: True)
-# right_arrow_completion = True
+right_arrow_completion = True

@@ -5,6 +5,12 @@
 setlocal foldlevel=1
 " All: {{{ 1
 
+" About: {{{ 2
+let g:snips_author = 'Faris Chugthai'
+let g:snips_email = 'farischugthai@gmail.com'
+let g:snips_github = 'https://github.com/farisachugthai'
+" }}}
+
 " Vim Plug: {{{ 2
 " let's have these share a directory since i don't use different plugins
 call plug#begin('~/.vim/plugged')
@@ -235,7 +241,7 @@ let g:fzf_colors =
 
 " With :F you can now speed through file searches
 
-let g:ag_command = 'ag --smart-case -u -g " "'
+let g:ag_command = 'ag --smart-case -u -g " " --'
 " TODO: need to look through this command because i keep getting an out of
 " index error
 command! -bang -nargs=* F call fzf#vim#grep(g:ag_command .shellescape(<q-args>), 1, <bang>0)
@@ -304,18 +310,19 @@ let g:ale_set_signs = 1                             " what is the default
 let g:airline_powerline_fonts = 1
 " }}}
 
-" Ultisnips: {{{ 3
-let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsSnippetDirectories = [ '~/.config/nvim/snippets' ]
-let g:ultisnips_python_quoting_style = 'GOOGLE'
-" }}}
-
 " Vim_Startify: {{{ 3
 let g:startify_session_sort = 1
 " }}}
 
 " }}}
 
+" Ultisnips: {{{ 3
+let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsSnippetDir = [ '~/.config/nvim/Ultisnips' ]
+let g:UltiSnips_python_quoting_style = 'GOOGLE'
+let g:UltiSnipsEnableSnipMate = 0           " isn't working at all
+" }}}
 " Gruvbox: {{{
 " https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 " TODO: syntax is wrong but the idea is to run check before eval

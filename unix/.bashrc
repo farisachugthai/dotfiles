@@ -157,14 +157,14 @@ if [[ -f ~/.fzf.bash ]]; then
 fi
 
 # spice fzf up with ripgrep
-if [[ "$(command -v ag)" ]]; then
-    export FZF_DEFAULT_COMMAND='ag -u -smart-case -g " "'
-    # the bind command makes searching files 1000x better and searching history non functional
-    export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
-elif [[ "$(command -v rg)" ]]; then
-    export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
-    export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
-fi
+# if [[ "$(command -v ag)" ]]; then
+#     export FZF_DEFAULT_COMMAND='ag -u -smart-case -g " "'
+#     # the bind command makes searching files 1000x better and searching history non functional
+#     export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
+# elif [[ "$(command -v rg)" ]]; then
+#     export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
+#     export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle'
+# fi
 
 bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
 
@@ -232,6 +232,9 @@ unset -v config
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
+
+# activate tmux but not yet.
+# [[ -z "$TMUX"  ]] && exec tmux
 # }}}
 
 # }}}

@@ -72,7 +72,7 @@ fi
 # kinda hacky but this is a real easy way to determine
 # if were using termux or ubuntu. termux defines prefix.
 if [[ -n "$PREFIX" ]]; then
-    export SHELL="$PREFIX/bin/bash"
+#    export SHELL="$PREFIX/bin/bash"
     export BROWSER="w3m"
 else
     export SHELL="/bin/bash"
