@@ -1,8 +1,9 @@
 dotfiles ~/projects/dotfiles/unix
 jedi-docs ~/.local/share/nvim/plugged/jedi-vim/pythonx/jedi/docs/docs
 nvim ~/.config/nvim
-vim ~/.vim
 py_tut ~/python/tutorials
+vim ~/.vim
+nvimruntime /usr/share/nvim/runtime
 
 pyls ~/.local/share/nvim/plugged/LanguageClient-neovim/rplugin/python3/LanguageClient
 word-freq ~/projects/word-freq

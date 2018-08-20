@@ -78,18 +78,18 @@ if [[ -n "$PREFIX" ]]; then
     export SHELL="$PREFIX/bin/bash"
     export BROWSER="w3m"
 else
-    export SHELL="/bin/bash"
+    # export SHELL="/bin/bash"
     export BROWSER="firefox"
 fi
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 # Also because termux doesn't set $TMPDIR to /tmp/
 if [[ -n "$TMPDIR" ]]; then
-    TMP="$TMPDIR"
+    export TMP="$TMPDIR"
 else
     if [[ -d "/tmp" ]]; then
         TMPDIR="/tmp"
-        TMP="$TMPDIR"
+        export TMP="$TMPDIR"
     fi
 fi
 

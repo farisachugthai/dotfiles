@@ -305,11 +305,12 @@ let g:UltiSnipsEditSplit="vertical"
 let g:startify_session_sort = 1
 " }}}
 
-" Deoplete: {{{
+" Deoplete: {{{ 3
 let g:deoplete#enable_at_startup = 1
 " }}}
 
-" Gruvbox:{{{
+" Gruvbox: {{{ 3
+" Load the colorscheme last. Noticeable startuptime improvement
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 " }}}
