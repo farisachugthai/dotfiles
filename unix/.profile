@@ -72,16 +72,20 @@ fi
 # kinda hacky but this is a real easy way to determine
 # if were using termux or ubuntu. termux defines prefix.
 if [[ -n "$PREFIX" ]]; then
-#    export SHELL="$PREFIX/bin/bash"
+    export SHELL="$PREFIX/bin/bash"
     export BROWSER="w3m"
+    export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
+    export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
 else
     export SHELL="/bin/bash"
     export BROWSER="firefox"
 fi
 
 # Set locale if it isn't explicitly stated elsewhere
-export LC_ALL=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8             # Commented because it overwrites everything
 export LANG=en_US.UTF-8                 # gathered from localectl
+export LC_MESSAGES=C                    # man i3: Prevents program output translation
+
 
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 

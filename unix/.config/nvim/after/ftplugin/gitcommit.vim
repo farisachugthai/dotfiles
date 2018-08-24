@@ -1,1 +1,1 @@
-../../../.vim/ftplugin/gitcommit.vim
+../../../../.vim/after/ftplugin/gitcommit.vim

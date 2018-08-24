@@ -94,7 +94,7 @@ set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
 set spellsuggest=5
-map <Leader>s :setlocal spell!<CR>
+nnoremap <Leader>s :setlocal spell!<CR>
 " Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
     setlocal dictionary='/usr/share/dict/words'
@@ -143,7 +143,7 @@ set complete+=.,b,u,t                   " open buffer, open buffers, and tags
 set fileignorecase
 set whichwrap+=<,>,h,l,[,]              " Reasonable line wrapping
 set nojoinspaces
-set diffopt=vertical,context:3        " vertical split diffs. def cont is 6
+set diffopt=vertical,context:3          " vertical split diffs. def cont is 6
 " }}}
 
 " }}}
@@ -314,8 +314,6 @@ let g:airline_powerline_fonts = 1
 let g:startify_session_sort = 1
 " }}}
 
-" }}}
-
 " Ultisnips: {{{ 3
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsUsePythonVersion = 3
@@ -323,13 +321,16 @@ let g:UltiSnipsSnippetDir = [ '~/.config/nvim/Ultisnips' ]
 let g:UltiSnips_python_quoting_style = 'GOOGLE'
 let g:UltiSnipsEnableSnipMate = 0           " isn't working at all
 " }}}
-" Gruvbox: {{{
+
+" Gruvbox: {{{ 3
 " https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 " TODO: syntax is wrong but the idea is to run check before eval
 " if &colorscheme=gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 " Speed up init by saving syntax /colo for last
 colorscheme gruvbox
+" }}}
+
 " }}}
 
 " }}}

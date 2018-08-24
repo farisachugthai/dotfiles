@@ -39,8 +39,10 @@ alias df='df -aht --total'
 alias free='free -mt'
 alias echo='echo -e'
 
-#termux command with odd default of view not send
+# termux command with odd default of view not send
 alias termux-share="termux-share -a send"
+# termux-open gets an option for a default file handler! Dropbox integration
+alias termux-open="termux-open --send"
 
 alias info="info --vi-keys"
 
@@ -80,4 +82,11 @@ fi
 # this needs to be a function nvim thinks its a filename
 
 # someone should let facebook know this is how typical CLI commands work
-alias yarn='yarn --help'
+if [[ "$#" -eq 1 ]]; then
+    alias yarn='yarn --help'
+else
+    continue
+fi
+# sigh so is this gonna need to evaluate for every command i run?
+# you need it to look something like this otherwise yarn does nothing but print
+# help pages and why have it installed?

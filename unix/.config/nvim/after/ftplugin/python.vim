@@ -1,1 +1,1 @@
-../../../.vim/ftplugin/python.vim
+../../../../.vim/after/ftplugin/python.vim

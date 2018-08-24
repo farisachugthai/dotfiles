@@ -41,7 +41,7 @@ endtry
 "
 
 " *'colorcolumn'* *'cc'*
-" 'colorcolumn' 'cc'	string	(default "")
+" 'colorcolumn' 'cc'	string	(default \"")
 "             local to window
 "             {not available when compiled without the |+syntax|
 "             feature}

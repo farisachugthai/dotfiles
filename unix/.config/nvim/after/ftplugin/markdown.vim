@@ -1,1 +1,1 @@
-../../../.vim/ftplugin/markdown.vim
+../../../../.vim/after/ftplugin/markdown.vim

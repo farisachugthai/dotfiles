@@ -1,6 +1,4 @@
 ! Xresources
-! So the terminal isn't completely illegible but it doesn't look very good and
-! URLs are impossible to read
 
 ! From the man himself Shotts.
 URxvt.geometry                 : 120x36
@@ -18,15 +16,13 @@ URxvt*fading                   : 30
 URxvt*colorUL                  : blue
 
 URxvt.letterSpace    : -2
-! urxvt*font: xft:Terminus
-Urxvt*font: FiraCode: autohint=True: pixelsize=24
+Urxvt*font: FiraCode: autohint=True: pixelsize=22
+URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=24
+URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=24
 
-URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=12
-URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=12
-
+# check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
 *antialias                     : true
 *autohint                      : true
-urxvt*font: xft:Terminus
 
 URxvt*depth:            32
 !URxvt*background:      rgba:0000/0000/0000/AAAA
@@ -213,8 +209,9 @@ dmenu.foreground:	        #d8dee9
 ! Last Modified: 6 Sep 2014
 ! -----------------------------------------------------------------------------
 
-! hard contrast         : *background : #1d2021
-*background             : #282828
+! hard contrast
+: *background : #1d2021
+! *background             : #282828
 ! soft contrast         : *background : #32302f
 *foreground             : #ebdbb2
 ! Black + DarkGrey
