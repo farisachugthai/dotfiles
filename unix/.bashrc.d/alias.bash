@@ -35,7 +35,7 @@ alias path='echo -e ${PATH//:/\\n}'
 
 #options i use every time i run these commands
 alias du='du -d 1 -h'
-alias df='df -aht --total'
+alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
 

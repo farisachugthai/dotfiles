@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # xinit
 
-failsafe="xterm -ls -T failsafe -geometry 80x24-0-0"
+failsafe="aterm -ls -T failsafe -geometry 80x24-0-0"
 
 trap "exec $failsafe" EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
 
@@ -11,4 +11,4 @@ trap "exec $failsafe" EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
 
 pgrep ssh-agent || eval $(ssh-agent -s) && ssh-add
 
-exec awesome
+exec i3-with-shmlog
