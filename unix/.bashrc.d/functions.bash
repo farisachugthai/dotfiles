@@ -2,14 +2,12 @@
 # Useful snippets and tricks to work in the shell more easily .
 
 # Create a new directory and enter it
-function mk()
-{
+mk() {
     mkdir -p "$@" && cd "$@"
 }
 
 # Handy Extract Program
-function extract()
-{
+extract() {
 if [ -f $1 ]; then
 case $1 in
     *.tar.bz2) tar xvjf $1 ;;
@@ -31,26 +29,21 @@ case $1 in
  echo "'$1' is not a valid file!"
  fi
 }
-
-
 # Run cd and ls at once
-function cs ()
-{
+cs () {
     cd "$@" && ls
 }
 
 # Decrypt the ssh priv key for the day
-function ssh-day ()
-{
-    if [[ -z $SSH_AUTH_SOCK ]]; then
+ssh-day () {
+    if [[ -z "$SSH_AUTH_SOCK" ]]; then
         eval `ssh-agent -s`
     fi
     ssh-add -t 86400
 }
 
 # Adds an alias to the current shell and to ~/.bashrc.d/alias
-add-alias ()
-{
+add-alias () {
    local name=$1 value="$2"
    echo alias $name=\'$value\' >> ~/.bashrc.d/alias.bash
    eval alias $name=\'$value\'
@@ -58,8 +51,7 @@ add-alias ()
 }
 
 # Update the python packages you care about most
-update-pip ()
-{
+update-pip () {
     local pu="pip install -Uq"
     $pu pip
     $pu ipython
@@ -70,49 +62,39 @@ update-pip ()
 }
 
 # I really don't like anything that smells like Emacs keybindings
-infovi ()
-{
+infovi () {
     info $1 | less
 }
 
 # From byobu
-byobu_prompt_status()
-{
-    local e=$?; [ $e != 0 ] && echo -e "$e ";
-}
+byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
 
 # Trying to get more out of fzf
 # commits in a repo
-fzf_commits()
-{
+fzf_commits() {
   git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
 }
 
 # for existing man pages
-fzf_apropos()
-{
+fzf_apropos() {
   apropos '' | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs man' | cut -f 1 -d " "
 }
 
 # view EVERYTHING set in your env
-fzf_env()
-{
+fzf_env() {
     set | tr = "\t" | fzf | cut -f 1
 }
 
-fzf_nvim()
-{
+fzf_nvim() {
   local file
   file=$(fzf --query="$1" --select-1 --exit-0)
   [ -n "$file" ] && ${EDITOR:-nvim} "$file"
 }
 
-tldrbox_cheat()
-{
+tldrbox_cheat() {
     tldr -m $1 >> "$HOME/.cheat/$1" && termux-share $1
 }
 
-tldropbox_dir()
-{
+tldropbox_dir() {
     tldr -m $1 >> "$PWD/$1" && termux-share $1
 }

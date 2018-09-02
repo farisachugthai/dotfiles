@@ -26,8 +26,7 @@ Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
 
@@ -35,7 +34,8 @@ call plug#end()
 " }}}
 
 " Nvim Specific: {{{ 2
-set background=dark
+set background=dark                 " set as early as possible
+
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
@@ -89,7 +89,7 @@ set splitright
 set encoding=UTF-8             " Set default encoding
 set fileencoding=UTF-8
 set spelllang=en
-set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+" set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
@@ -98,7 +98,7 @@ nnoremap <Leader>s :setlocal spell!<CR>
 " Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
     setlocal dictionary='/usr/share/dict/words'
-    " Replace the default dictionary completion with fzf-based fuzzy completion
+" Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
 if filereadable('/usr/share/dict/american-english')
@@ -107,9 +107,6 @@ endif
 if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
 endif
-set complete+=kspell                    " could also use set complete=k{dict file}
-set spellsuggest=5
-map <Leader>s :setlocal spell!<CR>
 " }}}
 
 " Fun With Clipboards: {{{ 3
@@ -124,6 +121,7 @@ endif
 set tags+=./tags,./../tags,./*/tags     " usr_29
 set mouse=a                             " Automatically enable mouse usage
 set cursorline
+set colorcolumn=+1
 set cmdheight=2
 set number
 set showmatch
@@ -144,6 +142,13 @@ set fileignorecase
 set whichwrap+=<,>,h,l,[,]              " Reasonable line wrapping
 set nojoinspaces
 set diffopt=vertical,context:3          " vertical split diffs. def cont is 6
+
+if has('persistent_undo')
+    set undodir=~/.vim/undodir
+    set undofile	" keep an undo file (undo changes after closing)
+endif
+set modeline
+
 " }}}
 
 " }}}
@@ -294,8 +299,6 @@ nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
 " Ale: {{{ 3
-" https://github.com/w0rp/ale
-let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ], }
 nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
@@ -303,6 +306,7 @@ let g:ale_sign_column_always = 1
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
 let g:ale_python_flake8_options = '--config ~/.config/flake8'
 let g:ale_set_signs = 1                             " what is the default
+let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ]}
 
 " }}}
 

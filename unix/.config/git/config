@@ -3,34 +3,32 @@
     name = farisachugthai
 
 [core]
-    editor = nvim
-    pager = less -rL
     autocrlf = input
-	excludesfile = "$HOME/.config/git/ignore"
+    editor = nvim
+    excludesfile = "$HOME/.config/git/ignore"
+    pager = less -rL
 
 [color]
-    ui = true
-    pager = true
-    interactive = auto
-    diff = true
     branch = always
+    diff = true
+    interactive = auto
+    pager = true
+    ui = true
 
 # Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
 [diff]
-    # guitool = gvimdiff3
     color = auto
     prompt = false
     strategy-option = patience
-    tool = nvim -d
+    tool =  difftool
 
 [merge]
-    # guitool = gvimdiff3
     color = auto
     mergestyle = diff3
     prompt = false
     strategy-option = resolve
-    tool = nvim -d
+    tool = vimdiff
 
 [push]
     default = simple
@@ -65,3 +63,5 @@
 
 [credential]
 	helper = cache
+
+# Vim: set ft:gitconfig :

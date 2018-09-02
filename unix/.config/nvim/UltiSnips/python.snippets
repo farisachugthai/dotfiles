@@ -701,11 +701,19 @@ class Test${1:Class}(${2:unittest.TestCase}):
 		${7:${VISUAL:pass}}
 endsnippet
 
-snippet " "triple quoted string (double quotes)" b
+# i don't understand whats going on here but I'm shooting for cheap workaround
+# until i do
+snippet " "triple quote docstring" b
 """
 ${1:${VISUAL:doc}}
-`!p triple_quotes_handle_trailing(snip, '"')`
+"""
 endsnippet
+
+# snippet " "triple quoted string (double quotes)" b
+# """
+# ${1:${VISUAL:doc}}
+# `!p triple_quotes_handle_trailing(snip, '"')`
+# endsnippet
 
 snippet ' "triple quoted string (single quotes)" b
 '''

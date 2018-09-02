@@ -15,6 +15,7 @@
 import time
 
 LOG_TIMESTAMP=time.ctime()
+# so i didn't assign this to amything?
 
 # General section tag
 [general]
@@ -32,7 +33,7 @@ arg_spec = True
 
 # History file (default: ~/.pythonhist):
 try:
-    hist_file = ~/local/share/bpython/
+    hist_file = ~/.local/share/bpython/
 
 # Number of lines to store in history (set to 0 to disable) (default: 100):
 hist_length = 10000
