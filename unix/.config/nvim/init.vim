@@ -41,15 +41,6 @@ set inccommand=split                " This alone is enough to never go back
 set termguicolors
 " }}}
 
-" Filetype Specific Options: {{{ 2
-" IPython:
-au BufRead,BufNewFile *.ipy setlocal filetype=python
-" Web Dev:
-au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-" Markdown:
-autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
-" }}}
-
 " Global Options: {{{ 2
 " Leader:
 let g:mapleader = "\<Space>"
@@ -64,8 +55,8 @@ let g:python_highlight_all = 1
 
 " Folds: {{{ 3
 set foldenable
-set foldlevelstart=1               " Enables most folds
-set foldnestmax=10                   " Why would anything be folded this much
+set foldlevelstart=1                " Enables most folds
+set foldnestmax=10                  " Why would anything be folded this much
 set foldmethod=marker
 " }}}
 
@@ -84,7 +75,9 @@ set splitright
 " Spell Checker: {{{ 3
 set encoding=utf-8             " Set default encoding
 set spelllang=en
-set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+" if filereadable($VIMRUNTIME/spell/en.utf-8.spl)
+"     set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+" endif
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
@@ -123,6 +116,16 @@ endif
 set pastetoggle=<F7>
 " }}}
 
+" Autocompletion: {{{ 3
+set wildmenu                            " Show list instead of just completing
+set wildmode=longest,list:longest       " Longest string or list alternatives
+set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
+set complete+=.,b,u,t                   " open buffer, open buffers, and tags
+set fileignorecase                      " when searching for files don't use case
+" I just realized I only have completefunc/omnifunc set in ftplugins.
+" You should have SOMETHING set globally for completefunc. Omni is ftspecific
+" so not that one.
+" }}}
 " Other Global Options: {{{ 3
 set tags+=./tags,./../tags,./*/tags     " usr_29
 set background=dark
@@ -134,17 +137,13 @@ set showmatch
 set ignorecase
 set smartcase
 set smartindent
+set autoindent                          " :he options: set with smartindent
 set noswapfile
 if has('gui_running')
     set guifont='Fira\ Code\ Mono:11'
 endif
 set path+=**        			        " Make autocomplete for filenames work
 set autochdir
-set wildmenu                            " Show list instead of just completing
-set wildmode=longest,list:longest       " Longest string or list alternatives
-set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
-set complete+=.,b,u,t                   " open buffer, open buffers, and tags
-set fileignorecase
 set whichwrap+=<,>,h,l,[,]              " Give reasonable line wrapping behaviour
 set nojoinspaces
 " }}}
@@ -271,6 +270,12 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
+" Jedi: {{{ 3
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
+" }}}
+
 " ALE: {{{ 3
 " https://github.com/w0rp/ale
 nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
@@ -284,7 +289,6 @@ let g:ale_python_flake8_options = '--config ~/.config/flake8'
 
 " }}}
 
-" Deleted the whole section on python executables. Check your ftplugin!
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTree
@@ -294,11 +298,18 @@ let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTr
 let g:UltiSnipsUsePythonVersion = 3
 " still haven't decided on nvim or vim dir
 let g:UltiSnipsSnippetDir=[$HOME.'/.config/nvim/UltiSnips']
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
+" the line below is probably gonna slow things down a lot
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips', 'UltiSnips']
+" I like these mappings
+let g:UltiSnipsJumpForwardTrigger='<Tab>'
+let g:UltiSnipsJumpBackwardTrigger='<S-Tab>'
+let g:UltiSnips_python_quoting_style='GOOGLE'
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit='vertical'
+
+let g:snips_author='Faris Chugthai'
+let g:snips_email='farischugthai@gmail.com'
+let g:snips_github='https://github.com/farisachugthai'
 " }}}
 
 " Vim_Startify: {{{ 3
@@ -314,7 +325,16 @@ let g:deoplete#enable_at_startup = 1
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 " }}}
+
 " }}}
 
+" Filetype Specific Options: {{{ 2
+" IPython:
+au BufRead,BufNewFile *.ipy setlocal filetype=python
+" Web Dev:
+au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
+" Markdown:
+autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
+" }}}
 
 " }}}

@@ -2,10 +2,9 @@
 # Here are what I believe to be the most important values
 
 channels:
+  - conda-canary
   - conda-forge
   - defaults
-  - conda-canary
-
 ssl_verify: true
 
 verbosity: 0

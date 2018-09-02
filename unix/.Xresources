@@ -15,12 +15,16 @@ URxvt*visualBell               : true
 URxvt*fading                   : 30
 URxvt*colorUL                  : blue
 
-URxvt.letterSpace    : -2
-Urxvt*font: FiraCode: autohint=True: pixelsize=22
-URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=24
-URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=24
+URxvt.letterSpace       : -2
+Urxvt*font              : FiraCode : autohint=True : pixelsize=20
+Urxvt*italicFont        : FiraCode : italic : autohint=True : pixelsize=20
+Urxvt*boldFont          : FiraCode : bold   : autohint=True : pixelsize=20
+! Admittedly unsure of the syntax so might err out
+! URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=24
+! Why does this say bold italic and only call bold?
+! URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=24
 
-!check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
+! check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
 *antialias                     : true
 *autohint                      : true
 
@@ -36,9 +40,9 @@ URxvt*url-select.underline     : true
 URxvt.matcher.pattern.1        : \\bwww\\.[\\w-]\\.[\\w./?&@#-\[\]]*[\\w/-]
 
 ! https://github.com/addy-dclxvi/i3-starterpack/blob/master/.Xresources
-URxvt*iso14755:			false
-URxvt*termName:			rxvt-256color
-URxvt.lineSpace:		0
+URxvt*iso14755:      false
+URxvt*termName:      rxvt-256color
+URxvt.lineSpace:     0
 
 URxvt*depth:            32
 !URxvt*background:      rgba:0000/0000/0000/AAAA
@@ -191,10 +195,10 @@ rofi.modi: run,drun,window
 ! Dmenu configs
 ! -----------------------------------------------------------------------------
 
-dmenu.selforeground:	    #d8dee9
-dmenu.background:	        #2e3440
-dmenu.selbackground:	    #bf616a
-dmenu.foreground:	        #d8dee9
+dmenu.selforeground:       #d8dee9
+dmenu.background:          #2e3440
+dmenu.selbackground:       #bf616a
+dmenu.foreground:          #d8dee9
 
 
 ! ------------------------------------------------------------------------------
@@ -206,7 +210,7 @@ dmenu.foreground:	        #d8dee9
 UXTerm*termName: xterm-256color
 UXTerm*VT100.geometry:     92x16
 UXTerm*font:               M+ 1mn
-UXTerm*faceSize:		   12
+UXTerm*faceSize:           12
 UXTerm*dynamicColors:      true
 UXTerm*utf8:               2
 UXTerm*eightBitInput:      true
@@ -218,12 +222,9 @@ UXTerm*rightScrollBar:     false
 UXTerm*jumpScroll:         true
 UXTerm*multiScroll:        true
 UXTerm*toolBar:            false
-UXTerm*boldMode: false
-UXTerm*colorBDMode: true
-UXTerm*colorBD: rgb:3f/3f/3f
-
-
-
+UXTerm*boldMode:           false
+UXTerm*colorBDMode:        true
+UXTerm*colorBD:            rgb:3f/3f/3f
 
 ! Addys config
 !

@@ -18,12 +18,10 @@ screws things up tremendously.
 so outside of remembering to do that, it's maybe possible to utilize the conda
 api to do a check yourself.
 
-┌─[faris@parrot]─[~]
-└──╼ $ echo $CONDA_PREFIX
+echo $CONDA_PREFIX
 /home/faris/miniconda3/envs/neovim
 
-┌─[faris@parrot]─[~]
-└──╼ $ conda --version
+$ conda --version
 conda 4.5.9
 
 as of conda 4.5.9 the only indication of what conda env you're in seems to be
@@ -36,12 +34,29 @@ it shaved over 30% off of my startuptime. dude nvim is getting so snappy!
 ## Plugins
 =====================================================================
 
+### Languange Client
+
+Language Client can stay in ftplugin/python.vim for now but there's no reason
+to limit it to that.
+
+The only thing is the func LanguageClient_serverCommands()
+
+But it's a simple dictionary. If you want, run a whole mess of loops checking
+things you care about I.E. bash language server, pyls etc are executable.
+
+if those loops return True, add it's name to the dictionary. then have the
+server run the commands we feed to it
+
+I'm not sure how I hadn't thought of this yet.
+
 ### Jedi Function
 
 Not really ready to do away with this completely.
 
 " Adapted largely from:
-" https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/jedi.vim
+" (https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/jedi.vim)
+
+```VimScript
 function! StartJedi()
     let g:jedi#completions_enabled = 0
     let g:jedi#auto_vim_configuration = 0
@@ -59,11 +74,16 @@ function! StartJedi()
         autocmd InsertLeave * set splitbelow!
     augroup END
 endfunction
+```
 
 
 ### lightline
 
 " Lightline: {{{
+
+btw do the code blocks need viml or VimScript after the tick marks?
+
+```viml
 let g:lightline = {
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
@@ -87,7 +107,8 @@ let g:lightline = {
 " endfunction
 
 " let g:lightline.colorscheme = 'seoul256'
-" " }}}
+" }}}
+```
 
 ## functions
 
@@ -96,7 +117,10 @@ let g:lightline = {
 Now out of curiosity would this go in .config/nvim/compilers?
 
 Compiler Func: {{{
+
 All in one compiler. Gonna rewrite to make my own
+
+```
 map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     exec "w"
@@ -123,12 +147,13 @@ func! CompileRunGcc()
         exec "!firefox %.html &"
     endif
 endfunc
-}}}
+```
 
+}}}
 
 ### ALE
 
-
+```
 function! LinterStatus() abort
   let l:counts = ale#statusline#Count(bufnr(''))
 
@@ -137,7 +162,7 @@ function! LinterStatus() abort
 
   return l:counts.total == 0 ? '' : printf( '%dW %dE', l:all_non_errors, l:all_errors )
 endfunction
-
+```
 
 ## Diff between nvim and vim
 
@@ -202,12 +227,12 @@ endif
 
 Was originally after the sys curl  call to download vimplug and above the endif
 
-
 ## Fun with clipboards
 
-
 fun trick from he provider. Before i uncomment, how do i check if I'm in
-tmux? lol just run py3 import vim, os; py3 if os.environ.get('TMUX'):
+tmux? actually learning how vim expands env vars is gonna be important.
+
+```
 let g:clipboard = {
           \   'name': 'myClipboard',
           \   'copy': {
@@ -220,7 +245,33 @@ let g:clipboard = {
           \   },
           \   'cache_enabled': 1,
           \ }
+```
 
 If `cache_enabled` is |TRUE| then when a selection is copied, Nvim will cache
 the selection until the copy command process dies. When pasting, if the copy
 process has not died, the cached selection is applied.
+
+
+## Mappings
+
+
+							*emacs-keys*
+For Emacs-style editing on the command-line: >
+	" start of line
+	:cnoremap <C-A>		<Home>
+	" back one character
+	:cnoremap <C-B>		<Left>
+	" delete character under cursor
+	:cnoremap <C-D>		<Del>
+	" end of line
+	:cnoremap <C-E>		<End>
+	" forward one character
+	:cnoremap <C-F>		<Right>
+	" recall newer command-line
+	:cnoremap <C-N>		<Down>
+	" recall previous (older) command-line
+	:cnoremap <C-P>		<Up>
+	" back one word
+	:cnoremap <Esc><C-B>	<S-Left>
+	" forward one word
+	:cnoremap <Esc><C-F>	<S-Right>

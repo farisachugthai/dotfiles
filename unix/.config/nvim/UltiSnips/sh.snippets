@@ -1,3 +1,13 @@
+# sh.snippets
+# Your personal snippets
+# =======================
+
+snippet
+if [[ -z "$1" ]]; then
+	echo -e "Usage: $0 [options] commands"
+	exit 2
+fi
+endsnippet
 
 global !p
 import vim
@@ -24,12 +34,13 @@ endglobal
 ###########################################################################
 #                            TextMate Snippets                            #
 ###########################################################################
-snippet #!
-`!p snip.rv = '#!/bin/' + getShell() + "\n\n" `
-endsnippet
+# snippet #!
+# `!p snip.rv = '#!/bin/' + getShell() + "\n\n" `
+# endsnippet
 
-snippet !env "#!/usr/bin/env (!env)"
+snippet ! "#!/usr/bin/env (!env)"
 `!p snip.rv = '#!/usr/bin/env ' + getShell() + "\n\n" `
+# set -euo pipefail
 endsnippet
 
 snippet sbash "safe bash options"

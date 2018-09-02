@@ -14,13 +14,8 @@ else
     let g:root = '~/.vim'
     let g:conf = '~/.vim/vimrc'
 endif
+
 " Vim Plug: {{{ 2
-" use curl because A) the --create-dirs option is nice and B) why make them
-" different in your init and vimrc?
-if !filereadable('~/.vim/autoload/plug.vim')
-    call system('curl -o ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-endif
 
 call plug#begin('~/.vim/plugged')
 
@@ -38,16 +33,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next',
     \ 'do': 'bash install.sh' }
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'plytophogy/vim-virtualenv'
+Plug 'SirVer/ultisnips'| Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'mhinz/vim-startify'
-" Possibly wanna wrap in an if executable() or something. possibly wanna lazy
-" load this too but idk how the ftdetect is gonna work
-"
-" Well something's not right because now ipynb files don't load at all.
-Plug 'szymonmaszke/vimpyter'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -60,20 +48,17 @@ endif
 call plug#end()
 " }}}
 
+" Vim Specific: {{{ 2
 if filereadable(glob('~/.vim/vimrc.local'))
     source ~/.vim/vimrc.local
 endif
-
+" }}}
 
 " Global Options: {{{ 2
 " Leader:
 let g:mapleader = "\<Space>"
 
 " Viminfo: {{{ 3
-" TODO: At some point I should aggregate all of the !has(nvim)s together to
-" keep them at least in one spot
-" Also don't let neovim and vim use the same viminfo file
-" TODO: What is the syntax for nvim's shada file?
 if !has('nvim')
     set viminfo='100,<200,s200,n$HOME/.vim/viminfo
 endif
@@ -87,16 +72,10 @@ set softtabstop=4
 let g:python_highlight_all = 1
 " }}}
 
-" Syntax Highlighting: {{{ 3
-if has('syntax')                    " if we can have syntax recognition
-    syntax on                       " this has to come after the colorscheme
-endif
-" }}}
-
 " Folds: {{{ 3
 set foldenable
-set foldlevelstart=10               " Enables most folds
-set foldnestmax=5                   " Why would anything be folded this much
+set foldlevelstart=1               " Enables most folds
+set foldnestmax=10                   " Why would anything be folded this much
 set foldmethod=marker
 " }}}
 
@@ -112,7 +91,7 @@ set splitbelow
 set splitright
 " }}}
 
-" Spell Checker:{{{3
+" Spell Checker:{{{ 3
 set encoding=utf-8
 set spelllang=en
 set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
@@ -304,17 +283,12 @@ let g:NERDTreeShowLineNumbers = 1
 let g:NERDTreeMouseMode = 2         " open dir on mouse click
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
 let g:NERDTreeRespectWildIgnore = 1
+" }}}
 
 " NERDCom: {{{ 3
 let g:NERDSpaceDelims = 1       " can we give the code some room to breathe?
 let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
-" }}}
-
-" Jedi: {{{ 3
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
 " }}}
 
 " Fugitive: {{{ 3
@@ -332,60 +306,22 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
-" Flake8 Ale Gruvbox: {{{ 3
-" Flake8:
-" https://github.com/nvie/vim-flake8
-let g:flake8_show_quickfix = 0
-let g:flake8_show_in_gutter = 1
-
-" Ale:
-nmap <Leader>l <Plug>(ale_toggle_buffer) <CR>
-
-" Gruvbox:
-"https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
-let g:gruvbox_contrast_dark = 'hard'
-
-" Language Servers:
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start']
-    \ }
-" Devicons:
-let g:webdevicons_enable = 1
-let g:webdevicons_enable_nerdtree = 1
+" Jedi: {{{ 3
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
 " }}}
 
-" Python Executables: {{{ 3
-if has('python3')
-    " Termux settings
-    if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
-        let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
-    endif
-
-    " Desktop
-    if executable('/home/faris/miniconda3/envs/neovim_vscode/bin/python')
-        let g:python3_host_prog = '/home/faris/miniconda3/envs/neovim_vscode/bin/python'
-    endif
-
-    if isdirectory("$HOME/virtualenvs")
-        let g:ale_virtualenv_dir_names+="virtualenvs"
-    else
-        " so i found this in the help docs
-        " wth is the syntax for the path? have i been doing this all wrong?
-        " call mkdir($HOME . \"/tmp/foo/bar", \"p", 0700)
-    endif
-endif
-" }}}
-
-" Language Servers: {{{ 3
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ 'sh': ['bash-language-server', 'start'],
-    \ }
-let g:LanguageClient_selectionUI = 'fzf'
-" set completefunc=LanguageClient#complete          " already set as omnifunc
-let g:LanguageClient_diagnosticsSignsMax = 10
+" ALE: {{{ 3
+" https://github.com/w0rp/ale
+nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ]}
+let g:ale_fix_on_save = 1
+let g:ale_sign_column_always = 1
+" Default: `'%code: %%s'`
+let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
+let g:ale_set_signs = 1 " what is the default
+let g:ale_python_flake8_options = '--config ~/.config/flake8'
 " }}}
 
 " Devicons: {{{ 3
@@ -395,30 +331,39 @@ let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTr
 
 " Ultisnips: {{{ 3
 let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/snippets']
+" still haven't decided on nvim or vim dir
+let g:UltiSnipsSnippetDir=[$HOME.'/.config/nvim/UltiSnips']
+" the line below is probably gonna slow things down a lot
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips', 'UltiSnips']
+" I like these mappings
+let g:UltiSnipsJumpForwardTrigger='<Tab>'
+let g:UltiSnipsJumpBackwardTrigger='<S-Tab>'
+let g:UltiSnips_python_quoting_style='GOOGLE'
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit='vertical'
+
+let g:snips_author='Faris Chugthai'
+let g:snips_email='farischugthai@gmail.com'
+let g:snips_github='https://github.com/farisachugthai'
 " }}}
 
 " Vim_Startify: {{{ 3
 let g:startify_session_sort = 1
 " }}}
 
-" Virtualenvs: {{{ 3
-let g:virtualenv_directory = '~/virtualenvs'
-let g:virtualenv_auto_activate = 1
+" Deoplete: {{{ 3
+let g:deoplete#enable_at_startup = 1
 " }}}
 
-" Deoplete: {{{
-let g:deoplete#enable_at_startup = 1
 " }}}
 
 " Filetype Specific Options: {{{ 2
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
-
 " Web Dev:
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
+
 " }}}

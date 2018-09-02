@@ -33,18 +33,18 @@ alias rmdir='rmdir -pv'
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
-#options i use every time i run these commands
+# Options i use every time i run these commands
 alias du='du -d 1 -h'
-alias df='df -aht --total'
+alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
 
-#termux command with odd default of view not send
+# Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
 
 alias info="info --vi-keys"
 
-#git aliases. for complicated git log calls funcs are better
+# Git aliases. for complicated git log calls funcs are better
 alias ga='git add'
 alias gb='git blame'
 alias gcl='git clone'
