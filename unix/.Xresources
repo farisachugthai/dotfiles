@@ -19,12 +19,7 @@ URxvt.letterSpace       : -2
 Urxvt*font              : FiraCode : autohint=True : pixelsize=20
 Urxvt*italicFont        : FiraCode : italic : autohint=True : pixelsize=20
 Urxvt*boldFont          : FiraCode : bold   : autohint=True : pixelsize=20
-! Admittedly unsure of the syntax so might err out
-! URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=24
-! Why does this say bold italic and only call bold?
-! URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=24
 
-! check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
 *antialias                     : true
 *autohint                      : true
 
@@ -54,16 +49,6 @@ URxvt.highlightColor:   #4682B4
 URxvt.throughColor:     Blue
 URxvt*cursorColor:      #dc8cc3
 URxvt*cursorColor2:     Black
-
-! ------------------------------------------------------------------------------
-! Xft Font Configuration
-! --------------------------------------------------------------------------
-Xft.antialias   : true
-Xft.autohint    : true
-Xft.lcdfilter   : lcddefault
-Xft.hintstyle   : hintslight
-Xft.hinting     : 1
-Xft.rgba        : rgb
 
 
 ! -----------------------------------------------------------------------------
@@ -104,6 +89,18 @@ URxvt.color245 : #928374
 URxvt.color246 : #a89984
 URxvt.color248 : #bdae93
 URxvt.color250 : #d5c4a1
+
+
+
+! ------------------------------------------------------------------------------
+! Xft Font Configuration
+! --------------------------------------------------------------------------
+Xft.antialias   : true
+Xft.autohint    : true
+Xft.lcdfilter   : lcddefault
+Xft.hintstyle   : hintslight
+Xft.hinting     : 1
+Xft.rgba        : rgb
 
 
 ! -----------------------------------------------------------------------------
@@ -226,6 +223,48 @@ UXTerm*boldMode:           false
 UXTerm*colorBDMode:        true
 UXTerm*colorBD:            rgb:3f/3f/3f
 
+! Here's a general colorscheme for the X server as a whole
+
+
+! -----------------------------------------------------------------------------
+! File: gruvbox-dark.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 6 Sep 2014
+! -----------------------------------------------------------------------------
+
+! hard contrast
+: *background : #1d2021
+! *background             : #282828
+! soft contrast         : *background : #32302f
+*foreground             : #ebdbb2
+! Black + DarkGrey
+*color0                 : #282828
+*color8                 : #928374
+! DarkRed + Red
+*color1                 : #cc241d
+*color9                 : #fb4934
+! DarkGreen + Green
+*color2                 : #98971a
+*color10                : #b8bb26
+! DarkYellow + Yellow
+*color3                 : #d79921
+*color11                : #fabd2f
+! DarkBlue + Blue
+*color4                 : #458588
+*color12                : #83a598
+! DarkMagenta + Magenta
+*color5                 : #b16286
+*color13                : #d3869b
+! DarkCyan + Cyan
+*color6                 : #689d6a
+*color14                : #8ec07c
+! LightGrey + White
+*color7                 : #a89984
+<F2><F3><F4>color15     : #ebdbb2
+
+
 ! Addys config
 !
 ! -----------------------------------------------------------------------------
@@ -286,26 +325,26 @@ UXTerm*colorBD:            rgb:3f/3f/3f
 ! *.color1:       #c2454e
 ! *.color9:       #ef5847
 
-! ! green
+! green
 ! *.color2:       #7cbf9e
 ! *.color10:      #a2d9b1
 
-! ! yellow
+! yellow
 ! *.color3:       #8a7a63
 ! *.color11:      #beb090
 
-! ! blue
+! blue
 ! *.color4:       #2e3340
 ! *.color12:      #61778d
 
-! ! magenta
+! magenta
 ! *.color5:       #ff5879
 ! *.color13:      #ff99a1
 
-! ! cyan
+! cyan
 ! *.color6:       #44b5b1
 ! *.color14:      #9ed9d8
 
-! ! white
+! white
 ! *.color7:       #f2f1b9
 ! *.color15:      #f6f6c9

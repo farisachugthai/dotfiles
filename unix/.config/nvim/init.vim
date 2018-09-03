@@ -186,6 +186,7 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " Plugin Configurations: {{{ 2
 
 " FZF: {{{ 3
+" In case you were not aware your FZF and Ag commands don't work
 " Adapted from:
 " https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/fzf.vim
 
