@@ -20,9 +20,26 @@ Urxvt*font: FiraCode: autohint=True: pixelsize=22
 URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=24
 URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=24
 
-# check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
+! check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
 *antialias                     : true
 *autohint                      : true
+
+URxvt*scrollWithBuffer         : false
+URxvt*scrollTtyOutput          : false
+URxvt*scrollTtyKeypress        : true
+
+! as a heads up the URLs are impossible to read so fix that
+URxvt.perl-ext-common          : default,matcher,tabbed
+URxvt.urlLauncher              : xdg-open
+URxvt*url-select.launcher      : /usr/bin/firefox
+URxvt*url-select.underline     : true
+URxvt.matcher.pattern.1        : \\bwww\\.[\\w-]\\.[\\w./?&@#-\[\]]*[\\w/-]
+
+! https://github.com/addy-dclxvi/i3-starterpack/blob/master/.Xresources
+URxvt*iso14755:			false
+URxvt*termName:			rxvt-256color
+URxvt.lineSpace:		0
+
 
 URxvt*depth:            32
 !URxvt*background:      rgba:0000/0000/0000/AAAA
@@ -44,17 +61,6 @@ Xft.lcdfilter   : lcddefault
 Xft.hintstyle   : hintslight
 Xft.hinting     : 1
 Xft.rgba        : rgb
-
-URxvt*scrollWithBuffer         : false
-URxvt*scrollTtyOutput          : false
-URxvt*scrollTtyKeypress        : true
-
-! as a heads up the URLs are impossible to read so fix that
-URxvt.perl-ext-common          : default,matcher,tabbed
-URxvt.urlLauncher              : xdg-open
-URxvt*url-select.launcher      : /usr/bin/firefox
-URxvt*url-select.underline     : true
-URxvt.matcher.pattern.1        : \\bwww\\.[\\w-]\\.[\\w./?&@#-\[\]]*[\\w/-]
 
 ! ! -----------------------------------------------------------------------------
 ! ! File: gruvbox-urxvt256.xresources
@@ -95,6 +101,45 @@ URxvt.color246 : #a89984
 URxvt.color248 : #bdae93
 URxvt.color250 : #d5c4a1
 
+
+! -----------------------------------------------------------------------------
+! File: gruvbox-dark.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 6 Sep 2014
+! -----------------------------------------------------------------------------
+
+! hard contrast         :
+*background : #1d2021
+! *background             : #282828
+! soft contrast         : *background : #32302f
+*foreground             : #ebdbb2
+! Black + DarkGrey
+*color0                 : #282828
+*color8                 : #928374
+! DarkRed + Red
+*color1                 : #cc241d
+*color9                 : #fb4934
+! DarkGreen + Green
+*color2                 : #98971a
+*color10                : #b8bb26
+! DarkYellow + Yellow
+*color3                 : #d79921
+*color11                : #fabd2f
+! DarkBlue + Blue
+*color4                 : #458588
+*color12                : #83a598
+! DarkMagenta + Magenta
+*color5                 : #b16286
+*color13                : #d3869b
+! DarkCyan + Cyan
+*color6                 : #689d6a
+*color14                : #8ec07c
+! LightGrey + White
+*color7                 : #a89984
+<F2><F3><F4>color15     : #ebdbb2
+
 ! special
 *.foreground:   #e8dfd6
 *.background:   #021b21
@@ -132,12 +177,6 @@ URxvt.color250 : #d5c4a1
 *.color7:       #f2f1b9
 *.color15:      #f6f6c9
 
-! https://github.com/addy-dclxvi/i3-starterpack/blob/master/.Xresources
-
-URxvt*iso14755:			false
-URxvt*termName:			rxvt-256color
-URxvt.lineSpace:		0
-
 ! ------------------------------------------------------------------------------
 ! Rofi configs
 ! ------------------------------------------------------------------------------
@@ -151,7 +190,7 @@ rofi.modi: run,drun,window
 
 ! ------------------------------------------------------------------------------
 ! Dmenu configs
-! ------------------------------------------------------------------------------
+! -----------------------------------------------------------------------------
 
 dmenu.selforeground:	    #d8dee9
 dmenu.background:	        #2e3440
@@ -201,70 +240,6 @@ dmenu.foreground:	        #d8dee9
 ! *.color7  : #e5e9f0
 ! *.color15 : #d1d5dc
 
-! -----------------------------------------------------------------------------
-! File: gruvbox-dark.xresources
-! Description: Retro groove colorscheme generalized
-! Author: morhetz <morhetz@gmail.com>
-! Source: https://github.com/morhetz/gruvbox-generalized
-! Last Modified: 6 Sep 2014
-! -----------------------------------------------------------------------------
-
-! hard contrast
-: *background : #1d2021
-! *background             : #282828
-! soft contrast         : *background : #32302f
-*foreground             : #ebdbb2
-! Black + DarkGrey
-*color0                 : #282828
-*color8                 : #928374
-! DarkRed + Red
-*color1                 : #cc241d
-*color9                 : #fb4934
-! DarkGreen + Green
-*color2                 : #98971a
-*color10                : #b8bb26
-! DarkYellow + Yellow
-*color3                 : #d79921
-*color11                : #fabd2f
-! DarkBlue + Blue
-*color4                 : #458588
-*color12                : #83a598
-! DarkMagenta + Magenta
-*color5                 : #b16286
-*color13                : #d3869b
-! DarkCyan + Cyan
-*color6                 : #689d6a
-*color14                : #8ec07c
-! LightGrey + White
-*color7                 : #a89984
-<F2><F3><F4>color15     : #ebdbb2
-
-! https://github.com/addy-dclxvi/i3-starterpack/blob/master/.Xresources
-
-URxvt*iso14755:			false
-URxvt*termName:			rxvt-256color
-URxvt.lineSpace:		0
-
-
-! ------------------------------------------------------------------------------
-! Rofi configs
-! ------------------------------------------------------------------------------
-
-rofi.color-enabled: true
-rofi.color-window: #2e3440, #2e3440, #2e3440
-rofi.color-normal: #2e3440, #d8dee9, #2e3440, #2e3440, #bf616a
-rofi.color-active: #2e3440, #b48ead, #2e3440, #2e3440, #93e5cc
-rofi.color-urgent: #2e3440, #ebcb8b, #2e3440, #2e3440, #ebcb8b
-rofi.modi: run,drun,window
-
-! ------------------------------------------------------------------------------
-! Dmenu configs
-! ------------------------------------------------------------------------------
-
-dmenu.selforeground:	    #d8dee9
-dmenu.background:	        #2e3440
-dmenu.selbackground:	    #bf616a
-dmenu.foreground:	        #d8dee9
 
 ! ------------------------------------------------------------------------------
 ! ! Espresso color scheme by Addy

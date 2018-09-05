@@ -15,13 +15,14 @@ TODO:
         - So would i need to use those vars locally in some function?
 """
 
-from time import strftime
+import time
+# from time import strftime
 import os.path
 
 ip = get_ipython()
 
 ldir = ip.profile_dir.log_dir
-fname = 'log-' + ip.profile + '-' + strftime('%Y-%m-%d') + ".py"
+fname = 'log-' + ip.profile + '-' + time.strftime('%Y-%m-%d') + ".py"
 filename = os.path.join(ldir, fname)
 notnew = os.path.exists(filename)
 
@@ -34,7 +35,7 @@ try:
         ip.logger.log_write(u"#!/usr/bin/env python\n" )
         ip.logger.log_write(u"# " + fname + "\n" )
         ip.logger.log_write(u"# IPython automatic logging file\n" )
-        ip.logger.log_write(u"# " + strftime('%H:%M:%S') + "\n" )
+        ip.logger.log_write(u"# " + time.strftime('%H:%M:%S') + "\n" )
         ip.logger.log_write(u"# =================================\n" )
         print (" Logging to "+filename)
 except RuntimeError:

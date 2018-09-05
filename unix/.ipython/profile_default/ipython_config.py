@@ -7,7 +7,11 @@
 from pygments.token import Comment
 
 c = get_config()
-c.AliasManager.user_aliases = [('la', 'ls -AlFh')]
+
+c.AliasManager.user_aliases = [
+        ('la', 'ls -AlFh'),
+        ('head', 'head -n 30')
+        ]
 
 
 #------------------------------------------------------------------------------
@@ -197,7 +201,7 @@ c.InteractiveShell.cache_size = 100000
 c.InteractiveShell.color_info = True
 
 # Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-c.InteractiveShell.colors = 'Linux'
+c.InteractiveShell.colors = 'Neutral'
 
 #
 # c.InteractiveShell.debug = False
@@ -308,6 +312,9 @@ c.TerminalInteractiveShell.editor = 'nvim'
 
 # Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor. This is
 #  in addition to the F2 binding, which is always enabled.
+
+# TODO: Need to add an editor hook so the tmp file it creates has a .py
+# extension or else you don't get all your ftplugin and snippet goodness!
 c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 
 # Provide an alternative handler to be called when the user presses Return. This
@@ -323,7 +330,7 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 # The name or class of a Pygments style to use for syntax
 #         highlighting:
 #  default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc, pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor, paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
-c.TerminalInteractiveShell.highlighting_style = 'monokai'
+c.TerminalInteractiveShell.highlighting_style = 'legacy'
 # I'm sure tango is plenty configurable but out of the box it's completely illegible
 # default has impossible to read strings and in a truncated sense just led to my first rm -r mistake
 
@@ -534,16 +541,6 @@ c.PlainTextFormatter.pprint = True
 
 #
 # c.PlainTextFormatter.verbose = False
-c.PlainTextFormatter.max_width = 100
-
-#
-c.PlainTextFormatter.newline = '\n'
-
-#
-c.PlainTextFormatter.pprint = True
-
-#
-#c.PlainTextFormatter.verbose = False
 
 #------------------------------------------------------------------------------
 # Completer(Configurable) configuration

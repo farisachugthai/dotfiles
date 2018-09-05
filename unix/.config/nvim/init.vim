@@ -34,25 +34,20 @@ call plug#end()
 " }}}
 
 " Nvim Specific: {{{ 2
-set background=dark                 " set as early as possible
+set background=dark                     " set as early as possible
 
-if filereadable(glob('~/.config/nvim/init.vim.local'))
-    source ~/.config/nvim/init.vim.local
-endif
 if filereadable(glob('~/.config/nvim/autocorrect.vim'))
     source ~/.config/nvim/autocorrect.vim
 endif
-set inccommand=split                " This alone is enough to never go back
+set inccommand=split                    " This alone is enough to never go back
 set termguicolors
-" }}}
 
-" Filetype Specific Options: {{{ 2
-" IPython:
-au BufRead,BufNewFile *.ipy setlocal filetype=python
-" Web Dev:
-au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
-" Markdown:
-autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
+" unabashedly stolen from junegunn dude is too good.
+let s:local_vimrc = fnamemodify(resolve(expand('<sfile>')), ':p:h').'/init.vim.local'
+if filereadable(s:local_vimrc)
+  execute 'source' s:local_vimrc
+endif
+
 " }}}
 
 " Global Options: {{{ 2
@@ -69,8 +64,8 @@ let g:python_highlight_all = 1
 
 " Folds: {{{ 3
 set foldenable
-set foldlevelstart=1                 " Enables most folds
-set foldnestmax=10                   " Why would anything be folded this much
+set foldlevelstart=1                    " Enables most folds
+set foldnestmax=10                      " Why would anything be folded this much
 set foldmethod=marker
 " }}}
 
@@ -86,7 +81,7 @@ set splitright
 " }}}
 
 " Spell Checker: {{{ 3
-set encoding=UTF-8             " Set default encoding
+set encoding=UTF-8                      " Set default encoding
 set fileencoding=UTF-8
 set spelllang=en
 " set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
@@ -94,10 +89,9 @@ set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
 set spellsuggest=5
-nnoremap <Leader>s :setlocal spell!<CR>
 " Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
-    setlocal dictionary='/usr/share/dict/words'
+    setlocal dictionary+='/usr/share/dict/words'
 " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
@@ -110,11 +104,13 @@ endif
 " }}}
 
 " Fun With Clipboards: {{{ 3
-if has('unnamedplus')           " Use the system clipboard.
+if has('unnamedplus')                   " Use the system clipboard.
   set clipboard+=unnamed,unnamedplus
-else                            " Accomodate Termux
+else                                    " Accomodate Termux
   set clipboard+=unnamed
 endif
+
+set pastetoggle=<F7>
 " }}}
 
 " Other Global Options: {{{ 3
@@ -132,7 +128,7 @@ set noswapfile
 if has('gui_running')
     set guifont='Fira\ Code\ Mono:11'
 endif
-set path+=**        			        " Recursively search files with :find
+set path+=**        			        " Recursively search dirs with :find
 set autochdir
 set wildmenu                            " Show list instead of just completing
 set wildmode=longest,list:longest       " Longest string or list alternatives
@@ -148,7 +144,6 @@ if has('persistent_undo')
     set undofile	" keep an undo file (undo changes after closing)
 endif
 set modeline
-
 " }}}
 
 " }}}
@@ -156,10 +151,15 @@ set modeline
 " Mappings: {{{ 2
 
 " General Mappings: {{{ 3
+" Navigate windows easier
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+" Navigate tabs easier
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <C-Left> :tabprev<CR>
+" Simple way to speed up startup hugely
 nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
 nnoremap <Leader>a ggVG
@@ -168,7 +168,9 @@ inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
 " It should be easier to get help
 nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
-noremap <F9> :e $MYVIMRC<CR>
+nnoremap <F9> :e $MYVIMRC<CR>
+" Toggle the spell checker
+nnoremap <Leader>s :setlocal spell!<CR>
 " }}}
 
 " Terminal: {{{ 3
@@ -176,6 +178,32 @@ tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 " }}}
+
+" Ale: {{{ 3
+" So these mappings would clobber so many things but its a good thought to
+" keep in the back of your mind
+" nnoremap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nnoremap <silent> <C-j> <Plug>(ale_next_wrap)
+nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+" }}}
+
+" Fugitive: {{{ 3
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>ge :Gedit<CR>
+nnoremap <silent> <leader>gE :Gedit<space>
+nnoremap <silent> <leader>gr :Gread<CR>
+nnoremap <silent> <leader>gR :Gread<space>
+nnoremap <silent> <leader>gw :Gwrite<CR>
+nnoremap <silent> <leader>gW :Gwrite!<CR>
+nnoremap <silent> <leader>gq :Gwq<CR>
+nnoremap <silent> <leader>gQ :Gwq!<CR>
+" }}}
+
+" Also thinking about throwing a few for ex around. something like
+" cnoremap C-a Beginning of line
 " }}}
 
 " Plugin Configuration: {{{ 2
@@ -255,13 +283,12 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " }}}
 
 " NERDTree: {{{ 3
-" If only NERDTree is open, close Vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeNaturalSort = 1                       " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
+let g:NERDTreeNaturalSort = 1
 let g:NERDTreeChDirMode = 2                         " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
 let g:NERDTreeMouseMode = 2                         " Open dirs with 1 click files with 2
@@ -275,39 +302,13 @@ let g:NERDDefaultAlign = 'left'                     " Align line-wise comment de
 let g:NERDTrimTrailingWhitespace = 1                " Trim trailing whitespace when uncommenting
 " }}}
 
-" Jedi: {{{ 3
-let g:jedi#smart_auto_mappings = 0          " if you see 'from' immediately create
-let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
-let g:jedi#show_call_signatures_delay = 250  " wait 50ms instead of 500 to show CS
-let g:jedi#completions_enabled = 1
-let g:jedi#force_py_version = 3
-" }}}
-
-" Fugitive: {{{ 3
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
-nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>ge :Gedit<CR>
-nnoremap <silent> <leader>gE :Gedit<space>
-nnoremap <silent> <leader>gr :Gread<CR>
-nnoremap <silent> <leader>gR :Gread<space>
-nnoremap <silent> <leader>gw :Gwrite<CR>
-nnoremap <silent> <leader>gW :Gwrite!<CR>
-nnoremap <silent> <leader>gq :Gwq<CR>
-nnoremap <silent> <leader>gQ :Gwq!<CR>
-" }}}
-
 " Ale: {{{ 3
-nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
-let g:ale_python_flake8_options = '--config ~/.config/flake8'
 let g:ale_set_signs = 1                             " what is the default
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ]}
-
 " }}}
 
 " Devicons: {{{ 3
@@ -323,11 +324,10 @@ let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsSnippetDir = [ '~/.config/nvim/Ultisnips' ]
 let g:UltiSnips_python_quoting_style = 'GOOGLE'
-let g:UltiSnipsEnableSnipMate = 0           " isn't working at all
+let g:UltiSnipsEnableSnipMate = 0                   " isn't working at all
 " }}}
 
 " Gruvbox: {{{ 3
-" https://github.com/morhetz/gruvbox/wiki/Configuration#ggruvbox_contrast_dark
 " TODO: syntax is wrong but the idea is to run check before eval
 " if &colorscheme=gruvbox
 let g:gruvbox_contrast_dark = 'hard'
@@ -335,6 +335,55 @@ let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 " }}}
 
+" }}}
+
+" Filetype Specific Options: {{{ 2
+" IPython:
+au BufRead,BufNewFile *.ipy setlocal filetype=python
+" Web Dev:
+au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
+" Markdown:
+autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
+" }}}
+
+" Functions: {{{ 2
+" Credit to Junegunn
+
+function! s:todo() abort
+  let entries = []
+  for cmd in ['git grep -niI -e TODO -e todo -e FIXME -e XXX 2> /dev/null',
+            \ 'grep -rniI -e TODO -e todo -e FIXME -e XXX * 2> /dev/null']
+    let lines = split(system(cmd), '\n')
+    if v:shell_error != 0 | continue | endif
+    for line in lines
+      let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
+      call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
+    endfor
+    break
+  endfor
+
+  if !empty(entries)
+    call setqflist(entries)
+    copen
+  endif
+endfunction
+command! Todo call s:todo()
+
+
+" Heres one where he uses fzf and Explore to search a packages docs
+
+function! s:plug_help_sink(line)
+  let dir = g:plugs[a:line].dir
+  for pat in ['doc/*.txt', 'README.md']
+    let match = get(split(globpath(dir, pat), "\n"), 0, '')
+    if len(match)
+      execute 'tabedit' match
+      return
+    endif
+  endfor
+  tabnew
+  execute 'Explore' dir
+endfunction
 " }}}
 
 " }}}
