@@ -130,6 +130,7 @@ iab Calcullated Calculated
 iab Calulated Calculated
 iab Candidtae Candidate
 iab Candidtaes Candidates
+ia Cant Can't
 iab Catagory Category
 iab Categiory Category
 iab Certian Certain
@@ -386,6 +387,7 @@ iab Idae Idea
 iab Idaes Ideas
 iab Identofy Identify
 iab Ihs His
+ia Ill I'll
 ia Im I'm
 iab Imediate Immediate
 iab Imediatly Immediately
@@ -429,6 +431,7 @@ iab Itwas It Was
 iab Iused Used
 iab Iwll Will
 iab Iwth With
+ia Ive I've
 iab Jsut Just
 iab Jugment Judgment
 iab Knowldge Knowledge
@@ -707,6 +710,7 @@ iab Thesame The Same
 iab Thetwo The Two
 iab Theyll They'll
 iab Theyve They've
+ia Theyre They're
 iab Thgat That
 iab Thge The
 iab Thier Their
@@ -714,7 +718,7 @@ iab Thigsn Things
 iab Thisyear This Year
 iab Thme Them
 iab Thna Than
-iab Thna Than 
+iab Thna Than
 iab Thne Then
 iab Thnigs Things
 iab Thnig Thing
@@ -773,7 +777,7 @@ iab Wherre Where
 iab Whic Which
 iab Whihc Which
 iab Whta What
-iab Whta What 
+iab Whta What
 iab Wief Wife
 iab Wierd Weird
 iab Wihch Which
@@ -944,6 +948,7 @@ iab calcullated calculated
 iab calulated calculated
 iab candidtae candidate
 iab candidtaes candidates
+ia cant can't
 iab catagory category
 iab categiory category
 iab certian certain
@@ -1200,6 +1205,7 @@ iab idae idea
 iab idaes ideas
 iab identofy identify
 iab ihs his
+ia ill I'll
 ia im I'm
 iab imediate immediate
 iab imediatly immediately
@@ -1243,6 +1249,7 @@ iab itwas it was
 iab iused used
 iab iwll will
 iab iwth with
+ia ive I've
 iab jsut just
 iab jugment judgment
 iab knowldge knowledge
@@ -1521,6 +1528,7 @@ iab thesame the same
 iab thetwo the two
 iab theyll they'll
 iab theyve they've
+ia theyre they're
 iab thgat that
 iab thge the
 iab thier their
@@ -1528,7 +1536,7 @@ iab thigsn things
 iab thisyear this year
 iab thme them
 iab thna than
-iab thna than 
+iab thna than
 iab thne then
 iab thnigs things
 iab thnig thing
@@ -1587,7 +1595,7 @@ iab wherre where
 iab whic which
 iab whihc which
 iab whta what
-iab whta what 
+iab whta what
 iab wief wife
 iab wierd weird
 iab wihch which

@@ -1,5 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+""" Create a logfile for the day and append to it if one already exists.
+
+2018-09-02
+
+This file has been in this repo for so long I feel like I forgot about it.
+
+This is so oddly written but from long enough ago that I'm not even surprised.
+
+TODO:
+    If you want, use datetime instead.
+    Import join in a more sensible manner.
+    Clean this namespace up you have notnew declared everytime you open a shelll!
+        - So would i need to use those vars locally in some function?
+"""
 
 from os import path
 import time

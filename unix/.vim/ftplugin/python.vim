@@ -1,6 +1,11 @@
 " python.vim
+" Maintainer: Faris Chugthai
 
-if exists("b:did_ftplugin") | finish | endif
+" Guard that should be at the top of all ftplugins
+if exists("b:did_ftplugin")
+    finish
+endif
+
 let b:did_ftplugin = 1
 let s:keepcpo= &cpo
 set cpo&vim
@@ -8,21 +13,31 @@ set cpo&vim
 setlocal tabstop=4 shiftwidth=4 expandtab softtabstop=4
 let g:python_highlight_all = 1
 
+" The external program vim uses for gg=G can be configured
+setlocal equalprg=yapf
+
 setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
 
-" Jedi:
-let g:jedi#smart_auto_mappings = 1
-let g:jedi#popup_on_dot = 1
-let g:jedi#use_tabs_not_buffers = 1
-let g:jedi#completions_enabled = 1
+" Highlight characters after 120 chars
+augroup vimrc_autocmds
+    autocmd!
+    autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
+    autocmd FileType python match Excess /\%120v.*/
+    autocmd FileType python set nowrap
+augroup END
+
+" Jedi: {{{
+let g:jedi#use_tabs_not_buffers = 1         " easy to maintain workspaces
 let g:jedi#completions_command = '<C-N>'
 let g:jedi#documentation_command = '<leader>h'
 let g:jedi#usages_command = '<leader>u'
-let g:jedi#show_call_signatures_delay = 50  " wait 50ms instead of 500 to show CS
+let g:jedi#show_call_signatures_delay = 100  " wait 100ms instead of 500 to show CS
+" }}}
 
-" Python Executables:
+" Python Executables: {{{
 " TODO: Properly handle env vars to cut this code in half
 if has('python3')
+    " Termux settings
 
     if executable('/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3')
         let g:python3_host_prog = '/data/data/com.termux/files/home/virtualenvs/neovim/bin/python3'
@@ -37,8 +52,9 @@ if has('python3')
     " as a last resort we should just assign the fucking system py3 ya know
 
 endif
+" }}}
 
-" Ale:
+" Ale: {{{
 " should i check if there's a config file in the current dir or in the project
 " dir? hmmmmm
 let b:ale_python_flake8_options = '--config ~/.config/flake8'
@@ -50,7 +66,7 @@ if isdirectory("$HOME/virtualenvs")
 endif
 " }}}
 
-" Language Servers:
+" Language Servers: {{{
 " ftplugins are supposed to be buffer local plugins right?
 let b:LanguageClient_serverCommands = { 'python': ['pyls'] }
 let b:LanguageClient_autoStart = 1
@@ -59,27 +75,7 @@ let b:LanguageClient_selectionUI = 'fzf'
 " nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap K :call LanguageClient_textDocument_hover()<CR>
 nnoremap gd :call LanguageClient_textDocument_definition()<CR>
-
-" it's a lovely plugin but of all the completeres why langclient???
-" It's merely a vesse lto get deoplete working smoothly. Like at least go jedi
-" or something....
-" setlocal omnifunc=LanguageClient#complete
-"setlocal completefunc=LanguageClient#complete
-
-
-
-" First time: try finding pydoc
-if !exists('g:pydoc_executable')
-    if executable('pydoc')
-        let g:pydoc_executable = 1
-    else
-        let g:pydoc_executable = 0
-    endif
-endif
-" If pydoc was found use it for keywordprg.
-if g:pydoc_executable
-    setlocal keywordprg=pydoc
-endif
+" }}}
 
 let &cpo = s:keepcpo
 unlet s:keepcpo
