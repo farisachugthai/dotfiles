@@ -1,13 +1,20 @@
 # sh.snippets
+
 # Your personal snippets
 # =======================
 
-snippet
+snippet ifempty "If loop echoes help guide if no CLAs" b
 if [[ -z "$1" ]]; then
 	echo -e "Usage: $0 [options] commands"
 	exit 2
 fi
 endsnippet
+
+snippet #! "#!/usr/bin/env (!env)"
+`!p snip.rv = '#!/usr/bin/env ' + getShell() + "# Maintainer: Faris Chugthai \n" `
+# set -euo pipefail
+endsnippet
+
 
 global !p
 import vim
@@ -38,10 +45,6 @@ endglobal
 # `!p snip.rv = '#!/bin/' + getShell() + "\n\n" `
 # endsnippet
 
-snippet ! "#!/usr/bin/env (!env)"
-`!p snip.rv = '#!/usr/bin/env ' + getShell() + "\n\n" `
-# set -euo pipefail
-endsnippet
 
 snippet sbash "safe bash options"
 #!/usr/bin/env bash

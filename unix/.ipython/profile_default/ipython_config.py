@@ -7,7 +7,11 @@
 from pygments.token import Comment
 
 c = get_config() # noqa
-c.AliasManager.user_aliases = [('la', 'ls -alFh')]
+c.AliasManager.user_aliases = [
+        ('la', 'ls -alFh'),
+        ('head', 'head -n 30'),
+        ('tree', 'tree'),
+        ]
 
 
 #------------------------------------------------------------------------------
@@ -155,7 +159,7 @@ c.TerminalIPythonApp.display_banner = True
 # 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
 #  nodes should be run interactively (displaying output from expressions).
 try:
-    c.InteractiveShell.ast_node_interactivity = 'last_expr'
+    c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 except Exception:
     c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
@@ -178,7 +182,7 @@ c.InteractiveShell.autoindent = True
 c.InteractiveShell.automagic = True
 
 # The part of the banner to be printed before the profile
-# c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
+# c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"       # noqa
 
 # The part of the banner to be printed after the profile
 # c.InteractiveShell.banner2 = ''
@@ -197,8 +201,9 @@ c.InteractiveShell.cache_size = 100000
 c.InteractiveShell.color_info = True
 
 # Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-c.InteractiveShell.colors = 'Linux'
+c.InteractiveShell.colors = 'Neutral'
 
+#
 # c.InteractiveShell.debug = False
 
 # Don't call post-execute functions that have failed in the past.
@@ -254,15 +259,11 @@ c.InteractiveShell.history_load_length = 10000
 #  TerminalInteractiveShell.prompts object directly.
 # c.InteractiveShell.prompts_pad_left = True
 
-
 c.InteractiveShell.quiet = False
-
 
 # c.InteractiveShell.separate_in = '\n'
 
-
 # c.InteractiveShell.separate_out = ''
-
 
 # c.InteractiveShell.separate_out2 = ''
 
@@ -299,6 +300,8 @@ c.TerminalInteractiveShell.editing_mode = 'vi'
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
 c.TerminalInteractiveShell.editor = 'nvim'
 
+# 07/16/18
+# i was reading prompt toolkits docs and I'm still unsure what thisection refers to
 # Allows to enable/disable the prompt toolkit history search
 # c.TerminalInteractiveShell.enable_history_search = True
 
@@ -321,7 +324,7 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
 # paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
 
-c.TerminalInteractiveShell.highlighting_style = 'monokai'
+c.TerminalInteractiveShell.highlighting_style = 'legacy'
 
 # I'm sure tango is plenty configurable but out of the box it's completely illegible
 # default has impossible to read strings and in a truncated sense just led to my first rm -r mistake
@@ -382,7 +385,7 @@ c.TerminalInteractiveShell.true_color = True
 #  set enabled=False to disable the SQLite history, in which case there will be
 #  no stored history, no SQLite connection, and no background saving thread.
 #  This may be necessary in some threaded environments where IPython is embedded.
-c.HistoryAccessor.enabled = True
+# c.HistoryAccessor.enabled = True
 
 # Path to file to use for SQLite history database.
 #

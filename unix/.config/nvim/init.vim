@@ -152,10 +152,15 @@ set nojoinspaces
 " Mappings: {{{ 2
 
 " General Mappings: {{{ 3
+" Navigate windows more easily
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+" Navigate tabs more easily
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <C-Left> :tabprev<CR>
+" NERDTree has sluggish startuptimes
 nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
 nnoremap <Leader>a ggVG
@@ -165,10 +170,11 @@ inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
 nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
 nnoremap <F9> :e $MYVIMRC<CR>
-nnoremap <C-Right> :tabnext<CR>
-nnoremap <C-Left> :tabprev<CR>
 
 " what happened to that mapping i had for running a python file in visual mode
+" i tried doing this mapping with all modes but there's no reason
+" for it to be activated in normal mode and it's annoying in visual
+inoremap jk <Esc>
 " }}}
 
 " Terminal: {{{ 3
@@ -181,6 +187,26 @@ tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
+
+" Ale: {{{ 3
+nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+" }}}
+
+" Fugitive: {{{ 3
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>ge :Gedit<CR>
+nnoremap <silent> <leader>gE :Gedit<space>
+nnoremap <silent> <leader>gr :Gread<CR>
+nnoremap <silent> <leader>gR :Gread<space>
+nnoremap <silent> <leader>gw :Gwrite<CR>
+nnoremap <silent> <leader>gW :Gwrite!<CR>
+nnoremap <silent> <leader>gq :Gwq<CR>
+nnoremap <silent> <leader>gQ :Gwq!<CR>
+" }}}
+
 " }}}
 
 " Plugin Configurations: {{{ 2
@@ -232,7 +258,7 @@ command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>),
 
 " could also use set grepprg here
 
-let g:fzf_history_dir = '$HOME/.local/share/fzf-history'
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 " }}}
 
 " NERDTree: {{{ 3
@@ -242,10 +268,10 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = 'right'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeNaturalSort = 1           " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
-let g:NERDTreeChDirMode = 2             " change cwd every time NT root changes
+let g:NERDTreeNaturalSort = 1               " Sorted counts go 1, 2, 3..10,11. Default is 1, 10, 11...100...2
+let g:NERDTreeChDirMode = 2                 " change cwd every time NT root changes
 let g:NERDTreeShowLineNumbers = 1
-let g:NERDTreeMouseMode = 2             " Open dirs with 1 click files with 2
+let g:NERDTreeMouseMode = 2                 " Open dirs with 1 click files with 2
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$', '\.git$']
 let g:NERDTreeRespectWildIgnore = 1         " yeah i meant those ones too
 " }}}
@@ -256,37 +282,13 @@ let g:NERDDefaultAlign = 'left'             " Align line-wise comment delimiters
 let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when uncommenting
 " }}}
 
-" Fugitive: {{{ 3
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
-nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>ge :Gedit<CR>
-nnoremap <silent> <leader>gE :Gedit<space>
-nnoremap <silent> <leader>gr :Gread<CR>
-nnoremap <silent> <leader>gR :Gread<space>
-nnoremap <silent> <leader>gw :Gwrite<CR>
-nnoremap <silent> <leader>gW :Gwrite!<CR>
-nnoremap <silent> <leader>gq :Gwq<CR>
-nnoremap <silent> <leader>gQ :Gwq!<CR>
-" }}}
-
-" Jedi: {{{ 3
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
-" }}}
-
 " ALE: {{{ 3
-" https://github.com/w0rp/ale
-nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
 let g:ale_set_signs = 1 " what is the default
-let g:ale_python_flake8_options = '--config ~/.config/flake8'
 
 " }}}
 

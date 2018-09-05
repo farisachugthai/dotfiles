@@ -41,6 +41,8 @@ alias echo='echo -e'
 
 # Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
+# termux-open gets an option for a default file handler! Dropbox integration
+alias termux-open="termux-open --send"
 
 alias info="info --vi-keys"
 
@@ -58,6 +60,8 @@ alias glo='git log'
 alias gls='git ls-tree'
 alias gs='git status'
 alias gst='git diff --stat'
+# Not gonna lie I really don't like the inconsistency of gst.
+# But is gds2 too much?? Like at what point are the alias more complicated than just running the command?
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -71,13 +75,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# alias for easier profiling of nvim. probs wanna change backticks and date format
-# alias prof="--startuptime $DOT/.config/nvim/profiling/`date`"
-# Usage: nvim prof [filename to edit]
-# this needs to be a function nvim thinks its a filename
-
-# here's a good one
+# I'll give you a second shot at it kid
 alias redo='fc -s'
-# or even:
+# And even a few ways to do it if you want
 alias r='fc -s'
 # wait could we do C-r like in vim?
