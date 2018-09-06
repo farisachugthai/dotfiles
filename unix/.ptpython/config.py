@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Configuration example for ``ptpython``.
 
@@ -15,6 +16,11 @@ __all__ = (
     'configure',
 )
 
+# this whole file is 1 function???? why not create a class and start doing stuff?
+
+# maybe set it up to run your ipy config first
+
+# also magics don't work as expected. even with automagic turned on `cat file` doesn't work
 
 def configure(repl):
     """
@@ -171,3 +177,5 @@ _custom_ui_colorscheme = {
     # Make the status toolbar red.
     Token.Toolbar.Status:                         'bg:#ff0000 #000000',
 }
+
+# ifmain

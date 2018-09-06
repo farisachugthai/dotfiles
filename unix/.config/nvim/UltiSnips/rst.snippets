@@ -123,8 +123,11 @@ def get_popular_code_type():
 	types = re.findall(r'[:|\.\.\s]code::?\s(\w+)', buf)
 	try:
 		popular_type = Counter(types).most_common()[0][0]
-	except IndexError:
-		popular_type = "lua" # Don't break default
+	except IndexError as e:
+		# what the hell is this
+		# popular_type = "lua" # Don't break default
+		# no i just want the exception
+		print(e)
 	return popular_type
 endglobal
 
