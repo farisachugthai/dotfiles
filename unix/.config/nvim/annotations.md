@@ -1,5 +1,14 @@
 # Annotations
 
+## runtime
+
+so this feels like an actual problem
+
+:echo &rtp
+
+doesn't display any directories below ~/.config/nvim
+....why is that? is that in fact a problem?
+
 ## speeding nvim up
 
 I've managed to shave off 3/4s of the time nvim takes to start up with a few
@@ -49,41 +58,15 @@ server run the commands we feed to it
 
 I'm not sure how I hadn't thought of this yet.
 
-### Jedi Function
-
-Not really ready to do away with this completely.
-
-" Adapted largely from:
-" (https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/jedi.vim)
-
-```VimScript
-function! StartJedi()
-    let g:jedi#completions_enabled = 0
-    let g:jedi#auto_vim_configuration = 0
-
-    let g:jedi#use_splits_not_buffers = 'right'
-    let g:jedi#documentation_command = '<leader>h'
-    let g:jedi#usages_command = '<leader>u'
-    let g:jedi#completions_command = '<C-N>'
-    " Improve performance by setting this to 0:
-    " https://github.com/davidhalter/jedi-vim/issues/163#issuecomment-73343003
-    let g:jedi#show_call_signatures = 2
-
-    augroup PreviewOnBottom
-        autocmd InsertEnter * set splitbelow
-        autocmd InsertLeave * set splitbelow!
-    augroup END
-endfunction
-```
-
 
 ### lightline
 
-" Lightline: {{{
+honestly keep this around because airline is pretty heavy on termux
 
 btw do the code blocks need viml or VimScript after the tick marks?
 
 ```viml
+" Lightline: {{{
 let g:lightline = {
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
@@ -153,7 +136,9 @@ endfunc
 
 ### ALE
 
-```
+....what the hell is this?
+
+```viml
 function! LinterStatus() abort
   let l:counts = ale#statusline#Count(bufnr(''))
 
@@ -163,51 +148,6 @@ function! LinterStatus() abort
   return l:counts.total == 0 ? '' : printf( '%dW %dE', l:all_non_errors, l:all_errors )
 endfunction
 ```
-
-## Diff between nvim and vim
-
-2. Defaults					            *nvim-defaults*
-
-- Syntax highlighting is enabled by default
-- ":filetype plugin indent on" is enabled by default
-
-- 'autoindent' is set by default
-- 'autoread' is set by default
-- 'backspace' defaults to "indent,eol,start"
-- 'backupdir' defaults to .,~/.local/share/nvim/backup (|xdg|)
-- 'belloff' defaults to "all"
-- 'complete' doesn't include "i"
-- 'cscopeverbose' is enabled
-- 'directory' defaults to ~/.local/share/nvim/swap// (|xdg|), auto-created
-- 'display' defaults to "lastline,msgsep"
-- 'fillchars' defaults (in effect) to "vert:│,fold:·"
-- 'formatoptions' defaults to "tcqj"
-- 'history' defaults to 10000 (the maximum)
-- 'hlsearch' is set by default
-- 'incsearch' is set by default
-- 'langnoremap' is enabled by default
-- 'langremap' is disabled by default
-- 'laststatus' defaults to 2 (statusline is always shown)
-- 'listchars' defaults to "tab:> ,trail:-,nbsp:+"
-- 'nocompatible' is always set
-- 'nrformats' defaults to "bin,hex"
-- 'ruler' is set by default
-- 'sessionoptions' doesn't include "options"
-- 'showcmd' is set by default
-- 'sidescroll' defaults to 1
-- 'smarttab' is set by default
-- 'tabpagemax' defaults to 50
-- 'tags' defaults to "./tags;,tags"
-- 'ttyfast' is always set
-
-
-**- 'undodir' defaults to ~/.local/share/nvim/undo (|xdg|), auto-created**
-Undodir is in the wrong spkt.
-
-- 'viminfo' includes "!"
-- 'wildmenu' is set by default
-
-
 
 ## VimScript Struggles
 
@@ -219,13 +159,6 @@ elseif                          " how do we check that a variable is set to a no
 else                            " Don't actually think this part does anything?
    "setlocal colorcolumn=+1
 endif
-
-### Vimscript making syscalls
-
-    " normal PlugInstall +UpdateRemotePlugins :clo
-    " Above didn't work. Unsure why.
-
-Was originally after the sys curl  call to download vimplug and above the endif
 
 ## Fun with clipboards
 
@@ -250,28 +183,3 @@ let g:clipboard = {
 If `cache_enabled` is |TRUE| then when a selection is copied, Nvim will cache
 the selection until the copy command process dies. When pasting, if the copy
 process has not died, the cached selection is applied.
-
-
-## Mappings
-
-
-							*emacs-keys*
-For Emacs-style editing on the command-line: >
-	" start of line
-	:cnoremap <C-A>		<Home>
-	" back one character
-	:cnoremap <C-B>		<Left>
-	" delete character under cursor
-	:cnoremap <C-D>		<Del>
-	" end of line
-	:cnoremap <C-E>		<End>
-	" forward one character
-	:cnoremap <C-F>		<Right>
-	" recall newer command-line
-	:cnoremap <C-N>		<Down>
-	" recall previous (older) command-line
-	:cnoremap <C-P>		<Up>
-	" back one word
-	:cnoremap <Esc><C-B>	<S-Left>
-	" forward one word
-	:cnoremap <Esc><C-F>	<S-Right>

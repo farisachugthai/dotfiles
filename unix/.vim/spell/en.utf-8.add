@@ -106,7 +106,7 @@ Vimwiki's
 Tagbar
 statusline
 colorscheme
-termux
+#ermux
 url
 cmds
 zim
@@ -277,3 +277,10 @@ vint
 google
 npm
 correctly
+modeline
+#EAD/!
+#EAD/!
+#EAD/!
+HEAD/!
+termux/!
+ALE

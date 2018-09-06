@@ -18,6 +18,7 @@ Raises:
 Returns:
 
 
+
 Around here would be an appropriate place to put:
     :copyright: (c) 2018 Faris Chugthai
     :license: MIT
@@ -35,49 +36,115 @@ __requires__ = 'flake8==3.5.0'
 __url__ = 'https://github.com/farisachugthai'
 
 
-# For the class below can we take note of which docstrings are visible
-# under what conditions? In the ipython shell if i run import MyClass; MyClass?
-# or MyClass.__init__? what do I see? And how much more likel am I to run the
-# first than the second AKA do we need an elaborate or really any docstring for
-# __init__?
-class MyClass(object):
+class MainClass1(object):
+    """This class docstring shows how to use sphinx and rst syntax
 
-    """Docstring for MyClass."""
+    The first line is brief explanation, which may be completed with
+    a longer one. For instance to discuss about its methods. The only
+    method here is :func:`function1`'s. The main idea is to document
+    the class and methods's arguments with
 
-    def __init__(self, a, b, c):
-        """TODO: to be defined.
+    - **parameters**, **types**, **return** and **return types**::
 
-        :a: TODO
-        :b: TODO
-        :c: TODO
+          :param arg1: description
+          :param arg2: description
+          :type arg1: type description
+          :type arg1: type description
+          :return: return description
+          :rtype: the return type description
 
-        """
-        self._a = a
-        self._b = b
-        self._c = c
+    - and to provide sections such as **Example** using the double commas syntax::
 
-        pass            # code
+          :Example:
 
+          followed by a blank line !
 
-def main(pos_args, kw_args, *args, **kwargs):
-    """Put your summary of the function here.
+      which appears as follow:
 
-    Provide a more detailed explanation if necessary. Returns and raises
-    signatures are from pandas.core.checked_add_with_arr
+      :Example:
 
-    Parameters
-    ----------
-    var : type
+      followed by a blank line
 
-    Returns
-    -------
-    sum : An array for elements x + b for each element x in arr if b is
-          a scalar or an array for elements x + y for each element pair
-          (x, y) in (arr, b).
+    - Finally special sections such as **See Also**, **Warnings**, **Notes**
+      use the sphinx syntax (*paragraph directives*)::
+
+          .. seealso:: blabla
+          .. warnings also:: blabla
+          .. note:: blabla
+          .. todo:: blabla
+
+    .. note::
+        There are many other Info fields but they may be redundant:
+            * param, parameter, arg, argument, key, keyword: Description of a
+              parameter.
+            * type: Type of a parameter.
+            * raises, raise, except, exception: That (and when) a specific
+              exception is raised.
+            * var, ivar, cvar: Description of a variable.
+            * returns, return: Description of the return value.
+            * rtype: Return type.
+
+    .. note::
+        There are many other directives such as versionadded, versionchanged,
+        rubric, centered, ... See the sphinx documentation for more details.
+
+    Here below is the results of the :func:`function1` docstring.
 
     """
-    pass
+
+    def function1(self, arg1, arg2, arg3):
+        """returns (arg1 / arg2) + arg3
+
+        This is a longer explanation, which may include math with latex syntax
+        :math:`\\alpha`.
+        Then, you need to provide optional subsection in this order (just to be
+        consistent and have a uniform documentation. Nothing prevent you to
+        switch the order):
+
+          - parameters using ``:param <name>: <description>``
+          - type of the parameters ``:type <name>: <description>``
+          - returns using ``:returns: <description>``
+          - examples (doctest)
+          - seealso using ``.. seealso:: text``
+          - notes using ``.. note:: text``
+          - warning using ``.. warning:: text``
+          - todo ``.. todo:: text``
+
+        **Advantages**:
+         - Uses sphinx markups, which will certainly be improved in future
+           version
+         - Nice HTML output with the See Also, Note, Warnings directives
 
 
-if __name__ == '__main__':
-    main()
+        **Drawbacks**:
+         - Just looking at the docstring, the parameter, type and  return
+           sections do not appear nicely
+
+        :param arg1: the first value
+        :param arg2: the first value
+        :param arg3: the first value
+        :type arg1: int, float,...
+        :type arg2: int, float,...
+        :type arg3: int, float,...
+        :returns: arg1/arg2 +arg3
+        :rtype: int, float
+
+        :Example:
+
+        >>> import template
+        >>> a = template.MainClass1()
+        >>> a.function1(1,1,1)
+        2
+
+        .. note:: can be useful to emphasize
+            important feature
+        .. seealso:: :class:`MainClass2`
+        .. warning:: arg2 must be non-zero.
+        .. todo:: check that arg2 is non zero.
+        """
+        return arg1/arg2 + arg3
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

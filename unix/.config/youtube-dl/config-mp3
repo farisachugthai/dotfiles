@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 # YouTube Downloader Configuration
 # Maintainer: Faris Chugthai
 
@@ -8,6 +8,8 @@
 
 # mp3
 
+# All configs: {{{
+
 # Filetype
 -f mp3
 
@@ -15,14 +17,14 @@
 --restrict-filenames
 
 # Output location
--o "$HOME/storage/shared/Videos/%(title)s.%(ext)s"
+-o "$HOME/storage/shared/Music/%(artist)s/%(title)s.%(ext)s"
 
 # Metadata
---add-metadata 
+--add-metadata
 --metadata-from-title "%(artist)s - %(title)s"
 
 # Filetype
--x --audio-format mp3 --audio-quality 0 --prefer-ffmpeg 
+-x --audio-format mp3 --audio-quality 0 --prefer-ffmpeg
 
 # Modification Time
 --no-mtime
@@ -31,22 +33,15 @@
 --embed-thumbnail
 
 # Modification time
---no-mtime 
-
-# Subtitles
---write-auto-sub
---embed-subs 
+--no-mtime
 
 # Thumbnails
---embed-thumbnail 
+--embed-thumbnail
 
 # Don't phone home
---no-call-home 
+--no-call-home
 
 # Don't use proprietary encodings
 --youtube-skip-dash-manifest
 
-
-# Testing
-
-#-o "$HOME/storage/shared/Music/%(artist)s/%(album)s/%(title)s.%(ext)s" 
+# }}}

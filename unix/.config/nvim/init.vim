@@ -1,4 +1,4 @@
-" init.vim
+"init.vim
 " Neovim configuration
 " Maintainer: Faris Chugthai
 
@@ -74,7 +74,9 @@ set splitright
 
 " Spell Checker: {{{ 3
 set encoding=utf-8             " Set default encoding
-set spelllang=en
+setlocal spelllang=en,en_us         " should use setlocal since we toggle spell checking on and off
+setlocal spellfile=~/.config/nvim/spell/en.utf-8.add
+
 " if filereadable($VIMRUNTIME/spell/en.utf-8.spl)
 "     set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 " endif
@@ -82,15 +84,16 @@ set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell
 set spellsuggest=5
-nnoremap <Leader>s :setlocal spell!<CR>
 
 " Can be set with sudo select-default-wordlist. I opted for American insane
+" how did the line below get deleted....
 if filereadable('/usr/share/dict/words')
     set dictionary='/usr/share/dict/words'
     " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
 
+" how did the line below get deleted....
 if filereadable('/usr/share/dict/american-english')
     set dictionary+=/usr/share/dict/american-english
 endif
@@ -152,6 +155,7 @@ set nojoinspaces
 " Mappings: {{{ 2
 
 " General Mappings: {{{ 3
+" Note that F7 is bound to pastetoggle so don't map it
 " Navigate windows more easily
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -164,8 +168,8 @@ nnoremap <C-Left> :tabprev<CR>
 nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
 nnoremap <Leader>a ggVG
-" f5 to run py file
-inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
+" f5 to run *.py. currently doesn't work or at least doesn't display anything
+inoremap <F5> <Esc>:w<CR>:!clear;python %
 " It should be easier to get help
 nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
@@ -175,6 +179,38 @@ nnoremap <F9> :e $MYVIMRC<CR>
 " i tried doing this mapping with all modes but there's no reason
 " for it to be activated in normal mode and it's annoying in visual
 inoremap jk <Esc>
+
+" Spell Checking
+" so now that it has to wait to see if i'm gonna do s= instead of just s
+" there's a really annoying delay. sorry for changing one of my oldest
+" mappings!
+nnoremap <Leader>sp :setlocal spell!<CR>
+" Based off the default value for spell suggest
+nnoremap <Leader>s= :norm z=<CR>
+" }}}
+
+" Emacs in the Ex line: {{{ 3
+
+" For Emacs-style editing on the command-line:
+" start of line
+:cnoremap <C-A>		<Home>
+" back one character
+:cnoremap <C-B>		<Left>
+" delete character under cursor
+:cnoremap <C-D>		<Del>
+" end of line
+:cnoremap <C-E>		<End>
+" forward one character
+:cnoremap <C-F>		<Right>
+" recall newer command-line
+:cnoremap <C-N>		<Down>
+" recall previous (older) command-line
+:cnoremap <C-P>		<Up>
+" back one word
+:cnoremap <Esc><C-B>	<S-Left>
+" forward one word
+:cnoremap <Esc><C-F>	<S-Right>
+
 " }}}
 
 " Terminal: {{{ 3
@@ -188,7 +224,7 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 
-" Ale: {{{ 3
+" ALE: {{{ 3
 nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 " }}}
 

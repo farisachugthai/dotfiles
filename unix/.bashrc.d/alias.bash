@@ -13,22 +13,34 @@ alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
 alias cd......="cd ../../../../.."
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias lx='ls -AlX'
-alias lt='ls -Alt'
+# some more ls aliases. pulled a few from ipython so not all were
+# written by me. as a result let me quick go over the flags
+# -A all except implied . and ..
+# -c sort by ctime.
+# -F classifies. indicators for symlinks and dirs are provided
+# -o is similar to -l but don't print group
+# -p means append / indicator to directoreis
+# ngl the greps still don't make sense to me. dir file, link, executable but how?
+alias l='ls -F'
+alias la='ls -AF'
+alias ldir='ls -po | grep /$'
+alias lf='ls -Fo | grep ^-'
+alias lk='ls -Fo | grep ^l'
+alias ll='ls -AlF'
+alias ls='ls -F'
+alias lt='ls -Altcr'
+alias lx='ls -Fo | grep ^-..x'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-#lets not clobber as we go
+# lets not clobber other files as we go. bash's namespace? clobber everything
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -pv'
+alias rm='rm -v'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -38,6 +50,8 @@ alias du='du -d 1 -h'
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
+alias head='head -n 30'
+alias tail='tail -n 30'
 
 # Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
@@ -66,7 +80,7 @@ alias gst='git diff --stat'
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls -F --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
 

@@ -1,18 +1,44 @@
-# Configuration file for ipython.
-# Heavily drawn from documentation at
-# https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
-# and source code found on GitHub.
-# Maintainer: Faris Chugthai
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+""" Configuration file for ipython.
+Heavily drawn from documentation at
+https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
+and source code found on GitHub.
+Maintainer: Faris Chugthai
+"""
 
 from pygments.token import Comment
 
 c = get_config() # noqa
-c.AliasManager.user_aliases = [
-        ('la', 'ls -alFh'),
-        ('head', 'head -n 30'),
-        ('tree', 'tree'),
-        ]
 
+# Maybe add in git alias? OTOH i currently have 12 with no signs of going down
+c.AliasManager.user_aliases = [
+    ('cp', 'cp -pv'),       # cp mv mkdir and rmdir are all overridden
+    ('head', 'head -n 30'),
+    ('la', 'ls -alFh'),
+    ('l', 'ls -CF'),
+    ('ll', 'ls -AlF'),      # i like mine more so override theres
+    ('lt', 'ls -Altcr'),
+    ('mkdir', 'mkdir -pv'),
+    ('mv', 'mv -pv'),
+    ('rm', 'rm -v'),
+    ('rmdir', 'rmdir -pv'),
+    ('tail', 'tail -n 30'),
+    ('tree', 'tree'),
+    ]
+
+# For some reason there's no section about aliases in the skel file. Weird.
+
+# well here's a fun fact
+#  You can use the %l specifier in an alias definition to represent the
+#  whole line when the alias is called.  For example::
+
+#    In [2]: alias bracket echo "Input in brackets: <%l>"
+#    In [3]: bracket hello world
+#    Input in brackets: <hello world>
+
+# note that we quote when in the configuration file but when running alias
+# interactively the syntax %alias alias_name cmd doesn't require quoting
 
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -203,7 +229,6 @@ c.InteractiveShell.color_info = True
 # Set the color scheme (NoColor, Neutral, Linux, or LightBG).
 c.InteractiveShell.colors = 'Neutral'
 
-#
 # c.InteractiveShell.debug = False
 
 # Don't call post-execute functions that have failed in the past.
@@ -223,7 +248,6 @@ c.InteractiveShell.history_length = 10000
 #  startup.
 c.InteractiveShell.history_load_length = 10000
 
-#
 # c.InteractiveShell.ipython_dir = ''
 
 # Start logging to the given file in append mode. Use `logfile` to specify a log
@@ -237,7 +261,6 @@ c.InteractiveShell.history_load_length = 10000
 #  specify a log file to **append** logs to.
 # c.InteractiveShell.logstart = False
 
-#
 # c.InteractiveShell.object_info_string_level = 0
 
 # Automatically call the pdb debugger after every exception.
@@ -458,16 +481,12 @@ c.HistoryManager.db_log_output = True
 #  If no function/callable is found to compute the format data, ``None`` is
 #  returned and this format type is not used.
 
-#
 # c.BaseFormatter.deferred_printers = {}
 
-#
 # c.BaseFormatter.enabled = True
 
-#
 # c.BaseFormatter.singleton_printers = {}
 
-#
 # c.BaseFormatter.type_printers = {}
 
 #------------------------------------------------------------------------------

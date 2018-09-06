@@ -1,6 +1,7 @@
 " vimrc
 " Maintainer: Faris Chugthai
 
+setlocal foldlevelstart=1
 " All: {{{ 1
 " Gonna start seriously consolidating vimrc and init.vim this is so hard
 " to maintain
@@ -8,12 +9,25 @@
 " Wait am i assigning these vars correctly? man fuck vimscript
 
 if has('nvim')
-    let g:root = '~/.config/nvim'
-    let g:conf = '~/.config/nvim/init.vim'
+    let s:root = '~/.config/nvim'
+    let s:conf = '~/.config/nvim/init.vim'
 else
-    let g:root = '~/.vim'
-    let g:conf = '~/.vim/vimrc'
+    let s:root = '~/.vim'
+    let s:conf = '~/.vim/vimrc'
 endif
+
+" Also we're gonna wanna do something about the OS thing too
+" something to the effect of:
+" if os.system('uname' == 'Android') or something i have no idea
+"   let s:uroot=$PREFIX/
+" else if os==Linux:
+"   let s:uroot=/usr/
+" else
+"   print erroor
+" and use that when referring to anything in those directories
+" oh damn if you get this working then you could also do add conditionals for
+" really slow plugins. only keep them if thiss var is set to my laptop not my
+" phone!
 
 " Vim Plug: {{{ 2
 
@@ -49,6 +63,8 @@ call plug#end()
 " }}}
 
 " Vim Specific: {{{ 2
+" do this as early as possible
+set background=dark
 if filereadable(glob('~/.vim/vimrc.local'))
     source ~/.vim/vimrc.local
 endif
@@ -266,7 +282,7 @@ command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>),
 
 " could also use set grepprg here
 
-let g:fzf_history_dir = '$HOME/.config/nvim/fzf-history'
+let g:fzf_history_dir = '$HOME/.vim/fzf-history'
 
 " }}}
 
@@ -366,4 +382,5 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
 
+colorscheme gruvbox
 " }}}

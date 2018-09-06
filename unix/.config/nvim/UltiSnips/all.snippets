@@ -61,8 +61,9 @@ endsnippet
 # modeline form ('set') to work in languages with comment terminators
 # (/* like C */).
 
+# just updated this one because you never remember that mdline is one
 snippet modeline "Vim modeline"
-vim`!v ':set '. (&expandtab ? printf('et sw=%i ts=%i', &sw, &ts) : printf('noet sts=%i sw=%i ts=%i', &sts, &sw, &ts)) . (&tw ? ' tw='. &tw : '') .  ':'`
+vim`!v ':set ft=markdown '. (&expandtab ? printf('et sw=%i ts=%i', &sw, &ts) : printf('noet sts=%i sw=%i ts=%i', &sts, &sw, &ts)) . (&tw ? ' tw='. &tw : '') .  ':'`
 endsnippet
 
 snippet mdline "Vim modeline for markdown" b

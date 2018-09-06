@@ -1,13 +1,22 @@
+# Flake8
+
 [flake8]
 max-line-length = 120
 
 ignore =
-    E251            # Fairly confident pep8 specifies you SHOULD leave whitespace around operators
+
+    # defaults
+    E121,E123,E126,E226,E24,E704,W503,W504      # defaults
+
+    E251            # Pep8 specifies you SHOULD leave space around operators
     E202            # whitespace between var and brackets ) } and ]
 
-    E121, E123, E126, E226, E24, E704           # defaults
     E265            # comments error
     E266            # too many leading #'s in a comment
 
 # the defaults for excluded files are
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox
+
+# Comma-separated list of errors and warnings to enable.
+# Defaults listed below
+# select = E,F,W,C90

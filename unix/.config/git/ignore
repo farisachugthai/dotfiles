@@ -1,25 +1,20 @@
-# Global Git Ignore
+# Global Gitignore
 # Maintainer: Faris Chugthai
 
 # Personal
 .zim/
-*.local
-!*.local/
-# OTOH should any .local files be in here in the first place? I guess this
-# is a good preventative measure
 tmux-history
-history.sqlite
 
 ## Python
 
 # mypy
-.mypy_cache
+.mypy_cache/
 
 # spyder projects
 .spyproject/
 
 # Jupyter Notebooks / JupyterLab
-.ipynb_checkpoints
+.ipynb_checkpoints/
 
 # Rope
 .ropeproject/
