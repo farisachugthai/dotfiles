@@ -1,5 +1,7 @@
-"""
-Configuration example for ``ptpython``.
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+""" Configuration example for ``ptpython``.
 
 Copy this file to ~/.ptpython/config.py
 """
@@ -55,7 +57,8 @@ def configure(repl):
     repl.wrap_lines = True
 
     # Mouse support.
-    repl.enable_mouse_support = True
+    # messes up termux. REPL takes over screen so no scrollback
+    repl.enable_mouse_support = False
 
     # Complete while typing. (Don't require tab before the
     # completion menu is shown.)
@@ -94,7 +97,8 @@ def configure(repl):
     repl.enable_system_bindings = True
 
     # Ask for confirmation on exit.
-    repl.confirm_exit = True
+    # honestly just annoying
+    repl.confirm_exit = False
 
     # Enable input validation. (Don't try to execute when the input contains
     # syntax errors.)

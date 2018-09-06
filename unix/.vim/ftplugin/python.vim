@@ -87,7 +87,7 @@ let g:jedi#usages_command = '<leader>u'
 let g:jedi#show_call_signatures_delay = 100  " wait 100ms instead of 500 to show CS
 " }}}
 
-" Ale: {{{ 3
+" ALE: {{{ 3
 " should i check if there's a config file in the current dir or in the project
 " dir? hmmmmm
 let b:ale_python_flake8_options = '--config ~/.config/flake8'

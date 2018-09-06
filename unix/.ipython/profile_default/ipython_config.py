@@ -7,25 +7,33 @@ and source code found on GitHub.
 Maintainer: Faris Chugthai
 """
 
+import sys
+# actually if the import file i use works then we shouldn't need this right?
+# actually don't count on the order of execution being correct
+
 from pygments.token import Comment
 
 c = get_config() # noqa
 
 # Maybe add in git alias? OTOH i currently have 12 with no signs of going down
 c.AliasManager.user_aliases = [
-    ('cp', 'cp -pv'),       # cp mv mkdir and rmdir are all overridden
+    ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
+    ('fzf', 'fzf'),         # all we need to do is figure out keybindings
+    ('ga', 'git add'),
+    ('gd', 'git diff'),
+    ('gs', 'git status'),
     ('head', 'head -n 30'),
     ('la', 'ls -alFh'),
     ('l', 'ls -CF'),
     ('ll', 'ls -AlF'),      # i like mine more so override theres
     ('lt', 'ls -Altcr'),
     ('mkdir', 'mkdir -pv'),
-    ('mv', 'mv -pv'),
+    ('mv', 'mv -iv'),
     ('rm', 'rm -v'),
     ('rmdir', 'rmdir -pv'),
     ('tail', 'tail -n 30'),
     ('tree', 'tree'),
-    ]
+]
 
 # For some reason there's no section about aliases in the skel file. Weird.
 
@@ -210,6 +218,17 @@ c.InteractiveShell.automagic = True
 # The part of the banner to be printed before the profile
 # c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"       # noqa
 
+# so i'm gonna start ignoring these entirely. internally python uses
+# check IPython/core/usage.py
+# unfortunately this doesn't work yet. release isn't defined and idk where
+# they define it in the original file.
+#  rewritten_banner_parts = ["Python %s\n" % sys.version.split("\n")[0],
+#                            "IPython {version} ".format(version=release.version), ]
+
+#  rewritten_banner = ''.join(rewritten_banner_parts)
+
+#  c.InteractiveShell.banner1 = rewritten_banner
+
 # The part of the banner to be printed after the profile
 # c.InteractiveShell.banner2 = ''
 
@@ -266,21 +285,10 @@ c.InteractiveShell.history_load_length = 10000
 # Automatically call the pdb debugger after every exception.
 # c.InteractiveShell.pdb = False
 
-# Deprecated since IPython 4.0 and ignored since 5.0, set
-#  TerminalInteractiveShell.prompts object directly.
-# c.InteractiveShell.prompt_in1 = 'In [\\#]: '
+# Since it's all been deprecated i deleted the section on IPython's str
+# methods for prompt. Don't change the prompt regardless because you'll destroy
+# the chance to use sphinx and stuff.
 
-# Deprecated since IPython 4.0 and ignored since 5.0, set
-#  TerminalInteractiveShell.prompts object directly.
-# c.InteractiveShell.prompt_in2 = '   .\\D.: '
-
-# Deprecated since IPython 4.0 and ignored since 5.0, set
-#  TerminalInteractiveShell.prompts object directly.
-# c.InteractiveShell.prompt_out = 'Out[\\#]: '
-
-# Deprecated since IPython 4.0 and ignored since 5.0, set
-#  TerminalInteractiveShell.prompts object directly.
-# c.InteractiveShell.prompts_pad_left = True
 
 c.InteractiveShell.quiet = False
 
@@ -295,7 +303,7 @@ c.InteractiveShell.quiet = False
 
 # Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-c.InteractiveShell.sphinxify_docstring = False
+c.InteractiveShell.sphinxify_docstring = True
 
 #
 c.InteractiveShell.wildcards_case_sensitive = False

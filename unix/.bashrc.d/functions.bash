@@ -100,3 +100,7 @@ tldrbox_cheat() {
 tldropbox_dir() {
     tldr -m "$1" >> "$PWD/$1" && termux-share "$1"
 }
+
+conda_switch() {
+    conda deactivate && conda activate "$1"
+}

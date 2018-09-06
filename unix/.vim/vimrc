@@ -1,8 +1,16 @@
 " vimrc
+" vim configuration
 " Maintainer: Faris Chugthai
 
-setlocal foldlevelstart=1
 " All: {{{ 1
+
+" About: {{{ 2
+let g:snips_author = 'Faris Chugthai'
+let g:snips_email = 'farischugthai@gmail.com'
+let g:snips_github = 'https://github.com/farisachugthai'
+" }}}
+
+" Nvim-OS: {{{ 2
 " Gonna start seriously consolidating vimrc and init.vim this is so hard
 " to maintain
 " Let's setup all the global vars we need
@@ -16,18 +24,13 @@ else
     let s:conf = '~/.vim/vimrc'
 endif
 
-" Also we're gonna wanna do something about the OS thing too
-" something to the effect of:
-" if os.system('uname' == 'Android') or something i have no idea
-"   let s:uroot=$PREFIX/
-" else if os==Linux:
-"   let s:uroot=/usr/
-" else
-"   print erroor
-" and use that when referring to anything in those directories
-" oh damn if you get this working then you could also do add conditionals for
-" really slow plugins. only keep them if thiss var is set to my laptop not my
-" phone!
+if exists('$PREFIX')
+    let s:usr_d = '$PREFIX'     " might need to expand on use
+    let s:OS= 'Android'
+else
+    let s:usr_d = '/usr'
+    let s:OS = 'Linux'
+" }}}
 
 " Vim Plug: {{{ 2
 
@@ -68,6 +71,13 @@ set background=dark
 if filereadable(glob('~/.vim/vimrc.local'))
     source ~/.vim/vimrc.local
 endif
+
+" TODO: Just throw it in with the if !has('nvim') block on termux branch
+" In nvim I think this gets loaded automatically
+" Invoke while in Vim by putting your cursor over a word and run [Leader]K
+runtime! ftplugin/man.vim
+let g:ft_man_folding_enable = 0
+set keywordprg=:Man
 " }}}
 
 " Global Options: {{{ 2
@@ -107,33 +117,72 @@ set splitbelow
 set splitright
 " }}}
 
-" Spell Checker:{{{ 3
-set encoding=utf-8
+" Spell Checker: {{{ 3
+set encoding=utf-8             " Set default encoding
+set fileencoding=utf-8
 set spelllang=en
-set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+" if !has('nvim')
+"     set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+" endif
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
-set spelllang=$HOME/.config/nvim/spell/en.utf-8.add.spl
+set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 set complete+=kspell                    " Autocomplete in insert mode
 set spellsuggest=5                      " Limit the number of suggestions from 'spell suggest'
 nnoremap <Leader>s :setlocal spell!<CR>
-
+" Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
-    set dictionary+=/usr/share/dict/words
+    setlocal dictionary+=/usr/share/dict/words
     " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
 
 if filereadable('/usr/share/dict/american-english')
-    set dictionary+=/usr/share/dict/american-english
+    setlocal dictionary+=/usr/share/dict/american-english
 endif
 
 if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
 endif
-
 if filereadable(glob('~/.vim/autocorrect.vim'))
     source ~/.vim/autocorrect.vim
 endif
+" }}}
+
+" all the nonsense nvim freed you of: {{{ 3
+if !has('nvim')
+    set autoread
+    set autoindent
+    set backspace=indent,eol,start
+    set belloff=all
+"    set display+=lastline,msgsep       error idk why
+    set history=10000
+    set hlsearch
+    set incsearch
+    set langnoremap
+    set laststatus=2
+    set noerrorbells
+    set nolangremap
+    set ruler
+    set sessionoptions-=options
+    set showcmd
+    set smarttab
+    set tabpagemax=50
+    set ttyfast         "insert/delete line commands. this makes Vim seem smoother
+    set nrformats-='octal'
+endif
+
+" - 'backupdir' defaults to .,~/.local/share/nvim/backup (|xdg|)
+
+" oddly vim already does. why?
+" - 'complete' doesn't include "i"
+
+" - 'cscopeverbose' is enabled
+" - 'directory' defaults to ~/.local/share/nvim/swap// (|xdg|), auto-created
+" - 'fillchars' defaults (in effect) to "vert:│,fold:·"
+" - 'formatoptions' defaults to "tcqj"
+" - 'listchars' defaults to "tab:> ,trail:-,nbsp:+"
+" - 'sidescroll' defaults to 1
+
 " }}}
 
 " Fun With Clipboards: {{{ 3
@@ -143,16 +192,24 @@ else                            " Accomodate Termux
   set clipboard+=unnamed
 endif
 
-" Here's a new option I found out about today 08-12-18. I suppose F7 is as
-" good as any other key?
 set pastetoggle=<F7>
 " }}}
 
+" Autocompletion: {{{ 3
+set wildmenu                            " Show list instead of just completing
+set wildmode=longest,list:longest       " Longest string or list alternatives
+set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
+set fileignorecase                      " when searching for files don't use case
+" I just realized I only have completefunc/omnifunc set in ftplugins.
+" You should have SOMETHING set globally for completefunc. Omni is ftspecific
+" so not that one.
+" }}}
+
 " Other Global Options: {{{ 3
-set tags+=./tags,./k./tags,./*/tags      " usr_29
+set tags+=./tags,./../tags,./*/tags     " usr_29
+set mouse=a                             " Automatically enable mouse usage
 set cursorline
 set cmdheight=2
-set colorcolumn=+1
 set hlsearch
 set ruler
 set backspace=indent,eol,start
@@ -160,19 +217,18 @@ set showcmd
 set number
 set showmatch
 set ignorecase
+set smartcase
 set smartindent
 set smarttab
 set noswapfile
-set guifont='Fira\ Code\ Mono:h11'
+
+if has('gui_running')
+    set guifont='Fira\ Code\ Mono:h11'
+endif
+
 set path+=**        			" Make autocomplete for filenames work
 set autochdir
-set mouse=a
 set fileformat=unix
-set wildmenu
-set wildmode=longest,list:longest
-set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
-set complete+=.,b,u,t
-set fileignorecase
 set display+=lastline
 set incsearch
 set history=10000
@@ -183,37 +239,70 @@ set whichwrap+=<,>,h,l,[,]
 set modeline
 
 if has('persistent_undo')
-    " TODO: if !isdirectory(~/.vim/undodir); call system(mkdir ...); endif
-    " check if that syntax is right.
-    " or just make a vim-setup.sh or vim-setup.py
     set undodir=~/.vim/undodir
     set undofile	" keep an undo file (undo changes after closing)
 endif
 set nojoinspaces
 
-"}}}
+" }}}
+
 " }}}
 
 " Mappings: {{{ 2
 "
 " General Mappings: {{{ 3
-" Easy window navigation
+" Note that F7 is bound to pastetoggle so don't map it
+" Navigate windows more easily
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+" Navigate tabs more easily
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <C-Left> :tabprev<CR>
+" NERDTree has sluggish startuptimes
+nnoremap <Leader>nt :NERDTreeToggle<CR>
 " select all text in buffer
 nnoremap <Leader>a ggVG
-" Map :NERDTreeTabsToggle to ease toggling the plugin
-nnoremap <Leader>nt <plug>NERDTreeMirrorToggle<CR>
 " f5 to run py file
 inoremap <F5> <Esc>:w<CR>:!clear;python %<CR>
 " It should be easier to get help
 nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
 nnoremap <F9> :e $MYVIMRC<CR>
-nnoremap <C-Right> :tabnext<CR>
-nnoremap <C-Left> :tabprev<CR>
+
+" Spell Checking
+" it has to wait to see if i'm gonna do s= instead of just s
+" and the delay is awful. sorry for changing one of my oldest mappings!
+nnoremap <Leader>sp :setlocal spell!<CR>
+" Based off the default value for spell suggest
+nnoremap <Leader>s= :norm z=<CR>
+
+
+" }}}
+
+" Emacs in the Ex line: {{{ 3
+
+" For Emacs-style editing on the command-line:
+" start of line
+:cnoremap <C-A>		<Home>
+" back one character
+:cnoremap <C-B>		<Left>
+" delete character under cursor
+:cnoremap <C-D>		<Del>
+" end of line
+:cnoremap <C-E>		<End>
+" forward one character
+:cnoremap <C-F>		<Right>
+" recall newer command-line
+:cnoremap <C-N>		<Down>
+" recall previous (older) command-line
+:cnoremap <C-P>		<Up>
+" back one word
+:cnoremap <Esc><C-B>	<S-Left>
+" forward one word
+:cnoremap <Esc><C-F>	<S-Right>
+
 " }}}
 
 " Terminal: {{{ 3
@@ -221,20 +310,54 @@ nnoremap <C-Left> :tabprev<CR>
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+
+" From he terminal
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+" }}}
+
+" Fugitive: {{{ 3
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>ge :Gedit<CR>
+nnoremap <silent> <leader>gE :Gedit<space>
+nnoremap <silent> <leader>gr :Gread<CR>
+nnoremap <silent> <leader>gR :Gread<space>
+nnoremap <silent> <leader>gw :Gwrite<CR>
+nnoremap <silent> <leader>gW :Gwrite!<CR>
+nnoremap <silent> <leader>gq :Gwq<CR>
+nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
 " Python Language Server: {{{ 3
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
+
+" ALE: {{{ 3
+nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+" }}}
+
+" Python Language Server: {{{ 3
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" }}}
+
 " }}}
 
 " Plugin Configurations: {{{ 2
-" In nvim I think this gets loaded automatically
-" Invoke while in Vim by putting your cursor over a word and run [Leader]K
-runtime! ftplugin/man.vim
-let g:ft_man_folding_enable = 0
-set keywordprg=:Man
 
 " FZF: {{{ 3
 " Adapted from:
@@ -307,36 +430,15 @@ let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left
 let g:NERDTrimTrailingWhitespace = 1 " Trim trailing whitespace when uncommenting
 " }}}
 
-" Fugitive: {{{ 3
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
-nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>ge :Gedit<CR>
-nnoremap <silent> <leader>gE :Gedit<space>
-nnoremap <silent> <leader>gr :Gread<CR>
-nnoremap <silent> <leader>gR :Gread<space>
-nnoremap <silent> <leader>gw :Gwrite<CR>
-nnoremap <silent> <leader>gW :Gwrite!<CR>
-nnoremap <silent> <leader>gq :Gwq<CR>
-nnoremap <silent> <leader>gQ :Gwq!<CR>
-" }}}
-
-" Jedi: {{{ 3
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#use_tabs_not_buffers = 1           " easy to maintain workspaces
-" }}}
 
 " ALE: {{{ 3
 " https://github.com/w0rp/ale
 nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
-let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ]}
+let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
-let g:ale_set_signs = 1 " what is the default
 let g:ale_python_flake8_options = '--config ~/.config/flake8'
 " }}}
 
@@ -371,6 +473,12 @@ let g:startify_session_sort = 1
 let g:deoplete#enable_at_startup = 1
 " }}}
 
+" Gruvbox: {{{ 3
+" Load the colorscheme last. Noticeable startuptime improvement
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+" }}}
+
 " }}}
 
 " Filetype Specific Options: {{{ 2
@@ -382,5 +490,4 @@ au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 " }}}
 
-colorscheme gruvbox
 " }}}

@@ -1,8 +1,9 @@
-"init.vim
+" init.vim
 " Neovim configuration
 " Maintainer: Faris Chugthai
 
 " All: {{{ 1
+
 " Vim Plug: {{{ 2
 
 call plug#begin('~/.vim/plugged')
@@ -34,6 +35,8 @@ call plug#end()
 " }}}
 
 " Nvim Specific: {{{ 2
+set background=dark
+
 if filereadable(glob('~/.config/nvim/init.vim.local'))
     source ~/.config/nvim/init.vim.local
 endif
@@ -123,15 +126,14 @@ set pastetoggle=<F7>
 set wildmenu                            " Show list instead of just completing
 set wildmode=longest,list:longest       " Longest string or list alternatives
 set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
-set complete+=.,b,u,t                   " open buffer, open buffers, and tags
 set fileignorecase                      " when searching for files don't use case
 " I just realized I only have completefunc/omnifunc set in ftplugins.
 " You should have SOMETHING set globally for completefunc. Omni is ftspecific
 " so not that one.
 " }}}
+
 " Other Global Options: {{{ 3
 set tags+=./tags,./../tags,./*/tags     " usr_29
-set background=dark
 set mouse=a                             " Automatically enable mouse usage
 set cursorline
 set cmdheight=2
@@ -150,6 +152,7 @@ set autochdir
 set whichwrap+=<,>,h,l,[,]              " Give reasonable line wrapping behaviour
 set nojoinspaces
 " }}}
+
 " }}}
 
 " Mappings: {{{ 2
@@ -180,10 +183,11 @@ nnoremap <F9> :e $MYVIMRC<CR>
 " for it to be activated in normal mode and it's annoying in visual
 inoremap jk <Esc>
 
-" Spell Checking
-" so now that it has to wait to see if i'm gonna do s= instead of just s
-" there's a really annoying delay. sorry for changing one of my oldest
-" mappings!
+" }}}
+
+" Spell Checking: {{{ 3
+" it has to wait to see if i'm gonna do s= instead of just s
+" and the delay is awful. sorry for changing one of my oldest mappings!
 nnoremap <Leader>sp :setlocal spell!<CR>
 " Based off the default value for spell suggest
 nnoremap <Leader>s= :norm z=<CR>
@@ -214,9 +218,24 @@ nnoremap <Leader>s= :norm z=<CR>
 " }}}
 
 " Terminal: {{{ 3
+" If running a terminal in Vim, go into Normal mode with Esc
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+
+" From he terminal
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 " }}}
 
 " Python Language Server: {{{ 3
@@ -325,7 +344,6 @@ let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
 let g:ale_set_signs = 1 " what is the default
-
 " }}}
 
 " Devicons: {{{ 3
