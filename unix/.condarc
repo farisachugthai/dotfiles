@@ -1,13 +1,17 @@
 # Condarc
-# Here are what I believe to be the most important values
+# Maintainer: Faris Chugthai
+# Let's put the modified values at the top since there aren't many
+# and this is a very long file.
+# please keep alphabetical
+# possibly think about timestamping when you change these
+# ooo and addig a conda version wouldn't be the worst idea.
 
-channels:
-  - conda-canary
-  - conda-forge
-  - defaults
-ssl_verify: true
-
-verbosity: 0
+# add_pip_as_python_dependency (bool)
+#   Add pip, wheel and setuptools as dependencies of python. This ensures
+#   pip, wheel and setuptools will always be installed any time python is
+#   installed.
+#
+add_pip_as_python_dependency: true
 
 aggressive_update_packages:
   - ca-certificates
@@ -18,6 +22,32 @@ aggressive_update_packages:
 
 auto_update_conda: true
 
+channels:
+  - conda-canary
+  - conda-forge
+  - defaults
+
+
+# also kinda curious how this is gonna go
+# json (bool)
+#   Ensure all output written to stdout is structured json.
+# json: True
+
+# pkgs_dirs (sequence: str)
+#   string delimiter: ','
+#   The list of directories where locally-available packages are linked
+#   from at install time. Packages not locally available are downloaded
+#   and extracted into the first writable directory.
+#
+# i don't actually know if this is how this works or what the consequences would be but
+# can i add in the system folders and virtualenvs folder?
+# pkgs_dirs: ['/home/faris/miniconda3/pkgs', '/home/faris/virtualenvs', '/usr/lib/python3.7/site-packages', '/usr/lib/python3.6']
+# nah you need write permissions
+
+
+
+
+
 # From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
 
 # Non-url channels will be interpreted as Anaconda.org usernames
@@ -27,7 +57,9 @@ auto_update_conda: true
 # and in 'conda list'. The default is False.
 show_channel_urls: true
 
+ssl_verify: true
 
+verbosity: 0
 
 # And all of this is the output of `conda config --describe` appended here
 
@@ -73,12 +105,6 @@ show_channel_urls: true
 # add_anaconda_token: true
 
 
-# add_pip_as_python_dependency (bool)
-#   Add pip, wheel and setuptools as dependencies of python. This ensures
-#   pip, wheel and setuptools will always be installed any time python is
-#   installed.
-#
-add_pip_as_python_dependency: true
 
 
 # aggressive_update_packages (sequence: str)
@@ -144,18 +170,10 @@ add_pip_as_python_dependency: true
 # anaconda_upload:
 
 
-# auto_update_conda (bool)
-#   aliases: self_update
-#   Automatically update conda when a newer or higher priority version is
-#   detected.
-#
-# I manually check for updates every day, and would be aware when they occur.
-
-
 # changeps1 (bool)
 #   When using activate, change the command prompt ($PS1) to include the
 #   activated environment.
-#
+# isn't this the default?
 changeps1: true
 
 
@@ -278,11 +296,6 @@ default_channels:
 # force: false
 
 
-# json (bool)
-#   Ensure all output written to stdout is structured json.
-#
-# json: false
-
 
 # local_repodata_ttl (bool, int)
 #   For a value of False or 0, always fetch remote repodata (HTTP 304
@@ -361,13 +374,6 @@ path_conflict: warn
 # pinned_packages: []
 
 
-# pkgs_dirs (sequence: str)
-#   string delimiter: ','
-#   The list of directories where locally-available packages are linked
-#   from at install time. Packages not locally available are downloaded
-#   and extracted into the first writable directory.
-#
-# pkgs_dirs: []
 
 
 # proxy_servers (map: NoneType, str)

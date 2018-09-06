@@ -6,5 +6,8 @@ setlocal textwidth=72
 setlocal spell
 
 setlocal colorcolumn=+1
+" keep the first line of a git commit 50 char long and everything after 72.
+setlocal colorcolumn=50
+
 " and if you want a hint at the required hl-ColorColumn syntax.
 "hi ColorColumn ctermbg=lightgrey guibg=lightgrey
