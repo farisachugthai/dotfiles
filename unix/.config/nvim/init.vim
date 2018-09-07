@@ -1,8 +1,38 @@
 " init.vim
 " Neovim configuration
 " Maintainer: Faris Chugthai
+scriptencoding UTF-8
 
 " All: {{{ 1
+
+" About: {{{ 2
+let g:snips_author = 'Faris Chugthai'
+let g:snips_email = 'farischugthai@gmail.com'
+let g:snips_github = 'https://github.com/farisachugthai'
+" }}}
+
+" Nvim_OS: {{{ 2
+" Gonna start seriously consolidating vimrc and init.vim this is so hard
+" to maintain
+" Let's setup all the global vars we need
+" Wait am i assigning these vars correctly? man fuck vimscript
+
+if has('nvim')
+    let s:root = '~/.config/nvim'
+    let s:conf = '~/.config/nvim/init.vim'
+else
+    let s:root = '~/.vim'
+    let s:conf = '~/.vim/vimrc'
+endif
+
+if exists('$PREFIX')
+    let s:usr_d = '$PREFIX'     " might need to expand on use
+    let s:OS= 'Android'
+else
+    let s:usr_d = '/usr'
+    let s:OS = 'Linux'
+endif
+" }}}
 
 " Vim Plug: {{{ 2
 
@@ -37,16 +67,24 @@ call plug#end()
 " Nvim Specific: {{{ 2
 set background=dark
 
-if filereadable(glob('~/.config/nvim/init.vim.local'))
-    source ~/.config/nvim/init.vim.local
+let s:local_vimrc = fnamemodify(resolve(expand('<sfile>')), ':p:h').'/init.vim.local'
+if filereadable(s:local_vimrc)
+    execute 'source' s:local_vimrc
 endif
+
 set inccommand=split                " This alone is enough to never go back
 set termguicolors
 " }}}
 
 " Global Options: {{{ 2
-" Leader:
+
+" Leader_Viminfo: {{{ 3
 let g:mapleader = "\<Space>"
+
+if !has('nvim')
+    set viminfo='100,<200,s200,n$HOME/.vim/viminfo
+endif
+" }}}
 
 " Pep8 Global Options: {{{ 3
 set tabstop=4
@@ -76,29 +114,31 @@ set splitright
 " }}}
 
 " Spell Checker: {{{ 3
-set encoding=utf-8             " Set default encoding
-setlocal spelllang=en,en_us         " should use setlocal since we toggle spell checking on and off
+set encoding=UTF-8                  " Set default encoding
+set fileencoding=UTF-8
+
+setlocal spelllang=en,en_us
 setlocal spellfile=~/.config/nvim/spell/en.utf-8.add
 
-" if filereadable($VIMRUNTIME/spell/en.utf-8.spl)
-"     set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
-" endif
+if !has('nvim')
+    set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
+endif
+
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
 set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
-set complete+=kspell
-set spellsuggest=5
+
+set complete+=kspell                    " Autocomplete in insert mode
+set spellsuggest=5                      " Limit the number of suggestions from 'spell suggest'
 
 " Can be set with sudo select-default-wordlist. I opted for American insane
-" how did the line below get deleted....
 if filereadable('/usr/share/dict/words')
-    set dictionary='/usr/share/dict/words'
+    setlocal dictionary+=/usr/share/dict/words
     " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
 
-" how did the line below get deleted....
 if filereadable('/usr/share/dict/american-english')
-    set dictionary+=/usr/share/dict/american-english
+    setlocal dictionary+=/usr/share/dict/american-english
 endif
 
 if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
@@ -117,8 +157,6 @@ else                            " Accomodate Termux
   set clipboard+=unnamed
 endif
 
-" Here's a new option I found out about today 08-12-18. I suppose F7 is as
-" good as any other key?
 set pastetoggle=<F7>
 " }}}
 
@@ -127,9 +165,10 @@ set wildmenu                            " Show list instead of just completing
 set wildmode=longest,list:longest       " Longest string or list alternatives
 set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
 set fileignorecase                      " when searching for files don't use case
-" I just realized I only have completefunc/omnifunc set in ftplugins.
-" You should have SOMETHING set globally for completefunc. Omni is ftspecific
-" so not that one.
+
+" set completefunc here and then let b:omnifunc in ftplugins
+set completefunc=LanguageClient#complete
+set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 " }}}
 
 " Other Global Options: {{{ 3
@@ -141,15 +180,20 @@ set number
 set showmatch
 set ignorecase
 set smartcase
-set smartindent
-set autoindent                          " :he options: set with smartindent
+set autoindent smartindent              " :he options: set with smartindent
 set noswapfile
+set fileformat=unix
+
 if has('gui_running')
     set guifont='Fira\ Code\ Mono:11'
 endif
+
 set path+=**        			        " Make autocomplete for filenames work
 set autochdir
+set fileformat=unix
 set whichwrap+=<,>,h,l,[,]              " Give reasonable line wrapping behaviour
+set modeline
+set undofile
 set nojoinspaces
 " }}}
 
@@ -165,9 +209,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 " Navigate tabs more easily
-nnoremap <C-Right> :tabnext<CR>
-nnoremap <C-Left> :tabprev<CR>
-" NERDTree has sluggish startuptimes
+nnoremap <A-Right> :tabnext<CR>
+nnoremap <A-Left> :tabprev<CR>
+" Simple way to speed up startup
 nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
 nnoremap <Leader>a ggVG
@@ -178,11 +222,7 @@ nnoremap <leader>he :helpgrep<space>
 " It should also be easier to edit the config
 nnoremap <F9> :e $MYVIMRC<CR>
 
-" what happened to that mapping i had for running a python file in visual mode
-" i tried doing this mapping with all modes but there's no reason
-" for it to be activated in normal mode and it's annoying in visual
 inoremap jk <Esc>
-
 " }}}
 
 " Spell Checking: {{{ 3
@@ -214,7 +254,6 @@ nnoremap <Leader>s= :norm z=<CR>
 :cnoremap <Esc><C-B>	<S-Left>
 " forward one word
 :cnoremap <Esc><C-F>	<S-Right>
-
 " }}}
 
 " Terminal: {{{ 3
@@ -238,12 +277,11 @@ nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 " }}}
 
-" Python Language Server: {{{ 3
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-" }}}
-
 " ALE: {{{ 3
+" So these mappings would clobber so many things but its a good thought to
+" keep in the back of your mind
+" nnoremap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nnoremap <silent> <C-j> <Plug>(ale_next_wrap)
 nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
 " }}}
 
@@ -262,14 +300,29 @@ nnoremap <silent> <leader>gq :Gwq<CR>
 nnoremap <silent> <leader>gQ :Gwq!<CR>
 " }}}
 
+" Python Language Server: {{{ 3
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 
-" Plugin Configurations: {{{ 2
+" }}}
+
+" Plugins: {{{ 2
+
+if !has('nvim')
+    " Invoke while in Vim by putting your cursor over a word and run <Leader>k
+    runtime! ftplugin/man.vim
+    let g:ft_man_folding_enable = 0
+    setlocal keywordprg=:Man
+endif
 
 " FZF: {{{ 3
-" In case you were not aware your FZF and Ag commands don't work
-" Adapted from:
-" https://github.com/tony/vim-config-framework/blob/2018-06-09/plugins.settings/contrib/fzf.vim
+
+augroup fzf
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+      \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+augroup end
 
 " An action can be a reference to a function that processes selected lines
 function! s:build_quickfix_list(lines)
@@ -300,18 +353,10 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" TODO: get changes from termux: Need to get ag commands.
-" With :F you can now speed through file searches
-let g:rg_command = '
-    \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
-    \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
-    \ -g "!*.{min.js,swp,o,zip}" \ -g "!{.git,node_modules,vendor}/*" '
-
-let g:fd_command = 'fd'
-
-command! -bang -nargs=* F call fzf#vim#grep(g:fd_command .shellescape(<q-args>), 1, <bang>0)
-
-" could also use set grepprg here
+let g:ag_command = 'ag --smart-case -u -g " " --'
+" TODO: need to look through this command because i keep getting an out of
+" index error
+command! -bang -nargs=* F call fzf#vim#grep(g:ag_command .shellescape(<q-args>), 1, <bang>0)
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 " }}}
@@ -340,41 +385,29 @@ let g:NERDTrimTrailingWhitespace = 1        " Trim trailing whitespace when unco
 " ALE: {{{ 3
 let g:ale_fixers = { '*': [ 'remove_trailing_lines', 'trim_whitespace' ] }
 let g:ale_fix_on_save = 1
-let g:ale_sign_column_always = 1
 " Default: `'%code: %%s'`
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
-let g:ale_set_signs = 1 " what is the default
+let g:ale_set_signs = 1
+let g:ale_sign_column_always = 1
 " }}}
 
 " Devicons: {{{ 3
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1               " adding the flags to NERDTree
-" }}}
-
-" Ultisnips: {{{ 3
-let g:UltiSnipsUsePythonVersion = 3
-" still haven't decided on nvim or vim dir
-let g:UltiSnipsSnippetDir=[$HOME.'/.config/nvim/UltiSnips']
-" the line below is probably gonna slow things down a lot
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips', 'UltiSnips']
-" I like these mappings
-let g:UltiSnipsJumpForwardTrigger='<Tab>'
-let g:UltiSnipsJumpBackwardTrigger='<S-Tab>'
-let g:UltiSnips_python_quoting_style='GOOGLE'
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit='vertical'
-
-let g:snips_author='Faris Chugthai'
-let g:snips_email='farischugthai@gmail.com'
-let g:snips_github='https://github.com/farisachugthai'
+let g:airline_powerline_fonts = 1
 " }}}
 
 " Vim_Startify: {{{ 3
 let g:startify_session_sort = 1
 " }}}
 
-" Deoplete: {{{ 3
-let g:deoplete#enable_at_startup = 1
+" Ultisnips: {{{ 3
+let g:UltiSnipsSnippetDir=[ '~/.config/nvim/UltiSnips' ]
+let g:UltiSnipsJumpForwardTrigger='<Tab>'
+let g:UltiSnipsJumpBackwardTrigger='<S-Tab>'
+let g:UltiSnips_python_quoting_style='GOOGLE'
+let g:UltiSnipsEnableSnipMate = 0
+let g:UltiSnipsEditSplit='vertical'
 " }}}
 
 " Gruvbox: {{{ 3
@@ -383,15 +416,73 @@ colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 " }}}
 
+" Language Client: {{{ 3
+let g:LanguageClient_serverCommands = {
+    \ 'python': [ 'pyls' ]
+    \ }
+" }}}
+
 " }}}
 
 " Filetype Specific Options: {{{ 2
+
+augroup ftpersonal
 " IPython:
 au BufRead,BufNewFile *.ipy setlocal filetype=python
 " Web Dev:
 au filetype javascript,html,css setlocal shiftwidth=2 softtabstop=2 tabstop=2
 " Markdown:
 autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
+augroup end
+" }}}
+
+" Functions: {{{ 2
+
+" Next few are from Junegunn so credit to him
+function! s:todo() abort
+    let entries = []
+    for cmd in ['git grep -niI -e TODO -e todo -e FIXME -e XXX 2> /dev/null',
+                \ 'grep -rniI -e TODO -e todo -e FIXME -e XXX * 2> /dev/null']
+        let lines = split(system(cmd), '\n')
+        if v:shell_error != 0 | continue | endif
+        for line in lines
+            let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
+            call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
+        endfor
+        break
+    endfor
+
+    if !empty(entries)
+        call setqflist(entries)
+        copen
+    endif
+endfunction
+command! Todo call s:todo()
+
+" Heres one where he uses fzf and Explore to search a packages docs
+function! s:plug_help_sink(line)
+    let dir = g:plugs[a:line].dir
+    for pat in ['doc/*.txt', 'README.md']
+        let match = get(split(globpath(dir, pat), "\n"), 0, '')
+        if len(match)
+            execute 'tabedit' match
+            return
+        endif
+    endfor
+    tabnew
+    execute 'Explore' dir
+endfunction
+
+"command to filter :scriptnames output by a regex
+command! -nargs=1 Scriptnames call <sid>scriptnames(<f-args>)
+function! s:scriptnames(re) abort
+    redir => scriptnames
+    silent scriptnames
+    redir END
+
+    let filtered = filter(split(scriptnames, "\n"), "v:val =~ '" . a:re . "'")
+    echo join(filtered, "\n")
+endfunction
 " }}}
 
 " }}}

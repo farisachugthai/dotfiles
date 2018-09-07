@@ -4,10 +4,20 @@
 
 so this feels like an actual problem
 
+:scriptnames
+on any filetype is indicating that the only files that are getting source from
+~/.config/nvim are init.vim, autocorrect.vim, the ftdetect dir and if the ft matches something in
+ftplugin then that file.
+
+however, i have a file in after/ that isn't getting sourced?
+none of my spell files.
+idk i feel like this is a problem right?
 :echo &rtp
 
-doesn't display any directories below ~/.config/nvim
-....why is that? is that in fact a problem?
+okay so ~/.config/nvim/after and ~/.config/nvim are the only dirs in rtp and
+packpath. so i guess that's cool but how do we properly use autoload?
+
+
 
 ## speeding nvim up
 

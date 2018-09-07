@@ -1,13 +1,6 @@
 " Deoplete: {{{
+
 let g:deoplete#enable_smart_case = 1
-
-" if i enter insert mode, then we're off to the races
-autocmd InsertEnter * call deoplete#enable()
-call deoplete#custom#option('smart_case', v:true)
-
-"" Close the autocompleter when we leave insert mode
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
 set completeopt+=noinsert                    " Autoselect feature
 
 "" On <CR>: close popup and save indent.
@@ -35,6 +28,13 @@ augroup load_us_deop
     autocmd!
     autocmd InsertEnter * call plug#load('ultisnips', 'deoplete'
                 \| autocmd! load_us_deop)
+
+    " if i enter insert mode, then we're off to the races
+    autocmd InsertEnter * call deoplete#enable()
+    call deoplete#custom#option('smart_case', v:true)
+
+    " Close the autocompleter when we leave insert mode
+    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 augroup END
 
 " Remove this if you'd like to use fuzzy search

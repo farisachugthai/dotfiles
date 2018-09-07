@@ -85,14 +85,23 @@ let g:jedi#completions_command = '<C-N>'
 let g:jedi#documentation_command = '<leader>h'
 let g:jedi#usages_command = '<leader>u'
 let g:jedi#show_call_signatures_delay = 100  " wait 100ms instead of 500 to show CS
+let g:jedi#smart_auto_mappings = 0         " must be set
 " }}}
 
 " ALE: {{{ 3
+
+let b:ale_linters = ['flake8', 'pycodestyle', 'pyflakes', 'pyls']
+" when i get the configuration down to what it needs to be i'm sure it's great
+let b:ale_linters_ignore = [ 'pylint' ]     " but holy hell that needs to stop
 " should i check if there's a config file in the current dir or in the project
 " dir? hmmmmm
 let b:ale_python_flake8_options = '--config ~/.config/flake8'
-if isdirectory("$HOME/virtualenvs")
-    let g:ale_virtualenv_dir_names+="virtualenvs"
+
+" Mypy is slow and we have other linters to check syntax
+let b:ale_python_mypy_ignore_invalid_syntax = 1
+
+if isdirectory('$HOME/virtualenvs')
+    let g:ale_virtualenv_dir_names += 'virtualenvs'
     " so i found this in the help docs
     " wth is the syntax for the path? have i been doing this all wrong?
     " call mkdir($HOME . \"/tmp/foo/bar", \"p", 0700)
