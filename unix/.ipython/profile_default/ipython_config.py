@@ -1,18 +1,52 @@
-# Configuration file for ipython.
-# Heavily drawn from documentation at
-# https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
-# and source code found on GitHub.
-# Maintainer: Faris Chugthai
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+""" Configuration file for ipython.
+Heavily drawn from documentation at
+https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
+and source code found on GitHub.
+Maintainer: Faris Chugthai
+"""
+
+import sys
+# actually if the import file i use works then we shouldn't need this right?
+# actually don't count on the order of execution being correct
 
 from pygments.token import Comment
 
-c = get_config()
+c = get_config() # noqa
 
+# Maybe add in git alias? OTOH i currently have 12 with no signs of going down
 c.AliasManager.user_aliases = [
-        ('la', 'ls -AlFh'),
-        ('head', 'head -n 30')
-        ]
+    ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
+    ('fzf', 'fzf'),         # all we need to do is figure out keybindings
+    ('ga', 'git add'),
+    ('gd', 'git diff'),
+    ('gs', 'git status'),
+    ('head', 'head -n 30'),
+    ('la', 'ls -alFh'),
+    ('l', 'ls -CF'),
+    ('ll', 'ls -AlF'),      # i like mine more so override theres
+    ('lt', 'ls -Altcr'),
+    ('mkdir', 'mkdir -pv'),
+    ('mv', 'mv -iv'),
+    ('rm', 'rm -v'),
+    ('rmdir', 'rmdir -pv'),
+    ('tail', 'tail -n 30'),
+    ('tree', 'tree'),
+]
 
+# For some reason there's no section about aliases in the skel file. Weird.
+
+# well here's a fun fact
+#  You can use the %l specifier in an alias definition to represent the
+#  whole line when the alias is called.  For example::
+
+#    In [2]: alias bracket echo "Input in brackets: <%l>"
+#    In [3]: bracket hello world
+#    Input in brackets: <hello world>
+
+# note that we quote when in the configuration file but when running alias
+# interactively the syntax %alias alias_name cmd doesn't require quoting
 
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -182,7 +216,18 @@ c.InteractiveShell.autoindent = True
 c.InteractiveShell.automagic = True
 
 # The part of the banner to be printed before the profile
-# c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
+# c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"       # noqa
+
+# so i'm gonna start ignoring these entirely. internally python uses
+# check IPython/core/usage.py
+# unfortunately this doesn't work yet. release isn't defined and idk where
+# they define it in the original file.
+#  rewritten_banner_parts = ["Python %s\n" % sys.version.split("\n")[0],
+#                            "IPython {version} ".format(version=release.version), ]
+
+#  rewritten_banner = ''.join(rewritten_banner_parts)
+
+#  c.InteractiveShell.banner1 = rewritten_banner
 
 # The part of the banner to be printed after the profile
 # c.InteractiveShell.banner2 = ''
@@ -203,8 +248,8 @@ c.InteractiveShell.color_info = True
 # Set the color scheme (NoColor, Neutral, Linux, or LightBG).
 c.InteractiveShell.colors = 'Neutral'
 
-#
 # c.InteractiveShell.debug = False
+
 # Don't call post-execute functions that have failed in the past.
 # c.InteractiveShell.disable_failing_post_execute = False
 
@@ -240,46 +285,27 @@ c.InteractiveShell.history_load_length = 10000
 # Automatically call the pdb debugger after every exception.
 # c.InteractiveShell.pdb = False
 
-# Deprecated since IPython 4.0 and ignored since 5.0, set
-#  TerminalInteractiveShell.prompts object directly.
-# c.InteractiveShell.prompt_in1 = 'In [\\#]: '
+# Since it's all been deprecated i deleted the section on IPython's str
+# methods for prompt. Don't change the prompt regardless because you'll destroy
+# the chance to use sphinx and stuff.
 
-# Deprecated since IPython 4.0 and ignored since 5.0, set
-#  TerminalInteractiveShell.prompts object directly.
-# c.InteractiveShell.prompt_in2 = '   .\\D.: '
-
-# Deprecated since IPython 4.0 and ignored since 5.0, set
-#  TerminalInteractiveShell.prompts object directly.
-# c.InteractiveShell.prompt_out = 'Out[\\#]: '
-
-# Deprecated since IPython 4.0 and ignored since 5.0, set
-#  TerminalInteractiveShell.prompts object directly.
-# c.InteractiveShell.prompts_pad_left = True
 
 c.InteractiveShell.quiet = False
 
-#
 # c.InteractiveShell.separate_in = '\n'
 
-#
 # c.InteractiveShell.separate_out = ''
 
-#
 # c.InteractiveShell.separate_out2 = ''
-
-#c.InteractiveShell.separate_in = '\n'
-
-#c.InteractiveShell.separate_out = ''
-
-#c.InteractiveShell.separate_out2 = ''
 
 # Show rewritten input, e.g. for autocall.
 # c.InteractiveShell.show_rewritten_input = True
 
 # Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-c.InteractiveShell.sphinxify_docstring = False
+c.InteractiveShell.sphinxify_docstring = True
 
+#
 c.InteractiveShell.wildcards_case_sensitive = False
 
 # Switch modes for the IPython exception handlers.
@@ -312,9 +338,6 @@ c.TerminalInteractiveShell.editor = 'nvim'
 
 # Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor. This is
 #  in addition to the F2 binding, which is always enabled.
-
-# TODO: Need to add an editor hook so the tmp file it creates has a .py
-# extension or else you don't get all your ftplugin and snippet goodness!
 c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 
 # Provide an alternative handler to be called when the user presses Return. This
@@ -325,22 +348,21 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # Highlight matching brackets.
 c.TerminalInteractiveShell.highlight_matching_brackets = True
 
-# The name or class of a Pygments style to use for syntax highlighting. To see
-#  available styles, run `pygmentize -L styles`.
-# The name or class of a Pygments style to use for syntax
-#         highlighting:
-#  default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc, pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor, paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
+# The name or class of a Pygments style to use for syntax highlighting.
+# To see available styles, run `pygmentize -L styles`.
+
+# default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc,
+# pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
+# paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
+
 c.TerminalInteractiveShell.highlighting_style = 'legacy'
+
 # I'm sure tango is plenty configurable but out of the box it's completely illegible
 # default has impossible to read strings and in a truncated sense just led to my first rm -r mistake
 
-# Actually coming back to that above comment tangos src code is clearly marked up
-# Even monokai, based off of tango, has values for half of its tokens plain empty!
-# So actually do go back and check it out
-
-
 # Override highlighting format for specific tokens
-c.TerminalInteractiveShell.highlighting_style_overrides = { Comment: '#ffffff'}
+# Comments were genuinely impossible to read. Might need to override punctuation next.
+c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Enable mouse support in the prompt (Note: prevents selecting text with the
 #  mouse)
@@ -384,7 +406,6 @@ c.TerminalInteractiveShell.true_color = True
 #  HistoryManager, below, which is a subclass of this.
 
 # Options for configuring the SQLite connection
-## Options for configuring the SQLite connection
 #
 #  These options are passed as keyword args to sqlite3.connect when establishing
 #  database conenctions.
@@ -431,11 +452,10 @@ c.HistoryManager.db_log_output = True
 #------------------------------------------------------------------------------
 
 # An object to manage the profile directory and its resources.
-## An object to manage the profile directory and its resources.
-#
+
 #  The profile directory is used by all IPython applications, to manage
 #  configuration, logging and security.
-#
+
 #  This object knows how to find, create and manage these directories. This
 #  should be used by any code that wants to handle profiles.
 
@@ -469,28 +489,13 @@ c.HistoryManager.db_log_output = True
 #  If no function/callable is found to compute the format data, ``None`` is
 #  returned and this format type is not used.
 
-#
 # c.BaseFormatter.deferred_printers = {}
 
-#
 # c.BaseFormatter.enabled = True
 
-#
 # c.BaseFormatter.singleton_printers = {}
 
-#
 # c.BaseFormatter.type_printers = {}
-#
-#c.BaseFormatter.deferred_printers = {}
-
-#
-#c.BaseFormatter.enabled = True
-
-#
-#c.BaseFormatter.singleton_printers = {}
-
-#
-#c.BaseFormatter.type_printers = {}
 
 #------------------------------------------------------------------------------
 # PlainTextFormatter(BaseFormatter) configuration
@@ -518,28 +523,20 @@ c.HistoryManager.db_log_output = True
 #                      p.pretty(field)
 #                  p.end_group(7, '])')
 
-#
+
 # c.PlainTextFormatter.float_precision = ''
 
 # Truncate large collections (lists, dicts, tuples, sets) to this size.
-#
-#c.PlainTextFormatter.float_precision = ''
 
-# Truncate large collections (lists, dicts, tuples, sets) to this size.
-#
 #  Set to 0 to disable truncation.
 c.PlainTextFormatter.max_seq_length = 100
 
-#
 c.PlainTextFormatter.max_width = 100
 
-#
 c.PlainTextFormatter.newline = '\n'
 
-#
 c.PlainTextFormatter.pprint = True
 
-#
 # c.PlainTextFormatter.verbose = False
 
 #------------------------------------------------------------------------------
@@ -648,4 +645,4 @@ c.LoggingMagics.quiet = False
 
 # If True, any %store-d variables will be automatically restored when IPython
 #  starts.
-#c.StoreMagics.autorestore = False
+# c.StoreMagics.autorestore = False

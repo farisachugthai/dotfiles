@@ -20,8 +20,8 @@
 [diff]
     color = auto
     prompt = false
-    strategy-option = patience
-    tool =  difftool
+    strategy-option = resolve
+    tool =  vimdiff
 
 [merge]
     color = auto
@@ -29,6 +29,9 @@
     prompt = false
     strategy-option = resolve
     tool = vimdiff
+
+# [mergetool "vimdiff"]
+#         cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [push]
     default = simple
@@ -43,25 +46,25 @@
     status = true
 
 [alias]
-# From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
+    # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
     last = log -1 HEAD
     unstage = reset HEAD
 
-# From varying Gists
+    # From varying Gists
     staged = diff --cached
     unstaged = diff
 
-# Fix unexpected behavior
+    # Fix unexpected behavior
     ls = ls-files
 
-# From: https://githowto.com/history
-# Run check git-log
+    # From: https://githowto.com/history
+    # Run check git-log
     hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 
 [help]
     autocorrect = 1
 
 [credential]
-	helper = cache
+    helper = cache
 
 # Vim: set ft:gitconfig :

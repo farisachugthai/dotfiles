@@ -1,22 +1,22 @@
 # Global Gitignore
 # Maintainer: Faris Chugthai
 
-# Personal Files
-*.local
-!*.local/
-# OTOH should any .local files be in here in the first place? I guess this
-# is a good preventative measure
+# Personal
+.zim/
 tmux-history
 history.sqlite
 .zim/
 
-## Python
+# Python
 
 # mypy
-.mypy_cache
+.mypy_cache/
+
+# spyder projects
+.spyproject/
 
 # Jupyter Notebooks / JupyterLab
-.ipynb_checkpoints
+.ipynb_checkpoints/
 
 # Rope
 .ropeproject/
@@ -45,7 +45,7 @@ build/
 .directory
 
 # PyCharm
-.idea
+.idea/
 
 # From:
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
