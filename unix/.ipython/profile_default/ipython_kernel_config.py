@@ -229,9 +229,8 @@ c.IPythonKernel.use_experimental_completions = True
 #  nodes should be run interactively (displaying output from expressions).
 try:
     c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
-except:
+except Exception:
     c.InteractiveShell.ast_node_interactivity = 'last_expr'
-
 
 # A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.

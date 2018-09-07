@@ -11,11 +11,13 @@
 #
 # see http://docs.bpython-interpreter.org/configuration.html
 # for all configurable options
+from os.path import expanduser, join as pjoin
+# import time
 
-import time
+# dont touch this until you're ready to handwrite a logger
+# LOG_TIMESTAMP=time.ctime()
 
-LOG_TIMESTAMP=time.ctime()
-# so i didn't assign this to amything?
+home = os.path.expanduser('~')
 
 # General section tag
 [general]
@@ -32,8 +34,13 @@ syntax = True
 arg_spec = True
 
 # History file (default: ~/.pythonhist):
+# TODO: Add in a datetime object that creates a new file for everyday
+
 try:
-    hist_file = ~/.local/share/bpython/
+    hist_file = pjoin(home, '.local', 'share', 'bpython.log')
+except Exception as e:
+    print(e)
+    hist_file = pjoin(home, '.pythonhist')
 
 # Number of lines to store in history (set to 0 to disable) (default: 100):
 hist_length = 10000
@@ -49,11 +56,13 @@ tab_length = 4
 # External editor to use for editing the current line, block, or full history
 # Default is to try $EDITOR and $VISUAL, then vi - but if you uncomment
 # the line below that will take precedence
-editor = nvim
+# actually is this supposed to be a string? Im using my value for both env
+# vars anyway
+# editor = nvim
 
 # Whether to append .py to the filename while saving session to a file.
 # (default: False)
-# save_append_py = False
+save_append_py = True
 
 # The name of a helper executable that should perform pastebin upload on
 # bpython's behalf. If unset, bpython uploads pastes to bpaste.net. (default: )
@@ -102,7 +111,7 @@ editor = nvim
 # (default: False)
 # list_above = False
 
-# AND BTW HOW DID YOU DO IT!
+# How did he enable this functionality? I would love to have this in ipython
 # Enables two fish (the shell) style features:
 # Previous line key will search for the current line (like reverse incremental
 # search) and right arrow will complete the current line with the first match

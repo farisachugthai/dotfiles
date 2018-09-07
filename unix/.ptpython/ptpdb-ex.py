@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-"""
-Example of how to call the prompt-toolkit version of the Python debugger (pdb).
+""" Example of how to call the prompt-toolkit version of the Python debugger (pdb).
 """
 from ptpdb import set_trace
 
