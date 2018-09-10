@@ -2,8 +2,100 @@
 
 # Personal Snippets you wrote
 
-# None yet but definitely copy the vim-snippets/snippets/rst.snippets
-#
+
+##########
+# Snipmate
+##########
+
+snippet : "Paragraph"
+	:${1:field name}: ${0:field body}
+endsnippet
+
+snippet * "Italics"
+	*${1:Emphasis}* ${0}
+endsnippet
+
+snippet ** "Bold"
+	**${1:Strong emphasis}** ${0}
+endsnippet
+
+snippet url "External url"
+	\`${1:hyperlink-name}\`_
+	.. _\`$1\`: ${0:link-block}
+endsnippet
+
+snippet title= "Title underlined with ==='s" b
+	${1:Title}
+	=====${2:=}
+	${0}
+endsnippet
+
+snippet title- "Title underlined with ---'s" b
+	${1:Title}
+	-----${2:-}
+	${0}
+endsnippet
+
+#some directive
+snippet img:
+	.. |${0:alias}| image:: ${1:img}
+endsnippet
+
+snippet fig:
+	.. figure:: ${1:img}
+		:alt: ${0:alter text}
+
+		$2
+endsnippet
+snippet cont:
+	.. contents::
+		${0:content}
+endsnippet
+snippet code:
+	.. code:: ${1:type}
+
+		${0:write some code}
+endsnippet
+
+snippet tip:
+	.. tip::
+		${0:my tips}
+endsnippet
+
+snippet not:
+	.. note::
+		${0:my notes}
+endsnippet
+
+snippet	war:
+	.. warning::
+		${0:attention!}
+endsnippet
+
+snippet imp:
+	.. important::
+		${0:this is importatnt}
+endsnippet
+
+snippet att:
+	.. attention::
+		${0:hey!}
+endsnippet
+
+snippet dan:
+	.. danger::
+		${0:ah!}
+endsnippet
+
+snippet err:
+	.. error::
+		${0:Error occur}
+endsnippet
+
+snippet cau:
+	.. caution::
+		${0:Watch out!}
+endsnippet
 
 ###########################################################################
 #							   General Stuff							  #

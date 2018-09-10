@@ -2,44 +2,58 @@
 # -*- coding: utf-8 -*-
 """ Configuration file for ipython.
 Heavily drawn from documentation at
-https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files
+
+`<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
+
 and source code found on GitHub.
-Maintainer: Faris Chugthai
 """
 
-import sys
 # actually if the import file i use works then we shouldn't need this right?
 # actually don't count on the order of execution being correct
-
 from pygments.token import Comment
 
-c = get_config() # noqa
+# c is a traitlets.config.Configurable object
+# so everything you see in this like 600 line file is how to interact
+# with those kinds of files. it's easy and doesn't require reinitializing
+# ipython on simple things like creating a new prompt after every command
+# increments it
 
-# Maybe add in git alias? OTOH i currently have 12 with no signs of going down
+c = get_config()            # noqa,pyls:
+
+# Alias: {{{
 c.AliasManager.user_aliases = [
-    ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
-    ('fzf', 'fzf'),         # all we need to do is figure out keybindings
-    ('ga', 'git add'),
-    ('gd', 'git diff'),
-    ('gs', 'git status'),
-    ('head', 'head -n 30'),
-    ('la', 'ls -alFh'),
-    ('l', 'ls -CF'),
-    ('ll', 'ls -AlF'),      # i like mine more so override theres
-    ('lt', 'ls -Altcr'),
-    ('mkdir', 'mkdir -pv'),
-    ('mv', 'mv -iv'),
-    ('rm', 'rm -v'),
-    ('rmdir', 'rmdir -pv'),
-    ('tail', 'tail -n 30'),
-    ('tree', 'tree'),
-]
+      ('ag', 'ag --color'),
+      ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
+      ('echo', 'echo -e'),
+      ('fzf', 'fzf'),         # all we need to do is figure out keybindings
+      ('ga', 'git add'),
+      ('gch', 'git checkout'),
+      ('gco', 'git commit'),
+      ('gd', 'git diff'),
+      ('gds', 'git diff --staged'),
+      ('glo', 'git log'),
+      ('gs', 'git status'),
+      ('gst', 'git diff --stat'),
+      ('head', 'head -n 30'),
+      ('la', 'ls -AF --color=always'),
+      ('l', 'ls -CF --color=always'),
+      ('ll', 'ls -AlF --color=always'),
+      ('ls', 'ls -F --color=always'),
+      ('lt', 'ls -Altcr --color=always'),
+      ('mkdir', 'mkdir -pv'),
+      ('mv', 'mv -iv'),
+      ('nvim', 'nvim'),
+      ('rm', 'rm -v'),
+      ('rmdir', 'rmdir -pv'),
+      ('tail', 'tail -n 30'),
+      ('vi', 'vim'),
+      ('vim', 'vim'),
+  ]
 
 # For some reason there's no section about aliases in the skel file. Weird.
-
 # well here's a fun fact
-#  You can use the %l specifier in an alias definition to represent the
-#  whole line when the alias is called.  For example::
+# You can use the %l specifier in an alias definition to represent the
+# whole line when the alias is called.  For example::
 
 #    In [2]: alias bracket echo "Input in brackets: <%l>"
 #    In [3]: bracket hello world
@@ -48,17 +62,19 @@ c.AliasManager.user_aliases = [
 # note that we quote when in the configuration file but when running alias
 # interactively the syntax %alias alias_name cmd doesn't require quoting
 
-#------------------------------------------------------------------------------
+# }}}
+
+# ----------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # A Mixin for applications that start InteractiveShell instances.
 #
 #  Provides configurables for loading extensions and executing files as part of
 #  configuring a Shell environment.
 #
-#  The following methods should be called by the :meth:`initialize` method of the
-#  subclass:
+#  The following methods should be called by the :meth:`initialize` method of
+#  the subclass:
 #
 #    - :meth:`init_path`
 #    - :meth:`init_shell` (to be implemented by the subclass)
@@ -113,11 +129,13 @@ c.AliasManager.user_aliases = [
 # c.InteractiveShellApp.pylab_import_all = True
 
 # Reraise exceptions encountered loading IPython extensions?
-# c.InteractiveShellApp.reraise_ipython_extension_failures = False
+# if you realize this is a bad idea please leave a note why
+# i'm actually curious
+c.InteractiveShellApp.reraise_ipython_extension_failures = True
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # This is an application.
 
@@ -130,9 +148,9 @@ c.AliasManager.user_aliases = [
 # Set the log level by value or name.
 # c.Application.log_level = 30
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # BaseIPythonApplication(Application) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # IPython: an enhanced interactive Python shell.
 
@@ -140,7 +158,7 @@ c.AliasManager.user_aliases = [
 # c.BaseIPythonApplication.auto_create = False
 
 # Whether to install the default config files into the profile dir. If a new
-#  profile is being created, and IPython contains config files for that profile,
+#  profile is being created, and IPython contains config files for that profile
 #  then they will be staged into the new directory.  Otherwise, default config
 #  files will be automatically generated.
 # c.BaseIPythonApplication.copy_config_files = False
@@ -151,9 +169,9 @@ c.AliasManager.user_aliases = [
 # c.BaseIPythonApplication.extra_config_file = ''
 
 # The name of the IPython directory. This directory is used for logging
-#  configuration (through profiles), history storage, etc. The default is usually
-#  $HOME/.ipython. This option can also be specified through the environment
-#  variable IPYTHONDIR.
+# configuration (through profiles), history storage, etc. The default is
+# $HOME/.ipython. This option can also be specified through the environment
+# variable IPYTHONDIR.
 # c.BaseIPythonApplication.ipython_dir = ''
 
 # Whether to overwrite existing config files when copying
@@ -164,11 +182,11 @@ c.BaseIPythonApplication.profile = 'default'
 
 # Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback
-# c.BaseIPythonApplication.verbose_crash = False
+c.BaseIPythonApplication.verbose_crash = False
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # TerminalIPythonApp(BaseIPythonApplication,InteractiveShellApp) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # Whether to display a banner upon starting IPython.
 c.TerminalIPythonApp.display_banner = True
@@ -179,14 +197,15 @@ c.TerminalIPythonApp.display_banner = True
 
 # Class to use to instantiate the TerminalInteractiveShell object. Useful for
 #  custom Frontends
-# c.TerminalIPythonApp.interactive_shell_class = 'IPython.terminal.interactiveshell.TerminalInteractiveShell'
+# shell_cls = 'IPython.terminal.interactiveshell.TerminalInteractiveShell'
+# c.TerminalIPythonApp.interactive_shell_class = shell_cls
 
 # Start IPython quickly by skipping the loading of config files.
 # c.TerminalIPythonApp.quick = False
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # InteractiveShell(SingletonConfigurable) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # An enhanced, interactive shell for Python.
 
@@ -202,11 +221,11 @@ except Exception:
 # c.InteractiveShell.ast_transformers = []
 
 # Make IPython automatically call any callable object even if you didn't type
-#  explicit parentheses. For example, 'str 43' becomes 'str(43)' automatically.
-#  The value can be '0' to disable the feature, '1' for 'smart' autocall, where
-#  it is not applied if there are no more arguments on the line, and '2' for
-#  'full' autocall, where all callable objects are automatically called (even if
-#  no arguments are present).
+# explicit parentheses. For example, 'str 43' becomes 'str(43)' automatically.
+# The value can be '0' to disable the feature, '1' for 'smart' autocall, where
+# it is not applied if there are no more arguments on the line, and '2' for
+# 'full' autocall, where all callable objects are automatically called (even if
+# no arguments are present).
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
@@ -216,14 +235,18 @@ c.InteractiveShell.autoindent = True
 c.InteractiveShell.automagic = True
 
 # The part of the banner to be printed before the profile
-# c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"       # noqa
+# c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16)
+# \nType 'copyright', 'credits' or 'license' for more information\nIPython
+# 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
 
-# so i'm gonna start ignoring these entirely. internally python uses
+# Let's try rewriting the banner.
 # check IPython/core/usage.py
 # unfortunately this doesn't work yet. release isn't defined and idk where
 # they define it in the original file.
-#  rewritten_banner_parts = ["Python %s\n" % sys.version.split("\n")[0],
-#                            "IPython {version} ".format(version=release.version), ]
+# rewritten_banner_parts = [
+#     "Python %s\n" % sys.version.split("\n")[0],
+#     "IPython {version} ".format(version=release.version),
+# ]
 
 #  rewritten_banner = ''.join(rewritten_banner_parts)
 
@@ -232,12 +255,12 @@ c.InteractiveShell.automagic = True
 # The part of the banner to be printed after the profile
 # c.InteractiveShell.banner2 = ''
 
-# Set the size of the output cache.  The default is 1000, you can change it
-#  permanently in your config file.  Setting it to 0 completely disables the
-#  caching system, and the minimum value accepted is 3 (if you provide a value
-#  less than 3, it is reset to 0 and a warning is issued).  This limit is defined
-#  because otherwise you'll spend more time re-flushing a too small cache than
-#  working
+# Set the size of the output cache. The default is 1000, you can change it
+# permanently in your config file. Setting it to 0 completely disables the
+# caching system, and the minimum value accepted is 3 (if you provide a value
+# less than 3, it is reset to 0 and a warning is issued). This limit is defined
+# because otherwise you'll spend more time re-flushing a too small cache than
+# working
 c.InteractiveShell.cache_size = 100000
 
 # Use colors for displaying information about objects. Because this information
@@ -269,9 +292,9 @@ c.InteractiveShell.history_load_length = 10000
 
 # c.InteractiveShell.ipython_dir = ''
 
-# Start logging to the given file in append mode. Use `logfile` to specify a log
-#  file to **overwrite** logs to.
-# c.InteractiveShell.logappend = '~/.ipython/profile_default/log/logging-default'
+# Start logging to the given file in append mode. Use `logfile` to specify a
+# log file to **overwrite** logs to.
+# c.InteractiveShell.logappend = ''
 
 # The name of the logfile to use.
 # c.InteractiveShell.logfile = ''
@@ -288,8 +311,6 @@ c.InteractiveShell.history_load_length = 10000
 # Since it's all been deprecated i deleted the section on IPython's str
 # methods for prompt. Don't change the prompt regardless because you'll destroy
 # the chance to use sphinx and stuff.
-
-
 c.InteractiveShell.quiet = False
 
 # c.InteractiveShell.separate_in = '\n'
@@ -303,7 +324,8 @@ c.InteractiveShell.quiet = False
 
 # Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-c.InteractiveShell.sphinxify_docstring = True
+# TODO: Do some kind of check to see whether we have docrepr in the env first
+# c.InteractiveShell.sphinxify_docstring = True
 
 #
 c.InteractiveShell.wildcards_case_sensitive = False
@@ -311,9 +333,9 @@ c.InteractiveShell.wildcards_case_sensitive = False
 # Switch modes for the IPython exception handlers.
 # c.InteractiveShell.xmode = 'Context'
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # TerminalInteractiveShell(InteractiveShell) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
@@ -331,18 +353,16 @@ c.TerminalInteractiveShell.editing_mode = 'vi'
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
 c.TerminalInteractiveShell.editor = 'nvim'
 
-# 07/16/18
-# i was reading prompt toolkits docs and I'm still unsure what thisection refers to
 # Allows to enable/disable the prompt toolkit history search
 # c.TerminalInteractiveShell.enable_history_search = True
 
-# Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor. This is
-#  in addition to the F2 binding, which is always enabled.
+# Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor.
+# This is in addition to the F2 binding, which is always enabled.
 c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 
-# Provide an alternative handler to be called when the user presses Return. This
-#  is an advanced option intended for debugging, which may be changed or removed
-#  in later releases.
+# Provide an alternative handler to be called when the user presses Return.
+# This is an advanced option intended for debugging, which may be changed or
+# removed in later releases.
 # c.TerminalInteractiveShell.handle_return = None
 
 # Highlight matching brackets.
@@ -353,15 +373,13 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 
 # default, emacs, friendly, colorful, autumn, murphy, manni, monokai, perldoc,
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
-# paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash, abap
+# paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash
 
 c.TerminalInteractiveShell.highlighting_style = 'legacy'
 
-# I'm sure tango is plenty configurable but out of the box it's completely illegible
-# default has impossible to read strings and in a truncated sense just led to my first rm -r mistake
-
 # Override highlighting format for specific tokens
-# Comments were genuinely impossible to read. Might need to override punctuation next.
+# Comments were genuinely impossible to read. Might need to override
+# punctuation next.
 c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Enable mouse support in the prompt (Note: prevents selecting text with the
@@ -396,33 +414,38 @@ c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
 #  in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
 c.TerminalInteractiveShell.true_color = True
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # HistoryAccessor(HistoryAccessorBase) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # Access the history database without adding to it.
 #
 #  This is intended for use by standalone history tools. IPython shells use
 #  HistoryManager, below, which is a subclass of this.
 
+# *******
+# What this implies is that if you want to create your own tool for analyzing
+# your history logs in IPython start here!
+# *******
+
 # Options for configuring the SQLite connection
 #
-#  These options are passed as keyword args to sqlite3.connect when establishing
-#  database conenctions.
+# These options are passed as keyword args to sqlite3.connect when establishing
+# database conenctions.
 # c.HistoryAccessor.connection_options = {}
 
 # enable the SQLite history
 #
-#  set enabled=False to disable the SQLite history, in which case there will be
-#  no stored history, no SQLite connection, and no background saving thread.
-#  This may be necessary in some threaded environments where IPython is embedded.
+# set enabled=False to disable the SQLite history, in which case there will be
+# no stored history, no SQLite connection, and no background saving thread.
+# This may be necessary in some threaded environments where IPython is embedded
 # c.HistoryAccessor.enabled = True
 
 # Path to file to use for SQLite history database.
 #
-#  By default, IPython will put the history database in the IPython profile
-#  directory.  If you would rather share one history among profiles, you can set
-#  this value in each, so that they are consistent.
+# By default, IPython will put the history database in the IPython profile
+# directory.  If you would rather share one history among profiles, you can set
+# this value in each, so that they are consistent.
 #
 #  Due to an issue with fcntl, SQLite is known to misbehave on some NFS mounts.
 #  If you see IPython hanging, try setting this to something on a local disk,
@@ -434,9 +457,9 @@ c.TerminalInteractiveShell.true_color = True
 #  end but not the back ticks), to avoid creating an history file.
 # c.HistoryAccessor.hist_file = ''
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # HistoryManager(HistoryAccessor) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # A class to organize all history-related functionality in one place.
 
@@ -447,9 +470,9 @@ c.HistoryManager.db_cache_size = 20
 # Should the history database include output? (default: no)
 c.HistoryManager.db_log_output = True
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # ProfileDir(LoggingConfigurable) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # An object to manage the profile directory and its resources.
 
@@ -463,28 +486,28 @@ c.HistoryManager.db_log_output = True
 #  `profile` option.
 # c.ProfileDir.location = ''
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # BaseFormatter(Configurable) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # A base formatter class that is configurable.
 #
-#  This formatter should usually be used as the base class of all formatters. It
-#  is a traited :class:`Configurable` class and includes an extensible API for
-#  users to determine how their objects are formatted. The following logic is
-#  used to find a function to format an given object.
+# This formatter should usually be used as the base class of all formatters. It
+# is a traited :class:`Configurable` class and includes an extensible API for
+# users to determine how their objects are formatted. The following logic is
+# used to find a function to format an given object.
 #
-#  1. The object is introspected to see if it has a method with the name
-#     :attr:`print_method`. If is does, that object is passed to that method
-#     for formatting.
-#  2. If no print method is found, three internal dictionaries are consulted
-#     to find print method: :attr:`singleton_printers`, :attr:`type_printers`
-#     and :attr:`deferred_printers`.
+# 1. The object is introspected to see if it has a method with the name
+#    :attr:`print_method`. If is does, that object is passed to that method
+#    for formatting.
+# 2. If no print method is found, three internal dictionaries are consulted
+#    to find print method: :attr:`singleton_printers`, :attr:`type_printers`
+#    and :attr:`deferred_printers`.
 #
-#  Users should use these dictionaries to register functions that will be used to
-#  compute the format data for their objects (if those objects don't have the
-#  special print methods). The easiest way of using these dictionaries is through
-#  the :meth:`for_type` and :meth:`for_type_by_name` methods.
+# Users should use these dictionaries to register functions that will be used
+# to compute the format data for their objects (if those objects don't have the
+# special print methods). The easiest way of using these dictionaries is
+# through the :meth:`for_type` and :meth:`for_type_by_name` methods.
 #
 #  If no function/callable is found to compute the format data, ``None`` is
 #  returned and this format type is not used.
@@ -497,16 +520,16 @@ c.HistoryManager.db_log_output = True
 
 # c.BaseFormatter.type_printers = {}
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # PlainTextFormatter(BaseFormatter) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # The default pretty-printer.
 #
-#  This uses :mod:`IPython.lib.pretty` to compute the format data of the object.
-#  If the object cannot be pretty printed, :func:`repr` is used. See the
-#  documentation of :mod:`IPython.lib.pretty` for details on how to write pretty
-#  printers.  Here is a simple example::
+# This uses :mod:`IPython.lib.pretty` to compute the format data of the object.
+# If the object cannot be pretty printed, :func:`repr` is used. See the
+# documentation of :mod:`IPython.lib.pretty` for details on how to write pretty
+# printers.  Here is a simple example::
 #
 #      def dtype_pprinter(obj, p, cycle):
 #          if cycle:
@@ -539,9 +562,9 @@ c.PlainTextFormatter.pprint = True
 
 # c.PlainTextFormatter.verbose = False
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Completer(Configurable) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # Enable unicode completions, e.g. \alpha<tab> . Includes completion of latex
 #  commands, unicode names, and expanding unicode characters back to latex
@@ -564,13 +587,13 @@ c.PlainTextFormatter.pprint = True
 #  hurt performance by preventing jedi to build its cache.
 c.Completer.jedi_compute_type_timeout = 400
 
-# Experimental: Use Jedi to generate autocompletions. Default to True if jedi is
-#  installed
+# Experimental: Use Jedi to generate autocompletions. Default to True if jedi
+# is installed
 c.Completer.use_jedi = True
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # IPCompleter(Completer) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # Extension of the completer class with IPython-specific features
 
@@ -587,8 +610,8 @@ c.Completer.use_jedi = True
 
 # Whether to merge completion results into a single list
 #
-#  If False, only the completion results from the first non-empty completer will
-#  be returned.
+# If False, only the completion results from the first non-empty completer will
+# be returned.
 # c.IPCompleter.merge_completions = True
 
 # Instruct the completer to omit private method names
@@ -602,15 +625,15 @@ c.Completer.use_jedi = True
 #  When 0: nothing will be excluded.
 # c.IPCompleter.omit__names = 2
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # ScriptMagics(Magics) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # Magics for talking to scripts
 #
-#  This defines a base `%%script` cell magic for running a cell with a program in
-#  a subprocess, and registers a few top-level magics that call %%script with
-#  common interpreters.
+# This defines a base `%%script` cell magic for running a cell with a program
+# in a subprocess, and registers a few top-level magics that call %%script with
+# common interpreters.
 
 # Extra script cell magics to define
 #
@@ -622,22 +645,22 @@ c.Completer.use_jedi = True
 
 # Dict mapping short 'ruby' names to full paths, such as '/opt/secret/bin/ruby'
 #
-#  Only necessary for items in script_magics where the default path will not find
-#  the right interpreter.
+# Only necessary for items in script_magics where the default path will not
+# find the right interpreter.
 # c.ScriptMagics.script_paths = {}
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # LoggingMagics(Magics) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # Magics related to all logging machinery.
 
 # Suppress output of log state when logging is enabled
 c.LoggingMagics.quiet = False
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # StoreMagics(Magics) configuration
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # Lightweight persistence for python variables.
 #

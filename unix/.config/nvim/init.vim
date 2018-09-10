@@ -116,32 +116,30 @@ set encoding=UTF-8             " Set default encoding
 scriptencoding UTF-8           " Vint believes encoding shoild be done first
 set fileencoding=UTF-8
 
-setlocal spelllang=en
-setlocal spellfile=~/.config/nvim/spell/en.utf-8.add
+set spelllang=en
+set spellfile=~/.config/nvim/spell/en.utf-8.add
 
 if !has('nvim')
     set spelllang+=$VIMRUNTIME/spell/en.utf-8.spl
 endif
 
-set spelllang+=$HOME/.config/nvim/spell/en.utf-8.spl
-set spelllang+=$HOME/.config/nvim/spell/en.utf-8.add.spl
 
 set complete+=kspell                    " Autocomplete in insert mode
 set spellsuggest=5                      " Limit the number of suggestions from 'spell suggest'
 
 " Can be set with sudo select-default-wordlist. I opted for American insane
 if filereadable('/usr/share/dict/words')
-    setlocal dictionary+=/usr/share/dict/words
+    set dictionary+=/usr/share/dict/words
     " Replace the default dictionary completion with fzf-based fuzzy completion
     inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 endif
 
 if filereadable('/usr/share/dict/american-english')
-    setlocal dictionary+=/usr/share/dict/american-english
+    set dictionary+=/usr/share/dict/american-english
 endif
 
 if filereadable('~/.config/nvim/spell/en.hun.spl')
-    setlocal spelllang+=~/.config/nvim/spell/en.hun.spl
+    set spelllang+=~/.config/nvim/spell/en.hun.spl
 endif
 
 if filereadable(glob('~/.vim/autocorrect.vim'))
