@@ -1,7 +1,5 @@
 " init.vim
 " Neovim configuration
-" Maintainer: Faris Chugthai
-scriptencoding UTF-8
 
 " All: {{{ 1
 
@@ -65,6 +63,12 @@ call plug#end()
 " }}}
 
 " Nvim Specific: {{{ 2
+" Yeah so we gotta do this BS again. Seriously try to keep odifications at 0
+" until the dust settles. I just wanted to note that it'd be a good enough idea to put on all 4
+" rc files to add the clipboard providor tmux thing. nvim specific.
+" made me think and realize that python3_host_prog is probably also something that should go in nvim specific
+" i mean that is if you wanna take it out of the ftplugin
+" holy shit we're moving so slow. yeah man i'm sure it's languageclient this only ever happens with that.
 set background=dark
 
 let s:local_vimrc = fnamemodify(resolve(expand('<sfile>')), ':p:h').'/init.vim.local'
@@ -114,10 +118,11 @@ set splitright
 " }}}
 
 " Spell Checker: {{{ 3
-set encoding=UTF-8                  " Set default encoding
+set encoding=UTF-8              " Set default encoding
+scriptencoding UTF-8            " Vint believes encoding should be done first
 set fileencoding=UTF-8
 
-setlocal spelllang=en,en_us
+setlocal spelllang=en
 setlocal spellfile=~/.config/nvim/spell/en.utf-8.add
 
 if !has('nvim')
@@ -141,19 +146,19 @@ if filereadable('/usr/share/dict/american-english')
     setlocal dictionary+=/usr/share/dict/american-english
 endif
 
-if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
+if filereadable('~/.config/nvim/spell/en.hun.spl')
     set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
 endif
 
-if filereadable(glob('~/.config/nvim/autocorrect.vim'))
-    source ~/.config/nvim/autocorrect.vim
+if filereadable(glob('~/.vim/autocorrect.vim'))
+    source ~/.vim/autocorrect.vim
 endif
 " }}}
 
 " Fun With Clipboards: {{{ 3
-if has('unnamedplus')           " Use the system clipboard.
+if has('unnamedplus')                   " Use the system clipboard.
   set clipboard+=unnamed,unnamedplus
-else                            " Accomodate Termux
+else                                    " Accomodate Termux
   set clipboard+=unnamed
 endif
 
@@ -211,6 +216,17 @@ nnoremap <C-l> <C-w>l
 " Navigate tabs more easily
 nnoremap <A-Right> :tabnext<CR>
 nnoremap <A-Left> :tabprev<CR>
+
+" T Pope
+nnoremap ]q :cnext<cr>
+nnoremap [q :cprev<cr>
+nnoremap ]l :lnext<cr>
+nnoremap [l :lprev<cr>
+nnoremap ]b :bnext<cr>
+nnoremap [b :bprev<cr>
+nnoremap ]t :tabn<cr>
+nnoremap [t :tabp<cr>
+
 " Simple way to speed up startup
 nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
@@ -223,6 +239,13 @@ nnoremap <leader>he :helpgrep<space>
 nnoremap <F9> :e $MYVIMRC<CR>
 
 inoremap jk <Esc>
+vnoremap jk <Esc>
+
+" Junegunn
+nnoremap <leader>o o<esc>
+nnoremap <leader>O O<esc>
+xnoremap < <gv
+xnoremap > >gv
 " }}}
 
 " Spell Checking: {{{ 3
@@ -237,23 +260,23 @@ nnoremap <Leader>s= :norm z=<CR>
 
 " For Emacs-style editing on the command-line:
 " start of line
-:cnoremap <C-A>		<Home>
+cnoremap <C-A> <Home>
 " back one character
-:cnoremap <C-B>		<Left>
+cnoremap <C-B> <Left>
 " delete character under cursor
-:cnoremap <C-D>		<Del>
+cnoremap <C-D> <Del>
 " end of line
-:cnoremap <C-E>		<End>
+cnoremap <C-E> <End>
 " forward one character
-:cnoremap <C-F>		<Right>
+cnoremap <C-F> <Right>
 " recall newer command-line
-:cnoremap <C-N>		<Down>
+cnoremap <C-N> <Down>
 " recall previous (older) command-line
-:cnoremap <C-P>		<Up>
+cnoremap <C-P> <Up>
 " back one word
-:cnoremap <Esc><C-B>	<S-Left>
+cnoremap <Esc><C-B>	<S-Left>
 " forward one word
-:cnoremap <Esc><C-F>	<S-Right>
+cnoremap <Esc><C-F> <S-Right>
 " }}}
 
 " Terminal: {{{ 3
@@ -261,8 +284,6 @@ nnoremap <Leader>s= :norm z=<CR>
 tnoremap <Esc> <C-W>N
 " from he term. rewrite for fzf
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-
-" From he terminal
 tnoremap <A-h> <C-\><C-N><C-w>h
 tnoremap <A-j> <C-\><C-N><C-w>j
 tnoremap <A-k> <C-\><C-N><C-w>k
@@ -278,11 +299,9 @@ nnoremap <A-l> <C-w>l
 " }}}
 
 " ALE: {{{ 3
-" So these mappings would clobber so many things but its a good thought to
-" keep in the back of your mind
-" nnoremap <silent> <C-k> <Plug>(ale_previous_wrap)
-" nnoremap <silent> <C-j> <Plug>(ale_next_wrap)
 nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+nnoremap ]a <Plug>(ale_next_wrap)
+nnoremap [a <Plug>(ale_previous_wrap)
 " }}}
 
 " Fugitive: {{{ 3
@@ -316,7 +335,13 @@ if !has('nvim')
     setlocal keywordprg=:Man
 endif
 
+runtime! macros/matchit.vim
+
 " FZF: {{{ 3
+
+if has('nvim') || has('gui_running')
+  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+endif
 
 augroup fzf
 autocmd! FileType fzf
@@ -353,12 +378,15 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-let g:ag_command = 'ag --smart-case -u -g " " --'
-" TODO: need to look through this command because i keep getting an out of
-" index error
-command! -bang -nargs=* F call fzf#vim#grep(g:ag_command .shellescape(<q-args>), 1, <bang>0)
-
 let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" Between this and FZF.vim you have :Ag and :grep using ag, you should be fine
+if executable('ag')
+  let &grepprg = 'ag --nogroup --nocolor --column'
+else
+  let &grepprg = 'grep -rn $* *'
+endif
+command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 " }}}
 
 " NERDTree: {{{ 3
@@ -389,6 +417,7 @@ let g:ale_fix_on_save = 1
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
 let g:ale_set_signs = 1
 let g:ale_sign_column_always = 1
+let g:ale_lint_delay = 1000
 " }}}
 
 " Devicons: {{{ 3
@@ -402,12 +431,12 @@ let g:startify_session_sort = 1
 " }}}
 
 " Ultisnips: {{{ 3
-let g:UltiSnipsSnippetDir=[ '~/.config/nvim/UltiSnips' ]
+let g:UltiSnipsSnippetDir = [ '~/.config/nvim/UltiSnips' ]
 let g:UltiSnipsJumpForwardTrigger='<Tab>'
 let g:UltiSnipsJumpBackwardTrigger='<S-Tab>'
-let g:UltiSnips_python_quoting_style='GOOGLE'
+let g:UltiSnips_python_quoting_style = 'GOOGLE'
 let g:UltiSnipsEnableSnipMate = 0
-let g:UltiSnipsEditSplit='vertical'
+let g:UltiSnipsEditSplit = 'vertical'
 " }}}
 
 " Gruvbox: {{{ 3
@@ -417,6 +446,9 @@ let g:gruvbox_contrast_dark = 'hard'
 " }}}
 
 " Language Client: {{{ 3
+" A better way of doing this would be to check if the server is executable
+" so like if executable('pyls) | let g:pyserver = 'pyls' and then run as
+" many checks as you feel like typing and then append them all to this dict
 let g:LanguageClient_serverCommands = {
     \ 'python': [ 'pyls' ]
     \ }
@@ -483,6 +515,37 @@ function! s:scriptnames(re) abort
     let filtered = filter(split(scriptnames, "\n"), "v:val =~ '" . a:re . "'")
     echo join(filtered, "\n")
 endfunction
+
+function! s:helptab()
+    if &buftype == 'help'
+        wincmd T
+        nnoremap <buffer> q :q<cr>
+    endif
+endfunction
+" keeps erroring idk why.
+" autocmd vimrc BufEnter *.txt call s:helptab()
+
+function! s:autosave(enable)
+  augroup autosave
+    autocmd!
+    if a:enable
+      autocmd TextChanged,InsertLeave <buffer>
+            \  if empty(&buftype) && !empty(bufname(''))
+            \|   silent! update
+            \| endif
+    endif
+  augroup END
+endfunction
+
+command! -bang Autosave call s:autosave(<bang>1)
+
+" Whats the syntax group under my cursor?
+function! s:hl()
+  " echo synIDattr(synID(line('.'), col('.'), 0), 'name')
+  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), '/')
+endfunction
+command! HL call <SID>hl()
+
 " }}}
 
 " }}}

@@ -20,6 +20,7 @@ Urxvt*font              : FiraCode : autohint=True : pixelsize=20
 Urxvt*italicFont        : FiraCode : italic : autohint=True : pixelsize=20
 Urxvt*boldFont          : FiraCode : bold   : autohint=True : pixelsize=20
 
+! check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
 *antialias                     : true
 *autohint                      : true
 
@@ -202,9 +203,8 @@ dmenu.foreground:          #d8dee9
 ! UXTerm configs
 ! ------------------------------------------------------------------------------
 
-
 ! termtype
-UXTerm*termName: xterm-256color
+UXTerm*termName:           xterm-256color
 UXTerm*VT100.geometry:     92x16
 UXTerm*font:               M+ 1mn
 UXTerm*faceSize:           12
@@ -224,46 +224,6 @@ UXTerm*colorBDMode:        true
 UXTerm*colorBD:            rgb:3f/3f/3f
 
 ! Here's a general colorscheme for the X server as a whole
-
-
-! -----------------------------------------------------------------------------
-! File: gruvbox-dark.xresources
-! Description: Retro groove colorscheme generalized
-! Author: morhetz <morhetz@gmail.com>
-! Source: https://github.com/morhetz/gruvbox-generalized
-! Last Modified: 6 Sep 2014
-! -----------------------------------------------------------------------------
-
-! hard contrast
-: *background : #1d2021
-! *background             : #282828
-! soft contrast         : *background : #32302f
-*foreground             : #ebdbb2
-! Black + DarkGrey
-*color0                 : #282828
-*color8                 : #928374
-! DarkRed + Red
-*color1                 : #cc241d
-*color9                 : #fb4934
-! DarkGreen + Green
-*color2                 : #98971a
-*color10                : #b8bb26
-! DarkYellow + Yellow
-*color3                 : #d79921
-*color11                : #fabd2f
-! DarkBlue + Blue
-*color4                 : #458588
-*color12                : #83a598
-! DarkMagenta + Magenta
-*color5                 : #b16286
-*color13                : #d3869b
-! DarkCyan + Cyan
-*color6                 : #689d6a
-*color14                : #8ec07c
-! LightGrey + White
-*color7                 : #a89984
-<F2><F3><F4>color15     : #ebdbb2
-
 
 ! Addys config
 !

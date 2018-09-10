@@ -7,7 +7,7 @@ Copy this file to ~/.ptpython/config.py
 """
 from __future__ import unicode_literals
 from prompt_toolkit.filters import ViInsertMode
-# from prompt_toolkit.key_binding.key_processor import KeyPress
+from prompt_toolkit.key_binding.key_processor import KeyPress
 from prompt_toolkit.keys import Keys
 from pygments.token import Token
 
@@ -97,7 +97,6 @@ def configure(repl):
     repl.enable_system_bindings = True
 
     # Ask for confirmation on exit.
-    # honestly just annoying
     repl.confirm_exit = False
 
     # Enable input validation. (Don't try to execute when the input contains
@@ -121,7 +120,8 @@ def configure(repl):
     """
 
     # Add custom key binding for PDB.
-    # holy hell this is genius. py3.7 just got breakpoint but this wouldve been a great addition to my ipy conf
+    # holy hell this is genius.
+    # py3.7 just got breakpoint. A great addition to my ipy conf
     @repl.add_key_binding(Keys.ControlB)
     def _(event):
         ' Pressing Control-B will insert "pdb.set_trace()" '
@@ -175,3 +175,6 @@ _custom_ui_colorscheme = {
     # Make the status toolbar red.
     Token.Toolbar.Status:                         'bg:#ff0000 #000000',
 }
+
+if __name__ == "__main__":
+    configure()

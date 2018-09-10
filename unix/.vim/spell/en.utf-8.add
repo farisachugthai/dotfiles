@@ -106,7 +106,6 @@ Vimwiki's
 Tagbar
 statusline
 colorscheme
-#ermux
 url
 cmds
 zim
@@ -227,7 +226,6 @@ vim
 vimrc
 spellchecker
 autocomplete
-<<<<<<< HEAD
 https
 vim
 docstring
@@ -246,7 +244,6 @@ ubuntu
 kate
 vim
 api
-=======
 fallback
 w3m
 keymap
@@ -271,16 +268,30 @@ diffupdate
 byobu
 chmod
 tmp
->>>>>>> termux
 vimscript
 vint
 google
 npm
-correctly
-modeline
+username
+gcloud
+Ubuntu
+rclone
+nonrecursively
+regex
+org
+api
+autocompletion
+offline
+REPL
+OpenSSH
+deian
+sudo
+shopt
+vim
+cheatsheet
+DDG
+YouTube
+mp3
+playlist
 #EAD/!
-#EAD/!
-#EAD/!
-HEAD/!
-termux/!
 ALE
