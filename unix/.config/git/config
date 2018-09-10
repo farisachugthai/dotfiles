@@ -21,7 +21,7 @@
     color = auto
     prompt = false
     strategy-option = resolve
-    tool =  vimdiff
+    tool = vimdiff
 
 [merge]
     color = auto
@@ -30,6 +30,9 @@
     strategy-option = resolve
     tool = vimdiff
 
+# this is from justinmk and i don't know how it works however its how he has his system
+# configured to use nvim as the difftool
+# https://github.com/neovim/neovim/issues/2377
 # [mergetool "vimdiff"]
 #         cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-"""
-Configuration example for ``ptpython``.
+# -*- coding: utf-8 -*-
+""" Configuration example for ``ptpython``.
 
 Copy this file to ~/.ptpython/config.py
 """
 from __future__ import unicode_literals
 from prompt_toolkit.filters import ViInsertMode
-# from prompt_toolkit.key_binding.key_processor import KeyPress
+from prompt_toolkit.key_binding.key_processor import KeyPress
 from prompt_toolkit.keys import Keys
 from pygments.token import Token
 
@@ -17,10 +17,9 @@ __all__ = (
 )
 
 # this whole file is 1 function???? why not create a class and start doing stuff?
-
 # maybe set it up to run your ipy config first
-
 # also magics don't work as expected. even with automagic turned on `cat file` doesn't work
+
 
 def configure(repl):
     """
@@ -100,7 +99,7 @@ def configure(repl):
     repl.enable_system_bindings = True
 
     # Ask for confirmation on exit.
-    repl.confirm_exit = True
+    repl.confirm_exit = False
 
     # Enable input validation. (Don't try to execute when the input contains
     # syntax errors.)
@@ -136,7 +135,6 @@ def configure(repl):
         b = event.current_buffer
         if b.accept_action.is_returnable:
             b.accept_action.validate_and_handle(event.cli, b)
-
 
     # Typing 'jj' in Vi Insert mode, should send escape. (Go back to navigation
     # mode.)
@@ -178,4 +176,5 @@ _custom_ui_colorscheme = {
     Token.Toolbar.Status:                         'bg:#ff0000 #000000',
 }
 
-# ifmain
+if __name__ == "__main__":
+    configure()

@@ -1,7 +1,5 @@
 " init.vim
 " Neovim configuration
-" Maintainer: Faris Chugthai
-scriptencoding UTF-8
 
 " All: {{{ 1
 
@@ -57,7 +55,6 @@ Plug 'mhinz/vim-startify'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 if !has('nvim')
-    Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
@@ -90,7 +87,7 @@ endif
 " Pep8 Global Options: {{{ 3
 set tabstop=4
 set shiftwidth=4
-set expandtab
+set expandtab smarttab
 set softtabstop=4
 let g:python_highlight_all = 1
 " }}}
@@ -116,9 +113,10 @@ set splitright
 
 " Spell Checker: {{{ 3
 set encoding=UTF-8             " Set default encoding
+scriptencoding UTF-8           " Vint believes encoding shoild be done first
 set fileencoding=UTF-8
 
-setlocal spelllang=en,en_us
+setlocal spelllang=en
 setlocal spellfile=~/.config/nvim/spell/en.utf-8.add
 
 if !has('nvim')
@@ -142,8 +140,8 @@ if filereadable('/usr/share/dict/american-english')
     setlocal dictionary+=/usr/share/dict/american-english
 endif
 
-if filereadable('$HOME/.config/nvim/spell/en.hun.spl')
-    set spelllang+=$HOME/.config/nvim/spell/en.hun.spl
+if filereadable('~/.config/nvim/spell/en.hun.spl')
+    setlocal spelllang+=~/.config/nvim/spell/en.hun.spl
 endif
 
 if filereadable(glob('~/.vim/autocorrect.vim'))
@@ -174,13 +172,14 @@ set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
 " Other Global Options: {{{ 3
 set tags+=./tags,./../tags,./*/tags     " usr_29
+set tags+=~/projects/tags               " consider generating a few large tag
+set tags+=~python/tags                  " files rather than recursive searches
 set mouse=a                             " Automatically enable mouse usage
 set cursorline
 set cmdheight=2
 set number
 set showmatch
-set ignorecase
-set smartcase
+set ignorecase smartcase
 set autoindent smartindent              " :he options: set with smartindent
 set noswapfile
 set fileformat=unix
@@ -192,10 +191,6 @@ endif
 set path+=**        			        " Recursively search dirs with :find
 set autochdir
 set wildmenu                            " Show list instead of just completing
-set wildmode=longest,list:longest       " Longest string or list alternatives
-set wildignore+=*.a,*.o,*.pyc,*~,*.swp,*.tmp
-set complete+=.,b,u,t                   " open buffer, open buffers, and tags
-set fileignorecase
 set whichwrap+=<,>,h,l,[,]              " Reasonable line wrapping
 set nojoinspaces
 set diffopt=vertical,context:3          " vertical split diffs. def cont is 6
@@ -204,6 +199,8 @@ if has('persistent_undo')
     set undodir=~/.vim/undodir
     set undofile	" keep an undo file (undo changes after closing)
 endif
+
+set backupdir=~/.vim/undodir
 set modeline
 " }}}
 
@@ -219,8 +216,18 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 " Navigate tabs easier
-nnoremap <A-Right> :tabnext<CR>
-nnoremap <A-Left> :tabprev<CR>
+nnoremap <a-Right> :tabnext<CR>
+nnoremap <a-Left> :tabprev<CR>
+" T Pope
+nnoremap ]q :cnext<cr>
+nnoremap [q :cprev<cr>
+nnoremap ]l :lnext<cr>
+nnoremap [l :lprev<cr>
+nnoremap ]b :bnext<cr>
+nnoremap [b :bprev<cr>
+nnoremap ]t :tabn<cr>
+nnoremap [t :tabp<cr>
+
 " Simple way to speed up startup
 nnoremap <Leader>nt :NERDTreeToggle<CR>
 " Select all text quickly
@@ -233,6 +240,13 @@ nnoremap <leader>he :helpgrep<space>
 nnoremap <F9> :e $MYVIMRC<CR>
 
 inoremap jk <Esc>
+vnoremap jk <Esc>
+
+" Junegunn
+nnoremap <leader>o o<esc>
+nnoremap <leader>O O<esc>
+xnoremap < <gv
+xnoremap > >gv
 " }}}
 
 " Spell Checking: {{{ 3
@@ -247,23 +261,23 @@ nnoremap <Leader>s= :norm z=<CR>
 
 " For Emacs-style editing on the command-line:
 " start of line
-:cnoremap <C-A>		<Home>
+cnoremap <C-A> <Home>
 " back one character
-:cnoremap <C-B>		<Left>
+cnoremap <C-B> <Left>
 " delete character under cursor
-:cnoremap <C-D>		<Del>
+cnoremap <C-D> <Del>
 " end of line
-:cnoremap <C-E>		<End>
+cnoremap <C-E> <End>
 " forward one character
-:cnoremap <C-F>		<Right>
+cnoremap <C-F> <Right>
 " recall newer command-line
-:cnoremap <C-N>		<Down>
+cnoremap <C-N> <Down>
 " recall previous (older) command-line
-:cnoremap <C-P>		<Up>
+cnoremap <C-P> <Up>
 " back one word
-:cnoremap <Esc><C-B>	<S-Left>
+cnoremap <Esc><C-B> <S-Left>
 " forward one word
-:cnoremap <Esc><C-F>	<S-Right>
+cnoremap <Esc><C-F> <S-Right>
 " }}}
 
 " Terminal: {{{ 3
@@ -292,6 +306,8 @@ nnoremap <A-l> <C-w>l
 " nnoremap <silent> <C-k> <Plug>(ale_previous_wrap)
 " nnoremap <silent> <C-j> <Plug>(ale_next_wrap)
 nnoremap <Leader>l <Plug>(ale_toggle_buffer) <CR>
+nnoremap ]a <Plug>(ale_next_wrap)
+nnoremap [a <Plug>(ale_previous_wrap)
 " }}}
 
 " Fugitive: {{{ 3
@@ -311,6 +327,7 @@ nnoremap <silent> <leader>gQ :Gwq!<CR>
 
 " Python Language Server: {{{ 3
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
 
@@ -325,7 +342,14 @@ if !has('nvim')
     setlocal keywordprg=:Man
 endif
 
+runtime! macros/matchit.vim
+
+
 " FZF: {{{ 3
+
+if has('nvim') || has('gui_running')
+  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+endif
 
 augroup fzf
 autocmd! FileType fzf
@@ -368,6 +392,13 @@ let g:ag_command = 'ag --smart-case -u -g " " --'
 command! -bang -nargs=* F call fzf#vim#grep(g:ag_command .shellescape(<q-args>), 1, <bang>0)
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+if executable('ag')
+  let &grepprg = 'ag --nogroup --nocolor --column'
+else
+  let &grepprg = 'grep -rn $* *'
+endif
+command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 " }}}
 
 " NERDTree: {{{ 3
@@ -398,6 +429,7 @@ let g:ale_fix_on_save = 1
 let g:ale_echo_msg_format = '%linter% - %code: %%s %severity%'
 let g:ale_set_signs = 1
 let g:ale_sign_column_always = 1
+let g:ale_lint_delay = 1000
 " }}}
 
 " Devicons: {{{ 3
@@ -492,6 +524,37 @@ function! s:scriptnames(re) abort
     let filtered = filter(split(scriptnames, "\n"), "v:val =~ '" . a:re . "'")
     echo join(filtered, "\n")
 endfunction
+
+
+function! s:helptab()
+    if &buftype == 'help'
+        wincmd T
+        nnoremap <buffer> q :q<cr>
+    endif
+endfunction
+" keeps erroring idk why.
+" autocmd vimrc BufEnter *.txt call s:helptab()
+
+function! s:autosave(enable)
+  augroup autosave
+    autocmd!
+    if a:enable
+      autocmd TextChanged,InsertLeave <buffer>
+            \  if empty(&buftype) && !empty(bufname(''))
+            \|   silent! update
+            \| endif
+    endif
+  augroup END
+endfunction
+
+command! -bang Autosave call s:autosave(<bang>1)
+
+" Whats the syntax group under my cursor?
+function! s:hl()
+  " echo synIDattr(synID(line('.'), col('.'), 0), 'name')
+  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), '/')
+endfunction
+command! HL call <SID>hl()
 " }}}
 
 " }}}

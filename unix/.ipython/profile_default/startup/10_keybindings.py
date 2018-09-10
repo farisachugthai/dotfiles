@@ -11,7 +11,8 @@ It mentions to read up on events and filters.
 
 https://python-prompt-toolkit.readthedocs.io/en/stable/pages/advanced_topics/key_bindings.html#move-about-key-bindings
 
-Theres no parallel docs for 1.0.15 so lets hope this outstandingly long file isnt completely backwards incompatible.
+There's no parallel docs for 1.0.15 so lets hope this outstandingly
+long file isnt completely backwards incompatible.
 """
 
 from IPython import get_ipython
@@ -26,22 +27,22 @@ from prompt_toolkit.filters import HasFocus, HasSelection, ViInsertMode
 
 # Global Variables
 
-ip = get_ipython()
+#  ip = get_ipython()
 
-insert_mode = ViInsertMode()
-
-
-def insert_unexpected(event):
-    buf = event.current_buffer
-    buf.insert_text('The Spanish Inquisition')
-    # Register the shortcut if IPython is using prompt_toolkit
+#  insert_mode = ViInsertMode()
 
 
-if getattr(ip, 'pt_cli'):
-    registry = ip.pt_cli.application.key_bindings_registry
-    registry.add_binding(Keys.ControlN,
-                         filter=(HasFocus(DEFAULT_BUFFER)
-                                 & ~HasSelection()
-                                 & insert_mode))(insert_unexpected)
+#  def insert_unexpected(event):
+#      buf = event.current_buffer
+#      buf.insert_text('The Spanish Inquisition')
+#      # Register the shortcut if IPython is using prompt_toolkit
+
+
+#  if getattr(ip, 'pt_cli'):
+#      registry = ip.pt_cli.application.key_bindings_registry
+#      registry.add_binding(Keys.ControlN,
+#                           filter=(HasFocus(DEFAULT_BUFFER)
+#                                   & ~HasSelection()
+#                                   & insert_mode))(insert_unexpected)
 
 # now what do i have to do to bind FZF to C-r...

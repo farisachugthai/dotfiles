@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Set up neovim
-
+# Set up vim
 if [[ -d "$HOME/.vim/autoload" ]]; then
     mkdir -pv "$HOME/.vim/autoload"
 fi
@@ -12,4 +11,16 @@ fi
 
 if [[ "$(command -v conda)" ]]; then
     conda install neovim
+else
+    pip install -U neovim
 fi
+
+# Set up neovim
+
+if [[ -d "$HOME/.local/share/nvim/site/autoload" ]]; then
+    mkdir -pv "$HOME/.local/share/nvim/site/autoload"
+fi
+
+ln -s "$HOME/.vim/autoload/plug.vim" "$HOME/.local/share/nvim/site/autoload"
+
+exit 0

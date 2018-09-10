@@ -1,14 +1,13 @@
 # Global Gitignore
+# Vim: set ft=gitcommit
 # Maintainer: Faris Chugthai
 
 # Personal
 .zim/
 tmux-history
 history.sqlite
-.zim/
-
-# Python
-
+*.patch
+# Python specific
 # mypy
 .mypy_cache/
 

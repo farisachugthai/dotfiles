@@ -13,43 +13,54 @@ alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
 alias cd......="cd ../../../../.."
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias lx='ls -AlX'
-alias lt='ls -Alt'
+# some more ls aliases. pulled a few from ipython so not all were
+# written by me. as a result let me quick go over the flags
+# -A all except implied . and ..
+# -c sort by ctime.
+# -F classifies. indicators for symlinks and dirs are provided
+# -o is similar to -l but don't print group
+# -p means append / indicator to directoreis
+# ngl the greps still don't make sense to me. dir file, link, executable but how?
+alias l='ls -F'
+alias la='ls -AF'
+alias ldir='ls -po | grep /$'
+alias lf='ls -Fo | grep ^-'
+alias lk='ls -Fo | grep ^l'
+alias ll='ls -AlF'
+alias ls='ls -F'
+alias lt='ls -Altcr'
+alias lx='ls -Fo | grep ^-..x'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-#lets not clobber as we go
+# lets not clobber other files as we go. bash's namespace? clobber everything
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -pv'
+alias rm='rm -v'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
-#options i use every time i run these commands
+# Options i use every time i run these commands
 alias du='du -d 1 -h'
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
+alias head='head -n 30'
+alias tail='tail -n 30'
 
-# termux command with odd default of view not send
+# Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
 # termux-open gets an option for a default file handler! Dropbox integration
 alias termux-open="termux-open --send"
 
 alias info="info --vi-keys"
 
-# git aliases. for complicated git log calls funcs are better
-# TODO: what do we do about name clobbers like status and stat. summary. short.
-# ....checkout, config, commit, clone. credentials...
-# TODO: my shell and nvim do different things for gc btw
+# Git aliases. for complicated git log calls funcs are better
 alias ga='git add'
 alias gb='git blame'
 alias gcl='git clone'
@@ -63,11 +74,13 @@ alias glo='git log'
 alias gls='git ls-tree'
 alias gs='git status'
 alias gst='git diff --stat'
+# Not gonna lie I really don't like the inconsistency of gst.
+# But is gds2 too much?? Like at what point are the alias more complicated than just running the command?
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls -F --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
 
@@ -76,17 +89,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# alias for easier profiling of nvim. probs wanna change backticks and date format
-# alias prof="--startuptime $DOT/.config/nvim/profiling/`date`"
-# Usage: nvim prof [filename to edit]
-# this needs to be a function nvim thinks its a filename
-
-# someone should let facebook know this is how typical CLI commands work
-if [[ "$#" -eq 1 ]]; then
-    alias yarn='yarn --help'
-else
-    continue
-fi
-# sigh so is this gonna need to evaluate for every command i run?
-# you need it to look something like this otherwise yarn does nothing but print
-# help pages and why have it installed?
+# I'll give you a second shot at it kid
+alias redo='fc -s'
+# And even a few ways to do it if you want
+alias r='fc -s'
+# wait could we do C-r like in vim?
