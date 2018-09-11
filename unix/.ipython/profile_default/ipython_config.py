@@ -40,6 +40,7 @@ c.AliasManager.user_aliases = [
       ('ll', 'ls -AlF --color=always'),
       ('ls', 'ls -F --color=always'),
       ('lt', 'ls -Altcr --color=always'),
+      ('mk', 'mkdir -pv %l && cd %l'),      # check if this works. only mkdir
       ('mkdir', 'mkdir -pv'),
       ('mv', 'mv -iv'),
       ('nvim', 'nvim'),

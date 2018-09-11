@@ -1,10 +1,12 @@
+cheat ~/.cheat
 dotfiles ~/projects/dotfiles/unix
 jedi-docs ~/.local/share/nvim/plugged/jedi-vim/pythonx/jedi/docs/docs
 nvim ~/.config/nvim
-py_tut ~/python/tutorials
-vim ~/.vim
 nvim-rtp /usr/share/nvim/runtime
-cheat ~/.cheat
+py_tut ~/python/tutorials
+tutorials ~/Dropbox/Dropbox/python/tutorials
+vim ~/.vim
+libref ~/Dropbox/Dropbox/python/official-python-docs/3.7.0/library
 
 nvim-rtpT /data/data/com.termux/files/usr/share/nvim/runtime
 prefix /data/data/com.termux/files/usr
