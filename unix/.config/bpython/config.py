@@ -12,11 +12,11 @@
 # see http://docs.bpython-interpreter.org/configuration.html
 # for all configurable options
 
+from os.path import expanduser, join as pjoin
 import time
 
-LOG_TIMESTAMP=time.ctime()
-# so i didn't assign this to amything?
-
+home = os.path.expanduser('~')
+# LOG_TIMESTAMP = time.ctime()
 # General section tag
 [general]
 
@@ -34,9 +34,10 @@ arg_spec = True
 # History file (default: ~/.pythonhist):
 # TODO: Add in a datetime object that creates a new file for everyday
 try:
-    hist_file = ~/.local/share/bpython.log
+    hist_file = pjoin(home, '.local', 'share', 'bpython.log')
 except Exception as e:
-    hist_file = ~/.pythonhist
+    print(e)
+    hist_file = pjoin(home, '.pythonhist')
 
 # Number of lines to store in history (set to 0 to disable) (default: 100):
 hist_length = 10000
@@ -44,7 +45,7 @@ hist_length = 10000
 # Soft tab size (default: 4, see pep-8):
 tab_length = 4
 
-# Color schemes should be put in $XDG_CONFIG_HOME/bpython/ e.g. to use the theme
+# Color schemes should be put in $XDG_CONFIG_HOME/bpython/ to use the theme
 # $XDG_CONFIG_HOME/bpython/foo.theme set color_scheme = foo. Leave blank or set
 # to "default" to use the default theme
 # color_scheme = default
@@ -56,7 +57,7 @@ editor = nvim
 
 # Whether to append .py to the filename while saving session to a file.
 # (default: False)
-# save_append_py = False
+save_append_py = True
 
 # The name of a helper executable that should perform pastebin upload on
 # bpython's behalf. If unset, bpython uploads pastes to bpaste.net. (default: )
