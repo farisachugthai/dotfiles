@@ -61,7 +61,7 @@ save_append_py = True
 
 # The name of a helper executable that should perform pastebin upload on
 # bpython's behalf. If unset, bpython uploads pastes to bpaste.net. (default: )
-#pastebin_helper = gist.py
+# pastebin_helper = gist.py
 
 # How long an undo must be expected to take before prompting for how
 # many lines should be undone. Set to -1 to never prompt, or 0 to

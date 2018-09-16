@@ -1,0 +1,10 @@
+# pdbrc
+
+# https://github.com/python/cpython/blob/3.7/Lib/pdb.py#L1380
+# in the do_alias() function it mentions some examples and they sounded like
+# useful alias to tack on!
+
+# Print instance variables (usage "pi classInst")
+alias pi for k in %1.__dict__.keys(): print("%1.",k,"=",%1.__dict__[k])
+# Print instance variables in self
+alias ps pi self

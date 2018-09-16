@@ -1,1 +1,0 @@
-../../.vim/skeleton.py

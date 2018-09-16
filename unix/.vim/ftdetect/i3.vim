@@ -1,1 +1,0 @@
-../../.config/nvim/ftdetect/i3.vim
