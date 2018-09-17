@@ -1,13 +1,15 @@
 # Global Gitignore
-# Vim: set ft=gitcommit
+# Vim: set ft=gitignore :
 # Maintainer: Faris Chugthai
 
 # Personal
 .zim/
 tmux-history
-history.sqlite
 *.patch
+
+
 # Python specific
+
 # mypy
 .mypy_cache/
 
@@ -38,7 +40,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
-.idea/
 
 ## KDE directory settings
 .directory

@@ -1,1 +1,0 @@
-../../.config/nvim/syntax/i3.vim
