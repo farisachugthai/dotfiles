@@ -107,7 +107,7 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# Set 'man' colors
+# Set 'man' colors. TODO: Also set this up for less.
 if [ "$color_prompt" = yes ]; then
     man() {
     env \
