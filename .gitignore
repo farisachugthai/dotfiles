@@ -1,24 +1,51 @@
-# gitignore
+# Global Gitignore
+# Maintainer: Faris Chugthai
+
+# Personal
+.zim/
+tmux-history
+
+## Python
+
+# mypy
 .mypy_cache/
+
+# spyder projects
+.spyproject/
+
 # Jupyter Notebooks / JupyterLab
-.ipynb_checkpoints
+.ipynb_checkpoints/
 
 # Rope
 .ropeproject/
 
-# Vim Backup Files
+## Vim Backup Files
 *.un~
 *.swp
 *.swo
 *~
 
-# KDE directory settings
+# Flask
+venv/
+*.pyc
+__pycache__/
+instance/
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.idea/
+
+## KDE directory settings
 .directory
 
 # PyCharm
 .idea
 
-# From: 
+# From:
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
@@ -26,6 +53,7 @@
 /tags*tags
 *[Tt]ags*
 /tags/
+*/tags/*
 TAGS
 .TAGS
 TAGS/
@@ -41,6 +69,46 @@ cscope.files
 cscope.out
 cscope.in.out
 cscope.po.out
+
+# Thank the Octocat
+# https://gist.github.com/octocat/9257657
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Visual Studio ran away with this one.
 ## Ignore Visual Studio temporary files, build results, and
@@ -265,7 +333,7 @@ _pkginfo.txt
 *.publishsettings
 orleans.codegen.cs
 
-# Including strong name files can present a security risk 
+# Including strong name files can present a security risk
 # (https://github.com/github/gitignore/pull/2483#issue-259490424)
 #*.snk
 
@@ -361,7 +429,7 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
-# Azure Stream Analytics local run output 
+# Azure Stream Analytics local run output
 ASALocalRun/
 
 # MSBuild Binary and Structured Log
@@ -370,5 +438,5 @@ ASALocalRun/
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
 
-# MFractors (Xamarin productivity tool) working folder 
+# MFractors (Xamarin productivity tool) working folder
 .mfractor/

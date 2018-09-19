@@ -223,8 +223,8 @@ def_key "j"
 #def_key "delete"
 #  delete_stored_playlist
 #
-def_key "k"
-  next_column
+#def_key "k"
+#  next_column
 #
 #def_key "right"
 #  slave_screen
@@ -436,8 +436,11 @@ def_key "6"
 #def_key "g"
 #  jump_to_position_in_song
 #
-#def_key "l"
-#  show_lyrics
+def_key "l"
+    next_column
+#   originally
+#   show_lyrics
+#
 #
 #def_key "ctrl-v"
 #  select_range
@@ -540,4 +543,7 @@ def_key "6"
 #
 #def_key "q"
 #  quit
-#
+#  note #5 above
+def_command "quit" [deferred]
+    stop
+    quit

@@ -1,1 +1,0 @@
-/home/faris/projects/dotfiles/unix/.vim/skeleton.py

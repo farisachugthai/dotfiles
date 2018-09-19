@@ -1,15 +1,14 @@
+cheat ~/.cheat
 dotfiles ~/projects/dotfiles/unix
 jedi-docs ~/.local/share/nvim/plugged/jedi-vim/pythonx/jedi/docs/docs
 nvim ~/.config/nvim
+nvim-rtp /usr/share/nvim/runtime
 py_tut ~/python/tutorials
-pyls ~/.local/share/nvim/plugged/LanguageClient-neovim/rplugin/python3/LanguageClient
 vim ~/.vim
-word-freq ~/projects/word-freq
+deoplete ~/.local/share/nvim/plugged/deoplete.nvim/rplugin/python3/deoplete
 
-chatistics ~/projects/chatistics
-cheat /storage/emulated/0/Android/data/com.dropbox.android/files/u730416625/scratch/.cheat
-nvim-rtp /data/data/com.termux/files/usr/share/nvim/runtime
+tutorials ~/Dropbox/Dropbox/python/tutorials
+libref ~/Dropbox/Dropbox/python/official-python-docs/3.7.0/library
+nvim-rtpT /data/data/com.termux/files/usr/share/nvim/runtime
 prefix /data/data/com.termux/files/usr
 pyroot /data/data/com.termux/files/usr/lib/python3.6
-usr-lib-pyls /data/data/com.termux/files/usr/lib/python3.6/site-packages/pyls
-pydocs ~/Dropbox/python/pydocs

@@ -1,1 +1,0 @@
-/home/faris/projects/dotfiles/unix/.vim/ftplugin/python.vim

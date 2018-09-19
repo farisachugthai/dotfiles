@@ -1,9 +1,58 @@
+# Condarc
+# Maintainer: Faris Chugthai
+# Let's put the modified values at the top since there aren't many
+# and this is a very long file.
+# please keep alphabetical
+# possibly think about timestamping when you change these
+# ooo and addig a conda version wouldn't be the worst idea.
+
+# add_pip_as_python_dependency (bool)
+#   Add pip, wheel and setuptools as dependencies of python. This ensures
+#   pip, wheel and setuptools will always be installed any time python is
+#   installed.
+#
+add_pip_as_python_dependency: true
+
+aggressive_update_packages:
+  - ca-certificates
+  - certifi
+  - openssl
+  - ipython
+  - conda
+
+auto_update_conda: true
+
 channels:
-  - defaults
   - conda-canary
   - conda-forge
-ssl_verify: true
-verbosity: 0
+  - defaults
+
+
+# also kinda curious how this is gonna go
+# json (bool)
+#   Ensure all output written to stdout is structured json.
+# json: True
+
+# pkgs_dirs (sequence: str)
+#   string delimiter: ','
+#   The list of directories where locally-available packages are linked
+#   from at install time. Packages not locally available are downloaded
+#   and extracted into the first writable directory.
+#
+# i don't actually know if this is how this works or what the consequences would be but
+# can i add in the system folders and virtualenvs folder?
+# pkgs_dirs: ['/home/faris/miniconda3/pkgs', '/home/faris/virtualenvs', '/usr/lib/python3.7/site-packages', '/usr/lib/python3.6']
+# nah you need write permissions
+
+
+# channel_priority (bool)
+#   When True, the solver is instructed to prefer channel order over
+#   package version. When False, the solver is instructed to give package
+#   version preference over channel priority.
+#
+channel_priority: false
+
+
 
 # From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
 
@@ -14,9 +63,41 @@ verbosity: 0
 # and in 'conda list'. The default is False.
 show_channel_urls: true
 
+ssl_verify: true
 
+verbosity: 0
 
 # And all of this is the output of `conda config --describe` appended here
+
+# Dude whatttttt thw new condarc file looks so much better than mine! Check this out
+# ######################################################
+# ##            Basic Conda Configuration             ##
+# ######################################################
+
+# env_prompt (str)
+#   Template for prompt modification based on the active environment.
+#   Currently supported template variables are '{prefix}', '{name}', and
+#   '{default_env}'. '{prefix}' is the absolute path to the active
+#   environment. '{name}' is the basename of the active environment
+#   prefix. '{default_env}' holds the value of '{name}' if the active
+#   environment is a conda named environment ('-n' flag), or otherwise
+#   holds the value of '{prefix}'. Templating uses python's str.format()
+#   method.
+#
+# env_prompt: '({default_env}) '
+
+# # envs_dirs (sequence: str)
+# #   aliases: envs_path
+# #   env var string delimiter: ':'
+# #   The list of directories to search for named environments. When
+# #   creating a new named environment, the environment will be placed in
+# #   the first writable location.
+# #
+# envs_dirs: []
+
+# I want a cool conda prompt like that!
+
+
 # For more information about this file see:
 # https://conda.io/docs/user-guide/configuration/use-condarc.html
 # add_anaconda_token (bool)
@@ -26,35 +107,22 @@ show_channel_urls: true
 #   Anaconda Server API site using `anaconda login`, automatically apply a
 #   matching private token to enable access to private packages and
 #   channels.
-# 
+#
 # add_anaconda_token: true
 
 
-# add_pip_as_python_dependency (bool)
-#   Add pip, wheel and setuptools as dependencies of python. This ensures
-#   pip, wheel and setuptools will always be installed any time python is
-#   installed.
-# 
-add_pip_as_python_dependency: true
 
 
 # aggressive_update_packages (sequence: str)
 #   string delimiter: ','
 #   A list of packages that, if installed, are always updated to the
 #   latest possible version.
-# 
-aggressive_update_packages:
-  - ca-certificates
-  - certifi
-  - openssl
-  - ipython
-  - conda
-
+#
 
 # allow_non_channel_urls (bool)
 #   Warn, but do not fail, when conda detects a channel url is not a valid
 #   channel.
-# 
+#
 # allow_non_channel_urls: false
 
 
@@ -67,7 +135,7 @@ aggressive_update_packages:
 #   Individual packages can override this setting, specifying that certain
 #   files should never be soft-linked (see the no_link option in the build
 #   recipe documentation).
-# 
+#
 # allow_softlinks: false
 
 
@@ -75,7 +143,7 @@ aggressive_update_packages:
 #   aliases: copy
 #   Register a preference that files be copied into a prefix during
 #   install rather than hard-linked.
-# 
+#
 # always_copy: false
 
 
@@ -89,7 +157,7 @@ aggressive_update_packages:
 #   some churn and invalidation. With this option, the contents of
 #   environments can be switched out (or erased) via operations on other
 #   environments.
-# 
+#
 # always_softlink: false
 
 
@@ -97,45 +165,30 @@ aggressive_update_packages:
 #   aliases: yes
 #   Automatically choose the 'yes' option whenever asked to proceed with a
 #   conda operation, such as when running `conda install`.
-# 
+#
 # always_yes:
 
 
 # anaconda_upload (NoneType, bool)
 #   aliases: binstar_upload
 #   Automatically upload packages built with conda build to anaconda.org.
-# 
+#
 # anaconda_upload:
-
-
-# auto_update_conda (bool)
-#   aliases: self_update
-#   Automatically update conda when a newer or higher priority version is
-#   detected.
-# 
-# I manually check for updates every day, and would be aware when they occur.
-auto_update_conda: false
 
 
 # changeps1 (bool)
 #   When using activate, change the command prompt ($PS1) to include the
 #   activated environment.
-# 
+# isn't this the default?
 changeps1: true
 
 
 # channel_alias (str)
 #   The prepended url location to associate with channel names.
-# 
+#
 # channel_alias: https://conda.anaconda.org
 
 
-# channel_priority (bool)
-#   When True, the solver is instructed to prefer channel order over
-#   package version. When False, the solver is instructed to give package
-#   version preference over channel priority.
-# 
-# channel_priority: true
 
 
 # client_ssl_cert (NoneType, str)
@@ -143,14 +196,14 @@ changeps1: true
 #   A path to a single file containing a private key and certificate (e.g.
 #   .pem file). Alternately, use client_ssl_cert_key in conjuction with
 #   client_ssl_cert for individual files.
-# 
+#
 # client_ssl_cert:
 
 
 # client_ssl_cert_key (NoneType, str)
 #   aliases: client_cert_key
 #   Used in conjunction with client_ssl_cert for a matching key file.
-# 
+#
 # client_ssl_cert_key:
 
 
@@ -158,14 +211,14 @@ changeps1: true
 #   Allow clobbering of overlapping file paths within packages, and
 #   suppress related warnings. Overrides the path_conflict configuration
 #   value when set to 'warn' or 'prevent'.
-# 
+#
 # clobber: false
 
 
 # create_default_packages (sequence: str)
 #   string delimiter: ','
 #   Packages that are by default added to a newly created environments.
-# 
+#
 # create_default_packages: [flake8, ipython]
 # These should just have their own jupyter environment and not interfere with others
 
@@ -178,7 +231,7 @@ changeps1: true
 #   the 'conda-forge' channel where the url to repodata is
 #   https://anaconda-repo.dev/packages/conda-forge/linux-64/repodata.json,
 #   add an entry 'conda-forge: https://anaconda-repo.dev/packages'.
-# 
+#
 # custom_channels: {}
 
 
@@ -191,7 +244,7 @@ changeps1: true
 #   can be defined with custom_multichannels, where the key is the
 #   multichannel name and the value is a list of channel names and/or
 #   channel urls.
-# 
+#
 # custom_multichannels: {}
 
 
@@ -201,7 +254,7 @@ changeps1: true
 #   multichannel.
 #
 # Unfortunately haven't learned R yet.
-# 
+#
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
@@ -214,14 +267,14 @@ default_channels:
 #   string delimiter: '&'
 #   Package specifications to disallow installing. The default is to allow
 #   all packages.
-# 
+#
 # disallowed_packages: []
 
 
 # download_only (bool)
 #   Solve an environment and ensure package caches are populated, but exit
 #   prior to unlinking and linking packages into the prefix
-# 
+#
 # download_only: false
 
 
@@ -231,7 +284,7 @@ default_channels:
 #   The list of directories to search for named environments. When
 #   creating a new named environment, the environment will be placed in
 #   the first writable location.
-# 
+#
 # envs_dirs: []
 
 
@@ -239,14 +292,9 @@ default_channels:
 #   Override any of conda's objections and safeguards for installing
 #   packages and potentially breaking environments. Also re-installs the
 #   package, even if the package is already installed. Implies --no-deps.
-# 
+#
 # force: false
 
-
-# json (bool)
-#   Ensure all output written to stdout is structured json.
-# 
-# json: false
 
 
 # local_repodata_ttl (bool, int)
@@ -255,21 +303,21 @@ default_channels:
 #   Cache-Control max-age header. Any other positive integer values is the
 #   number of seconds to locally cache repodata before checking the remote
 #   server for an update.
-# 
+#
 # local_repodata_ttl: 1
 
 
 # max_shlvl (int)
 #   The maximum number of stacked active conda environments.
-# 
-# max_shlvl: 2
+#
+max_shlvl: 2
 
 
 # migrated_channel_aliases (sequence: str)
 #   string delimiter: ','
 #   A list of previously-used channel_alias values, useful for example
 #   when switching between different Anaconda Repository instances.
-# 
+#
 # migrated_channel_aliases: []
 
 
@@ -278,33 +326,33 @@ default_channels:
 #   Do not install, update, remove, or change dependencies. This WILL lead
 #   to broken environments and inconsistent behavior. Use at your own
 #   risk.
-# 
+#
 # no_dependencies: false
 
 
 # non_admin_enabled (bool)
 #   Allows completion of conda's create, install, update, and remove
 #   operations, for non-privileged (non-root or non-administrator) users.
-# 
+#
 # non_admin_enabled: true
 
 
 # notify_outdated_conda (bool)
 #   Notify if a newer version of conda is detected during a create,
 #   install, update, or remove operation.
-# 
-# notify_outdated_conda: true
+#
+notify_outdated_conda: true
 
 
 # offline (bool)
 #   Restrict conda to cached download content and file:// based urls.
-# 
+#
 # offline: false
 
 
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
-# 
+#
 # override_channels_enabled: true
 
 
@@ -314,7 +362,7 @@ default_channels:
 #   of 'clobber', 'warn', or 'prevent'. The '--clobber' command-line flag
 #   or clobber configuration parameter overrides path_conflict set to
 #   'prevent'.
-# 
+#
 path_conflict: warn
 
 
@@ -322,17 +370,10 @@ path_conflict: warn
 #   string delimiter: '&'
 #   A list of package specs to pin for every environment resolution. This
 #   parameter is in BETA, and its behavior may change in a future release.
-# 
+#
 # pinned_packages: []
 
 
-# pkgs_dirs (sequence: str)
-#   string delimiter: ','
-#   The list of directories where locally-available packages are linked
-#   from at install time. Packages not locally available are downloaded
-#   and extracted into the first writable directory.
-# 
-# pkgs_dirs: []
 
 
 # proxy_servers (map: NoneType, str)
@@ -342,26 +383,26 @@ path_conflict: warn
 #   requests to that scheme. Values are are the actual proxy server, and
 #   are of the form 'scheme://[user:password@]host[:port]'. The optional
 #   'user:password' inclusion enables HTTP Basic Auth with your proxy.
-# 
+#
 # proxy_servers: {}
 
 
 # quiet (bool)
 #   Disable progress bar display and other output.
-# 
+#
 # quiet: false
 
 
 # remote_connect_timeout_secs (float)
 #   The number seconds conda will wait for your client to establish a
 #   connection to a remote url resource.
-# 
+#
 # remote_connect_timeout_secs: 9.15
 
 
 # remote_max_retries (int)
 #   The maximum number of retries each HTTP connection should attempt.
-# 
+#
 # remote_max_retries: 3
 
 
@@ -369,7 +410,7 @@ path_conflict: warn
 #   Once conda has connected to a remote resource and sent an HTTP
 #   request, the read timeout is the number of seconds conda will wait for
 #   the server to send a response.
-# 
+#
 # remote_read_timeout_secs: 60.0
 
 
@@ -377,34 +418,34 @@ path_conflict: warn
 #   Opt in, or opt out, of automatic error reporting to core maintainers.
 #   Error reports are anonymous, with only the error stack trace and
 #   information given by `conda info` being sent.
-# 
+#
 report_errors: false
 
 
 # rollback_enabled (bool)
 #   Should any error occur during an unlink/link transaction, revert any
 #   disk mutations made to that point in the transaction.
-# 
+#
 # rollback_enabled: true
 
 
 # safety_checks (SafetyChecks)
 #   Enforce available safety guarantees during package installation. The
 #   value must be one of 'enabled', 'warn', or 'disabled'.
-# 
-# safety_checks: warn
+#
+safety_checks: warn
 
 
 # shortcuts (bool)
 #   Allow packages to create OS-specific shortcuts (e.g. in the Windows
 #   Start Menu) at install time.
-# 
+#
 shortcuts: true
 
 
 # show_channel_urls (NoneType, bool)
 #   Show channel URLs when displaying what is going to be downloaded.
-# 
+#
 # show_channel_urls:
 
 
@@ -416,7 +457,7 @@ shortcuts: true
 #   ssl_verify to False disables certification verificaiton. The value for
 #   ssl_verify can also be (1) a path to a CA bundle file, or (2) a path
 #   to a directory containing certificates of trusted CA.
-# 
+#
 # ssl_verify: true
 
 
@@ -424,13 +465,13 @@ shortcuts: true
 #   string delimiter: ','
 #   A list of features that are tracked by default. An entry here is
 #   similar to adding an entry to the create_default_packages list.
-# 
+#
 # track_features: []
 
 
 # use_index_cache (bool)
 #   Use cache of channel index files, even if it has expired.
-# 
+#
 # use_index_cache: false
 
 
@@ -438,14 +479,14 @@ shortcuts: true
 #   Include non-conda-installed python packages with conda list. This does
 #   not affect any conda command or functionality other than the output of
 #   the command conda list.
-# 
+#
 # use_pip: true
 
 
 # verbosity (int)
 #   aliases: verbose
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.
-# 
+#
 # verbosity: 0
 
 
@@ -456,5 +497,5 @@ shortcuts: true
 #   are to be allowed, along with the --use-local command line flag, be
 #   sure to include the 'local' channel in the list. If the list is empty
 #   or left undefined, no channel exclusions will be enforced.
-# 
+#
 # whitelist_channels: []
