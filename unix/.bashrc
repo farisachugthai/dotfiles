@@ -65,7 +65,6 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-# TODO: add rxvt case
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
@@ -157,13 +156,37 @@ if [[ -f ~/.fzf.bash ]]; then
 fi
 
 # spice fzf up with silversearcher
-if [[ "$(command -v ag)" ]]; then
-    export FZF_DEFAULT_COMMAND='ag  --hidden --smart-case --max-count 5 -g --'
-    export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle '
+# if [[ "$(command -v ag)" ]]; then
+#     export FZF_DEFAULT_COMMAND='ag  --hidden --smart-case --max-count 5 -g --'
+#     export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle '
 # edit your selected file in fzf with C-e. proba ly wrong syntax
 # --bind -x "\C-e": nvim $(fzf);"
+# fi
 
+# fzf (https://github.com/junegunn/fzf)
+# --------------------------------------------------------------------
+fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
+if [[ "$(command -v fd)" ]]; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow --exclude .git'
 fi
+
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
+
+if [ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]; then
+  export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
+fi
+
+# TODO: Change pbcopy to xsel or xclip
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
+
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
+
+# fi
 # }}}
 
 # Python: {{{
@@ -195,7 +218,9 @@ elif [[ $CONDA_SHLVL -eq 1 ]]; then
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-eval "$(pip completion --bash)"
+if [[ "$(command -v pip)" ]]; then
+    eval "$(pip completion --bash)"
+fi
 # }}}
 
 # gcloud: {{{
@@ -217,10 +242,12 @@ fi
 # }}}
 
 # Sourced files: {{{
-for config in ~/.bashrc.d/*.bash; do
-    source "$config"
-done
-unset -v config
+if [[ -d ~/.bashrc.d/ ]]; then
+    for config in ~/.bashrc.d/*.bash; do
+        source "$config"
+    done
+    unset -v config
+fi
 
 # For the secrets
 if [[ -f "$HOME/.bashrc.local" ]]; then
