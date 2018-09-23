@@ -158,19 +158,33 @@ if [[ -f ~/.fzf.bash ]]; then
 fi
 
 # spice fzf up with ripgrep
-if [[ "$(command -v ag)" ]]; then
-     export FZF_DEFAULT_COMMAND='ag --hidden --max-count 5 -u --smart-case -g --'
-     # the bind command makes searching files 1000x better and searching history non functional
-     export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
-elif [[ "$(command -v rg)" ]]; then
-     export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
+# if [[ "$(command -v ag)" ]]; then
+#      export FZF_DEFAULT_COMMAND='ag --hidden --max-count 5 -u --smart-case -g --'
+#      # the bind command makes searching files 1000x better and searching history non functional
+#      export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
+# elif [[ "$(command -v rg)" ]]; then
+#      export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
+# fi
+# # trying to simplify for the time being
+# export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle --multi --color=bg+:24 --border'
+# bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
+
+fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow'
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height --exclude .git,.__pycache__'
+
+if [ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]; then
+  export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
 fi
-# trying to simplify for the time being
-export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle --multi --color=bg+:24 --border'
-bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
 
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
 
-# TODO: add one for enter
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
 # }}}
 
 # Python: {{{

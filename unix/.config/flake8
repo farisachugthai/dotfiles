@@ -11,14 +11,8 @@ ignore =
     E251            # Pep8 specifies you SHOULD leave space around operators
     E202            # whitespace between var and brackets ) } and ]
 
-    E265            # comments error. comment formatting is too opinionated
+    E265            # comments error
     E266            # too many leading #'s in a comment
-
-    E402            # warns on imports not at the top of a mod. no lazy loading?
-
-# enable mccabe temporarily. we might need to enable one of the options in select.
-max-complexity = 50
-
 
 # the defaults for excluded files are
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox

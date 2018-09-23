@@ -1,5 +1,12 @@
 # agignore
 
+*.un~
+*.swp
+*.swo
+*~
+__pycache__/
+.git
+.cache
 tags
 node_modules/
 # enough have .png embedded that most is plaintext but still ruins scrollback

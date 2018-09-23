@@ -18,11 +18,12 @@ from pygments.token import Comment
 # ipython on simple things like creating a new prompt after every command
 # increments it
 
-c = get_config()            # noqa,pyls:
+c = get_config()  # noqa
 
 # Alias: {{{
 c.AliasManager.user_aliases = [
       ('ag', 'ag --color'),
+      ('chmod', 'chmod'),
       ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
       ('echo', 'echo -e'),
       ('fzf', 'fzf'),         # all we need to do is figure out keybindings
