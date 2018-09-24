@@ -230,7 +230,11 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-c.InteractiveShell.autoindent = True
+# Jupyter Console doesn't handle this correctly
+try:
+    c.InteractiveShell.autoindent = True
+except Exception:
+    pass
 
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True

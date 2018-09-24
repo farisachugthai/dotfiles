@@ -15,10 +15,10 @@ URxvt*visualBell               : true
 URxvt*fading                   : 30
 URxvt*colorUL                  : blue
 
-URxvt.letterSpace    : -2
-Urxvt*font: FiraCode: autohint=True: pixelsize=22
-URxvt*italicFont     : xft : Bitstream Vera Sans Mono : italic        : autohint=true : pixelsize=24
-URxvt*boldItalicFont : xft : Bitstream Vera Sans Mono : bold          : italic        : autohint=true : pixelsize=24
+URxvt.letterSpace       : -2
+Urxvt*font              : FiraCode : autohint=True : pixelsize=20
+Urxvt*italicFont        : FiraCode : italic : autohint=True : pixelsize=20
+Urxvt*boldFont          : FiraCode : bold   : autohint=True : pixelsize=20
 
 ! check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
 *antialias                     : true
@@ -36,10 +36,9 @@ URxvt*url-select.underline     : true
 URxvt.matcher.pattern.1        : \\bwww\\.[\\w-]\\.[\\w./?&@#-\[\]]*[\\w/-]
 
 ! https://github.com/addy-dclxvi/i3-starterpack/blob/master/.Xresources
-URxvt*iso14755:			false
-URxvt*termName:			rxvt-256color
-URxvt.lineSpace:		0
-
+URxvt*iso14755:      false
+URxvt*termName:      rxvt-256color
+URxvt.lineSpace:     0
 
 URxvt*depth:            32
 !URxvt*background:      rgba:0000/0000/0000/AAAA
@@ -52,23 +51,14 @@ URxvt.throughColor:     Blue
 URxvt*cursorColor:      #dc8cc3
 URxvt*cursorColor2:     Black
 
-! ------------------------------------------------------------------------------
-! Xft Font Configuration
-! --------------------------------------------------------------------------
-Xft.antialias   : true
-Xft.autohint    : true
-Xft.lcdfilter   : lcddefault
-Xft.hintstyle   : hintslight
-Xft.hinting     : 1
-Xft.rgba        : rgb
 
-! ! -----------------------------------------------------------------------------
-! ! File: gruvbox-urxvt256.xresources
-! ! Description: Retro groove colorscheme generalized
-! ! Author: morhetz <morhetz@gmail.com>
-! ! Source: https://github.com/morhetz/gruvbox-generalized
-! ! Last Modified: 13 Dec 2013
-! ! -----------------------------------------------------------------------------
+! -----------------------------------------------------------------------------
+! File: gruvbox-urxvt256.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 13 Dec 2013
+! -----------------------------------------------------------------------------
 
 URxvt.color24  : #076678
 URxvt.color66  : #427b58
@@ -102,6 +92,18 @@ URxvt.color248 : #bdae93
 URxvt.color250 : #d5c4a1
 
 
+
+! ------------------------------------------------------------------------------
+! Xft Font Configuration
+! --------------------------------------------------------------------------
+Xft.antialias   : true
+Xft.autohint    : true
+Xft.lcdfilter   : lcddefault
+Xft.hintstyle   : hintslight
+Xft.hinting     : 1
+Xft.rgba        : rgb
+
+
 ! -----------------------------------------------------------------------------
 ! File: gruvbox-dark.xresources
 ! Description: Retro groove colorscheme generalized
@@ -110,9 +112,8 @@ URxvt.color250 : #d5c4a1
 ! Last Modified: 6 Sep 2014
 ! -----------------------------------------------------------------------------
 
-! hard contrast         :
-*background : #1d2021
-! *background             : #282828
+! hard contrast         : *background : #1d2021
+*background             : #282828
 ! soft contrast         : *background : #32302f
 *foreground             : #ebdbb2
 ! Black + DarkGrey
@@ -192,16 +193,43 @@ rofi.modi: run,drun,window
 ! Dmenu configs
 ! -----------------------------------------------------------------------------
 
-dmenu.selforeground:	    #d8dee9
-dmenu.background:	        #2e3440
-dmenu.selbackground:	    #bf616a
-dmenu.foreground:	        #d8dee9
+dmenu.selforeground:       #d8dee9
+dmenu.background:          #2e3440
+dmenu.selbackground:       #bf616a
+dmenu.foreground:          #d8dee9
+
+
+! ------------------------------------------------------------------------------
+! UXTerm configs
+! ------------------------------------------------------------------------------
+
+! termtype
+UXTerm*termName:           xterm-256color
+UXTerm*VT100.geometry:     92x16
+UXTerm*font:               M+ 1mn
+UXTerm*faceSize:           12
+UXTerm*dynamicColors:      true
+UXTerm*utf8:               2
+UXTerm*eightBitInput:      true
+UXTerm*saveLines:          10000
+UXTerm*scrollKey:          true
+UXTerm*scrollTtyOutput:    false
+UXTerm*scrollBar:          false
+UXTerm*rightScrollBar:     false
+UXTerm*jumpScroll:         true
+UXTerm*multiScroll:        true
+UXTerm*toolBar:            false
+UXTerm*boldMode:           false
+UXTerm*colorBDMode:        true
+UXTerm*colorBD:            rgb:3f/3f/3f
+
+! Here's a general colorscheme for the X server as a whole
 
 ! Addys config
 !
-! ------------------------------------------------------------------------------
+! -----------------------------------------------------------------------------
 ! Colour Configuration
-! ------------------------------------------------------------------------------
+! -----------------------------------------------------------------------------
 
 ! ! special
 ! *.foreground:   #d8dee8
@@ -241,71 +269,42 @@ dmenu.foreground:	        #d8dee9
 ! *.color15 : #d1d5dc
 
 
-! ------------------------------------------------------------------------------
-! ! Espresso color scheme by Addy
-! ! Based On Mocha
-! ! ------------------------------------------------------------------------------
+
+! Xresources colorscheme I came up with myself
 !
-!
-! ! special
-! *.foreground:   #f5f8f6
-! *.background:   #2f343f
-! *.cursorColor:  #dc8cc3
-!
-! ! black
-! *.color0  : #5b4848
-! *.color8  : #736060
-!
+! special
+! *.foreground:   #e8dfd6
+! *.background:   #021b21
+! *.cursorColor:  #e8dfd6
+
+! black
+! *.color0:       #032c36
+! *.color8:       #065f73
+
 ! ! red
-! *.color1  : #cb6077
-! *.color9  : #e3788f
-!
-! ! green
-! *.color2  : #bec55b
-! *.color10 : #d6ed73
-!
-! ! yellow
-! *.color3  : #e4bc87
-! *.color11 : #fcd49f
-!
-! ! blue
-! *.color4  : #8ab3d5
-! *.color12 : #a2cbed
-!
-! ! magenta
-! *.color5  : #a89bb9
-! *.color13 : #c0b3d1
-!
-! ! cyan
-! *.color6  : #7bcdb4
-! *.color14 : #93e5cc
-!
-! ! white
-! *.color7  : #e0d8d6
-! *.color15 : #f8f0ee
+! *.color1:       #c2454e
+! *.color9:       #ef5847
 
+! green
+! *.color2:       #7cbf9e
+! *.color10:      #a2d9b1
 
-! ------------------------------------------------------------------------------
-! UXTerm configs
-! ------------------------------------------------------------------------------
+! yellow
+! *.color3:       #8a7a63
+! *.color11:      #beb090
 
+! blue
+! *.color4:       #2e3340
+! *.color12:      #61778d
 
-! termtype
-UXTerm*termName: xterm-256color
-UXTerm*VT100.geometry:     92x16
-UXTerm*font:               M+ 1mn
-UXTerm*faceSize:		   12
-UXTerm*dynamicColors:      true
-UXTerm*utf8:               2
-UXTerm*eightBitInput:      true
-UXTerm*saveLines:          10000
-UXTerm*scrollKey:          true
-UXTerm*scrollTtyOutput:    false
-UXTerm*scrollBar:          false
-UXTerm*rightScrollBar:     false
-UXTerm*jumpScroll:         true
-UXTerm*multiScroll:        true
-UXTerm*toolBar:            false
-UXTerm*boldMode: false
-UXTerm*colorBDMode: true
-UXTerm*colorBD: rgb:3f/3f/3f
+! magenta
+! *.color5:       #ff5879
+! *.color13:      #ff99a1
+
+! cyan
+! *.color6:       #44b5b1
+! *.color14:      #9ed9d8
+
+! white
+! *.color7:       #f2f1b9
+! *.color15:      #f6f6c9
