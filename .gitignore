@@ -4,9 +4,11 @@
 # Personal
 .zim/
 tmux-history
+# kept debating this one. Going to use it for files that are going to be in
+# the repo temporarily but shouldn't get pushed
+*.local
 
-## Python
-
+# Python
 # mypy
 .mypy_cache/
 
@@ -19,7 +21,7 @@ tmux-history
 # Rope
 .ropeproject/
 
-## Vim Backup Files
+# Vim Backup Files
 *.un~
 *.swp
 *.swo
@@ -39,7 +41,7 @@ build/
 *.egg-info/
 .idea/
 
-## KDE directory settings
+# KDE directory settings
 .directory
 
 # PyCharm

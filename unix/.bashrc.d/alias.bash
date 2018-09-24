@@ -46,12 +46,15 @@ alias rm='rm -v'
 alias path='echo -e ${PATH//:/\\n}'
 
 # Options i use every time i run these commands
-alias du='du -d 1 -h'
+# probably shouldn't clobber the namespace though, there are conflicting options
+# for du so i'll change to du shallow
+alias dus='du -d 1 -h'
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
 alias head='head -n 30'
 alias tail='tail -n 30'
+alias treea='tree -aI .git'
 
 # Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
@@ -93,4 +96,3 @@ fi
 alias redo='fc -s'
 # And even a few ways to do it if you want
 alias r='fc -s'
-# wait could we do C-r like in vim?

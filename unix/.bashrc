@@ -2,6 +2,8 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
+# All: {{{ 1
+
 # Don't run if not interactive: {{{
 case $- in
     *i*);;
@@ -15,6 +17,7 @@ HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=50000
 # TODO: What are the units on either of these?
+# Still don't know but fc maxes out at 32767
 HISTFILESIZE=50000
 #https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
@@ -40,9 +43,9 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
+  if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
+  elif [[ -f /etc/bash_completion ]]; then
     . /etc/bash_completion
   fi
 fi
@@ -53,6 +56,7 @@ set -o noclobber        # Still dont want to clobber things
 shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
+
 # }}}
 
 # Defaults in Ubuntu bashrcs: {{{
@@ -76,19 +80,21 @@ esac
 # should be on the output of commands, not on the prompt
 force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if [[ -n "$force_color_prompt" ]]; then
+    if [[ -x /usr/bin/tput ]] && tput setaf 1 >&/dev/null; then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
     # a case would tend to support setf rather than setaf.
-    color_prompt=yes
+        color_prompt=yes
     else
-    color_prompt=
+        color_prompt=
     fi
 fi
 
 # https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
 # at some point you moved the \$\ back one [] on termux so i guess todo
+# we really gotta break this up into individual pieces then source in the vars
+# because this is impossible to decipher
 if [ "$color_prompt" = yes ]; then
     TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\\$\[\e[01;33m\]\[\e[0m\] "
 else
@@ -101,12 +107,12 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     export GIT_PS1_SHOWCOLORHINTS=1
     export GIT_PS1_SHOWSTASHSTATE=1
     export GIT_PS1_SHOWUPSTREAM="auto"
-    Color_Off="\[\033[0m\]"
-    Yellow="\[\033[0;33m\]"
+    export Color_Off="\[\033[0m\]"
+    export Yellow="\[\033[0;33m\]"
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# Set 'man' colors. TODO: Also set this up for less.
+# Set 'man' colors.
 if [ "$color_prompt" = yes ]; then
     man() {
     env \
@@ -150,6 +156,8 @@ fi
 # }}}
 
 # FZF: {{{
+# TODO: Go to this file and see how he set up only ever sourcing a file
+# if it's not already in $PATH
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
@@ -175,9 +183,9 @@ if [[ "$(command -v fd)" ]]; then
     export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow --exclude .git'
 fi
 
-[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height --multi --color=bg+:24'
 
-if [ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]; then
+if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
   export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
 fi
 
@@ -224,6 +232,10 @@ fi
 # }}}
 
 # gcloud: {{{
+#TODO: Jump in the shell, and run the following to ensure it works,
+# then reduce this section to 1 line!
+# if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
+
 # The next line updates PATH for the Google Cloud SDK.
 if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then source ~/bin/google-cloud-sdk/path.bash.inc; fi
 # The next line enables shell command completion for gcloud.
@@ -232,6 +244,7 @@ if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google
 if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
 if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
+
 # }}}
 
 # Ruby: {{{
@@ -253,4 +266,11 @@ fi
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
+# }}}
+
+# Alacritty doesn't provide much functionality outside of it's absurd speed
+# However, tmux covers any functionality that Alacritty isn't trying to give
+# So let's just activate it automatically
+[[ -z "$TMUX"  ]] && exec tmux
+
 # }}}
