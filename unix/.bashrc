@@ -2,6 +2,8 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
+# All: {{{ 1
+
 # Don't run if not interactive: {{{
 case $- in
     *i*);;
@@ -15,8 +17,9 @@ HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=50000
 # TODO: What are the units on either of these?
+# still don't kniw but fc maxes out at 32767
 HISTFILESIZE=50000
-#https://unix.stackexchange.com/a/174902
+# https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
@@ -40,7 +43,7 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
+  if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
@@ -65,10 +68,10 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-# TODO: add rxvt case
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
+
 # }}}
 
 # Prompt: {{{
@@ -77,21 +80,20 @@ esac
 # should be on the output of commands, not on the prompt
 force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if [[ -n "$force_color_prompt" ]]; then
+    if [[ -x "$PREFIX/bin/tput" ]] && tput setaf 1 >&/dev/null; then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.
-    color_prompt=yes
+    # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-    color_prompt=
+        color_prompt=
     fi
 fi
 
 # https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
-# at some point you moved the \$\ back one [] on termux so i guess todo
 if [ "$color_prompt" = yes ]; then
-    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\\$\[\e[01;33m\]\[\e[0m\] "
+    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
 else
     TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
 fi
@@ -102,12 +104,12 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     export GIT_PS1_SHOWCOLORHINTS=1
     export GIT_PS1_SHOWSTASHSTATE=1
     export GIT_PS1_SHOWUPSTREAM="auto"
-    Color_Off="\[\033[0m\]"
-    Yellow="\[\033[0;33m\]"
+    export Color_Off="\[\033[0m\]"
+    export Yellow="\[\033[0;33m\]"
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# Set 'man' colors. TODO: Also set this up for less.
+# Set 'man' colors
 if [ "$color_prompt" = yes ]; then
     man() {
     env \
@@ -137,16 +139,16 @@ export EDITOR="$VISUAL"
 
 # JavaScript: {{{
 # Source npm completion if its installed
-if [[ $(which npm) ]]; then
+if [[ "$(which npm)" ]]; then
     source ~/.bashrc.d/npm-completion.bash
 fi
 
 # Export nvm if the directory exists
-if [ -d "$HOME/.nvm" ]; then
+if [[ -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
     # Load nvm and bash completion
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+    [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
+    [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
 fi
 # }}}
 
@@ -156,14 +158,35 @@ if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
+#      export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
+# elif [[ "$(command -v rg)" ]]; then
+#      export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
+# fi
+
+fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
 # spice fzf up with silversearcher
 if [[ "$(command -v ag)" ]]; then
-    export FZF_DEFAULT_COMMAND='ag  --hidden --smart-case --max-count 5 -g --'
-    export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle '
-# edit your selected file in fzf with C-e. proba ly wrong syntax
-# --bind -x "\C-e": nvim $(fzf);"
+    export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers .'
+    export FZF_CTRL_T_OPTS=' {}" --preview-window=right:50%:wrap --cycle '
+# Junegunn's current set up per his bashrc with an added check for fd.
+elif [[ "$(command -v fd)" ]]; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow'
 
+    if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
+        export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
+    fi
 fi
+
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height --multi --cycle --color=bg+:24 --border --exclude .git,.__pycache__'
+
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
+
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
 # }}}
 
 # Python: {{{
@@ -184,29 +207,23 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     # <<< conda initialize <<<
 fi
 
-# If this env var isn't set it will equal 0. So also run a check that we have conda
-if [[ $CONDA_SHLVL -eq 0 ]]; then
-    if [[ -d "$HOME/miniconda3/etc/profile.d" ]]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
-        conda activate base
-    fi
-elif [[ $CONDA_SHLVL -eq 1 ]]; then
-    echo -e "Conda base environment successfully activated."
-fi
-
+if [[ "$(command -v pip)" ]]; then
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-eval "$(pip completion --bash)"
+    eval "$(pip completion --bash)"
+fi
 # }}}
 
 # gcloud: {{{
+# The next line updates PATH for the Google Cloud SDK.
+# can we do if "{$PREFIX,/bin}/g...{completion,path}.b..." and make this all one line?
 # The next line updates PATH for the Google Cloud SDK.
 if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then source ~/bin/google-cloud-sdk/path.bash.inc; fi
 # The next line enables shell command completion for gcloud.
 if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
 
 if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
+if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
-if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 # }}}
 
 # Ruby: {{{
@@ -217,13 +234,21 @@ fi
 # }}}
 
 # Sourced files: {{{
-for config in ~/.bashrc.d/*.bash; do
-    source "$config"
-done
+# Source in .bashrc.d
+if [[ -d ~/.bashrc.d ]]; then
+    for config in ~/.bashrc.d/*.bash; do
+        source "$config"
+    done
 unset -v config
+fi
 
 # For the secrets
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
+
+# activate tmux but not yet.
+# [[ -z "$TMUX"  ]] && exec tmux
+# }}}
+
 # }}}

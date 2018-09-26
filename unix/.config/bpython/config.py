@@ -11,12 +11,23 @@
 #
 # see http://docs.bpython-interpreter.org/configuration.html
 # for all configurable options
+<<<<<<< HEAD
+from os.path import expanduser, join as pjoin
+# import time
+
+# dont touch this until you're ready to handwrite a logger
+# LOG_TIMESTAMP=time.ctime()
+
+home = os.path.expanduser('~')
+
+=======
 
 from os.path import expanduser, join as pjoin
 import time
 
 home = os.path.expanduser('~')
 # LOG_TIMESTAMP = time.ctime()
+>>>>>>> master
 # General section tag
 [general]
 
@@ -33,6 +44,10 @@ arg_spec = True
 
 # History file (default: ~/.pythonhist):
 # TODO: Add in a datetime object that creates a new file for everyday
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
 try:
     hist_file = pjoin(home, '.local', 'share', 'bpython.log')
 except Exception as e:
@@ -45,7 +60,11 @@ hist_length = 10000
 # Soft tab size (default: 4, see pep-8):
 tab_length = 4
 
+<<<<<<< HEAD
+# Color schemes should be put in $XDG_CONFIG_HOME/bpython/ e.g. to use the theme
+=======
 # Color schemes should be put in $XDG_CONFIG_HOME/bpython/ to use the theme
+>>>>>>> master
 # $XDG_CONFIG_HOME/bpython/foo.theme set color_scheme = foo. Leave blank or set
 # to "default" to use the default theme
 # color_scheme = default
@@ -53,7 +72,13 @@ tab_length = 4
 # External editor to use for editing the current line, block, or full history
 # Default is to try $EDITOR and $VISUAL, then vi - but if you uncomment
 # the line below that will take precedence
+<<<<<<< HEAD
+# actually is this supposed to be a string? Im using my value for both env
+# vars anyway
+# editor = nvim
+=======
 editor = nvim
+>>>>>>> master
 
 # Whether to append .py to the filename while saving session to a file.
 # (default: False)
@@ -61,7 +86,11 @@ save_append_py = True
 
 # The name of a helper executable that should perform pastebin upload on
 # bpython's behalf. If unset, bpython uploads pastes to bpaste.net. (default: )
+<<<<<<< HEAD
+#pastebin_helper = gist.py
+=======
 # pastebin_helper = gist.py
+>>>>>>> master
 
 # How long an undo must be expected to take before prompting for how
 # many lines should be undone. Set to -1 to never prompt, or 0 to

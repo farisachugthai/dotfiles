@@ -1,12 +1,11 @@
-# Global Gitignore
+# Git Ignore
 # Maintainer: Faris Chugthai
 
 # Personal
 .zim/
 tmux-history
 
-## Python
-
+# Python
 # mypy
 .mypy_cache/
 
@@ -19,7 +18,7 @@ tmux-history
 # Rope
 .ropeproject/
 
-## Vim Backup Files
+# Vim Backup Files
 *.un~
 *.swp
 *.swo
@@ -39,7 +38,7 @@ build/
 *.egg-info/
 .idea/
 
-## KDE directory settings
+# KDE directory settings
 .directory
 
 # PyCharm
