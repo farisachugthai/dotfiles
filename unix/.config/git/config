@@ -70,4 +70,6 @@
 [credential]
     helper = cache
 
+[web]
+    browser = firefox
 # Vim: set ft:gitconfig :

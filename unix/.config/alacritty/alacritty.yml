@@ -1,5 +1,13 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator
 
+# Font size is at line 113
+# I'm not sure how to say this sensibly but I think alacritty retains state.
+# If you increase the font as I just did from 6 to 10 to 8 to 6 it doesn't
+# end at the same size it was at.
+#
+# But if you restart i3, you'll go back to the "original" font 6.
+#
+# So if you change the font size I guess Mod+Shift+r to restart i3 in place as well?
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -93,24 +101,24 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: monospace # should be "Menlo" or something on macOS.
+    family: Fira Code # should be "Menlo" or something on macOS.
     # Style can be specified to pick a specific face.
-    # style: Regular
+    style: Regular
 
   # The bold font face
   bold:
-    family: monospace # should be "Menlo" or something on macOS.
+    family: Fira Code # should be "Menlo" or something on macOS.
     # Style can be specified to pick a specific face.
-    # style: Bold
+    style: Bold
 
   # The italic font face
   italic:
-    family: monospace # should be "Menlo" or something on macOS.
+    family: Fira Code # should be "Menlo" or something on macOS.
     # Style can be specified to pick a specific face.
-    # style: Italic
+    style: Italic
 
   # Point size of the font
-  size: 6.0
+  size: 9.0
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -141,7 +149,7 @@ render_timer: false
 
 # Use custom cursor colors. If true, display the cursor in the cursor.foreground
 # and cursor.background colors, otherwise invert the colors of the cursor.
-custom_cursor_colors: false
+custom_cursor_colors: true
 
 # Colors (Tomorrow Night Bright)
 colors:
@@ -224,7 +232,7 @@ visual_bell:
   duration: 0
 
 # Background opacity
-background_opacity: 1.0
+background_opacity: .70
 
 # Mouse bindings
 #
@@ -279,6 +287,9 @@ live_config_reload: true
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
 # Entries in shell.args are passed unmodified as arguments to the shell.
 #
+# as in tmux split-window h?
+#
+# or ipython? like damn that's too much power hahah
 # shell:
 #   program: /bin/bash
 #   args:

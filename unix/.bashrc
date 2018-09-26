@@ -271,6 +271,9 @@ fi
 # Alacritty doesn't provide much functionality outside of it's absurd speed
 # However, tmux covers any functionality that Alacritty isn't trying to give
 # So let's just activate it automatically
-[[ -z "$TMUX"  ]] && exec tmux
+
+# So this actually is pretty great; however, this should be modified to find
+# a detached session to attach to before creating a new one.
+# [[ -z "$TMUX"  ]] && exec tmux
 
 # }}}
