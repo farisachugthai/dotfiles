@@ -9,7 +9,6 @@ tmux-history
 
 
 # Python specific
-
 # mypy
 .mypy_cache/
 
@@ -41,7 +40,7 @@ dist/
 build/
 *.egg-info/
 
-## KDE directory settings
+# KDE directory settings
 .directory
 
 # PyCharm

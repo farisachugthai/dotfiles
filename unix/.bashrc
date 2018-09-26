@@ -3,6 +3,7 @@
 # Maintainer: Faris Chugthai
 
 # All: {{{ 1
+
 # Don't run if not interactive: {{{
 case $- in
     *i*);;
@@ -16,9 +17,9 @@ HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=50000
 # TODO: What are the units on either of these?
-# still don't kniw but fc maxes out at 32657
+# still don't kniw but fc maxes out at 32767
 HISTFILESIZE=50000
-#https://unix.stackexchange.com/a/174902
+# https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
@@ -84,9 +85,9 @@ if [[ -n "$force_color_prompt" ]]; then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
     # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
+        color_prompt=yes
     else
-    color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -138,16 +139,16 @@ export EDITOR="$VISUAL"
 
 # JavaScript: {{{
 # Source npm completion if its installed
-if [[ $(which npm) ]]; then
+if [[ "$(which npm)" ]]; then
     source ~/.bashrc.d/npm-completion.bash
 fi
 
 # Export nvm if the directory exists
-if [ -d "$HOME/.nvm" ]; then
+if [[ -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
     # Load nvm and bash completion
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+    [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
+    [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
 fi
 # }}}
 
@@ -157,30 +158,31 @@ if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-# spice fzf up with ripgrep
-# if [[ "$(command -v ag)" ]]; then
-#      export FZF_DEFAULT_COMMAND='ag --hidden --max-count 5 -u --smart-case -g --'
-#      # the bind command makes searching files 1000x better and searching history non functional
 #      export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
 # elif [[ "$(command -v rg)" ]]; then
 #      export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
 # fi
-# # trying to simplify for the time being
-# export FZF_DEFAULT_OPTS='--preview="cat {}" --preview-window=right:50%:wrap --cycle --multi --color=bg+:24 --border'
-# bind -x '"\C-e": nvim $(fzf);'       # edit your selected file in fzf with C-e
 
 fzf-down() {
   fzf --height 50% "$@" --border
 }
 
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow'
-[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height --exclude .git,.__pycache__'
+# spice fzf up with silversearcher
+if [[ "$(command -v ag)" ]]; then
+    export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers .'
+    export FZF_CTRL_T_OPTS=' {}" --preview-window=right:50%:wrap --cycle '
+# Junegunn's current set up per his bashrc with an added check for fd.
+elif [[ "$(command -v fd)" ]]; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow'
 
-if [ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]; then
-  export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
+    if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
+        export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
+    fi
 fi
+
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height --multi --cycle --color=bg+:24 --border --exclude .git,.__pycache__'
 
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
 
@@ -205,19 +207,20 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     # <<< conda initialize <<<
 fi
 
+if [[ "$(command -v pip)" ]]; then
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-eval "$(pip completion --bash)"
+    eval "$(pip completion --bash)"
+fi
 # }}}
 
 # gcloud: {{{
 # The next line updates PATH for the Google Cloud SDK.
 # can we do if "{$PREFIX,/bin}/g...{completion,path}.b..." and make this all one line?
+# The next line updates PATH for the Google Cloud SDK.
 if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then source ~/bin/google-cloud-sdk/path.bash.inc; fi
 # The next line enables shell command completion for gcloud.
-if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc;
-fi
+if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
 
-# The next line updates PATH for the Google Cloud SDK.
 if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
@@ -232,10 +235,12 @@ fi
 
 # Sourced files: {{{
 # Source in .bashrc.d
-for config in ~/.bashrc.d/*.bash; do
-    source "$config"
-done
+if [[ -d ~/.bashrc.d ]]; then
+    for config in ~/.bashrc.d/*.bash; do
+        source "$config"
+    done
 unset -v config
+fi
 
 # For the secrets
 if [[ -f "$HOME/.bashrc.local" ]]; then
