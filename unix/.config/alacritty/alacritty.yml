@@ -1,6 +1,6 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator
 
-# Font size is at line 113
+# Font size is at line 121
 # I'm not sure how to say this sensibly but I think alacritty retains state.
 # If you increase the font as I just did from 6 to 10 to 8 to 6 it doesn't
 # end at the same size it was at.
@@ -137,7 +137,7 @@ font:
   # screens and make reading text a little easier.
   # On X11 it is possible to change the DPI for each instance of alacritty by using
   # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: true
+  scale_with_dpi: false
 
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
