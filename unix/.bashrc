@@ -45,7 +45,7 @@ fi
 if ! shopt -oq posix; then
   if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
+  elif [[ -f /etc/bash_completion ]]; then
     . /etc/bash_completion
   fi
 fi
@@ -71,7 +71,6 @@ fi
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
-
 # }}}
 
 # Prompt: {{{
@@ -84,7 +83,7 @@ if [[ -n "$force_color_prompt" ]]; then
     if [[ -x "$PREFIX/bin/tput" ]] && tput setaf 1 >&/dev/null; then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
+    # a case would tend to support setf rather than setaf.
         color_prompt=yes
     else
         color_prompt=
@@ -109,7 +108,7 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# Set 'man' colors
+# Set 'man' colors.
 if [ "$color_prompt" = yes ]; then
     man() {
     env \
@@ -158,20 +157,22 @@ if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-#      export FZF_DEFAULT_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
-# elif [[ "$(command -v rg)" ]]; then
-#      export FZF_DEFAULT_COMMAND='rg  --hidden --smart-case --max-count 10 .'
-# fi
-
 fzf-down() {
   fzf --height 50% "$@" --border
 }
 
-# spice fzf up with silversearcher
+# This is gonna be hard to organize. so let's start with getting one set up perfectly.
+# TODO: Get an Alt-C and C-r for ag
+
+# Is it going to be better to have these blocks for each keybinding? as it
+# stands C-r isn't defined when ag is present.
 if [[ "$(command -v ag)" ]]; then
-    export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers .'
-    export FZF_CTRL_T_OPTS=' {}" --preview-window=right:50%:wrap --cycle '
+    export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers -l'
+    export FZF_CTRL_T_OPTS=' --preview "head -100 {}" --preview-window=right:50%:wrap --cycle --multi '
 # Junegunn's current set up per his bashrc with an added check for fd.
+elif [[ "$(command -v rg)" ]]; then
+    export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10'
+    export FZF_CTRL_T_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
 elif [[ "$(command -v fd)" ]]; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
@@ -180,13 +181,33 @@ elif [[ "$(command -v fd)" ]]; then
     if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
+else
+    export FZF_DEFAULT_COMMAND='find * -type f'
 fi
 
-[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height --multi --cycle --color=bg+:24 --border --exclude .git,.__pycache__'
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--layout=reverse --bind "enter:execute(nvim {})" --multi --cycle --color=bg+:24 --border --exclude .git,.__pycache__'
 
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
+# termux doesnt have xclip or xsel
+
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
 
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
+
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+
+_fzf_compgen_path() {
+    fd --hidden --follow --exclude ".git" . "$1"
+}
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+    fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
+complete -F _fzf_path_completion -o default -o bashdefault ag
+complete -F _fzf_dir_completion -o default -o bashdefault tree
 # }}}
 
 # Python: {{{
@@ -207,6 +228,17 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     # <<< conda initialize <<<
 fi
 
+# If this env var isn't set it will equal 0. So also run a check that we have conda
+if [[ $CONDA_SHLVL -eq 0 ]]; then
+    if [[ -d "$HOME/miniconda3/etc/profile.d" ]]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+        conda activate base
+    fi
+elif [[ $CONDA_SHLVL -eq 1 ]]; then
+    echo -e "Conda base environment successfully activated."
+fi
+
+# https://pip.pypa.io/en/stable/user_guide/#command-completion
 if [[ "$(command -v pip)" ]]; then
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
     eval "$(pip completion --bash)"
@@ -226,15 +258,7 @@ if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX
 
 # }}}
 
-# Ruby: {{{
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-if [[ -d "$HOME/.rvm/bin" ]]; then
-    export PATH="$PATH:$HOME/.rvm/bin"
-fi
-# }}}
-
 # Sourced files: {{{
-# Source in .bashrc.d
 if [[ -d ~/.bashrc.d ]]; then
     for config in ~/.bashrc.d/*.bash; do
         source "$config"
@@ -246,9 +270,16 @@ fi
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
+# }}}
 
-# activate tmux but not yet.
+# Alacritty doesn't provide much functionality outside of it's absurd speed
+# However, tmux covers any functionality that Alacritty isn't trying to give
+# So let's just activate it automatically
+
+# So this actually is pretty great; however, this should be modified to find
+# a detached session to attach to before creating a new one.
 # [[ -z "$TMUX"  ]] && exec tmux
+[[ -n "$TMUX" ]] && FZF_TMUX=1 && FZF_TMUX_HEIGHT=80%
 # }}}
 
 # }}}

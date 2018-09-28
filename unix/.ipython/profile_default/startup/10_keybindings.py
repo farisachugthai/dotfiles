@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
 """Module for managing keybindings in IPython.
-=======
-""" Module for managing keybindings in IPython
->>>>>>> master
 
 Double check that termux has the right version of prompt because I'm
 seeing different modules to import. Or theres a bug because there were
@@ -16,7 +12,6 @@ Found the file where this is originally implemented YAS.
 
 Or I guess I should say the actual keybindings are listed.
 
-<<<<<<< HEAD
 Go to the ipython root dir:
     # no idea if below has correct sphinx syntax.
     :code: shell
@@ -50,42 +45,12 @@ Sep 24, 2018:
 #      """ From the IPython examples on keybinding configuration."""
 #      buf = event.current_buffer
 #      buf.insert_text('The Spanish Inquisition')
-=======
-go to the ipython root dir:
-    cd terminal
-    %pycat shortcuts
-
-and up at the top you have the keybindings IPython ships with listed for ya!
-"""
-# this right here is the mod we need to keep our eyes on.
-from prompt_toolkit.key_binding.registry import Registry
-from prompt_toolkit.key_binding.defaults import load_key_bindings
-
-from IPython import get_ipython
-from prompt_toolkit.enums import DEFAULT_BUFFER
-from prompt_toolkit.keys import Keys
-from prompt_toolkit.filters import HasFocus, HasSelection, ViInsertMode
-
-ip = get_ipython()
-insert_mode = ViInsertMode()
-
-
-def insert_unexpected(event):
-    """ From the IPython examples on keybinding configuration."""
-    buf = event.current_buffer
-    buf.insert_text('The Spanish Inquisition')
->>>>>>> master
 
 
 # hahahaha and boy was it unexpected! forgot to comment this guy out
 # Register the shortcut if IPython is using prompt_toolkit
-<<<<<<< HEAD
 #  if getattr(ip, 'pt_cli'):
 #      registry = ip.pt_cli.application.key_bindings_registry
-=======
-if getattr(ip, 'pt_cli'):
-    registry = ip.pt_cli.application.key_bindings_registry
->>>>>>> master
 #      registry.add_binding(Keys.ControlN,
 #                   filter=(HasFocus(DEFAULT_BUFFER)
 #                                  & ~HasSelection()

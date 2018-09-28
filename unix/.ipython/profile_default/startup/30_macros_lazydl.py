@@ -1,0 +1,1 @@
+IPython.macro.Macro('import requests\nurl = input("URL: ")\nfname = input("fname: ")\n_margv = url, fname\n# url = sys.argv[1]\nres = requests.get(url)\n# fname = sys.argv[2]\nwith open(fname, \'xt\') as f:\n    f.write(res.text)\n    \n')

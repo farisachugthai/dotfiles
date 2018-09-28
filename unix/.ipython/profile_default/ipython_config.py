@@ -18,20 +18,12 @@ from pygments.token import Comment
 # ipython on simple things like creating a new prompt after every command
 # increments it
 
-<<<<<<< HEAD
 c = get_config()  # noqa
 
 # Alias: {{{
 c.AliasManager.user_aliases = [
-      ('ag', 'ag --color'),
+      ('ag', 'ag --hidden --color'),
       ('chmod', 'chmod'),
-=======
-c = get_config()            # noqa,pyls:
-
-# Alias: {{{
-c.AliasManager.user_aliases = [
-      ('ag', 'ag'),
->>>>>>> master
       ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
       ('echo', 'echo -e'),
       ('fzf', 'fzf'),         # all we need to do is figure out keybindings
@@ -49,10 +41,6 @@ c.AliasManager.user_aliases = [
       ('ll', 'ls -AlF --color=always'),
       ('ls', 'ls -F --color=always'),
       ('lt', 'ls -Altcr --color=always'),
-<<<<<<< HEAD
-=======
-      ('mk', 'mkdir -pv %l && cd %l'),      # check if this works. only mkdir
->>>>>>> master
       ('mkdir', 'mkdir -pv'),
       ('mv', 'mv -iv'),
       ('nvim', 'nvim'),
@@ -167,14 +155,11 @@ c.InteractiveShellApp.reraise_ipython_extension_failures = True
 
 # IPython: an enhanced interactive Python shell.
 
-# Whether to create profile dir if it doesn't exist
-# c.BaseIPythonApplication.auto_create = False
-
 # Whether to install the default config files into the profile dir. If a new
 #  profile is being created, and IPython contains config files for that profile
 #  then they will be staged into the new directory.  Otherwise, default config
 #  files will be automatically generated.
-# c.BaseIPythonApplication.copy_config_files = False
+c.BaseIPythonApplication.copy_config_files = True
 
 # Path to an extra config file to load.
 #
@@ -195,7 +180,7 @@ c.BaseIPythonApplication.profile = 'default'
 
 # Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback
-c.BaseIPythonApplication.verbose_crash = False
+# c.BaseIPythonApplication.verbose_crash = False
 
 # ----------------------------------------------------------------------------
 # TerminalIPythonApp(BaseIPythonApplication,InteractiveShellApp) configuration
@@ -242,15 +227,11 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-<<<<<<< HEAD
 # Jupyter Console doesn't handle this correctly
 try:
     c.InteractiveShell.autoindent = True
 except Exception:
     pass
-=======
-c.InteractiveShell.autoindent = True
->>>>>>> master
 
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True
@@ -323,21 +304,12 @@ c.InteractiveShell.history_load_length = 10000
 # Start logging to the default log file in overwrite mode. Use `logappend` to
 #  specify a log file to **append** logs to.
 # c.InteractiveShell.logstart = False
-<<<<<<< HEAD
 
 # c.InteractiveShell.object_info_string_level = 0
 
 # Automatically call the pdb debugger after every exception.
 # c.InteractiveShell.pdb = False
 
-=======
-
-# c.InteractiveShell.object_info_string_level = 0
-
-# Automatically call the pdb debugger after every exception.
-# c.InteractiveShell.pdb = False
-
->>>>>>> master
 # Since it's all been deprecated i deleted the section on IPython's str
 # methods for prompt. Don't change the prompt regardless because you'll destroy
 # the chance to use sphinx and stuff.
@@ -355,7 +327,13 @@ c.InteractiveShell.quiet = False
 # Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
 # TODO: Do some kind of check to see whether we have docrepr in the env first
-# c.InteractiveShell.sphinxify_docstring = True
+import importlib  # noqa E402
+try:
+    importlib.import_module("docrepr")  # noqa E402
+except ImportError as e:
+    pass
+else:
+    c.InteractiveShell.sphinxify_docstring = True
 
 #
 c.InteractiveShell.wildcards_case_sensitive = False
@@ -375,7 +353,7 @@ c.TerminalInteractiveShell.confirm_exit = True
 # Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
 #  documentation for more information.
-c.TerminalInteractiveShell.display_completions = 'column'
+c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
 # Shortcut style to use at the prompt. 'vi' or 'emacs'.
 c.TerminalInteractiveShell.editing_mode = 'vi'

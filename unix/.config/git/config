@@ -20,6 +20,8 @@
 [diff]
     color = auto
     prompt = false
+    # detect copied files as well as renames. affects merge and status.renames
+    renames = copy
     strategy-option = resolve
     tool = vimdiff
 
@@ -72,5 +74,13 @@
 
 [web]
     browser = firefox
+
+[rebase]
+    stat = True
+    autoStash = True
+
+[status]
+    showStash = True
+    showUntrackedFiles = all
 
 # Vim: set ft:gitconfig :
