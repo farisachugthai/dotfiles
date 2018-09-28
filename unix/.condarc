@@ -23,33 +23,9 @@ aggressive_update_packages:
 auto_update_conda: true
 
 channels:
+  - defaults
   - conda-canary
   - conda-forge
-  - defaults
-
-
-# also kinda curious how this is gonna go
-# json (bool)
-#   Ensure all output written to stdout is structured json.
-# json: True
-
-# pkgs_dirs (sequence: str)
-#   string delimiter: ','
-#   The list of directories where locally-available packages are linked
-#   from at install time. Packages not locally available are downloaded
-#   and extracted into the first writable directory.
-#
-# i don't actually know if this is how this works or what the consequences would be but
-# can i add in the system folders and virtualenvs folder?
-# pkgs_dirs: ['/home/faris/miniconda3/pkgs', '/home/faris/virtualenvs', '/usr/lib/python3.7/site-packages', '/usr/lib/python3.6']
-# nah you need write permissions
-
-
-# channel_priority (bool)
-#   When True, the solver is instructed to prefer channel order over
-#   package version. When False, the solver is instructed to give package
-#   version preference over channel priority.
-#
 channel_priority: false
 
 
