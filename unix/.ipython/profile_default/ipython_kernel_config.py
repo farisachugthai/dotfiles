@@ -24,8 +24,10 @@ c = get_config()
 # c.ConnectionFileMixin.iopub_port = 0
 
 # Set the kernel's IP address [default localhost]. If the IP address is
-#  something other than localhost, then Consoles on other machines will be able
-#  to connect to the Kernel, so be careful!
+# something other than localhost, then Consoles on other machines will be able
+# to connect to the Kernel, so be careful!
+
+# could we set a private IP of we trust the LAN?
 # c.ConnectionFileMixin.ip = ''
 
 # set the shell (ROUTER) port [default: random]
@@ -206,14 +208,15 @@ c = get_config()
 #------------------------------------------------------------------------------
 
 #
-#  c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3.6'},
-#          {'text': 'Python3.7 Reference', 'url': 'https://docs.python.org/3.7'}
-#          {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'},
-#          {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'},
-#          {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'},
-#          {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'},
-#          {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'},
-#          {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}]
+  c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3'},
+          {'text': 'Python3.7 Reference', 'url': 'https://docs.python.org/3.7'}
+          {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'},
+          {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'},
+          {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'},
+          {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'},
+          {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'},
+          {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}
+          ]
 
 # Set this flag to False to deactivate the use of experimental IPython
 #  completion APIs.
@@ -245,14 +248,10 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-<<<<<<< HEAD
 try:
     c.InteractiveShell.autoindent = True
 except Exception:
     pass
-=======
-# c.InteractiveShell.autoindent = True
->>>>>>> master
 
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True
@@ -469,7 +468,7 @@ c.InteractiveShell.history_load_length = 10000
 # c.Session.signature_scheme = 'hmac-sha256'
 
 # The name of the unpacker for unserializing messages. Only used with custom
-#  functions for `packer`.
+# functions for `packer`.
 # c.Session.unpacker = 'json'
 
 # Username for the Session. Default is your system username.

@@ -1,5 +1,6 @@
 # Configuration file for jupyter-console.
 
+
 # -----------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
 # -----------------------------------------------------------------------------
@@ -325,4 +326,4 @@
 # c.Session.unpacker = 'json'
 
 # Username for the Session. Default is your system username.
-# c.Session.username = 'username'
+c.Session.username =   'fac'
