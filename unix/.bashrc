@@ -52,10 +52,9 @@ fi
 
 # Never thought about how this wouldn't work for termux
 if [[ -d /data/data/com.termux/files/usr/share/bash-completion/completions ]]; then
-    for COMPLETEFILE in "$PREFIX/share/bash-completion/completions/*";
-    do
+    if [[ -f "$PREFIX/share/bash-completion/completions" ]]; then
         . "$COMPLETEFILE"
-    done
+    fi
     unset COMPLETEFILE
 fi
 
