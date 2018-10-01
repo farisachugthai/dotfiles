@@ -50,6 +50,15 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Never thought about how this wouldn't work for termux
+if [[ -d /data/data/com.termux/files/usr/share/bash-completion/completions ]]; then
+    for COMPLETEFILE in "$PREFIX/share/bash-completion/completions/*";
+    do
+        . "$COMPLETEFILE"
+    done
+    unset COMPLETEFILE
+fi
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
 set -o noclobber        # Still dont want to clobber things
@@ -167,8 +176,12 @@ fzf-down() {
 # Is it going to be better to have these blocks for each keybinding? as it
 # stands C-r isn't defined when ag is present.
 if [[ "$(command -v ag)" ]]; then
-    export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers -l'
+    export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
     export FZF_CTRL_T_OPTS=' --preview "head -100 {}" --preview-window=right:50%:wrap --cycle --multi '
+    export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
+
+    alias ag="$FZF_CTRL_T_COMMAND"
+
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
     export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10'

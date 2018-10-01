@@ -1,3 +1,9 @@
+# yapf formatter
+# Maintainer: Faris Chugthai
+# 2018-09-28
+# Had this for a little bit
+# Merged in the changes from yapf --show-style
+
 [style]
 # Align closing bracket with visual indentation.
 align_closing_bracket_with_visual_indent=True
@@ -132,7 +138,7 @@ join_multiple_lines=True
 #
 #   1 + 2 * 3 - 4 / 5
 #
-# will be formatted as follows when configured with *,/:
+# will be formatted as follows when configured with "*,/":
 #
 #   1 + 2*3 - 4/5
 #
@@ -174,6 +180,16 @@ split_before_closing_bracket=True
 #       for variable in bar if variable != 42
 #   }
 split_before_dict_set_generator=True
+
+# Split before the '.' if we need to split a longer expression:
+#
+#   foo = ('This is a really long string: {}, {}, {}, {}'.format(a, b, c, d))
+#
+# would reformat to something like:
+#
+#   foo = ('This is a really long string: {}, {}, {}, {}'
+#          .format(a, b, c, d))
+split_before_dot=False
 
 # Split after the opening paren which surrounds an expression if it doesn't
 # fit on a single line.
@@ -248,4 +264,3 @@ split_penalty_logical_operator=300
 
 # Use the Tab character for indentation.
 use_tabs=False
-

@@ -2,6 +2,8 @@
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
 
+# TODO: For everything that modifies path, run a check to ensure it's not already an entry.
+
 # All: {{{
 
 # Set PATH so it includes user's private bin directories
@@ -59,29 +61,27 @@ fi
 # -R is what we need for ansi colors
 export PAGER="less -JR"
 
-# Man pages are difficult to read on Termux with line numbers
-export MANPAGER="less -R"
+# Its mindblowing how much improves using the help() function in IPy
+export MANPAGER="nvim -c 'set ft=man' -"
 
-export COLORTERM="truecolor"
-
-# These are the defaults but for the sake of being explicit rather than implicit
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
-# dropping these but don't use them yet
-# export XDG_CONFIG_DIRS="/etc/xdg"
-# export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-if [[ "$(which cheat)" ]]; then export CHEATCOLORS=true; fi
+if [[ "$(which cheat)" ]];then
+    export CHEATCOLORS=true;
+    export CHEATPATH="$HOME/python/tutorials:$HOME/python/tutorials/site-packages:$CHEATPATH"
+fi
 
 if [[ -n "$PREFIX" ]]; then
     export SHELL="$PREFIX/bin/bash"
     export BROWSER="w3m"
     export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
+    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
 else
     export SHELL="/bin/bash"
     export BROWSER="firefox"
@@ -90,7 +90,6 @@ fi
 # Set locale if it isn't explicitly stated elsewhere
 export LANG=en_US.UTF-8                 # gathered from localectl
 export LC_MESSAGES=C                    # man i3: Prevents program output translation
-export LANG=en_US.UTF-8                 # gathered from localectl
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 # Also because termux doesn't set $TMPDIR to /tmp/
@@ -113,11 +112,11 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 # }}}
 
 # Sourced files: {{{
-export TMUXP_CONFIGDIR='$HOME/.tmux'
 
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
-# }}}
+
+export NVIM="$HOME/projects/viconf/.config/nvim"
 
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then

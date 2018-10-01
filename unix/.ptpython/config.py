@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
-=======
-
->>>>>>> master
-""" Configuration example for ``ptpython``.
+"""Configuration example for ``ptpython``.
 
 Copy this file to ~/.ptpython/config.py
+
+
+Bugs::
+    Magics don't work as expected.
+    Even with automagic turned on `cat file` doesn't work; however %cat file
+    works perfectly.
+
 """
 from __future__ import unicode_literals
 from prompt_toolkit.filters import ViInsertMode
@@ -20,17 +23,9 @@ __all__ = (
     'configure',
 )
 
-<<<<<<< HEAD
-# this whole file is 1 function???? why not create a class and start doing stuff?
-# maybe set it up to run your ipy config first
-# also magics don't work as expected. even with automagic turned on `cat file` doesn't work
-
-=======
->>>>>>> master
 
 def configure(repl):
-    """
-    Configuration method. This is called during the start-up of ptpython.
+    """Configuration method. This is called during the start-up of ptpython.
 
     :param repl: `PythonRepl` instance.
     """
@@ -134,12 +129,8 @@ def configure(repl):
     """
 
     # Add custom key binding for PDB.
-<<<<<<< HEAD
     # holy hell this is genius. py3.7 just got breakpoint but this wouldve been a great addition to my ipy conf
-=======
-    # holy hell this is genius.
     # py3.7 just got breakpoint. A great addition to my ipy conf
->>>>>>> master
     @repl.add_key_binding(Keys.ControlB)
     def _(event):
         ' Pressing Control-B will insert "pdb.set_trace()" '
@@ -153,10 +144,6 @@ def configure(repl):
         if b.accept_action.is_returnable:
             b.accept_action.validate_and_handle(event.cli, b)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     # Typing 'jj' in Vi Insert mode, should send escape. (Go back to navigation
     # mode.)
     @repl.add_key_binding('j', 'j', filter=ViInsertMode())
@@ -166,7 +153,6 @@ def configure(repl):
 
     # Custom key binding for some simple autocorrection while typing.
     # TODO: Observe how much this slows stuff down because if its a quick lookup then you could add your autocorrect.vim
-    """
     corrections = {
         'impotr': 'import',
         'pritn': 'print',
@@ -184,7 +170,6 @@ def configure(repl):
                 b.insert_text(corrections[w])
 
         b.insert_text(' ')
-    """
 
 
 # Custom colorscheme for the UI. See `ptpython/layout.py` and

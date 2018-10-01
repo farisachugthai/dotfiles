@@ -101,10 +101,24 @@ tldropbox_dir() {
     tldr -m "$1" >> "$PWD/$1" && termux-share "$1"
 }
 
+# not only does this not work but running even the simple redirection errors out.
+# cheatbox(){
+#     cheat "$1" >> "HOME/.cheat/$1" && termux-open --send --chooser "$1"
+# }
+
 conda_switch() {
     conda deactivate && conda activate "$1"
 }
 
+# Heres a funny one from man command
+cd() {
+    command cd "$@" >/dev/null
+    pwd
+}
+
+
+# Honestly just pull up junegunns blog post on this, sit down,
+# hack away and make a new file.
 # TODO:
 # fstash - easier way to deal with stashes
 # type fstash to get a list of your stashes

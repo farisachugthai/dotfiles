@@ -227,7 +227,7 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-# Jupyter Console doesn't handle this correctly
+# Jupyter Console doesn't handle this correctly. Alledgedly ipy7.0 fixed that
 try:
     c.InteractiveShell.autoindent = True
 except Exception:
@@ -279,8 +279,9 @@ c.InteractiveShell.colors = 'Neutral'
 # c.InteractiveShell.disable_failing_post_execute = False
 
 # If True, anything that would be passed to the pager will be displayed as
-#  regular output instead.
-c.InteractiveShell.display_page = True
+# regular output instead.
+# Manpager is set to nvim and it handles it SO much better than vim did.
+c.InteractiveShell.display_page = False
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
 # c.InteractiveShell.enable_html_pager = False
@@ -326,7 +327,6 @@ c.InteractiveShell.quiet = False
 
 # Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-# TODO: Do some kind of check to see whether we have docrepr in the env first
 import importlib  # noqa E402
 try:
     importlib.import_module("docrepr")  # noqa E402
@@ -335,7 +335,6 @@ except ImportError as e:
 else:
     c.InteractiveShell.sphinxify_docstring = True
 
-#
 c.InteractiveShell.wildcards_case_sensitive = False
 
 # Switch modes for the IPython exception handlers.
@@ -348,7 +347,7 @@ c.InteractiveShell.wildcards_case_sensitive = False
 # Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
 #  direct exit without any confirmation.
-c.TerminalInteractiveShell.confirm_exit = True
+c.TerminalInteractiveShell.confirm_exit = False
 
 # Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
@@ -391,7 +390,7 @@ c.TerminalInteractiveShell.highlighting_style = 'legacy'
 c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Enable mouse support in the prompt (Note: prevents selecting text with the
-#  mouse)
+# mouse)
 # c.TerminalInteractiveShell.mouse_support = False
 
 # Class used to generate Prompt token for prompt_toolkit
@@ -399,12 +398,12 @@ c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Use `raw_input` for the REPL, without completion and prompt colors.
 #
-#  Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
-#  Known usage are: IPython own testing machinery, and emacs inferior-shell
-#  integration through elpy.
+# Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
+# Known usage are: IPython own testing machinery, and emacs inferior-shell
+# integration through elpy.
 #
-#  This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
-#  variable is set, or the current terminal is not a tty.
+# This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
+# variable is set, or the current terminal is not a tty.
 # c.TerminalInteractiveShell.simple_prompt = False
 
 # Number of line at the bottom of the screen to reserve for the completion menu
@@ -414,12 +413,12 @@ c.TerminalInteractiveShell.space_for_menu = 6
 c.TerminalInteractiveShell.term_title = True
 
 # Customize the terminal title format.  This is a python format string.
-#  Available substitutions are: {cwd}.
+# Available substitutions are: {cwd}.
 c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
 
 # Use 24bit colors instead of 256 colors in prompt highlighting. If your
-#  terminal supports true color, the following command should print 'TRUECOLOR'
-#  in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
+# terminal supports true color, the following command should print 'TRUECOLOR'
+# in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
 c.TerminalInteractiveShell.true_color = True
 
 # ----------------------------------------------------------------------------
@@ -427,9 +426,9 @@ c.TerminalInteractiveShell.true_color = True
 # ----------------------------------------------------------------------------
 
 # Access the history database without adding to it.
-#
-#  This is intended for use by standalone history tools. IPython shells use
-#  HistoryManager, below, which is a subclass of this.
+
+# This is intended for use by standalone history tools. IPython shells use
+# HistoryManager, below, which is a subclass of this.
 
 # *******
 # What this implies is that if you want to create your own tool for analyzing
@@ -437,20 +436,20 @@ c.TerminalInteractiveShell.true_color = True
 # *******
 
 # Options for configuring the SQLite connection
-#
+
 # These options are passed as keyword args to sqlite3.connect when establishing
 # database conenctions.
 # c.HistoryAccessor.connection_options = {}
 
 # enable the SQLite history
-#
+
 # set enabled=False to disable the SQLite history, in which case there will be
 # no stored history, no SQLite connection, and no background saving thread.
 # This may be necessary in some threaded environments where IPython is embedded
 # c.HistoryAccessor.enabled = True
 
 # Path to file to use for SQLite history database.
-#
+
 # By default, IPython will put the history database in the IPython profile
 # directory.  If you would rather share one history among profiles, you can set
 # this value in each, so that they are consistent.
@@ -652,7 +651,8 @@ c.Completer.use_jedi = True
 # c.ScriptMagics.script_magics = []
 
 # Dict mapping short 'ruby' names to full paths, such as '/opt/secret/bin/ruby'
-#
+# AKA the gcloud libs and other 3rd party bins
+
 # Only necessary for items in script_magics where the default path will not
 # find the right interpreter.
 # c.ScriptMagics.script_paths = {}
@@ -672,8 +672,8 @@ c.LoggingMagics.quiet = False
 
 # Lightweight persistence for python variables.
 #
-#  Provides the %store magic.
+# Provides the %store magic.
 
 # If True, any %store-d variables will be automatically restored when IPython
-#  starts.
+# starts.
 # c.StoreMagics.autorestore = False
