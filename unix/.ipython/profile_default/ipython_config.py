@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" Configuration file for ipython.
-Heavily drawn from documentation at
+"""Configuration file for ipython.
 
+Heavily drawn from documentation at
+.. URL::
 `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
 
 and source code found on GitHub.
 """
 
-# actually if the import file i use works then we shouldn't need this right?
-# actually don't count on the order of execution being correct
 from pygments.token import Comment
 
 # c is a traitlets.config.Configurable object
@@ -47,6 +46,8 @@ c.AliasManager.user_aliases = [
       ('rm', 'rm -v'),
       ('rmdir', 'rmdir -pv'),
       ('tail', 'tail -n 30'),
+      ('tree', 'tree'),
+      ('treea', 'tree -aI .git'),
       ('vi', 'vim'),
       ('vim', 'vim'),
   ]

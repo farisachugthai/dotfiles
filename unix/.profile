@@ -45,7 +45,7 @@ fi
 
 # JavaScript: {{{
 if [[ "$(command -v yarn)" ]]; then
-    YARNPATH=$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin
+    YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
     export PATH="$PATH:$YARNPATH"
 
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
@@ -59,9 +59,10 @@ fi
 
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
-export PAGER="less -JR"
+# -K: exit less in response to Ctrl-C
+export PAGER="less -JRK"
 
-# Its mindblowing how much improves using the help() function in IPy
+# It's mindblowing how much this improves using the help() function in IPy
 export MANPAGER="nvim -c 'set ft=man' -"
 
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -82,7 +83,9 @@ if [[ -n "$PREFIX" ]]; then
     export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
     export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
+    export PATH="$PREFIX/usr/local/bin/:$PATH"
 else
+    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
     export SHELL="/bin/bash"
     export BROWSER="firefox"
 fi
@@ -90,9 +93,12 @@ fi
 # Set locale if it isn't explicitly stated elsewhere
 export LANG=en_US.UTF-8                 # gathered from localectl
 export LC_MESSAGES=C                    # man i3: Prevents program output translation
+export LANGUAGE=en                      # nvim complains us region not supported
+# export LC_CTYPE=utf-8
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 # Also because termux doesn't set $TMPDIR to /tmp/
+
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else

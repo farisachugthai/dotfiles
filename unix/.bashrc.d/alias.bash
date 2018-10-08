@@ -46,12 +46,13 @@ alias rm='rm -v'
 alias path='echo -e ${PATH//:/\\n}'
 
 # Options i use every time i run these commands
-alias du='du -d 1 -h'
+alias dus='du -d 1 -h'
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
 alias head='head -n 30'
 alias tail='tail -n 30'
+alias treea='tree -aI .git'
 
 # Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
@@ -69,13 +70,12 @@ alias gch='git checkout'
 alias gco='git commit'
 alias gd='git diff'
 alias gds='git diff --staged'
+alias gds2='git diff --staged --stat'
 alias gdt='git difftool'
 alias glo='git log'
 alias gls='git ls-tree'
 alias gs='git status'
 alias gst='git diff --stat'
-# Not gonna lie I really don't like the inconsistency of gst.
-# But is gds2 too much?? Like at what point are the alias more complicated than just running the command?
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -89,8 +89,5 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# I'll give you a second shot at it kid
 alias redo='fc -s'
-# And even a few ways to do it if you want
 alias r='fc -s'
-# wait could we do C-r like in vim?

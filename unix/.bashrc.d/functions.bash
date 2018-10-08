@@ -101,21 +101,14 @@ tldropbox_dir() {
     tldr -m "$1" >> "$PWD/$1" && termux-share "$1"
 }
 
-# not only does this not work but running even the simple redirection errors out.
-# cheatbox(){
-#     cheat "$1" >> "HOME/.cheat/$1" && termux-open --send --chooser "$1"
-# }
-
 conda_switch() {
     conda deactivate && conda activate "$1"
 }
 
-# Heres a funny one from man command
-cd() {
-    command cd "$@" >/dev/null
-    pwd
+gpip() {
+    PIP_REQUIRE_VIRTUALENV="0" && pip "$@";
+<    PIP_REQUIRE_VIRTUALENV="1"
 }
-
 
 # Honestly just pull up junegunns blog post on this, sit down,
 # hack away and make a new file.
@@ -148,3 +141,10 @@ cd() {
 #     fi
 #   done
 # }
+
+# Oct 04, 2018
+# in a manner similar to __fzf__history__ display all of hist to std out
+#nonintrractive tho
+hist_std_out() {
+    fc -nl 1 "$HISTFILESIZE"
+}

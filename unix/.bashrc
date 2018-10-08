@@ -4,20 +4,20 @@
 
 # All: {{{ 1
 
-# Don't run if not interactive: {{{
+# Don't run if not interactive: {{{ 2
 case $- in
     *i*);;
     *) return 0;;
 esac
 # }}}
 
-# History: {{{
-# don't put duplicate lines or lines starting with space in the history.
+# History: {{{ 2
+# Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=50000
 # TODO: What are the units on either of these?
-# still don't kniw but fc maxes out at 32767
+# Still don't kniw but fc maxes out at 32767
 HISTFILESIZE=50000
 # https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
@@ -25,13 +25,13 @@ HISTTIMEFORMAT="%F %T: "
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 # }}}
 
-# Shopt: {{{
+# Shopt: {{{ 2
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
 shopt -s histappend
 # Check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# Update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -50,7 +50,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Never thought about how this wouldn't work for termux
+# i think i forgot to glob the -f loop
 if [[ -d /data/data/com.termux/files/usr/share/bash-completion/completions ]]; then
     if [[ -f "$PREFIX/share/bash-completion/completions" ]]; then
         . "$COMPLETEFILE"
@@ -66,7 +66,7 @@ shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 # }}}
 
-# Defaults in Ubuntu bashrcs: {{{
+# Defaults in Ubuntu bashrcs: {{{ 2
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -81,7 +81,23 @@ case "$TERM" in
 esac
 # }}}
 
-# Prompt: {{{
+# Colors: {{{ 2
+
+# TODO: Get other escape codes in a refactor the prompt.
+export Color_Off="\[\033[0m\]"
+export Yellow="\[\033[0;33m\]"
+
+# export BRIGHT = "\x1b[1m"
+# export BLACK = '\x1b[30m'
+# export RED = '\x1b[31m'
+# export CYAN = '\x1b[36m'
+# export GREEN = '\x1b[32m'
+# export BLUE = '\x1b[34m'
+# # }}}
+
+# Prompt: {{{ 2
+
+:
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
@@ -98,6 +114,8 @@ if [[ -n "$force_color_prompt" ]]; then
     fi
 fi
 
+# }}}
+
 # https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
 if [ "$color_prompt" = yes ]; then
     TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
@@ -111,12 +129,10 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     export GIT_PS1_SHOWCOLORHINTS=1
     export GIT_PS1_SHOWSTASHSTATE=1
     export GIT_PS1_SHOWUPSTREAM="auto"
-    export Color_Off="\[\033[0m\]"
-    export Yellow="\[\033[0;33m\]"
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# Set 'man' colors.
+# Set 'man' colors: {{{ 3
 if [ "$color_prompt" = yes ]; then
     man() {
     env \
@@ -130,11 +146,13 @@ if [ "$color_prompt" = yes ]; then
     man "$@"
     }
 fi
-
-unset color_prompt force_color_prompt
 # }}}
 
-# Vim: {{{
+unset color_prompt force_color_prompt
+
+# }}}
+
+# Vim: {{{ 2
 set -o vi
 if [[ "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
@@ -144,7 +162,7 @@ fi
 export EDITOR="$VISUAL"
 # }}}
 
-# JavaScript: {{{
+# JavaScript: {{{ 2
 # Source npm completion if its installed
 if [[ "$(which npm)" ]]; then
     source ~/.bashrc.d/npm-completion.bash
@@ -159,7 +177,7 @@ if [[ -d "$HOME/.nvm" ]]; then
 fi
 # }}}
 
-# FZF: {{{
+# FZF: {{{ 2
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
@@ -197,7 +215,7 @@ else
     export FZF_DEFAULT_COMMAND='find * -type f'
 fi
 
-[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--layout=reverse --bind "enter:execute(nvim {})" --multi --cycle --color=bg+:24 --border --exclude .git,.__pycache__'
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--layout=reverse --bind "enter:execute(nvim {})" --multi --cycle --color=bg+:24 --border'
 
 # termux doesnt have xclip or xsel
 
@@ -222,7 +240,7 @@ complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
 # }}}
 
-# Python: {{{
+# Python: {{{ 2
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -241,7 +259,7 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
 fi
 
 # If this env var isn't set it will equal 0. So also run a check that we have conda
-if [[ $CONDA_SHLVL -eq 0 ]]; then
+command -v conda 2>&1 && if [[ $CONDA_SHLVL -eq 0 ]]; then
     if [[ -d "$HOME/miniconda3/etc/profile.d" ]]; then
         . "$HOME/miniconda3/etc/profile.d/conda.sh"
         conda activate base
@@ -257,20 +275,15 @@ if [[ "$(command -v pip)" ]]; then
 fi
 # }}}
 
-# gcloud: {{{
-# The next line updates PATH for the Google Cloud SDK.
-# can we do if "{$PREFIX,/bin}/g...{completion,path}.b..." and make this all one line?
-# The next line updates PATH for the Google Cloud SDK.
-if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then source ~/bin/google-cloud-sdk/path.bash.inc; fi
-# The next line enables shell command completion for gcloud.
+# gcloud: {{{ 2
 if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
 
-if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
-if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
+if [[ -f "bin/google-cloud-sdk/path.bash.inc" ]]; then source "bin/google-cloud-sdk/path.bash.inc"; fi
 
 # }}}
 
-# Sourced files: {{{
+# Sourced files: {{{ 2
+# TODO: Check that the bin you're sourcing autocompletion for is installed
 if [[ -d ~/.bashrc.d ]]; then
     for config in ~/.bashrc.d/*.bash; do
         source "$config"
@@ -282,14 +295,7 @@ fi
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
-# }}}
 
-# Alacritty doesn't provide much functionality outside of it's absurd speed
-# However, tmux covers any functionality that Alacritty isn't trying to give
-# So let's just activate it automatically
-
-# So this actually is pretty great; however, this should be modified to find
-# a detached session to attach to before creating a new one.
 # [[ -z "$TMUX"  ]] && exec tmux
 [[ -n "$TMUX" ]] && FZF_TMUX=1 && FZF_TMUX_HEIGHT=80%
 # }}}

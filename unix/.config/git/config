@@ -6,7 +6,7 @@
     autocrlf = input
     editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
-    pager = less -rL
+    # xspager = less -rMFXKL
 
 [color]
     branch = always
@@ -36,8 +36,8 @@
 # this is from justinmk and i don't know how it works however its how he has his system
 # configured to use nvim as the difftool
 # https://github.com/neovim/neovim/issues/2377
-# [mergetool "vimdiff"]
-#         cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[mergetool "vimdiff"]
+        cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [push]
     default = simple
@@ -71,7 +71,7 @@
     autocorrect = 1
 
 [credential]
-    helper = cache
+	helper = cache --timeout=86400
 
 [web]
     browser = firefox
