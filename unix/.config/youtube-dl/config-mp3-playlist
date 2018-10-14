@@ -8,7 +8,7 @@
 
 # mp3 playlist
 
-# All configs: {{{
+# mp3 specific configs: {{{
 
 # Filetype
 -f mp3
@@ -51,9 +51,12 @@
 # }}}
 
 # Playlist specific: {{{
+
 # playlist. simple as that. output template updated to reflect playlist pos
 --yes-playlist
 
 # download archive. if the script is rerun on the same playlist only download
 # new videos
 --download-archive "$HOME/storage/shared/Music/archive/%(playlist)s.txt"
+
+# }}}

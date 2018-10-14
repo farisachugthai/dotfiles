@@ -7,6 +7,8 @@
 tmux-history
 *.patch
 
+# Local files
+*.local
 
 # Python specific
 # mypy
@@ -21,7 +23,7 @@ tmux-history
 # Rope
 .ropeproject/
 
-## Vim Backup Files
+# Vim Backup Files
 *.un~
 *.swp
 *.swo
@@ -40,11 +42,11 @@ dist/
 build/
 *.egg-info/
 
-# KDE directory settings
-.directory
-
 # PyCharm
 .idea/
+
+# KDE directory settings
+.directory
 
 # From:
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore

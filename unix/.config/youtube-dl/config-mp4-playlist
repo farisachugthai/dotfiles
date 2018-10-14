@@ -1,9 +1,9 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# YouTube Downloader Configuration
+# youtube-dl
 
-# mp4 single video
+# mp4-playlist: {{{ 1
 
-# mp4 specific configs: {{{ 1
+# mp4 specific configs: {{{ 2
 
 # Filetype
 -f mp4
@@ -34,5 +34,18 @@
 
 # Don't use proprietary encodings
 --youtube-skip-dash-manifest
+
+# }}}
+
+# Playlist specific: {{{ 2
+
+# playlist. simple as that. output template updated to reflect playlist pos
+--yes-playlist
+
+# download archive. if the script is rerun on the same playlist only download
+# new videos
+--download-archive "$HOME/storage/shared/Videos/%(creator)s/%(playlist_index)d%(title)s.%(ext)s"
+
+# }}}
 
 # }}}

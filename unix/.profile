@@ -60,7 +60,7 @@ fi
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 # -K: exit less in response to Ctrl-C
-export PAGER="less -JRK"
+export PAGER="less -JRKM"
 
 # It's mindblowing how much this improves using the help() function in IPy
 export MANPAGER="nvim -c 'set ft=man' -"
@@ -83,11 +83,11 @@ if [[ -n "$PREFIX" ]]; then
     export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
     export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
-    export PATH="$PREFIX/usr/local/bin/:$PATH"
+    export PATH="$PREFIX/local/bin/:$PATH"
 else
-    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
+    export NVIMRUNTIME="/usr/share/nvim/runtime"
     export SHELL="/bin/bash"
-    export BROWSER="firefox"
+    export BROWSER="firefox-nightly --profile-manager"
 fi
 
 # Set locale if it isn't explicitly stated elsewhere
@@ -121,12 +121,7 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
-
 export NVIM="$HOME/projects/viconf/.config/nvim"
-
-# Tmux the culprit as usual
-if [[ -n "$TMUX" ]]; then
-    source "$HOME/.bashrc"
-fi
+source "$HOME/.bashrc"
 
 # }}}

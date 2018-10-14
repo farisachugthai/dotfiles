@@ -50,7 +50,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# i think i forgot to glob the -f loop
+#TODO: i think i forgot to glob the -f loop. Debug this.
 if [[ -d /data/data/com.termux/files/usr/share/bash-completion/completions ]]; then
     if [[ -f "$PREFIX/share/bash-completion/completions" ]]; then
         . "$COMPLETEFILE"
@@ -133,18 +133,15 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
 fi
 
 # Set 'man' colors: {{{ 3
+# THIS IS PROBABLY WHATS FUCKING NVIM'S MANPAGER
 if [ "$color_prompt" = yes ]; then
-    man() {
-    env \
     LESS_TERMCAP_mb=$'\e[01;31m' \
     LESS_TERMCAP_md=$'\e[01;31m' \
     LESS_TERMCAP_me=$'\e[0m' \
     LESS_TERMCAP_se=$'\e[0m' \
     LESS_TERMCAP_so=$'\e[01;44;33m' \
     LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[01;32m' \
-    man "$@"
-    }
+    LESS_TERMCAP_us=$'\e[01;32m'
 fi
 # }}}
 
@@ -265,7 +262,7 @@ command -v conda 2>&1 && if [[ $CONDA_SHLVL -eq 0 ]]; then
         conda activate base
     fi
 elif [[ $CONDA_SHLVL -eq 1 ]]; then
-    echo -e "Conda base environment successfully activated."
+    echo -e '$CONDA_SHLV is currently: ' + "$CONDA_SHLVL"
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion

@@ -10,30 +10,30 @@ mk() {
 # Handy Extract Program
 extract() {
 if [ -f "$1" ]; then
-case "$1" in
-    *.tar.bz2) tar xvjf "$1" ;;
-    *.tar.gz) tar xvzf "$1" ;;
-    *.bz2) bunzip2 "$1" ;;
-    *.rar) unrar x "$1" ;;
-    *.gz) gunzip "$1" ;;
-    *.tar) tar xvf "$1" ;;
-    *.tbz2) tar xvjf "$1" ;;
-    *.tgz) tar xvzf "$1" ;;
-    *.zip) unzip "$1" ;;
-    *.Z) uncompress "$1" ;;
-    *.7z) 7z x "$1" ;;
-    *.tar.xz) tar xvf "$1" ;;
-# Alternatively you could run xz -d file.tar.xz; tar xvf file.tar
-    *) echo "'$1' cannot be extracted via >extract<" ;;
- esac
- else
- echo "'$1' is not a valid file!"
- fi
+    case "$1" in
+        *.tar.bz2) tar xvjf "$1" ;;
+        *.tar.gz) tar xvzf "$1" ;;
+        *.bz2) bunzip2 "$1" ;;
+        *.rar) unrar x "$1" ;;
+        *.gz) gunzip "$1" ;;
+        *.tar) tar xvf "$1" ;;
+        *.tbz2) tar xvjf "$1" ;;
+        *.tgz) tar xvzf "$1" ;;
+        *.zip) unzip "$1" ;;
+        *.Z) uncompress "$1" ;;
+        *.7z) 7z x "$1" ;;
+        *.tar.xz) tar xvf "$1" ;;
+    # Alternatively you could run xz -d file.tar.xz; tar xvf file.tar
+        *) echo "'$1' cannot be extracted via >extract<" ;;
+    esac
+else
+    echo "'$1' is not a valid file!"
+fi
 }
 
 # Run cd and ls at once
 cs () {
-    cd "$@" && ls
+    cd "$@" && ls -F
 }
 
 # Decrypt the ssh priv key for the day
@@ -64,7 +64,7 @@ update-pip () {
 
 # I really don't like anything that smells like Emacs keybindings
 infovi () {
-    info "$1" | less
+    info "$1" | "$PAGER"
 }
 
 # From byobu
@@ -106,8 +106,9 @@ conda_switch() {
 }
 
 gpip() {
-    PIP_REQUIRE_VIRTUALENV="0" && pip "$@";
-<    PIP_REQUIRE_VIRTUALENV="1"
+    PIP_REQUIRE_VIRTUALENV="0";
+    pip "$@";
+    PIP_REQUIRE_VIRTUALENV="1" > /dev/null
 }
 
 # Honestly just pull up junegunns blog post on this, sit down,
@@ -147,4 +148,18 @@ gpip() {
 #nonintrractive tho
 hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
+}
+
+
+gitdiffb(){
+    if [ $# -ne 2 ]; then
+        echo -e 'Usage: gitdiffb branch1 branch2'
+        exit 127
+        # if you care you can do man bash and search for exit codes to get the
+        # correct code to use here
+    fi
+
+    git log --graph \
+    --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' \
+    --abbrev-commit --date=relative $1..$2;
 }
