@@ -1,0 +1,41 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# YouTube Downloader Configuration
+# Maintainer: Faris Chugthai
+
+# Possibly better to save mutiple configs then change which one we use
+# Based on the situation using `--config-location`
+# Be aware you can use `--no-config
+
+# mp4
+
+# All configs: {{{
+
+# Filetype
+-f mp4
+
+# Filenames
+--restrict-filenames
+
+# Output location
+-o "$HOME/storage/shared/Videos/%(artist)s/%(title)s.%(ext)s"
+
+# Metadata
+--add-metadata
+--metadata-from-title "%(artist)s - %(title)s"
+
+# Modification time
+--no-mtime
+
+# Subtitles
+# Write autosubs only works with YT and videos
+--write-auto-sub
+--embed-subs
+
+# Thumbnails
+--embed-thumbnail
+
+# Don't phone home
+--no-call-home
+
+# Don't use proprietary encodings
+--youtube-skip-dash-manifest

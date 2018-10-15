@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" Configuration file for ipython.
-Heavily drawn from documentation at
+"""Configuration file for ipython.
 
-`<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
+Heavily drawn from documentation at::
+
+    `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
 
 and source code found on GitHub.
 """
@@ -20,6 +21,8 @@ from pygments.token import Comment
 
 c = get_config()  # noqa
 
+# We need to do an OS check. mkdir -pv has different effect on NT and Unix and honestly
+# has different effects on powershell and cmd
 # Alias: {{{
 c.AliasManager.user_aliases = [
       ('ag', 'ag --hidden --color'),

@@ -1,0 +1,592 @@
+[
+  {
+    "aliases": [
+      "add_binstar_token"
+    ],
+    "default_value": true,
+    "description": "In conjunction with the anaconda command-line client (installed with `conda install anaconda-client`), and following logging into an Anaconda Server API site using `anaconda login`, automatically apply a matching private token to enable access to private packages and channels.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "add_anaconda_token",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": [
+      "ca-certificates",
+      "certifi",
+      "openssl"
+    ],
+    "description": "A list of packages that, if installed, are always updated to the latest possible version.",
+    "element_types": [
+      "str"
+    ],
+    "name": "aggressive_update_packages",
+    "parameter_type": "sequence",
+    "string_delimiter": ","
+  },
+  {
+    "aliases": [],
+    "default_value": false,
+    "description": "Warn, but do not fail, when conda detects a channel url is not a valid channel.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "allow_non_channel_urls",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": false,
+    "description": "When allow_softlinks is True, conda uses hard-links when possible, and soft-links (symlinks) when hard-links are not possible, such as when installing on a different filesystem than the one that the package cache is on. When allow_softlinks is False, conda still uses hard-links when possible, but when it is not possible, conda copies files. Individual packages can override this setting, specifying that certain files should never be soft-linked (see the no_link option in the build recipe documentation).",
+    "element_types": [
+      "bool"
+    ],
+    "name": "allow_softlinks",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "copy"
+    ],
+    "default_value": false,
+    "description": "Register a preference that files be copied into a prefix during install rather than hard-linked.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "always_copy",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "softlink"
+    ],
+    "default_value": false,
+    "description": "Register a preference that files be soft-linked (symlinked) into a prefix during install rather than hard-linked. The link source is the 'pkgs_dir' package cache from where the package is being linked. WARNING: Using this option can result in corruption of long-lived conda environments. Package caches are *caches*, which means there is some churn and invalidation. With this option, the contents of environments can be switched out (or erased) via operations on other environments.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "always_softlink",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "yes"
+    ],
+    "default_value": null,
+    "description": "Automatically choose the 'yes' option whenever asked to proceed with a conda operation, such as when running `conda install`.",
+    "element_types": [
+      "bool",
+      "NoneType"
+    ],
+    "name": "always_yes",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "binstar_upload"
+    ],
+    "default_value": null,
+    "description": "Automatically upload packages built with conda build to anaconda.org.",
+    "element_types": [
+      "bool",
+      "NoneType"
+    ],
+    "name": "anaconda_upload",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": true,
+    "description": "Automatically activate the base environment during shell initialization.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "auto_activate_base",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "self_update"
+    ],
+    "default_value": true,
+    "description": "Automatically update conda when a newer or higher priority version is detected.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "auto_update_conda",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": "",
+    "description": "The location where conda-build will put built packages. Same as 'croot', but 'croot' takes precedence when both are defined. Also used in construction of the 'local' multichannel.",
+    "element_types": [
+      "str"
+    ],
+    "name": "bld_path",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": true,
+    "description": "When using activate, change the command prompt ($PS1) to include the activated environment.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "changeps1",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": "https://conda.anaconda.org",
+    "description": "The prepended url location to associate with channel names.",
+    "element_types": [
+      "str"
+    ],
+    "name": "channel_alias",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": true,
+    "description": "When True, the solver is instructed to prefer channel order over package version. When False, the solver is instructed to give package version preference over channel priority.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "channel_priority",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "channel"
+    ],
+    "default_value": [
+      "defaults"
+    ],
+    "description": "The list of conda channels to include for relevant operations.",
+    "element_types": [
+      "str"
+    ],
+    "name": "channels",
+    "parameter_type": "sequence",
+    "string_delimiter": ","
+  },
+  {
+    "aliases": [
+      "client_cert"
+    ],
+    "default_value": null,
+    "description": "A path to a single file containing a private key and certificate (e.g. .pem file). Alternately, use client_ssl_cert_key in conjuction with client_ssl_cert for individual files.",
+    "element_types": [
+      "str",
+      "NoneType"
+    ],
+    "name": "client_ssl_cert",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "client_cert_key"
+    ],
+    "default_value": null,
+    "description": "Used in conjunction with client_ssl_cert for a matching key file.",
+    "element_types": [
+      "str",
+      "NoneType"
+    ],
+    "name": "client_ssl_cert_key",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "conda-build"
+    ],
+    "default_value": {},
+    "description": "General configuration parameters for conda-build.",
+    "element_types": [
+      "str"
+    ],
+    "name": "conda_build",
+    "parameter_type": "map"
+  },
+  {
+    "aliases": [],
+    "default_value": [],
+    "description": "Packages that are by default added to a newly created environments.",
+    "element_types": [
+      "str"
+    ],
+    "name": "create_default_packages",
+    "parameter_type": "sequence",
+    "string_delimiter": ","
+  },
+  {
+    "aliases": [],
+    "default_value": "",
+    "description": "The location where conda-build will put built packages. Same as 'bld_path', but 'croot' takes precedence when both are defined. Also used in construction of the 'local' multichannel.",
+    "element_types": [
+      "str"
+    ],
+    "name": "croot",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": {
+      "pkgs/pro": "https://repo.anaconda.com"
+    },
+    "description": "A map of key-value pairs where the key is a channel name and the value is a channel location. Channels defined here override the default 'channel_alias' value. The channel name (key) is not included in the channel location (value).  For example, to override the location of the 'conda-forge' channel where the url to repodata is https://anaconda-repo.dev/packages/conda-forge/linux-64/repodata.json, add an entry 'conda-forge: https://anaconda-repo.dev/packages'.",
+    "element_types": [
+      "str"
+    ],
+    "name": "custom_channels",
+    "parameter_type": "map"
+  },
+  {
+    "aliases": [],
+    "default_value": {},
+    "description": "A multichannel is a metachannel composed of multiple channels. The two reserved multichannels are 'defaults' and 'local'. The 'defaults' multichannel is customized using the 'default_channels' parameter. The 'local' multichannel is a list of file:// channel locations where conda-build stashes successfully-built packages.  Other multichannels can be defined with custom_multichannels, where the key is the multichannel name and the value is a list of channel names and/or channel urls.",
+    "element_types": [
+      "list"
+    ],
+    "name": "custom_multichannels",
+    "parameter_type": "map"
+  },
+  {
+    "aliases": [],
+    "default_value": [
+      "https://repo.anaconda.com/pkgs/main",
+      "https://repo.anaconda.com/pkgs/free",
+      "https://repo.anaconda.com/pkgs/r"
+    ],
+    "description": "The list of channel names and/or urls used for the 'defaults' multichannel.",
+    "element_types": [
+      "str"
+    ],
+    "name": "default_channels",
+    "parameter_type": "sequence",
+    "string_delimiter": ","
+  },
+  {
+    "aliases": [
+      "disallow"
+    ],
+    "default_value": [],
+    "description": "Package specifications to disallow installing. The default is to allow all packages.",
+    "element_types": [
+      "str"
+    ],
+    "name": "disallowed_packages",
+    "parameter_type": "sequence",
+    "string_delimiter": "&"
+  },
+  {
+    "aliases": [],
+    "default_value": "({default_env}) ",
+    "description": "Template for prompt modification based on the active environment. Currently supported template variables are '{prefix}', '{name}', and '{default_env}'. '{prefix}' is the absolute path to the active environment. '{name}' is the basename of the active environment prefix. '{default_env}' holds the value of '{name}' if the active environment is a conda named environment ('-n' flag), or otherwise holds the value of '{prefix}'. Templating uses python's str.format() method.",
+    "element_types": [
+      "str"
+    ],
+    "name": "env_prompt",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "envs_path"
+    ],
+    "default_value": [],
+    "description": "The list of directories to search for named environments. When creating a new named environment, the environment will be placed in the first writable location.",
+    "element_types": [
+      "str"
+    ],
+    "name": "envs_dirs",
+    "parameter_type": "sequence",
+    "string_delimiter": ":"
+  },
+  {
+    "aliases": [],
+    "default_value": false,
+    "description": "Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "force_reinstall",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": false,
+    "description": "Ensure all output written to stdout is structured json.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "json",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": 1,
+    "description": "For a value of False or 0, always fetch remote repodata (HTTP 304 responses respected). For a value of True or 1, respect the HTTP Cache-Control max-age header. Any other positive integer values is the number of seconds to locally cache repodata before checking the remote server for an update.",
+    "element_types": [
+      "bool",
+      "int"
+    ],
+    "name": "local_repodata_ttl",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": [],
+    "description": "A list of previously-used channel_alias values. Useful when switching between different Anaconda Repository instances.",
+    "element_types": [
+      "str"
+    ],
+    "name": "migrated_channel_aliases",
+    "parameter_type": "sequence",
+    "string_delimiter": ","
+  },
+  {
+    "aliases": [],
+    "default_value": {},
+    "description": "A map of key-value pairs where the key is a channel name and the value is the previous location of the channel.",
+    "element_types": [
+      "str"
+    ],
+    "name": "migrated_custom_channels",
+    "parameter_type": "map"
+  },
+  {
+    "aliases": [],
+    "default_value": true,
+    "description": "Allows completion of conda's create, install, update, and remove operations, for non-privileged (non-root or non-administrator) users.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "non_admin_enabled",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": true,
+    "description": "Notify if a newer version of conda is detected during a create, install, update, or remove operation.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "notify_outdated_conda",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": false,
+    "description": "Restrict conda to cached download content and file:// based urls.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "offline",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": true,
+    "description": "Permit use of the --overide-channels command-line flag.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "override_channels_enabled",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": "clobber",
+    "description": "The method by which conda handle's conflicting/overlapping paths during a create, install, or update operation. The value must be one of 'clobber', 'warn', or 'prevent'. The '--clobber' command-line flag or clobber configuration parameter overrides path_conflict set to 'prevent'.",
+    "element_types": [
+      "PathConflict"
+    ],
+    "name": "path_conflict",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": [],
+    "description": "A list of package specs to pin for every environment resolution. This parameter is in BETA, and its behavior may change in a future release.",
+    "element_types": [
+      "str"
+    ],
+    "name": "pinned_packages",
+    "parameter_type": "sequence",
+    "string_delimiter": "&"
+  },
+  {
+    "aliases": [],
+    "default_value": [],
+    "description": "The list of directories where locally-available packages are linked from at install time. Packages not locally available are downloaded and extracted into the first writable directory.",
+    "element_types": [
+      "str"
+    ],
+    "name": "pkgs_dirs",
+    "parameter_type": "sequence",
+    "string_delimiter": ","
+  },
+  {
+    "aliases": [],
+    "default_value": {},
+    "description": "A mapping to enable proxy settings. Keys can be either (1) a scheme://hostname form, which will match any request to the given scheme and exact hostname, or (2) just a scheme, which will match requests to that scheme. Values are are the actual proxy server, and are of the form 'scheme://[user:password@]host[:port]'. The optional 'user:password' inclusion enables HTTP Basic Auth with your proxy.",
+    "element_types": [
+      "str",
+      "NoneType"
+    ],
+    "name": "proxy_servers",
+    "parameter_type": "map"
+  },
+  {
+    "aliases": [],
+    "default_value": false,
+    "description": "Remove packages that have previously been brought into an environment to satisfy dependencies of user-requested packages, but are no longer needed.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "prune",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": false,
+    "description": "Disable progress bar display and other output.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "quiet",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": 9.15,
+    "description": "The number seconds conda will wait for your client to establish a connection to a remote url resource.",
+    "element_types": [
+      "float"
+    ],
+    "name": "remote_connect_timeout_secs",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": 3,
+    "description": "The maximum number of retries each HTTP connection should attempt.",
+    "element_types": [
+      "int"
+    ],
+    "name": "remote_max_retries",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": 60.0,
+    "description": "Once conda has connected to a remote resource and sent an HTTP request, the read timeout is the number of seconds conda will wait for the server to send a response.",
+    "element_types": [
+      "float"
+    ],
+    "name": "remote_read_timeout_secs",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": null,
+    "description": "Opt in, or opt out, of automatic error reporting to core maintainers. Error reports are anonymous, with only the error stack trace and information given by `conda info` being sent.",
+    "element_types": [
+      "bool",
+      "NoneType"
+    ],
+    "name": "report_errors",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": true,
+    "description": "Should any error occur during an unlink/link transaction, revert any disk mutations made to that point in the transaction.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "rollback_enabled",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": "warn",
+    "description": "Enforce available safety guarantees during package installation. The value must be one of 'enabled', 'warn', or 'disabled'.",
+    "element_types": [
+      "SafetyChecks"
+    ],
+    "name": "safety_checks",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": true,
+    "description": "Allow packages to create OS-specific shortcuts (e.g. in the Windows Start Menu) at install time.",
+    "element_types": [
+      "bool"
+    ],
+    "name": "shortcuts",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": null,
+    "description": "Show channel URLs when displaying what is going to be downloaded.",
+    "element_types": [
+      "bool",
+      "NoneType"
+    ],
+    "name": "show_channel_urls",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [
+      "verify_ssl"
+    ],
+    "default_value": true,
+    "description": "Conda verifies SSL certificates for HTTPS requests, just like a web browser. By default, SSL verification is enabled, and conda operations will fail if a required url's certificate cannot be verified. Setting ssl_verify to False disables certification verification. The value for ssl_verify can also be (1) a path to a CA bundle file, or (2) a path to a directory containing certificates of trusted CA.",
+    "element_types": [
+      "str",
+      "bool"
+    ],
+    "name": "ssl_verify",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": [],
+    "description": "A list of features that are tracked by default. An entry here is similar to adding an entry to the create_default_packages list.",
+    "element_types": [
+      "str"
+    ],
+    "name": "track_features",
+    "parameter_type": "sequence",
+    "string_delimiter": ","
+  },
+  {
+    "aliases": [
+      "verbose"
+    ],
+    "default_value": 0,
+    "description": "Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.",
+    "element_types": [
+      "int"
+    ],
+    "name": "verbosity",
+    "parameter_type": "primitive"
+  },
+  {
+    "aliases": [],
+    "default_value": [],
+    "description": "The exclusive list of channels allowed to be used on the system. Use of any other channels will result in an error. If conda-build channels are to be allowed, along with the --use-local command line flag, be sure to include the 'local' channel in the list. If the list is empty or left undefined, no channel exclusions will be enforced.",
+    "element_types": [
+      "str"
+    ],
+    "name": "whitelist_channels",
+    "parameter_type": "sequence",
+    "string_delimiter": ","
+  }
+]

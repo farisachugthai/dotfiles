@@ -6,7 +6,7 @@
     name = farisachugthai
 
 [core]
-    autocrlf = input
+#	autocrlf = input
     editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
     pager = less -RLFSX
@@ -96,5 +96,5 @@
     recentrepo = C:/Users/faris/projects/utilities
 
 # If uname = 'nt' ya know
-# [credential]
-    # helper = cache
+[credential]
+    helper = wincred
