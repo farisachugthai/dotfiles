@@ -35,11 +35,13 @@ alias lx='ls -Fo | grep ^-..x'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# lets not clobber other files as we go. bash's namespace? clobber everything
+# Let's not clobber other files as we go. Bash's namespace? Clobber everything
+# Please don't turn the p flag for rmdir again.
+# You're lucky parent dirs weren't empty
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
-alias rmdir='rmdir -pv'
+alias rmdir='rmdir -v'
 alias rm='rm -v'
 
 # Print each PATH entry on a separate line

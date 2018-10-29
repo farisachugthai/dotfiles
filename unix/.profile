@@ -21,7 +21,7 @@ if [[ -d ~/.gem/ruby/2.6.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
 fi
 
-if [[ "$(command -v rvm)" ]]; then
+if [[ -d "$HOME/.rvm" ]]; then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
     export PATH="$PATH:$HOME/.rvm/bin"
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -63,7 +63,8 @@ fi
 export PAGER="less -JRKM"
 
 # It's mindblowing how much this improves using the help() function in IPy
-export MANPAGER="nvim -c 'set ft=man' -"
+# Its also driving me crazy that it isn't working. Fallback for now
+# export MANPAGER="nvim -c 'set ft=man' --"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"

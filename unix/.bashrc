@@ -114,7 +114,6 @@ if [[ -n "$force_color_prompt" ]]; then
     fi
 fi
 
-# }}}
 
 # https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
 if [ "$color_prompt" = yes ]; then
@@ -133,7 +132,7 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
 fi
 
 # Set 'man' colors: {{{ 3
-# THIS IS PROBABLY WHATS FUCKING NVIM'S MANPAGER
+# Keep an eye on whether this is the problem with nvim as manpager.
 if [ "$color_prompt" = yes ]; then
     LESS_TERMCAP_mb=$'\e[01;31m' \
     LESS_TERMCAP_md=$'\e[01;31m' \
@@ -150,6 +149,7 @@ unset color_prompt force_color_prompt
 # }}}
 
 # Vim: {{{ 2
+
 set -o vi
 if [[ "$(command -v nvim)" ]]; then
     export VISUAL="nvim"

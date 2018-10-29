@@ -91,8 +91,6 @@ URxvt.color246 : #a89984
 URxvt.color248 : #bdae93
 URxvt.color250 : #d5c4a1
 
-
-
 ! ------------------------------------------------------------------------------
 ! Xft Font Configuration
 ! --------------------------------------------------------------------------
@@ -102,7 +100,6 @@ Xft.lcdfilter   : lcddefault
 Xft.hintstyle   : hintslight
 Xft.hinting     : 1
 Xft.rgba        : rgb
-
 
 ! -----------------------------------------------------------------------------
 ! File: gruvbox-dark.xresources
@@ -189,6 +186,15 @@ rofi.color-active: #2e3440, #b48ead, #2e3440, #2e3440, #93e5cc
 rofi.color-urgent: #2e3440, #ebcb8b, #2e3440, #2e3440, #ebcb8b
 rofi.modi: run,drun,window
 
+! From:
+! https://github.com/LukeSmithxyz/voidrice/blob/master/.Xdefaults
+rofi.fake-transparency:	true
+rofi.lines:		3
+rofi.bw:		0
+rofi.opacity:		"10"
+rofi.hide-scrollbar:	true
+rofi.width:		30
+
 ! ------------------------------------------------------------------------------
 ! Dmenu configs
 ! -----------------------------------------------------------------------------
@@ -224,87 +230,8 @@ UXTerm*colorBDMode:        true
 UXTerm*colorBD:            rgb:3f/3f/3f
 
 ! Here's a general colorscheme for the X server as a whole
-
-! Addys config
-!
-! -----------------------------------------------------------------------------
-! Colour Configuration
-! -----------------------------------------------------------------------------
-
-! ! special
-! *.foreground:   #d8dee8
-! *.background:   #2f343f
-! *.cursorColor:  #b48ead
-
-! ! black
-! *.color0  : #4b5262
-! *.color8  : #434a5a
-
-! ! red
-! *.color1  : #bf616a
-! *.color9  : #b3555e
-
-! ! green
-! *.color2  : #a3be8c
-! *.color10 : #93ae7c
-
-! ! yellow
-! *.color3  : #ebcb8b
-! *.color11 : #dbbb7b
-
-! ! blue
-! *.color4  : #81a1c1
-! *.color12 : #7191b1
-
-! ! magenta
-! *.color5  : #b48ead
-! *.color13 : #a6809f
-
-! ! cyan
-! *.color6  : #89d0bA
-! *.color14 : #7dbba8
-
-! ! white
-! *.color7  : #e5e9f0
-! *.color15 : #d1d5dc
-
-
+! include ~/.Xresources.d/addy
 
 ! Xresources colorscheme I came up with myself
-!
-! special
-! *.foreground:   #e8dfd6
-! *.background:   #021b21
-! *.cursorColor:  #e8dfd6
-
-! black
-! *.color0:       #032c36
-! *.color8:       #065f73
-
-! ! red
-! *.color1:       #c2454e
-! *.color9:       #ef5847
-
-! green
-! *.color2:       #7cbf9e
-! *.color10:      #a2d9b1
-
-! yellow
-! *.color3:       #8a7a63
-! *.color11:      #beb090
-
-! blue
-! *.color4:       #2e3340
-! *.color12:      #61778d
-
-! magenta
-! *.color5:       #ff5879
-! *.color13:      #ff99a1
-
-! cyan
-! *.color6:       #44b5b1
-! *.color14:      #9ed9d8
-
-! white
-! *.color7:       #f2f1b9
-! *.color15:      #f6f6c9
+! include ~/.Xresources.d/personal-colorscheme
+! btw syntax highlighting turns the line bright red when you uncomment :(

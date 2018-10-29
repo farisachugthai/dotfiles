@@ -12,7 +12,15 @@
 --restrict-filenames
 
 # Output location
--o "$HOME/storage/shared/Videos/%(creator)s/%(playlist_index)d%(title)s.%(ext)s"
+# TODO: Doesn't wirk
+-o "$HOME/storage/shared/Videos/%(uploader)s/%(playlist_index)d%(title)s.%(ext)s"
+
+# TODO:Add in a UA
+# --user-agent UA
+# Also implement this!
+# --exec CMD
+# Execute a command on the file after downloading, similar to
+# find's -exec syntax.  Example: --exec 'adb push {} /sdcard/Music/ && rm {}'
 
 # Metadata
 --add-metadata

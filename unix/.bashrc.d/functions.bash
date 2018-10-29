@@ -106,9 +106,9 @@ conda_switch() {
 }
 
 gpip() {
-    PIP_REQUIRE_VIRTUALENV="0";
+    export PIP_REQUIRE_VIRTUALENV=0;
     pip "$@";
-    PIP_REQUIRE_VIRTUALENV="1" > /dev/null
+    export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
 }
 
 # Honestly just pull up junegunns blog post on this, sit down,
@@ -145,7 +145,7 @@ gpip() {
 
 # Oct 04, 2018
 # in a manner similar to __fzf__history__ display all of hist to std out
-#nonintrractive tho
+#noninteractive tho
 hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
 }
