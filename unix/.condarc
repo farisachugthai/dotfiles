@@ -2,9 +2,19 @@
 # Maintainer: Faris Chugthai
 # Let's put the modified values at the top since there aren't many
 # and this is a very long file.
-# please keep alphabetical
 # possibly think about timestamping when you change these
 # ooo and addig a conda version wouldn't be the worst idea.
+
+# Nov 03, 2018
+# Pinning conda because the update is breaking my setup
+
+# pinned_packages (sequence: str)
+#   string delimiter: '&'
+#   A list of package specs to pin for every environment resolution. This
+#   parameter is in BETA, and its behavior may change in a future release.
+#
+pinned_packages: ['conda']
+
 
 # add_pip_as_python_dependency (bool)
 #   Add pip, wheel and setuptools as dependencies of python. This ensures
@@ -18,7 +28,7 @@ aggressive_update_packages:
   - certifi
   - openssl
   - ipython
-  - conda
+  # 11/02/18 - Conda 4.5.11b took conda off here because conda 4.6 was crashing
 
 auto_update_conda: true
 
@@ -341,13 +351,6 @@ notify_outdated_conda: true
 #
 path_conflict: warn
 
-
-# pinned_packages (sequence: str)
-#   string delimiter: '&'
-#   A list of package specs to pin for every environment resolution. This
-#   parameter is in BETA, and its behavior may change in a future release.
-#
-# pinned_packages: []
 
 
 

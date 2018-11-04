@@ -39,7 +39,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
-alias rmdir='rmdir -pv'
+alias rmdir='rmdir -v'
 alias rm='rm -v'
 
 # Print each PATH entry on a separate line

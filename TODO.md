@@ -1,25 +1,16 @@
 # TODO
 
-Didn't wanna resort to a TODO for a dotfiles repo...
-But the 2 main branches are still quite different.
+**11/01/18**
 
-09/19/18 {possibly}:
-Termux needs to:
-~~git checkout Ultisnips/all.snippets~~
+Kinda starting over again because I'm on a new OS.
 
-***************Come back to see if the above rendered correctly!***************
+We need to fix the URL so I think it'd be something to the effect of
 
-git checkout .Xresources
-git checkout ptpython/config
-git checkout everything in .ipython.
-The main config is mostly style but there's also around 40 aliases,
-and the keybindings file has a lot of notes.
+`git remote set-url origin <url>`
 
-Sep 23, 2018:
-
-According to last ctime, the above should be from 09/19. Oh well if it's not.
-Termux needs to:
-git checkout .gitignore
+Problem is i don't actually know why the URL is messed up [i need to input
+usernames and passwords] which sounds like I did git clone and then cloned the
+https URL and not the git: one. So check that out and fix it. Then there's probably a LOT i need to catch up on from termux branch.
 
 
 Sep 27, 2018

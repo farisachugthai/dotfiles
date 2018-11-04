@@ -1,3 +1,6 @@
+;; Emacs
+;; So I guess this is a lisp comment huh?
+(setq evil-shift-width 4)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))

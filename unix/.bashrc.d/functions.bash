@@ -4,7 +4,7 @@
 # Functions to make the day a little easier
 # Create a new directory and enter it
 mk() {
-    mkdir -p "$@" && cd "$@"
+    mkdir -pv "$@" && cd "$@" || exit
 }
 
 # Handy Extract Program
@@ -103,4 +103,8 @@ tldropbox_dir() {
 
 conda_switch() {
     conda deactivate && conda activate "$1"
+}
+
+nman() {
+    "man $1" | "nvim -c 'set ft=man'"
 }

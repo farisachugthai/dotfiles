@@ -16,7 +16,7 @@ if [[ -d ~/.gem/ruby/2.6.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
 fi
 
-if [[ "$(command -v rvm)" ]]; then
+if [[ -d "$HOME/.rvm" ]]; then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
     export PATH="$PATH:$HOME/.rvm/bin"
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -32,7 +32,7 @@ elif [[ -d "$PREFIX/local/go" ]]; then
 fi
 
 # Utilize GOPATH.
-if [[ $(which go) ]]; then
+if [[ "$(command -v go)" ]]; then
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
@@ -51,12 +51,12 @@ fi
 # Environment Variables: {{{
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
-export PAGER="less -JR"
+if [[ "$(command -v most)" ]]; then
+    export PAGER=most
+else
+    export PAGER="less -JRMX"
+fi
 
-# Man pages are difficult to read on Termux with line numbers
-export MANPAGER="less -R"
-
-# still not 100% sure if it's supposed to be colorterm or truecolor or what
 export COLORTERM="truecolor"
 
 # These are the defaults but for the sake of being explicit rather than implicit
@@ -68,9 +68,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # cheat.py
-if [[ $(which cheat) ]]; then
-    export CHEATCOLORS=true
-fi
+if [[ "$(command -v cheat)" ]]; then export CHEATCOLORS=true; fi
 
 # kinda hacky but this is a real easy way to determine
 # if were using termux or ubuntu. termux defines prefix.
@@ -93,11 +91,9 @@ else
     fi
 fi
 
-# Set locale if it isn't explicitly stated elsewhere. Commented because locale is messed up on this workstation
-# export LC_ALL=en_US.UTF-8
-# export LANG=en_US.UTF-8                 # gathered from localectl
-
-# Termux doesn't define manpath but i ended up creating my own ~/.manpath file
+export LANG=en_US.UTF-8                 # gathered from localectl
+export LANGUAGE=en
+export LC_CTYPE=C.UTF-8                   # the only thing defined in /usr/lib/locale right now
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
 export TMUXP_CONFIGDIR='$HOME/.tmux'
@@ -115,5 +111,10 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$PATH:$HOME/.cargo/bin"; fi
 
 # Tmux the culprit as usual
 if [[ -n "$TMUX" ]]; then
-    source "$HOME/.bashrc"
+    tmux new
+else
+    # hoping that makes an array and by not specifying an index i only pick the 1st
+    tmux attach -t "$(tmux ls)"
 fi
+
+if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

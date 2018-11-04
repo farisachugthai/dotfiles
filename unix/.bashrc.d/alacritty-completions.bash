@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#/usr/bin/env bash
 
 # Load completion function
 complete -F _alacritty alacritty

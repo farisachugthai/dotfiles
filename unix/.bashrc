@@ -35,6 +35,7 @@ shopt -s histappend
 shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
+# *shellcheck disable SC2128*
 if [[ $BASH_VERSINFO -gt 3 ]]; then
     shopt -s globstar
 fi
@@ -61,6 +62,7 @@ shopt -s cdspell
 
 # Defaults in Ubuntu bashrcs: {{{
 # make less more friendly for non-text input files, see lesspipe(1)
+# Also lesspipe is described in Input Preprocessors in man 1 less.
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -114,8 +116,6 @@ fi
 
 # Set 'man' colors.
 if [ "$color_prompt" = yes ]; then
-    man() {
-    env \
     LESS_TERMCAP_mb=$'\e[01;31m' \
     LESS_TERMCAP_md=$'\e[01;31m' \
     LESS_TERMCAP_me=$'\e[0m' \
@@ -123,11 +123,11 @@ if [ "$color_prompt" = yes ]; then
     LESS_TERMCAP_so=$'\e[01;44;33m' \
     LESS_TERMCAP_ue=$'\e[0m' \
     LESS_TERMCAP_us=$'\e[01;32m' \
-    man "$@"
-    }
+    tput reset
 fi
 
 unset color_prompt force_color_prompt
+tput reset      # because otherwise I end up with a red cursor
 # }}}
 
 # Vim: {{{
@@ -142,7 +142,7 @@ export EDITOR="$VISUAL"
 
 # JavaScript: {{{
 # Source npm completion if its installed
-if [[ $(which npm) ]]; then
+if [[ "$(command -v npm)" ]]; then
     source ~/.bashrc.d/npm-completion.bash
 fi
 
@@ -194,35 +194,24 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap 
 
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
 
-# fi
 # }}}
 
 # Python: {{{
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('$HOME/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
+__conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/faris/miniconda3/etc/profile.d/conda.sh"
     else
-        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "$HOME/miniconda3/etc/profile.d/conda.sh"
-        else
-            export PATH="$HOME/miniconda3/bin:$PATH"
-        fi
+        export PATH="/home/faris/miniconda3/bin:$PATH"
     fi
-    unset __conda_setup
-    # <<< conda initialize <<<
 fi
-
-# If this env var isn't set it will equal 0. So also run a check that we have conda
-if [[ $CONDA_SHLVL -eq 0 ]]; then
-    if [[ -d "$HOME/miniconda3/etc/profile.d" ]]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
-        conda activate base
-    fi
-elif [[ $CONDA_SHLVL -eq 1 ]]; then
-    echo -e "Conda base environment successfully activated."
+unset __conda_setup
+# <<< conda initialize <<<
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
@@ -267,13 +256,5 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
 # }}}
-
-# Alacritty doesn't provide much functionality outside of it's absurd speed
-# However, tmux covers any functionality that Alacritty isn't trying to give
-# So let's just activate it automatically
-
-# So this actually is pretty great; however, this should be modified to find
-# a detached session to attach to before creating a new one.
-# [[ -z "$TMUX"  ]] && exec tmux
 
 # }}}
