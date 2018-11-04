@@ -1,0 +1,6 @@
+# egrc
+[eg-config]
+
+custom-dir="~/.cheat"
+squeeze=true
+pager-cmd="nvim -c 'set ft=man' -"

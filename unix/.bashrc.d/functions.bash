@@ -40,6 +40,9 @@ cs () {
 ssh-day () {
     if [[ -z "$SSH_AUTH_SOCK" ]]; then
         eval "$(ssh-agent -s)"
+    else
+        export SSH_AUTH_SOCK=''
+        eval "$(ssh-agent -s)"
     fi
     ssh-add -t 86400
 }
