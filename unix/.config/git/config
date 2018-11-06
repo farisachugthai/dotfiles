@@ -6,7 +6,7 @@
     autocrlf = input
     editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
-    # xspager = less -rMFXKL
+    pager = less -rMFXKL
 
 [color]
     branch = always

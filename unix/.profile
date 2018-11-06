@@ -62,9 +62,11 @@ fi
 # -K: exit less in response to Ctrl-C
 export PAGER="less -JRKM"
 
-# It's mindblowing how much this improves using the help() function in IPy
-# Its also driving me crazy that it isn't working. Fallback for now
-# export MANPAGER="nvim -c 'set ft=man' --"
+nvim_man(){
+    man "$1" | nvim '-c set ft=man'
+}
+
+export MANPAGER=nvim_man
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -124,5 +126,7 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 export DOT="$HOME/projects/dotfiles"
 export NVIM="$HOME/projects/viconf/.config/nvim"
 source "$HOME/.bashrc"
+
+# }}}
 
 # }}}

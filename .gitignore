@@ -38,7 +38,7 @@ build/
 *.egg-info/
 .idea/
 
-# KDE directory settings
+## KDE directory settings
 .directory
 
 # PyCharm

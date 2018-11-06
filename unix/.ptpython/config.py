@@ -62,12 +62,9 @@ def configure(repl):
     repl.wrap_lines = True
 
     # Mouse support.
-<<<<<<< HEAD
     repl.enable_mouse_support = True
-=======
     # messes up termux. REPL takes over screen so no scrollback
     repl.enable_mouse_support = False
->>>>>>> master
 
     # Complete while typing. (Don't require tab before the
     # completion menu is shown.)

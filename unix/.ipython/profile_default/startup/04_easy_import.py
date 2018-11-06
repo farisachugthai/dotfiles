@@ -14,13 +14,11 @@ Well it embeds ipython. But it has to import other modules. Hm.
 
 However we're functional so take that to mean what you want! :D
 """
-
 import os
 from pathlib import Path
 import re
 import sqlite3
 import sys
-
 
 try:
     import neovim
@@ -30,3 +28,8 @@ except ImportError as e:
     print("Neovim import failed. Only ignore this if you plan on going"
           " the entire session without using %edit")
     print("***************************************************************")
+
+# Nov 04, 2018: Let's add a few ipy :funcs: that have proven to be useful
+from IPython.utils.dir2 import dir2     # simply because its a nicer dir2
+from IPython import get_ipython
+from IPython.core.interactiveshell import InteractiveShell

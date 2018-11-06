@@ -8,6 +8,7 @@ Heavily drawn from documentation at
 
 and source code found on GitHub.
 """
+import os
 
 from pygments.token import Comment
 
@@ -20,6 +21,7 @@ from pygments.token import Comment
 c = get_config()  # noqa
 
 # Alias: {{{
+
 c.AliasManager.user_aliases = [
       ('ag', 'ag --hidden --color'),
       ('chmod', 'chmod'),
@@ -31,6 +33,7 @@ c.AliasManager.user_aliases = [
       ('gco', 'git commit'),
       ('gd', 'git diff'),
       ('gds', 'git diff --staged'),
+      ('gds2', 'git diff --staged --stat'),
       ('glo', 'git log'),
       ('gs', 'git status'),
       ('gst', 'git diff --stat'),
@@ -44,7 +47,7 @@ c.AliasManager.user_aliases = [
       ('mv', 'mv -iv'),
       ('nvim', 'nvim'),
       ('rm', 'rm -v'),
-      ('rmdir', 'rmdir -pv'),
+      ('rmdir', 'rmdir -v'),
       ('tail', 'tail -n 30'),
       ('tree', 'tree'),
       ('treea', 'tree -aI .git'),
@@ -171,8 +174,11 @@ c.BaseIPythonApplication.copy_config_files = True
 # configuration (through profiles), history storage, etc. The default is
 # $HOME/.ipython. This option can also be specified through the environment
 # variable IPYTHONDIR.
-# c.BaseIPythonApplication.ipython_dir = ''
-
+if os.environ.get("$IPYTHONDIR"):
+    c.BaseIPythonApplication.ipython_dir = os.environ.get("$IPYTHONDIR")
+else:
+    # c.BaseIPythonApplication.ipython_dir = "~/.ipython"
+    pass
 # Whether to overwrite existing config files when copying
 # c.BaseIPythonApplication.overwrite = False
 
@@ -331,10 +337,12 @@ c.InteractiveShell.quiet = False
 import importlib  # noqa E402
 try:
     importlib.import_module("docrepr")  # noqa E402
-except ImportError as e:
-    pass
+except ImportError:
+    c.InteractiveShell.sphinxify_docstring = False
 else:
-    c.InteractiveShell.sphinxify_docstring = True
+    # currently doesn't work
+    # c.InteractiveShell.sphinxify_docstring = True
+    pass
 
 c.InteractiveShell.wildcards_case_sensitive = False
 

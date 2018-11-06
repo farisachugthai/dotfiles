@@ -93,3 +93,5 @@ fi
 
 alias redo='fc -s'
 alias r='fc -s'
+
+alias spacemacs='emacs -F ~/.spacemacs'

@@ -40,8 +40,11 @@ cs () {
 ssh-day () {
     if [[ -z "$SSH_AUTH_SOCK" ]]; then
         eval "$(ssh-agent -s)"
+    else
+        SSH_AUTH_SOCK=''
+        ssh-day
     fi
-    ssh-add -t 86400
+    ssh-add
 }
 
 # Adds an alias to the current shell and to ~/.bashrc.d/alias
@@ -85,7 +88,6 @@ fzf_apropos() {
 fzf_env() {
     set | tr = "\t" | fzf | cut -f 1
 }
-
 
 fzf_nvim() {
   local file
@@ -150,8 +152,7 @@ hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
 }
 
-
-gitdiffb(){
+gitdiffb() {
     if [ $# -ne 2 ]; then
         echo -e 'Usage: gitdiffb branch1 branch2'
         exit 127
@@ -163,3 +164,5 @@ gitdiffb(){
     --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' \
     --abbrev-commit --date=relative $1..$2;
 }
+
+# Other TODO: Possibly rewrite the man function here. Like if nvim then do that, elif most, else less
