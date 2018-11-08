@@ -245,14 +245,11 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-<<<<<<< HEAD
 try:
     c.InteractiveShell.autoindent = True
 except Exception:
     pass
-=======
 # c.InteractiveShell.autoindent = True
->>>>>>> master
 
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True

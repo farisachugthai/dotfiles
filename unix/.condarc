@@ -1,5 +1,6 @@
 # Condarc
 # Maintainer: Faris Chugthai
+#
 # Let's put the modified values at the top since there aren't many
 # and this is a very long file.
 # possibly think about timestamping when you change these
@@ -13,7 +14,11 @@
 #   A list of package specs to pin for every environment resolution. This
 #   parameter is in BETA, and its behavior may change in a future release.
 #
-pinned_packages: ['conda']
+pinned_packages: [conda]
+
+# And for safety
+# conda config --set allow_conda_downgrades True
+# just remember that i ran that in case it doesn't persist
 
 
 # add_pip_as_python_dependency (bool)
@@ -37,7 +42,6 @@ channels:
   - conda-canary
   - conda-forge
 channel_priority: false
-
 
 
 # From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
@@ -422,6 +426,7 @@ safety_checks: warn
 shortcuts: true
 
 
+allow_conda_downgrades: true
 # show_channel_urls (NoneType, bool)
 #   Show channel URLs when displaying what is going to be downloaded.
 #

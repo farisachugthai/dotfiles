@@ -93,3 +93,15 @@ export rvm_log_path="${rvm_path}/log"
 # Add configure flags for builds
 #
 # export rvm_configure_flags="--with-openssl-dir=$rvm_path/usr --with-readline-dir=$rvm_path/usr"
+#
+# So here are the lines that I got from the new version of rvm.
+# A bit odd that they aren't annotated at all but whatever.
+# There was a 7th line but it was covered above. Otherwise these are all new
+# configurations! Neat.
+
+export rvm_environments_path="${HOME}/.rvm/environments"
+export rvm_gems_path="${HOME}/.rvm/gems"
+export rvm_gems_cache_path="${HOME}/.rvm/gems_cache"
+export rvm_wrappers_path="${HOME}/.rvm/wrappers"
+export rvm_create_flag="1"
+export rvm_user_path="${HOME}/.rvm/user"

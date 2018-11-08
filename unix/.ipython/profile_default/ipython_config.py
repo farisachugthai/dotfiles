@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" Configuration file for ipython.
+"""Configuration file for ipython.
+
 Heavily drawn from documentation at
 
 `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
 
-and source code found on GitHub.
+source code found on GitHub.
 """
+import os
 
-# actually if the import file i use works then we shouldn't need this right?
-# actually don't count on the order of execution being correct
 from pygments.token import Comment
 
 # c is a traitlets.config.Configurable object
@@ -18,11 +18,13 @@ from pygments.token import Comment
 # ipython on simple things like creating a new prompt after every command
 # increments it
 
-c = get_config()            # noqa,pyls:
+c = get_config()  # noqa
 
 # Alias: {{{
+
 c.AliasManager.user_aliases = [
-      ('ag', 'ag'),
+      ('ag', 'ag --hidden --color'),
+      ('chmod', 'chmod'),
       ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
       ('echo', 'echo -e'),
       ('fzf', 'fzf'),         # all we need to do is figure out keybindings
@@ -31,6 +33,8 @@ c.AliasManager.user_aliases = [
       ('gco', 'git commit'),
       ('gd', 'git diff'),
       ('gds', 'git diff --staged'),
+      ('gds', 'git diff --staged --stat'),
+      ('git', 'git'),
       ('glo', 'git log'),
       ('gs', 'git status'),
       ('gst', 'git diff --stat'),
@@ -45,8 +49,10 @@ c.AliasManager.user_aliases = [
       ('mv', 'mv -iv'),
       ('nvim', 'nvim'),
       ('rm', 'rm -v'),
-      ('rmdir', 'rmdir -pv'),
+      ('rmdir', 'rmdir -v'),
       ('tail', 'tail -n 30'),
+      ('tree', 'tree'),
+      ('treea', 'tree -aI .git'),
       ('vi', 'vim'),
       ('vim', 'vim'),
   ]
@@ -230,7 +236,11 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-c.InteractiveShell.autoindent = True
+# Jupyter Console doesn't handle this correctly.
+try:
+    c.InteractiveShell.autoindent = True
+except Exception:
+    pass
 
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True
@@ -279,7 +289,7 @@ c.InteractiveShell.colors = 'Neutral'
 
 # If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-c.InteractiveShell.display_page = True
+c.InteractiveShell.display_page = False
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
 # c.InteractiveShell.enable_html_pager = False
@@ -325,10 +335,14 @@ c.InteractiveShell.quiet = False
 
 # Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-# TODO: Do some kind of check to see whether we have docrepr in the env first
-# c.InteractiveShell.sphinxify_docstring = True
+import importlib  # noqa E402
+try:
+    importlib.import_module("docrepr")  # noqa E402
+except ImportError:
+    c.InteractiveShell.sphinxify_docstring = False
+else:
+    c.InteractiveShell.sphinxify_docstring = True
 
-#
 c.InteractiveShell.wildcards_case_sensitive = False
 
 # Switch modes for the IPython exception handlers.
@@ -341,12 +355,12 @@ c.InteractiveShell.wildcards_case_sensitive = False
 # Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
 #  direct exit without any confirmation.
-c.TerminalInteractiveShell.confirm_exit = True
+c.TerminalInteractiveShell.confirm_exit = False
 
 # Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
 #  documentation for more information.
-c.TerminalInteractiveShell.display_completions = 'column'
+c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
 # Shortcut style to use at the prompt. 'vi' or 'emacs'.
 c.TerminalInteractiveShell.editing_mode = 'vi'

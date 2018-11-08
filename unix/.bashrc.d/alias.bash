@@ -49,6 +49,7 @@ alias path='echo -e ${PATH//:/\\n}'
 # probably shouldn't clobber the namespace though, there are conflicting options
 # for du so i'll change to du shallow
 alias dus='du -d 1 -h'
+alias dU='du -d 1 -h --apparent-size | sort -rh'
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
@@ -60,8 +61,6 @@ alias treea='tree -aI .git'
 alias termux-share="termux-share -a send"
 # termux-open gets an option for a default file handler! Dropbox integration
 alias termux-open="termux-open --send"
-
-alias info="info --vi-keys"
 
 # Git aliases. for complicated git log calls funcs are better
 alias ga='git add'
