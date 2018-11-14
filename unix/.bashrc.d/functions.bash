@@ -73,7 +73,12 @@ infovi () {
 # From byobu
 byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
 
-# FZF:
+# FZF: {{{
+
+fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
 # commits in a repo
 fzf_commits() {
   git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
@@ -94,6 +99,8 @@ fzf_nvim() {
   file=$(fzf --query="$1" --select-1 --exit-0)
   [ -n "$file" ] && ${EDITOR:-nvim} "$file"
 }
+
+# }}}
 
 tldrbox_cheat() {
     tldr -m "$1" >> "$HOME/.cheat/$1" && termux-share "$1"

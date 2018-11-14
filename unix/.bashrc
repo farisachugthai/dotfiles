@@ -93,7 +93,7 @@ export Yellow="\[\033[0;33m\]"
 # export CYAN = '\x1b[36m'
 # export GREEN = '\x1b[32m'
 # export BLUE = '\x1b[34m'
-# # }}}
+# }}}
 
 # Prompt: {{{ 2
 
@@ -111,13 +111,35 @@ if [[ -n "$force_color_prompt" ]]; then
 fi
 
 # https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
+# if [ "$color_prompt" = yes ]; then
+# TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\") \
+# [$(if [[ ${EUID} == 0 ]]; then
+# echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h' \
+# else
+# echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h' \
+# fi) \
+# \[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] " \
+# else
+#     TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
+# fi
+
+
 if [ "$color_prompt" = yes ]; then
-    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]];
-        then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h';
-    else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
+    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
 else
     TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
 fi
+
+# just noticed this in the venv activate script. i like it!
+# if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT-}" ] ; then
+#     _OLD_VIRTUAL_PS1="$PS1"
+#     if [ "x" != x ] ; then
+#         PS1="$PS1"
+#     else
+#         PS1="(`basename \"$VIRTUAL_ENV\"`) $PS1"
+#     fi
+#     export PS1
+# fi
 
 if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     . "$HOME/.bashrc.d/git-prompt.sh";
@@ -130,15 +152,15 @@ fi
 
 # Set 'man' colors: {{{ 3
 # Keep an eye on whether this is the problem with nvim as manpager.
-if [ "$color_prompt" = yes ]; then
-    LESS_TERMCAP_mb=$'\e[01;31m' \
-    LESS_TERMCAP_md=$'\e[01;31m' \
-    LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_se=$'\e[0m' \
-    LESS_TERMCAP_so=$'\e[01;44;33m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[01;32m'
-fi
+# if [ "$color_prompt" = yes ]; then
+#     LESS_TERMCAP_mb=$'\e[01;31m' \
+#     LESS_TERMCAP_md=$'\e[01;31m' \
+#     LESS_TERMCAP_me=$'\e[0m' \
+#     LESS_TERMCAP_se=$'\e[0m' \
+#     LESS_TERMCAP_so=$'\e[01;44;33m' \
+#     LESS_TERMCAP_ue=$'\e[0m' \
+#     LESS_TERMCAP_us=$'\e[01;32m'
+# fi
 # }}}
 
 unset color_prompt force_color_prompt
@@ -177,21 +199,13 @@ if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-fzf-down() {
-  fzf --height 50% "$@" --border
-}
-
-# This is gonna be hard to organize. so let's start with getting one set up perfectly.
-# TODO: Get an Alt-C and C-r for ag
-
-# Is it going to be better to have these blocks for each keybinding? as it
-# stands C-r isn't defined when ag is present.
+# Loops for the varying backends for fzf. ag is my fave.
 if [[ "$(command -v ag)" ]]; then
     export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
     export FZF_CTRL_T_OPTS=' --preview "head -100 {}" --preview-window=right:50%:wrap --cycle --multi '
     export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
 
-    alias ag="$FZF_CTRL_T_COMMAND"
+    alias Ag="$FZF_CTRL_T_COMMAND"
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
@@ -209,11 +223,12 @@ else
     export FZF_DEFAULT_COMMAND='find * -type f'
 fi
 
-[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--layout=reverse --bind "enter:execute(nvim {})" --multi --cycle --color=bg+:24 --border'
+# Options for fzf no matter what
+export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS: --bind 'enter:execute(nvim {})' "
 
 # termux doesnt have xclip or xsel
-
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
 
@@ -252,15 +267,6 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     # <<< conda initialize <<<
 fi
 
-# If this env var isn't set it will equal 0. So also run a check that we have conda
-command -v conda 2>&1 && if [[ $CONDA_SHLVL -eq 0 ]]; then
-    if [[ -d "$HOME/miniconda3/etc/profile.d" ]]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
-        conda activate base
-    fi
-elif [[ $CONDA_SHLVL -eq 1 ]]; then
-    echo -e '$CONDA_SHLV is currently: ' + "$CONDA_SHLVL"
-fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 if [[ "$(command -v pip)" ]]; then
@@ -272,7 +278,7 @@ fi
 # gcloud: {{{ 2
 if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
 
-if [[ -f "bin/google-cloud-sdk/path.bash.inc" ]]; then source "bin/google-cloud-sdk/path.bash.inc"; fi
+if [[ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]]; then source "$HOME/bin/google-cloud-sdk/path.bash.inc"; fi
 
 # }}}
 
@@ -291,7 +297,9 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 
 # [[ -z "$TMUX"  ]] && exec tmux
-[[ -n "$TMUX" ]] && FZF_TMUX=1 && FZF_TMUX_HEIGHT=80%
+#[[ -n "$TMUX" ]] &&
+# export FZF_TMUX=1
+# export FZF_TMUX_HEIGHT=80%
 # }}}
 
 # }}}

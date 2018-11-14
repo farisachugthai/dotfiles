@@ -42,7 +42,9 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -v'
-alias rm='rm -v'
+# only prompts with more than 3 files or recursed dirs.
+# Less annoying than i but more safe
+# alias rm='rm -I'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'

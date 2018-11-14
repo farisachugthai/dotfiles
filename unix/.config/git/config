@@ -1,3 +1,6 @@
+# Global Git Config
+# Vim: set ft:gitconfig :
+
 [user]
     email = farischugthai@gmail.com
     name = farisachugthai
@@ -73,6 +76,9 @@
 [credential]
 	helper = cache --timeout=86400
 
+[credential "https://www.github.comm"]
+    username = farisachugtha
+
 [web]
     browser = firefox
 
@@ -84,4 +90,5 @@
     showStash = True
     showUntrackedFiles = all
 
-# Vim: set ft:gitconfig :
+[init]
+	templatedir = .config/git
