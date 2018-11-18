@@ -48,8 +48,8 @@ alias path='echo -e ${PATH//:/\\n}'
 # Options i use every time i run these commands
 # probably shouldn't clobber the namespace though, there are conflicting options
 # for du so i'll change to du shallow
-alias dus='du -d 1 -h'
-alias dU='du -d 1 -h --apparent-size | sort -rh'
+alias dus='du -d 1 -h --all'
+alias dU='du -d 1 -h --apparent-size --all | sort -rh'
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'

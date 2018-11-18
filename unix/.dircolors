@@ -1,3 +1,14 @@
+# dircolors
+#
+# in case you get confused about what the values down there are, they're ansi
+# escape characters.
+#
+# to more easily view the output of the `dircolors` command, run:
+# `dircolors | tr ":" "\n"
+# the values are organized by
+# bg; fg; attributes.
+#
+#
 # Copyright (c) 2017-present Arctic Ice Studio <development@arcticicestudio.com>
 # Copyright (c) 2017-present Sven Greb <code@svengreb.de>
 
@@ -6,6 +17,10 @@
 # License:    MIT
 
 COLOR tty
+
+###############
+#  terminals  #
+###############
 
 TERM ansi
 TERM *color*
@@ -68,6 +83,7 @@ CHR 33
 ORPHAN 31
 MISSING 01;37;41
 
+# cyan
 EXEC 01;36
 
 SETUID 01;04;37
@@ -168,6 +184,8 @@ STICKY 04;37;44
 .xlsx 32
 
 #+--- Executables ---+
+# I suppose I set this not realizing literally all of these
+# are Win32 exec's.
 .app 01;36
 .bat 01;36
 .btm 01;36

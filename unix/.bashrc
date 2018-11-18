@@ -101,6 +101,8 @@ if [[ -n "$force_color_prompt" ]]; then
     fi
 fi
 
+# I am still so afraid to touch this thing but I want to add $HISTCMD to it so badly
+
 # https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
 
 # Spare your eyes and don't look. Indenting the lines randomly added white
@@ -188,21 +190,18 @@ fzf-down() {
   fzf --height 50% "$@" --border
 }
 
-# This is gonna be hard to organize. so let's start with getting one set up perfectly.
-# TODO: Get an Alt-C and C-r for ag
-
-# Is it going to be better to have these blocks for each keybinding? as it
-# stands C-r isn't defined when ag is present.
+# Generally give everything that the searcher can handle itself I.E. ag has an option for follow.
+# In the opts env var, will be modifications that FZF undertakes. FZF has a --cycle option. ag doesn't.
 if [[ "$(command -v ag)" ]]; then
-    export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow'
+    export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
     export FZF_CTRL_T_OPTS=' --preview "head -100 {}" --preview-window=right:50%:wrap --cycle --multi '
     export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
-
-    alias ag='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow'
+    # and in nvim we have Ag aliased as well.
+    alias ag='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
-    export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10'
+    export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10 --follow '
     export FZF_CTRL_T_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
 elif [[ "$(command -v fd)" ]]; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'

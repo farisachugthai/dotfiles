@@ -60,14 +60,7 @@ fi
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
 export PAGER="less -JRMK"
-# export MANPAGER="less -JRMKL"
-
-# It's mindblowing how much this improves using the help() function in IPy
-# Its also driving me crazy that it isn't working. Fallback for now
-nman(){
-    "man $0 | nvim -c 'set ft=man'"
-}
-export MANPAGER=nman
+export MANPAGER="less -JRMKL"
 
 export COLORTERM="truecolor"
 
@@ -98,10 +91,10 @@ if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
     if [[ -d "/tmp" ]]; then
-        TMPDIR="/tmp"
-        export TMP="$TMPDIR"
+        export TMP="/var/tmp,/usr/tmp,/tmp"
+        export TMPDIR="/var/tmp"
     fi
-fi
+oui
 
 export TMUXP_CONFIGDIR='$HOME/.tmux'
 
@@ -137,12 +130,14 @@ fi
 
 # Sourced Files: {{{
 # Tmux the culprit as usual
-if [[ -n "$TMUX" ]]; then
+if [[ -z "$TMUX" ]]; then
     tmux new
 else
     # hoping that makes an array and by not specifying an index i only pick the 1st
     tmux attach -t "$(tmux ls)"
 fi
+# alternatively i think what we could do is something to the effect of: pseudocode
+# try: tmux new -s startup; except ServerExists; tmux attach -t startup or tmux new
 
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
