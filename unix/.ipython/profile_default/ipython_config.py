@@ -35,6 +35,7 @@ c.AliasManager.user_aliases = [
       ('gds', 'git diff --staged'),
       ('gds2', 'git diff --staged --stat'),
       ('glo', 'git log'),
+      ('gpip', 'export PIP_REQUIRE_VIRTUALENV=0; pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'),
       ('gs', 'git status'),
       ('gst', 'git diff --stat'),
       ('head', 'head -n 30'),
@@ -686,3 +687,4 @@ c.LoggingMagics.quiet = False
 # If True, any %store-d variables will be automatically restored when IPython
 # starts.
 # c.StoreMagics.autorestore = False
+

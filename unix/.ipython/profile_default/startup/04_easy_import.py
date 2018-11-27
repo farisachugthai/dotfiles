@@ -24,11 +24,11 @@ import sqlite3
 import sys
 
 try:
-    import neovim
+    import pynvim
 except ImportError as e:
     print("***************************************************************")
     print(e)
-    print("Neovim import failed. Only ignore this if you plan on going"
+    print("pynvim import failed. Only ignore this if you plan on going"
           " the entire session without using %edit")
     print("***************************************************************")
 

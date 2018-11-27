@@ -1,10 +1,25 @@
 # Condarc
 # Maintainer: Faris Chugthai
+#
 # Let's put the modified values at the top since there aren't many
 # and this is a very long file.
-# please keep alphabetical
 # possibly think about timestamping when you change these
 # ooo and addig a conda version wouldn't be the worst idea.
+
+# Nov 03, 2018
+# Pinning conda because the update is breaking my setup
+
+# pinned_packages (sequence: str)
+#   string delimiter: '&'
+#   A list of package specs to pin for every environment resolution. This
+#   parameter is in BETA, and its behavior may change in a future release.
+#
+pinned_packages: [conda]
+
+# And for safety
+# conda config --set allow_conda_downgrades True
+# just remember that i ran that in case it doesn't persist
+
 
 # add_pip_as_python_dependency (bool)
 #   Add pip, wheel and setuptools as dependencies of python. This ensures
@@ -18,40 +33,15 @@ aggressive_update_packages:
   - certifi
   - openssl
   - ipython
-  - conda
+  # 11/02/18 - Conda 4.5.11b took conda off here because conda 4.6 was crashing
 
 auto_update_conda: true
 
 channels:
+  - defaults
   - conda-canary
   - conda-forge
-  - defaults
-
-
-# also kinda curious how this is gonna go
-# json (bool)
-#   Ensure all output written to stdout is structured json.
-# json: True
-
-# pkgs_dirs (sequence: str)
-#   string delimiter: ','
-#   The list of directories where locally-available packages are linked
-#   from at install time. Packages not locally available are downloaded
-#   and extracted into the first writable directory.
-#
-# i don't actually know if this is how this works or what the consequences would be but
-# can i add in the system folders and virtualenvs folder?
-# pkgs_dirs: ['/home/faris/miniconda3/pkgs', '/home/faris/virtualenvs', '/usr/lib/python3.7/site-packages', '/usr/lib/python3.6']
-# nah you need write permissions
-
-
-# channel_priority (bool)
-#   When True, the solver is instructed to prefer channel order over
-#   package version. When False, the solver is instructed to give package
-#   version preference over channel priority.
-#
 channel_priority: false
-
 
 
 # From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
@@ -366,13 +356,6 @@ notify_outdated_conda: true
 path_conflict: warn
 
 
-# pinned_packages (sequence: str)
-#   string delimiter: '&'
-#   A list of package specs to pin for every environment resolution. This
-#   parameter is in BETA, and its behavior may change in a future release.
-#
-# pinned_packages: []
-
 
 
 
@@ -443,6 +426,7 @@ safety_checks: warn
 shortcuts: true
 
 
+allow_conda_downgrades: true
 # show_channel_urls (NoneType, bool)
 #   Show channel URLs when displaying what is going to be downloaded.
 #

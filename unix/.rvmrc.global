@@ -7,42 +7,43 @@
 # Beware that currently that file is overwritten on install so
 # back it up if you change anything.
 #
+rvm_silence_path_mismatch_check_flag=1
 
 # rvm Path
 #   This is where rvm installs and manages everything in by default.
 #
-#export rvm_path="$HOME/.rvm"
+export rvm_path="$HOME/.rvm"
 
 # Source Path
 #   This is where rvm extracts to for compiling & installing.
 #
-#export rvm_source_path="${rvm_path}/src"
+export rvm_source_path="${rvm_path}/src"
 
 # Log Path
 #   This is where rvm logs all of it's actions to
 #   (not including the 'do' actions)
 #
-#export rvm_log_path="${rvm_path}/log"
+export rvm_log_path="${rvm_path}/log"
 
 # Bin Path
 #   This is where rvm places all of it's executable/wrapper scripts.
-#export rvm_bin_path="${rvm_path}/bin"
+export rvm_bin_path="${rvm_path}/bin"
 
 # Gem Path
 #   This is where rvm installs all gems to for each ruby
 #   interpreter/version%gemset
 #
-#export rvm_gems_path="$rvm_path/gems"
+export rvm_gems_path="$rvm_path/gems"
 
 # Gem Options
 #   These options are passed to the 'gem' command in a RVM environment.
 #
-#export rvm_gem_options="--no-rdoc --no-ri"
+export rvm_gem_options="--no-rdoc --no-ri"
 
 # Temp Path
 #   This is where rvm stores all of its temporary files.
 #
-#export rvm_tmp_path="${rvm_tmp_path:-"$rvm_path/tmp"}"
+export rvm_tmp_path="${rvm_tmp_path:-"$rvm_path/tmp"}"
 
 # Install On Use Flag
 # Install rubies when used if are not installed.
@@ -62,7 +63,7 @@
 # Source a .rvmrc file in a directory after changing to it, if it exists.
 # To disable this fature, set in root/home .rvmrc file:
 #
-# export rvm_project_rvmrc=0
+ export rvm_project_rvmrc=0
 #
 # Or don't even bother sourcing rvm, it *is* optional. Always has been, you can
 # instead add $rvm_path/bin to your PATH and use --default to switch...

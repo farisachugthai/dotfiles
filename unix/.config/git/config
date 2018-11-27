@@ -10,6 +10,10 @@
     editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
     pager = less -rMFXKL
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
 
 [color]
     branch = always

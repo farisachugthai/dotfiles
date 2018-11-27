@@ -13,7 +13,7 @@
 
 # Output location
 # TODO: Doesn't wirk
--o "$HOME/storage/shared/Videos/%(uploader)s/%(playlist_index)d%(title)s.%(ext)s"
+-o "$HOME/storage/shared/Videos/%(uploader)s/%(title)s.%(ext)s"
 
 # TODO:Add in a UA
 # --user-agent UA

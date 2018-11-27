@@ -12,7 +12,7 @@
 --restrict-filenames
 
 # Output location
--o "$HOME/storage/shared/Videos/%(creator)s/%(playlist_index)d%(title)s.%(ext)s"
+-o "$HOME/storage/shared/Videos/%(creator)s/%(title)s.%(ext)s"
 
 # Metadata
 --add-metadata

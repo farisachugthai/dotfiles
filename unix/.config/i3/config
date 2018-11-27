@@ -1,13 +1,17 @@
 # i3 config file (v4)
+# Vim: set ft=i3:foldlevel=1
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
-# Maintainer: Faris Chugthai
 
 set $mod Mod4
+
+# All: {{{ 1
+
+# Fonts: {{{ 2
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # font pango:Roboto Sans Mono 14
-font pango:Fira Code 18
+font pango:Fira Code 14
 # font pango:Noto Sans 14
 
 # yo lemme keep trying to give you help on fonts
@@ -26,12 +30,16 @@ font pango:Fira Code 18
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
+# }}}
+
+# Bindsyms: {{{ 2
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 bindsym $mod+Return exec kitty
-# bindsym $mod+u+Return exec urxvt
-# bindsym $mod+k+Return exec konsole
+bindsym $mod+u+Return exec urxvt
+bindsym $mod+k+Return exec konsole
 # bindsym $mod+m+Return exec mate-terminal
 
 # kill focused window
@@ -49,22 +57,32 @@ bindsym $mod+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun 
 
 # https://github.com/addy-dclxvi/i3-starterpack/blob/master/.config/i3/config
 # common apps keybinds
-bindsym Print exec scrot 'Cheese_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
+#
+# i don't wanna use cheese maybe?
+# bindsym Print exec scrot 'Cheese_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
+#
 # this clobbers the move up keybinding
 # bindsym $mod+l exec i3lock -i ~/.wallpaper.png
 bindsym $mod+Shift+w exec firefox
-bindsym $mod+Shift+f exec thunar;workspace 3;focus
+
+# we don't have keepass in here yet!
+bindsym $mod+Shift+k exec keepassxc
+
+
+# kde so let's go ranger?
+# bindsym $mod+Shift+f exec thunar;workspace 3;focus
+bindsym $mod+Shift+f exec ranger
 
 #change volume
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
 bindsym XF86AudioMute exec amixer set Master toggle
 
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+# change focus. But do it in the vim way.
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -160,7 +178,7 @@ mode "resize" {
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
         bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
+            bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
         bindsym semicolon resize grow width 10 px or 10 ppt
 
@@ -170,7 +188,6 @@ mode "resize" {
         bindsym Up resize shrink height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
@@ -179,7 +196,11 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Classic Win97 keybinding that never left me
-bindsym $mod+Shift+Escape exec "Mate System Monitor"
+bindsym $mod+Shift+Escape exec "KSysGuard"
+
+# }}}
+
+# i3bar: {{{ 2
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -195,8 +216,20 @@ bar {
         inactive_workspace	#2f343f	#2f343f	#d8dee8
         urgent_workspace	#2f343f	#ebcb8b	#2f343f
     }
-        status_command i3status
+
+
+    position top
+    # output LVDS1
+    # tray_output LVDS1
+    tray_padding 5
+    font pango:Fira Code 13
+
+    status_command i3blocks
 }
+
+# }}}
+
+# assignments/window rules /workspaces: {{{ 2
 
 # genuinely taking everything from this guy.
 # window rules, you can find the window class using xprop
@@ -206,6 +239,10 @@ bar {
 # assign [class=Dolphin|Caja|Thunar|File-roller] 3
 # for_window [class=URxvt|Firefox|Vlc|] focus
 
+# }}}
+
+# Colorscheme: {{{ 2
+
 # colour of border, background, text, indicator, and child_border
 client.focused			#bf616a #2f343f #d8dee8 #bf616a #d8dee8
 client.focused_inactive	#2f343f #2f343f #d8dee8 #2f343f #2f343f
@@ -213,3 +250,7 @@ client.unfocused		#2f343f #2f343f #d8dee8 #2f343f #2f343f
 client.urgent			#2f343f #2f343f #d8dee8 #2f343f #2f343f
 client.placeholder		#2f343f #2f343f #d8dee8 #2f343f #2f343f
 client.background		#2f343f
+
+# }}}
+
+# }}}
