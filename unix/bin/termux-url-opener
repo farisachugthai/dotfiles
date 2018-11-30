@@ -14,6 +14,6 @@
 # youtube-dl --config-location "$HOME/.config/youtube-dl/config-mp3-playlist" "$1"
 
 # mp4
-youtube-dl --config-location "$HOME/.config/youtube-dl/config-mp4-playlist" "$1"
+youtube-dl --config-location "$HOME/.config/youtube-dl/config-mp4" "$1"
 
 exit 0

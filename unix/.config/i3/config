@@ -38,8 +38,8 @@ font pango:Fira Code 14
 floating_modifier $mod
 
 bindsym $mod+Return exec kitty
-bindsym $mod+u+Return exec urxvt
-bindsym $mod+k+Return exec konsole
+# bindsym $mod+u+Return exec urxvt
+# bindsym $mod+k+Return exec konsole
 # bindsym $mod+m+Return exec mate-terminal
 
 # kill focused window
@@ -63,7 +63,7 @@ bindsym $mod+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun 
 #
 # this clobbers the move up keybinding
 # bindsym $mod+l exec i3lock -i ~/.wallpaper.png
-bindsym $mod+Shift+w exec firefox
+bindsym $mod+Shift+f exec firefox
 
 # we don't have keepass in here yet!
 bindsym $mod+Shift+k exec keepassxc
@@ -71,14 +71,14 @@ bindsym $mod+Shift+k exec keepassxc
 
 # kde so let's go ranger?
 # bindsym $mod+Shift+f exec thunar;workspace 3;focus
-bindsym $mod+Shift+f exec ranger
+# bindsym $mod+Shift+f exec ranger
 
 #change volume
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
 bindsym XF86AudioMute exec amixer set Master toggle
 
-# change focus. But do it in the vim way.
+# change focus. But do it in the vim way. Thing I didn't think about. Clobbers horizontal split. hmmm.
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
@@ -92,7 +92,7 @@ bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
+# bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
 
@@ -103,17 +103,19 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+# bindsym $mod+h split h
+bindsyn $mod+- split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+| split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+# WHY ISN'T IT T BY DEFAULT
+bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
@@ -177,10 +179,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-            bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt

@@ -34,6 +34,7 @@ c.AliasManager.user_aliases = [
       ('gd', 'git diff'),
       ('gds', 'git diff --staged'),
       ('gds2', 'git diff --staged --stat'),
+      ('git', 'git'),
       ('glo', 'git log'),
       ('gpip', 'export PIP_REQUIRE_VIRTUALENV=0; pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'),
       ('gs', 'git status'),
