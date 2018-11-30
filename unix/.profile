@@ -94,7 +94,7 @@ else
         export TMP="/var/tmp,/usr/tmp,/tmp"
         export TMPDIR="/var/tmp"
     fi
-oui
+fi
 
 export TMUXP_CONFIGDIR='$HOME/.tmux'
 
@@ -145,4 +145,5 @@ export NVIM="$HOME/projects/viconf/.config/nvim"
 
 # }}}
 
+# Source the bashrc last.
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

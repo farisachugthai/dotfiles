@@ -1,4 +1,5 @@
 ;; -*- mode: emacs-lisp -*-
+;; Vim: set ft=lisp:
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -52,6 +53,7 @@ values."
           git-gutter-use-fringe t)
      github
      helm
+     magit
      markdown
      ;; multiple-cursors
      ;; neotree
@@ -59,6 +61,7 @@ values."
           org-enable-github-support t
           org-enable-reveal-js-support t
           org-enable-bootstrap-support t)
+     python
      (ranger :variables
              ranger-show-preview t
              ranger-show-hidden t

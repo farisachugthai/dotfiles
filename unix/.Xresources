@@ -112,9 +112,8 @@ Xft.rgba        : rgb
 ! Last Modified: 6 Sep 2014
 ! -----------------------------------------------------------------------------
 
-! hard contrast         : *background : #1d2021
-*background             : #282828
-! soft contrast         : *background : #32302f
+! hard contrast         : 
+*background             : #1d2021
 *foreground             : #ebdbb2
 ! Black + DarkGrey
 *color0                 : #282828
@@ -139,7 +138,7 @@ Xft.rgba        : rgb
 *color14                : #8ec07c
 ! LightGrey + White
 *color7                 : #a89984
-<F2><F3><F4>color15     : #ebdbb2
+color15                 : #ebdbb2
 
 ! special
 *.foreground:   #e8dfd6

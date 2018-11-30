@@ -4,9 +4,11 @@
 
 Heavily drawn from documentation at
 
-`<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
+.. URL::
 
-source code found on GitHub.
+    `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
+
+and source code found on GitHub.
 """
 import os
 
@@ -19,6 +21,12 @@ from pygments.token import Comment
 # increments it
 
 c = get_config()  # noqa
+
+try:
+    home = os.path.expanduser("~")
+except OSError as e:
+    print(e)
+    # You got microsofted I guess.
 
 # Alias: {{{
 
@@ -33,7 +41,7 @@ c.AliasManager.user_aliases = [
       ('gco', 'git commit'),
       ('gd', 'git diff'),
       ('gds', 'git diff --staged'),
-      ('gds', 'git diff --staged --stat'),
+      ('gds2', 'git diff --staged --stat'),
       ('git', 'git'),
       ('glo', 'git log'),
       ('gs', 'git status'),
@@ -179,7 +187,12 @@ c.InteractiveShellApp.reraise_ipython_extension_failures = True
 # configuration (through profiles), history storage, etc. The default is
 # $HOME/.ipython. This option can also be specified through the environment
 # variable IPYTHONDIR.
-# c.BaseIPythonApplication.ipython_dir = ''
+if os.environ.get("$IPYTHONDIR"):
+    c.BaseIPythonApplication.ipython_dir = os.environ.get("$IPYTHONDIR")
+else:
+    # Assume home was defined correctly up top. Will need to rewrite for windows
+    c.BaseIPythonApplication.ipython_dir = os.path.join(home, ".ipython")
+
 
 # Whether to overwrite existing config files when copying
 # c.BaseIPythonApplication.overwrite = False
@@ -189,7 +202,7 @@ c.BaseIPythonApplication.profile = 'default'
 
 # Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback
-c.BaseIPythonApplication.verbose_crash = False
+c.BaseIPythonApplication.verbose_crash = True
 
 # ----------------------------------------------------------------------------
 # TerminalIPythonApp(BaseIPythonApplication,InteractiveShellApp) configuration
@@ -236,7 +249,7 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-# Jupyter Console doesn't handle this correctly.
+# Jupyter Console doesn't handle this correctly. Alledgedly ipy7.0 fixed that
 try:
     c.InteractiveShell.autoindent = True
 except Exception:
@@ -289,7 +302,10 @@ c.InteractiveShell.colors = 'Neutral'
 
 # If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-c.InteractiveShell.display_page = False
+try:
+    c.InteractiveShell.display_page = True
+except ImportError:
+    c.InteractiveShell.display_page = False
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
 # c.InteractiveShell.enable_html_pager = False
@@ -398,19 +414,19 @@ c.TerminalInteractiveShell.highlighting_style = 'legacy'
 c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Enable mouse support in the prompt (Note: prevents selecting text with the
-#  mouse)
+# mouse)
 # c.TerminalInteractiveShell.mouse_support = False
 
 # Class used to generate Prompt token for prompt_toolkit
 # c.TerminalInteractiveShell.prompts_class = 'IPython.terminal.prompts.Prompts'
 
 # Use `raw_input` for the REPL, without completion and prompt colors.
+
+# Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
+# Known usage are: IPython own testing machinery, and emacs inferior-shell
+# integration through elpy.
 #
-#  Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
-#  Known usage are: IPython own testing machinery, and emacs inferior-shell
-#  integration through elpy.
-#
-#  This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
+# This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
 #  variable is set, or the current terminal is not a tty.
 # c.TerminalInteractiveShell.simple_prompt = False
 
@@ -421,12 +437,12 @@ c.TerminalInteractiveShell.space_for_menu = 6
 c.TerminalInteractiveShell.term_title = True
 
 # Customize the terminal title format.  This is a python format string.
-#  Available substitutions are: {cwd}.
+# Available substitutions are: {cwd}.
 c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
 
 # Use 24bit colors instead of 256 colors in prompt highlighting. If your
-#  terminal supports true color, the following command should print 'TRUECOLOR'
-#  in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
+# terminal supports true color, the following command should print 'TRUECOLOR'
+# in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
 c.TerminalInteractiveShell.true_color = True
 
 # ----------------------------------------------------------------------------
@@ -435,8 +451,8 @@ c.TerminalInteractiveShell.true_color = True
 
 # Access the history database without adding to it.
 #
-#  This is intended for use by standalone history tools. IPython shells use
-#  HistoryManager, below, which is a subclass of this.
+# This is intended for use by standalone history tools. IPython shells use
+# HistoryManager, below, which is a subclass of this.
 
 # *******
 # What this implies is that if you want to create your own tool for analyzing
@@ -450,22 +466,22 @@ c.TerminalInteractiveShell.true_color = True
 # c.HistoryAccessor.connection_options = {}
 
 # enable the SQLite history
-#
+
 # set enabled=False to disable the SQLite history, in which case there will be
 # no stored history, no SQLite connection, and no background saving thread.
 # This may be necessary in some threaded environments where IPython is embedded
 # c.HistoryAccessor.enabled = True
 
 # Path to file to use for SQLite history database.
-#
+
 # By default, IPython will put the history database in the IPython profile
 # directory.  If you would rather share one history among profiles, you can set
 # this value in each, so that they are consistent.
-#
+
 #  Due to an issue with fcntl, SQLite is known to misbehave on some NFS mounts.
 #  If you see IPython hanging, try setting this to something on a local disk,
 #  e.g::
-#
+
 #      ipython --HistoryManager.hist_file=/tmp/ipython_hist.sqlite
 #
 #  you can also use the specific value `:memory:` (including the colon at both
@@ -652,14 +668,15 @@ c.Completer.use_jedi = True
 
 # Extra script cell magics to define
 #
-#  This generates simple wrappers of `%%script foo` as `%%foo`.
+# This generates simple wrappers of `%%script foo` as `%%foo`.
 #
-#  If you want to add script magics that aren't on your path, specify them in
-#  script_paths
+# If you want to add script magics that aren't on your path, specify them in
+# script_paths
 # c.ScriptMagics.script_magics = []
 
 # Dict mapping short 'ruby' names to full paths, such as '/opt/secret/bin/ruby'
-#
+# AKA the gcloud libs and other 3rd party bins
+
 # Only necessary for items in script_magics where the default path will not
 # find the right interpreter.
 # c.ScriptMagics.script_paths = {}
@@ -679,8 +696,8 @@ c.LoggingMagics.quiet = False
 
 # Lightweight persistence for python variables.
 #
-#  Provides the %store magic.
+# Provides the %store magic.
 
 # If True, any %store-d variables will be automatically restored when IPython
-#  starts.
+# starts.
 # c.StoreMagics.autorestore = False
