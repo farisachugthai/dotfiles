@@ -4,12 +4,23 @@
 
 # TODO: For everything that modifies path, run a check to ensure it's not already an entry.
 
-# All: {{{
-
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Ruby: {{{
+# Platform_Dependant: {{{1
+if [[ -n "$PREFIX" ]]; then
+    export SHELL="$PREFIX/bin/bash"
+    export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
+    export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
+    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
+    export PATH="$PREFIX/local/bin/:$PATH"
+else
+    export NVIMRUNTIME="/usr/share/nvim/runtime"
+    export SHELL="/bin/bash"
+    export BROWSER="firefox-nightly --profile-manager"
+fi
+
+# Ruby: {{{1
 # This is gonna need a for loop soon.
 
 if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
@@ -26,9 +37,8 @@ if [[ -d "$HOME/.rvm" ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 fi
-# }}}
 
-# Go: {{{
+# Go: {{{1
 # Add the Go std lib to the PATH if that's where it was put
 if [[ -d "/usr/local/go" ]]; then
     export PATH="$PATH:/usr/local/go/bin"
@@ -41,9 +51,8 @@ if [[ "$(which go)" ]]; then
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
-# }}}
 
-# JavaScript: {{{
+# JavaScript: {{{1
 if [[ "$(command -v yarn)" ]]; then
     YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
     export PATH="$PATH:$YARNPATH"
@@ -53,20 +62,14 @@ if [[ "$(command -v yarn)" ]]; then
     fi
 
 fi
-# }}}
 
-# Environment Variables: {{{
+# Environment Variables: {{{1
 
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 # -K: exit less in response to Ctrl-C
-export PAGER="less -JRKM"
-
-nvim_man(){
-    man "$1" | nvim '-c set ft=man'
-}
-
-export MANPAGER=nvim_man
+# -M: Verbose prompt
+export PAGER="less -JRKML"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -77,20 +80,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 if [[ "$(which cheat)" ]];then
     export CHEATCOLORS=true;
-    export CHEATPATH="$HOME/python/tutorials:$HOME/python/tutorials/site-packages:$CHEATPATH"
-fi
-
-if [[ -n "$PREFIX" ]]; then
-    export SHELL="$PREFIX/bin/bash"
-    export BROWSER="w3m"
-    export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
-    export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
-    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
-    export PATH="$PREFIX/local/bin/:$PATH"
-else
-    export NVIMRUNTIME="/usr/share/nvim/runtime"
-    export SHELL="/bin/bash"
-    export BROWSER="firefox-nightly --profile-manager"
+    export CHEATPATH="$HOME/python/tutorials:$HOME/python/tutorials/site-packages:$HOME/.cheat"
 fi
 
 # Set locale if it isn't explicitly stated elsewhere
@@ -101,7 +91,7 @@ export LANGUAGE=en                      # nvim complains us region not supported
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 # Also because termux doesn't set $TMPDIR to /tmp/
-
+# I should change d to a dir i can read right?
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
@@ -114,19 +104,14 @@ fi
 export TMUXP_CONFIGDIR='$HOME/.tmux'
 
 export CURL_HOME="$HOME/.config/curl/curlrc"
-# }}}
 
-# Rust: {{{
+# Rust: {{{1
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
-# }}}
 
-# Sourced files: {{{
-
+# Sourced files: {{{1
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
-export NVIM="$HOME/projects/viconf/.config/nvim"
-source "$HOME/.bashrc"
+export VICONF="$HOME/projects/viconf/.config/nvim"
+export NVIM="$HOME/.config/nvim"
 
-# }}}
-
-# }}}
+if [[ -f "$HOME/.bashrc" ]]; then source "$HOME/.bashrc"; fi

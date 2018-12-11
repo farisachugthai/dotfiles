@@ -1,12 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# Vim: set foldmethod=marker:
 """Configuration file for ipython.
 
 Heavily drawn from documentation at
-.. URL::
-`<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
 
-and source code found on GitHub.
+.. URL::
+
+    `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
+
+In addition to source code found on GitHub.
+
+This module provides a lot of convenience functions, adds typical Linux shell
+commands to `user_ns`, or the global namespace, in addition to Git aliases.
+
+In addition, pygments is directly invoked to ensure comments are clearly visible
+in IPython cells.
 """
 import os
 
@@ -20,7 +29,14 @@ from pygments.token import Comment
 
 c = get_config()  # noqa
 
+try:
+    home = os.path.expanduser("~")
+except OSError:
+    pass  # need to learn how to handle Windows case
+
 # Alias: {{{
+
+# ..note: Should I add a check that this a Unix OS because this'll blow up on NT
 
 c.AliasManager.user_aliases = [
       ('ag', 'ag --hidden --color'),
@@ -43,16 +59,19 @@ c.AliasManager.user_aliases = [
       ('la', 'ls -AF --color=always'),
       ('l', 'ls -CF --color=always'),
       ('ll', 'ls -AlF --color=always'),
+      ('ln', 'ln'),
       ('ls', 'ls -F --color=always'),
       ('lt', 'ls -Altcr --color=always'),
+      ('mk', 'mkdir -pv %l && cd %l'),      # check if this works. only mkdir
       ('mkdir', 'mkdir -pv'),
       ('mv', 'mv -iv'),
       ('nvim', 'nvim'),
       ('rm', 'rm -v'),
       ('rmdir', 'rmdir -v'),
       ('tail', 'tail -n 30'),
+      ('touch', 'touch'),
       ('tree', 'tree'),
-      ('treea', 'tree -aI .git'),
+      ('treea', 'tree -aI .git -I __pycache__'),
       ('vi', 'vim'),
       ('vim', 'vim'),
   ]
@@ -161,6 +180,9 @@ c.InteractiveShellApp.reraise_ipython_extension_failures = True
 
 # IPython: an enhanced interactive Python shell.
 
+# Whether to create profile dir if it doesn't exist
+# c.BaseIPythonApplication.auto_create = False
+
 # Whether to install the default config files into the profile dir. If a new
 #  profile is being created, and IPython contains config files for that profile
 #  then they will be staged into the new directory.  Otherwise, default config
@@ -189,7 +211,7 @@ c.BaseIPythonApplication.profile = 'default'
 
 # Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback
-# c.BaseIPythonApplication.verbose_crash = False
+c.BaseIPythonApplication.verbose_crash = True
 
 # ----------------------------------------------------------------------------
 # TerminalIPythonApp(BaseIPythonApplication,InteractiveShellApp) configuration
@@ -408,7 +430,7 @@ c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 # c.TerminalInteractiveShell.prompts_class = 'IPython.terminal.prompts.Prompts'
 
 # Use `raw_input` for the REPL, without completion and prompt colors.
-#
+
 # Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
 # Known usage are: IPython own testing machinery, and emacs inferior-shell
 # integration through elpy.
@@ -464,11 +486,11 @@ c.TerminalInteractiveShell.true_color = True
 # By default, IPython will put the history database in the IPython profile
 # directory.  If you would rather share one history among profiles, you can set
 # this value in each, so that they are consistent.
-#
+
 #  Due to an issue with fcntl, SQLite is known to misbehave on some NFS mounts.
 #  If you see IPython hanging, try setting this to something on a local disk,
 #  e.g::
-#
+
 #      ipython --HistoryManager.hist_file=/tmp/ipython_hist.sqlite
 #
 #  you can also use the specific value `:memory:` (including the colon at both
@@ -655,10 +677,10 @@ c.Completer.use_jedi = True
 
 # Extra script cell magics to define
 #
-#  This generates simple wrappers of `%%script foo` as `%%foo`.
+# This generates simple wrappers of `%%script foo` as `%%foo`.
 #
-#  If you want to add script magics that aren't on your path, specify them in
-#  script_paths
+# If you want to add script magics that aren't on your path, specify them in
+# script_paths
 # c.ScriptMagics.script_magics = []
 
 # Dict mapping short 'ruby' names to full paths, such as '/opt/secret/bin/ruby'
@@ -688,4 +710,3 @@ c.LoggingMagics.quiet = False
 # If True, any %store-d variables will be automatically restored when IPython
 # starts.
 # c.StoreMagics.autorestore = False
-

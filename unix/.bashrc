@@ -2,16 +2,13 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
-# All: {{{ 1
-
-# Don't run if not interactive: {{{ 2
+# Don't run if not interactive:{{{1
 case $- in
     *i*);;
     *) return 0;;
 esac
-# }}}
 
-# History: {{{ 2
+# History:{{{1
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -23,9 +20,8 @@ HISTFILESIZE=50000
 HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
-# }}}
 
-# Shopt: {{{ 2
+# Shopt:{{{1
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -64,10 +60,10 @@ set -o noclobber        # Still dont want to clobber things
 shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
-# }}}
 
-# Defaults in Ubuntu bashrcs: {{{ 2
+# Defaults in Ubuntu bashrcs:{{{1
 # make less more friendly for non-text input files, see lesspipe(1)
+# Also lesspipe is described in Input Preprocessors in man 1 less.
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -79,10 +75,8 @@ fi
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
-# }}}
 
-# Colors: {{{ 2
-
+# Colors:{{{1
 # TODO: Get other escape codes in a refactor the prompt.
 export Color_Off="\[\033[0m\]"
 export Yellow="\[\033[0;33m\]"
@@ -93,17 +87,13 @@ export Yellow="\[\033[0;33m\]"
 # export CYAN = '\x1b[36m'
 # export GREEN = '\x1b[32m'
 # export BLUE = '\x1b[34m'
-# }}}
 
-# Prompt: {{{ 2
+# Prompt:{{{1
 
 force_color_prompt=yes
 
 if [[ -n "$force_color_prompt" ]]; then
     if [[ -x "$PREFIX/bin/tput" ]] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.
         color_prompt=yes
     else
         color_prompt=
@@ -150,25 +140,20 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# Set 'man' colors: {{{ 3
+# Set 'man' colors:{{{2
 # Keep an eye on whether this is the problem with nvim as manpager.
 # if [ "$color_prompt" = yes ]; then
-#     LESS_TERMCAP_mb=$'\e[01;31m' \
-#     LESS_TERMCAP_md=$'\e[01;31m' \
-#     LESS_TERMCAP_me=$'\e[0m' \
-#     LESS_TERMCAP_se=$'\e[0m' \
-#     LESS_TERMCAP_so=$'\e[01;44;33m' \
-#     LESS_TERMCAP_ue=$'\e[0m' \
-#     LESS_TERMCAP_us=$'\e[01;32m'
+#     export LESS_TERMCAP_mb=$'\e[01;31m' \
+#     export LESS_TERMCAP_md=$'\e[01;31m' \
+#     export LESS_TERMCAP_me=$'\e[0m' \
+#     export LESS_TERMCAP_se=$'\e[0m' \
+#     export LESS_TERMCAP_so=$'\e[01;44;33m' \
+#     export LESS_TERMCAP_ue=$'\e[0m' \
+#     export LESS_TERMCAP_us=$'\e[01;32m'
 # fi
-# }}}
-
 unset color_prompt force_color_prompt
 
-# }}}
-
-# Vim: {{{ 2
-
+# Vim:{{{1
 set -o vi
 if [[ "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
@@ -176,11 +161,10 @@ else
     export VISUAL="vim"
 fi
 export EDITOR="$VISUAL"
-# }}}
 
-# JavaScript: {{{ 2
+# JavaScript:{{{1
 # Source npm completion if its installed
-if [[ "$(which npm)" ]]; then
+if [[ "$(command -v npm)" ]]; then
     source ~/.bashrc.d/npm-completion.bash
 fi
 
@@ -191,9 +175,8 @@ if [[ -d "$HOME/.nvm" ]]; then
     [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
     [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
 fi
-# }}}
 
-# FZF: {{{ 2
+# FZF:{{{1
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
@@ -202,10 +185,11 @@ fi
 # Loops for the varying backends for fzf. ag is my fave.
 if [[ "$(command -v ag)" ]]; then
     export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
-    export FZF_CTRL_T_OPTS=' --preview "head -100 {}" --preview-window=right:50%:wrap --cycle --multi '
+    export FZF_CTRL_T_OPTS=' --preview "head -100 {}" --preview-window=right:50%:wrap --cycle --multi --header Add\ binds'
     export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
+    export FZF_DEFAULT_OPTS="$FZF_CTRL_T_OPTS"
 
-    alias Ag="$FZF_CTRL_T_COMMAND"
+    alias Ag="$FZF_DEFAULT_COMMAND"+"FZF_DEFAULT_OPTS"
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
@@ -223,9 +207,10 @@ else
     export FZF_DEFAULT_COMMAND='find * -type f'
 fi
 
-# Options for fzf no matter what
+# Options for FZF no matter what. Should set only if these vars are unset
+# though because this is gonna clobber.
 export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
-[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS: --bind 'enter:execute(nvim {})' "
+[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS: --bind 'enter:execute(nvim {})' "
 
 # termux doesnt have xclip or xsel
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
@@ -247,48 +232,48 @@ _fzf_compgen_dir() {
 
 complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
-# }}}
 
-# Python: {{{ 2
+# Python:{{{1
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('$HOME/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
+__conda_setup="$('$HOME/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "$HOME/miniconda3/etc/profile.d/conda.sh"
-        else
-            export PATH="$HOME/miniconda3/bin:$PATH"
-        fi
+        export PATH="$HOME/miniconda3/bin:$PATH"
     fi
-    unset __conda_setup
-    # <<< conda initialize <<<
 fi
-
+unset __conda_setup
+# <<< conda initialize <<<
+fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 if [[ "$(command -v pip)" ]]; then
-# https://pip.pypa.io/en/stable/user_guide/#command-completion
     eval "$(pip completion --bash)"
 fi
-# }}}
 
-# gcloud: {{{ 2
+# gcloud:{{{1
 if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
 
 if [[ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]]; then source "$HOME/bin/google-cloud-sdk/path.bash.inc"; fi
 
+# Ruby: {{{
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+if [[ -d "$HOME/.rvm/bin" ]]; then
+    export PATH="$PATH:$HOME/.rvm/bin"
+fi
 # }}}
 
-# Sourced files: {{{ 2
-# TODO: Check that the bin you're sourcing autocompletion for is installed
-if [[ -d ~/.bashrc.d ]]; then
+# Sourced files: {{{
+if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do
         source "$config"
     done
-unset -v config
+    unset -v config
 fi
 
 # For the secrets
@@ -297,9 +282,4 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 
 # [[ -z "$TMUX"  ]] && exec tmux
-#[[ -n "$TMUX" ]] &&
-# export FZF_TMUX=1
-# export FZF_TMUX_HEIGHT=80%
-# }}}
-
-# }}}
+# [[ -n "$TMUX" ]] && export FZF_TMUX=1 && export FZF_TMUX_HEIGHT=80%

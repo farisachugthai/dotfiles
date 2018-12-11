@@ -7,7 +7,7 @@ Imports built-in modules into the global namespace and noisely warns if 3rd
 party modules aren't installed.
 
 Usage:
-    File is neither run nor interactively sourced.
+    File is neither run nor interactively sourced. Simply initialize IPython!
 
 .. notes 2018-09-06:
     Discovered that putting the imports into functions and calling those functions
