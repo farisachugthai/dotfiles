@@ -12,7 +12,7 @@ esac
 # }}}
 
 # History: {{{ 2
-# don't put duplicate lines or lines starting with space in the history.
+# Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=50000
@@ -101,13 +101,8 @@ if [[ -n "$force_color_prompt" ]]; then
     fi
 fi
 
-# I am still so afraid to touch this thing but I want to add $HISTCMD to it so badly
-
 # https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
 
-# Spare your eyes and don't look. Indenting the lines randomly added white
-# space to my prompt and as a result, this steaming hot plate of escape codes
-# and special characters can't be indented at all.
 export ARROW='\342\224\224\342\224\200\342\224\200\342\225\274'
 export Color_Off="\[\033[0m\]"
 export Yellow="\[\033[0;33m\]"
@@ -135,23 +130,13 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# # Set 'man' colors: {{{ 3
-# if [ "$color_prompt" = yes ]; then
-#     export LESS_TERMCAP_mb=$'\e[01;31m' \
-#     export LESS_TERMCAP_md=$'\e[01;31m' \
-#     export LESS_TERMCAP_me=$'\e[0m' \
-#     export LESS_TERMCAP_se=$'\e[0m' \
-#     export LESS_TERMCAP_so=$'\e[01;44;33m' \
-#     export LESS_TERMCAP_ue=$'\e[0m' \
-#     export LESS_TERMCAP_us=$'\e[01;32m'
-# fi
-# # }}}
 
 unset color_prompt force_color_prompt
 tput reset      # because otherwise I end up with a red cursor
 # }}}
 
 # Vim: {{{ 2
+
 set -o vi
 if [[ "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
@@ -168,7 +153,7 @@ if [[ "$(command -v npm)" ]]; then
 fi
 
 # Export nvm if the directory exists
-if [ -d "$HOME/.nvm" ]; then
+if [[ -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
     # Load nvm and bash completion
     [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
@@ -177,32 +162,23 @@ fi
 # }}}
 
 # FZF: {{{ 2
-# TODO: Go to this file and see how he set up only ever sourcing a file
-# if it's not already in $PATH
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-# fzf (https://github.com/junegunn/fzf)
-# --------------------------------------------------------------------
-fzf-down() {
-  fzf --height 50% "$@" --border
-}
-
-# Generally give everything that the searcher can handle itself I.E. ag has an option for follow.
-# In the opts env var, will be modifications that FZF undertakes. FZF has a --cycle option. ag doesn't.
+# Loops for the varying backends for fzf. ag is my fave.
 if [[ "$(command -v ag)" ]]; then
     export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
-    export FZF_CTRL_T_OPTS=' --preview "head -100 {}" --preview-window=right:50%:wrap --cycle --multi '
+    export FZF_CTRL_T_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse --preview "head -100 {}" --preview-window=right:50%:wrap'
     export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
-    # and in nvim we have Ag aliased as well.
-    alias ag='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
+    alias Ag="$FZF_CTRL_T_COMMAND"
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
     export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10 --follow '
     export FZF_CTRL_T_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
+
 elif [[ "$(command -v fd)" ]]; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
@@ -215,10 +191,13 @@ else
     export FZF_DEFAULT_COMMAND='find * -type f'
 fi
 
-[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--layout=reverse --bind "enter:execute(nvim {})" --multi --cycle --color=bg+:24 --border'
+# Globally available options for FZF
+export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse --preview "head -100 {}" --preview-window=right:50%:wrap'
 
-# termux doesn't have xclip or xsel unfortunately
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
+[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS: --bind 'enter:execute(nvim {})' "
+
+# termux doesnt have xclip or xsel
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
 
@@ -243,18 +222,18 @@ complete -F _fzf_dir_completion -o default -o bashdefault tree
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+    __conda_setup="$('$HOME/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="$HOME/miniconda3/bin:$PATH"
+        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "$HOME/miniconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="$HOME/miniconda3/bin:$PATH"
+        fi
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+    unset __conda_setup
+    # <<< conda initialize <<<
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
@@ -286,7 +265,7 @@ if [[ -d "$HOME/.rvm/bin" ]]; then
 fi
 # }}}
 
-# Sourced files: {{{
+# Sourced files: {{{ 2
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do
         source "$config"
@@ -299,8 +278,7 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
 
-# [[ -z "$TMUX"  ]] && exec tmux
-[[ -n "$TMUX" ]] && FZF_TMUX=1 && FZF_TMUX_HEIGHT=80%
+[[ -n "$TMUX" ]] && export FZF_TMUX=1 && export FZF_TMUX_HEIGHT=80%
 # }}}
 
 # }}}

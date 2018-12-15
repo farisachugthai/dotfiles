@@ -6,7 +6,7 @@
 # Config `hide_cursor_when_typing` is deprecated. Please use `mouse.hide_when_typing` instead.
 # Config `unfocused_hollow_cursor` is deprecated. Please use `cursor.unfocused_hollow` instead.
 
-# Font size is at line 121
+# Font size is at line 129
 # I'm not sure how to say this sensibly but I think alacritty retains state.
 # If you increase the font as I just did from 6 to 10 to 8 to 6 it doesn't
 # end at the same size it was at.
@@ -126,7 +126,7 @@ font:
     style: Italic
 
   # Point size of the font
-  size: 9.0
+  size: 10.0
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.

@@ -25,8 +25,7 @@ c = get_config()  # noqa
 try:
     home = os.path.expanduser("~")
 except OSError as e:
-    print(e)
-    # You got microsofted I guess.
+    pass
 
 # Alias: {{{
 
@@ -44,6 +43,7 @@ c.AliasManager.user_aliases = [
       ('gds2', 'git diff --staged --stat'),
       ('git', 'git'),
       ('glo', 'git log'),
+      ('gpip', 'export PIP_REQUIRE_VIRTUALENV=0; pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'),
       ('gs', 'git status'),
       ('gst', 'git diff --stat'),
       ('head', 'head -n 30'),
@@ -60,7 +60,7 @@ c.AliasManager.user_aliases = [
       ('rmdir', 'rmdir -v'),
       ('tail', 'tail -n 30'),
       ('tree', 'tree'),
-      ('treea', 'tree -aI .git'),
+      ('treea', 'tree -a I .git -I __pycache__'),
       ('vi', 'vim'),
       ('vim', 'vim'),
   ]
@@ -192,8 +192,6 @@ if os.environ.get("$IPYTHONDIR"):
 else:
     # Assume home was defined correctly up top. Will need to rewrite for windows
     c.BaseIPythonApplication.ipython_dir = os.path.join(home, ".ipython")
-
-
 # Whether to overwrite existing config files when copying
 # c.BaseIPythonApplication.overwrite = False
 
@@ -425,9 +423,9 @@ c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 # Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
 # Known usage are: IPython own testing machinery, and emacs inferior-shell
 # integration through elpy.
-#
+
 # This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
-#  variable is set, or the current terminal is not a tty.
+# variable is set, or the current terminal is not a tty.
 # c.TerminalInteractiveShell.simple_prompt = False
 
 # Number of line at the bottom of the screen to reserve for the completion menu
@@ -450,7 +448,7 @@ c.TerminalInteractiveShell.true_color = True
 # ----------------------------------------------------------------------------
 
 # Access the history database without adding to it.
-#
+
 # This is intended for use by standalone history tools. IPython shells use
 # HistoryManager, below, which is a subclass of this.
 
@@ -460,7 +458,7 @@ c.TerminalInteractiveShell.true_color = True
 # *******
 
 # Options for configuring the SQLite connection
-#
+
 # These options are passed as keyword args to sqlite3.connect when establishing
 # database conenctions.
 # c.HistoryAccessor.connection_options = {}

@@ -4,12 +4,10 @@
 
 # TODO: For everything that modifies path, run a check to ensure it's not already an entry.
 
-# All: {{{
-
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Ruby: {{{
+# Ruby: {{{1
 # This is gonna need a for loop soon.
 
 # Load RVM into a shell session *as a function*
@@ -26,9 +24,8 @@ if [[ -d "$HOME/.rvm" ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 fi
-# }}}
 
-# Go: {{{
+# Go: {{{1
 # Add the Go std lib to the PATH if that's where it was put
 if [[ -d "/usr/local/go" ]]; then
     export PATH="$PATH:/usr/local/go/bin"
@@ -41,9 +38,7 @@ if [[ "$(command -v go)" ]]; then
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
-# }}}
-
-# JavaScript: {{{
+# JavaScript: {{{1
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
     export PATH="$PATH:$YARNPATH"
@@ -51,16 +46,14 @@ if [[ $(command -v yarn) ]]; then
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
 fi
-# }}}
 
-# Environment Variables: {{{
+# Environment Variables: {{{1
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 # -K: exit less in response to Ctrl-C
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
 export PAGER="less -JRMK"
-export MANPAGER="less -JRMKL"
 
 export COLORTERM="truecolor"
 
@@ -84,7 +77,6 @@ export LC_MESSAGES=C                    # man i3: Prevents program output transl
 export LANGUAGE=en                      # nvim complains us region not supported
 # export LC_CTYPE=C.UTF-8                 # the only thing defined in /usr/lib/locale right now
 
-
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 # Also because termux doesn't set $TMPDIR to /tmp/
 if [[ -n "$TMPDIR" ]]; then
@@ -104,13 +96,11 @@ export TMUXP_CONFIGDIR='$HOME/.tmux'
 # if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
 export CURL_HOME="$HOME/.config/curl/curlrc"
-# }}}
 
-# Rust: {{{
+# Rust: {{{1
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
-# }}}
 
-# Platform specific: {{{
+# Platform specific: {{{1
 
 # For defining the differences between Termux and Ubuntu/KDE Neon.
 if [[ -n "$PREFIX" ]]; then
@@ -123,27 +113,26 @@ if [[ -n "$PREFIX" ]]; then
 else
     export NVIMRUNTIME="/usr/share/nvim/runtime"
     # export SHELL="/bin/bash"
-    export BROWSER="firefox --profile-manager"
+    export BROWSER="firefox" 
     export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
 fi
-# }}}
 
-# Sourced Files: {{{
-# Tmux the culprit as usual
-if [[ -z "$TMUX" ]]; then
-    tmux new
-else
+# Sourced Files: {{{1
+# Unfortunately this only gets called in an interactive session tmux is reading
+# .profile, but most shells don't usually read this file in. As a result this
+# may have to move to bashrc.
+# if [[ -z "$TMUX" ]]; then
+    # tmux new
+# else
     # hoping that makes an array and by not specifying an index i only pick the 1st
-    tmux attach -t "$(tmux ls)"
-fi
+    # tmux attach -t "$(tmux ls)"
+# fi
 # alternatively i think what we could do is something to the effect of: pseudocode
 # try: tmux new -s startup; except ServerExists; tmux attach -t startup or tmux new
 
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
 export NVIM="$HOME/projects/viconf/.config/nvim"
-
-# }}}
 
 # Source the bashrc last.
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

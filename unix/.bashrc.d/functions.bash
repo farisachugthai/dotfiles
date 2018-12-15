@@ -74,6 +74,12 @@ infovi () {
 byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
 
 # FZF:
+
+fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
+
 # commits in a repo
 fzf_commits() {
   git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "

@@ -30,3 +30,6 @@ except ImportError as e:
     print("Neovim import failed. Only ignore this if you plan on going"
           " the entire session without using %edit")
     print("***************************************************************")
+
+# This is a wonderful convenience function that improves on the built-in dir()
+from IPython.utils.dir2 import dir2
