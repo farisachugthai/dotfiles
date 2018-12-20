@@ -4,9 +4,12 @@
 # Personal
 .zim/
 tmux-history
+*.patch
 
-## Python
+# Local files
+*.local
 
+# Python
 # mypy
 .mypy_cache/
 
@@ -19,7 +22,7 @@ tmux-history
 # Rope
 .ropeproject/
 
-## Vim Backup Files
+# Vim Backup Files
 *.un~
 *.swp
 *.swo
@@ -37,20 +40,18 @@ htmlcov/
 dist/
 build/
 *.egg-info/
-.idea/
 
-## KDE directory settings
+# KDE directory settings
 .directory
 
 # PyCharm
 .idea
+.idea/
 
 # From:
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
-*tags
-/tags*tags
 *[Tt]ags*
 /tags/
 */tags/*
@@ -133,7 +134,6 @@ Thumbs.db
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 

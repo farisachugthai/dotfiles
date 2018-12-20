@@ -1,24 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Bpython config.
 
-# Bpython config
+This is a standard python config file
+Valid values can be True, False, integer numbers, strings
+By default bpython will look for $XDG_CONFIG_HOME/bpython/config
+($XDG_CONFIG_HOME defaults to ~/.config) or you can specify a file with the
+--config option on the command line
 
-# This is a standard python config file
-# Valid values can be True, False, integer numbers, strings
-# By default bpython will look for $XDG_CONFIG_HOME/bpython/config
-# ($XDG_CONFIG_HOME defaults to ~/.config) or you can specify a file with the
-# --config option on the command line
-#
-# see http://docs.bpython-interpreter.org/configuration.html
-# for all configurable options
+:URL: http://docs.bpython-interpreter.org/configuration.html
 
+Refer to the link above for all configurable options
+"""
 from os.path import expanduser, join as pjoin
-import time
+# import time
 
-home = os.path.expanduser('~')
-# LOG_TIMESTAMP = time.ctime()
-# General section tag
-[general]
+# dont touch this until you're ready to handwrite a logger
+# LOG_TIMESTAMP=time.ctime()
+
+home = expanduser('~')
+
+[general]  # noqa
 
 # Display the autocomplete list as you type (default: True).
 # When this is off, you can hit tab to see the suggestions.
@@ -53,7 +55,7 @@ tab_length = 4
 # External editor to use for editing the current line, block, or full history
 # Default is to try $EDITOR and $VISUAL, then vi - but if you uncomment
 # the line below that will take precedence
-editor = nvim
+# editor = nvim
 
 # Whether to append .py to the filename while saving session to a file.
 # (default: False)
@@ -71,7 +73,7 @@ save_append_py = True
 # Enable autoreload feature by default (default: False).
 # default_autoreload = False
 
-[keyboard]
+[keyboard]  # noqa
 
 # All key bindings are shown commented out with their default binding
 
@@ -100,7 +102,8 @@ save_append_py = True
 # reverse_incremental_search = M-r
 # incremental_search = M-s
 
-[curtsies]
+# Also wth is curtsies?
+[curtsies]  # noqa
 
 # Allow the the completion and docstring box above the current line
 # (default: False)

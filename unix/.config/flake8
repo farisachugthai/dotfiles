@@ -14,6 +14,8 @@ ignore =
     E265            # comments error
     E266            # too many leading #'s in a comment
 
+    E302            # Guido doesn't even do this. Who are you?
+
 # the defaults for excluded files are
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox
 

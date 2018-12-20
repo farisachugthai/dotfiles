@@ -40,7 +40,9 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -v'
-alias rm='rm -v'
+# only prompts with more than 3 files or recursed dirs.
+# Less annoying than i but more safe
+# alias rm='rm -I'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -77,8 +79,6 @@ alias glo='git log'
 alias gls='git ls-tree'
 alias gs='git status'
 alias gst='git diff --stat'
-# Not gonna lie I really don't like the inconsistency of gst.
-# But is gds2 too much?? Like at what point are the alias more complicated than just running the command?
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -92,7 +92,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# I'll give you a second shot at it kid
 alias redo='fc -s'
-# And even a few ways to do it if you want
 alias r='fc -s'
+
+alias spacemacs='emacs -F ~/.spacemacs'

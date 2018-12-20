@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Persistenting stored macrosand placing them in startupdir."""
+"""Persistent macros and placing them in startupdir.
+
+Admittedly though, it doesn't actually make much sense to structure
+the file this way. Macros require all string input. So that's useful if the
+source of our info is a string; however, in a persistent file, we can define
+arbitrarily complex objects. So why limit ourselves to the string?
+"""
 from IPython.core.macro import Macro
 
 lazydl = Macro("""
@@ -15,3 +21,5 @@ res = requests.get(url)
 with open(fname, 'xt') as f:
     f.write(res.tex)
 """)
+
+del Macro

@@ -2,43 +2,128 @@
 # -*- coding: utf-8 -*-
 """Module for managing keybindings in IPython.
 
+Keybindings in IPython
+=======================
+
 Double check that termux has the right version of prompt because I'm
 seeing different modules to import. Or theres a bug because there were
 literally no modules with docstrings according to IPython.
 
 Currently using 1.0.15 - 2018-09-07
 
-Found the file where this is originally implemented YAS.
+Oct 30, 2018:
+    IPython 7.1.1 ships with pt2!
 
-Or I guess I should say the actual keybindings are listed.
+Run in shell
+-----------------------
 
-Go to the ipython root dir:
-    # no idea if below has correct sphinx syntax.
-    :code: shell
-    cd terminal
+Here's a little function I found today that might help guide this along
+in a more streamlined manner::
+
+    import IPython
+    IPython.terminal.interactiveshell.create_ipython_shortcuts()
+
+So alternatively you can do::
+
+    from IPython import get_ipython
+    from IPython.terminal.interactiveshell import create_ipython_shortcuts
+    ip = get_ipython()
+    c = create_ipython_shortcuts(ip)
+
+    # This will give you the following methods
+    [ins] In [11]: dir(c)
+    Out[11]:
+    ['_KeyBindings__version',
+    '__abstractmethods__',
+    '__class__',
+    '__delattr__',
+    '__dict__',
+    '__dir__',
+    '__doc__',
+    '__eq__',
+    '__format__',
+    '__ge__',
+    '__getattribute__',
+    '__gt__',
+    '__hash__',
+    '__init__',
+    '__init_subclass__',
+    '__le__',
+    '__lt__',
+    '__module__',
+    '__ne__',
+    '__new__',
+    '__reduce__',
+    '__reduce_ex__',
+    '__repr__',
+    '__setattr__',
+    '__sizeof__',
+    '__str__',
+    '__subclasshook__',
+    '__weakref__',
+    '_abc_impl',
+    '_clear_cache',
+    '_get_bindings_for_keys_cache',
+    '_get_bindings_starting_with_keys_cache'
+    '_version',
+    'add',
+    'add_binding',
+    'bindings',
+    'get_bindings_for_keys',
+    'get_bindings_starting_with_keys',
+    'remove',
+    'remove_binding']
+
+c.bindings has some useful info.
+No perceptible difference between add and add_binding.
+
+Couldn't get 'get_bindings_for_keys' to work unfortunately.
+Ran with one arg with a known key ('c-p') and got an empty response ([]).
+Ran with ('c-p', filter=HasFocus(DEFAULTBUFFER))
+and got an error.
+Ran with 2 keys and got an err.
+
+Help on function create_ipython_shortcuts in IPython.terminal.interactiveshell:
+
+IPython.terminal.interactiveshell.create_ipython_shortcuts = create_ipython_shortcuts(shell)
+    Set up the prompt_toolkit keyboard shortcuts for IPython
+
+
+Original File Implementation
+----------------------------
+
+Found the file where the default keybindings are listed.
+
+Go to the ipython root dir
+
+ipython::
+
+    %cd terminal
     %pycat shortcuts
 
 Up at the top you have the keybindings IPython ships with listed for ya!
 
 Sep 24, 2018:
     Commented everything out.
-    TODO:
-        Check whether were running in IPython or Jupyter console because these
-        imports break jupyter.
 
-        Why the hell does Jupyter import everything IPython uses btw???
+.. todo::
+
+    Check whether were running in IPython or Jupyter console because these
+    imports break jupyter.
+
+Why the hell does Jupyter import everything IPython uses btw???
 """
 # this right here is the mod we need to keep our eyes on.
-#  from prompt_toolkit.key_binding.registry import Registry
-#  from prompt_toolkit.key_binding.defaults import load_key_bindings
+# from prompt_toolkit.key_binding.registry import Registry
+# from prompt_toolkit.key_binding.defaults import load_key_bindings
 
-#  from IPython import get_ipython
-#  from prompt_toolkit.enums import DEFAULT_BUFFER
-#  from prompt_toolkit.keys import Keys
-#  from prompt_toolkit.filters import HasFocus, HasSelection, ViInsertMode
+# from IPython import get_ipython
+# from prompt_toolkit.enums import DEFAULT_BUFFER
+# from prompt_toolkit.keys import Keys
+# from prompt_toolkit.filters import HasFocus, HasSelection, ViInsertMode
 
-#  ip = get_ipython()
-#  insert_mode = ViInsertMode()
+# ip = get_ipython()
+# insert_mode = ViInsertMode()
 
 
 #  def insert_unexpected(event):
@@ -55,18 +140,18 @@ Sep 24, 2018:
 #                   filter=(HasFocus(DEFAULT_BUFFER)
 #                                  & ~HasSelection()
 #                              & insert_mode))(insert_unexpected)
-    # and basically continue on in this fashion for as long as you need
-    # ipython barely comes with any keybindings
-    # i'm gonna drop 2 that i thought were intesting though
+# and basically continue on in this fashion for as long as you need
+# ipython barely comes with any keybindings
+# i'm gonna drop 2 that i thought were intesting though
 
-    # Ctrl+I == Tab
-    # flake: noqa
-    # registry.add_binding(Keys.ControlI,
-                # filter=(HasFocus(DEFAULT_BUFFER)
-                     # & ~HasSelection()
-                     # & insert_mode
-                     # & cursor_in_leading_ws))(indent_buffer)
-    # flake: qa
+# Ctrl+I == Tab
+# flake: noqa
+# registry.add_binding(Keys.ControlI,
+# filter=(HasFocus(DEFAULT_BUFFER)
+# & ~HasSelection()
+# & insert_mode
+# & cursor_in_leading_ws))(indent_buffer)
+# flake: qa
 
 # also because i didn't know or remember these were keybindings
 #          # Ctrl+J == Enter, seemingly
@@ -76,9 +161,7 @@ Sep 24, 2018:
 #                                       & insert_mode
 #                              ))(return_handler)
 #  def pure_pt_way():
-#      """
-#      From the pt docs:
-
+#      """From the pt docs:
 
 #      It is also possible to combine multiple registries. We do this in the default
 #      key bindings. There are some registries that contain Emacs bindings, while
@@ -121,8 +204,8 @@ Sep 24, 2018:
 #      Module to define and register Terminal IPython shortcuts with
 #      :mod:`prompt_toolkit`
 
-#  # Copyright (c) IPython Development Team.
-#  # Distributed under the terms of the Modified BSD License.
+#   Copyright (c) IPython Development Team.
+#   Distributed under the terms of the Modified BSD License.
 #      """
 
 #      import warnings

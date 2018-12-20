@@ -48,3 +48,5 @@ def create_logging_file():
 
 if __name__ == "__main__":
     create_logging_file()
+    del create_logging_file
+    del path

@@ -1,3 +1,5 @@
+# Global Git Config
+# Vim: set ft=gitconfig:
 [user]
     email = farischugthai@gmail.com
     name = farisachugthai
@@ -6,7 +8,11 @@
     autocrlf = input
     editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
-    pager = less -rL
+    pager = less -rMFXKL
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
 
 [color]
     branch = always
@@ -20,10 +26,13 @@
 [diff]
     color = auto
     prompt = false
+    # detect copied files as well as renames. affects merge and status.renames
+    renames = copy
     strategy-option = resolve
     tool = vimdiff
 
 [merge]
+    autoStash
     color = auto
     conflictstyle = diff3
     mergestyle = diff3
@@ -76,7 +85,10 @@
     autocorrect = 1
 
 [credential]
-    helper = cache
+	helper = cache --timeout=86400
+
+[credential "https://www.github.comm"]
+    username = farisachugtha
 
 [web]
     browser = firefox
@@ -89,5 +101,5 @@
     showStash = True
     showUntrackedFiles = all
 
-
-# Vim: set ft:gitconfig :
+[init]
+	templatedir = .config/git

@@ -38,6 +38,7 @@ if [[ "$(command -v go)" ]]; then
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
+
 # JavaScript: {{{1
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
@@ -45,6 +46,12 @@ if [[ $(command -v yarn) ]]; then
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
+fi
+
+# Lisp:{{{1
+
+if [[ -d "$HOME/.racket/7.1/bin" ]]; then
+    export PATH="$PATH:$HOME/.racket/7.1/bin"
 fi
 
 # Environment Variables: {{{1
