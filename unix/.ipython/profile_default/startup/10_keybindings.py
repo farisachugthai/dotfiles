@@ -12,26 +12,27 @@ literally no modules with docstrings according to IPython.
 Currently using 1.0.15 - 2018-09-07
 
 Oct 30, 2018:
+
     IPython 7.1.1 ships with pt2!
 
 Run in shell
------------------------
+-------------
 
 Here's a little function I found today that might help guide this along
 in a more streamlined manner::
 
-    import IPython
-    IPython.terminal.interactiveshell.create_ipython_shortcuts()
+    >>> import IPython
+    >>> IPython.terminal.interactiveshell.create_ipython_shortcuts()
 
 So alternatively you can do::
 
-    from IPython import get_ipython
-    from IPython.terminal.interactiveshell import create_ipython_shortcuts
-    ip = get_ipython()
-    c = create_ipython_shortcuts(ip)
+    >>> from IPython import get_ipython
+    >>> from IPython.terminal.interactiveshell import create_ipython_shortcuts
+    >>> ip = get_ipython()
+    >>> c = create_ipython_shortcuts(ip)
 
     # This will give you the following methods
-    [ins] In [11]: dir(c)
+    >>> [ins] In [11]: dir(c)
     Out[11]:
     ['_KeyBindings__version',
     '__abstractmethods__',
@@ -79,14 +80,14 @@ No perceptible difference between add and add_binding.
 
 Couldn't get 'get_bindings_for_keys' to work unfortunately.
 Ran with one arg with a known key ('c-p') and got an empty response ([]).
-Ran with ('c-p', filter=HasFocus(DEFAULTBUFFER))
-and got an error.
+Ran with ('c-p', filter=HasFocus(DEFAULTBUFFER)) and got an error.
 Ran with 2 keys and got an err.
 
 Help on function create_ipython_shortcuts in IPython.terminal.interactiveshell:
 
-IPython.terminal.interactiveshell.create_ipython_shortcuts = create_ipython_shortcuts(shell)
-    Set up the prompt_toolkit keyboard shortcuts for IPython
+    >>> IPython.terminal.interactiveshell.create_ipython_shortcuts =
+    >>> create_ipython_shortcuts(shell)
+    # Set up the prompt_toolkit keyboard shortcuts for IPython
 
 
 Original File Implementation

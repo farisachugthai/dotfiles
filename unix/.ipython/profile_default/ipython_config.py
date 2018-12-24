@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Vim: set foldmethod=marker:
 """Configuration file for ipython.
 
 Heavily drawn from documentation at
@@ -11,7 +10,7 @@ Heavily drawn from documentation at
 
 In addition to source code found on GitHub.
 
-This module provides a lot of convenience functions, adds typical Linux shell
+This module provides  convenience functions, adds typical Linux shell
 commands to `user_ns`, or the global namespace, in addition to Git aliases.
 
 In addition, pygments is directly invoked to ensure comments are clearly visible
@@ -31,12 +30,10 @@ c = get_config()  # noqa
 
 try:
     home = os.path.expanduser("~")
-except OSError:
-    pass  # need to learn how to handle Windows case
+except OSError as e:
+    pass
 
 # Alias: {{{
-
-# ..note: Should I add a check that this a Unix OS because this'll blow up on NT
 
 c.AliasManager.user_aliases = [
       ('ag', 'ag --hidden --color'),
@@ -59,7 +56,6 @@ c.AliasManager.user_aliases = [
       ('la', 'ls -AF --color=always'),
       ('l', 'ls -CF --color=always'),
       ('ll', 'ls -AlF --color=always'),
-      ('ln', 'ln'),
       ('ls', 'ls -F --color=always'),
       ('lt', 'ls -Altcr --color=always'),
       ('mk', 'mkdir -pv %l && cd %l'),      # check if this works. only mkdir
@@ -69,9 +65,8 @@ c.AliasManager.user_aliases = [
       ('rm', 'rm -v'),
       ('rmdir', 'rmdir -v'),
       ('tail', 'tail -n 30'),
-      ('touch', 'touch'),
       ('tree', 'tree'),
-      ('treea', 'tree -aI .git -I __pycache__'),
+      ('treea', 'tree -a I .git -I __pycache__'),
       ('vi', 'vim'),
       ('vim', 'vim'),
   ]
@@ -88,7 +83,6 @@ c.AliasManager.user_aliases = [
 # note that we quote when in the configuration file but when running alias
 # interactively the syntax %alias alias_name cmd doesn't require quoting
 
-# }}}
 
 # ----------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -187,7 +181,7 @@ c.InteractiveShellApp.reraise_ipython_extension_failures = True
 #  profile is being created, and IPython contains config files for that profile
 #  then they will be staged into the new directory.  Otherwise, default config
 #  files will be automatically generated.
-c.BaseIPythonApplication.copy_config_files = True
+# c.BaseIPythonApplication.copy_config_files = False
 
 # Path to an extra config file to load.
 #
@@ -201,8 +195,8 @@ c.BaseIPythonApplication.copy_config_files = True
 if os.environ.get("$IPYTHONDIR"):
     c.BaseIPythonApplication.ipython_dir = os.environ.get("$IPYTHONDIR")
 else:
-    # c.BaseIPythonApplication.ipython_dir = "~/.ipython"
-    pass
+    # Assume home was defined correctly up top. Will need to rewrite for windows
+    c.BaseIPythonApplication.ipython_dir = os.path.join(home, ".ipython")
 # Whether to overwrite existing config files when copying
 # c.BaseIPythonApplication.overwrite = False
 
@@ -310,9 +304,11 @@ c.InteractiveShell.colors = 'Neutral'
 # c.InteractiveShell.disable_failing_post_execute = False
 
 # If True, anything that would be passed to the pager will be displayed as
-# regular output instead.
-# Manpager is set to nvim and it handles it SO much better than vim did.
-c.InteractiveShell.display_page = False
+#  regular output instead.
+try:
+    c.InteractiveShell.display_page = True
+except ImportError:
+    c.InteractiveShell.display_page = False
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
 # c.InteractiveShell.enable_html_pager = False
@@ -364,9 +360,7 @@ try:
 except ImportError:
     c.InteractiveShell.sphinxify_docstring = False
 else:
-    # currently doesn't work
-    # c.InteractiveShell.sphinxify_docstring = True
-    pass
+    c.InteractiveShell.sphinxify_docstring = True
 
 c.InteractiveShell.wildcards_case_sensitive = False
 
@@ -434,7 +428,7 @@ c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 # Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
 # Known usage are: IPython own testing machinery, and emacs inferior-shell
 # integration through elpy.
-#
+
 # This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
 # variable is set, or the current terminal is not a tty.
 # c.TerminalInteractiveShell.simple_prompt = False

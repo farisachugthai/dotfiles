@@ -3,8 +3,6 @@
 
 # mp4 single video
 
-# mp4 specific configs: {{{ 1
-
 # Filetype
 -f mp4
 
@@ -21,11 +19,6 @@
 # Modification time
 --no-mtime
 
-# Subtitles
-# Write autosubs only works with YT and videos
---write-auto-sub
---embed-subs
-
 # Thumbnails
 --embed-thumbnail
 
@@ -34,5 +27,3 @@
 
 # Don't use proprietary encodings
 --youtube-skip-dash-manifest
-
-# }}}

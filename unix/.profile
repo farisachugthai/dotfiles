@@ -14,6 +14,7 @@ if [[ -n "$PREFIX" ]]; then
     export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
     export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
     export PATH="$PREFIX/local/bin/:$PATH"
+    export MANPATH="$PREFIX/share/man:$HOME/.fzf/man"
 else
     export NVIMRUNTIME="/usr/share/nvim/runtime"
     export SHELL="/bin/bash"
@@ -47,7 +48,7 @@ elif [[ -d "$PREFIX/local/go" ]]; then
 fi
 
 # Utilize GOPATH.
-if [[ "$(which go)" ]]; then
+if [[ "$(command -v go)" ]]; then
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
@@ -78,7 +79,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-if [[ "$(which cheat)" ]];then
+if [[ "$(command -v cheat)" ]];then
     export CHEATCOLORS=true;
     export CHEATPATH="$HOME/python/tutorials:$HOME/python/tutorials/site-packages:$HOME/.cheat"
 fi

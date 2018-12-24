@@ -47,7 +47,7 @@ alias rmdir='rmdir -v'
 # alias rm='rm -I'
 
 # Print each PATH entry on a separate line
-alias path='echo -e ${PATH//:/\\n}'
+alias paoh='echo -e ${PATH//:/\\n}'
 
 # Options i use every time i run these commands
 alias dus='du -d 1 -h'
@@ -66,23 +66,35 @@ alias termux-open="termux-open --send"
 alias info="info --vi-keys"
 
 # Git aliases. for complicated git log calls funcs are better
+alias g='git status -sb'
 alias ga='git add'
-alias gb='git blame'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gci='git commit'
 alias gcl='git clone'
 alias gcls='git clone --depth 1'
-alias gch='git checkout'
-alias gco='git commit'
+alias gco='git checkout'
+alias gcob='git checkout -b'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gds2='git diff --staged --stat'
 alias gdt='git difftool'
+alias gf='git fetch --all'
 alias glo='git log'
 alias gls='git ls-tree'
+alias gm='git merge'
+alias gmt='git mergetool'
+alias gp='git pull'
+alias gpo='git pull origin'
+alias gpom='git pull origin master'
+alias gpu='git push'
+alias gr='git remote'
+alias grv='git remote -v'
 alias gs='git status'
 alias gst='git diff --stat'
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if [[ -x /usr/bin/dircolors ]]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls -F --color=auto'
     alias dir='dir --color=auto'

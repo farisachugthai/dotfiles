@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
+"""
 # This file is part of ranger, the console file manager.
 # This configuration file is licensed under the same terms as ranger.
 # ===================================================================
-#
-# NOTE: If you copied this file to /etc/ranger/commands_full.py or
-# ~/.config/ranger/commands_full.py, then it will NOT be loaded by ranger,
-# and only serve as a reference.
-#
+
+# NOTE: If you copied this file to ~/.config/ranger/commands_full.py,
+# then it will NOT be loaded by ranger, and only serve as a reference.
+
 # ===================================================================
 # This file contains ranger's commands.
 # It's all in python; lines beginning with # are comments.
-#
+
 # Note that additional commands are automatically generated from the methods
 # of the class ranger.core.actions.Actions.
-#
-# You can customize commands in the files /etc/ranger/commands.py (system-wide)
-# and ~/.config/ranger/commands.py (per user).
+
+# You can customize commands in the files /etc/ranger/commands.py 
+# (system-wide) and ~/.config/ranger/commands.py (per user).
+
 # They have the same syntax as this file.  In fact, you can just copy this
 # file to ~/.config/ranger/commands_full.py with
 # `ranger --copy-config=commands_full' and make your modifications, don't
@@ -23,7 +24,7 @@
 # `ranger --copy-config=commands' to copy a short sample commands.py that
 # has everything you need to get started.
 # But make sure you update your configs when you update ranger.
-#
+
 # ===================================================================
 # Every class defined here which is a subclass of `Command' will be used as a
 # command in ranger.  Several methods are defined to interface with ranger:
@@ -61,9 +62,9 @@
 #
 # ===================================================================
 # And this is a little reference for common ranger functions and objects:
-#
-# self.fm: A reference to the "fm" object which contains most information
-#      about ranger.
+
+# self.fm: A reference to the "fm" object which contains most 
+# information about ranger.
 # self.fm.notify(string): Print the given string on the screen.
 # self.fm.notify(string, bad=True): Print the given string in RED.
 # self.fm.reload_cwd(): Reload the current working directory.
@@ -75,10 +76,10 @@
 #      already typed in for you.
 # self.fm.move(direction): Moves the cursor in the given direction, which
 #      can be something like down=3, up=5, right=1, left=1, to=6, ...
-#
+
 # File objects (for example self.fm.thisfile) have these useful attributes and
 # methods:
-#
+
 # tfile.path: The path to the file.
 # tfile.basename: The base name only.
 # tfile.load_content(): Force a loading of the directories content (which
@@ -111,8 +112,8 @@ class alias(Command):
         if not self.arg(1) or not self.arg(2):
             self.fm.notify('Syntax: alias <newcommand> <oldcommand>', bad=True)
             return
-
-        self.fm.commands.alias(self.arg(1), self.rest(2))
+        else:
+            self.fm.commands.alias(self.arg(1), self.rest(2))
 
 
 class echo(Command):
@@ -120,13 +121,12 @@ class echo(Command):
 
     Display the text in the statusbar.
     """
-
     def execute(self):
         self.fm.notify(self.rest(1))
 
 
 class cd(Command):
-    """:cd [-r] <path>
+    """:cd [-r] <dirname>
 
     The cd command changes the directory.
     If the path is a file, selects that file.
@@ -1326,6 +1326,8 @@ class scout(Command):
     """:scout [-FLAGS...] <pattern>
 
     Swiss army knife command for searching, traveling and filtering files.
+    The command takes various flags as arguments which can be used to
+    influence its behaviour:
 
     Flags:
      -a    Automatically open a file on unambiguous match
@@ -1347,13 +1349,13 @@ class scout(Command):
     a :filter-like command using globbing.
     """
     # pylint: disable=bad-whitespace
+    # noqa E221
     AUTO_OPEN     = 'a'
     OPEN_ON_ENTER = 'e'
     FILTER        = 'f'
     SM_GLOB       = 'g'
     IGNORE_CASE   = 'i'
     KEEP_OPEN     = 'k'
-    SM_LETTERSKIP = 'l'
     MARK          = 'm'
     UNMARK        = 'M'
     PERM_FILTER   = 'p'
@@ -1362,6 +1364,7 @@ class scout(Command):
     AS_YOU_TYPE   = 't'
     INVERT        = 'v'
     # pylint: enable=bad-whitespace
+    # noqa
 
     def __init__(self, *args, **kwargs):
         super(scout, self).__init__(*args, **kwargs)

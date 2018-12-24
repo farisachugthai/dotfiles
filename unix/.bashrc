@@ -2,13 +2,13 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
-# Don't run if not interactive:{{{1
+# Don't run if not interactive: {{{1
 case $- in
     *i*);;
     *) return 0;;
 esac
 
-# History:{{{1
+# History: {{{1
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -21,7 +21,7 @@ HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
-# Shopt:{{{1
+# Shopt: {{{1
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -46,7 +46,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#TODO: i think i forgot to glob the -f loop. Debug this.
+# TODO: i think i forgot to glob the -f loop. Debug this.
 if [[ -d /data/data/com.termux/files/usr/share/bash-completion/completions ]]; then
     if [[ -f "$PREFIX/share/bash-completion/completions" ]]; then
         . "$COMPLETEFILE"
@@ -61,7 +61,7 @@ shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 
-# Defaults in Ubuntu bashrcs:{{{1
+# Defaults in Ubuntu bashrcs: {{{1
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -76,7 +76,7 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
-# Colors:{{{1
+# Colors: {{{1
 # TODO: Get other escape codes in a refactor the prompt.
 export Color_Off="\[\033[0m\]"
 export Yellow="\[\033[0;33m\]"
@@ -88,7 +88,7 @@ export Yellow="\[\033[0;33m\]"
 # export GREEN = '\x1b[32m'
 # export BLUE = '\x1b[34m'
 
-# Prompt:{{{1
+# Prompt: {{{1
 
 force_color_prompt=yes
 
@@ -140,7 +140,7 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# Set 'man' colors:{{{2
+# Set 'man' colors: {{{2
 # Keep an eye on whether this is the problem with nvim as manpager.
 # if [ "$color_prompt" = yes ]; then
 #     export LESS_TERMCAP_mb=$'\e[01;31m' \
@@ -153,7 +153,7 @@ fi
 # fi
 unset color_prompt force_color_prompt
 
-# Vim:{{{1
+# Vim: {{{1
 set -o vi
 if [[ "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
@@ -162,7 +162,7 @@ else
 fi
 export EDITOR="$VISUAL"
 
-# JavaScript:{{{1
+# JavaScript: {{{1
 # Source npm completion if its installed
 if [[ "$(command -v npm)" ]]; then
     source ~/.bashrc.d/npm-completion.bash
@@ -176,7 +176,7 @@ if [[ -d "$HOME/.nvm" ]]; then
     [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
 fi
 
-# FZF:{{{1
+# FZF: {{{1
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
@@ -233,7 +233,7 @@ _fzf_compgen_dir() {
 complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
 
-# Python:{{{1
+# Python: {{{1
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -256,7 +256,7 @@ if [[ "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
 fi
 
-# gcloud:{{{1
+# gcloud: {{{1
 if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
 
 if [[ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]]; then source "$HOME/bin/google-cloud-sdk/path.bash.inc"; fi
@@ -266,9 +266,8 @@ if [[ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]]; then source "$HOME/bin/g
 if [[ -d "$HOME/.rvm/bin" ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
-# }}}
 
-# Sourced files: {{{
+# Sourced files: {{{1
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do
         source "$config"

@@ -4,7 +4,7 @@
 # Functions to make the day a little easier
 # Create a new directory and enter it
 mk() {
-    mkdir -p "$@" && cd "$@"
+    mkdir -pv "$@" && cd "$@" || exit
 }
 
 # Handy Extract Program
@@ -41,8 +41,8 @@ ssh-day () {
     if [[ -z "$SSH_AUTH_SOCK" ]]; then
         eval "$(ssh-agent -s)"
     else
-        SSH_AUTH_SOCK=''
-        ssh-day
+        export SSH_AUTH_SOCK=''
+        eval "$(ssh-agent -s)"
     fi
     ssh-add
 }
@@ -100,8 +100,6 @@ fzf_nvim() {
   [ -n "$file" ] && ${EDITOR:-nvim} "$file"
 }
 
-# }}}
-
 tldrbox_cheat() {
     tldr -m "$1" >> "$HOME/.cheat/$1" && termux-share "$1"
 }
@@ -154,22 +152,16 @@ gpip() {
 
 # Oct 04, 2018
 # in a manner similar to __fzf__history__ display all of hist to std out
-#noninteractive tho
+# noninteractive tho
 hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
 }
 
-gitdiffb() {
-    if [ $# -ne 2 ]; then
-        echo -e 'Usage: gitdiffb branch1 branch2'
-        exit 127
-        # if you care you can do man bash and search for exit codes to get the
-        # correct code to use here
-    fi
 
-    git log --graph \
-    --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' \
-    --abbrev-commit --date=relative $1..$2;
+# Other TODO: Possibly rewrite the man function here. IE if nvim then do that,
+# elif most, else less
+
+# Back up a file using bracket expansion I.E. mv foo.py foo.py.bak
+bak() {
+    mv $1{,.bak}
 }
-
-# Other TODO: Possibly rewrite the man function here. Like if nvim then do that, elif most, else less

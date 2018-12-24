@@ -1,14 +1,32 @@
 #!/usr/bin/env python3
 # Maintainer: Faris Chugthai
+"""Download a video from YouTube using youtube_dl.
 
-# this script should be called with
-# ipython termux-urls.ipy $@
 
-# TODO:
-# 1. Assume that the youtubedl scriptb functions. Then double chsck we werent given a file
-# ytdl knows how to handle. if not, then scrape with bs4. possibly extend to
-# writing prettified json (as in json.dumps("",tab=4)) to a file.
+Dec 22, 2018:
 
+    Wow this code is only 6 months old and my god is it garbage. At least I
+    have the API somewhat documented.
+
+    Only came in here to note that if you initialize with no args, then use
+    :meth:`extract_info` with the URL as an arg, you get to see everything
+    you'd need to know about the metadata in all the varying formats you'd want
+    use.
+
+..usage::
+
+    This script should be called with:: shell
+
+        python termux-urls.ipy $@
+
+.. todo:
+
+    1. Assume that the youtube_dl script functions.
+    2. Then double chsck we weren't given a file ytdl knows how to handle.
+    3. If we were, then scrape with bs4.
+        - Possibly extend to writing prettified json
+        (as in json.dumps("",tab=4)) to a file.
+"""
 import requests
 import youtube_dl
 import sys
@@ -36,9 +54,10 @@ def ytdl(link):
 # should also check that the beginning of the link is youtu.be
 if link_parser[2] == "/playlist":
     print("This seems like a YouTube playlist. Downloading. Press Ctrl-C to stop")
+
 elif link_parser[1] == "youtu.be":
-    print(
-    ytdl(link)
+    print(ytdl(link))
+
 else:
     source = requests.get(link)
     source.raise_for_status()

@@ -3,13 +3,17 @@
 # flake8: noqa
 """Import my most frequently used modules.
 
+2018-09-06
+Discovered that putting the imports into functions and calling those functions
 Imports built-in modules into the global namespace and noisely warns if 3rd
 party modules aren't installed.
 
 Usage:
+
     File is neither run nor interactively sourced. Simply initialize IPython!
 
 .. notes 2018-09-06:
+
     Discovered that putting the imports into functions and calling those functions
     causes the imports to stay local to that function and not appear in the REPL
     namespace. Seemingly obvious now. So how does ptipython import things?
@@ -19,15 +23,14 @@ Usage:
 """
 import os
 from pathlib import Path
-import re
-import sqlite3
+import subprocess
+import shutil
 import sys
 
 try:
     import pynvim
 except ImportError as e:
     print("***************************************************************")
-    print(e)
     print("pynvim import failed. Only ignore this if you plan on going"
           " the entire session without using %edit")
     print("***************************************************************")
@@ -36,3 +39,11 @@ except ImportError as e:
 from IPython.utils.dir2 import dir2     # simply because its a nicer dir2
 from IPython import get_ipython
 from IPython.core.interactiveshell import InteractiveShell
+
+# 12/14/18
+import IPython
+
+try:
+    import git
+except ImportError:
+    pass

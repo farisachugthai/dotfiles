@@ -1,5 +1,5 @@
 # Global Git Config
-# Vim: set ft:gitconfig :
+# Vim: set ft:gitconfig:
 
 [user]
     email = farischugthai@gmail.com
@@ -10,10 +10,10 @@
     editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
     pager = less -rMFXKL
-	repositoryformatversion = 0
-	filemode = false
-	bare = false
-	logallrefupdates = true
+    repositoryformatversion = 0
+    filemode = false
+    bare = false
+    logallrefupdates = true
 
 [color]
     branch = always
@@ -44,7 +44,7 @@
 # configured to use nvim as the difftool
 # https://github.com/neovim/neovim/issues/2377
 [mergetool "vimdiff"]
-        cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [push]
     default = simple
@@ -60,28 +60,42 @@
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
+    ci = commit
+    co = checkout
     last = log -1 HEAD
-    unstage = reset HEAD
+    unstage = reset HEAD --
 
     # From varying Gists
+    rel = rev-parse --show-prefix
+    root = rev-parse --show-toplevel
     staged = diff --cached
     unstaged = diff
-
-    # Fix unexpected behavior
-    ls = ls-files
 
     # From: https://githowto.com/history
     # Run check git-log
     hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 
+    # General.
+    br = branch
+    bra = branch -a
+    cl =  clone
+    cls= clone --depth 1
+    d = diff
+    dt = difftool
+    f = fetch --all
+    m = merge
+    mt = mergetool
+    s = status
+    r = remote -v
+
 [help]
     autocorrect = 1
 
 [credential]
-	helper = cache --timeout=86400
+    helper = cache --timeout=86400
 
 [credential "https://www.github.comm"]
-    username = farisachugtha
+    username = farisachugthai
 
 [web]
     browser = firefox
@@ -93,6 +107,3 @@
 [status]
     showStash = True
     showUntrackedFiles = all
-
-[init]
-	templatedir = .config/git
