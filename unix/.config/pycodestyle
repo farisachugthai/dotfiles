@@ -1,11 +1,4 @@
 # pycodestyle
-<<<<<<< HEAD
-# 2018-09-14: At your leisure, run pydoc pycodestyle in a shell its phenomenal.
-# also this made me realize i either need to look into how langclient works or drop it and use jedi
-#
-# copied from flake. ensure everythings a valid code!
-=======
->>>>>>> master
 
 [pycodestyle]
 max-line-length = 120
@@ -20,6 +13,8 @@ ignore =
 
     E265            # comments error
     E266            # too many leading #'s in a comment
+
+    E302            # Guido doesn't even do this. Who are you?
 
 # the defaults for excluded files are
 # exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox

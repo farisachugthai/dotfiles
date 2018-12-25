@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" Configuration file for ipython.
+"""Configuration file for ipython.
+
 Heavily drawn from documentation at
 
-`<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
+.. URL::
 
-and source code found on GitHub.
+    `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
+
+In addition to source code found on GitHub.
+
+This module provides  convenience functions, adds typical Linux shell
+commands to `user_ns`, or the global namespace, in addition to Git aliases.
+
+In addition, pygments is directly invoked to ensure comments are clearly visible
+in IPython cells.
 """
+import os
 
-# actually if the import file i use works then we shouldn't need this right?
-# actually don't count on the order of execution being correct
 from pygments.token import Comment
 
 # c is a traitlets.config.Configurable object
@@ -18,64 +26,13 @@ from pygments.token import Comment
 # ipython on simple things like creating a new prompt after every command
 # increments it
 
-<<<<<<< HEAD
 c = get_config()  # noqa
 
-# Alias: {{{
-c.AliasManager.user_aliases = [
-      ('ag', 'ag --color'),
-      ('chmod', 'chmod'),
-=======
-c = get_config()            # noqa,pyls:
+try:
+    home = os.path.expanduser("~")
+except OSError as e:
+    pass
 
-# Alias: {{{
-c.AliasManager.user_aliases = [
-      ('ag', 'ag'),
->>>>>>> master
-      ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
-      ('echo', 'echo -e'),
-      ('fzf', 'fzf'),         # all we need to do is figure out keybindings
-      ('ga', 'git add'),
-      ('gch', 'git checkout'),
-      ('gco', 'git commit'),
-      ('gd', 'git diff'),
-      ('gds', 'git diff --staged'),
-      ('glo', 'git log'),
-      ('gs', 'git status'),
-      ('gst', 'git diff --stat'),
-      ('head', 'head -n 30'),
-      ('la', 'ls -AF --color=always'),
-      ('l', 'ls -CF --color=always'),
-      ('ll', 'ls -AlF --color=always'),
-      ('ls', 'ls -F --color=always'),
-      ('lt', 'ls -Altcr --color=always'),
-<<<<<<< HEAD
-=======
-      ('mk', 'mkdir -pv %l && cd %l'),      # check if this works. only mkdir
->>>>>>> master
-      ('mkdir', 'mkdir -pv'),
-      ('mv', 'mv -iv'),
-      ('nvim', 'nvim'),
-      ('rm', 'rm -v'),
-      ('rmdir', 'rmdir -pv'),
-      ('tail', 'tail -n 30'),
-      ('vi', 'vim'),
-      ('vim', 'vim'),
-  ]
-
-# For some reason there's no section about aliases in the skel file. Weird.
-# well here's a fun fact
-# You can use the %l specifier in an alias definition to represent the
-# whole line when the alias is called.  For example::
-
-#    In [2]: alias bracket echo "Input in brackets: <%l>"
-#    In [3]: bracket hello world
-#    Input in brackets: <hello world>
-
-# note that we quote when in the configuration file but when running alias
-# interactively the syntax %alias alias_name cmd doesn't require quoting
-
-# }}}
 
 # ----------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -185,8 +142,11 @@ c.InteractiveShellApp.reraise_ipython_extension_failures = True
 # configuration (through profiles), history storage, etc. The default is
 # $HOME/.ipython. This option can also be specified through the environment
 # variable IPYTHONDIR.
-# c.BaseIPythonApplication.ipython_dir = ''
-
+if os.environ.get("$IPYTHONDIR"):
+    c.BaseIPythonApplication.ipython_dir = os.environ.get("$IPYTHONDIR")
+else:
+    # Assume home was defined correctly up top. Will need to rewrite for windows
+    c.BaseIPythonApplication.ipython_dir = os.path.join(home, ".ipython")
 # Whether to overwrite existing config files when copying
 # c.BaseIPythonApplication.overwrite = False
 
@@ -195,7 +155,7 @@ c.BaseIPythonApplication.profile = 'default'
 
 # Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback
-c.BaseIPythonApplication.verbose_crash = False
+c.BaseIPythonApplication.verbose_crash = True
 
 # ----------------------------------------------------------------------------
 # TerminalIPythonApp(BaseIPythonApplication,InteractiveShellApp) configuration
@@ -242,15 +202,11 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-<<<<<<< HEAD
-# Jupyter Console doesn't handle this correctly
+# Jupyter Console doesn't handle this correctly. Alledgedly ipy7.0 fixed that
 try:
     c.InteractiveShell.autoindent = True
 except Exception:
     pass
-=======
-c.InteractiveShell.autoindent = True
->>>>>>> master
 
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True
@@ -299,7 +255,10 @@ c.InteractiveShell.colors = 'Neutral'
 
 # If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-c.InteractiveShell.display_page = True
+try:
+    c.InteractiveShell.display_page = True
+except ImportError:
+    c.InteractiveShell.display_page = False
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
 # c.InteractiveShell.enable_html_pager = False
@@ -323,21 +282,12 @@ c.InteractiveShell.history_load_length = 10000
 # Start logging to the default log file in overwrite mode. Use `logappend` to
 #  specify a log file to **append** logs to.
 # c.InteractiveShell.logstart = False
-<<<<<<< HEAD
 
 # c.InteractiveShell.object_info_string_level = 0
 
 # Automatically call the pdb debugger after every exception.
 # c.InteractiveShell.pdb = False
 
-=======
-
-# c.InteractiveShell.object_info_string_level = 0
-
-# Automatically call the pdb debugger after every exception.
-# c.InteractiveShell.pdb = False
-
->>>>>>> master
 # Since it's all been deprecated i deleted the section on IPython's str
 # methods for prompt. Don't change the prompt regardless because you'll destroy
 # the chance to use sphinx and stuff.
@@ -354,10 +304,14 @@ c.InteractiveShell.quiet = False
 
 # Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-# TODO: Do some kind of check to see whether we have docrepr in the env first
-# c.InteractiveShell.sphinxify_docstring = True
+import importlib  # noqa E402
+try:
+    importlib.import_module("docrepr")  # noqa E402
+except ImportError:
+    c.InteractiveShell.sphinxify_docstring = False
+else:
+    c.InteractiveShell.sphinxify_docstring = True
 
-#
 c.InteractiveShell.wildcards_case_sensitive = False
 
 # Switch modes for the IPython exception handlers.
@@ -370,12 +324,12 @@ c.InteractiveShell.wildcards_case_sensitive = False
 # Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
 #  direct exit without any confirmation.
-c.TerminalInteractiveShell.confirm_exit = True
+c.TerminalInteractiveShell.confirm_exit = False
 
 # Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
 #  documentation for more information.
-c.TerminalInteractiveShell.display_completions = 'column'
+c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
 # Shortcut style to use at the prompt. 'vi' or 'emacs'.
 c.TerminalInteractiveShell.editing_mode = 'vi'
@@ -413,20 +367,20 @@ c.TerminalInteractiveShell.highlighting_style = 'legacy'
 c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Enable mouse support in the prompt (Note: prevents selecting text with the
-#  mouse)
+# mouse)
 # c.TerminalInteractiveShell.mouse_support = False
 
 # Class used to generate Prompt token for prompt_toolkit
 # c.TerminalInteractiveShell.prompts_class = 'IPython.terminal.prompts.Prompts'
 
 # Use `raw_input` for the REPL, without completion and prompt colors.
-#
-#  Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
-#  Known usage are: IPython own testing machinery, and emacs inferior-shell
-#  integration through elpy.
-#
-#  This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
-#  variable is set, or the current terminal is not a tty.
+
+# Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR.
+# Known usage are: IPython own testing machinery, and emacs inferior-shell
+# integration through elpy.
+
+# This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT` environment
+# variable is set, or the current terminal is not a tty.
 # c.TerminalInteractiveShell.simple_prompt = False
 
 # Number of line at the bottom of the screen to reserve for the completion menu
@@ -436,12 +390,12 @@ c.TerminalInteractiveShell.space_for_menu = 6
 c.TerminalInteractiveShell.term_title = True
 
 # Customize the terminal title format.  This is a python format string.
-#  Available substitutions are: {cwd}.
+# Available substitutions are: {cwd}.
 c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
 
 # Use 24bit colors instead of 256 colors in prompt highlighting. If your
-#  terminal supports true color, the following command should print 'TRUECOLOR'
-#  in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
+# terminal supports true color, the following command should print 'TRUECOLOR'
+# in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
 c.TerminalInteractiveShell.true_color = True
 
 # ----------------------------------------------------------------------------
@@ -449,9 +403,9 @@ c.TerminalInteractiveShell.true_color = True
 # ----------------------------------------------------------------------------
 
 # Access the history database without adding to it.
-#
-#  This is intended for use by standalone history tools. IPython shells use
-#  HistoryManager, below, which is a subclass of this.
+
+# This is intended for use by standalone history tools. IPython shells use
+# HistoryManager, below, which is a subclass of this.
 
 # *******
 # What this implies is that if you want to create your own tool for analyzing
@@ -459,28 +413,28 @@ c.TerminalInteractiveShell.true_color = True
 # *******
 
 # Options for configuring the SQLite connection
-#
+
 # These options are passed as keyword args to sqlite3.connect when establishing
 # database conenctions.
 # c.HistoryAccessor.connection_options = {}
 
 # enable the SQLite history
-#
+
 # set enabled=False to disable the SQLite history, in which case there will be
 # no stored history, no SQLite connection, and no background saving thread.
 # This may be necessary in some threaded environments where IPython is embedded
 # c.HistoryAccessor.enabled = True
 
 # Path to file to use for SQLite history database.
-#
+
 # By default, IPython will put the history database in the IPython profile
 # directory.  If you would rather share one history among profiles, you can set
 # this value in each, so that they are consistent.
-#
+
 #  Due to an issue with fcntl, SQLite is known to misbehave on some NFS mounts.
 #  If you see IPython hanging, try setting this to something on a local disk,
 #  e.g::
-#
+
 #      ipython --HistoryManager.hist_file=/tmp/ipython_hist.sqlite
 #
 #  you can also use the specific value `:memory:` (including the colon at both
@@ -667,14 +621,15 @@ c.Completer.use_jedi = True
 
 # Extra script cell magics to define
 #
-#  This generates simple wrappers of `%%script foo` as `%%foo`.
+# This generates simple wrappers of `%%script foo` as `%%foo`.
 #
-#  If you want to add script magics that aren't on your path, specify them in
-#  script_paths
+# If you want to add script magics that aren't on your path, specify them in
+# script_paths
 # c.ScriptMagics.script_magics = []
 
 # Dict mapping short 'ruby' names to full paths, such as '/opt/secret/bin/ruby'
-#
+# AKA the gcloud libs and other 3rd party bins
+
 # Only necessary for items in script_magics where the default path will not
 # find the right interpreter.
 # c.ScriptMagics.script_paths = {}
@@ -694,8 +649,8 @@ c.LoggingMagics.quiet = False
 
 # Lightweight persistence for python variables.
 #
-#  Provides the %store magic.
+# Provides the %store magic.
 
 # If True, any %store-d variables will be automatically restored when IPython
-#  starts.
+# starts.
 # c.StoreMagics.autorestore = False

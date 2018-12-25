@@ -1,18 +1,21 @@
 [Appearance]
-BackgroundColorOpacity=15
-Skin=breeze-gruvbox-dark
-SkinInstalledWithKns=true
+BackgroundColorOpacity=95
+# Skin=breeze-gruvbox-dark don't actually know if i have this downloaded
 TerminalHighlightOnManualActivation=true
 Translucency=true
 
+[Behavior]
+FocusFollowsMouse=true
+OpenAfterStart=true
+
 [Desktop Entry]
-DefaultProfile=shell.profile
+DefaultProfile=bionic.profile
 
 [Dialogs]
 FirstRun=false
 
 [DownloadDialog Settings]
-Height 768=488
+Height 768=497
 Width 1366=700
 
 [Favorite Profiles]
@@ -45,4 +48,7 @@ toggle-session-monitor-silence=Ctrl+Shift+I
 view-full-screen=Ctrl+Shift+F11
 
 [Window]
-Width=80
+DynamicTabTitles=true
+Height=40
+KeepOpen=false
+ToggleToFocus=true

@@ -1,38 +1,66 @@
 # inputrc
 # Includes all persistant modifications to GNU readline
-#
 # Maintainer: Faris Chugthai
 
 # In an attempt to prevent RSI
 set editing-mode vi
 set keymap vi
 
-#From Arch Wiki
+# From Arch Wiki
 #
-# When usnng TAB for completions, the double tab can be changed to a single tab
+# When using TAB for completions, the double tab can be changed to a single tab
 # This also shows all partial completions
 set show-all-if-ambiguous on
 
 # Color files by types
 set colored-stats On
-#
+
 # Append char to indicate type
 set visible-stats On
 #
 # Mark symlinked directories
 set mark-symlinked-directories On
-#
+
 # Color the common prefix
 set colored-completion-prefix On
-#
+
 # Color the common prefix in menu-complete
 set menu-complete-display-prefix On
 
-#If set to On, readline performs filename matching and completion
-#in a case-insensitive fashion.
-set completion-map-case 
+# If set to On, readline performs filename matching and completion
+# in a case-insensitive fashion.
+set completion-map-case
 
-#If set to On, and completion-ignore-case is enabled, readline
-#trEats hyphens (-) and underscores (_) as equivalent when
-#performing case-insensitive filename matching and completion.
-set completion-ignore-case 
+# If set to On, and completion-ignore-case is enabled, readline
+# treats hyphens (-) and underscores (_) as equivalent when
+# performing case-insensitive filename matching and completion.
+set completion-ignore-case
+
+# When set to On, readline will configure the terminal in a way
+# that will enable it to insert each paste into the editing buffer
+# as a single string of characters, instead of treating each
+# character as if it had been read from the keyboard.  This can
+# prevent pasted characters from being interpreted as editing
+# commands.
+set enable-bracketed-paste On
+
+# Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
+set show-mode-in-prompt On
+
+# TODO:
+# vi-cmd-mode-string ((cmd))
+# This string is displayed immediately before the last line of the
+# primary prompt when vi editing mode is active and in command
+# mode.  The value is expanded like a key binding, so the standard
+# set of meta- and control prefixes and backslash escape sequences
+# is available.  Use the \1 and \2 escapes to begin and end
+# sequences of non-printing characters, which can be used to embed
+# a terminal control sequence into the mode string.
+# vi-ins-mode-string ((ins))
+# This string is displayed immediately before the last line of the
+# primary prompt when vi editing mode is active and in insertion
+# mode.  The value is expanded like a key binding, so the standard
+# set of meta- and control prefixes and backslash escape sequences
+# is available.  Use the \1 and \2 escapes to begin and end
+# sequences of non-printing characters, which can be used to embed
+# a terminal control sequence into the mode string.

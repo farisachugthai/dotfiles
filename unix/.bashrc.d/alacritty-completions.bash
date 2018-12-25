@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 # Load completion function
 complete -F _alacritty alacritty
@@ -11,11 +11,10 @@ _alacritty()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     prevprev="${COMP_WORDS[COMP_CWORD-2]}"
-    opts="-h --help -V --version --live-config-reload --no-live-config-reload --print-events -q -qq -v -vv -vvv --ref-test -e --command --config-file -d --dimensions -t --title --working-directory"
+    opts="-h --help -V --version --live-config-reload --no-live-config-reload --persistent-logging --print-events -q -qq -v -vv -vvv --ref-test -e --command --config-file -d --dimensions -t --title --working-directory"
 
     # If `--command` or `-e` is used, stop completing
     for i in "${!COMP_WORDS[@]}"; do
-        echo "${COMP_WORDS[i]}" >> ./testfile
         if [[ "${COMP_WORDS[i]}" == "--command" ]] \
             || [[ "${COMP_WORDS[i]}" == "-e" ]] \
             && [[ "${#COMP_WORDS[@]}" -gt "$(($i + 2))" ]]

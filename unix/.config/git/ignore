@@ -1,14 +1,17 @@
 # Global Gitignore
-# Vim: set ft=gitignore :
 # Maintainer: Faris Chugthai
+# TODO: If you set the filetype to gitignore it drops # from comments.
+# Figure out if we need to set comments or commentstrings.
 
 # Personal
 .zim/
 tmux-history
 *.patch
 
+# Local files
+*.local
 
-# Python specific
+# Python
 # mypy
 .mypy_cache/
 
@@ -21,7 +24,7 @@ tmux-history
 # Rope
 .ropeproject/
 
-## Vim Backup Files
+# Vim Backup Files
 *.un~
 *.swp
 *.swo
@@ -50,8 +53,6 @@ build/
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
-*tags
-/tags*tags
 *[Tt]ags*
 /tags/
 */tags/*
@@ -134,7 +135,6 @@ Thumbs.db
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 

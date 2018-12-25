@@ -1,6 +1,7 @@
 # Tig default configuration
-#
 # Please see 'man tigrc' for a complete reference.
+# Dec 19, 2018:
+# Cleaned up a little bit with `:Tabularize /=`
 
 # Settings
 # --------
@@ -114,7 +115,11 @@ set show-notes			= yes		# When non-bool passed as `--show-notes=...` (diff)
 #set diff-highlight		= true		# String (or bool): Path to diff-highlight script,
 						#                   defaults to `diff-highlight`.
 #set blame-options		= -C -C -C	# User-defined options for `tig blame` (git-blame)
-#set log-options		= --pretty=raw	# User-defined options for `tig log` (git-log)
+
+set log-options		= --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+}
+
+# User-defined options for `tig log` (git-log)
 #set main-options		= -n 1000	# User-defined options for `tig` (git-log)
 #set mailmap			= yes		# Use .mailmap to show canonical name and email address
 
@@ -133,10 +138,10 @@ set vertical-split		= auto		# Enum: horizontal, vertical, auto; Use auto to
 set split-view-width		= 50%		# Width of right-most view for vertical splits
 set editor-line-number		= yes		# Automatically pass line number to editor? Used
 						# for opening file at specific line e.g. from a diff
-set history-size		= 500		# Size of persistent history, 0 to disable
-set mouse			= no		# Enable mouse support?
-set mouse-scroll		= 3		# Number of lines to scroll via the mouse
-set mouse-wheel-cursor		= no		# Prefer moving the cursor to scrolling the view?
+set history-size       = 500		# Size of persistent history, 0 to disable
+set mouse              = yes		# Enable mouse support?
+set mouse-scroll       = 3		# Number of lines to scroll via the mouse
+set mouse-wheel-cursor = no		# Prefer moving the cursor to scrolling the view?
 
 # User-defined commands
 # ---------------------
