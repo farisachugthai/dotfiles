@@ -1,11 +1,22 @@
 #  !/usr/bin/env python
 #  -*- coding: utf-8 -*-
-"""Aliases for the interactive shell.
+"""File for all shell aliases.
+
+Utilizes `ip`, the global interactive Ipython session. Fills the `user_ns`
+with common Linux idioms.
+
+..note:
+
+    Should I add a check that this a Unix OS because this'll blow up on NT?
+
+Substitutions
+-------------
 
 For some reason there's no section about aliases in the skel file. Weird.
-Well here's a fun fact!
-You can use the %l specifier in an alias definition to represent the
-whole line when the alias is called.  For example:
+Well here's a fun fact!:
+
+    You can use the %l specifier in an alias definition to represent the
+    whole line when the alias is called.
 
 ipython::
 
@@ -14,24 +25,7 @@ ipython::
    Input in brackets: <hello world>
 
 Note that we quote when in the configuration file but when running alias
-interactively the syntax %alias alias_name cmd doesn't require quoting.
-
-Dec 16, 2018:
-
-    Got this file working. No idea whether it's a better idea to iterate over
-    the whole tuple like this but I can optimize at a different point in time.
-    It's no longer cluttering up my ipython_config.py file and that's a win.
-
-.. todo::
-
-    Start implementing checks. Aliases like apt, dpkg and cd are platform
-    specific. This isn't typically a problem but I can't imagine it'd be an
-    expensive operation to do something like the following::
-
-        >>> from platform import machine
-        >>> machine.uname()
-
-    Or whatever the syntax is.
+interactively the syntax ``%alias alias_name cmd`` doesn't require quoting
 """
 from IPython import get_ipython
 
@@ -54,20 +48,35 @@ ip.alias_manager.user_aliases = [
       ('fzf', 'fzf'),         # all we need to do is figure out keybindings
       ('g', 'git status -sb'),
       ('ga', 'git add'),
-      ('gch', 'git checkout'),
-      ('gco', 'git commit'),
+      ('gb', 'git branch'),
+      ('gba', 'git branch -a'),
+      ('gci', 'git commit'),
+      ('gcl', 'git clone'),
+      ('gcls', 'git clone --depth 1'),
+      ('gco', 'git checkout'),
       ('gd', 'git diff'),
       ('gds', 'git diff --staged'),
       ('gds2', 'git diff --staged --stat'),
+      ('gdt', 'git difftool'),
+      ('gf', 'git fetch --all'),
       ('git', 'git'),
       ('git hist', 'git log --pretty=format:%h %ad | %s%d [%an] --graph --date=short'),
       ('git last', 'git log -1 HEAD'),
       ('git staged', 'git diff --cached'),
+      ('git rel', 'git rev-parse --show-prefix'),
+      ('git root', 'git rev-parse --show-toplevel'),
       ('git unstage', 'git reset HEAD'),
       ('git unstaged', 'git diff'),
       ('glo', 'git log'),
+      ('gm', 'git merge'),
+      ('gmt', 'git mergetool'),
       ('gp', 'git pull'),
       ('gpip', 'export PIP_REQUIRE_VIRTUALENV=0; pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'),
+      ('gpo', 'git pull origin'),
+      ('gpom', 'git pull origin master'),
+      ('gpu', 'git push'),
+      ('gr', 'git remote'),
+      ('grv', 'git remote -v'),
       ('gs', 'git status'),
       ('gst', 'git diff --stat'),
       ('head', 'head -n 30'),
@@ -99,3 +108,6 @@ ip.alias_manager.user_aliases = [
 if __name__ == "__main__":
     for i in ip.alias_manager.user_aliases:
         ip.alias_manager.define_alias(i[0], i[1])
+
+    #  can't believe i forgot this
+    del i

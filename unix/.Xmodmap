@@ -1,3 +1,17 @@
+! This is an `xmodmap' input file for
+!   PC 105 key, wide Delete, tall Enter (XFree86; US) keyboards.
+! Automatically generated on Mon Jun 11 10:44:05 2018 by faris with
+
+! This is an `xmodmap' input file for
+!   PC 102 key, thin Delete, tall Enter (XFree86; United Kingdom) keyboards.
+! Automatically generated on Mon Jun 11 23:53:31 2018 by faris with
+
+! XKeyCaps 2.47; Copyright (c) 1991-1999 Jamie Zawinski; 2005-2006 Christoph Berg.
+! http://www.jwz.org/xkeycaps/
+!
+! This file presupposes that the keyboard is in the default state, and
+! may malfunction if it is not.
+!
 keycode   8 =
 keycode   9 = Escape NoSymbol Escape
 keycode  10 = 1 exclam 1 exclam

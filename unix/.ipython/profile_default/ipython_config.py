@@ -8,7 +8,13 @@ Heavily drawn from documentation at
 
     `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
 
-and source code found on GitHub.
+In addition to source code found on GitHub.
+
+This module provides  convenience functions, adds typical Linux shell
+commands to `user_ns`, or the global namespace, in addition to Git aliases.
+
+In addition, pygments is directly invoked to ensure comments are clearly visible
+in IPython cells.
 """
 import os
 
@@ -249,7 +255,10 @@ c.InteractiveShell.colors = 'Neutral'
 
 # If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-c.InteractiveShell.display_page = True
+try:
+    c.InteractiveShell.display_page = True
+except ImportError:
+    c.InteractiveShell.display_page = False
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
 # c.InteractiveShell.enable_html_pager = False

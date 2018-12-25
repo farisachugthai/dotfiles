@@ -15,23 +15,23 @@ Oct 30, 2018:
     IPython 7.1.1 ships with pt2!
 
 Run in shell
------------------------
+-------------
 
 Here's a little function I found today that might help guide this along
 in a more streamlined manner::
 
-    import IPython
-    IPython.terminal.interactiveshell.create_ipython_shortcuts()
+    >>> import IPython
+    >>> IPython.terminal.interactiveshell.create_ipython_shortcuts()
 
 So alternatively you can do::
 
-    from IPython import get_ipython
-    from IPython.terminal.interactiveshell import create_ipython_shortcuts
-    ip = get_ipython()
-    c = create_ipython_shortcuts(ip)
+    >>> from IPython import get_ipython
+    >>> from IPython.terminal.interactiveshell import create_ipython_shortcuts
+    >>> ip = get_ipython()
+    >>> c = create_ipython_shortcuts(ip)
 
     # This will give you the following methods
-    [ins] In [11]: dir(c)
+    >>> [ins] In [11]: dir(c)
     Out[11]:
     ['_KeyBindings__version',
     '__abstractmethods__',
@@ -79,22 +79,21 @@ No perceptible difference between add and add_binding.
 
 Couldn't get 'get_bindings_for_keys' to work unfortunately.
 Ran with one arg with a known key ('c-p') and got an empty response ([]).
-Ran with ('c-p', filter=HasFocus(DEFAULTBUFFER))
-and got an error.
+Ran with ('c-p', filter=HasFocus(DEFAULTBUFFER)) and got an error.
 Ran with 2 keys and got an err.
 
 Help on function create_ipython_shortcuts in IPython.terminal.interactiveshell:
 
-IPython.terminal.interactiveshell.create_ipython_shortcuts = create_ipython_shortcuts(shell)
-    Set up the prompt_toolkit keyboard shortcuts for IPython
+    >>> IPython.terminal.interactiveshell.create_ipython_shortcuts =
+    >>> create_ipython_shortcuts(shell)
+    # Set up the prompt_toolkit keyboard shortcuts for IPython
 
 
 Original File Implementation
 ----------------------------
 
-Found the file where the default keybindings are listed.
-
-Go to the ipython root dir
+Found the file where this is originally implemented YAS.
+Or I guess I should say the actual keybindings are listed.
 
 ipython::
 
@@ -110,8 +109,6 @@ Sep 24, 2018:
 
     Check whether were running in IPython or Jupyter console because these
     imports break jupyter.
-
-Why the hell does Jupyter import everything IPython uses btw???
 """
 # this right here is the mod we need to keep our eyes on.
 # from prompt_toolkit.key_binding.registry import Registry
@@ -147,10 +144,10 @@ Why the hell does Jupyter import everything IPython uses btw???
 # Ctrl+I == Tab
 # flake: noqa
 # registry.add_binding(Keys.ControlI,
-# filter=(HasFocus(DEFAULT_BUFFER)
-# & ~HasSelection()
-# & insert_mode
-# & cursor_in_leading_ws))(indent_buffer)
+            # filter=(HasFocus(DEFAULT_BUFFER)
+                 # & ~HasSelection()
+                 # & insert_mode
+                 # & cursor_in_leading_ws))(indent_buffer)
 # flake: qa
 
 # also because i didn't know or remember these were keybindings

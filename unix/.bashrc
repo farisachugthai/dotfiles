@@ -86,16 +86,18 @@ export Yellow="\[\033[0;33m\]"
 # export BLUE = '\x1b[34m'
 
 # Syntax Highlighted Man pages
-man() {
-  env \
-    LESS_TERMCAP_md=$'\e[1;36m' \
-    LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_se=$'\e[0m' \
-    LESS_TERMCAP_so=$'\e[1;40;92m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[1;32m' \
-      man "$@"
-}
+# Unfortunately all hideous.
+# man() {
+#   env \
+#     LESS_TERMCAP_md=$'\e[1;36m' \
+#     LESS_TERMCAP_me=$'\e[0m' \
+#     LESS_TERMCAP_se=$'\e[0m' \
+#     LESS_TERMCAP_so=$'\e[1;40;92m' \
+#     LESS_TERMCAP_ue=$'\e[0m' \
+#     LESS_TERMCAP_us=$'\e[1;32m' \
+#       man "$@"
+# }
+
 # Prompt: {{{2
 force_color_prompt=yes
 
@@ -284,3 +286,6 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 
 [[ -n "$TMUX" ]] && export FZF_TMUX=1 && export FZF_TMUX_HEIGHT=80%
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

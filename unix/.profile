@@ -7,10 +7,24 @@
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+# Platform_Dependant: {{{1
+if [[ -n "$PREFIX" ]]; then
+    export SHELL="$PREFIX/bin/bash"
+    export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
+    export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
+    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
+    export PATH="$PREFIX/local/bin/:$PATH"
+    export MANPATH="$PREFIX/share/man:$HOME/.fzf/man"
+else
+    export NVIMRUNTIME="/usr/share/nvim/runtime"
+    export SHELL="/bin/bash"
+    export BROWSER="firefox-nightly --profile-manager"
+    export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
+fi
+
 # Ruby: {{{1
 # This is gonna need a for loop soon.
 
-# Load RVM into a shell session *as a function*
 if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 fi
@@ -43,6 +57,7 @@ fi
 if [[ $(command -v yarn) ]]; then
     YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
     export PATH="$PATH:$YARNPATH"
+
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
@@ -72,17 +87,16 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# cheat.py
 if [[ "$(command -v cheat)" ]];then
-    export CHEATCOLORS=true
-    export CHEATPATH="$HOME/python/tutorials:$HOME/python/site-packages:$CHEATPATH"
+    export CHEATCOLORS=true;
+    export CHEATPATH="$HOME/python/tutorials:$HOME/python/tutorials/site-packages:$HOME/.cheat"
 fi
 
 # Set locale if it isn't explicitly stated elsewhere
 export LANG=en_US.UTF-8                 # gathered from localectl
 export LC_MESSAGES=C                    # man i3: Prevents program output translation
 export LANGUAGE=en                      # nvim complains us region not supported
-# export LC_CTYPE=C.UTF-8                 # the only thing defined in /usr/lib/locale right now
+# export LC_CTYPE=utf-8
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 # Also because termux doesn't set $TMPDIR to /tmp/
@@ -107,22 +121,6 @@ export CURL_HOME="$HOME/.config/curl/curlrc"
 # Rust: {{{1
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
-# Platform specific: {{{1
-
-# For defining the differences between Termux and Ubuntu/KDE Neon.
-if [[ -n "$PREFIX" ]]; then
-    export SHELL="$PREFIX/bin/bash"
-    export BROWSER="w3m"
-    export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
-    export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
-    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
-    export PATH="$PREFIX/local/bin/:$PATH"
-else
-    export NVIMRUNTIME="/usr/share/nvim/runtime"
-    # export SHELL="/bin/bash"
-    export BROWSER="firefox" 
-    export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
-fi
 
 # Sourced Files: {{{1
 # Unfortunately this only gets called in an interactive session tmux is reading

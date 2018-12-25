@@ -1,4 +1,4 @@
-# agignore
+# ignore {new file type for both ag and rg}
 
 *.un~
 *.swp

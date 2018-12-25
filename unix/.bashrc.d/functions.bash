@@ -152,22 +152,12 @@ gpip() {
 
 # Oct 04, 2018
 # in a manner similar to __fzf__history__ display all of hist to std out
-#noninteractive tho
+# noninteractive tho
 hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
 }
 
-gitdiffb() {
-    if [ $# -ne 2 ]; then
-        echo -e 'Usage: gitdiffb branch1 branch2'
-        exit 127
-        # if you care you can do man bash and search for exit codes to get the
-        # correct code to use here
-    fi
-
-    git log --graph \
-    --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' \
-    --abbrev-commit --date=relative $1..$2;
-}
-
-# Other TODO: Possibly rewrite the man function here. Like if nvim then do that, elif most, else less
+# I don't know why this was the hardest thing ever but oh my god I got it!
+man(){
+    nvim -c "Man $@" -c'wincmd o'
+} 
