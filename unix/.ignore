@@ -1,4 +1,4 @@
-# agignore
+# ignore {new file type for both ag and rg}
 
 *.un~
 *.swp
@@ -13,7 +13,6 @@ __pycache__$
 
 .git
 .cache
-tags
 node_modules/
 # enough have .png embedded that most is plaintext but still ruins scrollback
 *.ipynb

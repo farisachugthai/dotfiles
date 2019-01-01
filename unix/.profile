@@ -103,7 +103,7 @@ else
 fi
 
 export TMUXP_CONFIGDIR='$HOME/.tmux'
-
+export PYTHONDONTWRITEBYTECODE=1
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Rust: {{{1

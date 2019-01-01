@@ -107,3 +107,6 @@
 [status]
     showStash = True
     showUntrackedFiles = all
+
+[pull]
+    rebase = True

@@ -37,6 +37,8 @@ ip.alias_manager.user_aliases = [
       ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
       ('ctags', 'ctags'),     # it's nice to be able to build tags while working
       ('dpkg', 'dpkg'),
+      ('du', 'du'),
+      ('dus', 'du -d 1 -h'),
       ('echo', 'echo -e'),
       ('find', 'find'),
       ('fd', 'fd'),
@@ -52,7 +54,7 @@ ip.alias_manager.user_aliases = [
       ('gd', 'git diff'),
       ('gds', 'git diff --staged'),
       ('gds2', 'git diff --staged --stat'),
-      ('gdt', 'git difftool')
+      ('gdt', 'git difftool'),
       ('gf', 'git fetch --all'),
       ('git', 'git'),
       ('git hist', 'git log --pretty=format:%h %ad | %s%d [%an] --graph --date=short'),

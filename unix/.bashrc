@@ -14,7 +14,7 @@ HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=50000
 # TODO: What are the units on either of these?
-# Still don't kniw but fc maxes out at 32767
+# Still don't know but fc maxes out at 32767
 HISTFILESIZE=50000
 # https://unix.stackexchange.com/a/174902
 HISTTIMEFORMAT="%F %T: "
@@ -31,6 +31,8 @@ shopt -s histappend
 shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
+# TODO: Figure out the correct invocation of this directive
+# *shellcheck disable SC2128*
 if [[ $BASH_VERSINFO -gt 3 ]]; then
     shopt -s globstar
 fi
@@ -64,10 +66,10 @@ shopt -s cdspell
 # Defaults in Ubuntu bashrcs: {{{1
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
@@ -140,18 +142,41 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$Yellow`basename $VIRTUAL_ENV`$Color_Off]}" "$TMP_PS1" "[%s]"'
 fi
 
-# Set 'man' colors: {{{2
-# Keep an eye on whether this is the problem with nvim as manpager.
-# if [ "$color_prompt" = yes ]; then
-#     export LESS_TERMCAP_mb=$'\e[01;31m' \
-#     export LESS_TERMCAP_md=$'\e[01;31m' \
-#     export LESS_TERMCAP_me=$'\e[0m' \
-#     export LESS_TERMCAP_se=$'\e[0m' \
-#     export LESS_TERMCAP_so=$'\e[01;44;33m' \
-#     export LESS_TERMCAP_ue=$'\e[0m' \
-#     export LESS_TERMCAP_us=$'\e[01;32m'
-# fi
 unset color_prompt force_color_prompt
+
+# Refactoring Prompt: {{{2
+# CUSTOM BASH COLOR PROMPT
+# 30m - Black
+# 31m - Red
+# 32m - Green
+# 33m - Yellow
+# 34m - Blue
+# 35m - Purple
+# 36m - Cyan
+# 37m - White
+# 0 - Normal
+# 1 - Bold
+prompt() {
+    local BLACK="\[\033[0;30m\]"
+    local BLACKBOLD="\[\033[1;30m\]"
+    local RED="\[\033[0;31m\]"
+    local REDBOLD="\[\033[1;31m\]"
+    local GREEN="\[\033[0;32m\]"
+    local GREENBOLD="\[\033[1;32m\]"
+    local YELLOW="\[\033[0;33m\]"
+    local YELLOWBOLD="\[\033[1;33m\]"
+    local BLUE="\[\033[0;34m\]"
+    local BLUEBOLD="\[\033[1;34m\]"
+    local PURPLE="\[\033[0;35m\]"
+    local PURPLEBOLD="\[\033[1;35m\]"
+    local CYAN="\[\033[0;36m\]"
+    local CYANBOLD="\[\033[1;36m\]"
+    local WHITE="\[\033[0;37m\]"
+    local WHITEBOLD="\[\033[1;37m\]"
+    export PS1="\n$CYAN\T\n$GREENBOLD \u$YELLOWBOLD@$PURPLEBOLD\h\[\033[00m\]:$CYANBOLD[\w]\[\033[00m\] \\$ "
+}
+
+# Intentionally not calling this function
 
 # Vim: {{{1
 set -o vi
@@ -185,7 +210,7 @@ fi
 # Loops for the varying backends for fzf. ag is my fave.
 if [[ "$(command -v ag)" ]]; then
     export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
-    export FZF_CTRL_T_OPTS=' --preview "head -100 {}" --preview-window=right:50%:wrap --cycle --multi --header Add\ binds'
+    export FZF_CTRL_T_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse --preview "head -100 {}" --preview-window=right:50%:wrap  --header Add\ binds'
     export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
     export FZF_DEFAULT_OPTS="$FZF_CTRL_T_OPTS"
 
@@ -193,12 +218,13 @@ if [[ "$(command -v ag)" ]]; then
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
-    export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10'
+    export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10 --follow '
     export FZF_CTRL_T_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
+
 elif [[ "$(command -v fd)" ]]; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow'
+    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow --exclude .git'
 
     if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
@@ -210,6 +236,11 @@ fi
 # Options for FZF no matter what. Should set only if these vars are unset
 # though because this is gonna clobber.
 export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
+# You can't give a preview window as a default. FZF takes so many different inputs
+# that it periodically borks it. In nvim if you run Snippets, it tries to echo 100 lines
+# but is only receiving 1 line at a time.
+# --preview "head -100 {}" --preview-window=right:50%:wrap'
+
 [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS: --bind 'enter:execute(nvim {})' "
 
 # termux doesnt have xclip or xsel
@@ -256,12 +287,21 @@ if [[ "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
 fi
 
-# gcloud: {{{1
+export PYTHONDONTWRITEBYTECODE=1
+
+# gcloud: {{{2
+#TODO: Jump in the shell, and run the following to ensure it works,
+# then reduce this section to 1 line!
+# if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then source ~/bin/google-cloud-sdk/path.bash.inc; fi
+# The next line enables shell command completion for gcloud.
 if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
 
 if [[ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]]; then source "$HOME/bin/google-cloud-sdk/path.bash.inc"; fi
 
-# Ruby: {{{
+# Ruby: {{{1
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 if [[ -d "$HOME/.rvm/bin" ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
@@ -275,10 +315,13 @@ if [[ -d ~/.bashrc.d/ ]]; then
     unset -v config
 fi
 
-# For the secrets
+# Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
 
 # [[ -z "$TMUX"  ]] && exec tmux
 # [[ -n "$TMUX" ]] && export FZF_TMUX=1 && export FZF_TMUX_HEIGHT=80%
+
+# add some cool colors to ls
+eval $( dircolors -b ~/.dircolors )

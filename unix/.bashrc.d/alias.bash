@@ -47,7 +47,7 @@ alias rmdir='rmdir -v'
 # alias rm='rm -I'
 
 # Print each PATH entry on a separate line
-alias paoh='echo -e ${PATH//:/\\n}'
+alias path='echo -e ${PATH//:/\\n}'
 
 # Options i use every time i run these commands
 alias dus='du -d 1 -h'

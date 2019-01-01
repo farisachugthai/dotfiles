@@ -8,6 +8,12 @@
 (add-to-list 'load-path "~/.emacs.d/evil")
 (require 'evil)
 (evil-mode 1)
+
+;; Don't close if i haven't savedbcustomization
+(add-hook 'kill-emacs-query-functions
+               'custom-prompt-customize-unsaved-options)
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

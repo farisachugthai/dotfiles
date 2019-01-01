@@ -29,6 +29,11 @@ from pathlib import Path
 import subprocess
 import sys
 
+try:
+    from git import Git
+except ImportError:
+    pass
+
 
 def git_touch():
     """Convenience function that creates a file and git add's it"""
