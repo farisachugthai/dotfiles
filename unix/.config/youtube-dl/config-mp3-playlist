@@ -51,12 +51,9 @@
 # }}}
 
 # Playlist specific: {{{
-
 # playlist. simple as that. output template updated to reflect playlist pos
 --yes-playlist
 
 # download archive. if the script is rerun on the same playlist only download
 # new videos
 --download-archive "$HOME/storage/shared/Music/archive/%(playlist)s.txt"
-
-# }}}

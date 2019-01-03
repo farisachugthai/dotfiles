@@ -214,7 +214,7 @@ if [[ "$(command -v ag)" ]]; then
     export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
     export FZF_DEFAULT_OPTS="$FZF_CTRL_T_OPTS"
 
-    alias Ag="$FZF_DEFAULT_COMMAND"+"FZF_DEFAULT_OPTS"
+    alias Ag="$FZF_DEFAULT_COMMAND" | fzf "$FZF_DEFAULT_OPTS"
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then

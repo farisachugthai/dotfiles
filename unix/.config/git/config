@@ -110,3 +110,6 @@
 
 [pull]
     rebase = True
+
+[url "git://github.com/"]
+	insteadOf = github:
