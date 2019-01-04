@@ -1,4 +1,3 @@
-# ran sort on the file and man is this easier to read or what
 accept_bad_cookie 0
 accept_cookie 1
 accept_encoding gzip, deflate

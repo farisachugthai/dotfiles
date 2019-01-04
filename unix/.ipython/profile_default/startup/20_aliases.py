@@ -12,6 +12,10 @@ with common Linux idioms.
 Substitutions
 -------------
 
+<<<<<<< HEAD
+You can use the %l specifier in an alias definition to represent the
+whole line when the alias is called.  For example::
+=======
 For some reason there's no section about aliases in the skel file. Weird.
 Well here's a fun fact!:
 
@@ -42,6 +46,8 @@ ip.alias_manager.user_aliases = [
       ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
       ('ctags', 'ctags'),     # it's nice to be able to build tags while working
       ('dpkg', 'dpkg'),
+      ('du', 'du'),
+      ('dus', 'du -d 1 -h'),
       ('echo', 'echo -e'),
       ('find', 'find'),
       ('fd', 'fd'),
@@ -104,6 +110,7 @@ ip.alias_manager.user_aliases = [
       ('..', 'cd ..'),
       ('...', 'cd ../..'),
     ]
+
 
 if __name__ == "__main__":
     for i in ip.alias_manager.user_aliases:

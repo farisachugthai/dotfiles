@@ -45,8 +45,7 @@
 # https://github.com/neovim/neovim/issues/2377
 [mergetool "vimdiff"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
-# if it's not immediately clear what's going on, read up from this link:
+    # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
     # from this link we see that BASE is the commit that the file diverged at.
     # local and remote are the 2 paths we're trying to merge, and we can
@@ -115,3 +114,9 @@
 [status]
     showStash = True
     showUntrackedFiles = all
+
+[pull]
+    rebase = True
+
+[url "git://github.com/"]
+	insteadOf = github:

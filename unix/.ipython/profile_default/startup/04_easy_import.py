@@ -3,24 +3,21 @@
 # flake8: noqa
 """Import my most frequently used modules.
 
-Imports built-in modules into the global namespace and noisely warns if 3rd
-party modules aren't installed.
-
 Usage:
 
     File is neither run nor interactively sourced. Simply initialize IPython!
 
-.. notes 2018-09-06:
+2018-09-06
+.. note::
 
     Discovered that putting the imports into functions and calling those functions
     causes the imports to stay local to that function and not appear in the REPL
     namespace. Seemingly obvious now. So how does ptipython import things?
     You have access to ip.cleanup() after you import get_ipython
     Well it embeds ipython. But it has to import other modules. Hm.
-
     However we're functional so take that to mean what you want! :D
 
-..todo:
+.. todo::
 
     pynvim is the new module to import for neovim. However it only exists
     for python3.6 >. So we're gonna need to do a version check, then try
@@ -34,9 +31,9 @@ import sys
 
 # Nov 04, 2018: Let's add a few ipy :funcs: that have proven to be useful
 from IPython.utils.dir2 import dir2     # simply because its a nicer dir2
-# from IPython import get_ipython this is imported in a couple different files
-# so we don't actually need it here
 from IPython.core.interactiveshell import InteractiveShell
+
+# 12/14/18
 import IPython
 
 try:
@@ -46,7 +43,12 @@ except ImportError:
 
 
 def import_nvim(mod):
-    """Import the neovim module."""
+    """Import the neovim module.
+
+    Utilizes :func:`import_module` from :mod:`importlib`.
+
+    :param mod: A module to import.
+    """
     try:
         import_module(mod)
     except ImportError as e:
@@ -65,4 +67,5 @@ if __name__ == "__main__":
 
     import_nvim(mod)
     del import_nvim
-    del mod
+    # del mod
+    # this one can't be right because the point is to create a binding

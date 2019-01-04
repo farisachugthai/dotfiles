@@ -12,10 +12,10 @@
 --restrict-filenames
 
 # Output location
-# TODO: Doesn't wirk
+# TODO: Doesn't work
 -o "$HOME/storage/shared/Videos/%(uploader)s/%(playlist_index)d%(title)s.%(ext)s"
 
-# TODO:Add in a UA
+# TODO: Add in a UA
 # --user-agent UA
 # Also implement this!
 # --exec CMD
@@ -43,8 +43,6 @@
 # Don't use proprietary encodings
 --youtube-skip-dash-manifest
 
-# }}}
-
 # Playlist specific: {{{ 2
 
 # playlist. simple as that. output template updated to reflect playlist pos
@@ -53,7 +51,3 @@
 # download archive. if the script is rerun on the same playlist only download
 # new videos
 --download-archive "$HOME/storage/shared/Videos/%(creator)s/%(playlist_index)d%(title)s.%(ext)s"
-
-# }}}
-
-# }}}

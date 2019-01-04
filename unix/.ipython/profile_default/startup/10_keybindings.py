@@ -95,7 +95,7 @@ Original File Implementation
 Found the file where this is originally implemented YAS.
 Or I guess I should say the actual keybindings are listed.
 
-ipython::
+Go to the ipython root dir:: ipython
 
     %cd terminal
     %pycat shortcuts
@@ -144,10 +144,10 @@ Sep 24, 2018:
 # Ctrl+I == Tab
 # flake: noqa
 # registry.add_binding(Keys.ControlI,
-            # filter=(HasFocus(DEFAULT_BUFFER)
-                 # & ~HasSelection()
-                 # & insert_mode
-                 # & cursor_in_leading_ws))(indent_buffer)
+# filter=(HasFocus(DEFAULT_BUFFER)
+# & ~HasSelection()
+# & insert_mode
+# & cursor_in_leading_ws))(indent_buffer)
 # flake: qa
 
 # also because i didn't know or remember these were keybindings

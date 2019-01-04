@@ -12,20 +12,24 @@ TODO:
     - Consider using datetime instead of time. Not pertinent though.
     - Explore both the built-in logging module and IPython logging subclass.
     - Truncate output if it exceeds a certain threshold.
-        - Run dir(np) or dir(pd) a couple of times and the logs become swamped.
+        - Run dir(np) or dir(pd) a couple of times and the logs become
+        swamped.
 
 .. note::
 
-    For further reading, feel free to see the output of any of the following::
+    For further reading, feel free to see the output of any of the
+    following::
 
         >>> from IPython.core.interactiveshell import InteractiveShell
         >>> help(InteractiveShell)
 
     Which features descriptions of :funcs: relevant to startup such as
-    ``register_magic_function()`` and literally every option available through
+    ``register_magic_function()`` and literally every option available
+    through
     the %config magic.
 
-    For commands that are more related to the interactive aspect of the shell,
+    For commands that are more related to the interactive aspect of the
+    shell,
     see the following::
 
         >>> from IPython import get_ipython()
@@ -42,8 +46,6 @@ from os import path
 import time
 
 from IPython import get_ipython
-
-ip = get_ipython()
 
 
 def session_logger(ip):

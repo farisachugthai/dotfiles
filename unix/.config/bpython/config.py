@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """Bpython config.
 
-This is a standard python config file
+This is a standard python config file.
 Valid values can be True, False, integer numbers, strings
-By default bpython will look for $XDG_CONFIG_HOME/bpython/config
-($XDG_CONFIG_HOME defaults to ~/.config) or you can specify a file with the
+By default bpython will look for `$XDG_CONFIG_HOME/bpython/config`
+(`$XDG_CONFIG_HOME` defaults to ~/.config) or you can specify a file with the
 --config option on the command line
 
 :URL: http://docs.bpython-interpreter.org/configuration.html
@@ -109,7 +109,7 @@ save_append_py = True
 # (default: False)
 # list_above = False
 
-# How did he enable this functionality? I would love to have this in ipython
+# How did he enable this functionality? I would love to have this in IPython.
 # Enables two fish (the shell) style features:
 # Previous line key will search for the current line (like reverse incremental
 # search) and right arrow will complete the current line with the first match

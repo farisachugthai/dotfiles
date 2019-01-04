@@ -14,6 +14,6 @@ trap 'exec $failsafe' EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
 pgrep ssh-agent || eval "$(ssh-agent -s)" && ssh-add
 
 # invoke global X session script
-. /etc/X11/Xsession
+[[ -f /etc/X11/Xsession ]] && . /etc/X11/Xsession
 
 exec i3&

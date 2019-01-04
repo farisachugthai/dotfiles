@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Configuration example for ``ptpython``.
 
-""" Configuration example for ``ptpython``.
+Copy this file to `<~/.ptpython/config.py>`
 
-Copy this file to ~/.ptpython/config.py
+.. bugs::
+
+    Magics don't work as expected.
+    Even with automagic turned on `cat file` doesn't work; however %cat file
+    works perfectly.
+
 """
 from __future__ import unicode_literals
 from prompt_toolkit.filters import ViInsertMode
@@ -19,8 +25,7 @@ __all__ = (
 
 
 def configure(repl):
-    """
-    Configuration method. This is called during the start-up of ptpython.
+    """Configuration method. This is called during the start-up of ptpython.
 
     :param repl: `PythonRepl` instance.
     """
@@ -120,8 +125,7 @@ def configure(repl):
     """
 
     # Add custom key binding for PDB.
-    # holy hell this is genius.
-    # py3.7 just got breakpoint. A great addition to my ipy conf
+    # holy hell this is genius. py3.7 just got breakpoint but this wouldve been a great addition to my ipy conf
     @repl.add_key_binding(Keys.ControlB)
     def _(event):
         ' Pressing Control-B will insert "pdb.set_trace()" '
@@ -135,7 +139,6 @@ def configure(repl):
         if b.accept_action.is_returnable:
             b.accept_action.validate_and_handle(event.cli, b)
 
-
     # Typing 'jj' in Vi Insert mode, should send escape. (Go back to navigation
     # mode.)
     @repl.add_key_binding('j', 'j', filter=ViInsertMode())
@@ -145,7 +148,6 @@ def configure(repl):
 
     # Custom key binding for some simple autocorrection while typing.
     # TODO: Observe how much this slows stuff down because if its a quick lookup then you could add your autocorrect.vim
-    """
     corrections = {
         'impotr': 'import',
         'pritn': 'print',
@@ -163,7 +165,6 @@ def configure(repl):
                 b.insert_text(corrections[w])
 
         b.insert_text(' ')
-    """
 
 
 # Custom colorscheme for the UI. See `ptpython/layout.py` and

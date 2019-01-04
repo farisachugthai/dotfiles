@@ -157,7 +157,15 @@ hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
 }
 
+# Other TODO: Possibly rewrite the man function here. IE if nvim then do that,
+# elif most, else less
+
+# Back up a file using bracket expansion I.E. mv foo.py foo.py.bak
+bak() {
+    mv $1{,.bak}
+}
+
 # I don't know why this was the hardest thing ever but oh my god I got it!
 man(){
     nvim -c "Man $@" -c'wincmd o'
-} 
+}

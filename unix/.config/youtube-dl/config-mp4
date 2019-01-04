@@ -2,13 +2,7 @@
 # YouTube Downloader Configuration
 # Maintainer: Faris Chugthai
 
-# Possibly better to save mutiple configs then change which one we use
-# Based on the situation using `--config-location`
-# Be aware you can use `--no-config
-
-# mp4
-
-# All configs: {{{
+# mp4 single video
 
 # Filetype
 -f mp4
@@ -25,11 +19,6 @@
 
 # Modification time
 --no-mtime
-
-# Subtitles
-# Write autosubs only works with YT and videos
---write-auto-sub
---embed-subs
 
 # Thumbnails
 --embed-thumbnail
