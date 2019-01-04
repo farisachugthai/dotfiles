@@ -79,9 +79,8 @@ case "$TERM" in
 esac
 
 # Colors: {{{1
-# TODO: Get other escape codes in a refactor the prompt.
-export Color_Off="\[\033[0m\]"
-export Yellow="\[\033[0;33m\]"
+export COLOR_OFF="\[\033[0m\]"
+export YELLOW="\[\033[0;33m\]"
 
 # export BRIGHT = "\x1b[1m"
 # export BLACK = '\x1b[30m'
@@ -115,9 +114,18 @@ fi
 #     TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
 # fi
 
+export ARROW='\342\224\224\342\224\200\342\224\200\342\225\274'
 
 if [ "$color_prompt" = yes ]; then
-    TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'; else echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'; fi)\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] "
+TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\
+\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")\
+[$(if [[ ${EUID} == 0 ]]; then
+    echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'
+else
+    echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'
+fi)\
+\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]$ARROW $Color_Off\$\[\e[01;33m\]\[\e[0m\] "
+# well that's a little better i guess
 else
     TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
 fi
@@ -143,6 +151,7 @@ if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
 fi
 
 unset color_prompt force_color_prompt
+tput reset      # because otherwise I end up with a red cursor
 
 # Refactoring Prompt: {{{2
 # CUSTOM BASH COLOR PROMPT
@@ -201,7 +210,11 @@ if [[ -d "$HOME/.nvm" ]]; then
     [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
 fi
 
+# Testing out the language servers to see if they'll link up with neovim
+export PATH="$PATH:~/.local/share/nvim/site/node_modules/.bin"
+
 # FZF: {{{1
+
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
@@ -210,6 +223,7 @@ fi
 # Loops for the varying backends for fzf. ag is my fave.
 if [[ "$(command -v ag)" ]]; then
     export FZF_CTRL_T_COMMAND='ag  --hidden --nocolor --noheading --nobreak --nonumbers --follow -l'
+
     export FZF_CTRL_T_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse --preview "head -100 {}" --preview-window=right:50%:wrap  --header Add\ binds'
     export FZF_DEFAULT_COMMAND="$FZF_CTRL_T_COMMAND"
     export FZF_DEFAULT_OPTS="$FZF_CTRL_T_OPTS"
@@ -282,6 +296,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 fi
 
+
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 if [[ "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
@@ -290,16 +305,14 @@ fi
 export PYTHONDONTWRITEBYTECODE=1
 
 # gcloud: {{{2
-#TODO: Jump in the shell, and run the following to ensure it works,
+# TODO: Jump in the shell, and run the following to ensure it works,
 # then reduce this section to 1 line!
 # if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
 
 # The next line updates PATH for the Google Cloud SDK.
-if [[ -f ~/bin/google-cloud-sdk/path.bash.inc ]]; then source ~/bin/google-cloud-sdk/path.bash.inc; fi
-# The next line enables shell command completion for gcloud.
-if [[ -f ~/bin/google-cloud-sdk/completion.bash.inc ]]; then source ~/bin/google-cloud-sdk/completion.bash.inc; fi
+if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
-if [[ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]]; then source "$HOME/bin/google-cloud-sdk/path.bash.inc"; fi
+if [ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
 # Ruby: {{{1
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -325,3 +338,6 @@ fi
 
 # add some cool colors to ls
 eval $( dircolors -b ~/.dircolors )
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

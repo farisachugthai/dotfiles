@@ -1,8 +1,4 @@
 # pycodestyle
-# 2018-09-14: At your leisure, run pydoc pycodestyle in a shell its phenomenal.
-# also this made me realize i either need to look into how langclient works or drop it and use jedi
-#
-# copied from flake. ensure everythings a valid code!
 
 [pycodestyle]
 max-line-length = 120

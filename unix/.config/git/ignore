@@ -1,5 +1,7 @@
 # Global Gitignore
 # Maintainer: Faris Chugthai
+# TODO: If you set the filetype to gitignore it drops # from comments.
+# Figure out if we need to set comments or commentstrings.
 
 # Personal
 .zim/

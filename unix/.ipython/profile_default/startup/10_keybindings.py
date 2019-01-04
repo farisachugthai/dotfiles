@@ -12,7 +12,6 @@ literally no modules with docstrings according to IPython.
 Currently using 1.0.15 - 2018-09-07
 
 Oct 30, 2018:
-
     IPython 7.1.1 ships with pt2!
 
 Run in shell
@@ -106,11 +105,10 @@ Up at the top you have the keybindings IPython ships with listed for ya!
 Sep 24, 2018:
     Commented everything out.
 
-TODO:
-    Check whether we're running in IPython or Jupyter console because these
-    imports break jupyter.
+.. todo::
 
-    Why the hell does Jupyter import everything IPython uses btw???
+    Check whether were running in IPython or Jupyter console because these
+    imports break jupyter.
 """
 # this right here is the mod we need to keep our eyes on.
 # from prompt_toolkit.key_binding.registry import Registry
@@ -146,10 +144,10 @@ TODO:
 # Ctrl+I == Tab
 # flake: noqa
 # registry.add_binding(Keys.ControlI,
-            # filter=(HasFocus(DEFAULT_BUFFER)
-                 # & ~HasSelection()
-                 # & insert_mode
-                 # & cursor_in_leading_ws))(indent_buffer)
+# filter=(HasFocus(DEFAULT_BUFFER)
+# & ~HasSelection()
+# & insert_mode
+# & cursor_in_leading_ws))(indent_buffer)
 # flake: qa
 
 # also because i didn't know or remember these were keybindings

@@ -19,6 +19,7 @@ else
     export NVIMRUNTIME="/usr/share/nvim/runtime"
     export SHELL="/bin/bash"
     export BROWSER="firefox-nightly --profile-manager"
+    export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
 fi
 
 # Ruby: {{{1
@@ -28,7 +29,6 @@ if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 fi
 
-# Load RVM into a shell session *as a function*
 if [[ -d ~/.gem/ruby/2.6.0/bin ]]; then
     export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
 fi
@@ -61,15 +61,19 @@ if [[ "$(command -v yarn)" ]]; then
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
+fi
 
+# Lisp:{{{1
+if [[ -d "$HOME/.racket/7.1/bin" ]]; then
+    export PATH="$PATH:$HOME/.racket/7.1/bin"
 fi
 
 # Environment Variables: {{{1
-
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 # -K: exit less in response to Ctrl-C
 # -M: Verbose prompt
+# -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
 export PAGER="less -JRKML"
 
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -97,22 +101,41 @@ if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
     if [[ -d "/tmp" ]]; then
-        TMPDIR="/tmp"
-        export TMP="$TMPDIR"
+        export TMP="/var/tmp,/usr/tmp,/tmp"
+        export TMPDIR="/var/tmp"
     fi
 fi
 
 export TMUXP_CONFIGDIR='$HOME/.tmux'
 export PYTHONDONTWRITEBYTECODE=1
+
+# As this was placed here because Termux didn't have a manpath set
+# Here's the one I currently have from KDE Neon. Nov 07, 2018
+# /home/faris/miniconda3/share/man:/usr/local/man:/usr/local/share/man:/usr/share/man:/home/faris/.local/kitty.app/share/man:/home/faris/.fzf/man
+# if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
+
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Rust: {{{1
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
-# Sourced files: {{{1
+# Sourced Files: {{{1
+# Unfortunately this only gets called in an interactive session tmux is reading
+# .profile, but most shells don't usually read this file in. As a result this
+# may have to move to bashrc.
+# if [[ -z "$TMUX" ]]; then
+    # tmux new
+# else
+    # hoping that makes an array and by not specifying an index i only pick the 1st
+    # tmux attach -t "$(tmux ls)"
+# fi
+# alternatively i think what we could do is something to the effect of: pseudocode
+# try: tmux new -s startup; except ServerExists; tmux attach -t startup or tmux new
+
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
 
-if [[ -f "$HOME/.bashrc" ]]; then source "$HOME/.bashrc"; fi
+# Source the bashrc last.
+if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

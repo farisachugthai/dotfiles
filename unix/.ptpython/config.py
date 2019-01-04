@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """Configuration example for ``ptpython``.
 
-Copy this file to ~/.ptpython/config.py
+Copy this file to `<~/.ptpython/config.py>`
 
+.. bugs::
 
-Bugs::
     Magics don't work as expected.
     Even with automagic turned on `cat file` doesn't work; however %cat file
     works perfectly.
@@ -62,7 +62,6 @@ def configure(repl):
     repl.wrap_lines = True
 
     # Mouse support.
-    repl.enable_mouse_support = True
     # messes up termux. REPL takes over screen so no scrollback
     repl.enable_mouse_support = False
 
@@ -127,7 +126,6 @@ def configure(repl):
 
     # Add custom key binding for PDB.
     # holy hell this is genius. py3.7 just got breakpoint but this wouldve been a great addition to my ipy conf
-    # py3.7 just got breakpoint. A great addition to my ipy conf
     @repl.add_key_binding(Keys.ControlB)
     def _(event):
         ' Pressing Control-B will insert "pdb.set_trace()" '

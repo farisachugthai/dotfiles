@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 """Bpython config.
 
-This is a standard python config file
+This is a standard python config file.
 Valid values can be True, False, integer numbers, strings
-By default bpython will look for $XDG_CONFIG_HOME/bpython/config
-($XDG_CONFIG_HOME defaults to ~/.config) or you can specify a file with the
+By default bpython will look for `$XDG_CONFIG_HOME/bpython/config`
+(`$XDG_CONFIG_HOME` defaults to ~/.config) or you can specify a file with the
 --config option on the command line
 
-URL::
-    http://docs.bpython-interpreter.org/configuration.html
+:URL: http://docs.bpython-interpreter.org/configuration.html
 
 Refer to the link above for all configurable options
 """
@@ -48,16 +47,14 @@ hist_length = 10000
 # Soft tab size (default: 4, see pep-8):
 tab_length = 4
 
-# Color schemes should be put in $XDG_CONFIG_HOME/bpython/
-# to use the theme $XDG_CONFIG_HOME/bpython/foo.theme,
-# set color_scheme = foo.
+# Color schemes should be put in $XDG_CONFIG_HOME/bpython/ to use the theme
+# $XDG_CONFIG_HOME/bpython/foo.theme set color_scheme = foo. Leave blank or set
+# to "default" to use the default theme
 # color_scheme = default
 
 # External editor to use for editing the current line, block, or full history
 # Default is to try $EDITOR and $VISUAL, then vi - but if you uncomment
 # the line below that will take precedence
-# actually is this supposed to be a string? Im using my value for both env
-# vars anyway
 # editor = nvim
 
 # Whether to append .py to the filename while saving session to a file.
@@ -112,7 +109,7 @@ save_append_py = True
 # (default: False)
 # list_above = False
 
-# How did he enable this functionality? I would love to have this in ipython
+# How did he enable this functionality? I would love to have this in IPython.
 # Enables two fish (the shell) style features:
 # Previous line key will search for the current line (like reverse incremental
 # search) and right arrow will complete the current line with the first match

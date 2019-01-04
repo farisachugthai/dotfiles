@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Export functions to ease IPython/git interactions.
+"""Export functions to ease IPython/Git interactions.
 
-File: 40_git_helpers.py
-Author: Faris Chugthai
-Email: farischugthai@gmail.com
-Github: https://github.com/farisachugthai
+:File: 40_git_helpers.py
+:Author: Faris Chugthai
+:Email: farischugthai@gmail.com
+:Github: https://github.com/farisachugthai
 
 Attributes:
 -----------
@@ -44,3 +44,11 @@ def git_touch():
         fobject = Path(fname)
         fobject.touch()
         subprocess.run(['git', 'add', fobject])
+
+
+if __name__ == "__main__":
+    git_touch()
+    # The above is basically a placeholder. This should be run interactively
+    # and will expose commands as necessary and give useful defaults and
+    # prompts that guide users in the right direction to running a correct
+    # command short of "read 170 different man pages"

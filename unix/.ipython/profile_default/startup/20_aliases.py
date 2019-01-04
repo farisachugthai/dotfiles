@@ -12,8 +12,17 @@ with common Linux idioms.
 Substitutions
 -------------
 
+<<<<<<< HEAD
 You can use the %l specifier in an alias definition to represent the
 whole line when the alias is called.  For example::
+=======
+For some reason there's no section about aliases in the skel file. Weird.
+Well here's a fun fact!:
+
+    You can use the %l specifier in an alias definition to represent the
+    whole line when the alias is called.
+
+ipython::
 
    In [2]: alias bracket echo "Input in brackets: <%l>"
    In [3]: bracket hello world
@@ -102,6 +111,10 @@ ip.alias_manager.user_aliases = [
       ('...', 'cd ../..'),
     ]
 
+
 if __name__ == "__main__":
     for i in ip.alias_manager.user_aliases:
         ip.alias_manager.define_alias(i[0], i[1])
+
+    #  can't believe i forgot this
+    del i

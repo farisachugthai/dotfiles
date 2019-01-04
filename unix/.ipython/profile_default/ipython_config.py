@@ -33,57 +33,6 @@ try:
 except OSError as e:
     pass
 
-# Alias: {{{
-
-c.AliasManager.user_aliases = [
-      ('ag', 'ag --hidden --color'),
-      ('chmod', 'chmod'),
-      ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
-      ('echo', 'echo -e'),
-      ('fzf', 'fzf'),         # all we need to do is figure out keybindings
-      ('ga', 'git add'),
-      ('gch', 'git checkout'),
-      ('gco', 'git commit'),
-      ('gd', 'git diff'),
-      ('gds', 'git diff --staged'),
-      ('gds2', 'git diff --staged --stat'),
-      ('git', 'git'),
-      ('glo', 'git log'),
-      ('gpip', 'export PIP_REQUIRE_VIRTUALENV=0; pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'),
-      ('gs', 'git status'),
-      ('gst', 'git diff --stat'),
-      ('head', 'head -n 30'),
-      ('la', 'ls -AF --color=always'),
-      ('l', 'ls -CF --color=always'),
-      ('ll', 'ls -AlF --color=always'),
-      ('ls', 'ls -F --color=always'),
-      ('lt', 'ls -Altcr --color=always'),
-      ('mk', 'mkdir -pv %l && cd %l'),      # check if this works. only mkdir
-      ('mkdir', 'mkdir -pv'),
-      ('mv', 'mv -iv'),
-      ('nvim', 'nvim'),
-      ('rm', 'rm -v'),
-      ('rmdir', 'rmdir -v'),
-      ('tail', 'tail -n 30'),
-      ('tree', 'tree'),
-      ('treea', 'tree -a I .git -I __pycache__'),
-      ('vi', 'vim'),
-      ('vim', 'vim'),
-  ]
-
-# For some reason there's no section about aliases in the skel file. Weird.
-# well here's a fun fact
-# You can use the %l specifier in an alias definition to represent the
-# whole line when the alias is called.  For example::
-
-#    In [2]: alias bracket echo "Input in brackets: <%l>"
-#    In [3]: bracket hello world
-#    Input in brackets: <hello world>
-
-# note that we quote when in the configuration file but when running alias
-# interactively the syntax %alias alias_name cmd doesn't require quoting
-
-
 # ----------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
 # ----------------------------------------------------------------------------
