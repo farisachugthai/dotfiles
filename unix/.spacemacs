@@ -34,7 +34,6 @@ values."
    dotspacemacs-configuration-layers
    '(
      markdown
-     markdown
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -99,7 +98,6 @@ values."
    ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-but-keep-unused)
   )
-
 
 (defun dotspacemacs/init ()
   "Initialization function.

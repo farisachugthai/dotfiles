@@ -5,7 +5,7 @@
 Utilizes `ip`, the global interactive Ipython session. Fills the `user_ns`
 with common Linux idioms.
 
-..note:
+.. note::
 
     Should I add a check that this a Unix OS because this'll blow up on NT?
 
@@ -42,6 +42,8 @@ ip.alias_manager.user_aliases = [
       ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
       ('ctags', 'ctags'),     # it's nice to be able to build tags while working
       ('dpkg', 'dpkg'),
+      ('du', 'du'),
+      ('dus', 'du -d 1 -h'),
       ('echo', 'echo -e'),
       ('find', 'find'),
       ('fd', 'fd'),
@@ -104,6 +106,7 @@ ip.alias_manager.user_aliases = [
       ('..', 'cd ..'),
       ('...', 'cd ../..'),
     ]
+
 
 if __name__ == "__main__":
     for i in ip.alias_manager.user_aliases:
