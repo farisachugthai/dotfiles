@@ -5,7 +5,7 @@
 Utilizes `ip`, the global interactive Ipython session. Fills the `user_ns`
 with common Linux idioms.
 
-..note:
+.. note::
 
     Should I add a check that this a Unix OS because this'll blow up on NT?
 

@@ -3,6 +3,13 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -30,8 +37,10 @@ values."
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
+   setq configuration-layer=elpa-achives
    dotspacemacs-configuration-layers
    '(
+     markdown
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -101,7 +110,8 @@ values."
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
-   dotspacemacs-install-packages 'used-but-keep-unused))
+   dotspacemacs-install-packages 'used-but-keep-unused)
+  )
 
 (defun dotspacemacs/init ()
   "Initialization function.

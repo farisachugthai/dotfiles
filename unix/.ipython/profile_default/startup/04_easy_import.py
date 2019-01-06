@@ -3,10 +3,6 @@
 # flake8: noqa
 """Import my most frequently used modules.
 
-Usage:
-
-    File is neither run nor interactively sourced. Simply initialize IPython!
-
 2018-09-06
 .. note::
 
@@ -67,5 +63,3 @@ if __name__ == "__main__":
 
     import_nvim(mod)
     del import_nvim
-    # del mod
-    # this one can't be right because the point is to create a binding
