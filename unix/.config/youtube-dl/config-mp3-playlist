@@ -8,7 +8,7 @@
 
 # mp3 playlist
 
-# All configs: {{{
+# mp3 specific configs: {{{
 
 # Filetype
 -f mp3

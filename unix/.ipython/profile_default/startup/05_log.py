@@ -47,8 +47,6 @@ import time
 
 from IPython import get_ipython
 
-ip = get_ipython()
-
 
 def session_logger(ip):
     """Log all input and output for an IPython session.

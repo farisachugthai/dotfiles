@@ -54,8 +54,8 @@ if [[ "$(command -v go)" ]]; then
 fi
 
 # JavaScript: {{{1
-if [[ $(command -v yarn) ]]; then
-    YARNPATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
+if [[ "$(command -v yarn)" ]]; then
+    YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
     export PATH="$PATH:$YARNPATH"
 
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
@@ -64,7 +64,6 @@ if [[ $(command -v yarn) ]]; then
 fi
 
 # Lisp:{{{1
-
 if [[ -d "$HOME/.racket/7.1/bin" ]]; then
     export PATH="$PATH:$HOME/.racket/7.1/bin"
 fi
@@ -75,11 +74,8 @@ fi
 # -K: exit less in response to Ctrl-C
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-export PAGER="less -JRMK"
+export PAGER="less -JRKML"
 
-export COLORTERM="truecolor"
-
-# These are the defaults but for the sake of being explicit rather than implicit
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -100,6 +96,7 @@ export LANGUAGE=en                      # nvim complains us region not supported
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 # Also because termux doesn't set $TMPDIR to /tmp/
+# I should change d to a dir i can read right?
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
@@ -110,6 +107,7 @@ else
 fi
 
 export TMUXP_CONFIGDIR='$HOME/.tmux'
+export PYTHONDONTWRITEBYTECODE=1
 
 # As this was placed here because Termux didn't have a manpath set
 # Here's the one I currently have from KDE Neon. Nov 07, 2018
@@ -120,7 +118,6 @@ export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Rust: {{{1
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
-
 
 # Sourced Files: {{{1
 # Unfortunately this only gets called in an interactive session tmux is reading
@@ -137,7 +134,8 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
-export NVIM="$HOME/projects/viconf/.config/nvim"
+export VICONF="$HOME/projects/viconf/.config/nvim"
+export NVIM="$HOME/.config/nvim"
 
 # Source the bashrc last.
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

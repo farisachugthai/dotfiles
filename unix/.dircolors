@@ -1,3 +1,5 @@
+# dircolors
+#
 #                                    LS_COLORS
 # Maintainers: Magnus Woldrich <m@japh.se>,
 #              Ryan Delaney <ryan.delaney@gmail.com> OpenGPG: 0D98863B4E1D07B6
@@ -32,7 +34,7 @@
 # You should have received a copy of the Perl Artistic License along
 # with this program.  If not, see <http://www.perlfoundation.org/artistic_license_1_0>.
 
-# :core: {{{1
+# core {{{1
 BLK                   38;5;68
 CAPABILITY            38;5;17
 CHR                   38;5;113;1
@@ -56,7 +58,7 @@ STICKY                38;5;86;48;5;234
 STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 
 *LS_COLORS 48;5;89;38;5;197;1;3;4;7 # :-)
-
+# }}}
 # documents {{{1
 *README               38;5;220;1
 *README.rst           38;5;220;1
@@ -97,7 +99,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .yml                  38;5;178
 .RData                38;5;178
 .rdata                38;5;178
-
+# }}}
 # binary {{{2
 .cbr                  38;5;141
 .cbz                  38;5;141
@@ -140,8 +142,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 #   Excel module
 .xltm                 38;5;73;4
 .xltx                 38;5;73
-
-
+# }}}
+# }}}
 # configs {{{2
 *cfg                  1
 *conf                 1
@@ -154,7 +156,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .pcf                  1
 #   adobe photoshop proof settings file
 .psf                  1
-
+# }}}
 # code {{{1
 # version control {{{2
 .git                  38;5;197
@@ -255,7 +257,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # binaries {{{2
 # compiled apps for interpreted languages
 .pyc                  38;5;240
-
+# }}}
 # orchestration {{{2
 .tf                   38;5;168
 .tfstate              38;5;168
@@ -272,7 +274,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .mht                  38;5;125;1
 .eml                  38;5;125;1
 .mustache             38;5;125;1
-
+# }}}
 # java {{{2
 .coffee               38;5;074;1
 .java                 38;5;074;1
@@ -281,14 +283,14 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .jsm                  38;5;074;1
 .jsm                  38;5;074;1
 .jsp                  38;5;074;1
-
+# }}}
 # php {{{2
 .php                  38;5;81
 #   CakePHP view scripts and helpers
 .ctp                  38;5;81
 #   Twig template engine
 .twig                 38;5;81
-
+# }}}
 # vb/a {{{2
 .vb                   38;5;81
 .vba                  38;5;81
@@ -311,7 +313,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .old                  38;5;242
 .out                  38;5;242
 .SKIP                 38;5;244
-
+# }}}
 # patch files {{{2
 .diff                 48;5;197;38;5;232
 .patch                48;5;197;38;5;232;1
@@ -331,7 +333,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .png                  38;5;97
 .psd                  38;5;97
 .xpm                  38;5;97
-
+# }}}
 # vector {{{1
 .ai                   38;5;99
 .eps                  38;5;99
@@ -339,7 +341,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .drw                  38;5;99
 .ps                   38;5;99
 .svg                  38;5;99
-
+# }}}
 # video {{{1
 .avi                  38;5;114
 .divx                 38;5;114
@@ -367,11 +369,11 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .ts                   38;5;115
 .ogv                  38;5;115
 .f4v                  38;5;115
-
+  # }}}
   # lossless {{{2
 .VOB                  38;5;115;1
 .vob                  38;5;115;1
-
+# }}}
 # audio {{{1
 .3ga                  38;5;137;1
 .S3M                  38;5;137;1
@@ -404,7 +406,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .wv                   38;5;136;1
 .wvc                  38;5;136;1
 
-
+# }}}
 # fonts {{{1
 .afm                  38;5;66
 .fon                  38;5;66
@@ -416,7 +418,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 #   postscript fonts
 .PFA                  38;5;66
 .pfa                  38;5;66
-
+# }}}
 # archives {{{1
 .7z                   38;5;40
 .a                    38;5;40
@@ -454,14 +456,14 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .vpk                  38;5;215
 .bsp                  38;5;215
 .dmg                  38;5;215
-
+  # }}}
   # segments from 0 to three digits after first extension letter {{{2
 .r[0-9]{0,2}          38;5;239
 .zx[0-9]{0,2}         38;5;239
 .z[0-9]{0,2}          38;5;239
 # partial files
 .part                 38;5;239
-
+  # }}}
 # partition images {{{2
 .dmg                  38;5;124
 .iso                  38;5;124
@@ -472,7 +474,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .toast                38;5;124
 .vcd                  38;5;124
 .vmdk                 38;5;124
-
+# }}}
 # databases {{{2
 .accdb                38;5;60
 .accde                38;5;60
@@ -488,7 +490,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .typelib              38;5;60
 # NetCDF database
 .nc                   38;5;60
-
+# }}}
 # tempfiles {{{1
 # undo files
 .pacnew               38;5;33
@@ -528,12 +530,12 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .DS_Store             38;5;239
 .localized            38;5;239
 .CFUserTextEncoding   38;5;239
-
+# }}}
 # hosts {{{1
 # /etc/hosts.{deny,allow}
 .allow                38;5;112
 .deny                 38;5;196
-
+# }}}
 # systemd {{{1
 # http://www.freedesktop.org/software/systemd/man/systemd.unit.html
 .service              38;5;45
@@ -547,7 +549,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .path                 38;5;45
 .timer                38;5;45
 .snapshot             38;5;45
-
+# }}}
 # metadata {{{1
 .application          38;5;116
 .cue                  38;5;116
@@ -563,7 +565,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .theme                38;5;116
 .torrent              38;5;116
 .urlview              38;5;116
-
+# }}}
 # encrypted data {{{1
 .asc                  38;5;192;3
 .bfe                  38;5;192;3
@@ -607,7 +609,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .nes                  38;5;213
   # Sega
 .sms                  38;5;213
-
+# }}}
 # unsorted {{{1
 #
 #   Portable Object Translation for GNU Gettext
@@ -668,7 +670,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .storyboard           38;5;196
 .xcsettings           1
 .xib                  38;5;208
-
+# }}}
 # termcap {{{1
 TERM ansi
 TERM color-xterm
@@ -681,7 +683,6 @@ TERM con80x28
 TERM con80x30
 TERM con80x43
 TERM con80x50
-TERM con80x60
 
 # dircolors
 #
@@ -705,26 +706,19 @@ TERM cons25
 TERM console
 TERM cygwin
 TERM dtterm
-TERM dvtm
-TERM dvtm-256color
 TERM Eterm
 TERM eterm-color
-TERM fbterm
 TERM gnome
 TERM gnome-256color
-TERM hurd
 TERM jfbterm
 TERM konsole
-TERM konsole-256color
 TERM kterm
 TERM linux
 TERM linux-c
 TERM mach-color
 TERM mlterm
 TERM putty
-TERM putty-256color
-TERM rxvt*
-TERM rxvt-unicode
+TERM rxvt
 TERM rxvt-256color
 TERM rxvt-cygwin
 TERM rxvt-cygwin-native
@@ -738,10 +732,6 @@ TERM screen-bce
 TERM screen-w
 TERM screen.linux
 TERM screen.rxvt
-TERM st
-TERM st-256color
-TERM tmux*
-TERM tmux-256color
 TERM terminator
 TERM vt100
 TERM xterm
@@ -751,5 +741,6 @@ TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
 TERM xterm-kitty
+
 
 # vim: ft=dircolors:fdm=marker:et:sw=2:

@@ -95,7 +95,7 @@ Original File Implementation
 Found the file where this is originally implemented YAS.
 Or I guess I should say the actual keybindings are listed.
 
-ipython::
+Go to the ipython root dir:: ipython
 
     %cd terminal
     %pycat shortcuts

@@ -12,6 +12,10 @@ with common Linux idioms.
 Substitutions
 -------------
 
+<<<<<<< HEAD
+You can use the %l specifier in an alias definition to represent the
+whole line when the alias is called.  For example::
+=======
 For some reason there's no section about aliases in the skel file. Weird.
 Well here's a fun fact!:
 
