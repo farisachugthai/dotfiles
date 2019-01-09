@@ -167,5 +167,15 @@ bak() {
 
 # I don't know why this was the hardest thing ever but oh my god I got it!
 man(){
-    nvim -c "Man $@" -c'wincmd o'
+    nvim -c "Man! $1" -c'wincmd T'
+}
+
+tre(){
+    # Let's review a few of these options.
+    # -L is max dir depth
+    # -F: 
+    # Append a `/' for directories, a `=' for socket files, a `*' for
+    # executable files, a `>' for doors (Solaris) and a `|' for
+    # FIFO's, as per ls -F
+    tree -a -I '.git' -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F
 }

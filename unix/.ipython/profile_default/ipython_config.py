@@ -30,7 +30,7 @@ c = get_config()  # noqa
 
 try:
     home = os.path.expanduser("~")
-except OSError as e:
+except OSError:
     pass
 
 # ----------------------------------------------------------------------------
@@ -210,6 +210,8 @@ except Exception:
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True
 
+# Its honestly pretty annoying
+c.InteractiveShell.banner1 = ''
 # The part of the banner to be printed before the profile
 # c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16)
 # \nType 'copyright', 'credits' or 'license' for more information\nIPython

@@ -59,7 +59,6 @@ alias free='free -mt'
 alias echo='echo -e'
 alias head='head -n 30'
 alias tail='tail -n 30'
-alias treea='tree -aI .git'
 
 # Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
