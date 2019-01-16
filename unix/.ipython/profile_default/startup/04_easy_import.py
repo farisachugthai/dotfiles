@@ -3,8 +3,6 @@
 # flake8: noqa
 """Import my most frequently used modules.
 
-Imports a few from the stdlib that I use daily.
-
 Then imports a few utility functions from IPython and imports the python
 package neovim is served in.
 
@@ -48,6 +46,8 @@ Help on module IPython.utils.dir2 in IPython.utils:
     FILE
     
         `/usr/lib/python3.7/site-packages/IPython/utils/dir2.py`_
+
+2018-09-06
 
 .. note::
 
@@ -103,5 +103,3 @@ if __name__ == "__main__":
 
     import_nvim(mod)
     del import_nvim
-    # del mod
-    # this one can't be right because the point is to create a binding

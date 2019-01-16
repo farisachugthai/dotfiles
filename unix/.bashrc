@@ -47,7 +47,6 @@ if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/googl
 
 if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
-
 # History: {{{1
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
@@ -105,109 +104,7 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
-
-# Colors: {{{1
-
-export COLOR_OFF="\[\033[0m\]"
-
-export BLACK="\[\033[0;30m\]"
-export BLACKBOLD="\[\033[1;30m\]"
-export RED="\[\033[0;31m\]"
-export REDBOLD="\[\033[1;31m\]"
-export GREEN="\[\033[0;32m\]"
-export GREENBOLD="\[\033[1;32m\]"
-export YELLOW="\[\033[0;33m\]"
-export YELLOWBOLD="\[\033[1;33m\]"
-export BLUE="\[\033[0;34m\]"
-export BLUEBOLD="\[\033[1;34m\]"
-export PURPLE="\[\033[0;35m\]"
-export PURPLEBOLD="\[\033[1;35m\]"
-export CYAN="\[\033[0;36m\]"
-export CYANBOLD="\[\033[1;36m\]"
-export WHITE="\[\033[0;37m\]"
-export WHITEBOLD="\[\033[1;37m\]"
-
-# Prompt: {{{1
-
-# force_color_prompt=yes
-
-# if [[ -n "$force_color_prompt" ]]; then
-#     if [[ -x "$PREFIX/bin/tput" ]] && tput setaf 1 >&/dev/null; then
-#         color_prompt=yes
-#     else
-#         color_prompt=
-#     fi
-# fi
-
-# export ARROW='\342\224\224\342\224\200\342\224\200\342\225\274'
-
-# if [[ "$color_prompt" = yes ]]; then
-# TMP_PS1="$RED\342\224\214\342\224\200\ \`[[ \$? != 0 ]]` && echo \"[$YELLOW\342\234\227\[\033[0;37m\]]\342\224\200\"\
-#     \[$(if [[ ${EUID} == 0 ]]); then
-#     echo "$REDroot$RED@\[\033[01;96m\]\h"
-# else
-#     echo "\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h"
-# fi)\
-# "\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\
-# $ARROW\ $COLOR_OFF\$\[\e[01;33m\]\[\e[0m\]"
-# # well that's a little better i guess
-# else
-#     TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
-# fi
-
-# # just noticed this in the venv activate script. i like it!
-# if [[ -z "${VIRTUAL_ENV_DISABLE_PROMPT-}" ]] ; then
-#     _OLD_VIRTUAL_PS1="$PS1"
-#     if [[ "x" != x ]] ; then
-#         TMP_PS1="$TMP_PS1"
-#     else
-#         TMP_PS1="(`basename \"$VIRTUAL_ENV\"`) $TMP_PS1"
-#     fi
-# fi
-
-# if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
-#     . "$HOME/.bashrc.d/git-prompt.sh";
-#     export GIT_PS1_SHOWDIRTYSTATE=1
-#     export GIT_PS1_SHOWCOLORHINTS=1
-#     export GIT_PS1_SHOWSTASHSTATE=1
-#     export GIT_PS1_SHOWUPSTREAM="auto"
-#     PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$YELLOW`basename $VIRTUAL_ENV`$COLOR_OFF]}" "$TMP_PS1" "[%s]"'
-# else
-#     export PS1="$TMP_PS1"
-# fi
-
 PS1=$(gbt $?)
-
-# unset color_prompt force_color_prompt
-# tput reset      because otherwise I end up with a red cursor
-
-# Refactoring Prompt: {{{2
-# CUSTOM BASH COLOR PROMPT
-# prompt() {
-#     local BLACK="\[\033[0;30m\]"
-#     local BLACKBOLD="\[\033[1;30m\]"
-#     local RED="\[\033[0;31m\]"
-#     local REDBOLD="\[\033[1;31m\]"
-#     local GREEN="\[\033[0;32m\]"
-#     local GREENBOLD="\[\033[1;32m\]"
-#     local YELLOW="\[\033[0;33m\]"
-#     local YELLOWBOLD="\[\033[1;33m\]"
-#     local BLUE="\[\033[0;34m\]"
-#     local BLUEBOLD="\[\033[1;34m\]"
-#     local PURPLE="\[\033[0;35m\]"
-#     local PURPLEBOLD="\[\033[1;35m\]"
-#     local CYAN="\[\033[0;36m\]"
-#     local CYANBOLD="\[\033[1;36m\]"
-#     local WHITE="\[\033[0;37m\]"
-#     local WHITEBOLD="\[\033[1;37m\]"
-#     export PS1="\n$CYAN\T\n$GREENBOLD \u$YELLOWBOLD@$PURPLEBOLD\h\[\033[00m\]:$CYANBOLD[\w]\[\033[00m\] \\$ "
-# }
-
-# Intentionally not calling this function
 
 # Vim: {{{1
 set -o vi
@@ -219,12 +116,9 @@ fi
 export EDITOR="$VISUAL"
 
 # JavaScript: {{{1
-# Export nvm if the directory exists
-if [[ -d "$HOME/.nvm" ]]; then
-    export NVM_DIR="$HOME/.nvm"
-    # Load nvm and bash completion
-    [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
-    [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+# Source npm completion if its installed
+if [[ "$(command -v npm)" ]]; then
+    source ~/.bashrc.d/npm-completion.bash
 fi
 
 # Testing out the language servers to see if they'll link up with neovim
@@ -241,15 +135,14 @@ fi
 
 # Loops for the varying backends for fzf. ag is my fave.
 if [[ "$(command -v ag)" ]]; then
+
     # Make the default the most general. Even though these are a lot of options
     # most simply hide info to make it easier to use with FZF
     export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
 
-    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --bind "enter:execute(nvim {})"'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"+"$1"
-    # $FZF_CTRL_T_OPTS
-    # need to do assignments via assign if C-t has a value otherwise skip
-    export FZF_DEFAULT_OPTS="$FZF_CTRL_T_OPTS"
+    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --bind "enter:execute(nvim {})"'
+    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --preview-window=right:50%:wrap --bind "enter:execute(nvim {})"'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow $1"
 
     alias Ag='$FZF_DEFAULT_COMMAND | fzf '
 
@@ -276,12 +169,8 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
     echo "opts empty"
     export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
 fi
-# You can't give a preview window as a default. FZF takes so many different inputs
-# that it periodically borks it. In nvim if you run Snippets, it tries to echo 100 lines
-# but is only receiving 1 line at a time.
-# --preview "head -100 {}" --preview-window=right:50%:wrap'
 
-[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS: --bind 'enter:execute(nvim {})' "
+[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 # termux doesnt have xclip or xsel
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "

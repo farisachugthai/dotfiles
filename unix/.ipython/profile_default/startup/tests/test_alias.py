@@ -18,8 +18,6 @@ from IPython.utils.capture import capture_output
 
 import nose.tools as nt
 
-_ip = get_ipython()
-
 
 def test_alias_lifecycle():
     name = 'test_alias1'
@@ -61,5 +59,8 @@ def test_alias_args_error():
 
 
 if __name__ == "__main__":
+    if not ip or _ip:  # noqa F821 of course its undefined!
+        _ip = get_ipython()
+
     test_alias_lifecycle()
     test_alias_args_error()

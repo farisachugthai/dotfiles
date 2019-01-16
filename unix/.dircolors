@@ -3,7 +3,6 @@
 # By: Faris Chugthai
 # 01/06/19
 
-#
 #                                    LS_COLORS
 # Maintainers: Magnus Woldrich <m@japh.se>,
 #              Ryan Delaney <ryan.delaney@gmail.com> OpenGPG: 0D98863B4E1D07B6
@@ -160,7 +159,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .pcf                  1
 #   adobe photoshop proof settings file
 .psf                  1
-
+# }}}
 # code {{{1
 # version control {{{2
 .git                  38;5;197
@@ -688,6 +687,7 @@ TERM con80x30
 TERM con80x43
 TERM con80x50
 TERM con80x60
+TERM con80x60
 
 # dircolors
 #
@@ -757,5 +757,6 @@ TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
 TERM xterm-kitty
+# }}}
 
 # vim: ft=dircolors:fdm=marker:et:sw=2:
