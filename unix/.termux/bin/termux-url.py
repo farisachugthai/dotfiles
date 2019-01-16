@@ -2,22 +2,19 @@
 # Maintainer: Faris Chugthai
 """Download a video from YouTube using youtube_dl.
 
-
 Dec 22, 2018:
 
-    Wow this code is only 6 months old and my god is it garbage. At least I
-    have the API somewhat documented.
-
-    Only came in here to note that if you initialize with no args, then use
-    :meth:`extract_info` with the URL as an arg, you get to see everything
-    you'd need to know about the metadata in all the varying formats you'd want
-    use.
+    .. note::
+    
+        If you initialize with no args, then use :meth:`extract_info` with 
+        the URL as an arg, you get to see everything you'd need to know 
+        about the metadata in all the varying formats you'd want use.
 
 ..usage::
 
     This script should be called with:: shell
 
-        python termux-urls.ipy $@
+        python termux-urls.py $@
 
 .. todo:
 
@@ -35,9 +32,16 @@ import urllib
 link = sys.argv[1]
 link_parser = urllib.parse.urlparse(link)
 
-
-# possibly makes sense to make this a class. playlists are a subclass, objects with variable sizes are others etc...
 def ytdl(link):
+    """Executes downloading a YouTube video.
+
+    Possibly makes sense to make this a class. playlists are a subclass, 
+    objects with variable sizes are others etc...
+
+    :param link: URL to a YouTube video
+    :returns: Request object or urllib.Response if :mod:`requests` isn't 
+              downloaded.
+    """
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
@@ -51,6 +55,7 @@ def ytdl(link):
     ydl.download(link)
 
 
+# todo:: ifmain
 # should also check that the beginning of the link is youtu.be
 if link_parser[2] == "/playlist":
     print("This seems like a YouTube playlist. Downloading. Press Ctrl-C to stop")

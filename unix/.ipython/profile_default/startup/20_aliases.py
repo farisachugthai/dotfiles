@@ -5,24 +5,17 @@
 Utilizes `ip`, the global interactive Ipython session. Fills the `user_ns`
 with common Linux idioms.
 
-..note:
+.. note::
 
     Should I add a check that this a Unix OS because this'll blow up on NT?
 
 Substitutions
 -------------
 
-<<<<<<< HEAD
-You can use the %l specifier in an alias definition to represent the
+You can use the ``%l`` specifier in an alias definition to represent the
 whole line when the alias is called.  For example::
-=======
-For some reason there's no section about aliases in the skel file. Weird.
-Well here's a fun fact!:
 
-    You can use the %l specifier in an alias definition to represent the
-    whole line when the alias is called.
-
-ipython::
+.. ipython::
 
    In [2]: alias bracket echo "Input in brackets: <%l>"
    In [3]: bracket hello world
@@ -103,7 +96,7 @@ ip.alias_manager.user_aliases = [
       ('tail', 'tail -n 30'),
       ('touch', 'touch'),
       ('tree', 'tree'),
-      ('treea', 'tree -a I .git -I __pycache__'),
+      ('tre', 'tree -ashF -I .git -I __pycache__'),
       ('vi', 'vim'),
       ('vim', 'vim'),
       ('xx', 'quit'),       # this is a sweet one

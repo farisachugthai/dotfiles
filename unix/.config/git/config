@@ -30,7 +30,12 @@
     # detect copied files as well as renames. affects merge and status.renames
     renames = copy
     strategy-option = resolve
-    tool = vimdiff
+	tool = nvimdiff
+	renames = copies
+
+[difftool "nvimdiff"]
+	cmd = nvim -d $LOCAL $REMOTE
+	trustexitcode = true
 
 [merge]
     autoStash
@@ -39,11 +44,11 @@
     mergestyle = diff3
     prompt = false
     strategy-option = resolve
-    tool = vimdiff
+    tool = nvim-merge
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
-[mergetool "vimdiff"]
+[mergetool "nvim-merge"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
@@ -61,9 +66,6 @@
 
 [branch]
     autosetupmerge = true
-
-[pager]
-    status = true
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
@@ -92,7 +94,7 @@
     f = fetch --all
     m = merge
     mt = mergetool
-    s = status
+    s = status -sb
     r = remote -v
 
 [help]
@@ -119,4 +121,12 @@
     rebase = True
 
 [url "git://github.com/"]
-	insteadOf = github:
+	insteadOf = g:
+
+[url "git@gist.github.com:"]
+	insteadOf = "gist:"
+	pushInsteadOf = "gist:"
+
+; Could do something like this
+; [init]
+; 	templatedir = ~/.config/git/

@@ -8,18 +8,28 @@
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Platform_Dependant: {{{1
+# Tooo many of these are simply based on the weird path Termux gives.
+
 if [[ -n "$PREFIX" ]]; then
-    export SHELL="$PREFIX/bin/bash"
-    export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
-    export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
-    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
-    export PATH="$PREFIX/local/bin/:$PATH"
-    export MANPATH="$PREFIX/share/man:$HOME/.fzf/man"
+    _ROOT="$PREFIX"
 else
-    export NVIMRUNTIME="/usr/share/nvim/runtime"
-    export SHELL="/bin/bash"
+    _ROOT="/usr"
+fi
+
+export SHELL="$_ROOT/bin/bash"
+export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
+export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
+export MANPATH="$PREFIX/share/man:$HOME/.fzf/man"
+export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
+
+if [[ -f "$_ROOT/share/bash_completion" ]] && source "$_ROOT/share/bash_completion"; then
+    continue
+fi
+
+if [[ -n "$PREFIX" ]]; then
+    export PATH="$PREFIX/local/bin/:$PATH"
+else
     export BROWSER="firefox-nightly --profile-manager"
-    export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
 fi
 
 # Ruby: {{{1
@@ -95,8 +105,6 @@ export LANGUAGE=en                      # nvim complains us region not supported
 # export LC_CTYPE=utf-8
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
-# Also because termux doesn't set $TMPDIR to /tmp/
-# I should change d to a dir i can read right?
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
@@ -117,20 +125,13 @@ export PYTHONDONTWRITEBYTECODE=1
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Rust: {{{1
-if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
+if [[ -d "$HOME/.cargo/bin" ]]; then
+    export PATH="$HOME/.cargo/bin:$PATH";
+fi
 
 # Sourced Files: {{{1
-# Unfortunately this only gets called in an interactive session tmux is reading
-# .profile, but most shells don't usually read this file in. As a result this
-# may have to move to bashrc.
-# if [[ -z "$TMUX" ]]; then
-    # tmux new
-# else
-    # hoping that makes an array and by not specifying an index i only pick the 1st
-    # tmux attach -t "$(tmux ls)"
-# fi
-# alternatively i think what we could do is something to the effect of: pseudocode
-# try: tmux new -s startup; except ServerExists; tmux attach -t startup or tmux new
+
+# Setup completions correctly.
 
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
@@ -138,4 +139,11 @@ export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
 
 # Source the bashrc last.
-if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi
+if [[ -f "$HOME/.bashrc" ]]; then
+    . "$HOME/.bashrc" ;
+fi
+
+if [[ "$(command -v bat)" ]]; then
+    export BAT_THEME=OneHalfDark
+    export BAT_PAGER=''
+fi

@@ -9,12 +9,9 @@
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
 
-;; enable line numbers globally
-(global-linum-mode t)
-
 ;; Don't close if i haven't saved customizations
 (add-hook 'kill-emacs-query-functions
-               'custom-prompt-customize-unsaved-options)
+          'custom-prompt-customize-unsaved-options)
 
 ;; Run the Emacs server
 (require 'server)
@@ -25,7 +22,7 @@
 
 (require 'goto-chg)
 
-(setq evil-want-keybinding)
+(setq evil-want-keybindina t)
 (setq evil-want-minibuffer t)
 (setq evil-ex-complete-emacs-commands t)
 (require 'evil-collection)
@@ -50,13 +47,15 @@
 ;; Org
 ;; -----
 
+(require 'org-evil)
+
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-switchb)
 
 (setq org-indent-indentation-per-level 2)
-
+(setq org-log-done t)
 (setq 'org-startup-indented t)
 
 (setq 'org-catch-invisible edits t)
@@ -82,7 +81,6 @@
 ;   (after-load 'vc
 ;     (define-key vc-prefix-map (kbd "l") 'sanityinc/magit-or-vc-log-file)))
 
-(require 'org-evil)
 
 
 (provide init-local)
