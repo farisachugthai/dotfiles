@@ -34,7 +34,7 @@ MANPATH_MAP	$PREFIX/usr/local/bin		$PREFIX/usr/local/man
 MANPATH_MAP	$PREFIX/usr/local/bin		$PREFIX/usr/local/share/man
 MANPATH_MAP	$PREFIX/usr/local/sbin		$PREFIX/usr/local/man
 MANPATH_MAP	$PREFIX/usr/local/sbin		$PREFIX/usr/local/share/man
-MANPATH_MAP	$PREFIX/usr/X11R6/bin		$PREFIX/usr/X11R6/man
+:ANPATH_MAP	$PREFIX/usr/X11R6/bin		$PREFIX/usr/X11R6/man
 MANPATH_MAP	$PREFIX/usr/bin/X11		$PREFIX/usr/X11R6/man
 MANPATH_MAP	$PREFIX/usr/games		$PREFIX/usr/share/man
 MANPATH_MAP	$PREFIX/opt/bin		        $PREFIX/opt/man

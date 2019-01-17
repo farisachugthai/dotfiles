@@ -1,6 +1,6 @@
 # Configuration file for ipython-kernel.
 
-c = get_config()
+c = get_config()  # noqa
 # -----------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
 # -----------------------------------------------------------------------------
@@ -205,15 +205,15 @@ c.BaseIPythonApplication.copy_config_files = True
 # IPythonKernel(Kernel) configuration
 # -----------------------------------------------------------------------------
 
-c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3'},
-          {'text': 'Python3.7 Reference', 'url': 'https://docs.python.org/3.7'}
-          {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'},
-          {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'},
-          {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'},
-          {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'},
-          {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'},
-          {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}
-          ]
+# c.IPythonKernel.help_links = [{'text': 'Python Reference', 'url': 'https://docs.python.org/3'},
+#           {'text': 'Python3.7 Reference', 'url': 'https://docs.python.org/3.7'}
+#           {'text': 'IPython Reference', 'url': 'https://ipython.org/documentation.html'},
+#           {'text': 'NumPy Reference', 'url': 'https://docs.scipy.org/doc/numpy/reference/'},
+#           {'text': 'SciPy Reference', 'url': 'https://docs.scipy.org/doc/scipy/reference/'},
+#           {'text': 'Matplotlib Reference', 'url': 'https://matplotlib.org/contents.html'},
+#           {'text': 'SymPy Reference', 'url': 'http://docs.sympy.org/latest/index.html'},
+#           {'text': 'pandas Reference', 'url': 'https://pandas.pydata.org/pandas-docs/stable/'}
+#           ]
 
 # Set this flag to False to deactivate the use of experimental IPython
 # completion APIs.
@@ -254,7 +254,8 @@ except Exception:
 c.InteractiveShell.automagic = True
 
 # The part of the banner to be printed before the profile
-# c.InteractiveShell.banner1 = "Python 3.6.5 |Anaconda, Inm| (default, Apr 29 2018, 16:14:56) \nType 'copyright', 'credits' or 'license' for more information\nIPython 6.4.0 -- An enhanced Interactive Python. Type '?' for help.\n"
+# c.InteractiveShell.banner1 = "Python 3.6.5 |Anaconda, Inm| (default, Apr 29 2018, 16:14:56) \nType 'copyright',
+# 'credits' or 'license' for more information\nIPython 6.4.0 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 # The part of the banner to be printed after the profile
 # c.InteractiveShell.banner2 = ''
@@ -343,12 +344,12 @@ c.InteractiveShell.history_load_length = 10000
 # moduloe).
 try:
     import docrepr
- except Exception:
+except Exception:
     pass
 else:
     c.InteractiveShell.sphinxify_docstring = False
 
-# c.InteractiveShell.wildcards_case_sensitive = True
+c.InteractiveShell.wildcards_case_sensitive = False
 
 # Switch modes for the IPython exception handlers.
 # c.InteractiveShell.xmode = 'Context'

@@ -1,23 +1,59 @@
 # pydocstyle
+# Oct 13, 2018
 
-[pycodestyle]
+[pydocstyle]
 max-line-length = 120
 
 ignore =
 
-    # defaults
-    E121,E123,E126,E226,E24,E704,W503,W504      # defaults
+    D203, D212, D213 and D404. # defaults
 
-    E251            # Pep8 specifies you SHOULD leave space around operators
-    E202            # whitespace between var and brackets ) } and ]
+# Full list of options.
+# Pasted weird so used a macro.
+# qq3Wf-i<CR><Esc>q
+# then @q.
+# Meaning recird at q registry. Jump a few words ahead. Find the next -
+# (because that's probably a new option), insert mode, enter a newline, then go back to normal mode. Stop recording.
+# To run use @q
+#
+# How do you persist macros like this???
 
-    E265            # comments error
-    E266            # too many leading #'s in a comment
+# Options:
+# --version show program's version number and exit
+# -h, --help show this help message and exit
+# -e, --explain show explanation of each error
 
-# the defaults for excluded files are
-# exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox
+# ^---- that sounds cool
+#
+# -s, --source show source for each error
+# -d, --debug print debug information
+# -v, --verbose print status information
+# --count print total number of errors to stdout
+# --config=<path> use given config file and disable config discovery
+# --match=<pattern> check only files that exactly match <pattern> regular expression; default is
+# --match='(?!test_).*\. py' which matches files that don't start with 'test_' but end with '.py'
+# --match-dir=<pattern> search only dirs that exactly match <pattern> regular expression; default is --match-dir='[^\.].*', which matches all dirs that don't start with a dot
+# --ignore-decorators=<decorators> ignore any functions or methods that are decorated by a function with a name fitting the <decorators> regular expression; default is --ignore-decorators='' which does not ignore any decorated functions.
+#
+# Error Check Options: Only one of --select, --ignore or --convention can be specified.
+#
+# [convention]
+# choices are pep257, numpy...not sure about 3rd?
+# If none is specified, defaults to `--convention=pep257`.
+# These three options select the "basic list" of error codes to check.
 
-# Comma-separated list of errors and warnings to enable.
-# Defaults listed below
-# select
-# = E,F,W,C90
+# [select]
+# If you wish to change that list (for example, if you selected a known convention but wish to ignore a specific error from it or add a new one) you can use `--add-[ignore/select]` in order to do so.
+# --select=<codes>
+# choose the basic list of checked errors by specifying which errors to check for (with a list of comma- separated error codes or prefixes).
+# for example:
+# --select=D101,D2
+# --ignore=<codes>
+# choose the basic list of checked errors by specifying which errors to ignore out of all of the available error codes (with a list of comma-separated error codes or prefixes).
+
+# [ignore]
+# for example:
+# --ignore=D101,D2 --convention=<name> choose the basic list of checked errors by specifying an existing convention.
+# Possible conventions: pep257, numpy.
+# --add-select=<codes> add extra error codes to check to the basic list of errors previously set by --select, --ignore or --convention.
+# --add-ignore=<codes> ignore extra error codes by removing them from the basic list previously set by --select, --ignore or --convention.

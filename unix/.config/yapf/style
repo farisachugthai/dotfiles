@@ -1,3 +1,9 @@
+# yapf formatter
+# Maintainer: Faris Chugthai
+# 2018-09-28
+# Had this for a little bit
+# Merged in the changes from yapf --show-style
+
 [style]
 # Align closing bracket with visual indentation.
 align_closing_bracket_with_visual_indent=True
@@ -52,7 +58,7 @@ blank_line_before_nested_class_or_def=False
 #        'key1': 'value1',
 #        'key2': 'value2',
 #    })
-coalesce_brackets=False
+coalesce_brackets=True
 
 # The column limit.
 column_limit=79
@@ -126,13 +132,13 @@ indent_dictionary_value=False
 indent_width=4
 
 # Join short lines into one line. E.g., single line 'if' statements.
-join_multiple_lines=True
+join_multiple_lines=False
 
 # Do not include spaces around selected binary operators. For example:
 #
 #   1 + 2 * 3 - 4 / 5
 #
-# will be formatted as follows when configured with *,/:
+# will be formatted as follows when configured with "*,/":
 #
 #   1 + 2*3 - 4/5
 #
@@ -175,6 +181,16 @@ split_before_closing_bracket=True
 #   }
 split_before_dict_set_generator=True
 
+# Split before the '.' if we need to split a longer expression:
+#
+#   foo = ('This is a really long string: {}, {}, {}, {}'.format(a, b, c, d))
+#
+# would reformat to something like:
+#
+#   foo = ('This is a really long string: {}, {}, {}, {}'
+#          .format(a, b, c, d))
+split_before_dot=False
+
 # Split after the opening paren which surrounds an expression if it doesn't
 # fit on a single line.
 split_before_expression_after_opening_paren=False
@@ -204,7 +220,7 @@ split_before_named_assigns=True
 #       a_long_var + 100
 #       for a_long_var in xrange(1000)
 #       if a_long_var % 10]
-split_complex_comprehension=False
+split_complex_comprehension=True
 
 # The penalty for splitting right after the opening bracket.
 split_penalty_after_opening_bracket=30
@@ -248,4 +264,3 @@ split_penalty_logical_operator=300
 
 # Use the Tab character for indentation.
 use_tabs=False
-

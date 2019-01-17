@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Maintainer: Faris Chugthai
+
+# set -euo pipefail
+
+{"$EDITOR":-vim} "$@"

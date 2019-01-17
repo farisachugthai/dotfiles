@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
 # xinit
 
-failsafe="aterm -ls -T failsafe -geometry 80x24-0-0"
+setxkbmap -option 'ctrl:nocaps'
 
-trap "exec $failsafe" EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
+failsafe="xterm -ls -T failsafe -geometry 80x24-0-0"
 
-[[ -f ~/.Xdefaults ]] && xrdb ~/.Xdefaults
-[[ -f ~/.Xresources ]] && xrdb ~/.Xresources
+trap 'exec $failsafe' EXIT SIGHUP SIGINT SIGPIPE SIGTERM SIGIO
 
-if [[ -f ~/.Xmodmap ]]; then
-    if [[ "$(command -v xmodmap)" ]]; then
-        xmodmap ~/.Xmodmap
-    fi
-fi
+[[ -f ~/.Xdefaults ]] && xrdb -merge ~/.Xdefaults
+[[ -f ~/.Xresources ]] && xrdb -I$HOME ~/.Xresources
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
-pgrep ssh-agent || eval $(ssh-agent -s) && ssh-add
+pgrep ssh-agent || eval "$(ssh-agent -s)" && ssh-add
 
 # invoke global X session script
-if [[ -f /etc/X11/Xsession ]]; then
-    . /etc/X11/Xsession
-fi
+[[ -f /etc/X11/Xsession ]] && . /etc/X11/Xsession
 
-exec i3-with-shmlog&
+exec i3&

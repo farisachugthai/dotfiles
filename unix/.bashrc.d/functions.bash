@@ -4,44 +4,47 @@
 # Functions to make the day a little easier
 # Create a new directory and enter it
 mk() {
-    mkdir -p "$@" && cd "$@"
+    mkdir -pv "$@" && cd "$@" || exit
 }
 
 # Handy Extract Program
 extract() {
 if [ -f "$1" ]; then
-case "$1" in
-    *.tar.bz2) tar xvjf "$1" ;;
-    *.tar.gz) tar xvzf "$1" ;;
-    *.bz2) bunzip2 "$1" ;;
-    *.rar) unrar x "$1" ;;
-    *.gz) gunzip "$1" ;;
-    *.tar) tar xvf "$1" ;;
-    *.tbz2) tar xvjf "$1" ;;
-    *.tgz) tar xvzf "$1" ;;
-    *.zip) unzip "$1" ;;
-    *.Z) uncompress "$1" ;;
-    *.7z) 7z x "$1" ;;
-    *.tar.xz) tar xvf "$1" ;;
-# Alternatively you could run xz -d file.tar.xz; tar xvf file.tar
-    *) echo "'$1' cannot be extracted via >extract<" ;;
- esac
- else
- echo "'$1' is not a valid file!"
- fi
+    case "$1" in
+        *.tar.bz2) tar xvjf "$1" ;;
+        *.tar.gz) tar xvzf "$1" ;;
+        *.bz2) bunzip2 "$1" ;;
+        *.rar) unrar x "$1" ;;
+        *.gz) gunzip "$1" ;;
+        *.tar) tar xvf "$1" ;;
+        *.tbz2) tar xvjf "$1" ;;
+        *.tgz) tar xvzf "$1" ;;
+        *.zip) unzip "$1" ;;
+        *.Z) uncompress "$1" ;;
+        *.7z) 7z x "$1" ;;
+        *.tar.xz) tar xvf "$1" ;;
+    # Alternatively you could run xz -d file.tar.xz; tar xvf file.tar
+        *) echo "'$1' cannot be extracted via >extract<" ;;
+    esac
+else
+    echo "'$1' is not a valid file!"
+fi
 }
 
 # Run cd and ls at once
 cs () {
-    cd "$@" && ls
+    cd "$@" && ls -F
 }
 
 # Decrypt the ssh priv key for the day
 ssh-day () {
     if [[ -z "$SSH_AUTH_SOCK" ]]; then
         eval "$(ssh-agent -s)"
+    else
+        export SSH_AUTH_SOCK=''
+        eval "$(ssh-agent -s)"
     fi
-    ssh-add -t 86400
+    ssh-add
 }
 
 # Adds an alias to the current shell and to ~/.bashrc.d/alias
@@ -64,13 +67,18 @@ update-pip () {
 
 # I really don't like anything that smells like Emacs keybindings
 infovi () {
-    info "$1" | less
+    info "$1" | "$PAGER"
 }
 
 # From byobu
 byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
 
-# FZF:
+# FZF: {{{
+
+fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
 # commits in a repo
 fzf_commits() {
   git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
@@ -85,7 +93,6 @@ fzf_apropos() {
 fzf_env() {
     set | tr = "\t" | fzf | cut -f 1
 }
-
 
 fzf_nvim() {
   local file
@@ -105,6 +112,14 @@ conda_switch() {
     conda deactivate && conda activate "$1"
 }
 
+gpip() {
+    export PIP_REQUIRE_VIRTUALENV=0;
+    pip "$@";
+    export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
+}
+
+# Honestly just pull up junegunns blog post on this, sit down,
+# hack away and make a new file.
 # TODO:
 # fstash - easier way to deal with stashes
 # type fstash to get a list of your stashes
@@ -134,3 +149,23 @@ conda_switch() {
 #     fi
 #   done
 # }
+
+# Oct 04, 2018
+# in a manner similar to __fzf__history__ display all of hist to std out
+# noninteractive tho
+hist_std_out() {
+    fc -nl 1 "$HISTFILESIZE"
+}
+
+# Other TODO: Possibly rewrite the man function here. IE if nvim then do that,
+# elif most, else less
+
+# Back up a file using bracket expansion I.E. mv foo.py foo.py.bak
+bak() {
+    mv $1{,.bak}
+}
+
+# I don't know why this was the hardest thing ever but oh my god I got it!
+man(){
+    nvim -c "Man $@" -c'wincmd o'
+}

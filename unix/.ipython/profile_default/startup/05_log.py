@@ -1,29 +1,70 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" Create a logfile for the day and append to it if one already exists.
+"""Create a logfile for the day and append to it if one already exists.
 
-2018-09-02
+Collects both the input and output of every command run through the ipython
+interpreter and prepends a timestamp to commands.
 
-This file has been in this repo for so long I feel like I forgot about it.
-
-This is so oddly written but from long enough ago that I'm not even surprised.
+The timestamp is particularly convenient for concurrent instances of IPy.
 
 TODO:
-    Consider using datetime instead of time. Not pertinent though.
-    Explore both the built-in logging module and IPythons subclass.
+
+    - Consider using datetime instead of time. Not pertinent though.
+    - Explore both the built-in logging module and IPython logging subclass.
+    - Truncate output if it exceeds a certain threshold.
+        - Run dir(np) or dir(pd) a couple of times and the logs become
+        swamped.
+
+.. note::
+
+    For further reading, feel free to see the output of any of the
+    following::
+
+        >>> from IPython.core.interactiveshell import InteractiveShell
+        >>> help(InteractiveShell)
+
+    Which features descriptions of :funcs: relevant to startup such as
+    ``register_magic_function()`` and literally every option available
+    through
+    the %config magic.
+
+    For commands that are more related to the interactive aspect of the
+    shell,
+    see the following::
+
+        >>> from IPython import get_ipython()
+        >>> ip = get_ipython()
+        >>> help(ip)
+        >>> dir(ip)
+
+    In addition, there's an abundance of documentation online in the form of
+    rst docs and ipynb notebooks.
 """
+from __future__ import print_function
 
 from os import path
 import time
 
 from IPython import get_ipython
 
-ip = get_ipython()
 
+def session_logger(ip):
+    """Log all input and output for an IPython session.
 
-def create_logging_file():
-    """ Admittedly no reason this is a function except that I want to clean up
-    the namespace I get when I start IPython.
+    Saves the commands as valid IPython code. Note that this is not necessarily
+    valid python code.
+
+    The commands are appended to a file in the directory of the profile in
+    $IPYTHONDIR or fallback ~/.ipython. This file is named based on the date.
+
+    Parameters
+    -----------
+    :param ip: Global instance of the IPython shell
+    :type: InteractiveShell
+
+    Returns
+    --------
+    None
     """
     ldir = ip.profile_dir.log_dir
     fname = 'log-' + ip.profile + '-' + time.strftime('%Y-%m-%d') + ".py"
@@ -47,4 +88,5 @@ def create_logging_file():
 
 
 if __name__ == "__main__":
-    create_logging_file()
+    ip = get_ipython()
+    session_logger(ip)
