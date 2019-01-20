@@ -76,6 +76,7 @@ fi
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
 export PAGER="less -JRKML"
 
+export COLORTERM="truecolor"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -84,19 +85,17 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 if [[ "$(command -v cheat)" ]];then
-    export CHEATCOLORS=true;
-    export CHEATPATH="$HOME/python/tutorials:$HOME/python/tutorials/site-packages:$HOME/.cheat"
+    export CHEATCOLORS=true
+    export CHEATPATH="$HOME/python/tutorials:$HOME/python/site-packages:$CHEATPATH"
 fi
 
 # Set locale if it isn't explicitly stated elsewhere
 export LANG=en_US.UTF-8                 # gathered from localectl
 export LC_MESSAGES=C                    # man i3: Prevents program output translation
 export LANGUAGE=en                      # nvim complains us region not supported
-# export LC_CTYPE=utf-8
+# export LC_CTYPE=C.UTF-8                 # the only thing defined in /usr/lib/locale right now
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
-# Also because termux doesn't set $TMPDIR to /tmp/
-# I should change d to a dir i can read right?
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
