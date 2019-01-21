@@ -9,18 +9,24 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Platform_Dependant: {{{1
 if [[ -n "$PREFIX" ]]; then
-    export SHELL="$PREFIX/bin/bash"
     export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
-    export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
-    export PATH="$PREFIX/local/bin/:$PATH"
     export MANPATH="$PREFIX/share/man:$HOME/.fzf/man"
 else
-    export NVIMRUNTIME="/usr/share/nvim/runtime"
-    export SHELL="/bin/bash"
-    export BROWSER="firefox-nightly --profile-manager"
+    export BROWSER="firefox"
     export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
 fi
+
+if [[ -n "$PREFIX" ]]; then
+    _ROOT="$PREFIX"
+else
+    _ROOT="/usr"
+fi
+
+export SHELL="$_ROOT/bin/bash"
+export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
+export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
+export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -135,6 +141,11 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
+
+if [[ "$(command -v bat)" ]]; then
+    export BAT_THEME=OneHalfDark
+    export BAT_PAGER=''
+fi
 
 # Source the bashrc last.
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

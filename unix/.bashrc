@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
+# Vim: set foldlevel=0:
 
 # Don't run if not interactive: {{{1
 case $- in
@@ -13,20 +14,19 @@ esac
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/faris/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
+__conda_setup="$('$HOME/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/faris/miniconda3/bin:$PATH"
+        export PATH="$HOME/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 fi
-
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 if [[ "$(command -v pip)" ]]; then
@@ -46,7 +46,6 @@ if [[ -f ~/google-cloud-sdk/completion.bash.inc ]]; then source ~/google-cloud-s
 if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
 
 if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
-
 
 # History: {{{1
 # Don't put duplicate lines or lines starting with space in the history.
@@ -86,14 +85,6 @@ if ! shopt -oq posix; then
   elif [[ -f /etc/bash_completion ]]; then
     . /etc/bash_completion
   fi
-fi
-
-# TODO: i think i forgot to glob the -f loop. Debug this.
-if [[ -d /data/data/com.termux/files/usr/share/bash-completion/completions ]]; then
-    if [[ -f "$PREFIX/share/bash-completion/completions" ]]; then
-        . "$COMPLETEFILE"
-    fi
-    unset COMPLETEFILE
 fi
 
 # Case-insensitive globbing (used in pathname expansion)
@@ -237,7 +228,13 @@ fi
 export EDITOR="$VISUAL"
 
 # JavaScript: {{{1
-# Source npm completion if its installed. Modified based on shellcheck suggestions
+
+# Source npm completion if its installed.
+if [[ "$(command -v npm)" ]]; then
+    source ~/.bashrc.d/npm-completion.bash
+fi
+
+
 # Export nvm if the directory exists
 # if [[ -d "$HOME/.nvm" ]]; then
 #     export NVM_DIR="$HOME/.nvm"
@@ -247,13 +244,9 @@ export EDITOR="$VISUAL"
 # fi
 
 # Testing out the language servers to see if they'll link up with neovim
-# if [[ -d "$HOME/.local/share/nvim/site/node_modules/.bin" ]]; then
-#     export PATH="$PATH:$HOME/.local/share/nvim/site/node_modules/.bin"
-# fi
-
-# if [[ -z "$(command -v npm)" ]] ; then
-#     source "$HOME/.bashrc.d/npm-completion.bash"
-# fi
+if [[ -d "$HOME/.local/share/nvim/site/node_modules/.bin" ]]; then
+    export PATH="$PATH:$HOME/.local/share/nvim/site/node_modules/.bin"
+fi
 
 # FZF: {{{1
 
@@ -264,6 +257,7 @@ fi
 
 # Loops for the varying backends for fzf. ag is my fave.
 if [[ "$(command -v ag)" ]]; then
+
     # Make the default the most general. Even though these are a lot of options
     # most simply hide info to make it easier to use with FZF
     export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
@@ -298,12 +292,8 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
     echo "opts empty"
     export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
 fi
-# You can't give a preview window as a default. FZF takes so many different inputs
-# that it periodically borks it. In nvim if you run Snippets, it tries to echo 100 lines
-# but is only receiving 1 line at a time.
-# --preview "head -100 {}" --preview-window=right:50%:wrap'
 
-[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS: --bind 'enter:execute(nvim {})' "
+[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 # termux doesnt have xclip or xsel
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
@@ -344,9 +334,6 @@ fi
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
-
-# [[ -z "$TMUX"  ]] && exec tmux
-# [[ -n "$TMUX" ]] && export FZF_TMUX=1 && export FZF_TMUX_HEIGHT=80%
 
 # add some cool colors to ls
 eval $( dircolors -b ~/.dircolors )

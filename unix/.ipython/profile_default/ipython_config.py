@@ -301,15 +301,18 @@ c.InteractiveShell.quiet = False
 # Show rewritten input, e.g. for autocall.
 # c.InteractiveShell.show_rewritten_input = True
 
+# Jan 20, 2019: Even with docrepr installed this still ends up raising errors.
+# Need to debug later.
+c.InteractiveShell.sphinxify_docstring = False
 # Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
-import importlib  # noqa E402
-try:
-    importlib.import_module("docrepr")  # noqa E402
-except ImportError:
-    c.InteractiveShell.sphinxify_docstring = False
-else:
-    c.InteractiveShell.sphinxify_docstring = True
+# import importlib  # noqa E402
+# try:
+#     importlib.import_module("docrepr")  # noqa E402
+# except ImportError:
+#     c.InteractiveShell.sphinxify_docstring = False
+# else:
+    # c.InteractiveShell.sphinxify_docstring = True
 
 c.InteractiveShell.wildcards_case_sensitive = False
 
