@@ -2,34 +2,47 @@
 #  -*- coding: utf-8 -*-
 """File for all shell aliases.
 
-Utilizes `ip`, the global interactive Ipython session. Fills the `user_ns`
-with common Linux idioms.
+This module utilizes `ip`, the global IPython InteractiveShell instance, and
+fills the `user_ns` with common Linux idioms.
 
-.. note::
+.. admonition::
 
-    Should I add a check that this a Unix OS because this'll blow up on NT?
+    This blows up on Windows10. You've been warned.
 
-Substitutions
+.. todo::
+
+    Separate the dictionary below into OS and machine specific dictionaries.
+    Run basic checks and only add to the user namespace if they match.
+
+    Also I have to ask why we define all these aliases in one :py:`dict` and
+    then move it to another. Why not just define them all in 
+    :py:`ip.alias_manager.define_alias()` from the get go?
+
+
+Parameters
 -------------
 
-<<<<<<< HEAD
-You can use the %l specifier in an alias definition to represent the
-whole line when the alias is called.  For example::
-=======
-For some reason there's no section about aliases in the skel file. Weird.
-Well here's a fun fact!:
+When writing aliases, an alias definition can take various string placeholders.
+As per the official documentation:
 
     You can use the %l specifier in an alias definition to represent the
     whole line when the alias is called.
 
-ipython::
+.. ipython::
 
    In [2]: alias bracket echo "Input in brackets: <%l>"
    In [3]: bracket hello world
    Input in brackets: <hello world>
 
 Note that we quote when in the configuration file but when running alias
-interactively the syntax ``%alias alias_name cmd`` doesn't require quoting
+interactively the syntax ``%alias alias_name cmd`` doesn't require quoting.
+
+
+See Also
+---------
+
+:ref:`IPython.core.alias.Alias
+
 """
 from IPython import get_ipython
 
@@ -65,7 +78,7 @@ ip.alias_manager.user_aliases = [
       ('gds2', 'git diff --staged --stat'),
       ('gdt', 'git difftool'),
       ('gf', 'git fetch --all'),
-      ('git', 'git'),
+      ('git', 'git %l'),
       ('git hist', 'git log --pretty=format:%h %ad | %s%d [%an] --graph --date=short'),
       ('git last', 'git log -1 HEAD'),
       ('git staged', 'git diff --cached'),

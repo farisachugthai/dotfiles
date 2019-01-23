@@ -132,3 +132,5 @@
 
 ; [init]
 ; 	templatedir = ~/.config/git/
+[github]
+	user = farisachugthai

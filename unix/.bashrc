@@ -262,7 +262,7 @@ if [[ "$(command -v ag)" ]]; then
     # most simply hide info to make it easier to use with FZF
     export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
 
-    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --preview-window=right:50%:wrap --bind "enter:execute(nvim {})"'
+    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --preview-window=right:50%:wrap' 
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow $1"
     export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
     # need to do assignments via assign if C-t has a value otherwise skip

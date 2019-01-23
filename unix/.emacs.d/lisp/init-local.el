@@ -23,6 +23,13 @@
 ;; apparently i'm doing something wrong. *shrugs*
 
 ;; Evil
+;; -------
+
+(setq evil-want-keybinding nil)  ;; because evil-collection said so:q
+(setq evil-want-integration t)
+(setq evil-want-minibuffer t)
+(setq evil-ex-complete-emacs-commands t)
+
 (require 'evil)
 (evil-mode t)
 
@@ -55,10 +62,6 @@ setq (
 (require 'goto-chg)
 (global-set-key [(control ?.)] 'goto-last-change) (global-set-key [(control ?,)] 'goto-last-change-reverse)
 
-(setq evil-want-keybinding nil)  ;; because evil-collection said so:q
-(setq evil-want-integration t)
-(setq evil-want-minibuffer t)
-(setq evil-ex-complete-emacs-commands t)
 
 (require 'evil-collection)
 
@@ -78,9 +81,9 @@ setq (
 (elpy-enable)
 
 ;; use flycheck not flymake with elpy
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; (when (require 'flycheck nil t)
+;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 (add-hook 'python-mode-hook 'jedi:setup)
 

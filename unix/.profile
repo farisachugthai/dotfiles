@@ -10,7 +10,6 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # Platform_Dependant: {{{1
 if [[ -n "$PREFIX" ]]; then
     export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
-    export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
     export MANPATH="$PREFIX/share/man:$HOME/.fzf/man"
 else
     export BROWSER="firefox"
@@ -23,10 +22,12 @@ else
     _ROOT="/usr"
 fi
 
-export SHELL="$_ROOT/bin/bash"
+# apparently ipython really doesn't like this
+# export SHELL="$_ROOT/bin/env bash"
+export SHELL=/bin/bash
 export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
-export XDG_DATA_DIRS="$PREFIX/local/share:$PREFIX/share"
-export NVIMRUNTIME="$PREFIX/share/nvim/runtime"
+export XDG_DATA_DIRS="$_ROOT/local/share:$_ROOT/share"
+export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -42,6 +43,7 @@ fi
 if [[ -d "$HOME/.rvm" ]]; then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
     export PATH="$PATH:$HOME/.rvm/bin"
+    # shellcheck source=/home/faris/.rvm/scripts/rvm disable=1091
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 fi
 
@@ -54,22 +56,23 @@ elif [[ -d "$PREFIX/local/go" ]]; then
 fi
 
 # Utilize GOPATH.
-if [[ "$(command -v go)" ]]; then
+if [[ -n "$(command -v go)" ]]; then
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
 
 # JavaScript: {{{1
-if [[ "$(command -v yarn)" ]]; then
+if [[ -n "$(command -v yarn)" ]]; then
     YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
     export PATH="$PATH:$YARNPATH"
 
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
+        # shellcheck source=./.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash disable=1091
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
 fi
 
-# Lisp:{{{1
+# Lisp: {{{1
 if [[ -d "$HOME/.racket/7.1/bin" ]]; then
     export PATH="$PATH:$HOME/.racket/7.1/bin"
 fi
@@ -90,7 +93,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-if [[ "$(command -v cheat)" ]];then
+if [[ -n "$(command -v cheat)" ]];then
     export CHEATCOLORS=true
     export CHEATPATH="$HOME/python/tutorials:$HOME/python/site-packages:$CHEATPATH"
 fi
@@ -99,7 +102,9 @@ fi
 export LANG=en_US.UTF-8                 # gathered from localectl
 export LC_MESSAGES=C                    # man i3: Prevents program output translation
 export LANGUAGE=en                      # nvim complains us region not supported
-# export LC_CTYPE=C.UTF-8                 # the only thing defined in /usr/lib/locale right now
+export LC_CTYPE=C.UTF-8                 # the python default
+export PYTHONIOENCODING=utf-8:surrogateescape
+export PYTHONDONTWRITEBYTECODE=1
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 if [[ -n "$TMPDIR" ]]; then
@@ -111,8 +116,8 @@ else
     fi
 fi
 
-export TMUXP_CONFIGDIR='$HOME/.tmux'
-export PYTHONDONTWRITEBYTECODE=1
+if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
+
 
 # As this was placed here because Termux didn't have a manpath set
 # Here's the one I currently have from KDE Neon. Nov 07, 2018

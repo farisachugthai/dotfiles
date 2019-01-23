@@ -1,8 +1,12 @@
 # yapf formatter
 # Maintainer: Faris Chugthai
+
 # 2018-09-28
 # Had this for a little bit
 # Merged in the changes from yapf --show-style
+
+# Jan 21, 2019:
+# --show-style was deprecated. As of v.0.25 it's now `--style-help`
 
 [style]
 # Align closing bracket with visual indentation.
