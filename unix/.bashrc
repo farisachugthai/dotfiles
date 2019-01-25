@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
-# Vim: set foldlevel=0:
 
 # Don't run if not interactive: {{{1
 case $- in
@@ -104,7 +103,10 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-PS1=$(gbt $?)
+# GBT: {{{1
+export PS1=$(gbt $?)
+
+export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
 
 # Vim: {{{1
 set -o vi
@@ -138,13 +140,20 @@ if [[ "$(command -v ag)" ]]; then
 
     # Make the default the most general. Even though these are a lot of options
     # most simply hide info to make it easier to use with FZF
+
+    # Can't get it to work without -l though so only filename search.
     export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
 
-    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --bind "enter:execute(nvim {})"'
-    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --preview-window=right:50%:wrap --bind "enter:execute(nvim {})"'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow $1"
+    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --preview "head -100 {}" --ansi'
 
-    alias Ag='$FZF_DEFAULT_COMMAND | fzf '
+    # Difference between running 'fzf' and C-t is fullscreen or not.
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"
+    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header'"Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview."
+
+    # Doesn't work.
+    Ag() {
+        "$FZF_DEFAULT_COMMAND $@" | fzf -
+    }
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
@@ -159,23 +168,21 @@ elif [[ "$(command -v fd)" ]]; then
     if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
+
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
+
+    # Options for FZF no matter what.
+    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border'
 fi
 
-# Options for FZF no matter what. Should set only if these vars are unset
-# though because this is gonna clobber.
-if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
-    echo "opts empty"
-    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
-fi
-
-[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
+# [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
+# ^----- ????
 
 # termux doesnt have xclip or xsel
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview.' --history-size=5000 --cycle"
 
-command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF I .git -C {} | head -200'"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.

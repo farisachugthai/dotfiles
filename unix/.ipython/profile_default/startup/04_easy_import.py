@@ -12,23 +12,23 @@ Help on module IPython.utils.dir2 in IPython.utils:
 
 
     NAME
-    IPython.utils.dir2 - A fancy version of Python's builtin :func:`dir` 
+    IPython.utils.dir2 - A fancy version of Python's builtin :func:`dir`
     function.
 
     FUNCTIONS
-    
+
         dir2(obj)
         dir2(obj) -> list of strings
 
         Extended version of the Python builtin dir(), which does a few extra
         checks.
 
-        This version is guaranteed to return only a list of true strings, 
-        whereas :func:`dir()` returns anything that objects inject into 
+        This version is guaranteed to return only a list of true strings,
+        whereas :func:`dir()` returns anything that objects inject into
         themselves, even if they
-        are later not really valid for attribute access (many extension 
+        are later not really valid for attribute access (many extension
         libraries have such bugs).
-    
+
         get_real_method(obj, name)
         Like getattr, but with a few extra sanity checks:
 
@@ -44,22 +44,17 @@ Help on module IPython.utils.dir2 in IPython.utils:
         This catches all errors.
 
     FILE
-    
+
         `/usr/lib/python3.7/site-packages/IPython/utils/dir2.py`_
 
-2018-09-06
+**2018-09-06**
 
 .. note::
 
-    Discovered that putting the imports into functions and calling those 
-    functions causes the imports to stay local to that function and not 
-    appear in the REPL namespace. Seemingly obvious now. So how does 
+    Discovered that putting the imports into functions and calling those
+    functions causes the imports to stay local to that function and not
+    appear in the REPL namespace. Seemingly obvious now. So how does
     ptipython import things?
-    
-    You have access to ip.cleanup() after you import get_ipython
-    Well it embeds ipython. But it has to import other modules. Hm.
-    However we're functional so take that to mean what you want! :D
-
 """
 from importlib import import_module
 import os
@@ -85,14 +80,15 @@ def import_nvim(mod):
     Utilizes :func:`import_module` from :mod:`importlib`.
 
     :param mod: A module to import.
+    :returns: None
     """
     try:
         import_module(mod)
-    except ImportError as e:
+    except ImportError:
         print("************************************************************")
         print("{} import failed. Only ignore this if you plan on going"
               " the entire session without using %edit".format(mod))
-        print("*************************************************************")
+        print("************************************************************")
 
 
 if __name__ == "__main__":
