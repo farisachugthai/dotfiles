@@ -20,8 +20,8 @@ The timestamp is particularly convenient for concurrent instances of IPy.
     - Truncate output if it exceeds a certain threshold.
         - Run dir(np) or dir(pd) a couple of times and the logs become
         swamped.
-    - Possibly change that section under the shebang to also include 3 
-    double quotes and in the comment add system info like py version, venv, 
+    - Possibly change that section under the shebang to also include 3
+    double quotes and in the comment add system info like py version, venv,
     conda, any of the 1000000 things you could add.
 
 .. note::
@@ -60,11 +60,12 @@ from IPython import get_ipython
 def session_logger(ip):
     """Log all input and output for an IPython session.
 
-    Saves the commands as valid IPython code. Note that this is not necessarily
-    valid python code.
+    Saves the commands as valid IPython code. Note that this is not
+    necessarily valid python code.
 
     The commands are appended to a file in the directory of the profile in
-    $IPYTHONDIR or fallback ~/.ipython. This file is named based on the date.
+    $IPYTHONDIR or fallback ~/.ipython. This file is named based on the
+    date.
 
     Parameters
     -----------
@@ -81,7 +82,8 @@ def session_logger(ip):
     notnew = path.exists(filename)
 
     try:
-        ip.run_line_magic('logstart', '-to %s append' % filename)
+        ip.run_line_magic('logstart -to %s append' % filename)
+        # added -t to get timestamps
         if notnew:
             ip.logger.log_write(u"# =================================\n")
         else:
@@ -90,9 +92,9 @@ def session_logger(ip):
             ip.logger.log_write(u"# IPython automatic logging file\n")
             ip.logger.log_write(u"# " + time.strftime('%H:%M:%S') + "\n")
             ip.logger.log_write(u"# =================================\n")
-            print(" Logging to "+filename)
+            print(" Logging to " + filename)
     except RuntimeError:
-        print(" Already logging to "+ip.logger.logfname)
+        print(" Already logging to " + ip.logger.logfname)
 
 
 if __name__ == "__main__":

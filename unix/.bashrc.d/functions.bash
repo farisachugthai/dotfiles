@@ -65,7 +65,6 @@ update-pip () {
     $pu flake8
 }
 
-# I really don't like anything that smells like Emacs keybindings
 infovi () {
     info "$1" | "$PAGER"
 }
@@ -73,7 +72,7 @@ infovi () {
 # From byobu
 byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
 
-# FZF: {{{
+# FZF: {{{1
 
 fzf-down() {
   fzf --height 50% "$@" --border
@@ -100,6 +99,7 @@ fzf_nvim() {
   [ -n "$file" ] && ${EDITOR:-nvim} "$file"
 }
 
+# Dropbox: {{{1
 tldrbox_cheat() {
     tldr -m "$1" >> "$HOME/.cheat/$1" && termux-share "$1"
 }
@@ -108,6 +108,7 @@ tldropbox_dir() {
     tldr -m "$1" >> "$PWD/$1" && termux-share "$1"
 }
 
+# Python / Environment Managers: {{{1
 conda_switch() {
     conda deactivate && conda activate "$1"
 }
@@ -117,38 +118,6 @@ gpip() {
     pip "$@";
     export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
 }
-
-# Honestly just pull up junegunns blog post on this, sit down,
-# hack away and make a new file.
-# TODO:
-# fstash - easier way to deal with stashes
-# type fstash to get a list of your stashes
-# enter shows you the contents of the stash
-# ctrl-d shows a diff of the stash against your current HEAD
-# ctrl-b checks the stash out as a branch, for easier merging
-# fstash() {
-#   local out q k sha
-#   while out=$(
-#     git stash list --pretty="%C(yellow)%h %>(14)%Cgreen%cr %C(blue)%gs" |
-#     fzf --ansi --no-sort --query="$q" --print-query \
-#         --expect=ctrl-d,ctrl-b);
-#   do
-#     mapfile -t out <<< "$out"
-#     q="${out[0]}"
-#     k="${out[1]}"
-#     sha="${out[-1]}"
-#     sha="${sha%% *}"
-#     [[ -z "$sha" ]] && continue
-#     if [[ "$k" == 'ctrl-d' ]]; then
-#       git diff $sha
-#     elif [[ "$k" == 'ctrl-b' ]]; then
-#       git stash branch "stash-$sha" $sha
-#       break;
-#     else
-#       git stash show -p $sha
-#     fi
-#   done
-# }
 
 # Oct 04, 2018
 # in a manner similar to __fzf__history__ display all of hist to std out
@@ -173,7 +142,7 @@ man(){
 tre(){
     # Let's review a few of these options.
     # -L is max dir depth
-    # -F: 
+    # -F:
     # Append a `/' for directories, a `=' for socket files, a `*' for
     # executable files, a `>' for doors (Solaris) and a `|' for
     # FIFO's, as per ls -F
