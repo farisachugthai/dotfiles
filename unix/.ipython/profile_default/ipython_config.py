@@ -255,10 +255,7 @@ c.InteractiveShell.colors = 'Neutral'
 
 # If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-try:
-    c.InteractiveShell.display_page = True
-except ImportError:
-    c.InteractiveShell.display_page = False
+c.InteractiveShell.display_page = True
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
 # c.InteractiveShell.enable_html_pager = False
@@ -355,6 +352,10 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # Highlight matching brackets.
 c.TerminalInteractiveShell.highlight_matching_brackets = True
 
+###
+# Reverted and now using `./startup/gruvbox_style.py`_
+###
+
 # The name or class of a Pygments style to use for syntax highlighting.
 # To see available styles, run `pygmentize -L styles`.
 
@@ -362,12 +363,12 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
 # paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash
 
-c.TerminalInteractiveShell.highlighting_style = 'legacy'
+c.TerminalInteractiveShell.highlighting_style = 'gruvbox'
 
 # Override highlighting format for specific tokens
 # Comments were genuinely impossible to read. Might need to override
 # punctuation next.
-c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
+# c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Enable mouse support in the prompt (Note: prevents selecting text with the
 # mouse)

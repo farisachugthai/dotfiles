@@ -2,13 +2,13 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
-# Don't run if not interactive: {{{1
+# Don't run if not interactive: 
 case $- in
     *i*);;
     *) return 0;;
 esac
 
-# Python: {{{1
+# Python: 
 # Put python first because we need conda initialized right away
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
@@ -34,7 +34,7 @@ fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
-# gcloud: {{{2
+# gcloud: 
 # TODO: Jump in the shell, and run the following to ensure it works,
 # then reduce this section to 1 line!
 # if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
@@ -46,7 +46,7 @@ if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/googl
 
 if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
-# History: {{{1
+# History: 
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -59,7 +59,7 @@ HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
-# Shopt: {{{1
+# Shopt: 
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -93,7 +93,7 @@ shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 
-# Defaults in Ubuntu bashrcs: {{{1
+# Defaults in Ubuntu bashrcs: 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
 [[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -103,12 +103,13 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# GBT: {{{1
+# GBT: 
 export PS1=$(gbt $?)
 
 export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
+export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
 
-# Vim: {{{1
+# Vim: 
 set -o vi
 if [[ "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
@@ -117,7 +118,7 @@ else
 fi
 export EDITOR="$VISUAL"
 
-# JavaScript: {{{1
+# JavaScript: 
 # Source npm completion if its installed
 if [[ "$(command -v npm)" ]]; then
     source ~/.bashrc.d/npm-completion.bash
@@ -128,7 +129,7 @@ if [[ -d "$HOME/.local/share/nvim/site/node_modules/.bin" ]]; then
     export PATH="$PATH:$HOME/.local/share/nvim/site/node_modules/.bin"
 fi
 
-# FZF: {{{1
+# FZF: 
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
@@ -200,13 +201,13 @@ _fzf_compgen_dir() {
 complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
 
-# Ruby: {{{1
+# Ruby: 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 if [[ -d "$HOME/.rvm/bin" ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
 
-# Sourced files: {{{1
+# Sourced files: 
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do
         source "$config"
@@ -214,7 +215,7 @@ if [[ -d ~/.bashrc.d/ ]]; then
     unset -v config
 fi
 
-# Secrets: {{{1
+# Secrets: 
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi

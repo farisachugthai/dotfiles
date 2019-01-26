@@ -82,7 +82,7 @@ def session_logger(ip):
     notnew = path.exists(filename)
 
     try:
-        ip.run_line_magic('logstart -to %s append' % filename)
+        ip.run_line_magic('logstart', '-to %s append' % filename)
         # added -t to get timestamps
         if notnew:
             ip.logger.log_write(u"# =================================\n")

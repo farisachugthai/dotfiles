@@ -40,15 +40,15 @@ ip.alias_manager.user_aliases = [
     ('apt', 'apt'),
     ('chmod', 'chmod'),
     ('conda', 'conda'),
-    ('cp', 'cp -iv'),  # cp mv mkdir and rmdir are all overridden
-    ('ctags', 'ctags'),  # it's nice to be able to build tags while working
+    ('cp', 'cp -iv'),       # cp mv mkdir and rmdir are all overridden
+    ('ctags', 'ctags'),     # it's nice to be able to build tags while working
     ('dpkg', 'dpkg'),
     ('du', 'du'),
     ('dus', 'du -d 1 -h'),
     ('echo', 'echo -e'),
     ('find', 'find'),
     ('fd', 'fd'),
-    ('fzf', 'fzf'),  # all we need to do is figure out keybindings
+    ('fzf', 'fzf %l'),          # all we need to do is figure out keybindings
     ('g', 'git status -sb'),
     ('ga', 'git add'),
     ('gb', 'git branch'),
@@ -62,9 +62,10 @@ ip.alias_manager.user_aliases = [
     ('gds2', 'git diff --staged --stat'),
     ('gdt', 'git difftool'),
     ('gf', 'git fetch --all'),
-    ('git', 'git'),
+    ('git', 'git %l'),
     ('git hist',
-     'git log --pretty=format:%h %ad | %s%d [%an] --graph --date=short'),
+     'git log --pretty=format:%h %ad | %s%d [%an] --graph --date=short'
+     ),
     ('git last', 'git log -1 HEAD'),
     ('git staged', 'git diff --cached'),
     ('git rel', 'git rev-parse --show-prefix'),
@@ -94,7 +95,7 @@ ip.alias_manager.user_aliases = [
     ('mk', 'mkdir -pv %l && cd %l'),  # check if this works. only mkdir
     ('mkdir', 'mkdir -pv'),
     ('mv', 'mv -iv'),
-    ('nvim', 'nvim'),
+    ('nvim', 'nvim %l'),
     ('rg', 'rg'),
     ('rm', 'rm -v'),
     ('rmdir', 'rmdir -v'),
