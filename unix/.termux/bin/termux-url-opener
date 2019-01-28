@@ -3,17 +3,9 @@
 # Assumes Termux and Android OS.
 # Maintainer: Faris Chugthai
 
-# TODO: Use more robust regex for metadata and title.
-# Then start using 3rd party packages to fill in gaps. id3tag, picard, eyeD3
-# hopefully whatever requires the least effort so that might rule out ffmpeg...
-
-# mp3
-# youtube-dl --config-location "$HOME/.config/youtube-dl/config-mp3" "$1"
-
-# mp3 playlist
-# youtube-dl --config-location "$HOME/.config/youtube-dl/config-mp3-playlist" "$1"
-
 # mp4
+# As a reminder, if you put your cursor over a filename and press <kbd>gF</kd>
+# It'll open in a new tab.
 youtube-dl --config-location "$HOME/.config/youtube-dl/config-mp4" "$1"
 
 exit 0

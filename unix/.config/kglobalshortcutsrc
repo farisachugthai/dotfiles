@@ -1,28 +1,16 @@
-[$Version]
-update_info=powerdevil_move_shortcuts.upd:powerdevil_move_shortcuts
-
 [ActivityManager]
-_k_friendly_name=Plasma
-switch-to-activity-5177f5d0-ce33-4e3d-afef-dbc2e8e47ec8=none,none,
+_k_friendly_name=Activity Manager
+switch-to-activity-7f86fd99-5dc0-4ada-81ef-bab4eed2a2f6=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
-Switch to Next Keyboard Layout=none,none,Switch to Next Keyboard Layout
+Switch to Next Keyboard Layout=Ctrl+Alt+K,none,Switch to Next Keyboard Layout
 _k_friendly_name=KDE Daemon
 
-[cantata]
-_k_friendly_name=Cantata
-decreasevolume=,Volume Down,Decrease Volume
-increasevolume=,Volume Up,Increase Volume
-mute=,Volume Mute,Mute
-nexttrack=,Media Next,Next Track
-playpausetrack=,Media Play,Play/Pause
-prevtrack=,Media Previous,Previous Track
-stopaftercurrenttrack=none,none,Stop After Current Track
-stopplayback=,Media Stop,Stop
-
-[gvim.desktop]
-_k_friendly_name=Launch GVim 8.0
-_launch=none,none,Launch GVim 8.0
+[firefox.desktop]
+_k_friendly_name=Firefox Web Browser
+_launch=,none,Firefox Web Browser
+new-private-window=,none,Open a New Private Window
+new-window=,none,Open a New Window
 
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
@@ -39,28 +27,19 @@ Show System Activity=Ctrl+Esc,Ctrl+Esc,Show System Activity
 _k_friendly_name=KDE Daemon
 display=Display\tMeta+P,Display\tMeta+P,Switch Display
 
-[keepass2.desktop]
-_k_friendly_name=Launch KeePass2
-_launch=Ctrl+Alt+K,none,Launch KeePass2
-
 [khotkeys]
 _k_friendly_name=KDE Daemon
-{0495ab49-1aaa-4401-bf93-cec69bbfc744}=Meta+Shift+Print,none,Take Rectangular Region Screenshot
-{77f777d9-bbb7-4d5a-9f29-bebfa8927786}=Shift+Print,none,Take Full Screen Screenshot
-{9014bc0e-00d7-4b54-a615-fd29e1cb7fce}=Print,none,Start Screenshot Tool
-{90493b2d-398a-4cb6-acd3-e623ec04629b}=Ctrl+Alt+T,none,Konsole
-{a107a501-f47e-4dd5-b517-193df74fba50}=Meta+Print,none,Take Active Window Screenshot
+{3f00a041-a652-47df-9562-7fdcc2095341}=Print,none,Start Screenshot Tool
+{5b940bad-2d70-4600-948f-a2d57d6b85f4}=Shift+Print,none,Take Full Screen Screenshot
+{ab888834-c3f2-4ca8-b45c-19c76106bc3b}=none,none,Run Konsole
+{b7eba0f3-618c-4556-9eef-25ab15143cf1}=Meta+Shift+Print,none,Take Rectangular Region Screenshot
+{d03619b6-9b3c-48cc-9d9c-a2aadb485550}=none,none,Search
+{d4eee716-9b00-4300-a967-91b9a4b2bd93}=Meta+Print,none,Take Active Window Screenshot
+{f05e2edb-2d27-4116-bace-98247ed405c2}=Ctrl+Alt+T,none,Launch Konsole
 
-[klipper]
-_k_friendly_name=Klipper
-clear-history=none,none,Clear Clipboard History
-clipboard_action=,Ctrl+Alt+X,Enable Clipboard Actions
-cycleNextAction=none,none,Next History Item
-cyclePrevAction=none,none,Previous History Item
-edit_clipboard=none,none,Edit Contents...
-repeat_action=,Ctrl+Alt+R,Manually Invoke Action on Current Clipboard
-show-barcode=none,none,Show Barcode...
-show-on-mouse-pos=none,none,Open Klipper at Mouse Position
+[kitty.desktop]
+_k_friendly_name=kitty
+_launch=Meta+Return,none,kitty
 
 [kmix]
 _k_friendly_name=Audio Volume
@@ -73,12 +52,12 @@ mute=Volume Mute,Volume Mute,Mute
 
 [krunner]
 _k_friendly_name=Run Command
-run command=Alt+Space\tAlt+F2\t,Alt+Space,Run Command
+run command=Alt+Space\tAlt+F2\tSearch,Alt+Space,Run Command
 run command on clipboard contents=Alt+Shift+F2,Alt+Shift+F2,Run Command on clipboard contents
 
 [ksmserver]
 Halt Without Confirmation=Ctrl+Alt+Shift+PgDown,none,Halt Without Confirmation
-Lock Session=Meta+L,Ctrl+Alt+L\tScreensaver,Lock Session
+Lock Session=Ctrl+Alt+L\tScreensaver,Ctrl+Alt+L\tScreensaver,Lock Session
 Log Out=Ctrl+Alt+Del,none,Log Out
 Log Out Without Confirmation=Ctrl+Alt+Shift+Del,none,Log Out Without Confirmation
 Reboot Without Confirmation=Ctrl+Alt+Shift+PgUp,none,Reboot Without Confirmation
@@ -98,10 +77,10 @@ Kill Window=Ctrl+Alt+Esc,Ctrl+Alt+Esc,Kill Window
 MinimizeAll=Meta+Shift+D,none,MinimizeAll
 MoveMouseToCenter=Meta+F6,Meta+F6,Move Mouse to Center
 MoveMouseToFocus=Meta+F5,Meta+F5,Move Mouse to Focus
-MoveZoomDown=Meta+Down,Meta+Down,Move Zoomed Area Downwards
-MoveZoomLeft=Meta+Left,Meta+Left,Move Zoomed Area to Left
-MoveZoomRight=Meta+Right,Meta+Right,Move Zoomed Area to Right
-MoveZoomUp=Meta+Up,Meta+Up,Move Zoomed Area Upwards
+MoveZoomDown=none,none,Move Zoomed Area Downwards
+MoveZoomLeft=none,none,Move Zoomed Area to Left
+MoveZoomRight=none,none,Move Zoomed Area to Right
+MoveZoomUp=none,none,Move Zoomed Area Upwards
 Remove Window From Group=none,none,Remove Window From Group
 Setup Window Shortcut=none,none,Setup Window Shortcut
 Show Desktop=none,none,Show Desktop
@@ -186,10 +165,10 @@ Window Fullscreen=none,none,Make Window Fullscreen
 Window Grow Horizontal=none,none,Pack Grow Window Horizontally
 Window Grow Vertical=none,none,Pack Grow Window Vertically
 Window Lower=none,none,Lower Window
-Window Maximize=none,none,Maximize Window
+Window Maximize=none,Meta+PgUp,Maximize Window
 Window Maximize Horizontal=none,none,Maximize Window Horizontally
 Window Maximize Vertical=none,none,Maximize Window Vertically
-Window Minimize=none,none,Minimize Window
+Window Minimize=none,Meta+PgDown,Minimize Window
 Window Move=none,none,Move Window
 Window No Border=none,none,Hide Window Border
 Window On All Desktops=none,none,Keep Window on All Desktops
@@ -202,12 +181,12 @@ Window Pack Down=none,none,Pack Window Down
 Window Pack Left=none,none,Pack Window to the Left
 Window Pack Right=none,none,Pack Window to the Right
 Window Pack Up=none,none,Pack Window Up
-Window Quick Tile Bottom=none,none,Quick Tile Window to the Bottom
+Window Quick Tile Bottom=Meta+Down,Meta+Down,Quick Tile Window to the Bottom
 Window Quick Tile Bottom Left=none,none,Quick Tile Window to the Bottom Left
 Window Quick Tile Bottom Right=none,none,Quick Tile Window to the Bottom Right
-Window Quick Tile Left=none,none,Quick Tile Window to the Left
-Window Quick Tile Right=none,none,Quick Tile Window to the Right
-Window Quick Tile Top=none,none,Quick Tile Window to the Top
+Window Quick Tile Left=Meta+Left,Meta+Left,Quick Tile Window to the Left
+Window Quick Tile Right=Meta+Right,Meta+Right,Quick Tile Window to the Right
+Window Quick Tile Top=Meta+Up,Meta+Up,Quick Tile Window to the Top
 Window Quick Tile Top Left=none,none,Quick Tile Window to the Top Left
 Window Quick Tile Top Right=none,none,Quick Tile Window to the Top Right
 Window Raise=none,none,Raise Window
@@ -247,8 +226,9 @@ Window to Screen 4=none,none,Window to Screen 4
 Window to Screen 5=none,none,Window to Screen 5
 Window to Screen 6=none,none,Window to Screen 6
 Window to Screen 7=none,none,Window to Screen 7
+WindowGeometry=Ctrl+Shift+F11,Ctrl+Shift+F11,Toggle window geometry display (effect only)
 _k_friendly_name=KWin
-view_actual_size=Meta+0,Meta+0,Actual Size
+view_actual_size=,Meta+0,Actual Size
 view_zoom_in=Meta+=,Meta+=,Zoom In
 view_zoom_out=Meta+-,Meta+-,Zoom Out
 
@@ -286,14 +266,16 @@ show-on-mouse-pos=none,none,Open Klipper at Mouse Position
 
 [mediacontrol]
 _k_friendly_name=Media Controller
+mediavolumedown=none,none,Media volume down
+mediavolumeup=none,none,Media volume up
 nextmedia=Media Next,Media Next,Media playback next
 playpausemedia=Media Play,Media Play,Play/Pause media playback
 previousmedia=Media Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback
 
-[org.kde.ksysguard.desktop]
-_k_friendly_name=Launch KSysGuard
-_launch=Ctrl+Shift+Esc,none,Launch KSysGuard
+[org.keepassxc.KeePassXC.desktop]
+_k_friendly_name=KeePassXC
+_launch=,none,KeePassXC
 
 [org_kde_powerdevil]
 Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Decrease Keyboard Brightness
@@ -309,7 +291,7 @@ _k_friendly_name=Power Management
 [plasmashell]
 _k_friendly_name=Plasma
 activate task manager entry 1=Meta+1,Meta+1,Activate Task Manager Entry 1
-activate task manager entry 10=,Meta+0,Activate Task Manager Entry 10
+activate task manager entry 10=Meta+0,Meta+0,Activate Task Manager Entry 10
 activate task manager entry 2=Meta+2,Meta+2,Activate Task Manager Entry 2
 activate task manager entry 3=Meta+3,Meta+3,Activate Task Manager Entry 3
 activate task manager entry 4=Meta+4,Meta+4,Activate Task Manager Entry 4
@@ -318,11 +300,7 @@ activate task manager entry 6=Meta+6,Meta+6,Activate Task Manager Entry 6
 activate task manager entry 7=Meta+7,Meta+7,Activate Task Manager Entry 7
 activate task manager entry 8=Meta+8,Meta+8,Activate Task Manager Entry 8
 activate task manager entry 9=Meta+9,Meta+9,Activate Task Manager Entry 9
-activate widget 100=none,none,Activate Application Menu Widget
-activate widget 24=Alt+F1,none,Activate Application Launcher Widget
-activate widget 44=,none,Activate Application Launcher Widget
-activate widget 74=none,none,Activate Weather Forecast Widget
-activate widget 85=none,none,Activate Task Manager Widget
+activate widget 60=Alt+F1,none,Activate Application Launcher Widget
 clear-history=none,none,Clear Clipboard History
 clipboard_action=Ctrl+Alt+X,Ctrl+Alt+X,Enable Clipboard Actions
 cycleNextAction=none,none,Next History Item
@@ -337,6 +315,14 @@ show-barcode=none,none,Show Barcode...
 show-on-mouse-pos=none,none,Open Klipper at Mouse Position
 stop current activity=Meta+S,Meta+S,Stop Current Activity
 
+[ranger.desktop]
+_k_friendly_name=Launch ranger
+_launch=Meta+R,none,Launch ranger
+
 [yakuake]
 _k_friendly_name=Yakuake
-toggle-window-state=Ctrl+O\tF12,F12,Open/Retract Yakuake
+toggle-window-state=none,F12,Open/Retract Yakuake
+
+[zim.desktop]
+_k_friendly_name=Zim Desktop Wiki
+_launch=,none,Zim Desktop Wiki

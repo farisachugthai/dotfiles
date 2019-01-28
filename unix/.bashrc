@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
-# Vim: set foldlevel=0:
 
-# Don't run if not interactive: {{{1
+# Don't run if not interactive: 
 case $- in
     *i*);;
     *) return 0;;
 esac
 
-# Python: {{{1
+# Python: 
 # Put python first because we need conda initialized right away
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
@@ -35,7 +34,7 @@ fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
-# gcloud: {{{2
+# gcloud: 
 # TODO: Jump in the shell, and run the following to ensure it works,
 # then reduce this section to 1 line!
 # if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
@@ -47,7 +46,7 @@ if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/googl
 
 if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
-# History: {{{1
+# History: 
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -60,7 +59,7 @@ HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
-# Shopt: {{{1
+# Shopt: 
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -94,7 +93,7 @@ shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 
-# Defaults in Ubuntu bashrcs: {{{1
+# Defaults in Ubuntu bashrcs: 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
 [[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -104,9 +103,13 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-PS1=$(gbt $?)
+# GBT: 
+export PS1=$(gbt $?)
 
-# Vim: {{{1
+export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
+export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+
+# Vim: 
 set -o vi
 if [[ "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
@@ -115,7 +118,7 @@ else
 fi
 export EDITOR="$VISUAL"
 
-# JavaScript: {{{1
+# JavaScript: 
 # Source npm completion if its installed
 if [[ "$(command -v npm)" ]]; then
     source ~/.bashrc.d/npm-completion.bash
@@ -126,7 +129,7 @@ if [[ -d "$HOME/.local/share/nvim/site/node_modules/.bin" ]]; then
     export PATH="$PATH:$HOME/.local/share/nvim/site/node_modules/.bin"
 fi
 
-# FZF: {{{1
+# FZF: 
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
@@ -138,13 +141,20 @@ if [[ "$(command -v ag)" ]]; then
 
     # Make the default the most general. Even though these are a lot of options
     # most simply hide info to make it easier to use with FZF
+
+    # Can't get it to work without -l though so only filename search.
     export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
 
-    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --bind "enter:execute(nvim {})"'
-    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --preview-window=right:50%:wrap --bind "enter:execute(nvim {})"'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow $1"
+    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --preview "head -100 {}" --ansi'
 
-    alias Ag='$FZF_DEFAULT_COMMAND | fzf '
+    # Difference between running 'fzf' and C-t is fullscreen or not.
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"
+    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header'"Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview."
+
+    # Doesn't work.
+    Ag() {
+        "$FZF_DEFAULT_COMMAND $@" | fzf -
+    }
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
@@ -159,23 +169,21 @@ elif [[ "$(command -v fd)" ]]; then
     if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
+
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
+
+    # Options for FZF no matter what.
+    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border'
 fi
 
-# Options for FZF no matter what. Should set only if these vars are unset
-# though because this is gonna clobber.
-if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
-    echo "opts empty"
-    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
-fi
-
-[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
+# [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
+# ^----- ????
 
 # termux doesnt have xclip or xsel
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview.' --history-size=5000 --cycle"
 
-command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF I .git -C {} | head -200'"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
@@ -193,13 +201,13 @@ _fzf_compgen_dir() {
 complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
 
-# Ruby: {{{1
+# Ruby: 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 if [[ -d "$HOME/.rvm/bin" ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
 
-# Sourced files: {{{1
+# Sourced files: 
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do
         source "$config"
@@ -207,7 +215,7 @@ if [[ -d ~/.bashrc.d/ ]]; then
     unset -v config
 fi
 
-# Secrets: {{{1
+# Secrets: 
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi

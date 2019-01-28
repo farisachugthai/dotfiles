@@ -103,6 +103,7 @@ export LANG=en_US.UTF-8                 # gathered from localectl
 export LC_MESSAGES=C                    # man i3: Prevents program output translation
 export LANGUAGE=en                      # nvim complains us region not supported
 # export LC_CTYPE=utf-8
+export PYTHONDONTWRITEBYTECODE=1
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 if [[ -n "$TMPDIR" ]]; then
@@ -115,7 +116,6 @@ else
 fi
 
 export TMUXP_CONFIGDIR='$HOME/.tmux'
-export PYTHONDONTWRITEBYTECODE=1
 
 # As this was placed here because Termux didn't have a manpath set
 # Here's the one I currently have from KDE Neon. Nov 07, 2018

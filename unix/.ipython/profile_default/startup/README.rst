@@ -3,13 +3,25 @@ IPython Startup Scripts
 =======================
 
 :Author: Faris Chugthai
-:Date: 01-04-2019
+:Date: 01-15-2019
 
 
 Personal Notes
 ---------------
 
-Jan 04, 2018
+%rehash
+~~~~~~~
+
+The magic ``rehash`` allows you to reload all of your startup files including
+bash related ones!
+
+Haven't noticed any significant delays as a result of this, and it allows me to
+continue using IPython as a system shell.
+
+Configuration
+~~~~~~~~~~~~~
+
+**Jan 04, 2018**
 
 Here's a rough outline of what's going on in this directory.
 
@@ -39,6 +51,7 @@ As of today, the files present are as follows:
 Sep 27, 2018
 
 Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it, then ran
+
 .. ipython::
 
    %store lazydl >> 30_macros_lazydl.py
