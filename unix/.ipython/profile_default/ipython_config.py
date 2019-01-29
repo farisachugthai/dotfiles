@@ -210,6 +210,8 @@ except Exception:
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True
 
+# Its honestly pretty annoying
+c.InteractiveShell.banner1 = ''
 # The part of the banner to be printed before the profile
  c.InteractiveShell.banner1 = ""
 

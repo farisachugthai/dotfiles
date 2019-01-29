@@ -30,12 +30,12 @@
     # detect copied files as well as renames. affects merge and status.renames
     renames = copy
     strategy-option = resolve
-	tool = nvimdiff
-	renames = copies
+    tool = nvimdiff
+    renames = copies
 
 [difftool "nvimdiff"]
-	cmd = nvim -d $LOCAL $REMOTE
-	trustexitcode = true
+    cmd = nvim -d $LOCAL $REMOTE
+    trustexitcode = true
 
 [merge]
     autoStash
@@ -66,9 +66,6 @@
 
 [branch]
     autosetupmerge = true
-
-[pager]
-    status = true
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
@@ -123,14 +120,15 @@
 [pull]
     rebase = True
 
-[url "git://github.com/"]
-	insteadOf = g:
+[github]
+    user = farisachugthai
+    insteadOf = github:
+    insteadOf = g:
 
 [url "git@gist.github.com:"]
-	insteadOf = "gist:"
-	pushInsteadOf = "gist:"
+    insteadOf = "gist:"
+    pushInsteadOf = "gist:"
 
+; Could do something like this
 ; [init]
-; 	templatedir = ~/.config/git/
-[github]
-	user = farisachugthai
+;   templatedir = ~/.config/git/

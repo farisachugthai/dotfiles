@@ -59,8 +59,5 @@ def test_alias_args_error():
 
 
 if __name__ == "__main__":
-    if not ip or _ip:  # noqa F821 of course its undefined!
-        _ip = get_ipython()
-
+    _ip = get_ipython()
     test_alias_lifecycle()
-    test_alias_args_error()

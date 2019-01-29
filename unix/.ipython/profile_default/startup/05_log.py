@@ -7,13 +7,22 @@ interpreter and prepends a timestamp to commands.
 
 The timestamp is particularly convenient for concurrent instances of IPy.
 
-TODO:
+.. changelog::
+
+    01-13-19
+
+    Changed :func:`ip.magic()` to :func:`ip.run_line_magic()`
+
+.. todo::
 
     - Consider using datetime instead of time. Not pertinent though.
     - Explore both the built-in logging module and IPython logging subclass.
     - Truncate output if it exceeds a certain threshold.
         - Run dir(np) or dir(pd) a couple of times and the logs become
         swamped.
+    - Possibly change that section under the shebang to also include 3 
+    double quotes and in the comment add system info like py version, venv, 
+    conda, any of the 1000000 things you could add.
 
 .. note::
 
@@ -72,8 +81,7 @@ def session_logger(ip):
     notnew = path.exists(filename)
 
     try:
-        ip.magic('logstart -to %s append' % filename)
-        # added -t to get timestamps
+        ip.run_line_magic('logstart', '-to %s append' % filename)
         if notnew:
             ip.logger.log_write(u"# =================================\n")
         else:

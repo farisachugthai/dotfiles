@@ -63,7 +63,6 @@ alias free='free -mt'
 alias echo='echo -e'
 alias head='head -n 30'
 alias tail='tail -n 30'
-alias treea='tree -aI .git'
 
 # termux aliases: {{{1
 # Termux command with odd default of view not send
