@@ -1,5 +1,7 @@
 # Configuration file for jupyter-qtconsole.
 
+# from JupyterWidget import 
+
 #------------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
 #------------------------------------------------------------------------------
@@ -42,13 +44,13 @@
 
 ## Set to display confirmation dialog on exit. You can always use 'exit' or
 #  'quit', to force a direct exit without any confirmation.
-#c.JupyterConsoleApp.confirm_exit = True
+c.JupyterConsoleApp.confirm_exit = False
 
 ## Connect to an already running kernel
 #c.JupyterConsoleApp.existing = ''
 
 ## The name of the default kernel to start.
-#c.JupyterConsoleApp.kernel_name = 'python'
+c.JupyterConsoleApp.kernel_name = 'python3'
 
 ## Path to the ssh key to use for logging in to the ssh server.
 #c.JupyterConsoleApp.sshkey = ''
@@ -94,7 +96,7 @@
 #------------------------------------------------------------------------------
 
 ## Whether to display a banner upon starting the QtConsole.
-#c.JupyterQtConsoleApp.display_banner = True
+c.JupyterQtConsoleApp.display_banner = False
 
 ## Start the console window with the menu bar hidden.
 #c.JupyterQtConsoleApp.hide_menubar = False
@@ -149,11 +151,11 @@
 ## The font family to use for the console. On OSX this defaults to Monaco, on
 #  Windows the default is Consolas with fallback of Courier, and on other
 #  platforms the default is Monospace.
-#c.ConsoleWidget.font_family = ''
+c.ConsoleWidget.font_family = 'Fira Mono'
 
 ## The font size. If unconfigured, Qt will be entrusted with the size of the
 #  font.
-#c.ConsoleWidget.font_size = 0
+c.ConsoleWidget.font_size = 10
 
 ## The type of completer to use. Valid values are:
 #  

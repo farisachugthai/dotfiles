@@ -14,18 +14,13 @@
 (add-hook 'kill-emacs-query-functions
           'custom-prompt-customize-unsaved-options)
 
-;; Run the Emacs server
-(require 'server)
-(unless (server-running-p)
-  (server-start))
-
-;; (setq 'suggest-key-bindings 10) ;; show equivalent keybindings for 10sec. default is 2 but i'm slow
-;; apparently i'm doing something wrong. *shrugs*
+(setq 'suggest-key-bindings 10)
+;; show equivalent keybindings for 10sec. default is 2 but i'm slow
 
 ;; Evil
 ;; -------
 
-(setq evil-want-keybinding nil)  ;; because evil-collection said so:q
+(setq evil-want-keybinding nil)  ;; because evil-collection said so
 (setq evil-want-integration t)
 (setq evil-want-minibuffer t)
 (setq evil-ex-complete-emacs-commands t)

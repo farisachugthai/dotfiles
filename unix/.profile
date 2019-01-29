@@ -26,7 +26,10 @@ fi
 # export SHELL="$_ROOT/bin/env bash"
 export SHELL=/bin/bash
 export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
-export XDG_DATA_DIRS="$_ROOT/local/share:$_ROOT/share"
+# prepend test [ -n $XDG_DATA_HOME ] to this first?? should we add conda or
+# anywhere else that would have a /x/share/ dir?
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
 
 # Ruby: {{{1

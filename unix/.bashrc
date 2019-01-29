@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
-# Vim: set foldlevel=0:
 
 # Don't run if not interactive: {{{1
 case $- in
@@ -104,11 +103,6 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
-
 # Colors: {{{1
 export COLOR_OFF="\[\033[0m\]"
 export YELLOW="\[\033[0;33m\]"
@@ -119,104 +113,6 @@ export YELLOW="\[\033[0;33m\]"
 # export CYAN = '\x1b[36m'
 # export GREEN = '\x1b[32m'
 # export BLUE = '\x1b[34m'
-
-# Prompt: {{{1
-
-force_color_prompt=yes
-
-if [[ -n "$force_color_prompt" ]]; then
-    if [[ -x "/usr/bin/tput" ]] && tput setaf 1 >&/dev/null; then
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
-
-# https://www.unix.com/shell-programming-and-scripting/207507-changing-ps1.html
-# if [ "$color_prompt" = yes ]; then
-# TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\") \
-# [$(if [[ ${EUID} == 0 ]]; then
-# echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h' \
-# else
-# echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h' \
-# fi) \
-# \[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]\[\e[01;33m\]\\$\[\e[0m\] " \
-# else
-#     TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
-# fi
-
-export ARROW='\342\224\224\342\224\200\342\224\200\342\225\274'
-
-if [ "$color_prompt" = yes ]; then
-TMP_PS1="\[\033[0;31m\]\342\224\214\342\224\200\
-\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")\
-[$(if [[ ${EUID} == 0 ]]; then
-    echo '\[\033[01;31m\]root\[\033[01;33m\]@\[\033[01;96m\]\h'
-else
-    echo '\[\033[0;39m\]\u\[\033[01;33m\]@\[\033[01;96m\]\h'
-fi)\
-\[\033[0;31m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;31m\]]\n\[\033[0;31m\]$ARROW $COLOR_OFF\$\[\e[01;33m\]\[\e[0m\] "
-# well that's a little better i guess
-else
-    TMP_PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
-fi
-
-# just noticed this in the venv activate script. i like it!
-# if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT-}" ] ; then
-#     _OLD_VIRTUAL_PS1="$PS1"
-#     if [ "x" != x ] ; then
-#         PS1="$PS1"
-#     else
-#         PS1="(`basename \"$VIRTUAL_ENV\"`) $PS1"
-#     fi
-#     export PS1
-# fi
-
-if [[ -f "$HOME/.bashrc.d/git-prompt.sh" ]]; then
-    . "$HOME/.bashrc.d/git-prompt.sh";
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    export GIT_PS1_SHOWCOLORHINTS=1
-    export GIT_PS1_SHOWSTASHSTATE=1
-    export GIT_PS1_SHOWUPSTREAM="auto"
-    PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$YELLOW`basename $VIRTUAL_ENV`$COLOR_OFF]}" "$TMP_PS1" "[%s]"'
-fi
-
-unset color_prompt force_color_prompt
-tput reset      # because otherwise I end up with a red cursor
-
-# Refactoring Prompt: {{{2
-# CUSTOM BASH COLOR PROMPT
-# 30m - Black
-# 31m - Red
-# 32m - Green
-# 33m - Yellow
-# 34m - Blue
-# 35m - Purple
-# 36m - Cyan
-# 37m - White
-# 0 - Normal
-# 1 - Bold
-prompt() {
-    local BLACK="\[\033[0;30m\]"
-    local BLACKBOLD="\[\033[1;30m\]"
-    local RED="\[\033[0;31m\]"
-    local REDBOLD="\[\033[1;31m\]"
-    local GREEN="\[\033[0;32m\]"
-    local GREENBOLD="\[\033[1;32m\]"
-    local YELLOW="\[\033[0;33m\]"
-    local YELLOWBOLD="\[\033[1;33m\]"
-    local BLUE="\[\033[0;34m\]"
-    local BLUEBOLD="\[\033[1;34m\]"
-    local PURPLE="\[\033[0;35m\]"
-    local PURPLEBOLD="\[\033[1;35m\]"
-    local CYAN="\[\033[0;36m\]"
-    local CYANBOLD="\[\033[1;36m\]"
-    local WHITE="\[\033[0;37m\]"
-    local WHITEBOLD="\[\033[1;37m\]"
-    export PS1="\n$CYAN\T\n$GREENBOLD \u$YELLOWBOLD@$PURPLEBOLD\h\[\033[00m\]:$CYANBOLD[\w]\[\033[00m\] \\$ "
-}
-
-# Intentionally not calling this function
 
 # Vim: {{{1
 set -o vi
@@ -235,13 +131,13 @@ if [[ "$(command -v npm)" ]]; then
 fi
 
 
-# Export nvm if the directory exists
-# if [[ -d "$HOME/.nvm" ]]; then
-#     export NVM_DIR="$HOME/.nvm"
-#     # Load nvm and bash completion
-#     [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
-#     [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
-# fi
+Export nvm if the directory exists
+if [[ -d "$HOME/.nvm" ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    # Load nvm and bash completion
+    [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
+    [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+fi
 
 # Testing out the language servers to see if they'll link up with neovim
 if [[ -d "$HOME/.local/share/nvim/site/node_modules/.bin" ]]; then
@@ -262,12 +158,19 @@ if [[ "$(command -v ag)" ]]; then
     # most simply hide info to make it easier to use with FZF
     export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
 
-    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --preview-window=right:50%:wrap' 
+    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --preview-window=right:50%:wrap'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow $1"
     export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
     # need to do assignments via assign if C-t has a value otherwise skip
 
-    alias Ag='$FZF_DEFAULT_COMMAND | fzf '
+    # Difference between running 'fzf' and C-t is fullscreen or not.
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"
+    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header'"Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview."
+
+    # Doesn't work.
+    Ag() {
+        "$FZF_DEFAULT_COMMAND $@" | fzf -
+    }
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 elif [[ "$(command -v rg)" ]]; then
@@ -282,9 +185,9 @@ elif [[ "$(command -v fd)" ]]; then
     if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
+
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
-fi
 
 # Options for FZF no matter what. Should set only if these vars are unset
 # though because this is gonna clobber.
@@ -293,7 +196,7 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
     export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
 fi
 
-[[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
+# [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 # termux doesnt have xclip or xsel
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "

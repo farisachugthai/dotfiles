@@ -1,20 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Configuration file for ipython.
+"""Configuration file for IPython.
 
-Heavily drawn from documentation at
+Heavily drawn from documentation at ipython_docs_.
 
-.. URL::
-
-    `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
+.. _ipython_docs: `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
 
 In addition to source code found on GitHub.
 
 This module provides  convenience functions, adds typical Linux shell
-commands to `user_ns`, or the global namespace, in addition to Git aliases.
+commands to ``user_ns``, or the global namespace, in addition to Git aliases.
 
-In addition, pygments is directly invoked to ensure comments are clearly visible
-in IPython cells.
+In addition, :mod:`pygments` is directly invoked to ensure comments are
+clearly visible in :mod:`IPython` cells.
 """
 import os
 
@@ -30,7 +28,7 @@ c = get_config()  # noqa
 
 try:
     home = os.path.expanduser("~")
-except OSError as e:
+except OSError:
     pass
 
 # ----------------------------------------------------------------------------
@@ -161,16 +159,18 @@ c.BaseIPythonApplication.verbose_crash = True
 # ----------------------------------------------------------------------------
 
 # Whether to display a banner upon starting IPython.
-c.TerminalIPythonApp.display_banner = True
+c.TerminalIPythonApp.display_banner = False
 
 # If a command or file is given via the command-line, e.g. 'ipython foo.py',
 #  start an interactive shell after executing the file or command.
-# c.TerminalIPythonApp.force_interact = False
+c.TerminalIPythonApp.force_interact = False
 
 # Class to use to instantiate the TerminalInteractiveShell object. Useful for
 #  custom Frontends
 # shell_cls = 'IPython.terminal.interactiveshell.TerminalInteractiveShell'
 # c.TerminalIPythonApp.interactive_shell_class = shell_cls
+# ---
+# Damn that seems like some real useful code.
 
 # Start IPython quickly by skipping the loading of config files.
 # c.TerminalIPythonApp.quick = False
@@ -211,9 +211,7 @@ except Exception:
 c.InteractiveShell.automagic = True
 
 # The part of the banner to be printed before the profile
-# c.InteractiveShell.banner1 = "Python 3.6.4 (default, Jan  7 2018, 03:52:16)
-# \nType 'copyright', 'credits' or 'license' for more information\nIPython
-# 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
+ c.InteractiveShell.banner1 = ""
 
 # Let's try rewriting the banner.
 # check IPython/core/usage.py
@@ -254,10 +252,7 @@ c.InteractiveShell.colors = 'Neutral'
 
 # If True, anything that would be passed to the pager will be displayed as
 #  regular output instead.
-try:
-    c.InteractiveShell.display_page = True
-except ImportError:
-    c.InteractiveShell.display_page = False
+c.InteractiveShell.display_page = True
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
 # c.InteractiveShell.enable_html_pager = False
@@ -334,7 +329,7 @@ c.TerminalInteractiveShell.confirm_exit = False
 c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
 # Shortcut style to use at the prompt. 'vi' or 'emacs'.
-c.TerminalInteractiveShell.editing_mode = 'vi'
+c.TerminalInteractiveShell.editing_mode = 'emacs'
 
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
 c.TerminalInteractiveShell.editor = 'nvim'

@@ -1,6 +1,7 @@
 # Aliases for a more functional bash environment
 # Maintainer: Faris Chugthai
 
+# cd aliases: {{{1
 # Make navigation easier
 alias ..="cd .."
 alias ...="cd ../.."
@@ -13,6 +14,7 @@ alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
 alias cd......="cd ../../../../.."
 
+# ls aliases: {{{1
 # some more ls aliases. pulled a few from ipython so not all were
 # written by me. as a result let me quick go over the flags
 # -A all except implied . and ..
@@ -31,10 +33,12 @@ alias ls='ls -F'
 alias lt='ls -Altcr'
 alias lx='ls -Fo | grep ^-..x'
 
+# alert alias: {{{1
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+# coreutil aliases: {{{1
 # Let's not clobber other files as we go. Bash's namespace? Clobber everything
 # Please don't turn the p flag for rmdir again.
 # You're lucky parent dirs weren't empty
@@ -61,12 +65,14 @@ alias head='head -n 30'
 alias tail='tail -n 30'
 alias treea='tree -aI .git'
 
+# termux aliases: {{{1
 # Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
 # termux-open gets an option for a default file handler! Dropbox integration
 alias termux-open="termux-open --send"
 
-# Git aliases. for complicated git log calls funcs are better
+# Git aliases. {{{1
+# for complicated git log calls funcs are better
 alias g='git status -sb'
 alias ga='git add'
 alias gb='git branch'
