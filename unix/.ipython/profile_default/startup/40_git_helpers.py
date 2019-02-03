@@ -4,7 +4,6 @@
 
 :File: 40_git_helpers.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
 :Github: `https://github.com/farisachugthai`_
 
 .. todo::
@@ -71,6 +70,7 @@ if __name__ == "__main__":
     args = sys.argv[:]
 
     # git_touch(args)
+
     # The above is basically a placeholder. This should be run interactively
     # and will expose commands as necessary and give useful defaults and
     # prompts that guide users in the right direction to running a correct

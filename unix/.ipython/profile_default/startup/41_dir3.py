@@ -79,6 +79,10 @@ def dir3(args):
     del ns
 
 
-if __name__ == "__main__":
+def _interactive():
+    """Define a private method for interactive use instead of ifmain block."""
     args = sys.argv[:]
-    dir3(args)
+    if len(args) > 2:
+        dir3(args)
+    else:
+        sys.exit('Usage: TODO')

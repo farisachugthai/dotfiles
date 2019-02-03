@@ -1,5 +1,47 @@
 ### MATPLOTLIBRC FORMAT
 
+# Amusingly enough this is from the official Matplotlib GitHub repo.
+# And their link is dead btw, so check this one out:
+# :URL: https://web.archive.org/web/20111215111010/http://www.huyng.com/archives/sane-color-scheme-for-matplotlib/691/
+# From http://www.huyng.com/posts/sane-color-scheme-for-matplotlib/
+
+patch.linewidth: 0.5
+patch.facecolor: 348ABD  # blue
+patch.edgecolor: EEEEEE
+patch.antialiased: True
+
+font.size: 10.0
+
+axes.facecolor: E5E5E5
+axes.edgecolor: white
+axes.linewidth: 1
+axes.grid: True
+axes.titlesize: x-large
+axes.labelsize: large
+axes.labelcolor: 555555
+axes.axisbelow: True       # grid/ticks are below elements (e.g., lines, text)
+
+axes.prop_cycle: cycler('color', ['E24A33', '348ABD', '988ED5', '777777', 'FBC15E', '8EBA42', 'FFB5B8'])
+                   # E24A33 : red
+                   # 348ABD : blue
+                   # 988ED5 : purple
+                   # 777777 : gray
+                   # FBC15E : yellow
+                   # 8EBA42 : green
+                   # FFB5B8 : pink
+
+xtick.color: 555555
+xtick.direction: out
+
+ytick.color: 555555
+ytick.direction: out
+
+grid.color: white
+grid.linestyle: -    # solid line
+
+figure.facecolor: white
+figure.edgecolor: 0.50
+
 # This is a sample matplotlib configuration file - you can find a copy
 # of it on your system in
 # site-packages/matplotlib/mpl-data/matplotlibrc.  If you edit it
@@ -326,7 +368,7 @@ backend      : qt5agg
 #axes.prop_cycle    : cycler('color', ['1f77b4', 'ff7f0e', '2ca02c', 'd62728', '9467bd', '8c564b', 'e377c2', '7f7f7f', 'bcbd22', '17becf'])
                       # color cycle for plot lines  as list of string
                       # colorspecs: single letter, long name, or web-style hex
-					  # Note the use of string escapes here ('1f77b4', instead of 1f77b4)
+                      # Note the use of string escapes here ('1f77b4', instead of 1f77b4)
                       # as opposed to the rest of this file.
 #axes.autolimit_mode : data # How to scale axes limits to the data.
                             # Use "data" to use data limits, plus some margin
@@ -532,8 +574,8 @@ backend      : qt5agg
                                 # leave empty to always use current working directory
 #savefig.transparent : False    # setting that controls whether figures are saved with a
                                 # transparent background by default
-#savefig.frameon : True			# enable frame of figure when saving
-#savefig.orientation : portrait	# Orientation of saved figure
+#savefig.frameon : True         # enable frame of figure when saving
+#savefig.orientation : portrait # Orientation of saved figure
 
 ## tk backend params
 #tk.window_focus   : False    # Maintain shell focus for TkAgg
