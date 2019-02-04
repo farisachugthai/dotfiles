@@ -47,7 +47,7 @@ Help on module IPython.utils.dir2 in IPython.utils:
 
         `/usr/lib/python3.7/site-packages/IPython/utils/dir2.py`_
 
-2018-09-06
+**2018-09-06**
 
 .. note::
 
@@ -58,13 +58,6 @@ Help on module IPython.utils.dir2 in IPython.utils:
 
     You have access to ip.cleanup() after you import get_ipython
     Well it embeds ipython. But it has to import other modules. Hm.
-    However we're functional so take that to mean what you want! :D
-
-.. todo::
-
-    pynvim is the new module to import for neovim. However it only exists
-    for python3.6 >. So we're gonna need to do a version check, then try
-    to import pynvim for sys.version_info > (3, 5) ugh
 """
 from importlib import import_module
 import os
@@ -91,10 +84,11 @@ def import_nvim(mod):
     Utilizes :func:`import_module` from :mod:`importlib`.
 
     :param mod: A module to import.
+    :returns: None
     """
     try:
         import_module(mod)
-    except ImportError as e:
+    except ImportError:
         print("************************************************************")
         print("{} import failed. Only ignore this if you plan on going"
               " the entire session without using %edit".format(mod))

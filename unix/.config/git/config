@@ -5,15 +5,20 @@
     email = farischugthai@gmail.com
     name = farisachugthai
 
+[branch]
+    autosetupmerge = true
+
+[branch.master.mergeOptions]
+    ff=false
+
 [core]
     autocrlf = input
     editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
+    filemode = false
+    logallrefupdates = true
     pager = less -rMFXKL
     repositoryformatversion = 0
-    filemode = false
-    bare = false
-    logallrefupdates = true
 
 [color]
     branch = always
@@ -21,6 +26,12 @@
     interactive = auto
     pager = true
     ui = true
+
+[credential]
+    helper = cache --timeout=86400
+
+[credential "https://www.github.comm"]
+    username = farisachugthai
 
 # Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
@@ -37,12 +48,16 @@
     cmd = nvim -d $LOCAL $REMOTE
     trustexitcode = true
 
+[help]
+    autocorrect = 1
+
 [merge]
     autoStash
     color = auto
     conflictstyle = diff3
     mergestyle = diff3
     prompt = false
+    renormalize
     strategy-option = resolve
     tool = nvim-merge
 
@@ -57,15 +72,11 @@
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
 
-
 [push]
     default = simple
 
 [sequence]
     editor = nvim
-
-[branch]
-    autosetupmerge = true
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
@@ -97,21 +108,9 @@
     s = status -sb
     r = remote -v
 
-[help]
-    autocorrect = 1
-
-[credential]
-    helper = cache --timeout=86400
-
-[credential "https://www.github.comm"]
-    username = farisachugthai
-
-[web]
-    browser = firefox
-
 [rebase]
-    stat = True
     autoStash = True
+    stat = True
 
 [status]
     showStash = True
@@ -120,12 +119,12 @@
 [pull]
     rebase = True
 
-[github]
-    user = farisachugthai
-    insteadOf = github:
+[url "git://github.com"]
     insteadOf = g:
+    insteadOf = https://github.com
+    name = farisachugthai
 
-[url "git@gist.github.com:"]
+[url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
 

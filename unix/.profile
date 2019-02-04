@@ -8,6 +8,7 @@
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Platform_Dependant: {{{1
+
 if [[ -n "$PREFIX" ]]; then
     export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
     export MANPATH="$PREFIX/share/man:$HOME/.fzf/man"
@@ -22,10 +23,7 @@ else
     _ROOT="/usr"
 fi
 
-# apparently ipython really doesn't like this
-# export SHELL="$_ROOT/bin/env bash"
 export SHELL=/bin/bash
-export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
 # prepend test [ -n $XDG_DATA_HOME ] to this first?? should we add conda or
 # anywhere else that would have a /x/share/ dir?
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -73,6 +71,15 @@ if [[ -n "$(command -v yarn)" ]]; then
         # shellcheck source=./.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash disable=1091
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
+
+    if [[ -d "$HOME/.yarn/bin" ]]; then
+        export PATH="$PATH:$HOME/.yarn/bin"
+    fi
+    
+    if [[ -d "$HOME/.config/yarn/global/node_modules/.bin" ]]; then
+        export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
+    fi
+
 fi
 
 # Lisp: {{{1

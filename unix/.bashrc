@@ -28,7 +28,7 @@ unset __conda_setup
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-if [[ "$(command -v pip)" ]]; then
+if [[ -n "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
 fi
 
@@ -67,10 +67,12 @@ shopt -s histappend
 # Check the window size after each command and, if necessary,
 # Update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-# TODO: Figure out the correct invocation of this directive
-# *shellcheck disable SC2128*
+# Disabled because BASH_VERSINFO isn't even an array it's the 0th element
+# of BASH_VERSION and a simple int
+# shellcheck disable=SC2128
 if [[ $BASH_VERSINFO -gt 3 ]]; then
     shopt -s globstar
 fi
@@ -103,16 +105,13 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# Colors: {{{1
-export COLOR_OFF="\[\033[0m\]"
-export YELLOW="\[\033[0;33m\]"
+# GBT:
+if [[ -n "$(command -v gbt)" ]]; then
+    export PS1=$(gbt $?)
 
-# export BRIGHT = "\x1b[1m"
-# export BLACK = '\x1b[30m'
-# export RED = '\x1b[31m'
-# export CYAN = '\x1b[36m'
-# export GREEN = '\x1b[32m'
-# export BLUE = '\x1b[34m'
+    export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
+    export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+fi
 
 # Vim: {{{1
 set -o vi
@@ -126,12 +125,12 @@ export EDITOR="$VISUAL"
 # JavaScript: {{{1
 
 # Source npm completion if its installed.
-if [[ "$(command -v npm)" ]]; then
+if [[ -n "$(command -v npm)" ]]; then
+    # shellcheck source=/home/faris/.bashrc.d/npm-completion.bash
     source ~/.bashrc.d/npm-completion.bash
 fi
 
-
-Export nvm if the directory exists
+# Export nvm if the directory exists
 if [[ -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
     # Load nvm and bash completion
@@ -158,7 +157,9 @@ if [[ "$(command -v ag)" ]]; then
     # most simply hide info to make it easier to use with FZF
     export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
 
-    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --history-size=5000 --reverse --preview "head -100 {}" --preview-window=right:50%:wrap'
+    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border  --preview "head -100 {}" --ansi'
+
+    # Difference between running 'fzf' and C-t is fullscreen or not.
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow $1"
     export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
     # need to do assignments via assign if C-t has a value otherwise skip
@@ -189,32 +190,32 @@ elif [[ "$(command -v fd)" ]]; then
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
 
-# Options for FZF no matter what. Should set only if these vars are unset
-# though because this is gonna clobber.
-if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
-    echo "opts empty"
-    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --history-size=5000 --layout=reverse'
+    # Options for FZF no matter what.
+    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border'
 fi
+
 
 # [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 # termux doesnt have xclip or xsel
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
-command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aI .git -C {} | head -200'"
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200'"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 
-_fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
-}
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
-}
+if [[ -n "$(command -v fd)" ]]; then
+    _fzf_compgen_path() {
+        fd --hidden --follow --exclude ".git" . "$1"
+    }
+    # Use fd to generate the list for directory completion
+    _fzf_compgen_dir() {
+        fd --type d --hidden --follow --exclude ".git" . "$1"
+    }
+fi
 
 complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
