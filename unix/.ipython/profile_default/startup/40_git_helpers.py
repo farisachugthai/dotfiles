@@ -41,8 +41,6 @@ def git_touch(args):
         fname = files[1:]
     elif len(args) < 2:
         sys.exit("No file provided. Exiting.")
-    if len(sys.argv) < 2:
-        sys.exit()
     else:
         fname = args[1]
         subprocess.run(['git', 'add', fname])

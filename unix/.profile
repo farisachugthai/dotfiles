@@ -24,9 +24,7 @@ export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
 
-if [[ -f "$_ROOT/share/bash_completion" ]] && source "$_ROOT/share/bash_completion"; then
-    continue
-fi
+test [[ -f "$_ROOT/share/bash_completion" ]] && source "$_ROOT/share/bash_completion"
 
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
@@ -51,6 +49,7 @@ fi
 if [[ -d "$HOME/.rvm" ]]; then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
     export PATH="$PATH:$HOME/.rvm/bin"
+    # shellcheck source=/home/faris/.rvm/scripts/rvm disable=1091
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 fi
 
@@ -74,8 +73,18 @@ if [[ -n "$(command -v yarn)" ]]; then
     export PATH="$PATH:$YARNPATH"
 
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
+        # shellcheck source=./.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash disable=1091
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
+
+    if [[ -d "$HOME/.yarn/bin" ]]; then
+        export PATH="$PATH:$HOME/.yarn/bin"
+    fi
+
+    if [[ -d "$HOME/.config/yarn/global/node_modules/.bin" ]]; then
+        export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
+    fi
+
 fi
 
 # Lisp: {{{1

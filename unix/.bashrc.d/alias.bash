@@ -1,5 +1,8 @@
-# Aliases for a more functional bash environment
+#!/usr/bin/env bash
 # Maintainer: Faris Chugthai
+
+# set -euo pipefail
+# Aliases for a more functional bash environment
 
 # cd aliases: {{{1
 # Make navigation easier
@@ -56,7 +59,7 @@ alias path='echo -e ${PATH//:/\\n}'
 # probably shouldn't clobber the namespace though, there are conflicting options
 # for du so i'll change to du shallow
 alias dus='du -d 1 -h --all'
-alias dU='du -d 1 -h --apparent-size --all | sort -rh'
+alias dU='du -d 1 -h --apparent-size --all | sort -h | tail -n 10'
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'

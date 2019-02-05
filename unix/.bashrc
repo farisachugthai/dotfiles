@@ -28,7 +28,7 @@ unset __conda_setup
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-if [[ "$(command -v pip)" ]]; then
+if [[ -n "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
 fi
 
@@ -67,10 +67,12 @@ shopt -s histappend
 # Check the window size after each command and, if necessary,
 # Update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-# TODO: Figure out the correct invocation of this directive
-# *shellcheck disable SC2128*
+# Disabled because BASH_VERSINFO isn't even an array it's the 0th element
+# of BASH_VERSION and a simple int
+# shellcheck disable=SC2128
 if [[ $BASH_VERSINFO -gt 3 ]]; then
     shopt -s globstar
 fi
@@ -104,10 +106,12 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
 fi
 
 # GBT:
-export PS1=$(gbt $?)
+if [[ -n "$(command -v gbt)" ]]; then
+    export PS1=$(gbt $?)
 
-export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
-export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+    export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
+    export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+fi
 
 # Vim: {{{1
 set -o vi
@@ -121,7 +125,8 @@ export EDITOR="$VISUAL"
 # JavaScript: {{{1
 
 # Source npm completion if its installed.
-if [[ "$(command -v npm)" ]]; then
+if [[ -n "$(command -v npm)" ]]; then
+    # shellcheck source=/home/faris/.bashrc.d/npm-completion.bash
     source ~/.bashrc.d/npm-completion.bash
 fi
 
@@ -189,22 +194,24 @@ fi
 # [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 # termux doesnt have xclip or xsel
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview.' --history-size=5000 --cycle"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
-command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF -I.git {} | head -200'"
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200'"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 
-_fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
-}
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
-}
+if [[ -n "$(command -v fd)" ]]; then
+    _fzf_compgen_path() {
+        fd --hidden --follow --exclude ".git" . "$1"
+    }
+    # Use fd to generate the list for directory completion
+    _fzf_compgen_dir() {
+        fd --type d --hidden --follow --exclude ".git" . "$1"
+    }
+fi
 
 complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree

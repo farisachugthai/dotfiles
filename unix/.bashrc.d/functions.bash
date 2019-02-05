@@ -74,32 +74,6 @@ infovi () {
 # byobu_prompt_status: From byobu: {{{1
 byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
 
-# FZF: {{{1
-
-fzf-down() {
-  fzf --height 50% "$@" --border
-}
-
-# commits in a repo
-fzf_commits() {
-  git log --pretty=oneline --abbrev-commit | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs git show --color=always' | cut -f 1 -d " "
-}
-
-# for existing man pages
-fzf_apropos() {
-  apropos '' | fzf --preview-window=right:50% --preview 'echo {} | cut -f 1 -d " " | xargs man' | cut -f 1 -d " "
-}
-
-# view EVERYTHING set in your env
-fzf_env() {
-    set | tr = "\t" | fzf | cut -f 1
-}
-
-fzf_nvim() {
-  local file
-  file=$(fzf --query="$1" --select-1 --exit-0)
-  [ -n "$file" ] && ${EDITOR:-nvim} "$file"
-}
 
 # Dropbox: {{{1
 tldrbox_cheat() {
@@ -156,4 +130,4 @@ tre(){
     tree -a -I '.git' -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F
 }
 
-# TODO: make a function `gm` that requires $1 to be set 
+# TODO: make a function `gm` that requires $1 to be set

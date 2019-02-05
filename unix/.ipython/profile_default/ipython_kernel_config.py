@@ -341,7 +341,7 @@ c.InteractiveShell.history_load_length = 10000
 # c.InteractiveShell.show_rewritten_input = True
 
 # Enables rich html representation of docstrings. (This requires the docrepr
-# moduloe)
+# module).
 c.InteractiveShell.sphinxify_docstring = False
 
 c.InteractiveShell.wildcards_case_sensitive = False

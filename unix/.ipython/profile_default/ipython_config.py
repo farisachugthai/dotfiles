@@ -9,10 +9,11 @@ Heavily drawn from documentation at ipython_docs_.
 In addition to source code found on GitHub.
 
 This module provides convenience functions, adds typical Linux shell
-commands to ``user_ns``, or the global namespace, in addition to Git aliases.
+commands to ``user_ns``, or the global namespace, in addition to
+Git aliases.
 
-In addition, :mod:`pygments` is directly invoked to modify the colorscheme
-to ensure that comments are clearly visible in IPython cells.
+In addition, :mod:`pygments` is directly invoked to ensure comments are
+clearly visible in :mod:`IPython` cells.
 """
 import logging
 import os
@@ -217,8 +218,6 @@ c.InteractiveShell.automagic = True
 
 # The part of the banner to be printed before the profile
 c.InteractiveShell.banner1 = ""
-# \nType 'copyright', 'credits' or 'license' for more information\nIPython
-# 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 # Let's try rewriting the banner.
 # check IPython/core/usage.py
@@ -282,7 +281,7 @@ c.InteractiveShell.history_load_length = 10000
 
 # Start logging to the default log file in overwrite mode. Use `logappend` to
 #  specify a log file to **append** logs to.
-#c.InteractiveShell.logstart = False
+# c.InteractiveShell.logstart = False
 
 # NEW CODE WHOO
 # Select the loop runner that will be used to execute top-level asynchronous
@@ -317,9 +316,9 @@ c.InteractiveShell.sphinxify_docstring = False
 # try:
 #     importlib.import_module("docrepr")  # noqa E402
 # except ImportError:
-#     c.InteractiveShell.sphinxify_docstring = False
+#   c.InteractiveShell.sphinxify_docstring = False
 # else:
-#    c.InteractiveShell.sphinxify_docstring = True
+#   c.InteractiveShell.sphinxify_docstring = True
 
 c.InteractiveShell.wildcards_case_sensitive = False
 
@@ -365,11 +364,6 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # Highlight matching brackets.
 # c.TerminalInteractiveShell.highlight_matching_brackets = True
 
-###
-# Reverted and now using `./startup/gruvbox_style.py`_
-###
-
-# 01-27-19: Doesn't work.
 # The name or class of a Pygments style to use for syntax highlighting.
 # To see available styles, run `pygmentize -L styles`.
 
@@ -547,6 +541,7 @@ c.HistoryManager.db_log_output = True
 #                          p.breakable()
 #                      p.pretty(field)
 #                  p.end_group(7, '])')
+
 
 # c.PlainTextFormatter.float_precision = ''
 
