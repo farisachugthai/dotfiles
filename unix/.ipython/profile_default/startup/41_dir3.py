@@ -1,12 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Expand on the functions provided by dir()
+"""Expand on the functions provided by :func:`dir()`
 
-dir() is a phenomenal function for exploring both the global namespace and
-the exported methods of an object.
+:File: 41_dir3.py
+:Author: Faris Chugthai
+:Email: farischugthai@gmail.com
+:Github: https://github.com/farisachugthai
 
-However it can get incredibly messy, especially when ipython displays the keys
-for every line that has been run in the session. I.E.:
+Background
+-----------
+
+:func:`dir()` is a phenomenal function for exploring both the global namespace
+and the exported methods of an object.
+
+However it can get incredibly messy, especially when IPython displays the
+placeholder variables for every cell that has been run in the session. I.E.:
+
+.. literal::
+
     _i
     _ii
     _iii
@@ -14,18 +25,21 @@ for every line that has been run in the session. I.E.:
     _29
     ...
 
-This causes an incredibly long output that's difficult to parse quickly. This
-function attempts to avoid that.
+This causes an incredibly long output that's difficult to parse quickly at
+best, and at worst, the output truncates and all valuable information is hidden.
+This function attempts to avoid that by hiding all private and/or mangled 
+methods I.E. ones that begin with the characters ``_`` or ``__``.
 
-File: 41_dir3.py
-Author: Faris Chugthai
-Email: farischugthai@gmail.com
-Github: https://github.com/farisachugthai
+It also takes inspiration from :ref:`IPython.utils.dir2.dir2()`.
 
-Attributes:
+
+Attributes
+-----------
 
     ip (InteractiveShell): A global object representing the active IPython
-    session. Contains varying packages as well as the current global namespace.
+                           session. Contains varying packages as well as the
+                           current global namespace. Doesn't need to be defined
+                           in advance during an interactive session.
 
 .. code-block:: rst
 
@@ -36,17 +50,39 @@ Attributes:
 
 .. todo::
 
-    Did I do the doctest thing write? How you can use ellipses to ensure
-    a doctest doesn't fail because of something that'll always vary at runtime?
-
+    - Show some example usage.
+    - Should this function import or in any way be based off of dir2 via import?
 """
+import sys
 
 
-def dir3():
-    """Filter some of dir's output."""
-    ns = ip.user_global_ns.keys()
+def dir3(args):
+    """Filter some of dir's output.
+    
+    Parameters
+    ----------
+    args (str): The object to inspect
+
+    Returns
+    --------
+    None
+
+    .. note::
+
+        Should it return the filtered output to the caller?
+    """
+    ns = ip.user_global_ns.keys()  # noqa F821
     for i in ns:
         if not i.startswith('_'):
             print(i)
 
     del ns
+
+
+def _interactive():
+    """Define a private method for interactive use instead of ifmain block."""
+    args = sys.argv[:]
+    if len(args) > 2:
+        dir3(args)
+    else:
+        sys.exit('Usage: TODO')

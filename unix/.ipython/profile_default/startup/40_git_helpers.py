@@ -4,21 +4,8 @@
 
 :File: 40_git_helpers.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
 :Github: `https://github.com/farisachugthai`_
 
-Attributes:
------------
-
-    module_level_variables (type): Explanation and give an inline docstring
-    immediately afterwards if possible
-
-Example:
---------
-
-Any example of how to use this module goes here:: sh
-
-    $ python exampleofrst.py
 
 .. todo::
 
@@ -35,7 +22,21 @@ import sys
 
 
 def git_touch(args):
-    """Convenience function that creates a file and git add's it"""
+    """Convenience function that creates a file and git add's it.
+
+    Parameters
+    -----------
+    args : str (path-like object)
+        Path to a file that's needs to be staged and added to the Git index.
+
+    Returns
+    --------
+    None.
+
+    Examples
+    ---------
+    TODO
+    """
     if len(args) > 2:
         files = args.split()
         fname = files[1:]
@@ -47,7 +48,7 @@ def git_touch(args):
 
 
 def get_git_branch():
-    """Get the symbolic name for the current git branch"""
+    """Get the symbolic name for the current git branch."""
     cmd = "git rev-parse --abbrev-ref HEAD".split()
     try:
         return subprocess.check_output(cmd, stderr=subprocess.DEVNULL)

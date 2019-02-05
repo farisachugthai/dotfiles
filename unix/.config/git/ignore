@@ -46,10 +46,6 @@ build/
 # KDE directory settings
 .directory
 
-# PyCharm
-.idea/
-
-# From:
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
@@ -111,6 +107,12 @@ cscope.po.out
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# JavaScript
+# ===========
+*yarn.lock
+.ntvs_analysis.dat
+*node_modules/*
 
 # Visual Studio ran away with this one.
 ## Ignore Visual Studio temporary files, build results, and
@@ -324,7 +326,6 @@ _pkginfo.txt
 !*.[Cc]ache/
 
 # Others
-# ClientBin/
 #~$*
 #*~
 *.dbmdl
@@ -371,10 +372,6 @@ FakesAssemblies/
 
 # GhostDoc plugin setting file
 *.GhostDoc.xml
-
-# Node.js Tools for Visual Studio
-.ntvs_analysis.dat
-*node_modules/*
 
 # Visual Studio 6 build log
 *.plg

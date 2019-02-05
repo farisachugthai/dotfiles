@@ -1,3 +1,8 @@
+-- rc.lua
+-- Jan 23, 2019:
+-- Just wanted to point out that if you right click a tag, you can have
+-- more than 1 open at a time like what!
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
