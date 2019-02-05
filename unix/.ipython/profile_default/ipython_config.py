@@ -9,7 +9,8 @@ Heavily drawn from documentation at ipython_docs_.
 In addition to source code found on GitHub.
 
 This module provides convenience functions, adds typical Linux shell
-commands to ``user_ns``, or the global namespace, in addition to Git aliases.
+commands to ``user_ns``, or the global namespace, in addition to
+Git aliases.
 
 In addition, :mod:`pygments` is directly invoked to ensure comments are
 clearly visible in :mod:`IPython` cells.
@@ -281,6 +282,11 @@ c.InteractiveShell.history_load_length = 10000
 # Start logging to the default log file in overwrite mode. Use `logappend` to
 #  specify a log file to **append** logs to.
 # c.InteractiveShell.logstart = False
+
+# NEW CODE WHOO
+# Select the loop runner that will be used to execute top-level asynchronous
+# code
+# c.InteractiveShell.loop_runner = 'IPython.core.interactiveshell._asyncio_runner'
 
 # c.InteractiveShell.object_info_string_level = 0
 

@@ -155,14 +155,11 @@ if [[ "$(command -v ag)" ]]; then
 
     # Make the default the most general. Even though these are a lot of options
     # most simply hide info to make it easier to use with FZF
-    export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
 
-    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border  --preview "head -100 {}" --ansi'
+    # Can't get it to work without -l though so only filename search.
+    export FZF_DEFAULT_COMMAND='ag .'
 
-    # Difference between running 'fzf' and C-t is fullscreen or not.
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow $1"
-    export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
-    # need to do assignments via assign if C-t has a value otherwise skip
+    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --preview "head -100 {}" --ansi'
 
     # Difference between running 'fzf' and C-t is fullscreen or not.
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"

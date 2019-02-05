@@ -14,13 +14,19 @@
 (add-hook 'kill-emacs-query-functions
           'custom-prompt-customize-unsaved-options)
 
-(setq 'suggest-key-bindings 10)
-;; show equivalent keybindings for 10sec. default is 2 but i'm slow
+;; Run the Emacs server
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
+;; (setq 'suggest-key-bindings 10) ;; show equivalent keybindings for 10sec. default is 2 but i'm slow
+;; apparently i'm doing something wrong. *shrugs*
 
 ;; Evil
-;; -------
+;;------
+(require 'goto-chg)
 
-(setq evil-want-keybinding nil)  ;; because evil-collection said so
+(setq evil-want-keybinding nil)  ;; because evil-collection said so:q
 (setq evil-want-integration t)
 (setq evil-want-minibuffer t)
 (setq evil-ex-complete-emacs-commands t)
@@ -29,6 +35,7 @@
 (evil-mode t)
 
 (add-to-list 'load-path "~/.emacs.d/evil")
+(setq evil-ex-complete-emacs-commands t)
 
 ;; Evil requires undo-tree. Don't know where i declare that.
 (require 'undo-tree)
@@ -57,9 +64,12 @@ setq (
 (require 'goto-chg)
 (global-set-key [(control ?.)] 'goto-last-change) (global-set-key [(control ?,)] 'goto-last-change-reverse)
 
-
 (require 'evil-collection)
 
+(when (require 'evil-collection nil t)
+  (evil-collection-init))
+
+(setq evil-collection-setup-minibuffer t)  ; vim keybindings even in minibuffers
 
 (setq evil-magit-state 'motion)
 ;; do i need an evil-magit init func call
@@ -73,15 +83,14 @@ setq (
 ;; PYTHON CONFIGURATION
 ;; --------------------------------------
 
-(elpy-enable)
+;; Python
 
-;; use flycheck not flymake with elpy
-;; (when (require 'flycheck nil t)
-;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
+(require 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-mode)
+
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
 (add-hook 'python-mode-hook 'jedi:setup)
-
 (setq jedi:complete-on-dot t)                 ; optional
 
 (setq python-shell-interpreter "ipython"
@@ -90,6 +99,8 @@ setq (
 
 ;; Org
 ;; -----
+
+(require 'org-evil)
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -100,8 +111,7 @@ setq (
 
                                         ; (setq 'org-startup-indented t)
 
-                                        ;(setq 'org-catch-invisible-edits t)
-
+;; (setq 'org-catch-invisible edits t)
 ;; Hint: This is the main list in lisp/init-git.el
                                         ; (when (maybe-require-package 'magit)
                                         ;   (setq-default magit-diff-refine-hunk t)
@@ -124,9 +134,12 @@ setq (
                                         ;   (after-load 'vc
                                         ;     (define-key vc-prefix-map (kbd "l") 'sanityinc/magit-or-vc-log-file)))
 
-(require 'org-evil)
+;; Viper
+;; ------
+
+(setq viper-inhibit-startup-message 't)
+(setq viper-expert-level '1)
 
 
-(provide init-local)
-
-;;; init-local.el ends here
+(provide 'init-local)
+;; init-local.el ends here

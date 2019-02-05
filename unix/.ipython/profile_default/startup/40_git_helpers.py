@@ -6,7 +6,6 @@
 :Author: Faris Chugthai
 :Github: `https://github.com/farisachugthai`_
 
-
 .. todo::
 
     There is a gitpython module. We could try to import that and then work

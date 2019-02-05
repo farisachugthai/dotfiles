@@ -155,7 +155,7 @@ spaces_around_default_or_named_assign=False
 spaces_around_power_operator=False
 
 # The number of spaces required before a trailing comment.
-spaces_before_comment=1
+spaces_before_comment=2
 
 # Insert a space between the ending comma and closing bracket of a list,
 # etc.
