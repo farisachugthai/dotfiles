@@ -10,25 +10,30 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # Platform_Dependant: {{{1
 
 if [[ -n "$PREFIX" ]]; then
-    export XDG_CONFIG_DIRS="$PREFIX/etc/xdg"
-    export MANPATH="$PREFIX/share/man:$HOME/.fzf/man"
-else
-    export BROWSER="firefox"
-    export XDG_CONFIG_DIRS="/etc/xdg:/usr/share/xsessions"
-fi
-
-if [[ -n "$PREFIX" ]]; then
     _ROOT="$PREFIX"
 else
     _ROOT="/usr"
 fi
 
-export SHELL=/bin/bash
-# prepend test [ -n $XDG_DATA_HOME ] to this first?? should we add conda or
-# anywhere else that would have a /x/share/ dir?
+export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
+export PATH="$_ROOT/local/bin/:$PATH"
+
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
-export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
+
+test [[ -f "$_ROOT/share/bash_completion" ]] && source "$_ROOT/share/bash_completion"
+
+if [[ -n "$PREFIX" ]]; then
+    export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
+    export SHELL="$PREFIX/bin/bash"
+else
+    export BROWSER="firefox"
+    export SHELL=/bin/bash
+    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME/etc/xdg:/usr/share/xsessions"
+fi
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -75,7 +80,7 @@ if [[ -n "$(command -v yarn)" ]]; then
     if [[ -d "$HOME/.yarn/bin" ]]; then
         export PATH="$PATH:$HOME/.yarn/bin"
     fi
-    
+
     if [[ -d "$HOME/.config/yarn/global/node_modules/.bin" ]]; then
         export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
     fi
@@ -96,9 +101,6 @@ fi
 export PAGER="less -JRKML"
 
 export COLORTERM="truecolor"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -140,24 +142,15 @@ export CURL_HOME="$HOME/.config/curl/curlrc"
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
 # Sourced Files: {{{1
-# Unfortunately this only gets called in an interactive session tmux is reading
-# .profile, but most shells don't usually read this file in. As a result this
-# may have to move to bashrc.
-# if [[ -z "$TMUX" ]]; then
-    # tmux new
-# else
-    # hoping that makes an array and by not specifying an index i only pick the 1st
-    # tmux attach -t "$(tmux ls)"
-# fi
-# alternatively i think what we could do is something to the effect of: pseudocode
-# try: tmux new -s startup; except ServerExists; tmux attach -t startup or tmux new
+
+# Setup completions correctly.
 
 # Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
 
-if [[ "$(command -v bat)" ]]; then
+if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
     export BAT_PAGER=''
 fi

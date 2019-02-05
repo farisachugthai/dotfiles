@@ -118,6 +118,7 @@
 
 [pull]
     rebase = True
+    renormalize
 
 [url "git://github.com"]
     insteadOf = g:

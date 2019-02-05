@@ -194,7 +194,6 @@ else
     export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border'
 fi
 
-
 # [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 # termux doesnt have xclip or xsel
