@@ -2,13 +2,13 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
-# Don't run if not interactive: 
+# Don't run if not interactive: {{{1
 case $- in
     *i*);;
     *) return 0;;
 esac
 
-# Python: 
+# Python: {{{1
 # Put python first because we need conda initialized right away
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
@@ -28,13 +28,13 @@ unset __conda_setup
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-if [[ "$(command -v pip)" ]]; then
+if [[ -n "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
 fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
-# gcloud: 
+# gcloud: {{{2
 # TODO: Jump in the shell, and run the following to ensure it works,
 # then reduce this section to 1 line!
 # if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
@@ -46,7 +46,7 @@ if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/googl
 
 if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
-# History: 
+# History: {{{1
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -59,7 +59,7 @@ HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
-# Shopt: 
+# Shopt: {{{1
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -67,10 +67,12 @@ shopt -s histappend
 # Check the window size after each command and, if necessary,
 # Update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-# TODO: Figure out the correct invocation of this directive
-# *shellcheck disable SC2128*
+# Disabled because BASH_VERSINFO isn't even an array it's the 0th element
+# of BASH_VERSION and a simple int
+# shellcheck disable=SC2128
 if [[ $BASH_VERSINFO -gt 3 ]]; then
     shopt -s globstar
 fi
@@ -93,7 +95,7 @@ shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 
-# Defaults in Ubuntu bashrcs: 
+# Defaults in Ubuntu bashrcs: {{{1
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
 [[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -103,13 +105,15 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# GBT: 
-export PS1=$(gbt $?)
+# GBT:
+if [[ -n "$(command -v gbt)" ]]; then
+    export PS1=$(gbt $?)
 
-export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
-export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+    export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
+    export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+fi
 
-# Vim: 
+# Vim: {{{1
 set -o vi
 if [[ "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
@@ -118,10 +122,20 @@ else
 fi
 export EDITOR="$VISUAL"
 
-# JavaScript: 
-# Source npm completion if its installed
-if [[ "$(command -v npm)" ]]; then
+# JavaScript: {{{1
+
+# Source npm completion if its installed.
+if [[ -n "$(command -v npm)" ]]; then
+    # shellcheck source=/home/faris/.bashrc.d/npm-completion.bash
     source ~/.bashrc.d/npm-completion.bash
+fi
+
+# Export nvm if the directory exists
+if [[ -d "$HOME/.nvm" ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    # Load nvm and bash completion
+    [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
+    [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
 fi
 
 # Testing out the language servers to see if they'll link up with neovim
@@ -129,7 +143,7 @@ if [[ -d "$HOME/.local/share/nvim/site/node_modules/.bin" ]]; then
     export PATH="$PATH:$HOME/.local/share/nvim/site/node_modules/.bin"
 fi
 
-# FZF: 
+# FZF: {{{1
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
@@ -143,9 +157,9 @@ if [[ "$(command -v ag)" ]]; then
     # most simply hide info to make it easier to use with FZF
 
     # Can't get it to work without -l though so only filename search.
-    export FZF_DEFAULT_COMMAND='ag --silent --hidden --nocolor --noheading --nobreak --nonumbers -l . '
+    export FZF_DEFAULT_COMMAND='ag .'
 
-    export FZF_DEFAULT_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --preview "head -100 {}" --ansi'
+    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --preview "head -100 {}" --ansi'
 
     # Difference between running 'fzf' and C-t is fullscreen or not.
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"
@@ -178,36 +192,37 @@ else
 fi
 
 # [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
-# ^----- ????
 
 # termux doesnt have xclip or xsel
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview.' --history-size=5000 --cycle"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
-command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF I .git -C {} | head -200'"
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200'"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 
-_fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
-}
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
-}
+if [[ -n "$(command -v fd)" ]]; then
+    _fzf_compgen_path() {
+        fd --hidden --follow --exclude ".git" . "$1"
+    }
+    # Use fd to generate the list for directory completion
+    _fzf_compgen_dir() {
+        fd --type d --hidden --follow --exclude ".git" . "$1"
+    }
+fi
 
 complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
 
-# Ruby: 
+# Ruby: {{{1
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 if [[ -d "$HOME/.rvm/bin" ]]; then
     export PATH="$PATH:$HOME/.rvm/bin"
 fi
 
-# Sourced files: 
+# Sourced files: {{{1
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do
         source "$config"
@@ -215,7 +230,7 @@ if [[ -d ~/.bashrc.d/ ]]; then
     unset -v config
 fi
 
-# Secrets: 
+# Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi

@@ -41,12 +41,12 @@
     # detect copied files as well as renames. affects merge and status.renames
     renames = copy
     strategy-option = resolve
-	tool = nvimdiff
-	renames = copies
+    tool = nvimdiff
+    renames = copies
 
 [difftool "nvimdiff"]
-	cmd = nvim -d $LOCAL $REMOTE
-	trustexitcode = true
+    cmd = nvim -d $LOCAL $REMOTE
+    trustexitcode = true
 
 [help]
     autocorrect = 1
@@ -121,14 +121,14 @@
     renormalize
 
 [url "git://github.com"]
-	insteadOf = g:
+    insteadOf = g:
     insteadOf = https://github.com
     name = farisachugthai
 
 [url "git@gist.github.com"]
-	insteadOf = "gist:"
-	pushInsteadOf = "gist:"
+    insteadOf = "gist:"
+    pushInsteadOf = "gist:"
 
 ; Could do something like this
 ; [init]
-; 	templatedir = ~/.config/git/
+;   templatedir = ~/.config/git/

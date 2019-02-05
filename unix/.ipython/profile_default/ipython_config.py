@@ -9,11 +9,13 @@ Heavily drawn from documentation at ipython_docs_.
 In addition to source code found on GitHub.
 
 This module provides convenience functions, adds typical Linux shell
-commands to ``user_ns``, or the global namespace, in addition to Git aliases.
+commands to ``user_ns``, or the global namespace, in addition to
+Git aliases.
 
-In addition, :mod:`pygments` is directly invoked to modify the colorscheme
-to ensure that comments are clearly visible in IPython cells.
+In addition, :mod:`pygments` is directly invoked to ensure comments are
+clearly visible in :mod:`IPython` cells.
 """
+import logging
 import os
 
 from pygments.token import Comment
@@ -168,6 +170,9 @@ c.TerminalIPythonApp.force_interact = False
 # ---
 # Class to use to instantiate the TerminalInteractiveShell object. Useful for
 #  custom Frontends
+# c.TerminalIPythonApp.interactive_shell_class = 'IPython.terminal.interactiveshell.TerminalInteractiveShell'
+
+# I think the original code is above.
 # shell_cls = 'IPython.terminal.interactiveshell.TerminalInteractiveShell'
 # c.TerminalIPythonApp.interactive_shell_class = shell_cls
 # ---
@@ -213,8 +218,6 @@ c.InteractiveShell.automagic = True
 
 # The part of the banner to be printed before the profile
 c.InteractiveShell.banner1 = ""
-# \nType 'copyright', 'credits' or 'license' for more information\nIPython
-# 6.2.1 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 # Let's try rewriting the banner.
 # check IPython/core/usage.py
@@ -261,7 +264,7 @@ c.InteractiveShell.display_page = True
 # c.InteractiveShell.enable_html_pager = False
 
 # Total length of command history
-c.InteractiveShell.history_length = 10000
+c.InteractiveShell.history_length = 50000
 
 # The number of saved history entries to be loaded into the history buffer at
 #  startup.
@@ -279,6 +282,11 @@ c.InteractiveShell.history_load_length = 10000
 # Start logging to the default log file in overwrite mode. Use `logappend` to
 #  specify a log file to **append** logs to.
 # c.InteractiveShell.logstart = False
+
+# NEW CODE WHOO
+# Select the loop runner that will be used to execute top-level asynchronous
+# code
+# c.InteractiveShell.loop_runner = 'IPython.core.interactiveshell._asyncio_runner'
 
 # c.InteractiveShell.object_info_string_level = 0
 
@@ -308,9 +316,9 @@ c.InteractiveShell.sphinxify_docstring = False
 # try:
 #     importlib.import_module("docrepr")  # noqa E402
 # except ImportError:
-#     c.InteractiveShell.sphinxify_docstring = False
+#   c.InteractiveShell.sphinxify_docstring = False
 # else:
-#    c.InteractiveShell.sphinxify_docstring = True
+#   c.InteractiveShell.sphinxify_docstring = True
 
 c.InteractiveShell.wildcards_case_sensitive = False
 
@@ -332,7 +340,11 @@ c.TerminalInteractiveShell.confirm_exit = False
 c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
 # Shortcut style to use at the prompt. 'vi' or 'emacs'.
-c.TerminalInteractiveShell.editing_mode = 'emacs'
+# Ah I forgot <C-a> on Tmux and Emacs clobber.
+if os.environ.get("$TMUX"):
+    c.TerminalInteractiveShell.editing_mode = 'vi'
+else:
+    c.TerminalInteractiveShell.editing_mode = 'emacs'
 
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
 c.TerminalInteractiveShell.editor = 'nvim'
@@ -350,11 +362,7 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # c.TerminalInteractiveShell.handle_return = None
 
 # Highlight matching brackets.
-c.TerminalInteractiveShell.highlight_matching_brackets = True
-
-###
-# Reverted and now using `./startup/gruvbox_style.py`_
-###
+# c.TerminalInteractiveShell.highlight_matching_brackets = True
 
 # The name or class of a Pygments style to use for syntax highlighting.
 # To see available styles, run `pygmentize -L styles`.
@@ -363,12 +371,12 @@ c.TerminalInteractiveShell.highlight_matching_brackets = True
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
 # paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash
 
-c.TerminalInteractiveShell.highlighting_style = 'gruvbox'
+c.TerminalInteractiveShell.highlighting_style = 'monokai'
 
 # Override highlighting format for specific tokens
 # Comments were genuinely impossible to read. Might need to override
 # punctuation next.
-# c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
+c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Enable mouse support in the prompt (Note: prevents selecting text with the
 # mouse)
@@ -440,7 +448,7 @@ c.TerminalInteractiveShell.true_color = True
 #  e.g::
 
 #      ipython --HistoryManager.hist_file=/tmp/ipython_hist.sqlite
-#
+
 #  you can also use the specific value `:memory:` (including the colon at both
 #  end but not the back ticks), to avoid creating an history file.
 # c.HistoryAccessor.hist_file = ''
@@ -534,6 +542,7 @@ c.HistoryManager.db_log_output = True
 #                      p.pretty(field)
 #                  p.end_group(7, '])')
 
+
 # c.PlainTextFormatter.float_precision = ''
 
 # Truncate large collections (lists, dicts, tuples, sets) to this size.
@@ -541,11 +550,11 @@ c.HistoryManager.db_log_output = True
 #  Set to 0 to disable truncation.
 c.PlainTextFormatter.max_seq_length = 100
 
-c.PlainTextFormatter.max_width = 100
+c.PlainTextFormatter.max_width = 79
 
-c.PlainTextFormatter.newline = '\n'
+# c.PlainTextFormatter.newline = '\n'
 
-c.PlainTextFormatter.pprint = True
+# c.PlainTextFormatter.pprint = True
 
 # c.PlainTextFormatter.verbose = False
 
@@ -644,7 +653,7 @@ c.Completer.use_jedi = True
 # Magics related to all logging machinery.
 
 # Suppress output of log state when logging is enabled
-c.LoggingMagics.quiet = False
+c.LoggingMagics.quiet = True
 
 # ----------------------------------------------------------------------------
 # StoreMagics(Magics) configuration
