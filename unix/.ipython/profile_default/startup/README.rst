@@ -1,31 +1,22 @@
+.. ipython_readme:
+
 =======================
 IPython Startup Scripts
 =======================
 
+.. module:: IPython_README
+
 :Author: Faris Chugthai
-:Date: 01-15-2019
+:Date: Feb 06, 2019
 
-
-Personal Notes
----------------
-
-%rehash
-~~~~~~~
-
-The magic ``rehash`` allows you to reload all of your startup files including
-bash related ones!
-
-Haven't noticed any significant delays as a result of this, and it allows me to
-continue using IPython as a system shell.
 
 Configuration
 ~~~~~~~~~~~~~
-
-**Jan 04, 2018**
-
 Here's a rough outline of what's going on in this directory.
 
-.. todo: Should this go in the dir above because we're gonna be focusing on
+.. todo::
+
+   Should this go in the dir above because we're gonna be focusing on
    IPython configurations heavily enough that it warrants it? Or better to simply
    put only those notes in that dir and only comment on the startup scripts in this
    directory?
@@ -36,11 +27,7 @@ As of today, the files present are as follows:
 
 05_log.py_
 
-10_keybindings.py_
-
 20_aliases.py_
-
-30_macros_lazydl.py_
 
 40_git_helpers.py_
 
@@ -48,24 +35,39 @@ As of today, the files present are as follows:
 
 50_sysexception.py_
 
-Sep 27, 2018
 
-Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it, then ran
+%rehash
+~~~~~~~
+The IPython magic ``%rehash`` allows you to reload all of your startup files
+and also adds system commands to the namespace!
+
+Insofar, I haven't noticed any significant slowdown in startup time as a result
+of this, and it hugely eases utilizing IPython as a system shell.
+
+
+other
+~~~~~~
+
+Sep 27, 2018:
+
+Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it,
+then ran
 
 .. ipython::
 
    %store lazydl >> 30_macros_lazydl.py
 
-so that it persists for every IPython session. The char ``%`` is optional
-as this configuration has automagic enabled.
+So that it persists for every :mod:`IPython` session. The char ``%`` is optional
+as this configuration has ``automagic`` enabled.
 
 It uses the :func:`input()`  to circumvent the fact that macros don't take
 command line arguments.
 
-Official Docs
---------------
+.. todo:: Create an official docs section
 
-.. todo:
+.. Official Docs
+.. --------------
+
 
 Original
 ---------

@@ -24,7 +24,7 @@ export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
 
-test [[ -f "$_ROOT/share/bash_completion" ]] && source "$_ROOT/share/bash_completion"
+test  -f "$_ROOT/share/bash_completion" && source "$_ROOT/share/bash_completion"
 
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
@@ -98,8 +98,8 @@ fi
 # -K: exit less in response to Ctrl-C
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-export PAGER="less -JRKML"
-
+# export PAGER="less -JRKML"
+export PAGER="$NVIMRUNTIME/macros/less.sh"
 export COLORTERM="truecolor"
 
 # colored GCC warnings and errors
