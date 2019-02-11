@@ -60,6 +60,8 @@
     renormalize
     strategy-option = resolve
     tool = nvim-merge
+	summary = true
+	diffstat = true
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
@@ -132,3 +134,10 @@
 ; Could do something like this
 ; [init]
 ;   templatedir = ~/.config/git/
+[cola]
+	spellcheck = true
+	tabwidth = 4
+	expandtab = true
+	boldheaders = true
+[gui]
+	editor = nvim

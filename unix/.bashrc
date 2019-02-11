@@ -107,10 +107,12 @@ fi
 
 # GBT:
 if [[ -n "$(command -v gbt)" ]]; then
-    export PS1=$(gbt $?)
+    prompt_tmp=$(gbt $?)
+    export PS1=$prompt_tmp
 
     export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
     export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+    unset prompt_tmp
 fi
 
 # Vim: {{{1
@@ -163,11 +165,11 @@ if [[ "$(command -v ag)" ]]; then
 
     # Difference between running 'fzf' and C-t is fullscreen or not.
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"
-    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header'"Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview."
+    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --reverse --preview head -100 {} --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview.'
 
     # Doesn't work.
     Ag() {
-        "$FZF_DEFAULT_COMMAND $@" | fzf -
+        "$FZF_DEFAULT_COMMAND $*" | fzf -
     }
 
 # Junegunn's current set up per his bashrc with an added check for fd.
