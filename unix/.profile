@@ -24,7 +24,7 @@ export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
 
-test [[ -f "$_ROOT/share/bash_completion" ]] && source "$_ROOT/share/bash_completion"
+test  -f "$_ROOT/share/bash_completion" && source "$_ROOT/share/bash_completion"
 
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
@@ -32,7 +32,7 @@ if [[ -n "$PREFIX" ]]; then
 else
     export BROWSER="firefox"
     export SHELL=/bin/bash
-    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME/etc/xdg:/usr/share/xsessions"
+    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
 fi
 
 # Ruby: {{{1
@@ -99,8 +99,9 @@ fi
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
 export PAGER="less -JRKML"
-
+export VIMRUNTIME="$_ROOT/share/nvim/runtime"
 export COLORTERM="truecolor"
+export MANPAGER=kak
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'

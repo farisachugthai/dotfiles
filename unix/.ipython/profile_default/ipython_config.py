@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Configuration file for IPython.
+"""
+IPython Config
+==============
+
+.. module:: _ipython_config
+    :synopsis: Configuration file for IPython.
 
 Heavily drawn from documentation at ipython_docs_.
 
@@ -8,23 +13,33 @@ Heavily drawn from documentation at ipython_docs_.
 
 In addition to source code found on GitHub.
 
+
+Overview
+---------
+
 This module provides convenience functions, adds typical Linux shell
 commands to ``user_ns``, or the global namespace, in addition to
 Git aliases.
 
 In addition, :mod:`pygments` is directly invoked to ensure comments are
 clearly visible in :mod:`IPython` cells.
+
+
+Parameters
+------------
+
+``c`` is a :class:`traitlets.config.Configurable` object
+so everything you see in this like 600 line file is how to interact
+with those kinds of files. It's easy and doesn't require reinitializing
+:mod:`IPython` on simple things like creating a new prompt after every command
+increments it.
+
+
 """
-import logging
+# import logging
 import os
 
 from pygments.token import Comment
-
-# c is a traitlets.config.Configurable object
-# so everything you see in this like 600 line file is how to interact
-# with those kinds of files. it's easy and doesn't require reinitializing
-# ipython on simple things like creating a new prompt after every command
-# increments it
 
 c = get_config()  # noqa
 
@@ -541,7 +556,6 @@ c.HistoryManager.db_log_output = True
 #                          p.breakable()
 #                      p.pretty(field)
 #                  p.end_group(7, '])')
-
 
 # c.PlainTextFormatter.float_precision = ''
 
