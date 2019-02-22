@@ -159,13 +159,13 @@ if [[ "$(command -v ag)" ]]; then
     # most simply hide info to make it easier to use with FZF
 
     # Can't get it to work without -l though so only filename search.
-    export FZF_DEFAULT_COMMAND='ag .'
+    export FZF_DEFAULT_COMMAND='ag --hidden .'
 
-    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --preview "head -100 {}" --ansi'
+    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --ansi'
 
     # Difference between running 'fzf' and C-t is fullscreen or not.
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"
-    export FZF_CTRL_T_OPTS='--multi --cycle --inline-info --color=bg+:24 --border --reverse --preview head -100 {} --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header Press CTRL-Y to copy command into clipboard.\n Press ? to toggle preview.'
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press CTRL-Y to copy command into clipboard. Press ? to toggle preview."'
 
     # Doesn't work.
     Ag() {
@@ -225,11 +225,19 @@ if [[ -d "$HOME/.rvm/bin" ]]; then
 fi
 
 # Sourced files: {{{1
+# This needs updating since so many f the files are already stated and a handful add completion
+# for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do
+        # shellcheck source=/home/faris/.bashrc.d/*.bash
         source "$config"
     done
     unset -v config
+fi
+
+# Here's one for the terminal
+if [[ -n "$(command -v kitty)" ]]; then
+    source <(kitty + complete setup bash)
 fi
 
 # Secrets: {{{1

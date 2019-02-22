@@ -116,7 +116,7 @@ bak() {
 # I don't know why this was the hardest thing ever but oh my god I got it!
 # man: send `man` to nvim: {{{1
 man(){
-    nvim -c "Man! $1" -c'wincmd T'
+    nvim -c "Man $1" -c'wincmd T'
 }
 
 # tre: tree with way too many options to memorize: {{{1

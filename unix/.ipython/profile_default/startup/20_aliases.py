@@ -79,7 +79,7 @@ from IPython import get_ipython
 
 
 def linux_specific_aliases(_ip):
-    """Method adding Linux specific aliases.
+    """Add Linux specific alias to the ``user_ns``.
 
     For the time being everything is getting thrown in here until I more
     accurately tease out what is a Linux built-in, 3rd party software, and
@@ -115,19 +115,9 @@ def linux_specific_aliases(_ip):
     """
     ip.alias_manager.user_aliases = [
         ('ag', 'ag --hidden --color %l'),
-        ('apt', 'apt %l'),
-        ('chmod', 'chmod %l'),
-        ('conda', 'conda %l'),
         ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
-        ('ctags',
-         'ctags %l'),  # it's nice to be able to build tags while working
-        ('dpkg', 'dpkg %l'),
-        ('du', 'du %l'),
         ('dus', 'du -d 1 -h %l'),
-        ('echo', 'echo -e %l'),
-        ('find', 'find %l'),
-        ('fd', 'fd %l'),
-        ('fzf', 'fzf %l'),  # all we need to do is figure out keybindings
+        ('echo', 'echo -e %l'),  # this one especially since there's a parallel cmd command
         ('g', 'git status -sb'),
         ('ga', 'git add %l'),
         ('gb', 'git branch -a %l'),
@@ -140,7 +130,6 @@ def linux_specific_aliases(_ip):
         ('gds2', 'git diff --staged --stat %l'),
         ('gdt', 'git difftool %l'),
         ('gf', 'git fetch --all'),
-        ('git', 'git %l'),
         ('git hist',
          'git log --pretty=format:%h %ad | %s%d [%an] --graph --date=short'),
         ('git last', 'git log -1 HEAD %l'),
@@ -182,7 +171,6 @@ def linux_specific_aliases(_ip):
         ('tail', 'tail -n 30 %l'),
         ('touch', 'touch %l'),
         ('tre', 'tree -ashFC -I .git -I __pycache__ --filelimit 25'),
-        ('tree', 'tree %l'),
         ('vi', 'nvim %l'),
         ('vim', 'nvim %l'),
         ('xx', 'quit'),  # this is a sweet one

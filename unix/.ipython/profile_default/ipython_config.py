@@ -16,7 +16,6 @@ In addition to source code found on GitHub.
 
 Overview
 ---------
-
 This module provides convenience functions, adds typical Linux shell
 commands to ``user_ns``, or the global namespace, in addition to
 Git aliases.
@@ -27,7 +26,6 @@ clearly visible in :mod:`IPython` cells.
 
 Parameters
 ------------
-
 ``c`` is a :class:`traitlets.config.Configurable` object
 so everything you see in this like 600 line file is how to interact
 with those kinds of files. It's easy and doesn't require reinitializing
@@ -36,17 +34,19 @@ increments it.
 
 
 """
-# import logging
+import logging
 import os
 
 from pygments.token import Comment
+
+logging.basicConfig()
 
 c = get_config()  # noqa
 
 try:
     home = os.path.expanduser("~")
 except OSError:
-    pass
+    home = os.path.expanduser("%userprofile%")
 
 # ----------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -386,7 +386,7 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
 # paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash
 
-c.TerminalInteractiveShell.highlighting_style = 'monokai'
+c.TerminalInteractiveShell.highlighting_style = 'gruvbox'
 
 # Override highlighting format for specific tokens
 # Comments were genuinely impossible to read. Might need to override

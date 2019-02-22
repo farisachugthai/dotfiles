@@ -1,17 +1,14 @@
-.. ipython_readme:
+.. _ipython_startup_readme:
 
 =======================
 IPython Startup Scripts
 =======================
 
-.. module:: IPython_README
-
 :Author: Faris Chugthai
-:Date: Feb 06, 2019
-
+:Date: Feb 21, 2019
 
 Configuration
-~~~~~~~~~~~~~
+-------------
 Here's a rough outline of what's going on in this directory.
 
 .. todo::
@@ -37,41 +34,114 @@ As of today, the files present are as follows:
 
 
 %rehash
-~~~~~~~
+-------
+01_rehashx.py_
+
 The IPython magic ``%rehash`` allows you to reload all of your startup files
 and also adds system commands to the namespace!
 
 Insofar, I haven't noticed any significant slowdown in startup time as a result
 of this, and it hugely eases utilizing IPython as a system shell.
 
+.. other
+.. -----
+.. Sep 27, 2018:
 
-other
-~~~~~~
+.. Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it,
+.. then ran
 
-Sep 27, 2018:
+.. .. ipython::
 
-Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it,
-then ran
+..    %store lazydl >> 30_macros_lazydl.py
 
-.. ipython::
+.. So that it persists for every :mod:`IPython` session. The char ``%`` is optional
+.. as this configuration has ``automagic`` enabled.
 
-   %store lazydl >> 30_macros_lazydl.py
+.. It uses the :func:`input()`  to circumvent the fact that macros don't take
+.. command line arguments.
 
-So that it persists for every :mod:`IPython` session. The char ``%`` is optional
-as this configuration has ``automagic`` enabled.
-
-It uses the :func:`input()`  to circumvent the fact that macros don't take
-command line arguments.
-
-.. todo:: Create an official docs section
+.. .. todo:: Create an official docs section
 
 .. Official Docs
 .. --------------
 
+.. Development and Contributing
+.. This would be a good idea though.
+
+Convenience Functions
+-----------------------
+:ref:`IPython` provides the functions :func:`IPython.Application.initialized()`
+and :func:`IPython.Application.instance()`. As a result, each script can easily
+implement the following as a check to ensure that the global IPython instance
+is running.
+
+.. code-block:: python
+
+   if __name__ == "__main__":
+      from IPython import Application.initialized
+      import sys
+
+      if not Application.initialized():
+         sys.exit()
+
+.. double check that what I'm saying below is true
+
+Unfortunately, ``from IPython import Application`` may be a feature of IPython7.3,
+which at the time of writing was released 3 days ago. If you don't have this
+version of the module, you can alternatively run
+
+
+.. code-block:: python
+
+   from IPython.core.application import Application
+   Application.initialized()
+
+
+.. ipython::
+
+   In [114]: IPython.Application.initialized?
+   Signature: IPython.Application.initialized()
+   Docstring: Has an instance been created?
+   File:      ~/miniconda3/lib/python3.7/site-packages/traitlets/config/configurable.py
+   Type:      method
+
+
+   In [115]: IPython.Application.instance?
+   Signature: IPython.Application.instance(*args, **kwargs)
+   Docstring:
+   Returns a global instance of this class.
+
+   This method create a new instance if none have previously been created
+   and returns a previously created instance is one already exists.
+
+   The arguments and keyword arguments passed to this method are passed
+   on to the :meth:`__init__` method of the class upon instantiation.
+
+   Examples
+   --------
+
+   Create a singleton class using instance, and retrieve it::
+
+       >>> from traitlets.config.configurable import SingletonConfigurable
+       >>> class Foo(SingletonConfigurable): pass
+       >>> foo = Foo.instance()
+       >>> foo == Foo.instance()
+       True
+
+   Create a subclass that is retrived using the base class instance::
+
+       >>> class Bar(SingletonConfigurable): pass
+       >>> class Bam(Bar): pass
+       >>> bam = Bam.instance()
+       >>> bam == Bar.instance()
+       True
+   File:      ~/miniconda3/lib/python3.7/site-packages/traitlets/config/configurable.py
+   Type:      method
+
+
 
 Original
 ---------
-
 This is the IPython startup directory
 
 .py and .ipy files in this directory will be run *prior* to any code or files specified
@@ -84,6 +154,7 @@ with a prefix, e.g.::
     50-middle.py
     99-last.ipy
 
+.. _01_rehashx.py: ./01_rehashx.py
 .. _04_easy_import.py: ./04_easy_import.py
 .. _05_log.py: ./05_log.py
 .. _10_keybindings.py:  ./10_keybindings.py

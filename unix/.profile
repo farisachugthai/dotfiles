@@ -9,10 +9,11 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Platform_Dependant: {{{1
 
+# shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
-    _ROOT="$PREFIX"
+    export _ROOT="$PREFIX"
 else
-    _ROOT="/usr"
+    export _ROOT="/usr"
 fi
 
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
@@ -20,19 +21,24 @@ export PATH="$_ROOT/local/bin/:$PATH"
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
 export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
+# Default xdg_data_dirs. Obviously typos that somehow got through
+# Also that flatpak dir doesn't even exist?
+# /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/home/faris/.local/share:/usr/local/share:/usr/share
 
-test  -f "$_ROOT/share/bash_completion" && source "$_ROOT/share/bash_completion"
+# shellcheck source=/usr/share/bash-completion/bash_completion
+test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
 
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
     export SHELL="$PREFIX/bin/bash"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/local/share"
+    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$_ROOT/etc/xdg"
 else
     export BROWSER="firefox"
     export SHELL=/bin/bash
-    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME/etc/xdg:/usr/share/xsessions"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/xsessions/plasma:$_ROOT/local/share:$_ROOT/share/mime"
+    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
 fi
 
 # Ruby: {{{1
@@ -117,6 +123,9 @@ export LANGUAGE=en                      # nvim complains us region not supported
 export LC_CTYPE=C.UTF-8                 # the python default
 export PYTHONIOENCODING=utf-8:surrogateescape
 export PYTHONDONTWRITEBYTECODE=1
+
+# Emacs doesn't read Xresources files????
+export XENVIRONMENT=~/.Xresources
 
 # Enough vim plugins use either $TMPDIR or $TMP that this became necessary
 if [[ -n "$TMPDIR" ]]; then
