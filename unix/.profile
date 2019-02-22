@@ -10,9 +10,9 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # Platform_Dependant: {{{1
 
 if [[ -n "$PREFIX" ]]; then
-    _ROOT="$PREFIX"
+    export _ROOT="$PREFIX"
 else
-    _ROOT="/usr"
+    export _ROOT="/usr"
 fi
 
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
@@ -20,15 +20,14 @@ export PATH="$_ROOT/local/bin/:$PATH"
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
 export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
 
-test  -f "$_ROOT/share/bash_completion" && source "$_ROOT/share/bash_completion"
 
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
     export SHELL="$PREFIX/bin/bash"
+    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
 else
     export BROWSER="firefox"
     export SHELL=/bin/bash
@@ -55,10 +54,8 @@ fi
 
 # Go: {{{1
 # Add the Go std lib to the PATH if that's where it was put
-if [[ -d "/usr/local/go" ]]; then
-    export PATH="$PATH:/usr/local/go/bin"
-elif [[ -d "$PREFIX/local/go" ]]; then
-    export PATH="$PATH:$PREFIX/local/go/bin"
+if [[ -d "$_ROOT/local/go" ]]; then
+    export PATH="$PATH:$_ROOT/local/go/bin"
 fi
 
 # Utilize GOPATH.
@@ -98,10 +95,19 @@ fi
 # -K: exit less in response to Ctrl-C
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-export PAGER="less -JRKML"
+# export PAGER="less -JRKML"
+
+if [[ -n "$(command -v bat)" ]]; then
+    export BAT_THEME=OneHalfDark
+    export BAT_PAGER=''
+    export PAGER="bat"
+fi
 export VIMRUNTIME="$_ROOT/share/nvim/runtime"
 export COLORTERM="truecolor"
-export MANPAGER=kak
+
+# I love you vim but your manpager is driving me nuts.
+# Still need to debug.
+# export MANPAGER=kak
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -131,11 +137,8 @@ fi
 
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
-
-# As this was placed here because Termux didn't have a manpath set
-# Here's the one I currently have from KDE Neon. Nov 07, 2018
-# /home/faris/miniconda3/share/man:/usr/local/man:/usr/local/share/man:/usr/share/man:/home/faris/.local/kitty.app/share/man:/home/faris/.fzf/man
-# if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
+# Disable MSFT pwsh telemetry
+export POWERSHE_TELEMETRY_OPTOUT=1
 
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
@@ -150,11 +153,6 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
-
-if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME=OneHalfDark
-    export BAT_PAGER=''
-fi
 
 # Source the bashrc last.
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

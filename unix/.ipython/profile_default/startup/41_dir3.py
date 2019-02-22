@@ -17,8 +17,9 @@ Background
 :func:`dir()` is a phenomenal function for exploring both the global namespace
 and the exported methods of an object.
 
-However it can get incredibly messy, especially when :mod:`IPython` displays the
-placeholder variables for every cell that has been run in the session. I.E.:
+However it can get incredibly messy, especially when :mod:`IPython`
+displays the placeholder variables for every cell that has been
+run in the session. I.E.:
 
 .. literal::
 
@@ -30,11 +31,12 @@ placeholder variables for every cell that has been run in the session. I.E.:
     ...
 
 This causes an incredibly long output that's difficult to parse quickly at
-best, and at worst, the output truncates and all valuable information is hidden.
-This function attempts to avoid that by hiding all private and/or mangled
+best, and at worst, the output truncates and all valuable
+information is hidden. This function attempts to avoid that by
+hiding all private and/or mangled
 methods I.E. ones that begin with the characters ``_`` or ``__``.
 
-It also takes inspiration from :ref:`IPython.utils.dir2.dir2()`.
+It also takes inspiration from :func:`IPython.utils.dir2.dir2()`.
 
 
 Attributes
@@ -76,8 +78,8 @@ def dir3():
 
     .. note::
 
-        This might need to become a class soon this is quickly getting unwieldy
-        abd as is requires a lot of state.
+        This might need to become a class soon this is quickly
+        getting unwieldy and as is requires a lot of state.
     """
     # This should silence the error from flake about ip being used but not
     # defined
@@ -101,8 +103,8 @@ def dir3():
 def _interactive(args):
     """Define a private method for interactive use instead of ifmain block.
 
-    As this file is currently used in IPython's startup, the ifmain block will
-    execute on startup which is not desired.
+    As this file is currently used in IPython's startup, the
+    ifmain block will execute on startup which is not desired.
 
     What we're looking for is more similar to an autoload feature.
 

@@ -1,11 +1,3 @@
-! Xmodmap
-
-! remove Lock = Caps_Lock
-! add Lock = Control_L
-! keysym Caps_Lock = Control_L
-
-! Feb 09, 2019
-! Alternatively:
 remove Lock = Caps_Lock
+add Lock = Control_L
 keysym Caps_Lock = Control_L
-add Control = Control_L

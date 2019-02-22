@@ -90,13 +90,24 @@ conda_switch() {
 }
 
 # gpip: global pip. Disable required virtualenvs: {{{1
+# Feb 21, 2019: gpip2 and gpip3 added
 gpip() {
     export PIP_REQUIRE_VIRTUALENV=0;
-    pip "$@";
+    python -m pip "$@";
     export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
 }
 
+gpip2() {
+    export PIP_REQUIRE_VIRTUALENV=0;
+    python2 -m pip "$@";
+    export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
+}
 
+gpip3() {
+    export PIP_REQUIRE_VIRTUALENV=0;
+    python3 -m pip "$@";
+    export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
+}
 # Oct 04, 2018
 # in a manner similar to __fzf__history__ display all of hist to std out
 # noninteractive tho
@@ -113,10 +124,10 @@ bak() {
     mv $1{,.bak}
 }
 
-# I don't know why this was the hardest thing ever but oh my god I got it!
 # man: send `man` to nvim: {{{1
 man(){
-    nvim -c "Man! $1" -c'wincmd T'
+    nvim -c "Man $1" -c'wincmd T'
+    # Are you fucking kidding me? This hasn't been working for the last 3 months because of an extraneous bang...
 }
 
 # tre: tree with way too many options to memorize: {{{1

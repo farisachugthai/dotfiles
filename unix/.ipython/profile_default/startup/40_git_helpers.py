@@ -8,16 +8,19 @@
 
 .. todo::
 
-    There is a gitpython module. We could try to import that and then work
-    using it.
+    What version of python was subprocess.check_output() introduced in?
+
+
 """
 import subprocess
 import sys
+import sysconfig
 
 # try:
 #     from git import Git
 # except ImportError:
 #     pass
+SRCDIR = sysconfig.get_config_var('srcdir')
 
 
 def git_touch(args):
@@ -35,6 +38,7 @@ def git_touch(args):
     Examples
     ---------
     TODO
+
     """
     if len(args) > 2:
         files = args.split()
@@ -46,15 +50,6 @@ def git_touch(args):
         subprocess.run(['git', 'add', fname])
 
 
-def get_git_branch():
-    """Get the symbolic name for the current git branch."""
-    cmd = "git rev-parse --abbrev-ref HEAD".split()
-    try:
-        return subprocess.check_output(cmd, stderr=subprocess.DEVNULL)
-    except subprocess.CalledProcessError:
-        return None
-
-
 def get_git_root():
     """Show the root of a repo."""
     cmd = "git rev-parse --show-toplevel".split()
@@ -62,6 +57,32 @@ def get_git_root():
         return subprocess.check_output(cmd, stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
         return None
+
+
+def get_git_branch():
+    """Get the symbolic name for the current git branch."""
+    cmd = "git rev-parse --abbrev-ref HEAD".split()
+    try:
+        return subprocess.check_output(cmd,
+                                       stderr=subprocess.DEVNULL,
+                                       cwd=SRCDIR)
+    except subprocess.CalledProcessError:
+        return None
+
+
+def get_git_upstream_remote():
+    """Get the remote name to use for upstream branches.
+
+    Uses "upstream" if it exists, "origin" otherwise
+    """
+    cmd = "git remote get-url upstream".split()
+    try:
+        subprocess.check_output(cmd,
+                                stderr=subprocess.DEVNULL,
+                                cwd=SRCDIR)
+    except subprocess.CalledProcessError:
+        return "origin"
+    return "upstream"
 
 
 if __name__ == "__main__":

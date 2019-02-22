@@ -17,9 +17,9 @@ Here's a rough outline of what's going on in this directory.
 .. todo::
 
    Should this go in the dir above because we're gonna be focusing on
-   IPython configurations heavily enough that it warrants it? Or better to simply
-   put only those notes in that dir and only comment on the startup scripts in this
-   directory?
+   IPython configurations heavily enough that it warrants it? Or better to 
+   simply  put only those notes in that dir and only comment on the 
+   startup scripts in this directory?
 
 As of today, the files present are as follows:
 
@@ -38,27 +38,26 @@ As of today, the files present are as follows:
 
 %rehash
 ~~~~~~~
-The IPython magic ``%rehash`` allows you to reload all of your startup files
-and also adds system commands to the namespace!
+The IPython magic ``%rehash`` allows you to reload all of your startup 
+files and also adds system commands to the namespace!
 
-Insofar, I haven't noticed any significant slowdown in startup time as a result
-of this, and it hugely eases utilizing IPython as a system shell.
+Insofar, I haven't noticed any significant slowdown in startup time as a 
+result of this, and it hugely eases utilizing IPython as a system shell.
 
 
 other
 ~~~~~~
-
 Sep 27, 2018:
 
-Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it,
+Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it,l
 then ran
 
 .. ipython::
 
    %store lazydl >> 30_macros_lazydl.py
 
-So that it persists for every :mod:`IPython` session. The char ``%`` is optional
-as this configuration has ``automagic`` enabled.
+So that it persists for every :mod:`IPython` session. The char ``%`` is 
+optional as this configuration has ``automagic`` enabled.
 
 It uses the :func:`input()`  to circumvent the fact that macros don't take
 command line arguments.
@@ -68,17 +67,25 @@ command line arguments.
 .. Official Docs
 .. --------------
 
+Colorschemes
+~~~~~~~~~~~~
+Refer to ptpython's style module. It has a handful of useful functions and 
+should be a good reference for integrating a new :class:`pygments.Style()`
+into the shell.
+
 
 Original
 ---------
-
 This is the IPython startup directory
 
-.py and .ipy files in this directory will be run *prior* to any code or files specified
-via the exec_lines or exec_files configurables whenever you load this profile.
+.py and .ipy files in this directory will be run *prior* to any code or 
+files specified via the exec_lines or exec_files configurables whenever 
+you load this profile.
 
-Files will be run in lexicographical order, so you can control the execution order of files
-with a prefix, e.g.::
+Files will be run in lexicographical order, so you can control the 
+execution order of files with a prefix, e.g.
+
+.. code-block:: shell
 
     00-first.py
     50-middle.py

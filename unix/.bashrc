@@ -223,7 +223,12 @@ if [[ -d "$HOME/.rvm/bin" ]]; then
 fi
 
 # Sourced files: {{{1
-# This needs updating since so many f the files are already stated and a handful add completion
+
+# Feb 16, 2019: tmux botches this on termux
+
+test  -f "$_ROOT/share/bash_completion" && source "$_ROOT/share/bash_completion"
+
+# This needs updating since so many of the files are already stated and a handful add completion
 # for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do

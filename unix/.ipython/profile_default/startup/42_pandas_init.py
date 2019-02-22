@@ -26,7 +26,7 @@ import sys
 try:
     import pandas as pd
 except ImportError:
-    pass
+    sys.exit()
 
 
 def start():
