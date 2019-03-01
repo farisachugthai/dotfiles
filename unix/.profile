@@ -16,15 +16,17 @@ else
     export _ROOT="/usr"
 fi
 
-export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
-export PATH="$_ROOT/local/bin/:$PATH"
-
+# These aren't platform dependant thanks to that var we set but platform dependant code relies on this being set
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
-# Default xdg_data_dirs. Obviously typos that somehow got through
-# Also that flatpak dir doesn't even exist?
-# /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/home/faris/.local/share:/usr/local/share:/usr/share
+
+# this is what xdg data dirs is set to with no modification on my part. like god that has so many simple errors in it
+# /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:
+
+# Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
+
+export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/log"
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
 test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
@@ -32,13 +34,13 @@ test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
     export SHELL="$PREFIX/bin/bash"
-    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/local/share"
-    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$_ROOT/etc/xdg"
+    export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
 else
     export BROWSER="firefox"
     export SHELL=/bin/bash
-    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/xsessions/plasma:$_ROOT/local/share:$_ROOT/share/mime"
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/share/xsessions:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:/home/faris/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
 fi
 
 # Ruby: {{{1
@@ -61,10 +63,8 @@ fi
 
 # Go: {{{1
 # Add the Go std lib to the PATH if that's where it was put
-if [[ -d "/usr/local/go" ]]; then
-    export PATH="$PATH:/usr/local/go/bin"
-elif [[ -d "$PREFIX/local/go" ]]; then
-    export PATH="$PATH:$PREFIX/local/go/bin"
+if [[ -d "$_ROOT/local/go" ]]; then
+    export PATH="$PATH:$_ROOT/local/go/bin"
 fi
 
 # Utilize GOPATH.
@@ -87,10 +87,6 @@ if [[ -n "$(command -v yarn)" ]]; then
         export PATH="$PATH:$HOME/.yarn/bin"
     fi
 
-    if [[ -d "$HOME/.config/yarn/global/node_modules/.bin" ]]; then
-        export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
-    fi
-
 fi
 
 # Lisp: {{{1
@@ -99,14 +95,23 @@ if [[ -d "$HOME/.racket/7.1/bin" ]]; then
 fi
 
 # Environment Variables: {{{1
+
+# Pagers:
+
+if [[ -n "$(command -v bat)" ]]; then
+    export BAT_THEME=OneHalfDark
+    export BAT_PAGER=''
+    export PAGER="bat"
+else
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 # -K: exit less in response to Ctrl-C
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-# export PAGER="less -JRKML"
-export PAGER="$NVIMRUNTIME/macros/less.sh"
+    export PAGER="less -JRKML"
+fi
 export COLORTERM="truecolor"
+
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -158,11 +163,12 @@ if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
+export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
+export PATH="$_ROOT/local/bin/:$PATH"
 
-if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME=OneHalfDark
-    export BAT_PAGER=''
-fi
+# Disable MSFT pwsh telemetry
+export POWERSHE_TELEMETRY_OPTOUT=1
 
 # Source the bashrc last.
+# shellcheck source=/home/faris/.bashrc
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

@@ -10,7 +10,7 @@ IPython Aliases
 
 :File: 20_aliases.py
 :Author: Faris Chugthai
-:Github: https://github.com/farisachugthai
+`Github <https://github.com/farisachugthai>`_
 
 Overview
 ---------
@@ -23,16 +23,10 @@ fills the `user_ns` with common Linux idioms.
 
 .. todo::
 
-    - Separate the dictionary below into OS and machine specific dictionaries.
-    Run basic checks and only add to the user namespace if they match.
-
-    - Also I have to ask why we define all these aliases in one :py:`dict` and
-    then move it to another. Why not just define them all in
-    :py:func:`ip.alias_manager.define_alias()` from the get go?
-        - Secondary todo. How do you expand an alias in rst? Because that ``ip``
-        you have there is a refernce to the :class:`IPython.core.InteractiveShell`
-        global instance, it isn't the actual module name and as a result that
-        reference isn't going to work.
+    - Separate the dictionary below into OS and machine specific dictionaries. Run basic checks and only add to the user namespace if they match.
+    - Also I have to ask why we define all these aliases in one :py:`dict` and then move it to another.
+    - Why not just define them all in :py:func:`ip.alias_manager.define_alias()` from the get go?
+    - Secondary todo. How do you expand an alias in rst? Because that ``ip`` you have there is a refernce to the :class:`IPython.core.InteractiveShell` global instance, it isn't the actual module name and as a result that reference isn't going to work.
         - As a follow up to the question above I don't think you can do that.
         The function only takes so many parameters. So we could define them in
         while presenting them as arguments to the define_alias function call
@@ -52,7 +46,7 @@ As per the official documentation
 
 .. ipython::
 
-    In [2]: alias bracket echo "Input in brackets: <%l>"
+    In [2]: %alias bracket echo "Input in brackets: <%l>"
     In [3]: bracket hello world
     Input in brackets: <hello world>
 
@@ -62,7 +56,6 @@ interactively the syntax ``%alias alias_name cmd`` doesn't require quoting.
 
 Attributes
 -----------
-
 ip (InteractiveShell): A global object representing the active IPython
                        session. Contains varying packages as well as the
                        current global namespace. Doesn't need to be defined
@@ -76,10 +69,16 @@ Aliases file for IPython.
 
 """
 from IPython import get_ipython
+import platform
+
+
+def _sys_check():
+    """Check OS."""
+    return platform.uname().system
 
 
 def linux_specific_aliases(_ip):
-    """Add Linux specific alias to the ``user_ns``.
+    r"""Add Linux specific aliases.
 
     For the time being everything is getting thrown in here until I more
     accurately tease out what is a Linux built-in, 3rd party software, and
@@ -92,7 +91,7 @@ def linux_specific_aliases(_ip):
 
     Below is the source code for the function that is invoked here.
 
-    .. code-block:: python
+    .. code-block:: python3
 
         def define_alias(self, name, cmd):
             \"\"\"Define a new alias after validating it.
@@ -115,9 +114,18 @@ def linux_specific_aliases(_ip):
     """
     ip.alias_manager.user_aliases = [
         ('ag', 'ag --hidden --color %l'),
+        ('apt', 'apt %l'),
+        ('chmod', 'chmod %l'),
         ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
+        ('ctags',
+         'ctags %l'),  # it's nice to be able to build tags while working
+        ('dpkg', 'dpkg %l'),
+        ('du', 'du %l'),
         ('dus', 'du -d 1 -h %l'),
-        ('echo', 'echo -e %l'),  # this one especially since there's a parallel cmd command
+        ('echo', 'echo -e %l'),
+        ('find', 'find %l'),
+        ('fd', 'fd %l'),
+        ('fzf', 'fzf %l'),  # all we need to do is figure out keybindings
         ('g', 'git status -sb'),
         ('ga', 'git add %l'),
         ('gb', 'git branch -a %l'),
@@ -130,6 +138,7 @@ def linux_specific_aliases(_ip):
         ('gds2', 'git diff --staged --stat %l'),
         ('gdt', 'git difftool %l'),
         ('gf', 'git fetch --all'),
+        ('git', 'git %l'),
         ('git hist',
          'git log --pretty=format:%h %ad | %s%d [%an] --graph --date=short'),
         ('git last', 'git log -1 HEAD %l'),
@@ -171,6 +180,7 @@ def linux_specific_aliases(_ip):
         ('tail', 'tail -n 30 %l'),
         ('touch', 'touch %l'),
         ('tre', 'tree -ashFC -I .git -I __pycache__ --filelimit 25'),
+        ('tree', 'tree %l'),
         ('vi', 'nvim %l'),
         ('vim', 'nvim %l'),
         ('xx', 'quit'),  # this is a sweet one
@@ -180,17 +190,29 @@ def linux_specific_aliases(_ip):
     return ip.alias_manager.user_aliases
 
 
+def termux_aliases(ip):
+    # ('conda', 'conda %l')
+    # todo
+    # also you can fet rid of all aliases with no options thanks to rehashx
+    pass
+
+
 if __name__ == "__main__":
     ip = get_ipython()
 
     if type(ip) is None:
         raise Exception
 
-    # Now let's get the Linux aliases
-    user_aliases = linux_specific_aliases(ip)
+    if _sys_check() == 'Linux':
+
+        # Now let's get the Linux aliases.
+        user_aliases = linux_specific_aliases(ip)
+
+        if platform.machine() == "aarch64":
+            # user_aliases += termux_aliases(ip)
+            pass
 
     for i in user_aliases:
         ip.alias_manager.define_alias(i[0], i[1])
 
-    # Can't believe I forgot this
-    del i
+    del i, _sys_check

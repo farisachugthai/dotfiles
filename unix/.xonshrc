@@ -6,7 +6,10 @@ source-bash  "echo loading xonsh foreign shell"
     # XONSH WIZARD START
 $AUTO_SUGGEST_IN_COMPLETIONS = '1'
 $CASE_SENSITIVE_COMPLETIONS = '1'
-$DIRSTACK_SIZE = '10'
+
+$DIRSTACK_SIZE = '100'
+
+# Include hidden files when considering candidates for :mod:`xonsh.completer`
 $DOTGLOB = '1'
 $DYNAMIC_CWD_ELISION_CHAR = "'...'"
 $DYNAMIC_CWD_WIDTH = '15.0'
@@ -14,7 +17,9 @@ $LANG = 'en_US.UTF-8'
 $MULTILINE_PROMPT = '...'
 $_PATH = "$PATH"
 # $PATH = "['/home/faris/google-cloud-sdk/bin', '/home/faris/miniconda3/condabin', '/home/faris/.cargo/bin', '/home/faris/bin', '/home/faris/.local/bin', '/usr/local/sbin', '/usr/local/bin', '/usr/sbin', '/usr/bin', '/sbin', '/bin', '/usr/games', '/usr/local/games', '/snap/bin', '/home/faris/.rvm/bin', '/home/faris/.gem/ruby/2.5.0/bin', '/home/faris/.rvm/bin', '/home/faris/go/bin', '/home/faris/.yarn/bin', '/home/faris/.config/yarn/global/node_modules/.bin', '/home/faris/.racket/7.1/bin', '/home/faris/.rvm/bin', '/home/faris/.fzf/bin', '/home/faris/.rvm/bin']"
-$PATHEXT = "'.EXE'"
+
+# ...wait how the hell did that get set on KDE Neon i can't run exe files
+# $PATHEXT = "'.EXE'"
 $PROMPT = '{user}@{hostname}:{cwd}$ '
 $PROMPT_TOOLKIT_COLOR_DEPTH = 'DEPTH_24_BIT'
 $VI_MODE = '1'
@@ -29,5 +34,5 @@ $XONSH_STORE_STDOUT = '1'
 $XONSH_TRACEBACK_LOGFILE = '/home/faris/.local/share/xonsh/traceback.log'
 # source-foreign --envcmd %env -p 'conda activate && ipython'
 # xontrib load apt_tabcomplete base16_shell coreutils distributed jedi mpl prompt_ret_code xonda prompt_vi_mode
-xontrib load jedi xonda
+xontrib load jedi xonda bashisms
 # XONSH WIZARD END

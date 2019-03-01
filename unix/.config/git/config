@@ -60,8 +60,8 @@
     renormalize
     strategy-option = resolve
     tool = nvim-merge
-	summary = true
-	diffstat = true
+    summary = true
+    diffstat = true
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
@@ -110,6 +110,11 @@
     s = status -sb
     r = remote -v
 
+    # stashes
+    sh = stash
+    sha = stash --all
+    shp = stash pop
+
 [rebase]
     autoStash = True
     stat = True
@@ -122,12 +127,12 @@
     rebase = True
     renormalize
 
-[url "git://github.com"]
+[url "git://github.com/"]
     insteadOf = g:
     insteadOf = https://github.com
     name = farisachugthai
 
-[url "git@gist.github.com"]
+[url "git@gist.github.com/"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
 
@@ -135,9 +140,9 @@
 ; [init]
 ;   templatedir = ~/.config/git/
 [cola]
-	spellcheck = true
-	tabwidth = 4
-	expandtab = true
-	boldheaders = true
+    spellcheck = true
+    tabwidth = 4
+    expandtab = true
+    boldheaders = true
 [gui]
-	editor = nvim
+    editor = nvim

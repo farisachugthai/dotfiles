@@ -90,13 +90,24 @@ conda_switch() {
 }
 
 # gpip: global pip. Disable required virtualenvs: {{{1
+# Feb 21, 2019: gpip2 and gpip3 added
 gpip() {
     export PIP_REQUIRE_VIRTUALENV=0;
-    pip "$@";
+    python -m pip "$@";
     export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
 }
 
+gpip2() {
+    export PIP_REQUIRE_VIRTUALENV=0;
+    python2 -m pip "$@";
+    export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
+}
 
+gpip3() {
+    export PIP_REQUIRE_VIRTUALENV=0;
+    python3 -m pip "$@";
+    export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
+}
 # Oct 04, 2018
 # in a manner similar to __fzf__history__ display all of hist to std out
 # noninteractive tho
