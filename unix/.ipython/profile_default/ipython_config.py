@@ -4,7 +4,7 @@
 IPython Config
 ==============
 
-.. module:: _ipython_config
+.. module:: ipython_config
     :synopsis: Configuration file for IPython.
 
 Heavily drawn from documentation at ipython_docs_.
@@ -16,7 +16,6 @@ In addition to source code found on GitHub.
 
 Overview
 ---------
-
 This module provides convenience functions, adds typical Linux shell
 commands to ``user_ns``, or the global namespace, in addition to
 Git aliases.
@@ -27,26 +26,51 @@ clearly visible in :mod:`IPython` cells.
 
 Parameters
 ------------
-
-``c`` is a :class:`traitlets.config.Configurable` object
+``c`` is a :class:`traitlets.config.Configurable()` object
 so everything you see in this like 600 line file is how to interact
 with those kinds of files. It's easy and doesn't require reinitializing
-:mod:`IPython` on simple things like creating a new prompt after every command
-increments it.
+:mod:`IPython` on simple things like creating a new prompt after every
+command increments it.
+
+
+Attributes (Non-method parameters)
+----------------------------------
+``IPYTHONDIR`` : path-like object
+    Environment variable defined before runtime to indicate where the
+    IPython profile directory is.
+
+
+Returns
+-------
+``home`` : str
+    The users home directory.
 
 
 """
-# import logging
+import logging
 import os
 
 from pygments.token import Comment
+# nope but good try
+# from IPython import get_ipython as get_config
 
 c = get_config()  # noqa
+
+logging.basicConfig()
 
 try:
     home = os.path.expanduser("~")
 except OSError:
-    pass
+    home = os.environ.get("%userprofile%")
+
+# def loaded_config(loaded=None):
+#     """Just noticed IPython loads this file twice."""
+#     if loaded is None:
+#         pass
+#     loaded = True
+
+
+# loaded_config(loaded)  # noqa F821
 
 # ----------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -156,8 +180,8 @@ c.InteractiveShellApp.reraise_ipython_extension_failures = True
 # configuration (through profiles), history storage, etc. The default is
 # $HOME/.ipython. This option can also be specified through the environment
 # variable IPYTHONDIR.
-if os.environ.get("$IPYTHONDIR"):
-    c.BaseIPythonApplication.ipython_dir = os.environ.get("$IPYTHONDIR")
+if os.environ.get("IPYTHONDIR"):
+    c.BaseIPythonApplication.ipython_dir = os.environ.get("IPYTHONDIR")
 else:
     # Assume home was defined correctly up top. Will need to rewrite for windows
     c.BaseIPythonApplication.ipython_dir = os.path.join(home, ".ipython")
@@ -212,6 +236,9 @@ except Exception:
 # A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
 # c.InteractiveShell.ast_transformers = []
+
+# New in IPy 7.2
+c.InteractiveShell.autoawait = True
 
 # Make IPython automatically call any callable object even if you didn't type
 # explicit parentheses. For example, 'str 43' becomes 'str(43)' automatically.
@@ -356,10 +383,12 @@ c.TerminalInteractiveShell.display_completions = 'multicolumn'
 
 # Shortcut style to use at the prompt. 'vi' or 'emacs'.
 # Ah I forgot <C-a> on Tmux and Emacs clobber.
-if os.environ.get("$TMUX"):
+if os.environ.get("TMUX"):
     c.TerminalInteractiveShell.editing_mode = 'vi'
+    logging.warning("c.TerminalInteractiveShell.editing_mode = 'vi'")
 else:
     c.TerminalInteractiveShell.editing_mode = 'emacs'
+    logging.warning("c.TerminalInteractiveShell.editing_mode = 'emacs'")
 
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
 c.TerminalInteractiveShell.editor = 'nvim'

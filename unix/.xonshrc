@@ -1,0 +1,25 @@
+# XONSH WIZARD START
+source-bash "echo loading xonsh foreign shell"
+# XONSH WIZARD END
+
+# Default Prompt
+# HOW IS THIS ERRORING
+# {env_name}{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE} {cwd}{branch_color}{curr_branch: {}}{NO_COLOR} {BOLD_BLUE}{prompt_end}{NO_COLOR}
+
+# Gives confusing traceback
+# PROMPT={env_name}{BOLD_GREEN}{user}@{hostname}{UNDERLINE_INTENSE_CYAN} {cwd}{BOLD_BLUE}{curr_branch: {}}{NO_COLOR} {BOLD_BLUE}{prompt_end}{NO_COLOR}
+XONSH_SHOW_TRACEBACK = True
+
+SUBSEQUENCE_PATH_COMPLETION = True
+
+XONSH_CACHE_EVERYTHING = 1
+# Don't know if I'm allowed to do this. Holy hell nvim runs slow in xonsh
+# xontrib load jedi
+# see how it goes first
+
+xontrib load fzf-widgets
+
+$fzf_history_binding = Keys.ControlR
+$fzf_ssh_binding = Keys.ControlS
+
+XONSH_AUTOPAIR = 1

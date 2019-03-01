@@ -4,8 +4,6 @@
 
 # TODO: For everything that modifies path, run a check to ensure it's not already an entry.
 
-# Set PATH so it includes user's private bin directories
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Platform_Dependant: {{{1
 
@@ -15,7 +13,8 @@ else
     export _ROOT="/usr"
 fi
 
-export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
+# Set PATH so it includes user's private bin directories
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="$_ROOT/local/bin/:$PATH"
 
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -68,20 +67,6 @@ fi
 if [[ -n "$(command -v yarn)" ]]; then
     YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
     export PATH="$PATH:$YARNPATH"
-
-    if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
-        # shellcheck source=./.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash disable=1091
-        source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
-    fi
-
-    if [[ -d "$HOME/.yarn/bin" ]]; then
-        export PATH="$PATH:$HOME/.yarn/bin"
-    fi
-
-    if [[ -d "$HOME/.config/yarn/global/node_modules/.bin" ]]; then
-        export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
-    fi
-
 fi
 
 # Lisp: {{{1
@@ -90,24 +75,31 @@ if [[ -d "$HOME/.racket/7.1/bin" ]]; then
 fi
 
 # Environment Variables: {{{1
+
+# Pagers: {{{2
+
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 # -K: exit less in response to Ctrl-C
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-# export PAGER="less -JRKML"
 
 if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
     export BAT_PAGER=''
     export PAGER="bat"
+else
+    export PAGER="less -JRKML"
 fi
-export VIMRUNTIME="$_ROOT/share/nvim/runtime"
+
+export BYOBU_PAGER="nvim"
 export COLORTERM="truecolor"
 
 # I love you vim but your manpager is driving me nuts.
 # Still need to debug.
 # export MANPAGER=kak
+
+# Other: {{{2
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -138,21 +130,26 @@ fi
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
 # Disable MSFT pwsh telemetry
-export POWERSHE_TELEMETRY_OPTOUT=1
+export POWERSHELL_TELEMETRY_OPTOUT=1
 
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Rust: {{{1
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
 # Sourced Files: {{{1
 
 # Setup completions correctly.
 
-# Help find your dotfiles faster
+# Help find your dotfiles faster and setup nvim
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
+export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
+export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
+export VIMRUNTIME="$_ROOT/share/nvim/runtime"
 
 # Source the bashrc last.
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

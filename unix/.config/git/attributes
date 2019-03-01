@@ -4,5 +4,6 @@
 # The system knows a built-in macro attribute, binary:
 
 *.spl binary
+*.ttf binary
 
 text=auto

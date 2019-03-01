@@ -138,7 +138,9 @@ tre(){
     # Append a `/' for directories, a `=' for socket files, a `*' for
     # executable files, a `>' for doors (Solaris) and a `|' for
     # FIFO's, as per ls -F
-    tree -a -I '.git' -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F
+    # Also, and I don't know why, the a and I must be together to ignore .git
+    # In addition they MUST come last or .git gets included. Idk why man
+    tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -aI '.git'
 }
 
 # TODO: make a function `gm` that requires $1 to be set
