@@ -224,8 +224,8 @@ test -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/b
 # This needs updating since so many of the files are already stated and a handful add completion
 # for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
-    for config in ~/.bashrc.d/*.bash; do
-        source "$config"
+    for config in .bashrc.d/*.bash; do
+        . $config;
     done
     unset -v config
 fi

@@ -45,8 +45,8 @@ def ytdl(link):
     objects with variable sizes are others etc.
 
     :param link: URL to a YouTube video
-    :returns: Request object or :class:`urllib.Response` if 
-    :mod:`requests` isn't downloaded.
+    :returns: Request object or :class:`urllib.Response` if
+              :mod:`requests` isn't downloaded.
     """
     ydl_opts = {
         'format': 'bestaudio/best',

@@ -4,7 +4,7 @@
 IPython Config
 ==============
 
-.. module:: ipython_config
+.. module:: _ipython_config
     :synopsis: Configuration file for IPython.
 
 Heavily drawn from documentation at ipython_docs_.
@@ -51,12 +51,15 @@ import logging
 import os
 
 from pygments.token import Comment
-# nope but good try
-# from IPython import get_ipython as get_config
 
-c = get_config()  # noqa
+#### THIS IS THE MODULE! Its too exciting to able to execute this script
+# directly from within python and not get an error for a func call with no
+# import
+from traitlets.config import get_config
 
-logging.basicConfig()
+c = get_config()
+
+logging.basicConfig(level=logging.INFO)
 
 try:
     home = os.path.expanduser("~")
@@ -68,7 +71,6 @@ except OSError:
 #     if loaded is None:
 #         pass
 #     loaded = True
-
 
 # loaded_config(loaded)  # noqa F821
 
@@ -237,7 +239,8 @@ except Exception:
 #  user input before code is run.
 # c.InteractiveShell.ast_transformers = []
 
-# New in IPy 7.2
+# New in IPy 7.2. TODO: Should probably do some kind of check directly on the
+# _ip object to ensure that the version is above 7.2 first.
 c.InteractiveShell.autoawait = True
 
 # Make IPython automatically call any callable object even if you didn't type
@@ -415,7 +418,7 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
 # paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash
 
-c.TerminalInteractiveShell.highlighting_style = 'monokai'
+c.TerminalInteractiveShell.highlighting_style = 'gruvbox'
 
 # Override highlighting format for specific tokens
 # Comments were genuinely impossible to read. Might need to override
