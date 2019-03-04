@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Test that the IPython alias manager works.
+"""Test that the :class:`IPython.core.AliasManager` behaves as expected.
 
-:File: test_alias.py
+:File: test_20_aliases.py
 :Author: Faris Chugthai
-:Email: farischugthai@gmail.com
 :Github: https://github.com/farisachugthai
+:Date: |date|
 
-Took this from the IPython team insofar.
+Took this from the :mod:`IPython` team insofar.
 
 Should definitely consider rewriting it.
 But like partially because plagariasm, partially

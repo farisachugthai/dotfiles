@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # vim:set ai et sts=2 sw=2 tw=80:
 #
 # /etc/X11/Xsession
@@ -14,9 +14,9 @@ PROGNAME=Xsession
 message () {
   # pretty-print messages of arbitrary length; use xmessage if it
   # is available and $DISPLAY is set
-  MESSAGE="$PROGNAME: $*"
+  local MESSAGE="$PROGNAME: $*"
   echo "$MESSAGE" | fold -s -w ${COLUMNS:-80} >&2
-  if [ -n "$DISPLAY" ] && which xmessage > /dev/null 2>&1; then
+  if [ -n "$DISPLAY" ] && command -v xmessage > /dev/null 2>&1; then
     echo "$MESSAGE" | fold -s -w ${COLUMNS:-80} | xmessage -center -file -
   fi
 }
@@ -26,7 +26,7 @@ message_nonl () {
   # xmessage if it is available and $DISPLAY is set
   MESSAGE="$PROGNAME: $*"
   echo -n "$MESSAGE" | fold -s -w ${COLUMNS:-80} >&2;
-  if [ -n "$DISPLAY" ] && which xmessage > /dev/null 2>&1; then
+  if [ -n "$DISPLAY" ] && command -v xmessage > /dev/null 2>&1; then
     echo -n "$MESSAGE" | fold -s -w ${COLUMNS:-80} | xmessage -center -file -
   fi
 }
@@ -50,18 +50,17 @@ internal_errormsg () {
 
 # initialize variables for use by all session scripts
 
-OPTIONFILE=/etc/X11/Xsession.options
+export OPTIONFILE=/etc/X11/Xsession.options
+export SYSRESOURCES=/etc/X11/Xresources
+export USRRESOURCES=$HOME/.Xresources
+export SYSSESSIONDIR=/etc/X11/Xsession.d
+export USERXSESSION=$HOME/.xsession
+export USERXSESSIONRC=$HOME/.xsessionrc
+export ALTUSERXSESSION=$HOME/.Xsession
+export ERRFILE=$HOME/.xsession-errors
 
-SYSRESOURCES=/etc/X11/Xresources
-USRRESOURCES=$HOME/.Xresources
-
-SYSSESSIONDIR=/etc/X11/Xsession.d
-USERXSESSION=$HOME/.xsession
-USERXSESSIONRC=$HOME/.xsessionrc
-ALTUSERXSESSION=$HOME/.Xsession
-ERRFILE=$HOME/.xsession-errors
-
-# attempt to create an error file; abort if we cannot
+# attempt to create an error file; abort if we cannot. ...wait can i unset this
+# because i hate the xsession errors file? hm nah i guess leave it for now.
 if (umask 077 && touch "$ERRFILE") 2> /dev/null && [ -w "$ERRFILE" ] &&
   [ ! -L "$ERRFILE" ]; then
   chmod 600 "$ERRFILE"
@@ -115,6 +114,8 @@ fi
 # start i3. It is run by your login manager (xdm, slim, gdm,
 #         ...) as soon as you login.
 
+# To interject sddm is the DM for kde.
+
 # Sample xsession.
 
 # Disable DPMS turning off the screen. Honestly still don't know what it does.
@@ -154,14 +155,20 @@ ulimit -c unlimited
 
 # the below line might be supposed to put it in .xinitrc
 # dude it's not a default package why would you leave it naked
-if [[ command -v Xvfb ]]; then
+if [[ -n $(command -v Xvfb) ]]; then
   exec Xvfb&
 fi
 
 # Start i3 and log to ~/.i3/logfile
-echo "Starting at $(date)" >> ~/.local/share/i3/logfile
+# wait hold on now this is very specific to i3 and maybe i don't want i3
+# echo "Starting at $(date)" >> ~/.local/share/i3/logfile
 
-exec i3 -V -d all >> ~/.local/share/i3/logfile
+# exec i3 -V -d all >> ~/.local/share/i3/logfile
 
+# How in the world did I just let that global var sit for so long?
+unset PROGNAME
 
+# https://github.com/awesomeWM/awesome/blob/master/docs/01-readme.md#running-awesome
+# Xsession is a good spot for configs when you still want your display manager
+# to appear 
 exit 0

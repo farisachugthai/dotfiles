@@ -60,6 +60,8 @@
     renormalize
     strategy-option = resolve
     tool = nvim-merge
+	summary = true
+	diffstat = true
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
@@ -108,6 +110,19 @@
     s = status -sb
     r = remote -v
 
+    sh = stash
+    shp = stash pop
+    shl = stash list
+    shd = stash drop
+    shc = stash clear
+    sha = stash apply
+	switch = !legit switch
+	sync = !legit sync
+	publish = !legit publish
+	unpublish = !legit unpublish
+	undo = !legit undo
+	branches = !legit branches
+
 [rebase]
     autoStash = True
     stat = True
@@ -132,3 +147,10 @@
 ; Could do something like this
 ; [init]
 ;   templatedir = ~/.config/git/
+[cola]
+	spellcheck = true
+	tabwidth = 4
+	expandtab = true
+	boldheaders = true
+[gui]
+	editor = nvim

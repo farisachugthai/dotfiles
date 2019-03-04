@@ -96,6 +96,8 @@ setq (
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i")
 
+(require 'flycheck-pyflakes)
+(add-hook 'python-mode-hook 'flycheck-mode)
 
 ;; Org
 ;; -----

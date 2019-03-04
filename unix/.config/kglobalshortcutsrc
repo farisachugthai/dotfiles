@@ -3,14 +3,18 @@ _k_friendly_name=Activity Manager
 switch-to-activity-7f86fd99-5dc0-4ada-81ef-bab4eed2a2f6=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
-Switch to Next Keyboard Layout=Ctrl+Alt+K,none,Switch to Next Keyboard Layout
+Switch to Next Keyboard Layout=,none,Switch to Next Keyboard Layout
 _k_friendly_name=KDE Daemon
 
 [firefox.desktop]
 _k_friendly_name=Firefox Web Browser
-_launch=,none,Firefox Web Browser
-new-private-window=,none,Open a New Private Window
-new-window=,none,Open a New Window
+_launch=Meta+F,none,Firefox Web Browser
+new-private-window=Meta+Shift+P,none,Open a New Private Window
+new-window=Meta+Shift+N,none,Open a New Window
+
+[guake.desktop]
+_k_friendly_name=Launch Guake Terminal
+_launch=F12,none,Launch Guake Terminal
 
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
@@ -35,11 +39,11 @@ _k_friendly_name=KDE Daemon
 {b7eba0f3-618c-4556-9eef-25ab15143cf1}=Meta+Shift+Print,none,Take Rectangular Region Screenshot
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=none,none,Search
 {d4eee716-9b00-4300-a967-91b9a4b2bd93}=Meta+Print,none,Take Active Window Screenshot
-{f05e2edb-2d27-4116-bace-98247ed405c2}=Ctrl+Alt+T,none,Launch Konsole
+{f05e2edb-2d27-4116-bace-98247ed405c2}=,none,Launch Konsole
 
 [kitty.desktop]
 _k_friendly_name=kitty
-_launch=Meta+Return,none,kitty
+_launch=Meta+Return\tCtrl+Alt+T,none,kitty
 
 [kmix]
 _k_friendly_name=Audio Volume
@@ -132,8 +136,8 @@ TILING: Move Window Down=Meta+Shift+J,none,Move Window Down
 TILING: Move Window Left=Meta+Shift+H,none,Move Window Left
 TILING: Move Window Right=Meta+Shift+L,none,Move Window Right
 TILING: Move Window Up=Meta+Shift+K,none,Move Window Up
-TILING: Next Tiling Layout=Meta+PgDown,none,Next Tiling Layout
-TILING: Previous Tiling Layout=Meta+PgUp,none,Previous Tiling Layout
+TILING: Next Tiling Layout=,none,Next Tiling Layout
+TILING: Previous Tiling Layout=,none,Previous Tiling Layout
 TILING: Resize Active Window To The Bottom=Meta+Alt+J,none,Resize Active Window To The Bottom
 TILING: Resize Active Window To The Left=Meta+Alt+H,none,Resize Active Window To The Left
 TILING: Resize Active Window To The Right=Meta+Alt+L,none,Resize Active Window To The Right
@@ -141,7 +145,7 @@ TILING: Resize Active Window To The Top=Meta+Alt+K,none,Resize Active Window To 
 TILING: Swap Window With Master=Meta+Shift+M,none,Swap Window With Master
 TILING: Tile now=Meta+T,none,Tile now
 TILING: Toggle Border for all=Meta+Shift+U,none,Toggle Border for all
-TILING: Toggle Floating=Meta+F,none,Toggle Floating
+TILING: Toggle Floating=,none,Toggle Floating
 TILING: Toggle Tiling=Meta+Shift+F11,none,Toggle Tiling
 Toggle Window Raise/Lower=none,none,Toggle Window Raise/Lower
 Walk Through Desktop List=none,none,Walk Through Desktop List
@@ -165,10 +169,10 @@ Window Fullscreen=none,none,Make Window Fullscreen
 Window Grow Horizontal=none,none,Pack Grow Window Horizontally
 Window Grow Vertical=none,none,Pack Grow Window Vertically
 Window Lower=none,none,Lower Window
-Window Maximize=none,Meta+PgUp,Maximize Window
+Window Maximize=Meta+PgUp,Meta+PgUp,Maximize Window
 Window Maximize Horizontal=none,none,Maximize Window Horizontally
 Window Maximize Vertical=none,none,Maximize Window Vertically
-Window Minimize=none,Meta+PgDown,Minimize Window
+Window Minimize=Meta+PgDown,Meta+PgDown,Minimize Window
 Window Move=none,none,Move Window
 Window No Border=none,none,Hide Window Border
 Window On All Desktops=none,none,Keep Window on All Desktops
@@ -229,8 +233,8 @@ Window to Screen 7=none,none,Window to Screen 7
 WindowGeometry=Ctrl+Shift+F11,Ctrl+Shift+F11,Toggle window geometry display (effect only)
 _k_friendly_name=KWin
 view_actual_size=,Meta+0,Actual Size
-view_zoom_in=Meta+=,Meta+=,Zoom In
-view_zoom_out=Meta+-,Meta+-,Zoom Out
+view_zoom_in=Ctrl+=,Meta+=,Zoom In
+view_zoom_out=Ctrl+-,Meta+-,Zoom Out
 
 [lattedock]
 _k_friendly_name=Latte Dock
@@ -275,7 +279,7 @@ stopmedia=Media Stop,Media Stop,Stop media playback
 
 [org.keepassxc.KeePassXC.desktop]
 _k_friendly_name=KeePassXC
-_launch=,none,KeePassXC
+_launch=Meta+K\t,none,KeePassXC
 
 [org_kde_powerdevil]
 Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Decrease Keyboard Brightness
@@ -325,4 +329,4 @@ toggle-window-state=none,F12,Open/Retract Yakuake
 
 [zim.desktop]
 _k_friendly_name=Zim Desktop Wiki
-_launch=,none,Zim Desktop Wiki
+_launch=Meta+Z,none,Zim Desktop Wiki

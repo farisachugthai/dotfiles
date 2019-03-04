@@ -3,45 +3,43 @@
 # flake8: noqa
 """Import my most frequently used modules.
 
-Then imports a few utility functions from IPython and imports the python
+Then imports a few utility functions from :ref:`IPython` and imports the python
 package neovim is served in.
 
 Here's a little bit more info.
 
 Help on module IPython.utils.dir2 in IPython.utils:
 
+NAME
+IPython.utils.dir2 - A fancy version of Python's builtin :func:`dir()` function.
 
-    NAME
-    IPython.utils.dir2 - A fancy version of Python's builtin :func:`dir`
-    function.
+FUNCTIONS
 
-    FUNCTIONS
+    dir2(obj)
+    dir2(obj) -> list of strings
 
-        dir2(obj)
-        dir2(obj) -> list of strings
+    Extended version of the Python builtin dir(), which does a few extra
+    checks.
 
-        Extended version of the Python builtin dir(), which does a few extra
-        checks.
+    This version is guaranteed to return only a list of true strings,
+    whereas :func:`dir()` returns anything that objects inject into
+    themselves, even if they
+    are later not really valid for attribute access (many extension
+    libraries have such bugs).
 
-        This version is guaranteed to return only a list of true strings,
-        whereas :func:`dir()` returns anything that objects inject into
-        themselves, even if they
-        are later not really valid for attribute access (many extension
-        libraries have such bugs).
+    get_real_method(obj, name)
+    Like getattr, but with a few extra sanity checks:
 
-        get_real_method(obj, name)
-        Like getattr, but with a few extra sanity checks:
+    - If obj is a class, ignore everything except class methods
+    - Check if obj is a proxy that claims to have all attributes
+    - Catch attribute access failing with any exception
+    - Check that the attribute is a callable object
 
-        - If obj is a class, ignore everything except class methods
-        - Check if obj is a proxy that claims to have all attributes
-        - Catch attribute access failing with any exception
-        - Check that the attribute is a callable object
+    Returns the method or None.
 
-        Returns the method or None.
-
-        safe_hasattr(obj, attr)
-        In recent versions of Python, hasattr() only catches AttributeError.
-        This catches all errors.
+    safe_hasattr(obj, attr)
+    In recent versions of Python, hasattr() only catches AttributeError.
+    This catches all errors.
 
     FILE
 
@@ -56,13 +54,15 @@ Help on module IPython.utils.dir2 in IPython.utils:
     appear in the REPL namespace. Seemingly obvious now. So how does
     ptipython import things?
 
-    You have access to ip.cleanup() after you import get_ipython
-    Well it embeds ipython. But it has to import other modules. Hm.
+    You have access to ``ip.cleanup()`` after you run ``import get_ipython()``
+    Well it embeds :ref:`IPython` But it has to import other modules. Hm.
+
 """
 from importlib import import_module
 import os
 from pathlib import Path
 import shutil
+from shutil import which, chown, copytree  # noqa: E401
 import subprocess
 import sys
 
