@@ -6,8 +6,7 @@
 
 :File: pandas_init.py
 :Author: Faris Chugthai
-:Github: https://github.com/farisachugthai
-:Date: |date|
+`Github <https://github.com/farisachugthai>`_
 :URL: `https://realpython.com/python-pandas-tricks/#1-configure-options-settings-at-interpreter-startup`_
 
 .. todo::

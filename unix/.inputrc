@@ -3,8 +3,8 @@
 # Maintainer: Faris Chugthai
 
 # In an attempt to prevent RSI
-# set editing-mode vi
-# set keymap vi
+set editing-mode vi
+set keymap vi
 
 # From Arch Wiki
 #
@@ -29,12 +29,12 @@ set menu-complete-display-prefix On
 
 # If set to On, readline performs filename matching and completion
 # in a case-insensitive fashion.
-# set completion-map-case
+set completion-map-case
 
 # If set to On, and completion-ignore-case is enabled, readline
 # treats hyphens (-) and underscores (_) as equivalent when
 # performing case-insensitive filename matching and completion.
-# set completion-ignore-case
+set completion-ignore-case
 
 # When set to On, readline will configure the terminal in a way
 # that will enable it to insert each paste into the editing buffer

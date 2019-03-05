@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6980f66e-e23a-4bf0-b36e-3c6e930daa8d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dotfiles.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.config/awesome/menu.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.config/awesome/theme_zenburn.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/make.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/conf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/custom_magics.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/directive.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/extensions.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/index.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/ipython_interactive_shell.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/ipython_keybindings.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/jinja2-checkpoint.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/jinja2.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/magics.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/pygments.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/startup.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/31_toggle_emacs_vi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/32_vi_modes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/setup.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unix/.xonshrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitconfig" beforeDir="false" afterPath="$PROJECT_DIR$/.gitconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.bashrc.d/functions.bash" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.bashrc.d/functions.bash" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.config/kitty/diff.conf" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.config/kitty/diff.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.config/kitty/kitty.conf" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.config/kitty/kitty.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.dircolors" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.dircolors" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/extensions/README.rst" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/extensions_pt2.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/profile_default/README.rst" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.ipython/docs/source/basic_customization.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/profile_default/ipython_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.ipython/profile_default/ipython_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/20_aliases.py" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/20_aliases.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/30_macros_lazydl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/40_git_helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/README.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/pandas_init.py" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.ipython/profile_default/startup/pandas_init.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.jupyter/jupyter_qtconsole_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.jupyter/jupyter_qtconsole_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unix/.profile" beforeDir="false" afterPath="$PROJECT_DIR$/unix/.profile" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/unix/.ipython/profile_default/startup/20_aliases.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="24">
+              <caret line="246" column="40" selection-start-line="246" selection-start-column="40" selection-end-line="246" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.ipython/profile_default/startup/20_aliases.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1704">
+              <caret line="74" column="22" selection-start-line="74" selection-start-column="22" selection-end-line="74" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/unix/.editorconfig" />
+        <option value="$USER_HOME$/.ipython/profile_default/startup/20_aliases.py" />
+        <option value="$PROJECT_DIR$/unix/.ipython/extensions/README.rst" />
+        <option value="$PROJECT_DIR$/unix/.ipython/profile_default/startup/20_aliases.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-14" />
+    <option name="y" value="1" />
+    <option name="width" value="1106" />
+    <option name="height" value="1015" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="dotfiles" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dotfiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dotfiles" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dotfiles" type="462c0819:PsiDirectoryNode" />
+              <item name="unix" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dotfiles" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dotfiles" type="462c0819:PsiDirectoryNode" />
+              <item name="unix" type="462c0819:PsiDirectoryNode" />
+              <item name=".ipython" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dotfiles" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dotfiles" type="462c0819:PsiDirectoryNode" />
+              <item name="unix" type="462c0819:PsiDirectoryNode" />
+              <item name=".ipython" type="462c0819:PsiDirectoryNode" />
+              <item name="profile_default" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dotfiles" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dotfiles" type="462c0819:PsiDirectoryNode" />
+              <item name="unix" type="462c0819:PsiDirectoryNode" />
+              <item name=".ipython" type="462c0819:PsiDirectoryNode" />
+              <item name="profile_default" type="462c0819:PsiDirectoryNode" />
+              <item name="startup" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dotfiles" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dotfiles" type="462c0819:PsiDirectoryNode" />
+              <item name="unix" type="462c0819:PsiDirectoryNode" />
+              <item name=".ipython" type="462c0819:PsiDirectoryNode" />
+              <item name="profile_default" type="462c0819:PsiDirectoryNode" />
+              <item name="startup" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="editor.config.ad.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../utilities" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.Unnamed">
+    <list>
+      <item itemvalue="Python.Unnamed" />
+      <item itemvalue="Python docs.sphinx task in " />
+      <item itemvalue="Python tests.Unittests in Desktop" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6980f66e-e23a-4bf0-b36e-3c6e930daa8d" name="Default Changelist" comment="" />
+      <created>1549922508333</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1549922508333</updated>
+      <workItem from="1549922510100" duration="2002000" />
+      <workItem from="1551018871082" duration="3238000" />
+      <workItem from="1551786425922" duration="1747000" />
+      <workItem from="1551790220449" duration="40000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="7027000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1111" height="591" extended-state="6" />
+    <layout>
+      <window_info anchor="top" auto_hide="true" id="Google Cloud Storage" internal_type="SLIDING" order="0" type="SLIDING" weight="0.3184834" />
+      <window_info anchor="top" auto_hide="true" x="606" y="92" width="1097" height="415" id="Run" internal_type="SLIDING" order="1" sideWeight="0.49194312" type="SLIDING" weight="0.9242762" />
+      <window_info id="Favorites" order="0" sideWeight="0.5041494" side_tool="true" weight="0.23154056" />
+      <window_info id="Structure" order="1" sideWeight="0.5131265" side_tool="true" weight="0.16413662" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.4868735" visible="true" weight="0.16619183" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49952605" weight="0.48552337" />
+      <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.5004558" side_tool="true" weight="0.4142539" />
+      <window_info anchor="bottom" id="Message" order="3" />
+      <window_info anchor="bottom" id="Find" order="4" />
+      <window_info anchor="bottom" id="Database Changes" order="5" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Python Console" internal_type="SLIDING" order="6" sideWeight="0.4995442" type="SLIDING" weight="0.5256125" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49477682" weight="0.6617647" />
+      <window_info anchor="bottom" id="Debug" order="8" weight="0.24782608" />
+      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="11" show_stripe_button="false" weight="0.7322655" />
+      <window_info anchor="bottom" id="TODO" order="12" weight="0.32826087" />
+      <window_info anchor="bottom" id="App Config Tool" order="13" weight="0.32867134" />
+      <window_info anchor="right" id="Database" order="0" weight="0.32953465" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="SciView" order="2" weight="0.328585" />
+      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
+      <window_info anchor="right" id="Time Tracking" order="5" weight="0.22971742" />
+      <window_info anchor="right" x="0" y="0" width="227" height="391" id="Documentation" order="6" side_tool="true" weight="0.3299909" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="top" auto_hide="true" id="Google Cloud Storage" internal_type="SLIDING" order="0" type="SLIDING" weight="0.3184834" />
+      <window_info anchor="top" auto_hide="true" x="606" y="92" width="1097" height="415" id="Run" internal_type="SLIDING" order="1" sideWeight="0.49194312" type="SLIDING" weight="0.9242762" />
+      <window_info id="Favorites" order="0" sideWeight="0.5041494" side_tool="true" weight="0.23154056" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4868735" visible="true" weight="0.16413662" />
+      <window_info active="true" id="Structure" order="2" sideWeight="0.5131265" side_tool="true" visible="true" weight="0.16413662" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="1" sideWeight="0.49952605" weight="0.48552337" />
+      <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.5004558" side_tool="true" weight="0.4142539" />
+      <window_info anchor="bottom" id="Message" order="3" />
+      <window_info anchor="bottom" id="Find" order="4" />
+      <window_info anchor="bottom" id="Database Changes" order="5" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Python Console" internal_type="SLIDING" order="6" sideWeight="0.4995442" type="SLIDING" weight="0.5256125" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49477682" weight="0.6617647" />
+      <window_info anchor="bottom" id="Debug" order="8" weight="0.24782608" />
+      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="11" show_stripe_button="false" weight="0.7322655" />
+      <window_info anchor="bottom" id="TODO" order="12" weight="0.32826087" />
+      <window_info anchor="bottom" id="App Config Tool" order="13" weight="0.32867134" />
+      <window_info anchor="right" id="Database" order="0" weight="0.32953465" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="SciView" order="2" weight="0.328585" />
+      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
+      <window_info anchor="right" id="Time Tracking" order="5" weight="0.22971742" />
+      <window_info anchor="right" x="0" y="0" width="227" height="391" id="Documentation" order="6" side_tool="true" weight="0.3299909" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/unix/.editorconfig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/unix/.ipython/profile_default/README.rst" />
+    <entry file="file://$PROJECT_DIR$/unix/.ipython/extensions/README.rst" />
+    <entry file="file://$PROJECT_DIR$/unix/.ipython/profile_default/startup/20_aliases.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="246" column="40" selection-start-line="246" selection-start-column="40" selection-end-line="246" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.ipython/profile_default/startup/20_aliases.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1704">
+          <caret line="74" column="22" selection-start-line="74" selection-start-column="22" selection-end-line="74" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

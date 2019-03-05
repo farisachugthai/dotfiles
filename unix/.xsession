@@ -168,7 +168,4 @@ fi
 # How in the world did I just let that global var sit for so long?
 unset PROGNAME
 
-# https://github.com/awesomeWM/awesome/blob/master/docs/01-readme.md#running-awesome
-# Xsession is a good spot for configs when you still want your display manager
-# to appear 
 exit 0

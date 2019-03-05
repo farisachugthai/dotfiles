@@ -1,1 +1,8 @@
-unix/.config/git/attributes
+# Git Attributes
+# From man 5 gitattributes line 551:
+
+# The system knows a built-in macro attribute, binary:
+
+*.spl binary
+
+text=auto

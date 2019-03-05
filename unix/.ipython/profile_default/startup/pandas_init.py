@@ -6,8 +6,6 @@
 
 :File: pandas_init.py
 :Author: Faris Chugthai
-:Github: https://github.com/farisachugthai
-:Date: |date|
 :URL: `https://realpython.com/python-pandas-tricks/#1-configure-options-settings-at-interpreter-startup`_
 
 .. todo::
@@ -26,7 +24,7 @@ import sys
 try:
     import pandas as pd
 except ImportError:
-    pass
+    sys.exit()
 
 
 def start():
@@ -56,4 +54,4 @@ if __name__ == '__main__':
     start()
 
     del start
-# Clean up namespace in the interpreter
+    # Clean up namespace in the interpreter
