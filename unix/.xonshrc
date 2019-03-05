@@ -1,7 +1,41 @@
-# Feb 09, 2019: Killed all errors!
+"""
+Vim: set ft=python:
 
-# Feb 13, 2019: From termux
-source-bash  "echo loading xonsh foreign shell"
+Mar 03, 2019:
+
+Just got an error from the fzf widget.
+
+
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/virtualenvs/xonsh/lib/python3.7/site-packages/xonsh/__amalgam__.py",
+
+line 8459, in _call handler(**self _kwargs)
+
+File "/data/data/com.termux/files/home/virtualenvs/xonsh/lib/python3.7/site-packages/xontrib/fzf-widgets.xsh",
+
+line 56, in custom_keybindings handler('fzf_history_binding')
+
+File "/data/data/com.termux/files/home/virtualenvs/xonsh/lib/python3.7/site-packages/xontrib/fzf-widgets.xsh",
+
+line 53, in handler::
+
+    >>> return bindings.registry.add_binding(key)
+
+AttributeError: 'KeyBindings' object has no attribute 'registry'
+Exception raised in event handler; ignored.
+
+(xonsh) <user>@localhost ~ $ nvim "/data/data/com.termux/files/home/virtualenvs/xonsh/lib/python3.7/site-packages/xontrib/fzf-widgets.xsh"
+
+Changing the line above to::
+
+    >>> return bindings.add_binding(key)
+
+Fixed it immediately. Just to take note of that.
+
+"""
+# XONSH WIZARD START
+source-bash "echo loading xonsh foreign shell"
+# XONSH WIZARD END
 
     # XONSH WIZARD START
 $AUTO_SUGGEST_IN_COMPLETIONS = '1'
@@ -22,6 +56,7 @@ $_PATH = "$PATH"
 # $PATHEXT = "'.EXE'"
 $PROMPT = '{user}@{hostname}:{cwd}$ '
 $PROMPT_TOOLKIT_COLOR_DEPTH = 'DEPTH_24_BIT'
+SUBSEQUENCE_PATH_COMPLETION = True
 $VI_MODE = '1'
 $XONSH_AUTOPAIR = '1'
 $XONSH_CACHE_EVERYTHING = '1'

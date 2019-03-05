@@ -4,8 +4,6 @@
 
 # TODO: For everything that modifies path, run a check to ensure it's not already an entry.
 
-# Set PATH so it includes user's private bin directories
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Platform_Dependant: {{{1
 
@@ -16,6 +14,10 @@ else
     export _ROOT="/usr"
 fi
 
+# Set PATH so it includes user's private bin directories
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$_ROOT/local/bin:$PATH"
+
 # These aren't platform dependant thanks to that var we set but platform dependant code relies on this being set
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -25,8 +27,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:
 
 # Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
-
-export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/log"
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
 test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
@@ -96,7 +96,7 @@ fi
 
 # Environment Variables: {{{1
 
-# Pagers:
+# Pagers: {{{2
 
 if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
@@ -110,8 +110,11 @@ else
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
     export PAGER="less -JRKML"
 fi
+
+export BYOBU_PAGER="nvim"
 export COLORTERM="truecolor"
 
+# Other: {{{2
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -144,30 +147,26 @@ fi
 
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
-
-# As this was placed here because Termux didn't have a manpath set
-# Here's the one I currently have from KDE Neon. Nov 07, 2018
-# /home/faris/miniconda3/share/man:/usr/local/man:/usr/local/share/man:/usr/share/man:/home/faris/.local/kitty.app/share/man:/home/faris/.fzf/man
-# if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
+# Disable MSFT pwsh telemetry
+export POWERSHELL_TELEMETRY_OPTOUT=1
 
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Rust: {{{1
 if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
 # Sourced Files: {{{1
 
 # Setup completions correctly.
 
-# Help find your dotfiles faster
+# Help find your dotfiles faster and setup nvim
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
+export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
-export PATH="$_ROOT/local/bin/:$PATH"
-
-# Disable MSFT pwsh telemetry
-export POWERSHE_TELEMETRY_OPTOUT=1
 
 # Source the bashrc last.
 # shellcheck source=/home/faris/.bashrc

@@ -245,13 +245,8 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-# Only set this in IPython! Messes jupyter up.
-# try:
-#     c.InteractiveShell.autoindent = True
-# except Exception:
-#     pass
 try:
-    c.InteractiveShell.autoawait = True 
+    c.InteractiveShell.autoindent = True
 except Exception:
     pass
 

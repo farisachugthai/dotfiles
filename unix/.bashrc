@@ -152,48 +152,43 @@ if [[ -f ~/.fzf.bash ]]; then
     . "$HOME/.fzf.bash"
 fi
 
-# Loops for the varying backends for fzf. ag is my fave.
+# Loops for the varying backends for fzf.
 if [[ "$(command -v ag)" ]]; then
-
-    # Make the default the most general. Even though these are a lot of options
-    # most simply hide info to make it easier to use with FZF
-
-    # Can't get it to work without -l though so only filename search.
-    export FZF_DEFAULT_COMMAND='ag --hidden .'
-
-    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --ansi'
-
-    # Difference between running 'fzf' and C-t is fullscreen or not.
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press CTRL-Y to copy command into clipboard. Press ? to toggle preview."'
-
     # Doesn't work.
     Ag() {
-        "$FZF_DEFAULT_COMMAND $*" | fzf -
+        "$FZF_DEFAULT_COMMAND $@" | fzf -
     }
+fi
 
 # Junegunn's current set up per his bashrc with an added check for fd.
-elif [[ "$(command -v rg)" ]]; then
-    export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10 --follow '
-    export FZF_CTRL_T_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
+if [[ "$(command -v rg)" ]]; then
+
+    export FZF_DEFAULT_COMMAND='rg --hidden --max-count 10 --follow --smart-case --no-messages '
+    export FZF_CTRL_T_COMMAND='rg --hidden --count-matches --follow --smart-case --no-messages '
+
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --color=bg+:24 --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
+    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --ansi'
+
 
 elif [[ "$(command -v fd)" ]]; then
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow --exclude .git'
+
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow -j 8 -d 6 --exclude .git'
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow -j 8 -e --exclude .git'
+    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
+
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview."'
 
     if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
 
+
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
 
     # Options for FZF no matter what.
-    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border'
+    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --reverse'
 fi
-
-# [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 # termux doesnt have xclip or xsel
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
@@ -225,7 +220,12 @@ if [[ -d "$HOME/.rvm/bin" ]]; then
 fi
 
 # Sourced files: {{{1
-# This needs updating since so many f the files are already stated and a handful add completion
+
+# Feb 16, 2019: tmux botches this on termux
+
+test -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
+
+# This needs updating since so many of the files are already stated and a handful add completion
 # for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in ~/.bashrc.d/*.bash; do
@@ -235,6 +235,10 @@ if [[ -d ~/.bashrc.d/ ]]; then
     unset -v config
 fi
 
+# add some cool colors to ls
+eval $( dircolors -b ~/.dircolors )
+
+
 # Here's one for the terminal
 if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
@@ -242,10 +246,6 @@ fi
 
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
+    # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
-
-# add some cool colors to ls
-eval $( dircolors -b ~/.dircolors )
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
