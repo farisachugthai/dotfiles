@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
+"""Global configuration file for IPython.
+
 IPython Config
 ==============
 
@@ -45,17 +46,14 @@ Returns
 ``home`` : str
     The users home directory.
 
+.. todo:: Idk if this would be worth it or not but divide each subsection into functions and call them.
 
 """
 import logging
 import os
 
 from pygments.token import Comment
-
-#### THIS IS THE MODULE! Its too exciting to able to execute this script
-# directly from within python and not get an error for a func call with no
-# import
-from traitlets.config import get_config
+from trailets.config import get_config
 
 c = get_config()
 

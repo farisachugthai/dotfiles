@@ -256,19 +256,16 @@ if __name__ == "__main__":
 
     user_aliases = []
 
+    user_aliases = common_aliases(_ip)
+
     if _sys_check() == 'Linux':
 
         # Now let's get the Linux aliases.
-        user_aliases = linux_specific_aliases(_ip)
+        user_aliases += linux_specific_aliases(_ip)
 
         if platform.machine() == "aarch64":
             # user_aliases += termux_aliases(ip)
             pass
-
-    if len(user_aliases) == 0:
-        user_aliases += common_aliases(_ip)
-    else:
-        user_aliases = common_aliases(_ip)
 
     for i in user_aliases:
         _ip.alias_manager.define_alias(i[0], i[1])

@@ -8,38 +8,39 @@ package neovim is served in.
 
 Here's a little bit more info.
 
+.. code-block:: rst
+
 Help on module IPython.utils.dir2 in IPython.utils:
 
-NAME
-IPython.utils.dir2 - A fancy version of Python's builtin :func:`dir()` function.
 
-FUNCTIONS
+    NAME
+    IPython.utils.dir2 - A fancy version of Python's builtin :func:`dir()` function.
 
-    dir2(obj)
-    dir2(obj) -> list of strings
+    FUNCTIONS
 
-    Extended version of the Python builtin dir(), which does a few extra
-    checks.
+        dir2(obj)
+        dir2(obj) -> list of strings
 
-    This version is guaranteed to return only a list of true strings,
-    whereas :func:`dir()` returns anything that objects inject into
-    themselves, even if they
-    are later not really valid for attribute access (many extension
-    libraries have such bugs).
+        Extended version of the Python builtin dir(), which does a few extra checks.
 
-    get_real_method(obj, name)
-    Like getattr, but with a few extra sanity checks:
+        This version is guaranteed to return only a list of true strings,
+        whereas :func:`dir()` returns anything that objects inject into
+        themselves, even if they are later not really valid for attribute
+        access (many extension libraries have such bugs).
 
-    - If obj is a class, ignore everything except class methods
-    - Check if obj is a proxy that claims to have all attributes
-    - Catch attribute access failing with any exception
-    - Check that the attribute is a callable object
+        get_real_method(obj, name)
+        Like getattr, but with a few extra sanity checks:
 
-    Returns the method or None.
+        - If obj is a class, ignore everything except class methods
+        - Check if obj is a proxy that claims to have all attributes
+        - Catch attribute access failing with any exception
+        - Check that the attribute is a callable object
 
-    safe_hasattr(obj, attr)
-    In recent versions of Python, hasattr() only catches AttributeError.
-    This catches all errors.
+        Returns the method or None.
+
+        safe_hasattr(obj, attr)
+        In recent versions of Python, hasattr() only catches AttributeError.
+        This catches all errors.
 
     FILE
 
@@ -57,6 +58,9 @@ FUNCTIONS
     You have access to ``ip.cleanup()`` after you run ``import get_ipython()``
     Well it embeds :ref:`IPython` But it has to import other modules. Hm.
 
+
+NOQA E401
+
 """
 from importlib import import_module
 import os
@@ -66,11 +70,10 @@ from shutil import which, chown, copytree  # noqa: E401
 import subprocess
 import sys
 
+import IPython
+from IPython import get_ipython
 from IPython.utils.dir2 import dir2, get_real_method, safe_hasattr
 from IPython.core.interactiveshell import InteractiveShell
-
-# 12/14/18
-import IPython
 
 try:
     import git
@@ -78,13 +81,20 @@ except ImportError:
     pass
 
 
-def import_nvim(mod):
+def _import_nvim(mod):
     """Import the neovim module.
 
-    Utilizes :func:`import_module` from :mod:`importlib`.
+    Utilizes :func:`import_module()` from :mod:`importlib`.
 
-    :param mod: A module to import.
-    :returns: None
+    Parameters
+    ----------
+    mod : module
+        The module to import
+
+    Returns
+    -------
+    None
+
     """
     try:
         import_module(mod)
@@ -96,10 +106,12 @@ def import_nvim(mod):
 
 
 if __name__ == "__main__":
+    _ip = get_ipython
+
     if sys.version_info > (3, 5):
         mod = 'pynvim'
     else:
         mod = 'neovim'
 
-    import_nvim(mod)
-    del import_nvim
+    _import_nvim(mod)
+    del _import_nvim

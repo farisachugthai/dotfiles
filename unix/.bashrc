@@ -32,6 +32,8 @@ if [[ -n "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
 fi
 
+export PYTHONDONTWRITEBYTECODE=1
+
 # gcloud: {{{2
 # TODO: Jump in the shell, and run the following to ensure it works,
 # then reduce this section to 1 line!
@@ -105,10 +107,12 @@ fi
 
 # GBT:
 if [[ -n "$(command -v gbt)" ]]; then
-    export PS1="$(gbt $?)"
+    prompt_tmp=$(gbt $?)
+    export PS1=$prompt_tmp
 
     export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
     export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+    unset prompt_tmp
 fi
 
 # Vim: {{{1
@@ -162,7 +166,7 @@ if [[ "$(command -v rg)" ]]; then
     export FZF_DEFAULT_COMMAND='rg --hidden --max-count 10 --follow --smart-case --no-messages '
     export FZF_CTRL_T_COMMAND='rg --hidden --count-matches --follow --smart-case --no-messages '
 
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --color=bg+:24 --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
     export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --ansi'
 
 
@@ -178,7 +182,7 @@ elif [[ "$(command -v fd)" ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
 
-    
+
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
 
@@ -224,8 +228,9 @@ test -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/b
 # This needs updating since so many of the files are already stated and a handful add completion
 # for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
-    for config in .bashrc.d/*.bash; do
-        . $config;
+    for config in ~/.bashrc.d/*.bash; do
+        # shellcheck source=/home/faris/.bashrc.d/*.bash
+        source "$config"
     done
     unset -v config
 fi
@@ -233,7 +238,14 @@ fi
 # add some cool colors to ls
 eval $( dircolors -b ~/.dircolors )
 
+
+# Here's one for the terminal
+if [[ -n "$(command -v kitty)" ]]; then
+    source <(kitty + complete setup bash)
+fi
+
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
+    # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi

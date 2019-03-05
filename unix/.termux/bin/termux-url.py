@@ -32,7 +32,8 @@ import sys
 try:
     import requests
 except ImportError:
-    logging.warning("This script xepends on the requests module. Falling back to urllib.")
+    logging.warning(
+        "This script xepends on the requests module. Falling back to urllib.")
     import urllib
 
 import youtube_dl
@@ -41,21 +42,23 @@ import youtube_dl
 def ytdl(link):
     """Execute downloading a YouTube video.
 
-    Possibly makes sense to make this a class. Playlists are a subclass,
-    objects with variable sizes are others etc.
+    Possibly makes sense to make this a class. playlists are a subclass,
+    objects with variable sizes are others etc...
 
     :param link: URL to a YouTube video
-    :returns: Request object or :class:`urllib.Response` if
-              :mod:`requests` isn't downloaded.
+    :returns: Request object or urllib.Response if :mod:`requests` isn't
+              downloaded.
     """
     ydl_opts = {
-        'format': 'bestaudio/best',
+        'format':
+        'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        'output': 'TODO:'
+        'output':
+        'TODO:'
     }
     ydl = youtube_dl.YoutubeDL(ydl_opts)
     ydl.download(link)
@@ -67,7 +70,9 @@ if __name__ == "__main__":
     link_parser = urllib.parse.urlparse(link)
 
     if link_parser[2] == "/playlist":
-        logging.debug("This seems like a YouTube playlist. Downloading. Press Ctrl-C to stop")
+        logging.debug(
+            "This seems like a YouTube playlist. Downloading. Press Ctrl-C to stop"
+        )
 
     elif link_parser[1] == "youtu.be":
         print(ytdl(link))
