@@ -4,25 +4,35 @@
 
 Unfortunately in it's current invocation this extension doesn't work.
 
-Usage::
+Usage
+-----
+.. ipython::
+
     %load_ext example
 
-While not utilized here, a similar execution path can be utilized for
-IPython.core.magic.cell_magic
 
-Let's try importing the Magics class.
+While not utilized here, a similar execution path can be utilized for
+:func:`IPython.core.magic.cell_magic()`
+
+Let's try importing the class:`IPython.core.magic.Magics()`.
 
 Ah I just read the src and it mentions quite a few things I did wrong.
 
 We also need to import InteractiveShell.register_magic(class or instance)
 So I had it spelled wrong.
+
+See Also
+--------
+Utilize jedi and run ``:Pyimport IPython.core.magic`` to see the src.
+
 """
 import sys
 import time
 
-# utilize jedi and run :Pyimport IPython.core.magic to see the src
+from IPython import get_ipython
 from IPython.core.magic import Magics, magics_class, line_magic
-from IPython.core.interactiveshell import InteractiveShell
+# from IPython.core.interactiveshell import InteractiveShell
+
 
 @magics_class
 class ExampleMagic(Magics):
@@ -39,7 +49,12 @@ class ExampleMagic(Magics):
             return time.time()
 
 
-def load_ipython_extension(ip):
+def load_ipython_extension(_ip):
     """Load the extension in IPython."""
-    ip.register_magic(ExampleMagic)
-    ip.register_magic(time_printer)
+    _ip.register_magic(ExampleMagic)
+    _ip.register_magic(ExampleMagic.time_printer)
+
+
+if __name__ == "__main__":
+    _ip = get_ipython()
+    load_ipython_extension(_ip)

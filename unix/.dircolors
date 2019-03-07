@@ -759,5 +759,4 @@ TERM xterm-color
 TERM xterm-debian
 TERM xterm-kitty
 # }}}
-
 # vim: ft=dircolors:fdm=marker:et:sw=2:

@@ -166,7 +166,7 @@ if [[ "$(command -v rg)" ]]; then
     export FZF_DEFAULT_COMMAND='rg --hidden --max-count 10 --follow --smart-case --no-messages '
     export FZF_CTRL_T_COMMAND='rg --hidden --count-matches --follow --smart-case --no-messages '
 
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --color=bg+:24 --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
     export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --ansi'
 
 
@@ -228,24 +228,22 @@ test -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/b
 # This needs updating since so many of the files are already stated and a handful add completion
 # for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
-    for config in ~/.bashrc.d/*.bash; do
+    for config in .bashrc.d/*.bash; do
         # shellcheck source=/home/faris/.bashrc.d/*.bash
-        source "$config"
+        . $config;
     done
     unset -v config
 fi
-
-# add some cool colors to ls
-eval $( dircolors -b ~/.dircolors )
-
 
 # Here's one for the terminal
 if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
 fi
 
+# add some cool colors to ls
+eval $( dircolors -b ~/.dircolors )
+
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
-    # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi

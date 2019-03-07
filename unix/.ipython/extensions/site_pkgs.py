@@ -2,31 +2,42 @@
 # -*- coding: utf-8 -*-
 """Show site packages for different venvs installed on a system.
 
-Assumes:
-    Unix OS
+Utilize IPython macros to search through the site-packages directory for
+membership of a package.
+
+
+Assumes
+-------
+Unix OS
 
 Will be tested on Win10 soon.
 
 The only changes that should need to be made is possibly making a getter for
 the home dir.
 
-.. code block::
+.. code-block:: python3
 
     >>> try:
     >>>     home = os.environ.get('$HOME')
     >>> except OSError:
     >>>     os.environ.get('%userprofile%')
 
-TODO:
-    - Might wanna accept sys.argv in case we don't wanna exclusively
-      use ~/virtualenvs
-    - If no arguments given print usage info.
-    - If argument all (or maybe --all?) is given print everything
-    - Add >>> to code below.
 
-References:
-    IPython.core.interactiveshell
-    Around lines 2300::
+.. todo::
+
+    - Might wanna accept sys.argv in case we don't wanna exclusively use ~/virtualenvs
+    - Accept an argument for log level...and also initialize a logger.
+    - Change the format here it shouldn't use macros. Those are better suited for interactive use and reloading things from history.
+
+
+References
+----------
+:mod:`IPython.core.interactiveshell`
+
+
+Around lines 2300
+
+.. code-block:: python3
 
     #-------------------------------------------------------------------------
     # Things related to macros
@@ -51,6 +62,7 @@ References:
         if not isinstance(themacro, macro.Macro):
             raise ValueError('A macro must be a string or a Macro instance.')
         self.user_ns[name] = themacro
+
 
 """
 import argparse

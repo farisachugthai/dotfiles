@@ -111,8 +111,7 @@
     r = remote -v
 
     # stashes
-    sh = stash
-    sha = stash --all
+    sh = stash --all
     shp = stash pop
     shl = stash list
     shd = stash drop
@@ -134,7 +133,7 @@
     showUntrackedFiles = all
 
 [pull]
-    rebase = True
+    rebase = preserve
     renormalize
 
 [url "git://github.com"]

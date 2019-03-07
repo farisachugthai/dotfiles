@@ -6,11 +6,18 @@
 
 :File: pandas_init.py
 :Author: Faris Chugthai
-`Github <https://github.com/farisachugthai>`_
+:Github: https://github.com/farisachugthai
+:Date: |date|
 :URL: `https://realpython.com/python-pandas-tricks/#1-configure-options-settings-at-interpreter-startup`_
 
-.. todo:: - Import :mod:`logging` and use a :func:`logging.warning()` call if pandas isn't installed.
+.. todo::
 
+    - Import :mod:`logging` and use a :func:`logging.warning()` call if pandas
+    isn't installed. I simply pass now, but it should at least notify.
+    It used to be :func:`sys.exit()` though so at least we don't do that!
+
+    - Also we should do a check that we're on python3.6+ because otherwise,
+    we'll crash the interpreter as we invoke an expression with f-strings.
 
 
 """

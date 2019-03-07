@@ -16,9 +16,7 @@ fi
 
 # Set PATH so it includes user's private bin directories
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-export PATH="$_ROOT/local/bin:$PATH"
 
-# These aren't platform dependant thanks to that var we set but platform dependant code relies on this being set
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -167,6 +165,7 @@ export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
 export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
+export PATH="$_ROOT/local/bin/:$PATH"
 
 # Source the bashrc last.
 # shellcheck source=/home/faris/.bashrc
