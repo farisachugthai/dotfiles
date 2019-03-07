@@ -165,7 +165,6 @@ export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
 export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
-export VIMRUNTIME="$_ROOT/share/nvim/runtime"
 export PATH="$_ROOT/local/bin/:$PATH"
 
 # Source the bashrc last.

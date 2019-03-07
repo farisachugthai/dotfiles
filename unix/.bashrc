@@ -32,6 +32,8 @@ if [[ -n "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
 fi
 
+export PYTHONDONTWRITEBYTECODE=1
+
 # gcloud: {{{2
 # TODO: Jump in the shell, and run the following to ensure it works,
 # then reduce this section to 1 line!
@@ -105,10 +107,12 @@ fi
 
 # GBT:
 if [[ -n "$(command -v gbt)" ]]; then
-    export PS1="$(gbt $?)"
+    prompt_tmp=$(gbt $?)
+    export PS1=$prompt_tmp
 
     export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
     export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
+    unset prompt_tmp
 fi
 
 # Vim: {{{1
@@ -178,7 +182,7 @@ elif [[ "$(command -v fd)" ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
 
-    
+
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
 
@@ -225,9 +229,15 @@ test -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/b
 # for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
     for config in .bashrc.d/*.bash; do
+        # shellcheck source=/home/faris/.bashrc.d/*.bash
         . $config;
     done
     unset -v config
+fi
+
+# Here's one for the terminal
+if [[ -n "$(command -v kitty)" ]]; then
+    source <(kitty + complete setup bash)
 fi
 
 # add some cool colors to ls

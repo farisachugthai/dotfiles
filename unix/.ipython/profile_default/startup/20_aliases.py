@@ -1,5 +1,5 @@
-#  !/usr/bin/env python
-#  -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """File for all shell aliases.
 
 IPython Aliases
@@ -21,7 +21,7 @@ IPython Aliases
 
 Overview
 --------
-This module utilizes ``ip``, the global IPython InteractiveShell instance, and
+This module utilizes ``_ip``, the global IPython InteractiveShell instance, and
 fills the ``user_ns`` with common Linux idioms.
 
 .. admonition::
@@ -35,7 +35,7 @@ fills the ``user_ns`` with common Linux idioms.
     - Also I have to ask why we define all these aliases in one :py:`dict` and then move it to another.
     - Why not just define them all in :py:func:`ip.alias_manager.define_alias()` from the get go?
     - Secondary todo. How do you expand an alias in rst?
-    - ``ip`` is a reference to the :class:`IPython.core.InteractiveShell` global instance
+    - ``_ip`` is a reference to the :class:`IPython.core.InteractiveShell` global instance
     - It isn't the actual module name and as a result that reference isn't going to work.
 
 
@@ -63,10 +63,10 @@ interactively the syntax ``%alias alias_name cmd`` doesn't require quoting.
 
 Attributes
 ----------
-_ip (InteractiveShell): A global object representing the active IPython
-                        session. Contains varying packages as well as the
-                        current global namespace. Doesn't need to be defined
-                        in advance during an interactive session.
+``_ip`` : InteractiveShell
+    A global object representing the active IPython session.
+    Contains varying packages as well as the current global namespace.
+    Doesn't need to be defined in advance during an interactive session.
 
 
 See Also
@@ -122,19 +122,10 @@ def linux_specific_aliases(_ip):
 
     """
     _ip.alias_manager.user_aliases = [
-        ('ag', 'ag --hidden --color %l'),
-        ('apt', 'apt %l'),
-        ('chmod', 'chmod %l'),
+        ('ag', 'ag --hidden %l'),
         ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
-        ('ctags',
-         'ctags %l'),  # it's nice to be able to build tags while working
-        ('dpkg', 'dpkg %l'),
-        ('du', 'du %l'),
         ('dus', 'du -d 1 -h %l'),
         ('echo', 'echo -e %l'),
-        ('find', 'find %l'),
-        ('fd', 'fd %l'),
-        ('fzf', 'fzf %l'),  # all we need to do is figure out keybindings
         ('gpip',
          'export PIP_REQUIRE_VIRTUALENV=0; python -m pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'
          ),
@@ -153,8 +144,6 @@ def linux_specific_aliases(_ip):
         ('mk', 'mkdir -pv %l && cd %l'),  # check if this works. only mkdir
         ('mkdir', 'mkdir -pv %l'),
         ('mv', 'mv -iv %l'),
-        ('nvim', 'nvim %l'),
-        ('rg', 'rg %l'),
         ('rm', 'rm -v %l'),
         ('rmdir', 'rmdir -v %l'),
         ('profile_default',
@@ -162,9 +151,7 @@ def linux_specific_aliases(_ip):
         ('startup',
          'cd ~/projects/dotfiles/unix/.ipython/profile_default/startup'),
         ('tail', 'tail -n 30 %l'),
-        ('touch', 'touch %l'),
         ('tre', 'tree -ashFC -I .git -I __pycache__ --filelimit 25'),
-        ('tree', 'tree %l'),
         ('vi', 'nvim %l'),
         ('vim', 'nvim %l'),
         ('xx', 'quit'),  # this is a sweet one
@@ -172,13 +159,6 @@ def linux_specific_aliases(_ip):
         ('...', 'cd ../..'),
     ]
     return _ip.alias_manager.user_aliases
-
-
-def termux_aliases(_ip):
-    # ('conda', 'conda %l')
-    # todo
-    # also you can fet rid of all aliases with no options thanks to rehashx
-    pass
 
 
 def common_aliases(_ip):
@@ -204,9 +184,13 @@ def common_aliases(_ip):
         ('ga', 'git add %l'),
         ('gb', 'git branch -a %l'),
         ('gci', 'git commit'),
+        ('gcia', 'git commit --amend %l'),
+        ('gcid', 'git commit --date=%l'),
+        ('gciad', 'git commit --amend --date=%l'),
         ('gcl', 'git clone %l'),
         ('gcls', 'git clone --depth 1 %l'),
         ('gco', 'git checkout %l'),
+        ('gcob', 'git checkout -b %l'),
         ('gd', 'git diff %l'),
         ('gds', 'git diff --staged %l'),
         ('gds2', 'git diff --staged --stat %l'),
@@ -221,11 +205,12 @@ def common_aliases(_ip):
         ('git root', 'git rev-parse --show-toplevel'),
         ('git unstage', 'git reset HEAD'),
         ('git unstaged', 'git diff %l'),
-        ('glo', 'git log %l'),
+        ('gl', 'git log %l'),
+        ('glo', 'git log --graph --decorate --abbrev --branches --all'),
         ('gm', 'git merge --no-ff %l'),
         ('gmm', 'git merge master'),
         ('gmt', 'git mergetool %l'),
-        ('gp', 'git pull'),
+        ('gp', 'git pull --all'),
         ('gpo', 'git pull origin'),
         ('gpom', 'git pull origin master'),
         ('gpu', 'git push'),
@@ -238,6 +223,7 @@ def common_aliases(_ip):
         ('gshc', 'git stash clear'),
         ('gsha', 'git stash apply'),
         ('gst', 'git diff --stat %l'),
+        ('gt', 'git tag --list'),
         ('lswitch', 'legit switch'),
         ('lsync', 'legit sync'),
         ('lpublish', 'legit publish'),
@@ -266,9 +252,9 @@ if __name__ == "__main__":
             pass
 
     if len(user_aliases) == 0:
-        user_aliases += common_aliases(_ip)
-    else:
         user_aliases = common_aliases(_ip)
+    else:
+        user_aliases += common_aliases(_ip)
 
     for i in user_aliases:
         _ip.alias_manager.define_alias(i[0], i[1])
