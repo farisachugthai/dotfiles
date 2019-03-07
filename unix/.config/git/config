@@ -133,7 +133,7 @@
     showUntrackedFiles = all
 
 [pull]
-    rebase = True
+    rebase = preserve
     renormalize
 
 [url "git://github.com"]
