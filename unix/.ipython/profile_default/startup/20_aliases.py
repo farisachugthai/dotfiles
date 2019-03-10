@@ -32,8 +32,6 @@ fills the ``user_ns`` with common Linux idioms.
 
     - Separate the dictionary below into OS and machine specific dictionaries.
     - Run basic checks and only add to the user namespace if they match.
-    - Also I have to ask why we define all these aliases in one :py:`dict` and then move it to another.
-    - Why not just define them all in :py:func:`ip.alias_manager.define_alias()` from the get go?
     - Secondary todo. How do you expand an alias in rst?
     - ``_ip`` is a reference to the :class:`IPython.core.InteractiveShell` global instance
     - It isn't the actual module name and as a result that reference isn't going to work.
@@ -70,7 +68,7 @@ Attributes
 
 
 See Also
----------
+--------
 Aliases file for IPython.
 :ref:`IPython.core.alias.Alias`
 
@@ -113,10 +111,10 @@ def linux_specific_aliases(_ip):
 
     Returns
     -------
-    _ip.alias_manager.user_aliases : SingletonConfigurable
+    ``_ip.alias_manager.user_aliases`` : SingletonConfigurable
         Subclass of the :class:`AliasManager()` ....I think. Generically
         referring to it as a :mod:`traitlets` object but the interface is the
-        same as a tuple with 2 elements in the form (alias, system command.
+        same as a tuple with 2 elements in the form (alias, system command).
 
 
 
@@ -152,17 +150,12 @@ def linux_specific_aliases(_ip):
          'cd ~/projects/dotfiles/unix/.ipython/profile_default/startup'),
         ('tail', 'tail -n 30 %l'),
         ('tre', 'tree -ashFC -I .git -I __pycache__ --filelimit 25'),
-        ('vi', 'nvim %l'),
-        ('vim', 'nvim %l'),
-        ('xx', 'quit'),  # this is a sweet one
-        ('..', 'cd ..'),
-        ('...', 'cd ../..'),
     ]
     return _ip.alias_manager.user_aliases
 
 
 def common_aliases(_ip):
-    r"""Add aliases common to all OSes. Only git aliases for now.
+    r"""Add aliases common to all OSes.
 
     Parameters
     ----------
@@ -172,18 +165,20 @@ def common_aliases(_ip):
 
     Returns
     -------
-    _ip.alias_manager.user_aliases : SingletonConfigurable
+    ``_ip.alias_manager.user_aliases`` : SingletonConfigurable
         Subclass of the :class:`AliasManager()` ....I think. Generically
         referring to it as a :mod:`traitlets` object but the interface is the
-        same as a tuple with 2 elements in the form (alias, system command.
+        same as a tuple with 2 elements in the form (alias, system command).
 
 
     """
     _ip.alias_manager.user_aliases = [
-        ('g', 'git status -sb'),
+        ('g', 'git diff --staged --stat -- HEAD'),
         ('ga', 'git add %l'),
+        ('ga.', 'git add .'),
+        ('gar', 'git add --renormalize %l'),
         ('gb', 'git branch -a %l'),
-        ('gci', 'git commit'),
+        ('gci', 'git commit %l'),
         ('gcia', 'git commit --amend %l'),
         ('gcid', 'git commit --date=%l'),
         ('gciad', 'git commit --amend --date=%l'),
@@ -207,6 +202,7 @@ def common_aliases(_ip):
         ('git unstaged', 'git diff %l'),
         ('gl', 'git log %l'),
         ('glo', 'git log --graph --decorate --abbrev --branches --all'),
+        ('gls', 'git ls-tree'),
         ('gm', 'git merge --no-ff %l'),
         ('gmm', 'git merge master'),
         ('gmt', 'git mergetool %l'),
@@ -216,7 +212,7 @@ def common_aliases(_ip):
         ('gpu', 'git push'),
         ('gr', 'git remote -v'),
         ('gs', 'git status'),
-        ('gsh', 'git stash -a'),
+        ('gsh', 'git stash'),
         ('gshp', 'git stash pop'),
         ('gshl', 'git stash list'),
         ('gshd', 'git stash drop'),
@@ -230,6 +226,11 @@ def common_aliases(_ip):
         ('lunpublish', 'legit unpublish'),
         ('lundo', 'legit undo'),
         ('lbranches', 'legit branches'),
+        ('vi', 'nvim %l'),
+        ('vim', 'nvim %l'),
+        ('xx', 'quit'),  # this is a sweet one
+        ('..', 'cd ..'),
+        ('...', 'cd ../..'),
     ]
     return _ip.alias_manager.user_aliases
 
@@ -245,16 +246,13 @@ if __name__ == "__main__":
     if _sys_check() == 'Linux':
 
         # Now let's get the Linux aliases.
-        user_aliases = linux_specific_aliases(_ip)
+        user_aliases += linux_specific_aliases(_ip)
 
         if platform.machine() == "aarch64":
             # user_aliases += termux_aliases(ip)
             pass
 
-    if len(user_aliases) == 0:
-        user_aliases = common_aliases(_ip)
-    else:
-        user_aliases += common_aliases(_ip)
+    user_aliases += common_aliases(_ip)
 
     for i in user_aliases:
         _ip.alias_manager.define_alias(i[0], i[1])
