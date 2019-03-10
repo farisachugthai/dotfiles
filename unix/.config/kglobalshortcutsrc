@@ -233,8 +233,8 @@ Window to Screen 7=none,none,Window to Screen 7
 WindowGeometry=Ctrl+Shift+F11,Ctrl+Shift+F11,Toggle window geometry display (effect only)
 _k_friendly_name=KWin
 view_actual_size=,Meta+0,Actual Size
-view_zoom_in=Ctrl+=,Meta+=,Zoom In
-view_zoom_out=Ctrl+-,Meta+-,Zoom Out
+view_zoom_in=none,Meta+=,Zoom In
+view_zoom_out=none,Meta+-,Zoom Out
 
 [lattedock]
 _k_friendly_name=Latte Dock

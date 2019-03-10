@@ -53,8 +53,7 @@ import os
 from pygments.token import Comment
 
 #### THIS IS THE MODULE! Its too exciting to able to execute this script
-# directly from within python and not get an error for a func call with no
-# import
+#  from within python and not get an error for a func call with no import
 from traitlets.config import get_config
 
 c = get_config()
@@ -195,7 +194,7 @@ c.BaseIPythonApplication.profile = 'default'
 
 # Create a massive crash report when IPython encounters what may be an internal
 #  error.  The default is to append a short message to the usual traceback
-c.BaseIPythonApplication.verbose_crash = True
+c.BaseIPythonApplication.verbose_crash = False
 
 # ----------------------------------------------------------------------------
 # TerminalIPythonApp(BaseIPythonApplication,InteractiveShellApp) configuration
@@ -294,7 +293,7 @@ c.InteractiveShell.cache_size = 100000
 c.InteractiveShell.color_info = True
 
 # Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-c.InteractiveShell.colors = 'Neutral'
+c.InteractiveShell.colors = 'Linux'
 
 # c.InteractiveShell.debug = False
 
