@@ -9,15 +9,19 @@ case $- in
 esac
 
 # Python: {{{1
+
 # Put python first because we need conda initialized right away
+
+# Conda: {{{2
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/miniconda3/bin/conda' shell.bash hook 2> /dev/null)"
-if [ $? -eq 0 ]; then
+__conda_setup="$($HOME/miniconda3/bin/conda shell.bash hook 2> /dev/null)"
+if [[ $__conda_setup == 0 ]]; then
     eval "$__conda_setup"
 else
     if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        # shellcheck source=/home/faris/miniconda3/etc/profile.d/conda.sh
         . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
         export PATH="$HOME/miniconda3/bin:$PATH"
@@ -27,6 +31,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 fi
 
+# }}}
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 if [[ -n "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
@@ -35,9 +40,12 @@ fi
 export PYTHONDONTWRITEBYTECODE=1
 
 # gcloud: {{{2
+
 # TODO: Jump in the shell, and run the following to ensure it works,
 # then reduce this section to 1 line!
 # if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
+
+# TODO: Alternatively decide on 1 fucking spot to download this. ~/.local/ should be reasonable enough.
 if [[ -f ~/google-cloud-sdk/path.bash.inc ]]; then source ~/google-cloud-sdk/path.bash.inc; fi
 
 if [[ -f ~/google-cloud-sdk/completion.bash.inc ]]; then source ~/google-cloud-sdk/completion.bash.inc; fi
@@ -47,6 +55,7 @@ if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/googl
 if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
 
 # History: {{{1
+
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -60,6 +69,7 @@ HISTTIMEFORMAT="%F %T: "
 HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
 # Shopt: {{{1
+
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Append to the history file, don't overwrite it
@@ -77,16 +87,6 @@ if [[ $BASH_VERSINFO -gt 3 ]]; then
     shopt -s globstar
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [[ -f /usr/share/bash-completion/bash_completion ]]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [[ -f /etc/bash_completion ]]; then
-    . /etc/bash_completion
-  fi
-fi
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
@@ -96,6 +96,7 @@ shopt -s dirspell       # Autocorrect the spelling if it can
 shopt -s cdspell
 
 # Defaults in Ubuntu bashrcs: {{{1
+
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
 [[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -105,7 +106,7 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# GBT:
+# GBT: {{{1
 if [[ -n "$(command -v gbt)" ]]; then
     prompt_tmp=$(gbt $?)
     export PS1=$prompt_tmp
@@ -116,8 +117,10 @@ if [[ -n "$(command -v gbt)" ]]; then
 fi
 
 # Vim: {{{1
+
 set -o vi
-if [[ "$(command -v nvim)" ]]; then
+
+if [[ -n "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
 else
     export VISUAL="vim"
@@ -136,7 +139,9 @@ fi
 if [[ -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
     # Load nvm and bash completion
+    # shellcheck source=/home/faris/.nvm/nvm.sh
     [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
+    # shellcheck source=/home/faris/.nvm/bash_completion
     [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
 fi
 
@@ -149,11 +154,12 @@ fi
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
+    # shellcheck source=/home/faris/.fzf.bash
     . "$HOME/.fzf.bash"
 fi
 
 # Loops for the varying backends for fzf.
-if [[ "$(command -v ag)" ]]; then
+if [[ -n "$(command -v ag)" ]]; then
     # Doesn't work.
     Ag() {
         "$FZF_DEFAULT_COMMAND $@" | fzf -
@@ -161,7 +167,7 @@ if [[ "$(command -v ag)" ]]; then
 fi
 
 # Junegunn's current set up per his bashrc with an added check for fd.
-if [[ "$(command -v rg)" ]]; then
+if [[ -n "$(command -v rg)" ]]; then
 
     export FZF_DEFAULT_COMMAND='rg --hidden --max-count 10 --follow --smart-case --no-messages '
     export FZF_CTRL_T_COMMAND='rg --hidden --count-matches --follow --smart-case --no-messages '
@@ -170,7 +176,7 @@ if [[ "$(command -v rg)" ]]; then
     export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --ansi'
 
 
-elif [[ "$(command -v fd)" ]]; then
+elif [[ -n "$(command -v fd)" ]]; then
 
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow -j 8 -d 6 --exclude .git'
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow -j 8 -e --exclude .git'
@@ -223,12 +229,13 @@ fi
 
 # Feb 16, 2019: tmux botches this on termux
 
+# shellcheck source=/usr/share/bash-completion/bash_completion
 test -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
 
 # This needs updating since so many of the files are already stated and a handful add completion
 # for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
-    for config in .bashrc.d/*.bash; do
+    for config in "$HOME/.bashrc.d"/*.bash; do
         # shellcheck source=/home/faris/.bashrc.d/*.bash
         . $config;
     done
@@ -241,9 +248,10 @@ if [[ -n "$(command -v kitty)" ]]; then
 fi
 
 # add some cool colors to ls
-eval $( dircolors -b ~/.dircolors )
+eval "$( dircolors -b ~/.dircolors )"
 
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
+    # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi

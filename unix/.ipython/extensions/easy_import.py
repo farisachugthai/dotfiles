@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 
-:mod:`easy_import`
-
     .. currentmodule:: easy_import
         :synopsis: Import commonly used modules into the IPython namespace.
 
@@ -57,4 +55,4 @@ def load_ns(mods):
 
 def load_ipython_extension(_ip):
     """Create ``ns`` magic."""
-    __ip.magics_manager.register_function(load_ns, 'line', 'ns')
+    _ip.magics_manager.register_function(load_ns, 'line', 'ns')

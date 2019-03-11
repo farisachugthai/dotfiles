@@ -73,8 +73,10 @@ Aliases file for IPython.
 :ref:`IPython.core.alias.Alias`
 
 """
-from IPython import get_ipython
 import platform
+
+import IPython
+from IPython import get_ipython
 
 
 def _sys_check():
@@ -119,7 +121,7 @@ def linux_specific_aliases(_ip):
 
 
     """
-    _ip.alias_manager.user_aliases = [
+    _user_aliases = [
         ('ag', 'ag --hidden %l'),
         ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
         ('dus', 'du -d 1 -h %l'),
@@ -151,7 +153,7 @@ def linux_specific_aliases(_ip):
         ('tail', 'tail -n 30 %l'),
         ('tre', 'tree -ashFC -I .git -I __pycache__ --filelimit 25'),
     ]
-    return _ip.alias_manager.user_aliases
+    return _user_aliases
 
 
 def common_aliases(_ip):
@@ -172,7 +174,7 @@ def common_aliases(_ip):
 
 
     """
-    _ip.alias_manager.user_aliases = [
+    _user_aliases = [
         ('g', 'git diff --staged --stat -- HEAD'),
         ('ga', 'git add %l'),
         ('ga.', 'git add .'),
@@ -232,13 +234,13 @@ def common_aliases(_ip):
         ('..', 'cd ..'),
         ('...', 'cd ../..'),
     ]
-    return _ip.alias_manager.user_aliases
+    return _user_aliases
 
 
 if __name__ == "__main__":
     _ip = get_ipython()
 
-    if type(_ip) is None:
+    if not isinstance(_ip, IPython.terminal.interactiveshell.TerminalInteractiveShell):
         raise Exception
 
     user_aliases = []
