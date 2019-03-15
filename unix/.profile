@@ -2,8 +2,17 @@
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
 
-# TODO: For everything that modifies path, run a check to ensure it's not already an entry.
+# Pathadd: {{{1
+# https://superuser.com/a/39995
+pathadd() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
 
+# Note that PATH should already be marked as exported, so reexporting is not needed. This checks whether the directory exists & is a directory before adding it, which you may not care about.
+
+# Also, this adds the new directory to the end of the path; to put at the beginning, use PATH="$1${PATH:+":$PATH"}" instead of the above PATH= line.
 
 # Platform_Dependant: {{{1
 
@@ -14,8 +23,11 @@ else
     export _ROOT="/usr"
 fi
 
-# Set PATH so it includes user's private bin directories
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+# Set PATH so it includes user's private bin directories. Let's start small with pathadd()
+
+pathadd "$HOME/bin"
+pathadd "$HOME/.local/bin"
+
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -44,29 +56,23 @@ fi
 # Ruby: {{{1
 # This is gonna need a for loop soon.
 
-if [[ -d ~/.gem/ruby/2.5.0/bin ]]; then
-    export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
-fi
+pathadd "$HOME/.gem/ruby/2.5.0/bin"
+pathadd "$HOME/.gem/ruby/2.6.0/bin"
+pathadd "$HOME/.gem/ruby/2.7.0/bin"
 
-if [[ -d ~/.gem/ruby/2.6.0/bin ]]; then
-    export PATH="$PATH:$HOME/.gem/ruby/2.6.0/bin"
-fi
-
-if [[ -d "$HOME/.rvm" ]]; then
+if [[ -n "$(command -v rvm)" ]]; then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-    export PATH="$PATH:$HOME/.rvm/bin"
+    pathadd "$HOME/.rvm/bin"
     # shellcheck source=/home/faris/.rvm/scripts/rvm disable=1091
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 fi
 
 # Go: {{{1
 # Add the Go std lib to the PATH if that's where it was put
-if [[ -d "$_ROOT/local/go" ]]; then
-    export PATH="$PATH:$_ROOT/local/go/bin"
-fi
 
 # Utilize GOPATH.
 if [[ -n "$(command -v go)" ]]; then
+    pathadd "$_ROOT/local/go/bin"
     export GOPATH="$(go env GOPATH)"
     export PATH="$PATH:$GOPATH/bin"
 fi
@@ -74,23 +80,17 @@ fi
 # JavaScript: {{{1
 if [[ -n "$(command -v yarn)" ]]; then
     YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
-    export PATH="$PATH:$YARNPATH"
+    pathadd "$YARNPATH"
 
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
         # shellcheck source=./.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash disable=1091
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
 
-    if [[ -d "$HOME/.yarn/bin" ]]; then
-        export PATH="$PATH:$HOME/.yarn/bin"
-    fi
-
 fi
 
 # Lisp: {{{1
-if [[ -d "$HOME/.racket/7.1/bin" ]]; then
-    export PATH="$PATH:$HOME/.racket/7.1/bin"
-fi
+pathadd "$HOME/.racket/7.1/bin"
 
 # Environment Variables: {{{1
 
@@ -138,7 +138,8 @@ if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
     if [[ -d "/tmp" ]]; then
-        export TMP="/var/tmp,/usr/tmp,/tmp"
+        # don't have tmp set to more than one thing dingus
+        export TMP="/var/tmp"
         export TMPDIR="/var/tmp"
     fi
 fi
@@ -151,9 +152,9 @@ export POWERSHELL_TELEMETRY_OPTOUT=1
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Rust: {{{1
-if [[ -d "$HOME/.cargo/bin" ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
+pathadd "$HOME/.cargo/bin"
 
-export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc" fi
 
 # Sourced Files: {{{1
 
@@ -165,7 +166,7 @@ export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
 export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
-export PATH="$_ROOT/local/bin/:$PATH"
+pathadd "$_ROOT/local/bin"
 
 # Source the bashrc last.
 # shellcheck source=/home/faris/.bashrc
