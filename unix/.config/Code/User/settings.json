@@ -96,5 +96,7 @@
     "git.branchWhitespaceChar": "_",
     "vim.neovimPath": "/usr/bin/nvim",
     "vim.timeout": 100,
-    "vim.sneakUseIgnorecaseAndSmartcase": true
+    "vim.sneakUseIgnorecaseAndSmartcase": true,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
 }

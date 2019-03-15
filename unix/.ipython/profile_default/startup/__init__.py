@@ -18,6 +18,7 @@ from IPython import get_ipython
 _ip = get_ipython()
 
 logging.getLogger(__name__).addHandler(NullHandler())
+logging.basicConfig(level=logging.WARNING)
 
 pkg_resources.declare_namespace(__name__)
 

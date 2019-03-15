@@ -8,6 +8,12 @@ case $- in
     *) return 0;;
 esac
 
+pathadd() {  # {{{1
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
+
 # Python: {{{1
 
 # Put python first because we need conda initialized right away
@@ -24,7 +30,7 @@ else
         # shellcheck source=/home/faris/miniconda3/etc/profile.d/conda.sh
         . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="$HOME/miniconda3/bin:$PATH"
+        pathadd "$HOME/miniconda3/bin"
     fi
 fi
 unset __conda_setup
@@ -46,13 +52,11 @@ export PYTHONDONTWRITEBYTECODE=1
 # if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
 
 # TODO: Alternatively decide on 1 fucking spot to download this. ~/.local/ should be reasonable enough.
-if [[ -f ~/google-cloud-sdk/path.bash.inc ]]; then source ~/google-cloud-sdk/path.bash.inc; fi
 
-if [[ -f ~/google-cloud-sdk/completion.bash.inc ]]; then source ~/google-cloud-sdk/completion.bash.inc; fi
-
-if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
-
-if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
+if [[ -d ~/google-cloud-sdk ]]; then
+    # shellcheck source=~/google-cloud-sdk/completion.bash.inc && source ~/google-cloud-sdk/path.bash.inc
+    source /home/faris/google-cloud-sdk/{completion.bash.inc,path.bash.inc}
+fi
 
 # History: {{{1
 
@@ -146,16 +150,15 @@ if [[ -d "$HOME/.nvm" ]]; then
 fi
 
 # Testing out the language servers to see if they'll link up with neovim
-if [[ -d "$HOME/.local/share/nvim/site/node_modules/.bin" ]]; then
-    export PATH="$PATH:$HOME/.local/share/nvim/site/node_modules/.bin"
-fi
+pathadd "$HOME/.local/share/nvim/site/node_modules/.bin"
 
+# Auto added by yarn. Reordered it a lil ;)
 # FZF: {{{1
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     # shellcheck source=/home/faris/.fzf.bash
-    . "$HOME/.fzf.bash"
+    source "$HOME/.fzf.bash"
 fi
 
 # Loops for the varying backends for fzf.
@@ -167,10 +170,11 @@ if [[ -n "$(command -v ag)" ]]; then
 fi
 
 # Junegunn's current set up per his bashrc with an added check for fd.
+# Well you might wanna double check that because this isn't working right now either
 if [[ -n "$(command -v rg)" ]]; then
 
-    export FZF_DEFAULT_COMMAND='rg --hidden --max-count 10 --follow --smart-case --no-messages '
-    export FZF_CTRL_T_COMMAND='rg --hidden --count-matches --follow --smart-case --no-messages '
+    export FZF_DEFAULT_COMMAND='rg --hidden --follow --files $* ' 
+    export FZF_CTRL_T_COMMAND='rg --hidden  --follow  --files $* '
 
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
     export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --ansi'
@@ -219,23 +223,14 @@ fi
 complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
 
-# Ruby: {{{1
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-if [[ -d "$HOME/.rvm/bin" ]]; then
-    export PATH="$PATH:$HOME/.rvm/bin"
-fi
-
 # Sourced files: {{{1
 
 # Feb 16, 2019: tmux botches this on termux
 
-# shellcheck source=/usr/share/bash-completion/bash_completion
-test -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
-
 # This needs updating since so many of the files are already stated and a handful add completion
 # for commands i don't hace on every device.
 if [[ -d ~/.bashrc.d/ ]]; then
-    for config in "$HOME/.bashrc.d"/*.bash; do
+    for config in $HOME/.bashrc.d/*.bash; do
         # shellcheck source=/home/faris/.bashrc.d/*.bash
         . $config;
     done

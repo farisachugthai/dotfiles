@@ -21,8 +21,8 @@ IPython Aliases
 
 Overview
 --------
-This module utilizes ``_ip``, the global IPython InteractiveShell instance, and
-fills the ``user_ns`` with common Linux idioms.
+This module utilizes `_ip`, the global IPython InteractiveShell instance, and
+fills the `user_ns` with common Linux idioms.
 
 .. admonition::
 
@@ -30,24 +30,22 @@ fills the ``user_ns`` with common Linux idioms.
 
 .. todo::
 
-    - Separate the dictionary below into OS and machine specific dictionaries.
-    - Run basic checks and only add to the user namespace if they match.
-    - Secondary todo. How do you expand an alias in rst?
-    - ``_ip`` is a reference to the :class:`IPython.core.InteractiveShell` global instance
-    - It isn't the actual module name and as a result that reference isn't going to work.
-
+    - Start implementing the replace directive for `_ip` and class....InteractiveShell
 
 Parameters
 ----------
-When writing aliases, an alias definition can take various string placeholders.
-As per the official documentation
+When writing aliases, an ``%alias`` definition can take various string
+placeholders. As per the official documentation:
 
 
-.. topic:: %l parameter
+    .. topic:: %l parameter
 
-    You can use the %l specifier in an alias definition to represent the
-    whole line when the alias is called.
+        You can use the %l specifier in an alias definition to represent the
+        whole line when the alias is called.
 
+Meaning that it behaves similarly to the parameter `$*` in shells like eshell.
+
+The documentation goes on to say:
 
 .. ipython::
 
@@ -61,10 +59,32 @@ interactively the syntax ``%alias alias_name cmd`` doesn't require quoting.
 
 Attributes
 ----------
-``_ip`` : InteractiveShell
+_ip : InteractiveShell
     A global object representing the active IPython session.
     Contains varying packages as well as the current global namespace.
     Doesn't need to be defined in advance during an interactive session.
+
+
+Examples
+--------
+This code creates a handful of platform-specific functions where each returns
+`user_aliases`. Realizing that this is also used in the IPython implementation,
+the source code of the implementation has been provided for reference.
+
+.. ipython::
+
+    class AliasManager(Configurable):
+
+        default_aliases = List(default_aliases()).tag(config=True)
+        user_aliases = List(default_value=[]).tag(config=True)
+        shell = Instance('IPython.core.interactiveshell.InteractiveShellABC', allow_none=True)
+
+        def __init__(self, shell=None, **kwargs):
+            super(AliasManager, self).__init__(shell=shell, **kwargs)
+            # For convenient access
+            self.linemagics = self.shell.magics_manager.magics['line']
+            self.init_aliases()
+
 
 
 See Also
@@ -73,10 +93,14 @@ Aliases file for IPython.
 :ref:`IPython.core.alias.Alias`
 
 """
+import logging
 import platform
+from shutil import which
 
+# from prompt_toolkit import print_formatted_text as print
 import IPython
 from IPython import get_ipython
+from IPython.core.alias import AliasError
 
 
 def _sys_check():
@@ -87,14 +111,20 @@ def _sys_check():
 def linux_specific_aliases(_ip):
     r"""Add Linux specific aliases.
 
-    For the time being everything is getting thrown in here until I more
-    accurately tease out what is a Linux built-in, 3rd party software, and
-    which commands overlap between bash, cmd and powershell.
+    Aliases that have either:
+
+        * Only been tested on Linux
+        * Only natively exist on Linux
+        * Clobber an existing Windows command (cmd in particular)
+
+    Convenience packages exist such as ConEmu or Cmder which allow a large
+    number of GNU/Linux built-ins to exist on Windows, and as a result, this
+    list may not be comprehensive.
 
     Parameters
     ----------
-    ``_ip`` : :class:`IPython.core.interactiveshell.InteractiveShell()` object
-        The global instance of IPython.
+    _ip : :class:`IPython.core.interactiveshell.InteractiveShell()` object
+        The global instance of :mod:`IPython`.
 
 
     Below is the source code for the function that is invoked here.
@@ -113,8 +143,7 @@ def linux_specific_aliases(_ip):
 
     Returns
     -------
-    ``_ip.alias_manager.user_aliases`` : SingletonConfigurable
-        Subclass of the :class:`AliasManager()` ....I think. Generically
+    _ip.alias_manager.user_aliases : SingletonConfigurable
         referring to it as a :mod:`traitlets` object but the interface is the
         same as a tuple with 2 elements in the form (alias, system command).
 
@@ -126,6 +155,7 @@ def linux_specific_aliases(_ip):
         ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
         ('dus', 'du -d 1 -h %l'),
         ('echo', 'echo -e %l'),
+        ('fzf', 'rg --hidden --follow --files'),
         ('gpip',
          'export PIP_REQUIRE_VIRTUALENV=0; python -m pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'
          ),
@@ -243,6 +273,8 @@ if __name__ == "__main__":
     if not isinstance(_ip, IPython.terminal.interactiveshell.TerminalInteractiveShell):
         raise Exception
 
+    logging.getLogger(__name__)
+
     user_aliases = []
 
     if _sys_check() == 'Linux':
@@ -256,7 +288,13 @@ if __name__ == "__main__":
 
     user_aliases += common_aliases(_ip)
 
+    if which('fzf') and which('rg'):
+        user_aliases.extend(('fzf', 'rg --hidden --follow --files'))
+
     for i in user_aliases:
-        _ip.alias_manager.define_alias(i[0], i[1])
+        try:
+            _ip.alias_manager.define_alias(i[0], i[1])
+        except AliasError as e:
+            logging.error(e)
 
     del i, _sys_check
