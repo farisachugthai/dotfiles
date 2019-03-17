@@ -92,6 +92,11 @@ fi
 # Lisp: {{{1
 pathadd "$HOME/.racket/7.1/bin"
 
+# Rust: {{{1
+pathadd "$HOME/.cargo/bin"
+
+if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
+
 # Environment Variables: {{{1
 
 # Pagers: {{{2
@@ -150,11 +155,6 @@ if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 export POWERSHELL_TELEMETRY_OPTOUT=1
 
 export CURL_HOME="$HOME/.config/curl/curlrc"
-
-# Rust: {{{1
-pathadd "$HOME/.cargo/bin"
-
-if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc" fi
 
 # Sourced Files: {{{1
 
