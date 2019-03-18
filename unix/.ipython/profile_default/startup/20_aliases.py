@@ -21,8 +21,8 @@ IPython Aliases
 
 Overview
 --------
-This module utilizes `_ip`, the global IPython InteractiveShell instance, and
-fills the `user_ns` with common Linux idioms.
+This module utilizes ``_ip``, the global IPython InteractiveShell instance, and
+fills the ``user_ns`` with common Linux idioms.
 
 .. admonition::
 
