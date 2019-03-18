@@ -3,7 +3,7 @@ _k_friendly_name=Activity Manager
 switch-to-activity-7f86fd99-5dc0-4ada-81ef-bab4eed2a2f6=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
-Switch to Next Keyboard Layout=,none,Switch to Next Keyboard Layout
+Switch to Next Keyboard Layout=,Ctrl+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=KDE Daemon
 
 [firefox.desktop]
@@ -233,8 +233,8 @@ Window to Screen 7=none,none,Window to Screen 7
 WindowGeometry=Ctrl+Shift+F11,Ctrl+Shift+F11,Toggle window geometry display (effect only)
 _k_friendly_name=KWin
 view_actual_size=,Meta+0,Actual Size
-view_zoom_in=Ctrl+=,Meta+=,Zoom In
-view_zoom_out=Ctrl+-,Meta+-,Zoom Out
+view_zoom_in=none,Meta+=,Zoom In
+view_zoom_out=none,Meta+-,Zoom Out
 
 [lattedock]
 _k_friendly_name=Latte Dock

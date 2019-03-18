@@ -44,19 +44,21 @@ export rvm_gem_options="--no-rdoc --no-ri"
 # Temp Path
 #   This is where rvm stores all of its temporary files.
 
-export rvm_tmp_path="${rvm_tmp_path:-"$rvm_path/tmp"}"
+export rvm_tmp_path="${rvm_tmp_path:-$rvm_path/tmp}"
 
 # Install On Use Flag
 # Install rubies when used if are not installed.
 
-#export rvm_install_on_use_flag=1
+export rvm_install_on_use_flag=1
 
 # Gemset Create on use Flag
+
 # This will create a gemset when the gemset is used if it does not exist
-# export rvm_gemset_create_on_use_flag=1
+
+export rvm_gemset_create_on_use_flag=1
 
 # Make Flags, I have 8 cpu's so I might use 7 make threads:
-#export rvm_make_flags="-j7"
+export rvm_make_flags="-j7"
 
 # Source a .rvmrc file in a directory after changing to it, if it exists.
 # To disable this fature, set in root/home .rvmrc file:
@@ -83,11 +85,12 @@ export rvm_project_rvmrc=0
 
 # Disable automatic system configuration of RVM via /etc/profile.d/rvm.sh:
 
-# export rvm_etc_profile_flag=0
+export rvm_etc_profile_flag=0
 
 # Add configure flags for builds
 
 # export rvm_configure_flags="--with-openssl-dir=$rvm_path/usr --with-readline-dir=$rvm_path/usr"
+export rvm_configure_flags="--clang"
 
 # So here are the lines that I got from the new version of rvm.
 # A bit odd that they aren't annotated at all but whatever.
