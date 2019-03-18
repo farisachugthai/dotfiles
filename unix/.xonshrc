@@ -1,5 +1,4 @@
-"""Initialize xonsh.
-
+"""
 Vim: set ft=python:
 
 Mar 03, 2019:
@@ -25,8 +24,7 @@ line 53, in handler::
 AttributeError: 'KeyBindings' object has no attribute 'registry'
 Exception raised in event handler; ignored.
 
-(xonsh) <user>@localhost ~ $
-nvim "/data/data/com.termux/files/home/virtualenvs/xonsh/lib/python3.7/site-packages/xontrib/fzf-widgets.xsh"
+(xonsh) <user>@localhost ~ $ nvim "/data/data/com.termux/files/home/virtualenvs/xonsh/lib/python3.7/site-packages/xontrib/fzf-widgets.xsh"
 
 Changing the line above to::
 

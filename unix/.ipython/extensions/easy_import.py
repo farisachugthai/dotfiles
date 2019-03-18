@@ -39,9 +39,16 @@ def load_ns(mods):
     mods : module(s)
         Modules to import.
 
+
+    Returns
+    -------
+    None
+
+
     Examples
     --------
     %ns mpl
+
 
     """
     _ip = get_ipython()
@@ -50,9 +57,9 @@ def load_ns(mods):
         # should probably check that this isn't empty after 20_aliases
         for mod in mods:
             if mod in aliases:
-                user_ns.update(import_ns(namespaces[aliases[mod]))
+                _ip.user_ns.update(import_ns(namespaces[aliases[mod]]))
 
 
 def load_ipython_extension(_ip):
     """Create ``ns`` magic."""
-    _ip.magics_manager.register_function(load_ns, 'line', 'ns')
+    ___ip.magics_manager.register_function(load_ns, 'line', 'ns')

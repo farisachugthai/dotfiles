@@ -35,7 +35,6 @@ What if I want to write the output to a file? Can I prepend the ``%%file`` to
 the top? How deep can this rabbit hole go?
 
 .. _defined_magics:
-
 Which magics are defined here?
 
 .. _line:

@@ -47,8 +47,12 @@ export PYTHONDONTWRITEBYTECODE=1
 
 # GCloud: {{{2
 
-if [[ -f "$PREFIX/google-cloud-sdk/path.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/path.bash.inc"; fi
-if [[ -f "$PREFIX/google-cloud-sdk/completion.bash.inc" ]]; then source "$PREFIX/google-cloud-sdk/completion.bash.inc"; fi
+if [[ -d ~/google-cloud-sdk ]]; then
+    # shellcheck source=~/google-cloud-sdk/completion.bash.inc
+    source /home/faris/google-cloud-sdk/completion.bash.inc
+    # shellcheck source=~/google-cloud-sdk/path.bash.inc
+    source /home/faris/google-cloud-sdk/path.bash.inc
+fi
 
 # History: {{{1
 
@@ -168,8 +172,8 @@ if [[ -n "$(command -v rg)" ]]; then
 
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
     export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
-    export FZF_CTRL_R_COMMAND='rg'
-    export FZF_ALT_C_COMMAND='rg $*'
+    export FZF_CTRL_R_COMMAND="rg $*"
+    export FZF_ALT_C_COMMAND="rg --files $*"
 
 
 elif [[ -n "$(command -v fd)" ]]; then

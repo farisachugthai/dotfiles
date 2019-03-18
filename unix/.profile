@@ -93,6 +93,10 @@ fi
 pathadd "$HOME/.racket/7.1/bin"
 
 # Rust: {{{1
+
+# Remember to keep rust above the environment variables. If ./.cargo/bin isn't
+# added to the path when we evaluate the PAGER var, then we end up with less
+# even if we have bat installed.
 pathadd "$HOME/.cargo/bin"
 
 if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
@@ -103,8 +107,9 @@ if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgrepr
 
 if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
-    export BAT_PAGER=''
     export PAGER="bat"
+    # override this on the CLI if you want but for general use and in scripts plain is best
+    export BAT_STYLE=plain
 else
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
