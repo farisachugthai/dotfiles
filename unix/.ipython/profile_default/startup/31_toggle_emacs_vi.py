@@ -51,7 +51,7 @@ class EditingMode():
     EMACS = 'EMACS'
 
 
-def run():
+def vim_prompt_run():
     """Create a set of key bindings."""
     bindings = KeyBindings()
 
@@ -76,4 +76,4 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    vim_prompt_run()
