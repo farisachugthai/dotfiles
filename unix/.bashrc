@@ -171,19 +171,25 @@ if [[ -n "$(command -v rg)" ]]; then
     export FZF_CTRL_R_COMMAND='rg'
     export FZF_ALT_C_COMMAND='rg $*'
 
+    # Difference between running 'fzf' and C-t is fullscreen or not.
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --follow"
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press CTRL-Y to copy command into clipboard. Press ? to toggle preview."'
 
 elif [[ -n "$(command -v fd)" ]]; then
 
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow -j 8 -d 6 --exclude .git'
-    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow -j 8 -e --exclude .git'
-    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
+# Junegunn's current set up per his bashrc with an added check for fd.
+elif [[ "$(command -v rg)" ]]; then
+    export FZF_CTRL_T_COMMAND='rg --hidden --max-count 10 --follow '
+    export FZF_CTRL_T_OPTS='--multi --color=bg+:24 --bind "enter:execute(less {})" --preview-window=right:50%:wrap --cycle'
 
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview."'
+elif [[ "$(command -v fd)" ]]; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow --exclude .git'
 
     if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
-
 
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
@@ -191,6 +197,8 @@ else
     # Options for FZF no matter what.
     export FZF_DEFAULT_OPTS='--multi --cycle'
 fi
+
+# [[ -n "$NVIM_LISTEN_ADDRESS" ]] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"
 
 # termux doesnt have xclip or xsel
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
@@ -238,3 +246,8 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+
+# add some cool colors to ls
+eval $( dircolors -b ~/.dircolors )
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

@@ -38,6 +38,8 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 # Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
 
+export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/log"
+
 # shellcheck source=/usr/share/bash-completion/bash_completion
 test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
 
@@ -99,7 +101,7 @@ if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgrepr
 
 # Environment Variables: {{{1
 
-# Pagers: {{{2
+# Pagers:
 
 if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
@@ -113,11 +115,8 @@ else
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
     export PAGER="less -JRKML"
 fi
-
-export BYOBU_PAGER="nvim"
 export COLORTERM="truecolor"
 
-# Other: {{{2
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -151,8 +150,11 @@ fi
 
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
-# Disable MSFT pwsh telemetry
-export POWERSHELL_TELEMETRY_OPTOUT=1
+
+# As this was placed here because Termux didn't have a manpath set
+# Here's the one I currently have from KDE Neon. Nov 07, 2018
+# /home/faris/miniconda3/share/man:/usr/local/man:/usr/local/share/man:/usr/share/man:/home/faris/.local/kitty.app/share/man:/home/faris/.fzf/man
+# if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
 
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
@@ -160,13 +162,15 @@ export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Setup completions correctly.
 
-# Help find your dotfiles faster and setup nvim
+# Help find your dotfiles faster
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
-export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
 pathadd "$_ROOT/local/bin"
+
+# Disable MSFT pwsh telemetry
+export POWERSHE_TELEMETRY_OPTOUT=1
 
 # Source the bashrc last.
 # shellcheck source=/home/faris/.bashrc

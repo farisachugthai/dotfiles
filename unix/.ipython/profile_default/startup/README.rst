@@ -1,13 +1,13 @@
-.. startup-readme:
+.. _ipython_startup_readme:
 
 =======================
 IPython Startup Scripts
 =======================
 
-.. module:: startup-readme
+.. module:: IPython_README
 
 :Author: Faris Chugthai
-:Date: Mar 03, 2019
+:Date: Feb 23, 2019
 
 
 Configuration
@@ -17,9 +17,9 @@ Here's a rough outline of what's going on in this directory.
 .. todo::
 
    Should this go in the dir above because we're gonna be focusing on
-   IPython configurations heavily enough that it warrants it? Or better to
-   simply  put only those notes in that dir and only comment on the
-   startup scripts in this directory?
+   IPython configurations heavily enough that it warrants it? Or better to simply
+   put only those notes in that dir and only comment on the startup scripts in this
+   directory?
 
 As of today, the files present are as follows:
 
@@ -46,27 +46,8 @@ and also adds system commands to the namespace!
 Insofar, I haven't noticed any significant slowdown in startup time as a result
 of this, and it hugely eases utilizing IPython as a system shell.
 
-.. other
-.. -----
-.. Sep 27, 2018:
 
-.. Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it,
-.. then ran
-
-.. ipython::
-
-..    %store lazydl >> 30_macros_lazydl.py
-
-.. So that it persists for every :mod:`IPython` session. The char ``%`` is optional
-.. as this configuration has ``automagic`` enabled.
-
-.. It uses the :func:`input()`  to circumvent the fact that macros don't take
-.. command line arguments.
-
-.. todo:: Create an official docs section
-
-.. Official Docs
-.. --------------
+.. todo::
 
 .. Development and Contributing
 .. This would be a good idea though.
@@ -142,19 +123,15 @@ version of the module, you can alternatively run
    Type:      method
 
 
-
 Original
 ---------
 This is the IPython startup directory
 
-.py and .ipy files in this directory will be run *prior* to any code or
-files specified via the exec_lines or exec_files configurables whenever
-you load this profile.
+.py and .ipy files in this directory will be run *prior* to any code or files specified
+via the exec_lines or exec_files configurables whenever you load this profile.
 
-Files will be run in lexicographical order, so you can control the
-execution order of files with a prefix, e.g.
-
-.. code-block:: shell
+Files will be run in lexicographical order, so you can control the execution order of files
+with a prefix, e.g.::
 
     00-first.py
     50-middle.py

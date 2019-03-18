@@ -3,32 +3,24 @@
 """File for all shell aliases.
 
 IPython Aliases
-===============
+================
 
 .. module:: aliases
-    :synopsis: Create aliases for :mod:`IPython` to ease use as a system shell.
+    :synopsis: Create aliases for IPython to ease use as a system shell.
 
 :File: 20_aliases.py
 :Author: Faris Chugthai
 
 `Github <https://github.com/farisachugthai>`_
 
-
-.. changelog:: Mar 03, 2019
-
-    Moved git aliases into new :func:`common_aliases()`
-
-
 Overview
---------
-This module utilizes ``_ip``, the global IPython InteractiveShell instance, and
+---------
+This module utilizes ``_ip``, the global
+:class:`IPython.core.interactiveshell.InteractiveShell()` instance, and
 fills the ``user_ns`` with common Linux idioms.
 
-.. admonition::
 
-    This blows up on Windows10. You've been warned.
-
-.. todo::
+.. todo:: - Secondary todo. How do you expand an alias in rst?
 
     - Separate the dictionary below into OS and machine specific dictionaries.
     - Run basic checks and only add to the user namespace if they match.
@@ -37,34 +29,35 @@ fills the ``user_ns`` with common Linux idioms.
     - It isn't the actual module name and as a result that reference isn't going to work.
 
 
-Parameters
-----------
+String Formatting
+------------------
 When writing aliases, an alias definition can take various string placeholders.
 As per the official documentation
 
-
 .. topic:: %l parameter
 
-    You can use the %l specifier in an alias definition to represent the
+    You can use the `%l` specifier in an alias definition to represent the
     whole line when the alias is called.
 
 
 .. ipython::
 
-    In [2]: %alias bracket echo "Input in brackets: <%l>"
+    In [2]: alias bracket echo "Input in brackets: <%l>"
     In [3]: bracket hello world
     Input in brackets: <hello world>
 
-Note that we quote when in the configuration file but when running alias
+
+Note that we quote when in the configuration file but when running ``alias``
 interactively the syntax ``%alias alias_name cmd`` doesn't require quoting.
 
 
 Attributes
-----------
-``_ip`` : InteractiveShell
-    A global object representing the active IPython session.
-    Contains varying packages as well as the current global namespace.
-    Doesn't need to be defined in advance during an interactive session.
+-----------
+``_ip`` : :class:`IPython.core.interactiveshell.InteractiveShell()`
+    A global object representing the active :mod:`IPython`
+    session. Contains varying packages as well as the
+    current global namespace. Doesn't need to be defined
+    in advance during an interactive session.
 
 
 See Also
@@ -79,22 +72,54 @@ import IPython
 from IPython import get_ipython
 
 
-def _sys_check():
-    """Check OS."""
-    return platform.uname().system
+    In the future, it should be dynamically checked whether the user is
+    starting up from a shell that has these commands loaded or not.
+
+
+    Parameters
+    -----------
+    ``_ip`` : :class:`IPython.core.interactiveshell.InteractiveShell()` object
+        The global instance of the current :mod:`IPython` shell.
+
+
+    Returns
+    --------
+    ``ip.alias_manager.user_aliases` : List of tuples.
+        Even though it may superficially appear to be a :mod:`traitlets` object,
+        the interface is the same as a list with a tuple containing 2 elements
+        each. Each element in the list takes the form (alias, system command).
+        Therefore the type appears to be a list of tuples where each tuple
+        contains 2 strings.
+
+    """
+    _ip.alias_manager.user_aliases = [
+        ('copy', 'copy'),
+        ('ddir', 'dir /ad /on'),
+        ('echo', 'echo'),
+        ('ldir', 'dir /ad /on'),
+        ('ls', 'dir /on'),
+        ('mkdir', 'mkdir'),
+        ('ren', 'ren'),
+        ('rmdir', 'rmdir'),
+        (
+            'tree',
+            'tree /F /A %l',
+        ),
+    ]
+    return _ip.alias_manager.user_aliases
 
 
 def linux_specific_aliases(_ip):
-    r"""Add Linux specific aliases.
+    r"""Add Linux specific alias to the ``user_ns``.
 
     For the time being everything is getting thrown in here until I more
     accurately tease out what is a Linux built-in, 3rd party software, and
     which commands overlap between bash, cmd and powershell.
 
     Parameters
-    ----------
+    -----------
     ``_ip`` : :class:`IPython.core.interactiveshell.InteractiveShell()` object
-        The global instance of IPython.
+        The global instance of the current IPython shell.
 
 
     Below is the source code for the function that is invoked here.
@@ -127,27 +152,16 @@ def linux_specific_aliases(_ip):
         ('dus', 'du -d 1 -h %l'),
         ('echo', 'echo -e %l'),
         ('gpip',
-         'export PIP_REQUIRE_VIRTUALENV=0; python -m pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'
-         ),
-        ('gpip2',
-         'export PIP_REQUIRE_VIRTUALENV=0; python2 -m pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'
-         ),
-        ('gpip3',
-         'export PIP_REQUIRE_VIRTUALENV=0; python3 -m pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'
+         'export PIP_REQUIRE_VIRTUALENV=0; pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'
          ),
         ('head', 'head -n 30 %l'),
-        ('la', 'ls -AF --color=always %l'),
-        ('l', 'ls -CF --color=always %l'),
-        ('ll', 'ls -AlF --color=always %l'),
-        ('ls', 'ls -F --color=always %l'),
-        ('lt', 'ls -Altcr --color=always %l'),
         ('mk', 'mkdir -pv %l && cd %l'),  # check if this works. only mkdir
         ('mkdir', 'mkdir -pv %l'),
         ('mv', 'mv -iv %l'),
         ('rm', 'rm -v %l'),
         ('rmdir', 'rmdir -v %l'),
         ('profile_default',
-         'cd ~/projects/dotfiles/unix/.ipython/profile_default/startup'),
+         'cd ~/projects/dotfiles/unix/.ipython/profile_default'),
         ('startup',
          'cd ~/projects/dotfiles/unix/.ipython/profile_default/startup'),
         ('tail', 'tail -n 30 %l'),
@@ -187,7 +201,6 @@ def common_aliases(_ip):
         ('gcl', 'git clone %l'),
         ('gcls', 'git clone --depth 1 %l'),
         ('gco', 'git checkout %l'),
-        ('gcob', 'git checkout -b %l'),
         ('gd', 'git diff %l'),
         ('gds', 'git diff --staged %l'),
         ('gds2', 'git diff --staged --stat %l'),
@@ -208,7 +221,7 @@ def common_aliases(_ip):
         ('gm', 'git merge --no-ff %l'),
         ('gmm', 'git merge master'),
         ('gmt', 'git mergetool %l'),
-        ('gp', 'git pull --all'),
+        ('gp', 'git pull'),
         ('gpo', 'git pull origin'),
         ('gpom', 'git pull origin master'),
         ('gpu', 'git push'),
@@ -250,13 +263,17 @@ if __name__ == "__main__":
         # Now let's get the Linux aliases.
         user_aliases += linux_specific_aliases(_ip)
 
-        if platform.machine() == "aarch64":
-            # user_aliases += termux_aliases(ip)
-            pass
+    # Now let's get the Linux aliases
+    if platform.uname() == 'Linux':
+        user_aliases += linux_specific_aliases(_ip)
 
     user_aliases += common_aliases(_ip)
 
     for i in user_aliases:
         _ip.alias_manager.define_alias(i[0], i[1])
 
-    del i, _sys_check
+    # Clean up namespace but also don't crash if we didn't add a single alias.
+    try:
+        del i
+    except NameError:
+        pass

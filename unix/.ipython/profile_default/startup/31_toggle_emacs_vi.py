@@ -6,13 +6,12 @@ Also add a bottom toolbar.
 
 Dude...
 
-So I was getting errors from the linters before I ran anything.
-Import statements don't cover EditingMode. Fuck the docs let's
-just go to the source.
+So I was getting errors from the linters before I ran anything. Import statements
+don't cover EditingMode. Fuck the docs let's just go to the source.
 
 ..wth?
 
-.. code-block:: python3
+.. code-block:: python
 
     from __future__ import unicode_literals
 
@@ -38,15 +37,6 @@ was too hard to write...
 :URL: https://python-prompt-toolkit.readthedocs.io/en/master/pages/asking_for_input.html#dynamically-switch-between-emacs-and-vi-mode # noqa
 
 **But we still need to bind this to IPython!**
-
-Mar 02, 2019:
-
-    Just to explicitly state it, as this is currently written, it only uses
-    this prompt for 1 command and yes that 1 command uses a different
-    namespace than the rest of IPython!! Whoa.
-
-    Genuinely can't say I expected that.
-
 
 """
 from prompt_toolkit import prompt
