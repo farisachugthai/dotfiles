@@ -8,7 +8,6 @@ Do we need to use the IPython idiom
     c = get_ipython()
 
 """
-import os
 # from JupyterWidget import
 # ------------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
@@ -116,9 +115,7 @@ c.JupyterQtConsoleApp.display_banner = False
 # c.JupyterQtConsoleApp.plain = False
 
 # path to a custom CSS stylesheet
-home = os.path.expanduser("~")
-c.JupyterQtConsoleApp.stylesheet = os.path.join(
-    home, '', '.local', 'scripts', 'gruvbox-pygments', 'gruvbox.css')
+# c.JupyterQtConsoleApp.stylesheet = ''
 
 # ------------------------------------------------------------------------------
 # ConsoleWidget(NewBase) configuration
@@ -141,7 +138,7 @@ c.JupyterQtConsoleApp.stylesheet = os.path.join(
 
 # The maximum number of lines of text before truncation. Specifying a non-
 #  positive number disables text truncation (not recommended).
-c.ConsoleWidget.buffer_size = 5000
+# c.ConsoleWidget.buffer_size = 500
 
 # The height of the console at start time in number of characters (will double
 #  with `vsplit` paging)
@@ -166,6 +163,7 @@ c.ConsoleWidget.font_family = 'Fira Mono'
 # The font size. If unconfigured, Qt will be entrusted with the size of the
 #  font.
 c.ConsoleWidget.font_size = 10
+
 # The type of completer to use. Valid values are:
 #
 #  'plain'   : Show the available completion as a text list
@@ -185,7 +183,7 @@ c.ConsoleWidget.font_size = 10
 
 # The type of underlying text widget to use. Valid values are 'plain', which
 #  specifies a QPlainTextEdit, and 'rich', which specifies a QTextEdit.
-c.ConsoleWidget.kind = 'rich'
+# c.ConsoleWidget.kind = 'plain'
 
 # Prefix to add to outputs coming from clients other than this one.
 #

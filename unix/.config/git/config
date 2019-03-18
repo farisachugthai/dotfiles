@@ -111,9 +111,18 @@
     r = remote -v
 
     # stashes
-    sh = stash
-    sha = stash --all
+    sh = stash --all
     shp = stash pop
+    shl = stash list
+    shd = stash drop
+    shc = stash clear
+    sha = stash apply
+	switch = !legit switch
+	sync = !legit sync
+	publish = !legit publish
+	unpublish = !legit unpublish
+	undo = !legit undo
+	branches = !legit branches
 
 [rebase]
     autoStash = True
@@ -124,15 +133,15 @@
     showUntrackedFiles = all
 
 [pull]
-    rebase = True
+    rebase = preserve
     renormalize
 
-[url "git://github.com/"]
+[url "git://github.com"]
     insteadOf = g:
     insteadOf = https://github.com
     name = farisachugthai
 
-[url "git@gist.github.com/"]
+[url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
 

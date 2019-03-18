@@ -4,7 +4,9 @@
 import sys
 
 
-class ExceptionHook:
+class ExceptionHook(BaseException):
+    """Custom exception hook for IPython."""
+
     instance = None
 
     def __call__(self, *args, **kwargs):

@@ -124,10 +124,11 @@ bak() {
     mv $1{,.bak}
 }
 
-# I don't know why this was the hardest thing ever but oh my god I got it!
-# man: send `man` to nvim: {{{1
-man(){
+# nman: send `man` to nvim: {{{1
+# I'm also gonna make it so that it stops shadowing the builtin. You have the choice if you want.
+nman(){
     nvim -c "Man $1" -c'wincmd T'
+    # Are you fucking kidding me? This hasn't been working for the last 3 months because of an extraneous bang...
 }
 
 # tre: tree with way too many options to memorize: {{{1
@@ -138,7 +139,9 @@ tre(){
     # Append a `/' for directories, a `=' for socket files, a `*' for
     # executable files, a `>' for doors (Solaris) and a `|' for
     # FIFO's, as per ls -F
-    tree -a -I '.git' -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F
+    # Also, and I don't know why, the a and I must be together to ignore .git
+    # In addition they MUST come last or .git gets included. Idk why man
+    tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -aI '.git'
 }
 
 # TODO: make a function `gm` that requires $1 to be set

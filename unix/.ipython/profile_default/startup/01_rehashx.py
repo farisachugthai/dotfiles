@@ -11,11 +11,12 @@ making IPython work as a more versatile system shell.
 
 Help
 -----
-Help on method run_line_magic in  :mod:`IPython.core.interactiveshell`:
+Help on :func:~`IPython.core.interactiveshell.run_line_magic()`:
 
     run_line_magic(magic_name, line, _stack_depth=1)
     method of IPython.terminal.interactiveshell.TerminalInteractiveShell instance
     Execute the given line magic.
+
 
 Parameters
 ----------

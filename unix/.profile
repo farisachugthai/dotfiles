@@ -38,8 +38,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 # Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
 
-export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/log"
-
 # shellcheck source=/usr/share/bash-completion/bash_completion
 test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
 
@@ -95,18 +93,23 @@ fi
 pathadd "$HOME/.racket/7.1/bin"
 
 # Rust: {{{1
+
+# Remember to keep rust above the environment variables. If ./.cargo/bin isn't
+# added to the path when we evaluate the PAGER var, then we end up with less
+# even if we have bat installed.
 pathadd "$HOME/.cargo/bin"
 
 if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
 
 # Environment Variables: {{{1
 
-# Pagers:
+# Pagers: {{{2
 
 if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
-    export BAT_PAGER=''
     export PAGER="bat"
+    # override this on the CLI if you want but for general use and in scripts plain is best
+    export BAT_STYLE=plain
 else
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
@@ -115,8 +118,11 @@ else
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
     export PAGER="less -JRKML"
 fi
+
+export BYOBU_PAGER="nvim"
 export COLORTERM="truecolor"
 
+# Other: {{{2
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -150,11 +156,8 @@ fi
 
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
-
-# As this was placed here because Termux didn't have a manpath set
-# Here's the one I currently have from KDE Neon. Nov 07, 2018
-# /home/faris/miniconda3/share/man:/usr/local/man:/usr/local/share/man:/usr/share/man:/home/faris/.local/kitty.app/share/man:/home/faris/.fzf/man
-# if [ "$(command -v manpath)" ] ; then MANPATH="$(manpath)"; export MANPATH; fi
+# Disable MSFT pwsh telemetry
+export POWERSHELL_TELEMETRY_OPTOUT=1
 
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
@@ -162,15 +165,13 @@ export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Setup completions correctly.
 
-# Help find your dotfiles faster
+# Help find your dotfiles faster and setup nvim
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
 export NVIM="$HOME/.config/nvim"
+export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
 pathadd "$_ROOT/local/bin"
-
-# Disable MSFT pwsh telemetry
-export POWERSHE_TELEMETRY_OPTOUT=1
 
 # Source the bashrc last.
 # shellcheck source=/home/faris/.bashrc
