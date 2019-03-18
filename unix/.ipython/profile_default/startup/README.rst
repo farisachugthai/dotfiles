@@ -4,8 +4,11 @@
 IPython Startup Scripts
 =======================
 
+.. module:: IPython_README
+
 :Author: Faris Chugthai
-:Date: Feb 21, 2019
+:Date: Feb 23, 2019
+
 
 Configuration
 -------------
@@ -43,27 +46,8 @@ and also adds system commands to the namespace!
 Insofar, I haven't noticed any significant slowdown in startup time as a result
 of this, and it hugely eases utilizing IPython as a system shell.
 
-.. other
-.. -----
-.. Sep 27, 2018:
 
-.. Wrote a macro with :ref:`%macro lazydl _i`, used ``%store lazydl`` to save it,
-.. then ran
-
-.. .. ipython::
-
-..    %store lazydl >> 30_macros_lazydl.py
-
-.. So that it persists for every :mod:`IPython` session. The char ``%`` is optional
-.. as this configuration has ``automagic`` enabled.
-
-.. It uses the :func:`input()`  to circumvent the fact that macros don't take
-.. command line arguments.
-
-.. .. todo:: Create an official docs section
-
-.. Official Docs
-.. --------------
+.. todo::
 
 .. Development and Contributing
 .. This would be a good idea though.
@@ -137,7 +121,6 @@ version of the module, you can alternatively run
        True
    File:      ~/miniconda3/lib/python3.7/site-packages/traitlets/config/configurable.py
    Type:      method
-
 
 
 Original

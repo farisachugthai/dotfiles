@@ -4,11 +4,12 @@
 
 :File: 40_git_helpers.py
 :Author: Faris Chugthai
-:Github: `https://github.com/farisachugthai`_
 
-.. todo::
+`Github <https://github.com/farisachugthai>`_
 
-    What version of python was subprocess.check_output() introduced in?
+.. todo:: There is a gitpython module. We could try to import that and then work using it.
+
+.. todo:: What version of python was subprocess.check_output() introduced in?
 
 
 """
