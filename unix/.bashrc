@@ -45,17 +45,13 @@ fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
-# gcloud: {{{2
-
-# TODO: Jump in the shell, and run the following to ensure it works,
-# then reduce this section to 1 line!
-# if [[ -f {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc ]]; then source {~/bin,$PREFIX}/google-cloud-sdk/{path,completion}.bash.inc, fi
-
-# TODO: Alternatively decide on 1 fucking spot to download this. ~/.local/ should be reasonable enough.
+# GCloud: {{{2
 
 if [[ -d ~/google-cloud-sdk ]]; then
-    # shellcheck source=~/google-cloud-sdk/completion.bash.inc && source ~/google-cloud-sdk/path.bash.inc
-    source /home/faris/google-cloud-sdk/{completion.bash.inc,path.bash.inc}
+    # shellcheck source=~/google-cloud-sdk/completion.bash.inc
+    source /home/faris/google-cloud-sdk/completion.bash.inc
+    # shellcheck source=~/google-cloud-sdk/path.bash.inc
+    source /home/faris/google-cloud-sdk/path.bash.inc
 fi
 
 # History: {{{1
@@ -80,6 +76,7 @@ set -o notify
 shopt -s histappend
 # Check the window size after each command and, if necessary,
 # Update the values of LINES and COLUMNS.
+# Now the default in Bash 5!!!
 shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
@@ -115,9 +112,8 @@ if [[ -n "$(command -v gbt)" ]]; then
     prompt_tmp=$(gbt $?)
     export PS1=$prompt_tmp
 
-    export GBT_CARS='Status, Os, Hostname, Dir, Git, Sign'
-    export GBT_CAR_STATUS_FORMAT=' {{ Code }} {{ Signal }} '
-    unset prompt_tmp
+    export GBT_CARS="Status, Os, Hostname, Dir, Git, Sign"
+    export GBT_CAR_STATUS_FORMAT=" {{ Code }} {{ Signal }} "
 fi
 
 # Vim: {{{1
@@ -152,7 +148,6 @@ fi
 # Testing out the language servers to see if they'll link up with neovim
 pathadd "$HOME/.local/share/nvim/site/node_modules/.bin"
 
-# Auto added by yarn. Reordered it a lil ;)
 # FZF: {{{1
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
@@ -170,14 +165,15 @@ if [[ -n "$(command -v ag)" ]]; then
 fi
 
 # Junegunn's current set up per his bashrc with an added check for fd.
-# Well you might wanna double check that because this isn't working right now either
 if [[ -n "$(command -v rg)" ]]; then
 
-    export FZF_DEFAULT_COMMAND='rg --hidden --follow --files $* ' 
-    export FZF_CTRL_T_COMMAND='rg --hidden  --follow  --files $* '
+    export FZF_DEFAULT_COMMAND='rg --hidden --files $* '
+    export FZF_CTRL_T_COMMAND='rg --hidden  --files $* '
 
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
-    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --ansi'
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
+    export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
+    export FZF_CTRL_R_COMMAND="rg $*"
+    export FZF_ALT_C_COMMAND="rg --files $*"
 
 
 elif [[ -n "$(command -v fd)" ]]; then
@@ -192,12 +188,11 @@ elif [[ -n "$(command -v fd)" ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
 
-
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
 
     # Options for FZF no matter what.
-    export FZF_DEFAULT_OPTS='--multi --cycle --color=bg+:24 --border --reverse'
+    export FZF_DEFAULT_OPTS='--multi --cycle'
 fi
 
 # termux doesnt have xclip or xsel
@@ -225,14 +220,10 @@ complete -F _fzf_dir_completion -o default -o bashdefault tree
 
 # Sourced files: {{{1
 
-# Feb 16, 2019: tmux botches this on termux
-
-# This needs updating since so many of the files are already stated and a handful add completion
-# for commands i don't hace on every device.
-if [[ -d ~/.bashrc.d/ ]]; then
+if [[ -d ~/.bashrc.d ]]; then
     for config in $HOME/.bashrc.d/*.bash; do
         # shellcheck source=/home/faris/.bashrc.d/*.bash
-        . $config;
+        source $config;
     done
     unset -v config
 fi

@@ -86,7 +86,6 @@ the source code of the implementation has been provided for reference.
             self.init_aliases()
 
 
-
 See Also
 --------
 Aliases file for IPython.
@@ -155,7 +154,6 @@ def linux_specific_aliases(_ip):
         ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
         ('dus', 'du -d 1 -h %l'),
         ('echo', 'echo -e %l'),
-        ('fzf', 'rg --hidden --follow --files'),
         ('gpip',
          'export PIP_REQUIRE_VIRTUALENV=0; python -m pip %l; export PIP_REQUIRE_VIRTUALENV=1 > /dev/null'
          ),
@@ -197,7 +195,7 @@ def common_aliases(_ip):
 
     Returns
     -------
-    ``_ip.alias_manager.user_aliases`` : SingletonConfigurable
+    _ip.alias_manager.user_aliases : SingletonConfigurable
         Subclass of the :class:`AliasManager()` ....I think. Generically
         referring to it as a :mod:`traitlets` object but the interface is the
         same as a tuple with 2 elements in the form (alias, system command).
@@ -273,7 +271,7 @@ if __name__ == "__main__":
     if not isinstance(_ip, IPython.terminal.interactiveshell.TerminalInteractiveShell):
         raise Exception
 
-    logging.getLogger(__name__)
+    logging.basicConfig(level=logging.WARNING)
 
     user_aliases = []
 
@@ -281,13 +279,16 @@ if __name__ == "__main__":
 
         # Now let's get the Linux aliases.
         user_aliases += linux_specific_aliases(_ip)
+        logging.info("The number of available aliases is: " + str(len(user_aliases)))
 
         if platform.machine() == "aarch64":
             # user_aliases += termux_aliases(ip)
             pass
 
     user_aliases += common_aliases(_ip)
+    logging.info("The number of available aliases is: " + str(len(user_aliases)))
 
+    # There has got to be a better way to do this.
     if which('fzf') and which('rg'):
         user_aliases.extend(('fzf', 'rg --hidden --follow --files'))
 

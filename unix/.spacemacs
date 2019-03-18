@@ -40,6 +40,7 @@ values."
      auto-completion
      better-defaults
      emacs-lisp
+     evil-commentary
      (git :variables
         git-magit-status-fullscreen t)
      github
@@ -51,11 +52,15 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     racket
      spacemacs-ui-visual
      spell-checking
      syntax-checking
+     treemacs
      tmux
      ;; restructuredtext is this one?
+     unicode-fonts
+     vinegar
      version-control
      )
    ;; List of additional packages that will be installed without being
@@ -351,6 +356,8 @@ you should place your code here."
         scroll-conservatively 9999
         scroll-step 1); Highlight current line.
   (global-hl-line-mode 1)
+
+  (set-frame-font "Fira Code")
 
   (setq-default tab-width 4 indent-tabs-mode nil)
   (define-key global-map (kbd "RET") 'newline-and-indent)
