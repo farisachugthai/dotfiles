@@ -17,7 +17,7 @@ tmux-history
 .spyproject/
 
 # Jupyter Notebooks / JupyterLab
-.ipynb_checkpoints/
+**.ipynb_checkpoints/
 
 # Rope
 .ropeproject/
@@ -397,6 +397,8 @@ paket-files/
 
 # JetBrains Rider
 *.idea/workspace.xml
+!.idea
+**/.idea
 *.sln.iml
 
 # CodeRush
