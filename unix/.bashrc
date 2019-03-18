@@ -188,6 +188,7 @@ elif [[ -n "$(command -v fd)" ]]; then
         export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
 
+
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
 

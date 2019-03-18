@@ -52,8 +52,9 @@ import os
 
 from pygments.token import Comment
 
-#### THIS IS THE MODULE! Its too exciting to able to execute this script
-#  from within python and not get an error for a func call with no import
+# THIS IS THE MODULE! Its too exciting to able to execute this script
+# directly from within python and not get an error for a func call with no
+# import
 from traitlets.config import get_config
 
 c = get_config()

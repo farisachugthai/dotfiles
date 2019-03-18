@@ -124,11 +124,11 @@ bak() {
     mv $1{,.bak}
 }
 
+<<<<<<< Updated upstream
 # nman: send `man` to nvim: {{{1
 # I'm also gonna make it so that it stops shadowing the builtin. You have the choice if you want.
 nman(){
     nvim -c "Man $1" -c'wincmd T'
-    # Are you fucking kidding me? This hasn't been working for the last 3 months because of an extraneous bang...
 }
 
 # tre: tree with way too many options to memorize: {{{1
