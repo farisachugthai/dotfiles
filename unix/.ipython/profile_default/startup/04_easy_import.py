@@ -8,42 +8,40 @@ package neovim is served in aka :mod:`pynvim`.
 
 Here's a little bit more info.
 
-.. code-block:: rst
+:
 
     Help on module IPython.utils.dir2 in IPython.utils:
 
+    NAME
+    IPython.utils.dir2 - A fancy version of Python's builtin :func:`dir()` function.
 
-        NAME
-        IPython.utils.dir2 - A fancy version of Python's builtin :func:`dir`
-        function.
+    FUNCTIONS
 
-        FUNCTIONS
+        dir2(obj)
+        dir2(obj) -> list of strings
 
-            dir2(obj)
-            dir2(obj) -> list of strings
+        Extended version of the Python builtin dir(), which does a few extra
+        checks.
 
-            Extended version of the Python builtin dir(), which does a few extra
-            checks.
+        This version is guaranteed to return only a list of true strings,
+        whereas :func:`dir()` returns anything that objects inject into
+        themselves, even if they
+        are later not really valid for attribute access (many extension
+        libraries have such bugs).
 
-            This version is guaranteed to return only a list of true strings,
-            whereas :func:`dir()` returns anything that objects inject into
-            themselves, even if they
-            are later not really valid for attribute access (many extension
-            libraries have such bugs).
+        get_real_method(obj, name)
+        Like getattr, but with a few extra sanity checks:
 
-            get_real_method(obj, name)
-            Like getattr, but with a few extra sanity checks:
+        - If obj is a class, ignore everything except class methods
+        - Check if obj is a proxy that claims to have all attributes
+        - Catch attribute access failing with any exception
+        - Check that the attribute is a callable object
 
-            - If obj is a class, ignore everything except class methods
-            - Check if obj is a proxy that claims to have all attributes
-            - Catch attribute access failing with any exception
-            - Check that the attribute is a callable object
+        Returns the method or None.
 
-            Returns the method or None.
-
-            safe_hasattr(obj, attr)
-            In recent versions of Python, hasattr() only catches AttributeError.
-            This catches all errors.
+        safe_hasattr(obj, attr)
+        In recent versions of Python, hasattr() only catches AttributeError.
+        This catches all errors.
 
         FILE
 
@@ -60,6 +58,14 @@ Here's a little bit more info.
 
     You have access to ip.cleanup() after you import get_ipython
     Well it embeds ipython. But it has to import other modules. Hm.
+
+
+Refactored into IPython extension
+---------------------------------
+Mar 08, 2019
+
+About to be a noop as functionality can be more easily embedded via an
+IPython extension.
 
 """
 from importlib import import_module

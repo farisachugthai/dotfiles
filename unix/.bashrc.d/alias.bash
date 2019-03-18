@@ -18,8 +18,10 @@ alias cd.....="cd ../../../.."
 alias cd......="cd ../../../../.."
 
 # ls aliases: {{{1
+
 # some more ls aliases. pulled a few from ipython so not all were
 # written by me. as a result let me quick go over the flags
+
 # -A all except implied . and ..
 # -c sort by ctime.
 # -F classifies. indicators for symlinks and dirs are provided
@@ -36,11 +38,13 @@ alias lt='ls -Altcr'
 alias lx='ls -Fo | grep ^-..x'
 
 # alert: {{{1
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Safer coreutils: {{{1
+
 # Let's not clobber other files as we go. Bash's namespace? Clobber everything
 # Please don't turn the p flag for rmdir again.
 # You're lucky parent dirs weren't empty
@@ -67,15 +71,19 @@ alias head='head -n 30'
 alias tail='tail -n 30'
 
 # Termux alias: {{{1
+
 # Termux command with odd default of view not send
 alias termux-share="termux-share -a send"
 # termux-open gets an option for a default file handler! Dropbox integration
 alias termux-open="termux-open --send"
 
 # Git aliases. {{{1
+
 # for complicated git log calls funcs are better
-alias g='git status -sb'
+alias g='git diff --stat --staged -- HEAD'
 alias ga='git add'
+alias ga.='git add .'
+alias gar='git add --renormalize'
 alias gb='git branch -a'
 alias gci='git commit'
 alias gcia='git commit --amend'
@@ -96,13 +104,13 @@ alias gls='git ls-tree'
 alias gm='git merge --no-ff'
 alias gmm='git merge master'
 alias gmt='git mergetool'
-alias gp='git pull --all'
+alias gp='git pull'
 alias gpo='git pull origin'
 alias gpom='git pull origin master'
 alias gpu='git push'
 alias gr='git remote -v'
 alias gs='git status'
-alias gsh='git stash -a'
+alias gsh='git stash'
 alias gshp='git stash pop'
 alias gshl='git stash list'
 alias gshd='git stash drop'
@@ -112,6 +120,7 @@ alias gst='git diff --stat'
 alias gt='git tag --list'
 
 # Other: {{{1
+
 # enable color support of ls and also add handy aliases
 if [[ -x /usr/bin/dircolors ]]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"

@@ -11,23 +11,23 @@ sphinx documents.  It knows about standard IPython prompts, and
 extracts the input and output lines.  These prompts will be renumbered
 starting at ``1``.  The inputs will be fed to an embedded IPython
 interpreter and the outputs from that interpreter will be inserted as
-well.  For example, code blocks like the following::
+well.  For example, code blocks like the following
 
 .. ipython::
 
-   In [136]: x = 2
+    In [136]: x = 2
 
-   In [137]: x**3
-   Out[137]: 8
+    In [137]: x**3
+    Out[137]: 8
 
 will be rendered as the following.
 
 .. ipython::
 
-   In [136]: x = 2
+    In [136]: x = 2
 
-   In [137]: x**3
-   Out[137]: 8
+    In [137]: x**3
+    Out[137]: 8
 
 .. note::
 
@@ -45,26 +45,25 @@ be renumbered in the rendered docs, and pick up where the block above
 left off.
 
 .. ipython::
-   :okexcept:
-   :okwarning:
+    :okexcept:
+    :okwarning:
 
-   In [138]: z = x*3   # x is recalled from previous block
+    In [138]: z = x*3   # x is recalled from previous block
 
-   In [139]: z
-   Out[139]: 6
+    In [139]: z
+    Out[139]: 6
 
-   In [140]: print z
-   --------> print(z)
-   6
+    In [140]: print z
+    --------> print(z)
+    6
 
-   In [141]: q = z[)   # this is a syntax error -- we trap ipy exceptions
-   ------------------------------------------------------------
-      File "<IPython console>", line 1
-        q = z[)   # this is a syntax error -- we trap ipy exceptions
-              ^
-   SyntaxError: invalid syntax
+    In [141]: q = z[)   # this is a syntax error -- we trap ipy exceptions
+    ------------------------------------------------------------
+       File "<IPython console>", line 1
+         q = z[)   # this is a syntax error -- we trap ipy exceptions
+               ^
+    SyntaxError: invalid syntax
 
-**UH NO YOU DON'T THIS IS ACTUALLY CRASHING MY `make html` invocation**
 
 The embedded interpreter supports some limited markup.  For example,
 you can put comments in your IPython sessions, which are reported
@@ -96,13 +95,13 @@ Multi-line input is supported.
 
     In [60]: import urllib
 
-   In [130]: url = 'http://ichart.finance.yahoo.com/table.csv?s=CROX\
-      .....: &d=9&e=22&f=2009&g=d&a=1&br=8&c=2006&ignore=.csv'
+    In [130]: url = 'http://ichart.finance.yahoo.com/table.csv?s=CROX'
+       .....: '&d=9&e=22&f=2009&g=d&a=1&br=8&c=2006&ignore=.csv'
 
-   In [131]: print url.split('&')
-      .....: print(url.split('&'))
-   # ['http://ichart.finance.yahoo.com/table.csv?s=CROX', 'd=9', 'e=22',
-   'f=2009', 'g=d', 'a=1', 'b=8', 'c=2006', 'ignore=.csv']
+    In [131]: print(url.split('&')
+       .....: print(url.split('&'))
+    # ['https://ichart.finance.yahoo.com/table.csv?s=CROX', 'd=9', 'e=22',
+    'f=2009', 'g=d', 'a=1', 'b=8', 'c=2006', 'ignore=.csv']
 
 
 You can do doctesting on multi-line output as well.  Just be careful
@@ -114,24 +113,24 @@ suppress the seed line so it doesn't show up in the rendered output:
 
 .. ipython::
 
-   In [133]: import numpy.random
+    In [133]: import numpy.random
 
-   @suppress
-   In [134]: numpy.random.seed(2358)
+    @suppress
+    In [134]: numpy.random.seed(2358)
 
-   @doctest
-   In [135]: numpy.random.rand(10,2)
-   Out[135]:
-   array([[ 0.64524308,  0.59943846],
-          [ 0.47102322,  0.8715456 ],
-          [ 0.29370834,  0.74776844],
-          [ 0.99539577,  0.1313423 ],
-          [ 0.16250302,  0.21103583],
-          [ 0.81626524,  0.1312433 ],
-          [ 0.67338089,  0.72302393],
-          [ 0.7566368 ,  0.07033696],
-          [ 0.22591016,  0.77731835],
-          [ 0.0072729 ,  0.34273127]])
+    @doctest
+    In [135]: numpy.random.rand(10,2)
+    Out[135]:
+    array([[ 0.64524308,  0.59943846],
+           [ 0.47102322,  0.8715456 ],
+           [ 0.29370834,  0.74776844],
+           [ 0.99539577,  0.1313423 ],
+           [ 0.16250302,  0.21103583],
+           [ 0.81626524,  0.1312433 ],
+           [ 0.67338089,  0.72302393],
+           [ 0.7566368 ,  0.07033696],
+           [ 0.22591016,  0.77731835],
+           [ 0.0072729 ,  0.34273127]])
 
 Another demonstration of multi-line input and output:
 
@@ -277,3 +276,5 @@ line just below them (eg ``savefig``).
     generated at doc build time, and raise errors if they don’t
     match. Also, can be applied to the entire ``..IPython`` block as a
     directive option with ``:doctest:``.
+
+.. Vim: set sw=4:

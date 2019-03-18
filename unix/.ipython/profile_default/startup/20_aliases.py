@@ -22,8 +22,11 @@ fills the ``user_ns`` with common Linux idioms.
 
 .. todo:: - Secondary todo. How do you expand an alias in rst?
 
-That ``_ip`` you have there is a reference to the :class:`IPython.core.interactiveshell.InteractiveShell()`
-global instance, and that's a serious PITA to type out every time.
+    - Separate the dictionary below into OS and machine specific dictionaries.
+    - Run basic checks and only add to the user namespace if they match.
+    - Secondary todo. How do you expand an alias in rst?
+    - ``_ip`` is a reference to the :class:`IPython.core.InteractiveShell` global instance
+    - It isn't the actual module name and as a result that reference isn't going to work.
 
 
 String Formatting
@@ -58,43 +61,16 @@ Attributes
 
 
 See Also
----------
+--------
 Aliases file for IPython.
 :ref:`IPython.core.alias.Alias`
 
 """
 import platform
 
+import IPython
 from IPython import get_ipython
 
-
-def windows_specific_aliases(_ip):
-    """Add Windows specific aliases to the ``user_ns``.
-
-    Default Aliases On Windows
-    ---------------------------
-    .. ipython::
-
-        In [42]: _ip.alias_manager.default_aliases
-        Out[42]:
-        [
-            ('ls', 'dir /on'),
-            ('ddir', 'dir /ad /on'),
-            ('ldir', 'dir /ad /on'),
-            ('mkdir', 'mkdir'),
-            ('rmdir', 'rmdir'),
-            ('echo', 'echo'),
-            ('ren', 'ren'),
-            ('copy', 'copy')
-        ]
-
-    ConEmu
-    ------
-    To a beautiful extent, ConEmu {and the Cmder package I have installed} gives
-    the standard GNU tools.
-
-    ``ls`` runs natively on my Windows 10 laptop from cmd! As a result I may
-    move a few unexpected commands into the common_aliases function.
 
     In the future, it should be dynamically checked whether the user is
     starting up from a shell that has these commands loaded or not.
@@ -161,16 +137,18 @@ def linux_specific_aliases(_ip):
                                                         magic_name=name)
 
     Returns
-    --------
-    ``ip.alias_manager.user_aliases`` : List of tuples
-        Even though it may superficially appear to be a :mod:`traitlets` object,
-        the interface is the same as a list with a tuple containing 2 elements
-        each. Each element in the list takes the form (alias, system command).
+    -------
+    ``_ip.alias_manager.user_aliases`` : SingletonConfigurable
+        Subclass of the :class:`AliasManager()` ....I think. Generically
+        referring to it as a :mod:`traitlets` object but the interface is the
+        same as a tuple with 2 elements in the form (alias, system command).
+
+
 
     """
-    _ip.alias_manager.user_aliases = [
-        ('ag', 'ag --hidden --color %l'),
-        ('cp', 'cp -iv %l'),
+    _user_aliases = [
+        ('ag', 'ag --hidden %l'),
+        ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
         ('dus', 'du -d 1 -h %l'),
         ('echo', 'echo -e %l'),
         ('gpip',
@@ -188,19 +166,38 @@ def linux_specific_aliases(_ip):
          'cd ~/projects/dotfiles/unix/.ipython/profile_default/startup'),
         ('tail', 'tail -n 30 %l'),
         ('tre', 'tree -ashFC -I .git -I __pycache__ --filelimit 25'),
-        ('tree', 'tree %l'),
-        ('...', 'cd ../..'),
     ]
-    return _ip.alias_manager.user_aliases
+    return _user_aliases
 
 
 def common_aliases(_ip):
-    """Temporarily only git aliases."""
-    _ip.alias_manager.user_aliases = [
-        ('g', 'git status -sb'),
+    r"""Add aliases common to all OSes.
+
+    Parameters
+    ----------
+    ``_ip`` : :class:`IPython.core.interactiveshell.InteractiveShell()` object
+        The global instance of IPython.
+
+
+    Returns
+    -------
+    ``_ip.alias_manager.user_aliases`` : SingletonConfigurable
+        Subclass of the :class:`AliasManager()` ....I think. Generically
+        referring to it as a :mod:`traitlets` object but the interface is the
+        same as a tuple with 2 elements in the form (alias, system command).
+
+
+    """
+    _user_aliases = [
+        ('g', 'git diff --staged --stat -- HEAD'),
         ('ga', 'git add %l'),
+        ('ga.', 'git add .'),
+        ('gar', 'git add --renormalize %l'),
         ('gb', 'git branch -a %l'),
-        ('gci', 'git commit'),
+        ('gci', 'git commit %l'),
+        ('gcia', 'git commit --amend %l'),
+        ('gcid', 'git commit --date=%l'),
+        ('gciad', 'git commit --amend --date=%l'),
         ('gcl', 'git clone %l'),
         ('gcls', 'git clone --depth 1 %l'),
         ('gco', 'git checkout %l'),
@@ -218,8 +215,11 @@ def common_aliases(_ip):
         ('git root', 'git rev-parse --show-toplevel'),
         ('git unstage', 'git reset HEAD'),
         ('git unstaged', 'git diff %l'),
-        ('glo', 'git log %l'),
-        ('gm', 'git merge %l'),
+        ('gl', 'git log %l'),
+        ('glo', 'git log --graph --decorate --abbrev --branches --all'),
+        ('gls', 'git ls-tree'),
+        ('gm', 'git merge --no-ff %l'),
+        ('gmm', 'git merge master'),
         ('gmt', 'git mergetool %l'),
         ('gp', 'git pull'),
         ('gpo', 'git pull origin'),
@@ -227,37 +227,47 @@ def common_aliases(_ip):
         ('gpu', 'git push'),
         ('gr', 'git remote -v'),
         ('gs', 'git status'),
+        ('gsh', 'git stash'),
+        ('gshp', 'git stash pop'),
+        ('gshl', 'git stash list'),
+        ('gshd', 'git stash drop'),
+        ('gshc', 'git stash clear'),
+        ('gsha', 'git stash apply'),
         ('gst', 'git diff --stat %l'),
-        ('la', 'ls -AF --color=always %l'),
-        ('l', 'ls -CF --color=always %l'),
-        ('ll', 'ls -AlF --color=always %l'),
-        ('ls', 'ls -F --color=always %l'),
-        ('lt', 'ls -Altcr --color=always %l'),
-        ('nvim', 'nvim %l'),
+        ('gt', 'git tag --list'),
+        ('lswitch', 'legit switch'),
+        ('lsync', 'legit sync'),
+        ('lpublish', 'legit publish'),
+        ('lunpublish', 'legit unpublish'),
+        ('lundo', 'legit undo'),
+        ('lbranches', 'legit branches'),
         ('vi', 'nvim %l'),
         ('vim', 'nvim %l'),
         ('xx', 'quit'),  # this is a sweet one
         ('..', 'cd ..'),
+        ('...', 'cd ../..'),
     ]
-    return _ip.alias_manager.user_aliases
+    return _user_aliases
 
 
 if __name__ == "__main__":
     _ip = get_ipython()
 
-    if type(_ip) is None:
+    if not isinstance(_ip, IPython.terminal.interactiveshell.TerminalInteractiveShell):
         raise Exception
 
     user_aliases = []
 
-    user_aliases = common_aliases(_ip)
+    if _sys_check() == 'Linux':
+
+        # Now let's get the Linux aliases.
+        user_aliases += linux_specific_aliases(_ip)
 
     # Now let's get the Linux aliases
     if platform.uname() == 'Linux':
         user_aliases += linux_specific_aliases(_ip)
 
-    elif platform.uname() == 'Windows_NT':
-        user_aliases += windows_specific_aliases(_ip)
+    user_aliases += common_aliases(_ip)
 
     for i in user_aliases:
         _ip.alias_manager.define_alias(i[0], i[1])
