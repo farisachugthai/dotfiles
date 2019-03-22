@@ -80,7 +80,7 @@ alias termux-open="termux-open --send"
 # Git aliases. {{{1
 
 # for complicated git log calls funcs are better
-alias g='git diff --stat --staged -- HEAD'
+alias g='git diff --stat --staged'
 alias ga='git add'
 alias ga.='git add .'
 alias gar='git add --renormalize'
@@ -111,11 +111,11 @@ alias gpu='git push'
 alias gr='git remote -v'
 alias gs='git status'
 alias gsh='git stash'
-alias gshp='git stash pop'
-alias gshl='git stash list'
-alias gshd='git stash drop'
-alias gshc='git stash clear'
 alias gsha='git stash apply'
+alias gshc='git stash clear'
+alias gshd='git stash drop'
+alias gshl='git stash list'
+alias gshp='git stash pop'
 alias gst='git diff --stat'
 alias gt='git tag --list'
 

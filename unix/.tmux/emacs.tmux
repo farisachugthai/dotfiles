@@ -1,28 +1,38 @@
 # Emacs keys
 
-# Emacs: {{{1
-
 # Mar 08, 2019:
 # Spent a little bit rereading things and just realized how much you lose by
-# setting vim keybindings. But I want all the functionality! So
-bind-key    -T copy-mode-vi   C-Space           send-keys -X begin-selection
+# setting vim keybindings. But I want all the functionality!
+
+# Mar 22, 2019: So we're gonna
+# copy the Emacs bindings and add the word -vi at the end
+
+# Actually we should only do that for things that require
+# Escape, Meta, Alt, Ctrl or Shift aka the EMACS keys ;)
+
+# Individual letters like F and T are already defined and I want the vim commands
+# But we don't get anything with Alt, PgUp, PgDown like don't make me compromise
+# usability because I like vi!! *glares in readline*
+
+
+bind-key    -T copy-mode-vi    C-Space           send-keys -X begin-selection
 bind-key    -T copy-mode-vi    C-g               send-keys -X clear-selection
-bind-key    -T copy-mode-vi    C-n               send-keys -X cursor-down
-bind-key    -T copy-mode-vi    C-p               send-keys -X cursor-up
+# bind-key    -T copy-mode-vi    C-n               send-keys -X cursor-down
+# bind-key    -T copy-mode-vi    C-p               send-keys -X cursor-up
 bind-key    -T copy-mode-vi    C-r               command-prompt -i -I "#{pane_search_string}" -p "(search up)" "send -X search-backward-incremental \"%%%\""
 bind-key    -T copy-mode-vi    C-s               command-prompt -i -I "#{pane_search_string}" -p "(search down)" "send -X search-forward-incremental \"%%%\""
-bind-key    -T copy-mode-vi    C-v               send-keys -X page-down
-bind-key    -T copy-mode-vi    C-w               send-keys -X copy-selection-and-cancel
-bind-key    -T copy-mode-vi    ,                 send-keys -X jump-reverse
-bind-key    -T copy-mode-vi    ;                 send-keys -X jump-again
-bind-key    -T copy-mode-vi    F                 command-prompt -1 -p "(jump backward)" "send -X jump-backward \"%%%\""
-bind-key    -T copy-mode-vi    N                 send-keys -X search-reverse
-bind-key    -T copy-mode-vi    R                 send-keys -X rectangle-toggle
-bind-key    -T copy-mode-vi    T                 command-prompt -1 -p "(jump to backward)" "send -X jump-to-backward \"%%%\""
-bind-key    -T copy-mode-vi    f                 command-prompt -1 -p "(jump forward)" "send -X jump-forward \"%%%\""
-bind-key    -T copy-mode-vi    g                 command-prompt -p "(goto line)" "send -X goto-line \"%%%\""
-bind-key    -T copy-mode-vi    n                 send-keys -X search-again
-bind-key    -T copy-mode-vi    t                 command-prompt -1 -p "(jump to forward)" "send -X jump-to-forward \"%%%\""
+# bind-key    -T copy-mode-vi    C-v               send-keys -X page-down
+# bind-key    -T copy-mode-vi    C-w               send-keys -X copy-selection-and-cancel
+# bind-key    -T copy-mode-vi    ,                 send-keys -X jump-reverse
+# bind-key    -T copy-mode-vi    ;                 send-keys -X jump-again
+# bind-key    -T copy-mode-vi    F                 command-prompt -1 -p "(jump backward)" "send -X jump-backward \"%%%\""
+# bind-key    -T copy-mode-vi    N                 send-keys -X search-reverse
+# bind-key    -T copy-mode-vi    R                 send-keys -X rectangle-toggle
+# bind-key    -T copy-mode-vi    T                 command-prompt -1 -p "(jump to backward)" "send -X jump-to-backward \"%%%\""
+# bind-key    -T copy-mode-vi    f                 command-prompt -1 -p "(jump forward)" "send -X jump-forward \"%%%\""
+# bind-key    -T copy-mode-vi    g                 command-prompt -p "(goto line)" "send -X goto-line \"%%%\""
+# bind-key    -T copy-mode-vi    n                 send-keys -X search-again
+# bind-key    -T copy-mode-vi    t                 command-prompt -1 -p "(jump to forward)" "send -X jump-to-forward \"%%%\""
 bind-key    -T copy-mode-vi    MouseDown1Pane    select-pane
 bind-key    -T copy-mode-vi    MouseDrag1Pane    select-pane ; send-keys -X begin-selection
 bind-key    -T copy-mode-vi    MouseDragEnd1Pane send-keys -X copy-selection-and-cancel

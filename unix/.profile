@@ -79,8 +79,9 @@ fi
 
 # JavaScript: {{{1
 if [[ -n "$(command -v yarn)" ]]; then
-    YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
-    pathadd "$YARNPATH"
+    # YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
+    # pathadd "$YARNPATH"
+    # because i added yarn to /etc/apt/sources.list.d and now it resides /usr/bin like a normal binary
 
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
         # shellcheck source=./.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash disable=1091

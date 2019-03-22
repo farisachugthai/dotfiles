@@ -124,7 +124,6 @@ bak() {
     mv $1{,.bak}
 }
 
-<<<<<<< Updated upstream
 # nman: send `man` to nvim: {{{1
 # I'm also gonna make it so that it stops shadowing the builtin. You have the choice if you want.
 nman(){
