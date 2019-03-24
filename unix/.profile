@@ -23,11 +23,6 @@ else
     export _ROOT="/usr"
 fi
 
-# Set PATH so it includes user's private bin directories. Let's start small with pathadd()
-
-pathadd "$HOME/bin"
-pathadd "$HOME/.local/bin"
-
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -38,8 +33,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 # Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
 
-# shellcheck source=/usr/share/bash-completion/bash_completion
-test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
 
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
@@ -52,6 +45,13 @@ else
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/share/xsessions:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:/home/faris/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
 fi
+
+# User dirs first: {{{1
+
+# Set PATH so it includes user's private bin directories and set them first in path
+
+if [[ -d "$HOME/bin" ]]; then export PATH="$HOME/bin:$PATH"; fi
+if [[ -d "$HOME/.local/bin" ]]; then export PATH="$HOME/.local/bin:$PATH"; fi
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -79,8 +79,9 @@ fi
 
 # JavaScript: {{{1
 if [[ -n "$(command -v yarn)" ]]; then
-    YARNPATH="$HOME/.yarn/bin:$HOME/.local/share/yarn/global/node_modules/.bin"
-    pathadd "$YARNPATH"
+    pathadd "$HOME/.yarn/bin"
+
+    pathadd "$XDG_DATA_HOME/yarn/global/node_modules/.bin"
 
     if [[ -f "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash" ]]; then
         # shellcheck source=./.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash disable=1091
@@ -100,6 +101,18 @@ pathadd "$HOME/.racket/7.1/bin"
 pathadd "$HOME/.cargo/bin"
 
 if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
+
+# History: {{{1
+
+# Don't put duplicate lines or lines starting with space in the history.
+export HISTCONTROL=ignoreboth
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+export HISTSIZE=-1
+export HISTFILESIZE=-1
+# https://unix.stackexchange.com/a/174902
+export HISTTIMEFORMAT="%F %T: "
+# Ignore all the damn cds, ls's its a waste to have pollute the history
+export HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
 # Environment Variables: {{{1
 
@@ -168,7 +181,7 @@ export CURL_HOME="$HOME/.config/curl/curlrc"
 # Help find your dotfiles faster and setup nvim
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
-export NVIM="$HOME/.config/nvim"
+export NVIM_CONF="$HOME/.config/nvim"
 export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
 pathadd "$_ROOT/local/bin"

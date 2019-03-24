@@ -26,7 +26,7 @@ __conda_setup="$($HOME/miniconda3/bin/conda shell.bash hook 2> /dev/null)"
 if [[ $__conda_setup == 0 ]]; then
     eval "$__conda_setup"
 else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+    if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
         # shellcheck source=/home/faris/miniconda3/etc/profile.d/conda.sh
         . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
@@ -49,24 +49,10 @@ export PYTHONDONTWRITEBYTECODE=1
 
 if [[ -d ~/google-cloud-sdk ]]; then
     # shellcheck source=~/google-cloud-sdk/completion.bash.inc
-    source /home/faris/google-cloud-sdk/completion.bash.inc
+    source "$HOME/google-cloud-sdk/completion.bash.inc"
     # shellcheck source=~/google-cloud-sdk/path.bash.inc
-    source /home/faris/google-cloud-sdk/path.bash.inc
+    source "$HOME/google-cloud-sdk/path.bash.inc"
 fi
-
-# History: {{{1
-
-# Don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=50000
-# TODO: What are the units on either of these?
-# Still don't know but fc maxes out at 32767
-HISTFILESIZE=50000
-# https://unix.stackexchange.com/a/174902
-HISTTIMEFORMAT="%F %T: "
-# Ignore all the damn cds, ls's its a waste to have pollute the history
-HISTIGNORE='exit:ls:cd:history:ll:la:gs'
 
 # Shopt: {{{1
 
@@ -152,27 +138,21 @@ pathadd "$HOME/.local/share/nvim/site/node_modules/.bin"
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
+    export FZF_TMUX_HEIGHT=40
     # shellcheck source=/home/faris/.fzf.bash
     source "$HOME/.fzf.bash"
-fi
-
-# Loops for the varying backends for fzf.
-if [[ -n "$(command -v ag)" ]]; then
-    # Doesn't work.
-    Ag() {
-        "$FZF_DEFAULT_COMMAND $@" | fzf -
-    }
 fi
 
 # Junegunn's current set up per his bashrc with an added check for fd.
 if [[ -n "$(command -v rg)" ]]; then
 
-    export FZF_DEFAULT_COMMAND='rg --hidden --files $* '
-    export FZF_CTRL_T_COMMAND='rg --hidden  --files $* '
+    export FZF_DEFAULT_COMMAND='rg --hidden '
+    export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
+    export FZF_CTRL_T_COMMAND='rg --hidden --no-messages --max-count 10  --files $* '
 
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
-    export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
     export FZF_CTRL_R_COMMAND="rg $*"
+    export FZF_CTRL_R_OPTS="--multi --cycle --ansi"
     export FZF_ALT_C_COMMAND="rg --files $*"
 
 
@@ -193,13 +173,13 @@ else
     export FZF_DEFAULT_COMMAND='find * -type f'
 
     # Options for FZF no matter what.
-    export FZF_DEFAULT_OPTS='--multi --cycle'
+    export FZF_DEFAULT_OPTS=' --cycle'
 fi
 
 # termux doesnt have xclip or xsel
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+export FZF_CTRL_R_OPTS="--preview 'head -n 100 {}' --preview-window=down:50%:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
-command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200'"
+command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
@@ -220,6 +200,9 @@ complete -F _fzf_path_completion -o default -o bashdefault ag
 complete -F _fzf_dir_completion -o default -o bashdefault tree
 
 # Sourced files: {{{1
+
+# shellcheck source=/usr/share/bash-completion/bash_completion
+test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
 
 if [[ -d ~/.bashrc.d ]]; then
     for config in $HOME/.bashrc.d/*.bash; do
