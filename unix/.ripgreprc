@@ -1,0 +1,11 @@
+# Ripgreprc
+
+# -g '!*/.git'
+# -g '!*/.svn'
+# -g '!*/.hg'
+# -g '!*/CVS'
+# -g '!*/.DS_Store'
+# -g '!*/node_modules'
+--hidden
+
+# could add colors and stuff
