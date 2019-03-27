@@ -1,5 +1,5 @@
 """
-Vim: set ft=python:
+Vim: set ft=xonsh:
 
 Mar 03, 2019:
 
@@ -49,17 +49,17 @@ $DYNAMIC_CWD_WIDTH = '15.0'
 $LANG = 'en_US.UTF-8'
 $MULTILINE_PROMPT = '...'
 $PROMPT_TOOLKIT_COLOR_DEPTH = 'DEPTH_24_BIT'
-SUBSEQUENCE_PATH_COMPLETION = True
+$SUBSEQUENCE_PATH_COMPLETION = True
 $VI_MODE = '1'
-XONSH_AUTOPAIR = 1
-XONSH_CACHE_EVERYTHING = 1
+$XONSH_AUTOPAIR = 1
+$XONSH_CACHE_EVERYTHING = 1
 $XONSH_HISTORY_SIZE = '107374182400'
 $XONSH_SHOW_TRACEBACK = 'True'
 $XONSH_STORE_STDIN = '1'
 $XONSH_STORE_STDOUT = '1'
 # TODO: How to eval either ~ or $HOME
 # $XONSH_TRACEBACK_LOGFILE = '.local/share/xonsh/traceback.log'
-XONSH_SHOW_TRACEBACK = True
+$XONSH_SHOW_TRACEBACK = True
 
 # Don't know if I'm allowed to do this. Holy hell nvim runs slow in xonsh
 # xontrib load jedi

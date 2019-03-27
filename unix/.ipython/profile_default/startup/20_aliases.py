@@ -8,6 +8,8 @@ IPython Aliases
 .. module:: aliases
     :synopsis: Create aliases for :mod:`IPython` to ease use as a system shell.
 
+.. |ip| .. replace:: :class:`IPython.core.interactiveshell.InteractiveShell`
+
 .. rubric:: Changelog - Mar 03, 2019
 
     Moved git aliases into new :func:`common_aliases()`
@@ -15,8 +17,8 @@ IPython Aliases
 
 Overview
 --------
-This module utilizes ``_ip``, the global IPython InteractiveShell instance, and
-fills the ``user_ns`` with common Linux idioms.
+This module utilizes ``_ip``, the global IPython InteractiveShell 
+instance, and fills the ``user_ns`` with common Linux idioms.
 
 
 .. todo::
@@ -146,7 +148,7 @@ def linux_specific_aliases(_ip):
     """
     _user_aliases = [
         ('ag', 'ag --hidden --color %l'),
-        ('cs', 'cd %s && ls -F --color=always %l'),
+        ('cs', 'cd %s && ls -F --color=always %s'),
         ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
         ('dus', 'du -d 1 -h %l'),
         ('echo', 'echo -e %l'),

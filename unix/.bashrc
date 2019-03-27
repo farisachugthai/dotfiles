@@ -147,7 +147,7 @@ fi
 if [[ -n "$(command -v rg)" ]]; then
 
     export FZF_DEFAULT_COMMAND='rg --hidden '
-    export FZF_DEFAULT_OPTS='--multi --cycle  --ansi -j 10 '
+    export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
 
     export FZF_CTRL_T_COMMAND='rg --hidden --no-messages --max-count 10 --files $* '
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '

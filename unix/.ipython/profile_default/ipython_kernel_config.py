@@ -1,4 +1,5 @@
 # Configuration file for ipython-kernel.
+from traitlets.config import get_config
 
 c = get_config()  # noqa
 # -----------------------------------------------------------------------------
@@ -104,7 +105,7 @@ c = get_config()  # noqa
 # c.InteractiveShellApp.pylab_import_all = True
 
 # Reraise exceptions encountered loading IPython extensions?
-# c.InteractiveShellApp.reraise_ipython_extension_failures = False
+c.InteractiveShellApp.reraise_ipython_extension_failures = True
 
 # -----------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
@@ -128,13 +129,13 @@ c = get_config()  # noqa
 # IPython: an enhanced interactive Python shell.
 
 # Whether to create profile dir if it doesn't exist
-c.BaseIPythonApplication.auto_create = True
+# c.BaseIPythonApplication.auto_create = True
 
 # Whether to install the default config files into the profile dir. If a new
 # profile is being created, and IPython contains config files for that profile,
 # then they will be staged into the new directory.  Otherwise, default config
 # files will be automatically generated.
-c.BaseIPythonApplication.copy_config_files = True
+# c.BaseIPythonApplication.copy_config_files = True
 
 # Path to an extra config file to load.
 #
@@ -245,10 +246,10 @@ except Exception:
 # c.InteractiveShell.autocall = 0
 
 # Autoindent IPython code entered interactively.
-try:
-    c.InteractiveShell.autoindent = True
-except Exception:
-    pass
+# try:
+#     c.InteractiveShell.autoindent = True
+# except Exception:
+#     pass
 
 # Enable magic commands to be called without the leading %.
 c.InteractiveShell.automagic = True
@@ -286,7 +287,7 @@ c.InteractiveShell.colors = 'Linux'
 c.InteractiveShell.display_page = True
 
 # (Provisional API) enables html representation in mime bundles sent to pagers.
-# c.InteractiveShell.enable_html_pager = False
+c.InteractiveShell.enable_html_pager = True
 
 # Total length of command history
 c.InteractiveShell.history_length = 100000
@@ -342,7 +343,7 @@ c.InteractiveShell.history_load_length = 10000
 
 # Enables rich html representation of docstrings. (This requires the docrepr
 # module).
-c.InteractiveShell.sphinxify_docstring = False
+c.InteractiveShell.sphinxify_docstring = True
 
 c.InteractiveShell.wildcards_case_sensitive = False
 

@@ -1,3 +1,7 @@
+from traitlets.config import get_config
+
+c = get_config()
+
 # Configuration file for jupyter-console.
 
 # -----------------------------------------------------------------------------
@@ -42,7 +46,7 @@
 
 # Set to display confirmation dialog on exit. You can always use 'exit' or
 #  'quit', to force a direct exit without any confirmation.
-# c.JupyterConsoleApp.confirm_exit = True
+c.JupyterConsoleApp.confirm_exit = "False"
 
 # Connect to an already running kernel
 # c.JupyterConsoleApp.existing = ''
@@ -110,37 +114,44 @@
 
 # Set to display confirmation dialog on exit. You can always use 'exit' or
 #  'quit', to force a direct exit without any confirmation.
-# c.ZMQTerminalInteractiveShell.confirm_exit = True
+c.ZMQTerminalInteractiveShell.confirm_exit = False
 
 # Shortcut style to use at the prompt. 'vi' or 'emacs'.
 # c.ZMQTerminalInteractiveShell.editing_mode = 'emacs'
 
 # The name of a Pygments style to use for syntax highlighting
-# c.ZMQTerminalInteractiveShell.highlighting_style = ''
+c.ZMQTerminalInteractiveShell.highlighting_style = 'Gruvbox'
 
 # Override highlighting format for specific tokens
 # c.ZMQTerminalInteractiveShell.highlighting_style_overrides = {}
 
 # How many history items to load into memory
-# c.ZMQTerminalInteractiveShell.history_load_length = 1000
+c.ZMQTerminalInteractiveShell.history_load_length = 5000
 
 # Handler for image type output.  This is useful, for example, when connecting
-#  to the kernel in which pylab inline backend is activated.  There are four
-#  handlers defined.  'PIL': Use Python Imaging Library to popup image; 'stream':
-#  Use an external program to show the image.  Image will be fed into the STDIN
-#  of the program.  You will need to configure `stream_image_handler`;
-#  'tempfile': Use an external program to show the image.  Image will be saved in
+#  to the kernel in which pylab inline backend is activated.
+
+# There are four handlers defined.
+
+# 'PIL': Use Python Imaging Library to popup image;
+
+# stream': Use an external program to show the image.  Image will be fed into
+# the STDIN  of the program.
+# You will need to configure `stream_image_handler`;
+
+# 'tempfile': Use an external program to show the image.  Image will be saved in
 #  a temporally file and the program is called with the temporally file.  You
-#  will need to configure `tempfile_image_handler`; 'callable': You can set any
-#  Python callable which is called with the image data.  You will need to
-#  configure `callable_image_handler`.
+#  will need to configure `tempfile_image_handler`;
+
+# 'callable': You can set any  Python callable which is called with the image
+# data.  You will need to configure `callable_image_handler`.
 # c.ZMQTerminalInteractiveShell.image_handler = 'PIL'
 
 # Whether to include output from clients other than this one sharing the same
 #  kernel.
 #
 #  Outputs are not displayed until enter is pressed.
-# c.ZMQTerminalInteractiveShell.include_other_output = False
+c.ZMQTerminalInteractiveShell.include_other_output = True
 
 # Timeout (in seconds) for giving up on a kernel's is_complete response.
 #
