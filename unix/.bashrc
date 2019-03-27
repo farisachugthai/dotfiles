@@ -138,22 +138,32 @@ pathadd "$HOME/.local/share/nvim/site/node_modules/.bin"
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
-    export FZF_TMUX_HEIGHT=40
+    export FZF_TMUX_HEIGHT=80%
     # shellcheck source=/home/faris/.fzf.bash
     source "$HOME/.fzf.bash"
 fi
 
-# Junegunn's current set up per his bashrc with an added check for fd.
+
 if [[ -n "$(command -v rg)" ]]; then
 
     export FZF_DEFAULT_COMMAND='rg --hidden '
-    export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
-    export FZF_CTRL_T_COMMAND='rg --hidden --no-messages --max-count 10  --files $* '
+    export FZF_DEFAULT_OPTS='--multi --cycle  --ansi -j 10 '
 
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
+    export FZF_CTRL_T_COMMAND='rg --hidden --no-messages --max-count 10 --files $* '
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
+
     export FZF_CTRL_R_COMMAND="rg $*"
-    export FZF_CTRL_R_OPTS="--multi --cycle --ansi"
+    export FZF_CTRL_R_OPTS="--cycle --ansi --preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+
     export FZF_ALT_C_COMMAND="rg --files $*"
+
+    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb ]]; then
+        export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
+    else
+        export FZF_CTRL_T_OPTS+='--preview "head -100 {}"'
+    fi
+    Ag() { ag -l -g "" | fzf; };
+    Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
 
 
 elif [[ -n "$(command -v fd)" ]]; then
@@ -164,8 +174,8 @@ elif [[ -n "$(command -v fd)" ]]; then
 
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "head -100 {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview."'
 
-    if [[ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]]; then
-        export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
+    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb ]]; then
+        export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
     fi
 
 
@@ -177,7 +187,6 @@ else
 fi
 
 # termux doesnt have xclip or xsel
-export FZF_CTRL_R_OPTS="--preview 'head -n 100 {}' --preview-window=down:50%:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "
 
