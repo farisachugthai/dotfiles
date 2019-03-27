@@ -2,7 +2,7 @@
 
 Do we need to use the IPython idiom
 
-.. code-block:: python
+.. code-block:: python3
 
     from IPython import get_ipython
     c = get_ipython()
@@ -10,7 +10,7 @@ Do we need to use the IPython idiom
 """
 # from JupyterWidget import
 # ------------------------------------------------------------------------------
-# ConnectionFileMixin(LoggingConfigurable) configuration
+# connectionFileMixin(LoggingConfigurable) configuration
 # ------------------------------------------------------------------------------
 
 # Mixin for configurable classes that work with connection files
@@ -53,7 +53,7 @@ Do we need to use the IPython idiom
 #  'quit', to force a direct exit without any confirmation.
 c.JupyterConsoleApp.confirm_exit = False
 
-# Connect to an already running kernel
+# connect to an already running kernel
 # c.JupyterConsoleApp.existing = ''
 
 # The name of the default kernel to start.
@@ -118,7 +118,7 @@ c.JupyterQtConsoleApp.display_banner = False
 # c.JupyterQtConsoleApp.stylesheet = ''
 
 # ------------------------------------------------------------------------------
-# ConsoleWidget(NewBase) configuration
+# consoleWidget(NewBase) configuration
 # ------------------------------------------------------------------------------
 
 # An abstract base class for console-type widgets. This class has functionality
@@ -138,15 +138,15 @@ c.JupyterQtConsoleApp.display_banner = False
 
 # The maximum number of lines of text before truncation. Specifying a non-
 #  positive number disables text truncation (not recommended).
-# c.ConsoleWidget.buffer_size = 500
+c.ConsoleWidget.buffer_size = 1000
 
 # The height of the console at start time in number of characters (will double
 #  with `vsplit` paging)
-# c.ConsoleWidget.console_height = 25
+c.ConsoleWidget.console_height = 50
 
 # The width of the console at start time in number of characters (will double
 #  with `hsplit` paging)
-# c.ConsoleWidget.console_width = 81
+c.ConsoleWidget.console_width = 120
 
 # Whether to automatically execute on syntactically complete input.
 #
@@ -158,7 +158,7 @@ c.JupyterQtConsoleApp.display_banner = False
 # The font family to use for the console. On OSX this defaults to Monaco, on
 #  Windows the default is Consolas with fallback of Courier, and on other
 #  platforms the default is Monospace.
-c.ConsoleWidget.font_family = 'Fira Mono'
+c.ConsoleWidget.font_family = 'Fira Code'
 
 # The font size. If unconfigured, Qt will be entrusted with the size of the
 #  font.
@@ -173,7 +173,7 @@ c.ConsoleWidget.font_size = 10
 #              completion by pressing Return.
 #  'ncurses' : Show the completion as a text list which is navigable by
 #              `tab` and arrow keys.
-# c.ConsoleWidget.gui_completion = 'ncurses'
+c.ConsoleWidget.gui_completion = 'droplist'
 
 # Whether to include output from clients other than this one sharing the same
 #  kernel.
@@ -183,7 +183,7 @@ c.ConsoleWidget.font_size = 10
 
 # The type of underlying text widget to use. Valid values are 'plain', which
 #  specifies a QPlainTextEdit, and 'rich', which specifies a QTextEdit.
-# c.ConsoleWidget.kind = 'plain'
+c.ConsoleWidget.kind = 'rich'
 
 # Prefix to add to outputs coming from clients other than this one.
 #
@@ -204,7 +204,7 @@ c.ConsoleWidget.font_size = 10
 #     'custom_page_requested(str)' signal.
 #  'none'
 #     The text is written directly to the console.
-# c.ConsoleWidget.paging = 'inside'
+c.ConsoleWidget.paging = 'vsplit'
 
 # ------------------------------------------------------------------------------
 # HistoryConsoleWidget(ConsoleWidget) configuration
@@ -214,7 +214,7 @@ c.ConsoleWidget.font_size = 10
 #  and provides a readline-esque interface to this history.
 
 #
-# c.HistoryConsoleWidget.history_lock = False
+c.HistoryConsoleWidget.history_lock = True
 
 # ------------------------------------------------------------------------------
 # FrontendWidget(HistoryConsoleWidget,BaseFrontendMixin) configuration
@@ -253,7 +253,7 @@ c.ConsoleWidget.font_size = 10
 #  format specifier, it will be used. Otherwise, the filename will be appended to
 #  the end the command. To use a terminal text editor, the command should launch
 #  a new terminal, e.g. ``"gnome-terminal -- vim"``.
-# c.JupyterWidget.editor = ''
+c.JupyterWidget.editor = 'nvim-qt'
 
 # The editor command to use when a specific line number is requested. The string
 #  should contain two format specifiers: {line} and {filename}. If this parameter
@@ -283,7 +283,7 @@ c.ConsoleWidget.font_size = 10
 
 # If not empty, use this Pygments style for syntax highlighting. Otherwise, the
 #  style sheet is queried for Pygments style information.
-# c.JupyterWidget.syntax_style = ''
+c.JupyterWidget.syntax_style = 'gruvbox'
 
 # ------------------------------------------------------------------------------
 # KernelManager(ConnectionFileMixin) configuration
