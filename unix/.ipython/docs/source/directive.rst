@@ -92,7 +92,10 @@ match on a doctest assertion, an error will be:
 
 Multi-line input is supported.
 
+.. then why is this erroring for me?
+
 .. ipython::
+    :okexcept:
 
     In [60]: import urllib
 
@@ -122,27 +125,27 @@ suppress the seed line so it doesn't show up in the rendered output:
    @doctest
    In [135]: numpy.random.rand(10,2)
    Out[135]:
-   array([[ 0.64524308,  0.59943846],
-          [ 0.47102322,  0.8715456 ],
-          [ 0.29370834,  0.74776844],
-          [ 0.99539577,  0.1313423 ],
-          [ 0.16250302,  0.21103583],
-          [ 0.81626524,  0.1312433 ],
-          [ 0.67338089,  0.72302393],
-          [ 0.7566368 ,  0.07033696],
-          [ 0.22591016,  0.77731835],
-          [ 0.0072729 ,  0.34273127]])
+   array([[0.64524308, 0.59943846],
+          [0.47102322, 0.8715456 ],
+          [0.29370834, 0.74776844],
+          [0.99539577, 0.1313423 ],
+          [0.16250302, 0.21103583],
+          [0.81626524, 0.1312433 ],
+          [0.67338089, 0.72302393],
+          [0.7566368 , 0.07033696],
+          [0.22591016, 0.77731835],
+          [0.0072729 , 0.34273127]])
 
 Another demonstration of multi-line input and output:
 
 .. ipython::
 
-   In [106]: print x
+   In [106]: print(x)
    --------> print(x)
    jdh
 
    In [109]: for i in range(10):
-      .....:     print i
+      .....:     print(i)
       .....:
       .....:
    0
@@ -163,21 +166,20 @@ you can do.  When using the matplotlib ``use`` directive, it should
 occur before any import of pylab.  This will not show up in the
 rendered docs, but the commands will be executed in the embedded
 interpreter and subsequent line numbers will be incremented to reflect
-the inputs::
+the inputs:
 
-
-  .. IPython::
-     :suppress:
-
-     In [144]: from pylab import *
-
-     In [145]: ion()
 
 .. ipython::
    :suppress:
 
    In [144]: from pylab import *
+   In [145]: ion()
 
+
+.. ipython::
+   :suppress:
+
+   In [144]: from pylab import *
    In [145]: ion()
 
 Likewise, you can set ``:doctest:`` or ``:verbatim:`` to apply these
@@ -218,7 +220,7 @@ settings to the entire block.  For example:
 You can create one or more pyplot plots and insert them with the
 ``@savefig`` decorator.
 
-.. IPython::
+.. ipython::
 
    @savefig plot_simple.png width=4in
    In [151]: plot([1,2,3]);
@@ -228,9 +230,9 @@ You can create one or more pyplot plots and insert them with the
    In [151]: hist(np.random.randn(10000), 100);
 
 In a subsequent session, we can update the current figure with some
-text, and then resave
+text, and then resave.
 
-.. IPython::
+.. ipython::
 
    In [151]: ylabel('number')
 
@@ -238,6 +240,8 @@ text, and then resave
 
    @savefig hist_with_text.png width=4in
    In [153]: grid(True)
+
+
 
 Pseudo-Decorators
 =================
@@ -249,13 +253,13 @@ line just below them (eg ``savefig``).
 
 @suppress
 
-    execute the IPython input block, but suppress the input and output
+    Execute the IPython input block, but suppress the input and output
     block from the rendered output.  Also, can be applied to the entire
     ``..IPython`` block as a directive option with ``:suppress:``.
 
 @verbatim
 
-    insert the input and output block in verbatim, but auto-increment
+    Insert the input and output block in verbatim, but auto-increment
     the line numbers. Internally, the interpreter will be fed an empty
     string, so it is a no-op that keeps line numbering consistent.
     Also, can be applied to the entire ``..IPython`` block as a
@@ -263,11 +267,11 @@ line just below them (eg ``savefig``).
 
 @savefig OUTFILE [IMAGE_OPTIONS]
 
-    save the figure to the static directory and insert it into the
+    Save the figure to the static directory and insert it into the
     document, possibly binding it into a minipage and/or putting
     code/figure label/references to associate the code and the
     figure. Takes args to pass to the image directive (*scale*,
-    *width*, etc can be kwargs); see `image options
+    *width*, etc can be ``kwargs``); see `image options
     <http://docutils.sourceforge.net/docs/ref/rst/directives.html#image>`_
     for details.
 
