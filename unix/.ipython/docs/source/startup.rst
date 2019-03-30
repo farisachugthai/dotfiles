@@ -90,8 +90,10 @@ version of the module, you can alternatively run
    Type:      method
 
 
+Here's the help from IPython.application.instance.:
+
    In [115]: IPython.Application.instance?
-   Signature: IPython.Application.instance(*args, **kwargs)
+   Signature: IPython.Application.instance(\*args, \*\*kwargs)
    Docstring:
    Returns a global instance of this class.
 
@@ -101,8 +103,10 @@ version of the module, you can alternatively run
    The arguments and keyword arguments passed to this method are passed
    on to the :meth:`__init__` method of the class upon instantiation.
 
-   Examples
-   --------
+
+Examples
+--------
+:
 
    Create a singleton class using instance, and retrieve it::
 
@@ -112,15 +116,16 @@ version of the module, you can alternatively run
        >>> foo == Foo.instance()
        True
 
-   Create a subclass that is retrived using the base class instance::
+   Create a subclass that is retrieved using the base class instance::
 
        >>> class Bar(SingletonConfigurable): pass
        >>> class Bam(Bar): pass
        >>> bam = Bam.instance()
        >>> bam == Bar.instance()
        True
-   File:      ~/miniconda3/lib/python3.7/site-packages/traitlets/config/configurable.py
-   Type:      method
+
+File:      ~/miniconda3/lib/python3.7/site-packages/traitlets/config/configurable.py
+Type:      method
 
 
 Original

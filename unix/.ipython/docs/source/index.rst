@@ -14,7 +14,6 @@ a good amount of reworking as is.
    :maxdepth: 2
    :caption: Contents:
 
-   basic_customization
    startup
    ipython_keybindings
    ipython_interactive_shell
@@ -22,10 +21,8 @@ a good amount of reworking as is.
    custom_magics
    directive
    extensions
-   extensions_pt2
    pygments
    jinja2
-   jinja2-checkpoint
 
 
 
