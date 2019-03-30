@@ -3,15 +3,12 @@ IPython_InteractiveShell
 ==========================
 Created Saturday 03 March 2018
 
-.. |ip| replace:: :class:`IPython.core.interactiveshell.InteractiveShell`
-
-`Interactive Shell src code <https://github.com/ipython/ipython/blob/master/IPython/core/interactiveshell.py>`_
-
-Lines 436-451
+`https://github.com/ipython/ipython/blob/master/IPython/core/interactiveshell.py <https://github.com/ipython/ipython/blob/master/IPython/core/interactiveshell.py>`_
+lines 436-451
 
 Here's some interesting LOC from the source code.
 
-.. code-block:: python3
+.. code-block:: python
 
         # Subcomponents of InteractiveShell
         alias_manager = Instance('IPython.core.alias.AliasManager', allow_none=True)
@@ -35,5 +32,3 @@ February 25, 2019
 
 Gotta admit though, I don't know what that :class:`Instance()` is and I assume
 it's a bit of the crux of the whole point.
-
-It might be a :mod:traitlets object.

@@ -7,7 +7,7 @@ IPython Config
 .. module:: _ipython_config
     :synopsis: Configuration file for IPython.
 
-Heavily drawn from documentation at ipython_docs_.
+Heavily drawn from documentation at `ipython_docs`_.
 
 .. _ipython_docs: `<https://ipython.readthedocs.io/en/stable/config/intro.html#python-config-files>`
 
@@ -17,8 +17,7 @@ In addition to source code found on GitHub.
 Overview
 ---------
 This module provides convenience functions, adds typical Linux shell
-commands to ``user_ns``, or the global namespace, in addition to
-Git aliases.
+commands to `user_ns`, or the global namespace, in addition to Git aliases.
 
 In addition, :mod:`pygments` is directly invoked to ensure comments are
 clearly visible in :mod:`IPython` cells.
@@ -26,23 +25,24 @@ clearly visible in :mod:`IPython` cells.
 
 Parameters
 ------------
-``c`` is a :class:`traitlets.config.Configurable()` object
-so everything you see in this like 600 line file is how to interact
-with those kinds of files. It's easy and doesn't require reinitializing
-:mod:`IPython` on simple things like creating a new prompt after every
-command increments it.
+c : :class:`IPython.core.interactiveshell.InteractiveShell`
+    `c` is a :class:`traitlets.config.Configurable()` object
+    so everything you see in this like 600 line file is how to interact
+    with those kinds of files. It's easy and doesn't require reinitializing
+    :mod:`IPython` on simple things like creating a new prompt after every
+    command increments it.
 
 
 Attributes (Non-method parameters)
 ----------------------------------
-``IPYTHONDIR`` : path-like object
+IPYTHONDIR : path-like object
     Environment variable defined before runtime to indicate where the
     IPython profile directory is.
 
 
 Returns
 -------
-``home`` : str
+home : str
     The users home directory.
 
 
@@ -418,7 +418,7 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
 # paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash
 
-c.TerminalInteractiveShell.highlighting_style = 'Gruvbox'
+c.TerminalInteractiveShell.highlighting_style = 'gruvbox'
 
 # Override highlighting format for specific tokens
 # Comments were genuinely impossible to read. Might need to override

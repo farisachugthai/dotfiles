@@ -13,13 +13,10 @@ Plus now I can ensure this works!
 .. ipython::
 
    In [3]: from jinja2 import Template
-
    In [4]: t = Template
    Out[4]: jinja2.environment.Template
-
    In [5]: t = Template("Hello {{something}}")
    Out[5]: <Template memory:7c981e95c0>
-
    In [7]: t.render(something="World!")
    Out[7]: 'Hello World!'
 
@@ -30,18 +27,14 @@ January 29, 2019:
 .. ipython::
 
    In [15]: from jinja2 import Template
-
    In [16]: t = Template("My favorite numbers: {% for n in range(1,10) %}{{n}} " "{% endfor %}")
    Out[16]: <Template memory:7fc729f55c50>[ins]
-
-   In [17]: t.render()Out[17]: 'My favorite numbers: 1 2 3 4 5 6 7 8 9 '
+   In [17]: t.render()
+   Out[17]: 'My favorite numbers: 1 2 3 4 5 6 7 8 9 '
 
 Feb 08, 2019:
 
-... Wow. Well I wish I had any information on where we got that previous code
-or anything at all..
-
-Fuck me. I later realized it's from the link below.
+The above code came from:
 
 :URL: https://realpython.com/primer-on-jinja-templating/
 
@@ -49,12 +42,13 @@ Let's take notes on this guy.
 
 .. no idea if the below is a real directive.
 
-.. blockquote::
+:
 
    For example, Jinja templates use {% ... %} for expressions or logic (like
    for loops), while {{ ... }} is used for outputting the results of an
    expression or a variable to the end user. The latter tag, when rendered, is
    replaced with a value or values, and is seen by the end user.
+
 
 Sphinx on Jinja Templating
 --------------------------
@@ -73,7 +67,10 @@ The most important idea about Jinja from Sphinx?:
 .. raw:: html
 
     <p>For example, to add a new link to the template area containing related links all
-you have to do is to add a new template called <code class=""docutils literal notranslate"><span class=""pre">layout.html</p>span></Template>code> with the following contents:</Template>p>""</p>
+    you have to do is to add a new template called
+    <code class=""docutils literal notranslate"><span class=""pre">layout.html</p>span></Template>code>
+    with the following contents:
+    </Template>p>""</p>
 
 
 .. code-block:: html+jinja
@@ -84,4 +81,4 @@ you have to do is to add a new template called <code class=""docutils literal no
         {{  super() }}
     {% endblock %} }}"</li> %}
 
-
+Cool.

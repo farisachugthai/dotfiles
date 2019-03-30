@@ -49,9 +49,10 @@ Mar 02, 2019:
 
 
 """
-from prompt_toolkit import prompt
+from prompt_toolkit.shortcuts.prompt import PromptSession
 from prompt_toolkit.application.current import get_app
 from prompt_toolkit.key_binding import KeyBindings
+from IPython import get_ipython
 
 
 class EditingMode():
@@ -82,7 +83,8 @@ def vim_prompt_run():
         text = 'Vi' if get_app().editing_mode == EditingMode.VI else 'Emacs'
         return [('class:toolbar', ' [F4] %s ' % text)]
 
-    prompt('> ', key_bindings=bindings, bottom_toolbar=bottom_toolbar)
+    PromptSession('> ', key_bindings=bindings, bottom_toolbar=bottom_toolbar)
+
 
 
 if __name__ == "__main__":
