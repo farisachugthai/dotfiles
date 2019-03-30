@@ -8,25 +8,18 @@ IPython Aliases
 .. module:: aliases
     :synopsis: Create aliases for :mod:`IPython` to ease use as a system shell.
 
-:File: 20_aliases.py
-:Author: Faris Chugthai
+.. |ip| .. replace:: :class:`IPython.core.interactiveshell.InteractiveShell`
 
-`Github <https://github.com/farisachugthai>`_
-
-
-.. changelog:: Mar 03, 2019
+.. rubric:: Changelog - Mar 03, 2019
 
     Moved git aliases into new :func:`common_aliases()`
 
 
 Overview
 --------
-This module utilizes ``_ip``, the global IPython InteractiveShell instance, and
-fills the ``user_ns`` with common Linux idioms.
+This module utilizes ``_ip``, the global IPython InteractiveShell 
+instance, and fills the ``user_ns`` with common Linux idioms.
 
-.. admonition::
-
-    This blows up on Windows10. You've been warned.
 
 .. todo::
 
@@ -120,6 +113,12 @@ def linux_specific_aliases(_ip):
     number of GNU/Linux built-ins to exist on Windows, and as a result, this
     list may not be comprehensive.
 
+    Yet to be implemented
+    ---------------------
+    - ``ssh-day``
+    - ``extract``
+    - ``fzf`` in its many invocations.
+
     Parameters
     ----------
     _ip : :class:`IPython.core.interactiveshell.InteractiveShell()` object
@@ -142,15 +141,14 @@ def linux_specific_aliases(_ip):
 
     Returns
     -------
-    _ip.alias_manager.user_aliases : SingletonConfigurable
-        referring to it as a :mod:`traitlets` object but the interface is the
-        same as a tuple with 2 elements in the form (alias, system command).
+    _ip.alias_manager.user_aliases : list of ('alias', 'system command') tuples
 
 
 
     """
     _user_aliases = [
-        ('ag', 'ag --hidden %l'),
+        ('ag', 'ag --hidden --color %l'),
+        ('cs', 'cd %s && ls -F --color=always %s'),
         ('cp', 'cp -iv %l'),  # cp mv mkdir and rmdir are all overridden
         ('dus', 'du -d 1 -h %l'),
         ('echo', 'echo -e %l'),
@@ -172,6 +170,9 @@ def linux_specific_aliases(_ip):
         ('mk', 'mkdir -pv %l && cd %l'),  # check if this works. only mkdir
         ('mkdir', 'mkdir -pv %l'),
         ('mv', 'mv -iv %l'),
+        ('nman', 'nvim -c "Man $1" -c"wincmd T"'),
+        ('r', 'fc -s'),
+        ('redo', 'fc -s'),
         ('rm', 'rm -v %l'),
         ('rmdir', 'rmdir -v %l'),
         ('profile_default',
@@ -203,7 +204,7 @@ def common_aliases(_ip):
 
     """
     _user_aliases = [
-        ('g', 'git diff --staged --stat -- HEAD'),
+        ('g', 'git diff --staged --stat'),
         ('ga', 'git add %l'),
         ('ga.', 'git add .'),
         ('gar', 'git add --renormalize %l'),
@@ -256,8 +257,6 @@ def common_aliases(_ip):
         ('lunpublish', 'legit unpublish'),
         ('lundo', 'legit undo'),
         ('lbranches', 'legit branches'),
-        ('vi', 'nvim %l'),
-        ('vim', 'nvim %l'),
         ('xx', 'quit'),  # this is a sweet one
         ('..', 'cd ..'),
         ('...', 'cd ../..'),
@@ -268,7 +267,8 @@ def common_aliases(_ip):
 if __name__ == "__main__":
     _ip = get_ipython()
 
-    if not isinstance(_ip, IPython.terminal.interactiveshell.TerminalInteractiveShell):
+    if not isinstance(
+            _ip, IPython.terminal.interactiveshell.TerminalInteractiveShell):
         raise Exception
 
     logging.basicConfig(level=logging.WARNING)
@@ -279,18 +279,24 @@ if __name__ == "__main__":
 
         # Now let's get the Linux aliases.
         user_aliases += linux_specific_aliases(_ip)
-        logging.info("The number of available aliases is: " + str(len(user_aliases)))
+        logging.info("The number of available aliases is: " +
+                     str(len(user_aliases)))
 
         if platform.machine() == "aarch64":
             # user_aliases += termux_aliases(ip)
             pass
 
     user_aliases += common_aliases(_ip)
-    logging.info("The number of available aliases is: " + str(len(user_aliases)))
 
     # There has got to be a better way to do this.
     if which('fzf') and which('rg'):
-        user_aliases.extend(('fzf', 'rg --hidden --follow --files'))
+        user_aliases.extend(
+            ('fzf', '$FZF_DEFAULT_COMMAND | fzf-tmux $FZF_DEFAULT_OPTS'))
+    elif which('fzf') and which('ag'):
+        pass  # TODO
+
+    logging.info("The number of available aliases is: " +
+                 str(len(user_aliases)))
 
     for i in user_aliases:
         try:

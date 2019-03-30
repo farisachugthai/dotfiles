@@ -9,6 +9,7 @@
     }
   },
   "load_extensions": {
-    "nbextensions_configurator/config_menu/main": true
+    "nbextensions_configurator/config_menu/main": false,
+    "ipyparallel": false
   }
 }

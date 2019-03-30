@@ -418,7 +418,7 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
 # paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash
 
-c.TerminalInteractiveShell.highlighting_style = 'gruvbox'
+c.TerminalInteractiveShell.highlighting_style = 'Gruvbox'
 
 # Override highlighting format for specific tokens
 # Comments were genuinely impossible to read. Might need to override

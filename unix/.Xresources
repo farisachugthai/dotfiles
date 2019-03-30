@@ -8,21 +8,11 @@ URxvt*scrollBar_right          : false
 URxvt.secondaryScroll          : true
 URxvt.cursorBlink              : false
 
-! First attempt at configuring the X server directly
-URxvt*transparent              : true
-URxvt*shading                  : 50
-URxvt*visualBell               : true
-URxvt*fading                   : 30
-URxvt*colorUL                  : blue
+URxvt.letterSpace       : 1
+Urxvt*font              : FiraCode : pixelsize=40
+Urxvt*italicFont        : FiraCode : italic : autohint=True : pixelsize=40
+Urxvt*boldFont          : FiraCode : bold   : autohint=True : pixelsize=40
 
-URxvt.letterSpace       : -2
-Urxvt*font              : FiraCode : autohint=True : pixelsize=20
-Urxvt*italicFont        : FiraCode : italic : autohint=True : pixelsize=20
-Urxvt*boldFont          : FiraCode : bold   : autohint=True : pixelsize=20
-
-! check out archwikis entry on fontconfig for good explanations of anti-aliasing and autohinting
-*antialias                     : true
-*autohint                      : true
 
 URxvt*scrollWithBuffer         : false
 URxvt*scrollTtyOutput          : false
@@ -34,22 +24,6 @@ URxvt.urlLauncher              : xdg-open
 URxvt*url-select.launcher      : /usr/bin/firefox
 URxvt*url-select.underline     : true
 URxvt.matcher.pattern.1        : \\bwww\\.[\\w-]\\.[\\w./?&@#-\[\]]*[\\w/-]
-
-! https://github.com/addy-dclxvi/i3-starterpack/blob/master/.Xresources
-URxvt*iso14755:      false
-URxvt*termName:      rxvt-256color
-URxvt.lineSpace:     0
-
-URxvt*depth:            32
-!URxvt*background:      rgba:0000/0000/0000/AAAA
-!URxvt*background:      [80]#404552
-URxvt*background:       [100]#2f343f
-URxvt*foreground:       #F8F8FF
-URxvt.underlineColor:   #4682B4
-URxvt.highlightColor:   #4682B4
-URxvt.throughColor:     Blue
-URxvt*cursorColor:      #dc8cc3
-URxvt*cursorColor2:     Black
 
 
 ! -----------------------------------------------------------------------------

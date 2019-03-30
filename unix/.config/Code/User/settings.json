@@ -8,8 +8,7 @@
     "editor.fontFamily": "'Fira Code', 'monospace'",
     "editor.fontLigatures": true,
     "editor.mouseWheelZoom": true,
-    "editor.minimap.enabled": false,
-    "editor.renderWhitespace": "all",
+    "editor.renderWhitespace": "none",
     "editor.rulers": [
         80,
         120
@@ -60,7 +59,7 @@
     "python.terminal.executeInFileDir": true,
     "python.venvPath": "~/miniconda3/envs/",
     "restructuredtext.builtDocumentationPath": "${workspaceFolder}/docs/_build/html",
-    "restructuredtext.confPath": "${workspaceFolder}/docs",
+    "restructuredtext.confPath": "",
     "search.quickOpen.includeSymbols": true,
     "search.runInExtensionHost": true,
     "search.smartCase": true,
@@ -76,7 +75,7 @@
     "typescript.suggest.completeFunctionCalls": true,
     "update.enableWindowsBackgroundUpdates": false,
     "vim.enableNeovim": true,
-    "vim.history": 500,
+    "vim.history": 5000,
     "vim.leader": "<Space>",
     "vim.sneak": true,
     "vim.statusBarColorControl": true,
@@ -84,8 +83,8 @@
     "window.zoomLevel": 0,
     "workbench.colorCustomizations": {
         "statusBar.background": "#005f5f",
-        "statusBar.debuggingBackground": "#005f5f",
-        "statusBar.noFolderBackground": "#005f5f"
+        "statusBar.noFolderBackground": "#005f5f",
+        "statusBar.debuggingBackground": "#005f5f"
     },
     "workbench.commandPalette.history": 500,
     "workbench.enableExperiments": false,
@@ -98,5 +97,28 @@
     "vim.timeout": 100,
     "vim.sneakUseIgnorecaseAndSmartcase": true,
     "editor.suggestSelection": "first",
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "restructuredtext.languageServer.disabled": false,
+    "python.dataScience.useDefaultConfigForJupyter": false,
+    "workbench.sideBar.location": "left",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "debug.toolBarLocation": "docked",
+    "vim.easymotion": true,
+    "vim.easymotionMarkerFontFamily": "Fira Code",
+    "vim.foldfix": true,
+    "vim.highlightedyank.enable": true,
+    "vim.hlsearch": true,
+    "spotify.showMuteVolumeButton": true,
+    "spotify.showPauseButton": true,
+    "spotify.showVolumeUpButton": true,
+    "spotify.showVolumeDownButton": true,
+    "material-icon-theme.showUpdateMessage": true,
+    "git.allowForcePush": true,
+    "extensions.ignoreRecommendations": true,
+    "terminal.integrated.windowsEnableConpty": true,
+    "workbench.commandPalette.preserveInput": true,
+    "files.autoGuessEncoding": true,
+    "workbench.quickOpen.preserveInput": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.settings.openDefaultKeybindings": true
 }
