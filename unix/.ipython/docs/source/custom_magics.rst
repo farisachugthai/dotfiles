@@ -48,7 +48,7 @@ You can also create magics of all three kinds by inheriting from the
 :class:`IPython.core.magic.Magics` class.  This lets you create magics that can
 potentially hold state in between calls, and that have full access to the main
 IPython object:
-    
+
 .. sourcecode:: python
 
     # This code can be put in any Python module, it does not require IPython
@@ -112,7 +112,7 @@ instantiate the class yourself before registration:
             # You must call the parent constructor
             super(StatefulMagics, self).__init__(shell)
             self.data = data
-        
+
         # etc...
 
     def load_ipython_extension(ipython):
@@ -136,8 +136,9 @@ instantiate the class yourself before registration:
    :func:`define_magic` function are advised to adjust their code
    for the current API.
 
+
 Complete Example
-================
+----------------
 
 Here is a full example of a magic package. You can distribute magics using
 setuptools, distutils, or any other distribution tools like `flit
@@ -157,9 +158,9 @@ setuptools, distutils, or any other distribution tools like `flit
    $ cat example_magic/__init__.py
    """An example magic"""
    __version__ = '0.0.1'
-   
+
    from .abracadabra import Abracadabra
-   
+
    def load_ipython_extension(ipython):
        ipython.register_magics(Abracadabra)
 

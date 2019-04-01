@@ -1,0 +1,9 @@
+
+[projects/dotfiles]
+checkout = git clone 'git@github.com:farisachugthai/dotfiles.git' 'dotfiles'
+
+[projects/viconf]
+checkout = git clone 'git@github.com:farisachugthai/viconf.git' 'viconf'
+
+[projects/Gruvbox-IPython]
+checkout = git clone 'git@github.com:farisachugthai/Gruvbox-IPython.git' 'Gruvbox-IPython'

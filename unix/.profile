@@ -122,7 +122,7 @@ if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
     export PAGER="bat"
     # override this on the CLI if you want but for general use and in scripts plain is best
-    export BAT_STYLE=plain
+    export BAT_STYLE=full
 else
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors

@@ -14,15 +14,15 @@ a good amount of reworking as is.
    :maxdepth: 2
    :caption: Contents:
 
-   startup
-   ipython_keybindings
-   ipython_interactive_shell
-   magics
-   custom_magics
-   directive
-   extensions
-   pygments
-   jinja2
+   Startup <startup>
+   Keybindings <ipython_keybindings>
+   Interactive Shell Object <ipython_interactive_shell>
+   Built-in Magics <magics>
+   Writing Your Own Magics <custom_magics>
+   Sphinx Directives <directive>
+   IPython extensions and nbextensions  <extensions>
+   Pygments highlighting <pygments>
+   Jinja <jinja2>
 
 
 

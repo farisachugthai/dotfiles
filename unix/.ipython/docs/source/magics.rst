@@ -24,9 +24,10 @@ But even when i run ``%GUI`` [which should disable that] it doesn't work.
 2. Are you allowed to use 2 cell magics in one cell?
 What if I wanted to do
 
-
 ``%%timeit``
+
 ``%%bash``
+
 ``. ~/.bashrc``
 
 Is that legal?
@@ -34,55 +35,48 @@ What if I want to write the output to a file? Can I prepend the ``%%file`` to
 the top? How deep can this rabbit hole go?
 
 Mar 30, 2019:
+
 *I don't think so because it crashed IPython while trying to build docs.*
-
-
-.. _defined_magics:
 
 Which magics are defined here?
 
+.. _defined_magics:
 
 Line:
 ------
 
-hist[ory], pycat (briefly), recall, ed[it], bookmark, run, store, save
-
-
+``hist[ory]``, ``pycat`` (briefly), ``recall``, ``ed[it]``, ``bookmark``,
+``run``, ``store``, ``save``
 
 Cell:
 -----
 
-[write]file, timeit [also a line magic just not documented], macro
+``[write]file``, ``timeit`` [also a line magic just not documented], ``macro``
 
 
 Which magics do you think deserve a special mention even if we haven't
 documented them here?
 
-1.
-``Alias`` probably should get some attention here now that i have an egregious
+1. ``Alias`` probably should get some attention here now that i have an egregious
 amount on it in .bashrc and the ipy config.
-
-2.
-``cpaste`` is neat because you can feed it lines that still have the >>> or
-[In] and [Out] prepended.
-
-3.
-``paste directly`` pulls from the clipboard without intervention AND it strips
-a leading > so you can pull it from diff files!!
+2. ``cpaste`` is neat because you can feed it lines that still have the >>> or [In] and [Out] prepended.
+3. ``paste directly`` pulls from the clipboard without intervention AND it strips a leading > so you can pull it from diff files!!
 
 Special special mention.
-``:py:function:exec()`` is not a magic but I actually thought it was!
+:func:`exec` is not a magic but I actually thought it was!
 
 In [18]: exec(In[6])
 
-exec() is a fucking Python built-in that just takes strings, but it can operate on
-history syntax. Idk how to traverse sessions yet and idk if it can.
+:func:`exec` is a fucking Python built-in that just takes strings, but it can
+operate on history syntax. Idk how to traverse sessions yet and idk if it can.
 
-exec ~2/4
+``exec ~2/4``
+
 successfully printed the 4th line from 2 sessions ago that I wanted,
 but it wouldn't redir to exec() correctly. Maybe
 
 ``var = %history ~2/4``
+
 ``exec(var)``
 
 would work better?
@@ -95,26 +89,19 @@ And in the future PLEASE keep hist, file, and edit together and in that order!
 The most useful reminder I have
 --------------------------------
 
-**07/16/18**
-
-tldr; use the following to view previously run commands last session.
+**tldr; use the following to view previously run commands last session.**
 
 ``hist ~1/``
 
-**Remember that ``hist ~1`` OUTPUTS NOTHING! DON'T FORGET THE :kbd:`/`!**
+Okay so this might not be my most useful reminder but it's certainly the command
+I forget the most often.
+
+Remember that ``hist ~1`` OUTPUTS NOTHING! DON'T FORGET THE :kbd:`/`!
 
 Use the following to to reload every command you ran last session into your
 current cell.
 
 ``recall ~1/``
-
-Nov 20, 2018:
-
-Got the problem with man fixed up but like 2 nights ago nvim crashed on me again.
-
-
-IPython's Magics
-==================
 
 ``timeit()``
 
@@ -155,7 +142,7 @@ This shell makes EVERYTHING SO EASY MY GOD
 
 2018-09-07
 
-Speaking of timeit I just gave this a whirl to try and see.
+Speaking of ``%%timeit`` I just gave this a whirl to try and see.
 
 ``%%timeit``
 ``!nvim random-python-file.py +qall``
@@ -182,18 +169,12 @@ nvim startup time on our hands.
 
 macro
 --------
-
-I found a link on <https://gist.github.com> that shows you how to make jupyter
+I found a link on `<https://gist.github.com>` that shows you how to make jupyter
 notebook cells wider. So I figured I'd do something like
 
 ``%macro widen_jupyter_cells``
 
-Fuck where does it go when i exit the session?
-
-2018-09-07
-
 Also is that a macro or a magic?
-
 
 store
 ------
@@ -335,11 +316,11 @@ I guess I needed to step away for a little.
 
 # hist_list =[]
 # for i in range(2):
-   # hist_list.append(In[i])
-   # try:
-       # hist_list.append(Out[i])
-   # except KeyError:
-       # pass
+#    hist_list.append(In[i])
+#    try:
+#        hist_list.append(Out[i])
+#    except KeyError:
+#        pass
 
 Wrote that and got what I assume was the best I could. Then :kbd:`VolUp-W`
 to pick the previous line, :kbd:`Esc` to go to Vim normal mode, and ('v')
@@ -505,60 +486,74 @@ run
 ----
 
 -t
-  print timing information at the end of the run.  IPython will give
-  you an estimated CPU time consumption for your script, which under
-  Unix uses the resource module to avoid the wraparound problems of
-  time.clock().  Under Unix, an estimate of time spent on system tasks
-  is also given (for Windows platforms this is reported as 0.0).
+
+   print timing information at the end of the run.  IPython will give
+   you an estimated CPU time consumption for your script, which under
+   Unix uses the resource module to avoid the wraparound problems of
+   time.clock().  Under Unix, an estimate of time spent on system tasks
+   is also given (for Windows platforms this is reported as 0.0).
 
 If -t is given, an additional ``-N<N>`` option can be given, where <N>
 must be an integer indicating how many times you want the script to
 run.  The final timing report will include total and per run results.
 
-For example (testing the script uniq_stable.py)
+For example (testing the script uniq_stable.py):
 
-In [1]: run -t uniq_stable
+    In [1]: %run -t uniq_stable
 
-IPython CPU timings (estimated):
-  User  :    0.19597 s.
-  System:        0.0 s.
+    IPython CPU timings (estimated):
+      User  :    0.19597 s.
+      System:        0.0 s.
 
-In [2]: run -t -N5 uniq_stable
+    In [2]: run -t -N5 uniq_stable
 
-IPython CPU timings (estimated):
-Total runs performed: 5
-  Times :      Total       Per run
-  User  :   0.910862 s,  0.1821724 s.
-  System:        0.0 s,        0.0 s.
+    IPython CPU timings (estimated):
+    Total runs performed: 5
+      Times :      Total       Per run
+      User  :   0.910862 s,  0.1821724 s.
+      System:        0.0 s,        0.0 s.
 
 -d
   run your program under the control of pdb, the Python debugger.
 This allows you to execute your program step by step, watch variables,
 etc.  Internally, what IPython does is similar to calling
 
-      pdb.run('execfile("YOURFILENAME")')
+      ``pdb.run('execfile("YOURFILENAME")')``
 
 with a breakpoint set on line 1 of your file.  You can change the line
 number for this automatic breakpoint to be <N> by using the -bN option
 (where N must be an integer). For example
 
-      %run -d -b40 myscript
+      ``%run -d -b40 myscript``
 
 will set the first breakpoint at line 40 in myscript.py.  Note that
 the first breakpoint must be set on a line which actually does
 something (not a comment or docstring) for it to stop execution.
 
-  Or you can specify a breakpoint in a different file
+Or you can specify a breakpoint in a different file
 
-      %run -d -b myotherfile.py:20 myscript
+      ``%run -d -b myotherfile.py:20 myscript``
 
 When the pdb debugger starts, you will see a (Pdb) prompt.  You must
 first enter 'c' (without quotes) to start execution up to the first
 breakpoint.
 
 Entering 'help' gives information about the use of the debugger.  You
-can easily see pdb's full documentation with "import pdb;pdb.help()"
+can easily see pdb's full documentation with ``import pdb;pdb.help()``
 at a prompt.
+
+Momentary Detour
+~~~~~~~~~~~~~~~~
+So this magic should create a similar output to ``%debug`` but for some reason
+whenever I invoke debug, it doesn't show any relevant code when using :kbd:`l`,
+:kbd:`ll`, :kbd:`list` or anything.
+
+Unsure what I'm doing wrong, but running ``%run -d -b [line_number]`` works
+perfectly enough that honestly I might not care for the time being.
+
+
+%run again
+----------
 
 -p
 run program under the control of the Python profiler module (which
