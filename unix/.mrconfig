@@ -1,4 +1,3 @@
-
 [projects/dotfiles]
 checkout = git clone 'git@github.com:farisachugthai/dotfiles.git' 'dotfiles'
 
@@ -7,3 +6,67 @@ checkout = git clone 'git@github.com:farisachugthai/viconf.git' 'viconf'
 
 [projects/Gruvbox-IPython]
 checkout = git clone 'git@github.com:farisachugthai/Gruvbox-IPython.git' 'Gruvbox-IPython'
+[DEFAULT]
+git_gc = git gc "$@"
+jobs = 5
+
+include = cat ~/.config/mr/config.d/*
+# Add support for Avery Pennarun's git-subtree
+#
+# To make mr use this file, add a line like this inside the [DEFAULT]
+# section of your ~/.mrconfig
+include = cat $_ROOT/share/mr/git-subtree
+
+[Notebooks/Notes]
+checkout = git clone 'ssh://neon:/home/faris/Documents/Notes' 'Notes'
+
+
+error() {
+	echo "mr: $@" >&2
+	exit 1
+}
+warning() {
+	echo "mr (warning): $@" >&2
+}
+info() {
+	echo "mr: $@" >&2
+}
+hours_since() {
+	if [ -z "$1" ] || [ -z "$2" ]; then
+		error "mr: usage: hours_since action num"
+	fi
+	for dir in .git .svn .bzr CVS .hg _darcs _FOSSIL_ .fslckout; do
+		if [ -e "$MR_REPO/$dir" ]; then
+			flagfile="$MR_REPO/$dir/.mr_last$1"
+			break
+		fi
+	done
+	if [ -z "$flagfile" ]; then
+		for dir in refs/heads; do
+			if [ -e "$MR_REPO/$dir" ]; then
+				flagfile="$MR_REPO/.mr_last$1"
+				break
+			fi
+		done
+	fi
+	if [ -z "$flagfile" ]; then
+		error "cannot determine flag filename"
+	fi
+	delta=`perl -wle 'print -f shift() ? int((-M _) * 24) : 9999' "$flagfile"`
+	if [ "$delta" -lt "$2" ]; then
+		return 1
+	else
+		touch "$flagfile"
+		return 0
+	fi
+}
+is_bzr_checkout() {
+	LANG=C bzr info | egrep -q '^Checkout'
+}
+lazy() {
+	if [ -d "$MR_REPO" ]; then
+		return 1
+	else
+		return 0
+	fi
+}
