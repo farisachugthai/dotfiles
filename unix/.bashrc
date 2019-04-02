@@ -15,11 +15,13 @@ pathadd() {  # {{{1
 }
 
 # $_ROOT: {{{1
+# shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
     export _ROOT="$PREFIX"
 else
     export _ROOT="/usr"
 fi
+
 # Python: {{{1
 
 # Put python first because we need conda initialized right away
@@ -64,7 +66,7 @@ fi
 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
-[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
+[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
@@ -206,9 +208,6 @@ fi
 
 # add some cool colors to ls
 eval "$( dircolors -b ~/.dircolors )"
-
-# Support for caching mr
-. "$_ROOT/share/mr.sh/cache-mr-status.sh"
 
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then

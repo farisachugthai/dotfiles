@@ -120,5 +120,6 @@
     "files.autoGuessEncoding": true,
     "workbench.quickOpen.preserveInput": true,
     "workbench.editor.highlightModifiedTabs": true,
-    "workbench.settings.openDefaultKeybindings": true
+    "workbench.settings.openDefaultKeybindings": true,
+    "restructuredtext.experimental": true
 }

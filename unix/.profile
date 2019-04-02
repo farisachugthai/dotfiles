@@ -155,7 +155,7 @@ shopt -s shift_verbose
 
 shopt -s no_empty_cmd_completion
 # If set, and the cmdhist option is enabled, multi-line commands are saved to
-# the history with embedded newlines rather than using semicolon separators 
+# the history with embedded newlines rather than using semicolon separators
 # where possible.
 shopt -s lithist
 
@@ -166,7 +166,6 @@ shopt -s direxpand
 if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
     export PAGER="bat"
-    # override this on the CLI if you want but for general use and in scripts plain is best
     export BAT_STYLE=full
     export BAT_PAGER="less -JRKML"
 else
