@@ -4,7 +4,7 @@
 IPython Config
 ==============
 
-.. module:: _ipython_config
+.. module:: ipython_config
     :synopsis: Configuration file for IPython.
 
 Heavily drawn from documentation at `ipython_docs`_.
@@ -17,10 +17,11 @@ In addition to source code found on GitHub.
 Overview
 ---------
 This module provides convenience functions, adds typical Linux shell
-commands to `user_ns`, or the global namespace, in addition to Git aliases.
+commands to `user_ns`, or the global namespace, in addition to
+Git aliases.
 
-In addition, :mod:`pygments` is directly invoked to ensure comments are
-clearly visible in :mod:`IPython` cells.
+In addition, :mod:`pygments` is directly invoked to ensure comments
+are clearly visible in :mod:`IPython` cells.
 
 
 Parameters
@@ -35,7 +36,7 @@ c : :class:`IPython.core.interactiveshell.InteractiveShell`
 
 Attributes (Non-method parameters)
 ----------------------------------
-IPYTHONDIR : path-like object
+:envvar:`IPYTHONDIR` : str
     Environment variable defined before runtime to indicate where the
     IPython profile directory is.
 
@@ -59,7 +60,7 @@ from traitlets.config import get_config
 
 c = get_config()
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 try:
     home = os.path.expanduser("~")
@@ -156,7 +157,7 @@ c.InteractiveShellApp.reraise_ipython_extension_failures = True
 # c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
 
 # Set the log level by value or name.
-# c.Application.log_level = 30
+c.Application.log_level = "logging.WARNING"
 
 # ----------------------------------------------------------------------------
 # BaseIPythonApplication(Application) configuration
@@ -397,6 +398,7 @@ else:
 c.TerminalInteractiveShell.editor = 'nvim'
 
 # Allows to enable/disable the prompt toolkit history search
+# The only reason I'd wanna disable this is to enable autocompletion. How do we do that?
 # c.TerminalInteractiveShell.enable_history_search = True
 
 # Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor.
@@ -418,12 +420,19 @@ c.TerminalInteractiveShell.extra_open_editor_shortcuts = True
 # pastie, borland, trac, native, fruity, bw, vim, vs, tango, rrt, xcode, igor,
 # paraiso-light, paraiso-dark, lovelace, algol, algol_nu, arduino, rainbow_dash
 
-c.TerminalInteractiveShell.highlighting_style = 'gruvbox'
+try:
+    from gruvbox.style import GruvboxStyle
+except ModuleNotFoundError:
+    logging.error("Gruvbox style not installed. Falling back to default.")
+    c.TerminalInteractiveShell.highlighting_style = 'default'
+else:
+    c.TerminalInteractiveShell.highlighting_style = 'Gruvbox'
+    del GruvboxStyle
 
 # Override highlighting format for specific tokens
 # Comments were genuinely impossible to read. Might need to override
 # punctuation next.
-c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
+# c.TerminalInteractiveShell.highlighting_style_overrides = {Comment: '#ffffff'}
 
 # Enable mouse support in the prompt (Note: prevents selecting text with the
 # mouse)
