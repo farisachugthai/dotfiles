@@ -8,12 +8,7 @@
 [branch]
     autosetupmerge = true
 
-[branch.master.mergeOptions]
-    ff=false
-
 [core]
-    autocrlf = input
-    editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
     filemode = false
     logallrefupdates = true
@@ -24,7 +19,6 @@
     branch = always
     diff = true
     interactive = auto
-    pager = true
     ui = true
 
 [credential]
@@ -45,7 +39,7 @@
     renames = copies
 
 [difftool "nvimdiff"]
-    cmd = nvim -d $LOCAL $REMOTE
+    cmd = nvim-qt.exe -d $LOCAL $REMOTE
     trustexitcode = true
 
 [help]
@@ -66,7 +60,7 @@
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
 [mergetool "nvim-merge"]
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    cmd = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
     # from this link we see that BASE is the commit that the file diverged at.
@@ -76,9 +70,6 @@
 
 [push]
     default = simple
-
-[sequence]
-    editor = nvim
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
