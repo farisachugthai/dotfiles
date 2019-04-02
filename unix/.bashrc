@@ -14,6 +14,12 @@ pathadd() {  # {{{1
     fi
 }
 
+# $_ROOT: {{{1
+if [[ -n "$PREFIX" ]]; then
+    export _ROOT="$PREFIX"
+else
+    export _ROOT="/usr"
+fi
 # Python: {{{1
 
 # Put python first because we need conda initialized right away
@@ -53,34 +59,6 @@ if [[ -d ~/google-cloud-sdk ]]; then
     # shellcheck source=~/google-cloud-sdk/path.bash.inc
     source "$HOME/google-cloud-sdk/path.bash.inc"
 fi
-
-# Shopt: {{{1
-
-# Be notified of asynchronous jobs completing in the background
-set -o notify
-# Append to the history file, don't overwrite it
-shopt -s histappend
-# Check the window size after each command and, if necessary,
-# Update the values of LINES and COLUMNS.
-# Now the default in Bash 5!!!
-shopt -s checkwinsize
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-# Disabled because BASH_VERSINFO isn't even an array it's the 0th element
-# of BASH_VERSION and a simple int
-# shellcheck disable=SC2128
-if [[ $BASH_VERSINFO -gt 3 ]]; then
-    shopt -s globstar
-fi
-
-
-# Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob
-set -o noclobber        # Still dont want to clobber things
-shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
-shopt -s dirspell       # Autocorrect the spelling if it can
-shopt -s cdspell
 
 # Defaults in Ubuntu bashrcs: {{{1
 
@@ -146,13 +124,13 @@ fi
 
 if [[ -n "$(command -v rg)" ]]; then
 
-    export FZF_DEFAULT_COMMAND='rg --hidden '
+    export FZF_DEFAULT_COMMAND='rg --hidden --no-messages $*'
     export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
 
     export FZF_CTRL_T_COMMAND='rg --hidden --no-messages --max-count 10 --files $* '
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
 
-    export FZF_CTRL_R_COMMAND="rg $*"
+    export FZF_CTRL_R_COMMAND="rg --no-messages $*"
     export FZF_CTRL_R_OPTS="--cycle --ansi --preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
     export FZF_ALT_C_COMMAND="rg --files $*"
@@ -228,6 +206,9 @@ fi
 
 # add some cool colors to ls
 eval "$( dircolors -b ~/.dircolors )"
+
+# Support for caching mr
+. "$_ROOT/share/mr.sh/cache-mr-status.sh"
 
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
