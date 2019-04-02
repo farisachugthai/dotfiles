@@ -113,16 +113,62 @@ export HISTFILESIZE=-1
 export HISTTIMEFORMAT="%F %T: "
 # Ignore all the damn cds, ls's its a waste to have pollute the history
 export HISTIGNORE='exit:ls:cd:history:ll:la:gs'
+# Apparently I never named histfile?
+export HISTFILE="$HOME/.bash_history"
 
-# Environment Variables: {{{1
+# Append to the history file, don't overwrite it
+shopt -s histappend
+shopt -s histreedit
 
-# Pagers: {{{2
+# Shopt: {{{1
+
+# Be notified of asynchronous jobs completing in the background
+set -o notify
+# Check the window size after each command and update the values of LINES and COLUMNS.
+# Now the default in Bash 5!!!
+shopt -s checkwinsize
+
+# ** will match all files and zero or more directories and subdirectories.
+# shellcheck disable=SC2128
+if [[ $BASH_VERSINFO -gt 3 ]]; then
+    shopt -s globstar
+fi
+
+# If an attempt is made to exit bash , list currently running jobs, their status and a warning
+shopt -s checkjobs
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+set -o noclobber        # Still dont want to clobber things
+shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
+shopt -s dirspell       # Autocorrect the spelling if it can
+shopt -s cdspell
+
+# This should be enabled by default but termux is listing it as off
+shopt -s hostcomplete
+
+# If you try to complete something that isn't a command, check if its an alias
+shopt -s progcomp_alias
+
+# Print verbose error messages when using shift
+shopt -s shift_verbose
+
+shopt -s no_empty_cmd_completion
+# If set, and the cmdhist option is enabled, multi-line commands are saved to
+# the history with embedded newlines rather than using semicolon separators 
+# where possible.
+shopt -s lithist
+
+shopt -s direxpand
+
+# Pagers: {{{1
 
 if [[ -n "$(command -v bat)" ]]; then
     export BAT_THEME=OneHalfDark
     export PAGER="bat"
     # override this on the CLI if you want but for general use and in scripts plain is best
-    export BAT_STYLE=plain
+    export BAT_STYLE=full
+    export BAT_PAGER="less -JRKML"
 else
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
@@ -135,7 +181,7 @@ fi
 export BYOBU_PAGER="nvim"
 export COLORTERM="truecolor"
 
-# Other: {{{2
+# Other Environment Variables: {{{1
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -145,7 +191,7 @@ if [[ -n "$(command -v cheat)" ]];then
     export CHEATPATH="$HOME/python/tutorials:$HOME/python/site-packages:$CHEATPATH"
 fi
 
-# Set locale if it isn't explicitly stated elsewhere
+# Set locale if it isn't explicitly stated elsewhere: {{{2
 export LANG=en_US.UTF-8                 # gathered from localectl
 export LC_MESSAGES=C                    # man i3: Prevents program output translation
 export LANGUAGE=en                      # nvim complains us region not supported
@@ -156,7 +202,7 @@ export PYTHONDONTWRITEBYTECODE=1
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources
 
-# Enough vim plugins use either $TMPDIR or $TMP that this became necessary
+# tmp: {{{2
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
@@ -169,7 +215,7 @@ fi
 
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
-# Disable MSFT pwsh telemetry
+# Disable MSFT pwsh telemetry: {{{2
 export POWERSHELL_TELEMETRY_OPTOUT=1
 
 export CURL_HOME="$HOME/.config/curl/curlrc"

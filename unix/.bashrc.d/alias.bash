@@ -117,6 +117,8 @@ alias gshc='git stash clear'
 alias gshd='git stash drop'
 alias gshl='git stash list'
 alias gshp='git stash pop'
+alias gshs='git stash show'
+alias gshsp='git stash show -p'
 alias gst='git diff --stat'
 alias gt='git tag --list'
 
@@ -138,3 +140,5 @@ alias redo='fc -s'
 alias r='fc -s'
 
 alias spacemacs='emacs -F ~/.spacemacs'
+
+alias n='nvim $*'

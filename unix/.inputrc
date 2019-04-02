@@ -2,12 +2,21 @@
 # Includes all persistant modifications to GNU readline
 # Maintainer: Faris Chugthai
 
-# In an attempt to prevent RSI
-# set editing-mode vi
-# set keymap vi
+# Reminder: {{{1
 
+# emacs-editing-mode (C-e)
+#     When in vi command mode, this causes a switch to emacs editing mode.
+
+# vi-editing-mode (M-C-j)
+#     When in emacs editing mode, this causes a switch to vi editing mode.
+
+# In an attempt to prevent RSI: {{{1
+set editing-mode vi
+set keymap vi
+
+# Options: {{{1
 # From Arch Wiki
-#
+
 # When using TAB for completions, the double tab can be changed to a single tab
 # This also shows all partial completions
 set show-all-if-ambiguous on
@@ -45,9 +54,9 @@ set menu-complete-display-prefix On
 set enable-bracketed-paste On
 
 # Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
-set show-mode-in-prompt On
+set show-mode-in-prompt Off
 
-# TODO:
+# TODO: {{{1
 # vi-cmd-mode-string ((cmd))
 # This string is displayed immediately before the last line of the
 # primary prompt when vi editing mode is active and in command
@@ -56,6 +65,7 @@ set show-mode-in-prompt On
 # is available.  Use the \1 and \2 escapes to begin and end
 # sequences of non-printing characters, which can be used to embed
 # a terminal control sequence into the mode string.
+
 # vi-ins-mode-string ((ins))
 # This string is displayed immediately before the last line of the
 # primary prompt when vi editing mode is active and in insertion
