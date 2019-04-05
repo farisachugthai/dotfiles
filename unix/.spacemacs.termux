@@ -1,7 +1,7 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
-;; Vim: set commentstring=;;\ %s:
+;; Vim: set ft=lisp:commentstring=;\ %s
 ;; I'm incurable
 
 (defun dotspacemacs/layers ()
@@ -56,8 +56,13 @@ This function should only modify configuration layer settings."
      markdown
      multiple-cursors
      neotree
-     org
-     python
+     (org :variables
+          org-startup-indented t)
+     (python :variables
+          python-enable-yapf-format-on-save t
+          python-sort-imports-on-save t
+             python-shell-interpreter "ipython3"
+             python-shell-interpreter-args "-i --TerminalInteractiveShell.simple_prompt=True")
      ranger
      restructuredtext
      (shell :variables
@@ -190,7 +195,6 @@ It should only modify the values of Spacemacs settings."
                                 (bookmarks . 5)
                                 (projects . 3)
                                 (agenda . 5)
-                                (projects . 7))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -200,7 +204,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
    ;; (default nil)
-   dotspacemacs-initial-scratch-message nil
+   dotspacemacs-initial-scratch-message "Happy Hacking <3"
 
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
@@ -263,7 +267,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the default layout name is displayed in the mode-line.
    ;; (default nil)
-   dotspacemacs-display-default-layout nil
+   dotspacemacs-display-default-layout t
 
    ;; If non-nil then the last auto saved layouts are resumed automatically upon
    ;; start. (default nil)
@@ -316,7 +320,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -330,12 +334,12 @@ It should only modify the values of Spacemacs settings."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 100
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -379,7 +383,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc…
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis nil
+   dotspacemacs-smart-closing-parenthesis t
 
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
@@ -423,7 +427,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "%I@%S- %m  - %t "
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -443,7 +447,7 @@ It should only modify the values of Spacemacs settings."
    ;; Run `spacemacs/prettify-org-buffer' when
    ;; visiting README.org files of Spacemacs.
    ;; (default nil)
-   dotspacemacs-pretty-docs nil))
+   dotspacemacs-pretty-docs nil)))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
@@ -468,7 +472,25 @@ This function is called only while dumping Spacemacs configuration. You can
 dump.
 
 This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded, you should place your code here."
+explicitly specified that a variable should be set before a package is loaded,
+you should place your code here.
+
+Here's some good advice that probably could apply to every package below.
+
+Because of autoloading, calling to =org= functions will trigger the loading up
+of the =org= shipped with emacs which will induce conflicts. One way to avoid
+conflict is to wrap your =org= config code in a =with-eval-after-load= block
+like this:
+
+#+BEGIN_SRC emacs-lisp
+  (with-eval-after-load 'org
+    ;; Org config goes here
+    ;; ....
+    )
+#+END_SRC
+
+From the spacemacs FAQ.
+"
   ;; first things first we should define use-package
 
   ;; This is only needed once, near the top of the file
@@ -479,7 +501,8 @@ explicitly specified that a variable should be set before a package is loaded, y
   (use-package evil
     :ensure t
     :init
-    (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+    ;; I think evil-want-integration needs to be set to nil tho
+    (setq evil-want-integration nil
     (setq evil-want-keybinding nil)
     :config
     (evil-mode 1))
@@ -563,7 +586,13 @@ explicitly specified that a variable should be set before a package is loaded, y
                     (let ((woman-use-topic-at-point t))
                       (woman))))
 
-  )
+
+  ;; Activate evil-smartparens when I'm in a common lisp filetype
+  (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-common-lisp-mode)
+  ;; And a racket file
+  (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-racket-mode)
+
+  ))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -580,7 +609,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (yasnippet-snippets xterm-color ws-butler writeroom-mode winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs ranger rainbow-delimiters prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-ipython nameless mwim multi-term move-text magit-svn magit-gitflow macrostep lsp-ui lorem-ipsum link-hint json-navigator json-mode indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl define-word counsel-projectile company-statistics company-lsp column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+    (base16-theme yasnippet-snippets yapfify xterm-color ws-butler writeroom-mode winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs ranger rainbow-delimiters pytest pyenv-mode py-isort prettier-js popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-ipython nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lsp-ui lorem-ipsum live-py-mode link-hint json-navigator json-mode indent-guide importmagic hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-tabs evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl define-word cython-mode counsel-projectile company-statistics company-lsp company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -1,3 +1,11 @@
+[projects/dotfiles]
+checkout = git clone 'git@github.com:farisachugthai/dotfiles.git' 'dotfiles'
+
+[projects/viconf]
+checkout = git clone 'git@github.com:farisachugthai/viconf.git' 'viconf'
+
+[projects/Gruvbox-IPython]
+checkout = git clone 'git@github.com:farisachugthai/Gruvbox-IPython.git' 'Gruvbox-IPython'
 [DEFAULT]
 git_gc = git gc "$@"
 jobs = 5
@@ -8,15 +16,6 @@ include = cat ~/.config/mr/config.d/*
 # To make mr use this file, add a line like this inside the [DEFAULT]
 # section of your ~/.mrconfig
 include = cat $_ROOT/share/mr/git-subtree
-
-[projects/dotfiles]
-checkout = git clone 'git@github.com:farisachugthai/dotfiles.git' 'dotfiles'
-
-[projects/viconf]
-checkout = git clone 'git@github.com:farisachugthai/viconf.git' 'viconf'
-
-[projects/Gruvbox-IPython]
-checkout = git clone 'git@github.com:farisachugthai/Gruvbox-IPython.git' 'Gruvbox-IPython'
 
 [Notebooks/Notes]
 checkout = git clone 'ssh://neon:/home/faris/Documents/Notes' 'Notes'
@@ -71,4 +70,3 @@ lazy() {
 		return 0
 	fi
 }
-
