@@ -148,7 +148,9 @@ shopt -s cdspell
 shopt -s hostcomplete
 
 # If you try to complete something that isn't a command, check if its an alias
-shopt -s progcomp_alias
+if [[ $BASH_VERSINFO -gt 4 ]]; then
+    shopt -s progcomp_alias
+fi
 
 # Print verbose error messages when using shift
 shopt -s shift_verbose
