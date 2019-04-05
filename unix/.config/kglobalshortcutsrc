@@ -148,6 +148,7 @@ TILING: Toggle Border for all=Meta+Shift+U,none,Toggle Border for all
 TILING: Toggle Floating=,none,Toggle Floating
 TILING: Toggle Tiling=Meta+Shift+F11,none,Toggle Tiling
 Toggle Window Raise/Lower=none,none,Toggle Window Raise/Lower
+ToggleCurrentThumbnail=Meta+Ctrl+T,Meta+Ctrl+T,Toggle Thumbnail for Current Window
 Walk Through Desktop List=none,none,Walk Through Desktop List
 Walk Through Desktop List (Reverse)=none,none,Walk Through Desktop List (Reverse)
 Walk Through Desktops=none,none,Walk Through Desktops

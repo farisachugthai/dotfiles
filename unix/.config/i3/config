@@ -208,15 +208,15 @@ bindsym $mod+Shift+Escape exec "KSysGuard"
 # finds out, if available)
 bar {
     colors {
-        background #2f343f
-        statusline #2f343f
-        separator #4b5262
+        background #282828
+        statusline #ebdbb2
+        separator #928374
 
         # colour of border, background, and text
-        focused_workspace	#2f343f	#bf616a	#d8dee8
-        active_workspace	#2f343f	#2f343f	#d8dee8
-        inactive_workspace	#2f343f	#2f343f	#d8dee8
-        urgent_workspace	#2f343f	#ebcb8b	#2f343f
+        focused_workspace #689d6a #689d6a #282828
+        active_workspace #1d2021 #1d2021 #928374
+        inactive_workspace #32302f #32302f #928374
+        urgent_workspace #cc241d #cc241d #ebdbb2
     }
 
 
@@ -245,14 +245,16 @@ bar {
 
 # Colorscheme: {{{ 2
 
+# Well thank you i3-style!
+# Modified the client.focused so that the border uses bg4, background is bg0
+# text is fg1
+# Added child border of neutral orange with #d65d0e
+
 # colour of border, background, text, indicator, and child_border
-client.focused			#bf616a #2f343f #d8dee8 #bf616a #d8dee8
-client.focused_inactive	#2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.unfocused		#2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.urgent			#2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.placeholder		#2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.background		#2f343f
-
-# }}}
-
-# }}}
+client.focused              #7c6f64 #1d2021 #ebdbb2 #282828 #d65d0e
+client.focused_inactive     #1d2021 #1d2021 #928374 #282828
+client.unfocused            #32302f #32302f #928374 #282828
+client.urgent               #cc241d #cc241d #ebdbb2 #282828
+client.placeholder		    #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.background		    #2f343f
+# Don't change the background to 1d2021 it becomes too homogoneous
