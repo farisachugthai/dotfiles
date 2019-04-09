@@ -1,7 +1,7 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
-;; Vim: set commentstring=;;\ %s:ft=lisp:
+;; Vim: set ft=lisp:commentstring=;\ %s
 ;; I'm incurable
 
 (defun dotspacemacs/layers ()
@@ -43,6 +43,9 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
+     (colors :variables
+             colors-colorize-identifiers 'all
+             colors-enable-nyan-cat-progress-bar (display-graphic-p))
      common-lisp
      csv
      emacs-lisp
@@ -58,14 +61,14 @@ This function should only modify configuration layer settings."
      markdown
      multiple-cursors
      neotree
-     org
+     (org :variables
+            org-startup-indented t)
      (python :variables
              python-enable-yapf-format-on-save t
              python-sort-imports-on-save t
              python-backend 'anaconda-mode
              python-shell-interpreter "ipython3"
-             python-shell-interpreter-args "-i --TerminalInteractiveShell.simple_prompt=True")
-
+             python-shell-interpreter-args "-i --simple-prompt")
      ranger
      restructuredtext
      (shell :variables
@@ -204,7 +207,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-startup-lists '((recents . 5)
                                 (bookmarks . 5)
                                 (projects . 3)
-                                (agenda . 5)
+                                (agenda . 5))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -437,7 +440,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemacs-frame-title-format "%I@%S - %m - %t "
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -457,7 +460,7 @@ It should only modify the values of Spacemacs settings."
    ;; Run `spacemacs/prettify-org-buffer' when
    ;; visiting README.org files of Spacemacs.
    ;; (default nil)
-   dotspacemacs-pretty-docs nil)))
+   dotspacemacs-pretty-docs nil))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
@@ -515,7 +518,7 @@ From the spacemacs FAQ.
     (setq evil-want-integration nil
     (setq evil-want-keybinding nil)
     :config
-    (evil-mode 1))
+    (evil-mode 1)))
 
   (use-package evil-collection
     :after evil
@@ -602,7 +605,7 @@ From the spacemacs FAQ.
   ;; And a racket file
   (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-racket-mode)
 
-  ))
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
