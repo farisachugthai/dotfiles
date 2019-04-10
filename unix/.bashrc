@@ -73,15 +73,6 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# GBT: {{{1
-if [[ -n "$(command -v gbt)" ]]; then
-    prompt_tmp=$(gbt $?)
-    export PS1=$prompt_tmp
-
-    export GBT_CARS="Status, Os, Hostname, Dir, Git, Sign"
-    export GBT_CAR_STATUS_FORMAT=" {{ Code }} {{ Signal }} "
-fi
-
 # Vim: {{{1
 
 set -o vi

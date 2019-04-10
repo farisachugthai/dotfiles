@@ -8,3 +8,9 @@
 alias pi for k in %1.__dict__.keys(): print("%1.",k,"=",%1.__dict__[k])
 # Print instance variables in self
 alias ps pi self
+
+
+# Apr 07, 2019
+# How in the world have I gone this long without noticing this isn't set up
+alias ? pinfo
+alias ?? pinfo2

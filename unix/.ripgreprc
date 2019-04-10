@@ -1,11 +1,31 @@
 # Ripgreprc
+# Vim: set commentstring=#\ %s:
 
-# -g '!*/.git'
+-g '!.git/*'
 # -g '!*/.svn'
 # -g '!*/.hg'
 # -g '!*/CVS'
 # -g '!*/.DS_Store'
-# -g '!*/node_modules'
+-g '!node_modules/*'
+
 --hidden
 
 # could add colors and stuff
+
+# don't match more than 50 lines
+--max-count 50
+
+--max-depth 8
+
+# if you need to debug run --messages on the command line.
+--no-messages
+
+# Colors are limited to one of eight choices: red, blue, green, cyan,
+# magenta, yellow, white and black. Styles are limited to nobold,
+# bold, nointense, intense, nounderline or underline.
+
+# The format of the flag is {type}:{attribute}:{value}.  {type}
+# should be one of path, line, column or match.  {attribute} can be
+# fg, bg or style.  {value} is either a color (for fg and bg) or a
+# text style. A special format, {type}:none, will clear all color
+# settings for {type}.
