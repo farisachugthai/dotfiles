@@ -166,9 +166,9 @@ shopt -s direxpand
 # Pagers: {{{1
 
 if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME=OneHalfDark
-    export PAGER="bat"
-    export BAT_STYLE=full
+    export BAT_THEME="Monokai Extended Bright"
+    export PAGER="bat --italic-text always --wrap never $*"
+    export BAT_STYLE="changes,numbers"
     export BAT_PAGER="less -JRKML"
 else
 # -J displays a status column at the left edge of the screen
@@ -203,7 +203,7 @@ export PYTHONDONTWRITEBYTECODE=1
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources
 
-# tmp: {{{2
+# Tmp: {{{2
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
