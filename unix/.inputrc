@@ -36,41 +36,26 @@ set colored-completion-prefix On
 # Color the common prefix in menu-complete
 set menu-complete-display-prefix On
 
-# If set to On, readline performs filename matching and completion
-# in a case-insensitive fashion.
-# set completion-map-case
-
-# If set to On, and completion-ignore-case is enabled, readline
-# treats hyphens (-) and underscores (_) as equivalent when
-# performing case-insensitive filename matching and completion.
-# set completion-ignore-case
-
-# When set to On, readline will configure the terminal in a way
-# that will enable it to insert each paste into the editing buffer
+# When set to On, readline will configure the terminal in a way that will
+# enable it to insert each paste into the editing buffer
 # as a single string of characters, instead of treating each
 # character as if it had been read from the keyboard.  This can
-# prevent pasted characters from being interpreted as editing
-# commands.
+# prevent pasted characters from being interpreted as editing commands.
 set enable-bracketed-paste On
 
 # Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
 set show-mode-in-prompt Off
 
-# TODO: {{{1
-# vi-cmd-mode-string ((cmd))
-# This string is displayed immediately before the last line of the
-# primary prompt when vi editing mode is active and in command
-# mode.  The value is expanded like a key binding, so the standard
-# set of meta- and control prefixes and backslash escape sequences
-# is available.  Use the \1 and \2 escapes to begin and end
-# sequences of non-printing characters, which can be used to embed
-# a terminal control sequence into the mode string.
+# Apr 12, 2019: Line 3200 man bash
+set blink-matching-paren
 
-# vi-ins-mode-string ((ins))
-# This string is displayed immediately before the last line of the
-# primary prompt when vi editing mode is active and in insertion
-# mode.  The value is expanded like a key binding, so the standard
-# set of meta- and control prefixes and backslash escape sequences
-# is available.  Use the \1 and \2 escapes to begin and end
-# sequences of non-printing characters, which can be used to embed
-# a terminal control sequence into the mode string.
+# should we? default off. my arrow keys work idk
+# set enable-keypad
+
+set input-meta
+set output-meta
+
+# words which have more than one possible completion without any possible
+# partial completion (the possible completions don't share a common prefix)
+# cause the matches to be listed immediately instead of ringing the bell.
+set show-all-if-unmodified
