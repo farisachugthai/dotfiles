@@ -166,7 +166,7 @@ shopt -s direxpand
 # Pagers: {{{1
 
 if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME="Monokai Extended Bright"
+    export BAT_THEME="OneHalfDark"
     export PAGER="bat --italic-text always --wrap never $*"
     export BAT_STYLE="changes,numbers"
     export BAT_PAGER="less -JRKML"

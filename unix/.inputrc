@@ -2,7 +2,15 @@
 # Includes all persistant modifications to GNU readline
 # Maintainer: Faris Chugthai
 
-# Reminder: {{{1
+# Switch keymaps: {{{1
+# Apr 17, 2019: Running `bind -p` showed that nothing is bound to emacs editing mode.
+# Let's bind it to the keys described in rluserman
+
+# $if mode = vi
+#     Control-e: set emacs-editing-mode
+# $else
+#     "\C-M-j": set  vi-editing-mode
+# $endif
 
 # emacs-editing-mode (C-e)
 #     When in vi command mode, this causes a switch to emacs editing mode.
@@ -15,7 +23,7 @@ set editing-mode vi
 set keymap vi
 
 # Options: {{{1
-# From Arch Wiki
+# From Arch Wiki and man bash
 
 # When using TAB for completions, the double tab can be changed to a single tab
 # This also shows all partial completions
@@ -36,15 +44,14 @@ set colored-completion-prefix On
 # Color the common prefix in menu-complete
 set menu-complete-display-prefix On
 
-# When set to On, readline will configure the terminal in a way that will
-# enable it to insert each paste into the editing buffer
-# as a single string of characters, instead of treating each
+# When set to On, readline will configure the terminal that will enable it to
+# insert each paste as a single string of characters, instead of treating each
 # character as if it had been read from the keyboard.  This can
 # prevent pasted characters from being interpreted as editing commands.
 set enable-bracketed-paste On
 
 # Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
-set show-mode-in-prompt Off
+set show-mode-in-prompt On
 
 # Apr 12, 2019: Line 3200 man bash
 set blink-matching-paren
@@ -59,3 +66,24 @@ set output-meta
 # partial completion (the possible completions don't share a common prefix)
 # cause the matches to be listed immediately instead of ringing the bell.
 set show-all-if-unmodified
+
+set expand-tilde
+
+# History Search: {{{1
+
+# https://ss64.com/bash/bind.html
+# Setup the shell to perform a history search when the Up and Down arrow keys are used.
+# This allows typing part of a command and then using the arrows to select
+# matching commands from history.
+# (by default Up and Down will just select previous commands without any
+# matching against history.)
+
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+bind '"\e[C": forward-char'
+bind '"\e[D": backward-char'
+
+# The last two bindings ensure that the left and right keys continue to work correctly.
+
+# Include: {{{1
+# $include  /etc/inputrc

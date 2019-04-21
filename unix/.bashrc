@@ -133,3 +133,5 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 
 trap 'source /root/.bashrc' USR1
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
