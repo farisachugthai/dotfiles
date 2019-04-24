@@ -1,10 +1,5 @@
 # Condarc
 # Maintainer: Faris Chugthai
-#
-# Let's put the modified values at the top since there aren't many
-# and this is a very long file.
-# possibly think about timestamping when you change these
-# ooo and addig a conda version wouldn't be the worst idea.
 
 # Nov 03, 2018
 # Pinning conda because the update is breaking my setup
@@ -16,11 +11,6 @@
 #
 # pinned_packages: [conda]
 allow_conda_downgrades: false
-
-# And for safety
-# conda config --set allow_conda_downgrades True
-# just remember that i ran that in case it doesn't persist
-# Dec 19, 2018: Don't remember why I set that
 
 # add_pip_as_python_dependency (bool)
 #   Add pip, wheel and setuptools as dependencies of python. This ensures
@@ -326,7 +316,7 @@ notify_outdated_conda: true
 #   or clobber configuration parameter overrides path_conflict set to
 #   'prevent'.
 #
-path_conflict: warn
+# path_conflict: warn
 
 # proxy_servers (map: NoneType, str)
 #   A mapping to enable proxy settings. Keys can be either (1) a

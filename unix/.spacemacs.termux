@@ -1,8 +1,15 @@
+;;; .spacemacs.neon --- Spacemacs
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 ;; Vim: set ft=lisp:commentstring=;\ %s
 ;; I'm incurable
+
+
+;;; Commentary:
+;;
+
+;;; Code:
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -31,7 +38,7 @@ This function should only modify configuration layer settings."
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '("~/.emacs.d/private/layers/")
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
@@ -55,27 +62,47 @@ This function should only modify configuration layer settings."
      (colors :variables
              colors-colorize-identifiers 'all
              colors-enable-nyan-cat-progress-bar (display-graphic-p))
+     common-lisp
+     csv
      emacs-lisp
      evil-commentary
      (git :variables
+<<<<<<< Updated upstream
+          git-magit-status-fullscreen t
+          magit-repository-directories
+          '(("~/projects" . 2)("~/src/" . 2)))
+||||||| merged common ancestors
           git-magit-status-fullscreen t)
+=======
+          git-magit-status-fullscreen t
+          global-git-gutter+-mode)
+>>>>>>> Stashed changes
      github
      (helm :variables
-           '(helm-M-x-fuzzy-match t)  ;; optional fuzzy matching for helm-M-x
-           (helm-buffers-fuzzy-matching t)
-           '(helm-recentf-fuzzy-match t))
+           helm-M-x-fuzzy-match t  ;; optional fuzzy matching for helm-M-x
+           helm-buffers-fuzzy-matching t
+           helm-recentf-fuzzy-match t)
      html
+<<<<<<< Updated upstream
+     (ibuffer :variables ibuffer-group-buffers-by 'projects)
+     imenu-list  ;; tagbar
+||||||| merged common ancestors
+=======
+     (ibuffer :variables ibuffer-group-buffers-by 'projects)
+>>>>>>> Stashed changes
      json
      ipython-notebook
      lsp
      markdown
-     multiple-cursors
+     (multiple-cursors :variables
+                       multiple-cursors-backend 'evil-mc)
      neotree
      (org :variables
           org-startup-indented t)
      (python :variables
              python-enable-yapf-format-on-save t
              python-sort-imports-on-save t
+             python-backend 'lsp
              python-shell-interpreter "ipython3"
              python-shell-interpreter-args "-i --simple-prompt")
      racket
@@ -84,7 +111,13 @@ This function should only modify configuration layer settings."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     spacemacs-org
+     spacemacs-completion
+     spacemacs-editing
+     spacemacs-editing-visual
+     spacemacs-evil
+     spacemacs-language
+     spacemacs-layouts
+     spacemacs-purpose
      spell-checking
      sphinx
      syntax-checking
@@ -211,7 +244,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-startup-lists '((recents . 10)
                                 (bookmarks . 7)
                                 (projects . 5)
-                                (agenda . 7))
+                                (agenda . 5)
+                                (todos . 10))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -245,7 +279,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Fira Code"
-                               :size 13
+                               :size 14
                                :weight normal
                                :width normal)
 
@@ -328,7 +362,7 @@ It should only modify the values of Spacemacs settings."
    ;; another same-purpose window is available. If non-nil, `switch-to-buffer'
    ;; displays the buffer in a same-purpose window even if the buffer can be
    ;; displayed in the current window. (default nil)
-   dotspacemacs-switch-to-buffer-prefers-purpose nil
+   dotspacemacs-switch-to-buffer-prefers-purpose t
 
    ;; If non-nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
@@ -444,7 +478,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S - %m  - %t "
+   dotspacemacs-frame-title-format "%I@%S - %m - %t "
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -495,7 +529,7 @@ you should place your code here.
 Here's some good advice that probably could apply to every package below.
 
 Because of autoloading, calling to =org= functions will trigger the loading up
-of the =org= shipped with emacs which will induce conflicts. One way to avoid
+of the =org= shipped with Emacs which will induce conflicts. One way to avoid
 conflict is to wrap your =org= config code in a =with-eval-after-load= block
 like this:
 
@@ -506,13 +540,12 @@ like this:
     )
 #+END_SRC
 
-From the spacemacs FAQ.
-"
+From the spacemacs FAQ."
   ;; first things first we should define use-package
 
   ;; This is only needed once, near the top of the file
-  ;; (eval-when-compile
-  ;;  (require 'use-package))
+  (eval-when-compile
+  (require 'use-package))
 
   ;; from the github page for evil-collection
   (use-package evil
@@ -553,21 +586,15 @@ From the spacemacs FAQ.
   (setq savehist-file "~/.emacs.d/savehist")
   (setq history-length 10000)
   (savehist-mode 1)
-
-  ;; Relative line numbers
-  (require 'linum-relative)
-  (linum-relative-global-mode)
-  (setq
-   linum-relative-current-symbol ""
-   linum-relative-format "%3s ")
                                         ; Split navigation.
   (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
   (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
   (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
   (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 
-  (require 'evil-tabs)
-  (global-evil-tabs-mode t)
+  ;; currently not matching anything. shrugs
+  ;; (require 'evil-tabs)
+  ;; (global-evil-tabs-mode t)
 
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
@@ -598,6 +625,24 @@ From the spacemacs FAQ.
   ;; And a racket file
   (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-racket-mode)
 
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#4f97d7")
+     ("OKAY" . "#4f97d7")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#86dc2f")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX" . "#dc752f")
+     ("XXXX" . "#dc752f")
+     ("???" . "#dc752f"))))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -627,3 +672,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
+
+(provide '.spacemacs)
+
+;;; .spacemacs.neon ends here
