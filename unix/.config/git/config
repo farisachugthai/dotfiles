@@ -5,72 +5,6 @@
     email = farischugthai@gmail.com
     name = farisachugthai
 
-[branch]
-    autosetupmerge = true
-
-[core]
-    excludesfile = "$HOME/.config/git/ignore"
-    filemode = false
-    logallrefupdates = true
-    pager = less -rMFXKL
-    repositoryformatversion = 0
-
-[color]
-    branch = always
-    diff = true
-    interactive = auto
-    ui = true
-
-[credential]
-    helper = cache --timeout=86400
-
-[credential "https://www.github.comm"]
-    username = farisachugthai
-
-# Man git-difftool: Line 85
-# If difftool settings havent been set, fall back to mergetool
-[diff]
-    color = auto
-    prompt = false
-    # detect copied files as well as renames. affects merge and status.renames
-    renames = copy
-    strategy-option = resolve
-    tool = nvimdiff
-    renames = copies
-
-[difftool "nvimdiff"]
-    cmd = nvim-qt.exe -d $LOCAL $REMOTE
-    trustexitcode = true
-
-[help]
-    autocorrect = 1
-
-[merge]
-    autoStash
-    color = auto
-    conflictstyle = diff3
-    mergestyle = diff3
-    prompt = false
-    renormalize
-    strategy-option = resolve
-    tool = nvim-merge
-    summary = true
-    diffstat = true
-
-# this is from justinmk
-# https://github.com/neovim/neovim/issues/2377
-[mergetool "nvim-merge"]
-    cmd = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-    # if it's not immediately clear what's going on, read up from this link:
-    # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
-    # from this link we see that BASE is the commit that the file diverged at.
-    # local and remote are the 2 paths we're trying to merge, and we can
-    # determine which changes are necessary and what needs to be kept by
-    # looking at those 4 buffers as a timeline
-
-[push]
-    default = simple
-
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
     ci = commit
@@ -115,6 +49,84 @@
 	undo = !legit undo
 	branches = !legit branches
 
+[branch]
+    autosetupmerge = true
+
+[cola]
+    spellcheck = true
+    tabwidth = 4
+    expandtab = true
+    boldheaders = true
+
+[core]
+    excludesfile = "$HOME/.config/git/ignore"
+    filemode = false
+    logallrefupdates = true
+    repositoryformatversion = 0
+
+[credential]
+    helper = cache --timeout=86400
+
+[credential "https://www.github.comm"]
+    username = farisachugthai
+
+# Man git-difftool: Line 85
+# If difftool settings havent been set, fall back to mergetool
+[diff]
+    prompt = false
+    # detect copied files as well as renames. affects merge and status.renames
+    strategy-option = resolve
+    tool = nvimdiff
+    renames = copies
+
+[difftool "nvimdiff"]
+    cmd = nvim-qt.exe -d $LOCAL $REMOTE
+    cmd = nvim -d $LOCAL $REMOTE
+    prompt = false
+
+[grep]
+    lineNumber = true
+    extendedRegexp = true
+
+[gui]
+    editor = nvim-qt.exe
+    editor = nvim
+    cmd = nvim -d $LOCAL $REMOTE
+    prompt = false
+
+[grep]
+    lineNumber = true
+    extendedRegexp = true
+
+[help]
+    autocorrect = 1
+
+[merge]
+    autoStash
+    color = auto
+    conflictstyle = diff3
+    mergestyle = diff3
+    prompt = false
+    renormalize
+    strategy-option = resolve
+    tool = nvim-merge
+    summary = true
+    diffstat = true
+
+# this is from justinmk
+# https://github.com/neovim/neovim/issues/2377
+[mergetool "nvim-merge"]
+    cmd = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    # if it's not immediately clear what's going on, read up from this link:
+    # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
+    # from this link we see that BASE is the commit that the file diverged at.
+    # local and remote are the 2 paths we're trying to merge, and we can
+    # determine which changes are necessary and what needs to be kept by
+    # looking at those 4 buffers as a timeline
+
+[push]
+    default = simple
+
 [rebase]
     autoStash = True
     stat = True
@@ -139,10 +151,3 @@
 ; Could do something like this
 ; [init]
 ;   templatedir = ~/.config/git/
-[cola]
-    spellcheck = true
-    tabwidth = 4
-    expandtab = true
-    boldheaders = true
-[gui]
-    editor = nvim

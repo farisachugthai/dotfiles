@@ -40,10 +40,11 @@ if [[ -n "$PREFIX" ]]; then
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
 else
-    export BROWSER="firefox"
+    export BROWSER="firefox --profile-manager $*"
     export SHELL=/bin/bash
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
-    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/share/xsessions:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:/home/faris/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
+    # You forgot the one for snaps!
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
 fi
 
 # User dirs first: {{{1
@@ -163,6 +164,9 @@ shopt -s lithist
 
 shopt -s direxpand
 
+shopt -s autocd
+shopt -s cdable_vars
+
 # Pagers: {{{1
 
 if [[ -n "$(command -v bat)" ]]; then
@@ -218,7 +222,9 @@ if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
 # Disable MSFT pwsh telemetry: {{{2
 export POWERSHELL_TELEMETRY_OPTOUT=1
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
+# cURL: {{{2
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Sourced Files: {{{1
