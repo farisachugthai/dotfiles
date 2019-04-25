@@ -65,7 +65,7 @@ $XONSH_SHOW_TRACEBACK = True
 # xontrib load jedi
 # see how it goes first
 
-xontrib load fzf-widgets
+# xontrib load fzf-widgets
 
-$fzf_history_binding = Keys.ControlR
-$fzf_ssh_binding = Keys.ControlS
+# $fzf_history_binding = Keys.ControlR
+# $fzf_ssh_binding = Keys.ControlS

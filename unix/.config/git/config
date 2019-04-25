@@ -77,12 +77,15 @@
     # detect copied files as well as renames. affects merge and status.renames
     strategy-option = resolve
     tool = nvimdiff
-    renames = copies
 
 [difftool "nvimdiff"]
     cmd = nvim-qt.exe -d $LOCAL $REMOTE
     cmd = nvim -d $LOCAL $REMOTE
     prompt = false
+
+[grep]
+    lineNumber = true
+    extendedRegexp = true
 
 [grep]
     lineNumber = true
@@ -94,29 +97,28 @@
     cmd = nvim -d $LOCAL $REMOTE
     prompt = false
 
-[grep]
-    lineNumber = true
-    extendedRegexp = true
-
 [help]
     autocorrect = 1
 
+[log]
+    abbrevCommit = true
+
 [merge]
     autoStash
-    color = auto
     conflictstyle = diff3
+    diffstat = true
     mergestyle = diff3
     prompt = false
     renormalize
     strategy-option = resolve
-    tool = nvim-merge
     summary = true
-    diffstat = true
+    tool = nvim-merge
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
 [mergetool "nvim-merge"]
     cmd = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
     # from this link we see that BASE is the commit that the file diverged at.
@@ -124,20 +126,21 @@
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
 
+[pull]
+    rebase = preserve
+    renormalize
+
 [push]
     default = simple
 
 [rebase]
     autoStash = True
     stat = True
+    missingCommitsCheck = "warn"  # jesus christ Git why are all your defaults destructive??
 
 [status]
     showStash = True
     showUntrackedFiles = all
-
-[pull]
-    rebase = preserve
-    renormalize
 
 [url "git://github.com"]
     insteadOf = g:
@@ -147,7 +150,3 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
-
-; Could do something like this
-; [init]
-;   templatedir = ~/.config/git/
