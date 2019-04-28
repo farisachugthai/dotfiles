@@ -48,25 +48,36 @@ This function should only modify configuration layer settings."
              colors-enable-nyan-cat-progress-bar (display-graphic-p))
      common-lisp
      csv
+     dap
+     debug
      emacs-lisp
      evil-commentary
      (git :variables
-        git-magit-status-fullscreen t)
+        git-magit-status-fullscreen t
+        magit-repository-directories
+        '(("~/projects" . 2)("~/src/" . 2)))
      github
      helm
      html
+     hy  ;; this mode is so fucking cool
+     (ibuffer :variables
+              ibuffer-group-buffers-by 'projects)
+     imenu-list  ;; tagbar
+     ipython-notebook
+     javascript
      json
+     hy  ;; this mode is so fucking cool
      ipython-notebook
      lsp
      markdown
      multiple-cursors
      neotree
      (org :variables
-            org-startup-indented t)
+          org-startup-indented t)
      (python :variables
              python-enable-yapf-format-on-save t
              python-sort-imports-on-save t
-             python-backend 'anaconda-mode
+             python-backend 'lsp
              python-shell-interpreter "ipython3"
              python-shell-interpreter-args "-i --simple-prompt")
      ranger
@@ -240,7 +251,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '(Fira Code
+   dotspacemacs-default-font '("Fira Code"
                                :size 12
                                :weight normal
                                :width normal)
