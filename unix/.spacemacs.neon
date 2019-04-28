@@ -60,6 +60,7 @@ This function should only modify configuration layer settings."
      command-log
      common-lisp
      csv
+     dap
      debug
      django
      emacs-lisp
@@ -68,7 +69,6 @@ This function should only modify configuration layer settings."
      evil-snipe
      (git :variables
           git-magit-status-fullscreen t
-     ;; sorry man no idea if this is gonna work
           magit-repository-directories
           '(("~/projects" . 2)("~/src/" . 2)))
      github
@@ -82,18 +82,18 @@ This function should only modify configuration layer settings."
      ipython-notebook
      javascript
      json
-     lisp
+     lsp
      markdown
      (multiple-cursors :variables
                        multiple-cursors-backend 'evil-mc)
      neotree
      (org :variables
           org-startup-indented t)
-     (pandoc)
+     pandoc
      (python :variables
              python-enable-yapf-format-on-save t
              python-sort-imports-on-save t
-             python-backend 'anaconda-mode
+             python-backend 'lsp
              python-shell-interpreter "ipython3"
              python-shell-interpreter-args "-i --simple-prompt")
      racket
@@ -144,7 +144,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(evil-tabs)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -288,8 +288,16 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
+<<<<<<< HEAD
    dotspacemacs-default-font '("Fira Code"
                                :size 14
+||||||| merged common ancestors
+   dotspacemacs-default-font '(Fira Code
+                               :size 12
+=======
+   dotspacemacs-default-font '("Fira Code"
+                               :size 12
+>>>>>>> master
                                :weight normal
                                :width normal)
 
@@ -681,17 +689,3 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (yapfify yaml-mode xterm-color ws-butler winum which-key wgrep web-mode volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit systemd spray spotify spaceline powerline smex smeargle slime-company slime slim-mode shell-pop scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode faceup pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox spinner pandoc-mode ox-pandoc orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-plus-contrib org-mime org-download org-bullets open-junk-file neotree mwim multi-term move-text mmm-mode markdown-toc magit-gitflow magit-popup magit-gh-pulls macrostep lorem-ipsum live-py-mode linum-relative link-hint jinja2-mode ivy-hydra insert-shebang indent-guide hydra lv hy-mode dash-functional hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-spotify-plus multi helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md geiser fuzzy flyspell-correct-ivy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist highlight evil-numbers evil-mc evil-matchit evil-magit magit transient git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu eshell-z eshell-prompt-extras esh-help engine-mode emoji-cheat-sheet-plus emmet-mode elisp-slime-nav ein skewer-mode markdown-mode polymode deferred request websocket js2-mode simple-httpd dumb-jump diminish diff-hl define-word dactyl-mode cython-mode csv-mode counsel-projectile projectile pkg-info epl counsel swiper ivy company-web web-completion-data company-statistics company-shell company-emoji company-ansible company-anaconda company common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed ansible-doc ansible anaconda-mode pythonic f s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup gruvbox-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

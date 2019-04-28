@@ -10,9 +10,8 @@ pathadd() {
     fi
 }
 
-# Note that PATH should already be marked as exported, so reexporting is not needed. This checks whether the directory exists & is a directory before adding it, which you may not care about.
-
-# Also, this adds the new directory to the end of the path; to put at the beginning, use PATH="$1${PATH:+":$PATH"}" instead of the above PATH= line.
+# Note that PATH should already be marked as exported, so reexporting is not needed.
+# This checks whether the directory exists & is a directory before adding it, which you may not care about.
 
 # Platform_Dependant: {{{1
 
@@ -28,7 +27,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
-# this is what xdg data dirs is set to with no modification on my part. like god that has so many simple errors in it
+# this is what xdg data dirs is set to with no modification on my part. That has so many simple errors in it
 # /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:
 
 # Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
@@ -46,6 +45,12 @@ else
     # You forgot the one for snaps!
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
 fi
+
+# I mean I guess if this exists on both. Only observed on termux
+pathadd "$_ROOT/libexec"
+
+# Apr 23, 2019: Add pythonx so we can get clang formatters
+pathadd "$XDG_CONFIG_HOME/nvim/pythonx"
 
 # User dirs first: {{{1
 

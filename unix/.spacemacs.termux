@@ -58,15 +58,21 @@ This function should only modify configuration layer settings."
      emacs-lisp
      evil-commentary
      (git :variables
-          git-magit-status-fullscreen t)
+          git-magit-status-fullscreen t
+          magit-repository-directories
+          global-git-gutter+-mode
+          '(("~/projects" . 2)("~/src/" . 2)))
      github
      (helm :variables
-           '(helm-M-x-fuzzy-match t)  ;; optional fuzzy matching for helm-M-x
-           (helm-buffers-fuzzy-matching t)
-           '(helm-recentf-fuzzy-match t))
+           helm-M-x-fuzzy-match t  ;; optional fuzzy matching for helm-M-x
+           helm-buffers-fuzzy-matching t
+           helm-recentf-fuzzy-match t)
      html
-     json
+     (ibuffer :variables
+              ibuffer-group-buffers-by 'projects)
+     imenu-list  ;; tagbar
      ipython-notebook
+     json
      lsp
      markdown
      multiple-cursors
