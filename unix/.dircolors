@@ -208,8 +208,13 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 #   assembly language
 .asm                  38;5;81
 #   LISP
+# While we're on the topic of lisp, no el, no org? Tisk tisk
+
 .cl                   38;5;81
 .lisp                 38;5;81
+.el                   38;5;81
+.org                  38;5;81
+
 #   lua
 .lua                  38;5;81
 #   Moonscript

@@ -140,5 +140,5 @@ alias redo='fc -s'
 alias r='fc -s'
 
 alias spacemacs='emacs -l ~/.spacemacs'
-
+alias cat=bat
 alias n='nvim $*'

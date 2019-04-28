@@ -15,13 +15,13 @@ if [[ -n "$(command -v rg)" ]]; then  # {{{1
     # Base command: {{{2
     # Apr 18, 2019: rg shitting the bed idk whats happening
     # export FZF_DEFAULT_COMMAND="rg --hidden --no-messages --files $*"
-    export FZF_DEFAULT_COMMAND=""
+    export FZF_DEFAULT_COMMAND="fd --hidden --follow --type file --max-depth 25  --absolute-path --color always $*"
     export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
 
     # <Ctrl-t>: {{{2
     # Might be implemented as __fzf_select__
     # export FZF_CTRL_T_COMMAND="rg --hidden --no-messages --passthru --files"
-    export FZF_CTRL_T_COMMAND=""
+    export FZF_CTRL_T_COMMAND="fd --hidden --follow --type file --max-depth 25  --absolute-path --color always $*"
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
 
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb ]]; then

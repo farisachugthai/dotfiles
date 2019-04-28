@@ -1,5 +1,4 @@
 # Global Git Config
-# Vim: set ft=gitconfig:
 
 [user]
     email = farischugthai@gmail.com
@@ -75,7 +74,6 @@
 [diff]
     prompt = false
     # detect copied files as well as renames. affects merge and status.renames
-    renames = copy
     strategy-option = resolve
     tool = nvimdiff
 
@@ -90,6 +88,13 @@
 
 [gui]
     editor = nvim-qt.exe
+    editor = nvim
+    cmd = nvim -d $LOCAL $REMOTE
+    trustexitcode = true
+
+[grep]
+    lineNumber = true
+    extendedRegexp = true
 
 [help]
     autocorrect = 1
@@ -131,6 +136,9 @@
     autoStash = True
     stat = True
     missingCommitsCheck = "warn"  # jesus christ Git why are all your defaults destructive??
+
+[ssh]
+    variant = "ssh -p 8022 $*"
 
 [status]
     showStash = True
