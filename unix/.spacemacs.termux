@@ -1,3 +1,4 @@
+;;; .spacemacs --- Spacemacs
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
@@ -41,6 +42,7 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ansible
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
@@ -55,21 +57,18 @@ This function should only modify configuration layer settings."
      (colors :variables
              colors-colorize-identifiers 'all
              colors-enable-nyan-cat-progress-bar (display-graphic-p))
+     dap
+     debug
      emacs-lisp
      evil-commentary
-     (git :variables
-          git-magit-status-fullscreen t
-          magit-repository-directories
-          global-git-gutter+-mode
-          '(("~/projects" . 2)("~/src/" . 2)))
+     git
      github
      (helm :variables
            helm-M-x-fuzzy-match t  ;; optional fuzzy matching for helm-M-x
            helm-buffers-fuzzy-matching t
            helm-recentf-fuzzy-match t)
      html
-     (ibuffer :variables
-              ibuffer-group-buffers-by 'projects)
+     (ibuffer :variables ibuffer-group-buffers-by 'projects)
      imenu-list  ;; tagbar
      ipython-notebook
      json
@@ -78,24 +77,31 @@ This function should only modify configuration layer settings."
      multiple-cursors
      neotree
      (org :variables
-          org-startup-indented t)
+          org-startup-indented t
+          org-want-todo-bindings t)
      (python :variables
              python-enable-yapf-format-on-save t
              python-sort-imports-on-save t
+             python-backend 'lsp
              python-shell-interpreter "ipython3"
              python-shell-interpreter-args "-i --simple-prompt")
      racket
      ranger
      restructuredtext
+     smex
+     spacemacs-completion
+     spacemacs-editing
+     spacemacs-editing-visual
+     spacemacs-evil
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
      spacemacs-org
-     spell-checking
+     (spell-checking :variables spell-checking-enable-by-default nil)
      sphinx
-     syntax-checking
+     (syntax-checking :variables syntax-checking-enable-by-default nil
+                      syntax-checking-enable-tooltips t)
      tmux
-     treemacs
      version-control
      vinegar
      )
@@ -107,7 +113,8 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      gruvbox-theme evil-tabs )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -217,7 +224,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-startup-lists '((recents . 10)
                                 (bookmarks . 7)
                                 (projects . 5)
-                                (agenda . 7))
+                                (agenda . 7)
+                                (todos . 9))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -230,7 +238,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-initial-scratch-message "Happy Hacking <3"
 
    ;; List of themes, the first of the list is loaded when spacemacs starts.
-   ;; Press `SPC T n' to cycle to the next theme in the list (works great
+   ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(gruvbox-dark-hard)
 
@@ -251,7 +259,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Fira Code"
-                               :size 13
+                               :size 12
                                :weight normal
                                :width normal)
 
@@ -284,7 +292,17 @@ It should only modify the values of Spacemacs settings."
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
    dotspacemacs-distinguish-gui-tab nil
-
+   ;; If non nil `Y' is remapped to `y$' in Evil states. (default nil)
+   dotspacemacs-remap-Y-to-y$ nil
+   ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
+   ;; there. (default t)
+   dotspacemacs-retain-visual-state-on-shift t
+   ;; If non-nil, J and K move lines up and down when in visual mode.
+   ;; (default nil)
+   dotspacemacs-visual-line-move-text nil
+   ;; If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
+   ;; (default nil)
+   dotspacemacs-ex-substitute-global nil
    ;; Name of the default layout (default "Default")
    dotspacemacs-default-layout-name "Default"
 
@@ -294,7 +312,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil then the last auto saved layouts are resumed automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-auto-resume-layouts t
 
    ;; If non-nil, auto-generate layout name when creating new layouts. Only has
    ;; effect when using the "jump to layout by number" commands. (default nil)
@@ -313,7 +331,23 @@ It should only modify the values of Spacemacs settings."
 
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
+   ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
+   dotspacemacs-helm-resize t
+   ;; if non nil, the helm header is hidden when there is only one source.
+   ;; (default nil)
+   dotspacemacs-helm-no-header nil
+   ;; define the position to display `helm', options are `bottom', `top',
+   ;; `left', or `right'. (default 'bottom)
+   dotspacemacs-helm-position 'bottom
+   ;; Controls fuzzy matching in helm. If set to `always', force fuzzy matching
+   ;; in all non-asynchronous sources. If set to `source', preserve individual
+   ;; source settings. Else, disable fuzzy matching in all sources.
+   ;; (default 'always)
+   dotspacemacs-helm-use-fuzzy 'always
+   ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
+   ;; several times cycle between the kill ring content. (default nil)
 
+   ;; don't set to true this is really annoying
    ;; If non-nil, the paste transient-state is enabled. While enabled, after you
    ;; paste something, pressing `C-j' and `C-k' several times cycles through the
    ;; elements in the `kill-ring'. (default nil)
@@ -450,7 +484,7 @@ It should only modify the values of Spacemacs settings."
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
    ;; (default "%I@%S")
-   dotspacemacs-frame-title-format "%I@%S - %m  - %t "
+   dotspacemacs-frame-title-format "%I@%S - %m - %t "
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
@@ -496,7 +530,7 @@ dump.
 
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
-you should place your code here.
+you should place your code here
 
 Here's some good advice that probably could apply to every package below.
 
@@ -512,35 +546,36 @@ like this:
     )
 #+END_SRC
 
-From the spacemacs FAQ.
-"
+From the spacemacs FAQ."
   ;; first things first we should define use-package
 
   ;; This is only needed once, near the top of the file
+
   ;; (eval-when-compile
-  ;;  (require 'use-package))
+  ;;   (require 'use-package))
 
-  ;; from the github page for evil-collection
-  (use-package evil
-    :ensure t
-    :init
-    ;; I think evil-want-integration needs to be set to nil tho
-    (setq evil-want-keybinding nil)
-    :config
-    (evil-mode 1))
+;; The rest is general setup
 
-  (use-package evil-collection
-    :after evil
-    :ensure t
-    :config
-    (evil-collection-init))
+  '(hl-todo-keyword-faces
+    (quote
+     (("TODO" . "#dc752f")
+      ("NEXT" . "#dc752f")
+      ("THEM" . "#2d9574")
+      ("PROG" . "#4f97d7")
+      ("OKAY" . "#4f97d7")
+      ("DONT" . "#f2241f")
+      ("FAIL" . "#f2241f")
+      ("DONE" . "#86dc2f")
+      ("NOTE" . "#b1951d")
+      ("KLUDGE" . "#b1951d")
+      ("HACK" . "#b1951d")
+      ("TEMP" . "#b1951d")
+      ("FIXME" . "#dc752f")
+      ("XXX" . "#dc752f")
+      ("XXXX" . "#dc752f")
+      ("???" . "#dc752f"))))
 
-  ;; and here's the rest of this shit
-  (require 'evil-matchit)
-  (global-evil-matchit-mode)
-  (require 'evil-surround)
-  (global-evil-surround-mode)
-
+    ;; After here everything isn't organized super well.
   (setq scroll-margin 5
         scroll-conservatively 9999
         scroll-step 1); Highlight current line.
@@ -550,36 +585,12 @@ From the spacemacs FAQ.
   (define-key global-map (kbd "RET") 'newline-and-indent)
   (scroll-bar-mode -1)
 
-  ;; from Space f e R eval
-  ;; (setq dotspacemacs-mode-line-theme 'spacemacs)
-
   ;; Save/restore command history etc across sessions.
   (require 'savehist)
   (setq savehist-additional-variables '(extended-command-history global-mark-ring mark-ring search-ring regexp-search-ring))
   (setq savehist-file "~/.emacs.d/savehist")
   (setq history-length 10000)
   (savehist-mode 1)
-
-  ;; Relative line numbers
-  (require 'linum-relative)
-  (linum-relative-global-mode)
-  (setq
-   linum-relative-current-symbol ""
-   linum-relative-format "%3s ")
-                                        ; Split navigation.
-  (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-  (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-  (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-  (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-
-  (require 'evil-tabs)
-  (global-evil-tabs-mode t)
-
-  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-  ;; Also in visual mode
-  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
-  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
   ;; The following is from Section 3 in the Info page on 'woman'.
   ;; 3.1.2 Using the "Word at Point" as a Topic Suggestion
@@ -597,17 +608,127 @@ From the spacemacs FAQ.
                     (interactive)
                     (let ((woman-use-topic-at-point t))
                       (woman))))
-
-
-  ;; Activate evil-smartparens when I'm in a common lisp filetype
-  (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-common-lisp-mode)
-  ;; And a racket file
-  (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-racket-mode)
-
   )
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
+(defun your_spacemacs/evil-setup ()
+"Don't know what I'm doing in any capacity but this seemed like a better way
+to organize the code I have already. after a little mucking around this works
+flawlessly! I feel like I'm learning Lisp so quickly :p"
+    ;; from the github page for evil-collection
+    (use-package evil
+      :defer t
+      :ensure t
+      :init
+      (setq evil-want-keybinding nil)
+      :config
+      (evil-mode 1))
+
+    (use-package evil-collection
+      :defer t
+      :after evil
+      :ensure t
+      :config
+      (evil-collection-init))
+
+  ;; and here's the rest of this shit
+  (use-package evil-matchit
+    :ensure t
+    :defer t
+    :config
+    (setq global-evil-matchit-mode))
+
+  (use-package evil-surround
+    :ensure t
+    :defer t
+    :config
+    (setq global-evil-surround-mode))
+
+  (use-package evil-tabs
+    :ensure t
+    :defer t
+    :config
+    (global-evil-tabs-mode t))
+
+
+  ;; i'm gonna move the bindings out of this function as it seems like sylvan doesn't
+  ;; bind keys in the same func in
+  ;; ~/.emacs.d/layers/+spacemacs/spacemacs-evil/local/evil-unimpaired/evil-unimpaired.el
+
+  ;; meh fuck it
+
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
+  ;; Split navigation.
+  (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+  (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+  (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+  (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
+)
+
+
+(defun your_spacemacs/org_setup ()
+    "https://orgmode.org/org.html#Code-Evaluation-Security
+    Yeah that link has some good info like check this guy out.
+    For example, here is how to execute ditaa code blocks without prompting:
+
+    (defun my-org-confirm-babel-evaluate (lang body)
+      (not (string= lang \"ditaa\")))  ;don't ask for ditaa
+    (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)"
+    (setq-default
+      org-confirm-babel-evaluate nil
+      org-refile-use-cache t
+      org-log-done 'time
+      org-log-redeadline 'time
+      org-log-refile 'time
+      org-log-reschedule 'time
+      org-log-reschedule 'time
+      )
+    ;; haven't tried yasnippet in org mode but let's try this in advance
+    (add-hook 'org-mode-hook
+                  (lambda ()
+                    (setq-local yas/trigger-key [tab])
+                    (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+
+    ;;; If this doesn't fix it
+
+    ;; (defun yas/org-very-safe-expand ()
+    ;;   (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+
+    ;; Then, tell Org mode to use that function:
+
+    ;; (add-hook 'org-mode-hook
+    ;;           (lambda ()
+    ;;             (make-variable-buffer-local 'yas/trigger-key)
+    ;;             (setq yas/trigger-key [tab])
+    ;;             (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+    ;;             (define-key yas/keymap [tab] 'yas/next-field)))
+
+
+
+)
+
+(defun yourspacemacs/git_setup ()
+  '(git-magit-status-fullscreen t)
+  '(global-git-gutter+-mode t)
+  (setq (quote(magit-repository-directories
+        (("~/projects/" . 2)
+        ("~/src/" . 2)
+        )))
+   )
+ )
+
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -618,14 +739,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
- '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (elscreen vimrc-mode helm-gtags ggtags dactyl-mode counsel-gtags base16-theme yasnippet-snippets yapfify xterm-color ws-butler writeroom-mode winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs ranger rainbow-delimiters pytest pyenv-mode py-isort prettier-js popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-ipython nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lsp-ui lorem-ipsum live-py-mode link-hint json-navigator json-mode indent-guide importmagic hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-tabs evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl define-word cython-mode counsel-projectile company-statistics company-lsp company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
- '(paradox-github-token t))
+    (yaml-mode jinja2-mode forge company-ansible ansible-doc ansible magit yasnippet-snippets yapfify xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox ox-twbs ox-gfm overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-ipython neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-treemacs lsp-python lorem-ipsum live-py-mode link-hint json-navigator json-mode indent-guide importmagic impatient-mode ibuffer-projectile hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist ghub gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-leader evil-indent-plus evil-iedit-state evil-goggles evil-expat evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav eldoc-eval ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl define-word dap-mode cython-mode csv-mode counsel-projectile company-web company-statistics company-quickhelp company-lsp company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode closql clean-aindent-mode centered-cursor-mode browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -633,3 +749,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
+
+(provide '.spacemacs)
+
+;;; .spacemacs.neon ends here

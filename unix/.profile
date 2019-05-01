@@ -31,8 +31,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:
 
 # Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
-
-
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man"
     export SHELL="$PREFIX/bin/bash"
@@ -58,6 +56,12 @@ pathadd "$XDG_CONFIG_HOME/nvim/pythonx"
 
 if [[ -d "$HOME/bin" ]]; then export PATH="$HOME/bin:$PATH"; fi
 if [[ -d "$HOME/.local/bin" ]]; then export PATH="$HOME/.local/bin:$PATH"; fi
+
+# Python: {{{1
+
+export PYTHONIOENCODING=utf-8:surrogateescape
+export PYTHONDONTWRITEBYTECODE=1
+export IPYTHONDIR="$HOME/.ipython"
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -175,7 +179,7 @@ shopt -s cdable_vars
 # Pagers: {{{1
 
 if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME="OneHalfDark"
+    export BAT_THEME="Monokai Extended Bright"
     export PAGER="bat --italic-text always --wrap never $*"
     export BAT_STYLE="changes,numbers"
     export BAT_PAGER="less -JRKML"
@@ -206,8 +210,6 @@ export LANG=en_US.UTF-8                 # gathered from localectl
 export LC_MESSAGES=C                    # man i3: Prevents program output translation
 export LANGUAGE=en                      # nvim complains us region not supported
 export LC_CTYPE=C.UTF-8                 # the python default
-export PYTHONIOENCODING=utf-8:surrogateescape
-export PYTHONDONTWRITEBYTECODE=1
 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources

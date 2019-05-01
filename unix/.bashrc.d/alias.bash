@@ -68,15 +68,31 @@ alias dU='du -d 1 -h --apparent-size --all | sort -h | tail -n 10'
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
-alias head='head -n 30'
-alias tail='tail -n 30'
+alias head="head -n 30 $*"
+alias tail="tail -n 30 $*"
 
 # Termux alias: {{{1
 
-# Termux command with odd default of view not send
-alias termux-share="termux-share -a send"
-# termux-open gets an option for a default file handler! Dropbox integration
-alias termux-open="termux-open --send"
+if [[ -n "$ANDROID_ROOT" ]]; then
+
+    # Termux command with odd default of view not send
+    alias termux-share="termux-share -a send"
+
+    # But let's make it easier to use
+    alias share="termux-share -a send"
+
+    # termux-open gets an option for a default file handler! Dropbox integration
+    alias termux-open="termux-open --send"
+
+    # I still want to type less
+    alias opn="termux-open --send"
+
+    # Copy and paste for when I don't feel like firing up tmux
+    alias copy="termux-clipboard-get"
+    # Paste is a coreutil though
+    alias pste="termux-clipboard-set $*"
+
+fi
 
 # Git aliases. {{{1
 
