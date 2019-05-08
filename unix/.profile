@@ -38,16 +38,17 @@ if [[ -n "$PREFIX" ]]; then
     export SHELL="$PREFIX/bin/bash"
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
+    pathadd "$_ROOT/libexec"
 else
     export BROWSER="firefox --profile-manager $*"
     export SHELL=/bin/bash
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
     # You forgot the one for snaps!
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
+    pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
 fi
 
 # I mean I guess if this exists on both. Only observed on termux
-pathadd "$_ROOT/libexec"
 
 # Apr 23, 2019: Add pythonx so we can get clang formatters
 pathadd "$XDG_CONFIG_HOME/nvim/pythonx"
@@ -171,25 +172,6 @@ shopt -s direxpand
 
 shopt -s autocd
 shopt -s cdable_vars
-
-# Pagers: {{{1
-
-if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME="OneHalfDark"
-    export PAGER="bat --italic-text always --wrap never $*"
-    export BAT_STYLE="changes,numbers"
-    export BAT_PAGER="less -JRKML"
-else
-# -J displays a status column at the left edge of the screen
-# -R is what we need for ansi colors
-# -K: exit less in response to Ctrl-C
-# -M: Verbose prompt
-# -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-    export PAGER="less -JRKML"
-fi
-
-export BYOBU_PAGER="nvim"
-export COLORTERM="truecolor"
 
 # Other Environment Variables: {{{1
 

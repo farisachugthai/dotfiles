@@ -84,6 +84,25 @@ else
 fi
 export EDITOR="$VISUAL"
 
+# Pagers: {{{1
+
+if [[ -n "$(command -v bat)" ]]; then
+    export BAT_THEME="OneHalfDark"
+    export PAGER="bat --italic-text always --wrap never $*"
+    export BAT_STYLE="changes,numbers"
+    export BAT_PAGER="less -JRKML"
+else
+# -J displays a status column at the left edge of the screen
+# -R is what we need for ansi colors
+# -K: exit less in response to Ctrl-C
+# -M: Verbose prompt
+# -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
+    export PAGER="less -JRKML"
+fi
+
+export BYOBU_PAGER="nvim"
+export COLORTERM="truecolor"
+
 # JavaScript: {{{1
 
 # Source npm completion if its installed.
