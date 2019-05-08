@@ -36,16 +36,17 @@ if [[ -n "$PREFIX" ]]; then
     export SHELL="$PREFIX/bin/bash"
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
+    pathadd "$_ROOT/libexec"
 else
     export BROWSER="firefox --profile-manager $*"
     export SHELL=/bin/bash
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
     # You forgot the one for snaps!
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
+    pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
 fi
 
 # I mean I guess if this exists on both. Only observed on termux
-pathadd "$_ROOT/libexec"
 
 # Apr 23, 2019: Add pythonx so we can get clang formatters
 pathadd "$XDG_CONFIG_HOME/nvim/pythonx"
@@ -111,89 +112,6 @@ pathadd "$HOME/.racket/7.1/bin"
 pathadd "$HOME/.cargo/bin"
 
 if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
-
-# History: {{{1
-
-# Don't put duplicate lines or lines starting with space in the history.
-export HISTCONTROL=ignoreboth
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-export HISTSIZE=-1
-export HISTFILESIZE=-1
-# https://unix.stackexchange.com/a/174902
-export HISTTIMEFORMAT="%F %T: "
-# Ignore all the damn cds, ls's its a waste to have pollute the history
-export HISTIGNORE='exit:ls:cd:history:ll:la:gs'
-# Apparently I never named histfile?
-export HISTFILE="$HOME/.bash_history"
-
-# Append to the history file, don't overwrite it
-shopt -s histappend
-shopt -s histreedit
-
-# Shopt: {{{1
-
-# Be notified of asynchronous jobs completing in the background
-set -o notify
-# Check the window size after each command and update the values of LINES and COLUMNS.
-# Now the default in Bash 5!!!
-shopt -s checkwinsize
-
-# ** will match all files and zero or more directories and subdirectories.
-# shellcheck disable=SC2128
-if [[ $BASH_VERSINFO -gt 3 ]]; then
-    shopt -s globstar
-fi
-
-# If an attempt is made to exit bash , list currently running jobs, their status and a warning
-shopt -s checkjobs
-
-# Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob
-set -o noclobber        # Still dont want to clobber things
-shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
-shopt -s dirspell       # Autocorrect the spelling if it can
-shopt -s cdspell
-
-# This should be enabled by default but termux is listing it as off
-shopt -s hostcomplete
-
-# If you try to complete something that isn't a command, check if its an alias
-if [[ $BASH_VERSINFO -gt 4 ]]; then
-    shopt -s progcomp_alias
-fi
-
-# Print verbose error messages when using shift
-shopt -s shift_verbose
-
-shopt -s no_empty_cmd_completion
-# If set, and the cmdhist option is enabled, multi-line commands are saved to
-# the history with embedded newlines rather than using semicolon separators
-# where possible.
-shopt -s lithist
-
-shopt -s direxpand
-
-shopt -s autocd
-shopt -s cdable_vars
-
-# Pagers: {{{1
-
-if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME="Monokai Extended Bright"
-    export PAGER="bat --italic-text always --wrap never $*"
-    export BAT_STYLE="changes,numbers"
-    export BAT_PAGER="less -JRKML"
-else
-# -J displays a status column at the left edge of the screen
-# -R is what we need for ansi colors
-# -K: exit less in response to Ctrl-C
-# -M: Verbose prompt
-# -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-    export PAGER="less -JRKML"
-fi
-
-export BYOBU_PAGER="nvim"
-export COLORTERM="truecolor"
 
 # Other Environment Variables: {{{1
 
