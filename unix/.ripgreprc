@@ -1,5 +1,6 @@
-# Ripgreprc
+# ripgrep
 # Vim: set commentstring=#\ %s:
+# You gotta rework the whole thing it actually jams rg in its current state
 
 -g '!.git/*'
 # -g '!*/.svn'
@@ -13,9 +14,9 @@
 # could add colors and stuff
 
 # don't match more than 50 lines
---max-count 50
+# --max-count 50
 
---max-depth 8
+# --max-depth 8
 
 # if you need to debug run --messages on the command line.
 --no-messages

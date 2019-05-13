@@ -18,22 +18,17 @@ programming and conventional Unix terminal workflows.
 In addition, global configurations for [git](./unix/.config/git)
 and [Anaconda](./unix/.condarc) exist.
 
-## IPython
+A configuration for [Tmux](./unix/.tmux.conf) exists as well.
 
-I regularly use IPython as a system shell in comparison to the typical Bash
-shell that Unix OSes provide. While a terminal provides a huge number of
-powerful commands and the ability to pipe them together, Bash still has a number
-of inconsistencies and oddities in its behavior.
+![Termux_Using_Git_Python_Tmux_Vim](./images/Termux_Using_Git_Python_Tmux_Vim.jpg "opt title")
 
-As a result I've created a few [extensions](./unix/.ipython/extensions) and
-written a few scripts that are run during IPython's initialization.
+These configurations exist primarily for Linux only platforms as there
+are extensively commented files for [Xmodmap](./unix/.Xmodmap),
+[.xbindkeys](./unix/.xbindkeys), [.Xresources](./unix/.Xresources),
+[.xsession](./unix/.xsession); however, to the maximum extent possible, the code
+has been made portable to Windows.
 
-Those startup files are here: [startup](./unix/.ipython/profile_default/startup)
-and you can check out the README where I detail the code here:
 
-[README](./unix/.ipython/profile_default/startup/README.rst)
+## License
 
-### Features
-
-The first script to run invokes `%rehashx%` which initializes IPython
-with all of the commands that the system shell knows.
+MIT

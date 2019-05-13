@@ -1,28 +1,40 @@
-#===============================================================================
+#==============================================================================
 #         NAME:  fzf.bash
 #  DESCRIPTION:  From my bashrc
-#===============================================================================
+#==============================================================================
+
+# TODO: I don't know how to implement this and it'd be complicated but we could
+# add a var with all keybindings, colorschemes and a toggle for a preview window
+# with 1 predefined keybinding and then do
+# fzf_default_optd + universal opts
+# fzf_ctrl_t_opts
+# something like
+# if [[ -n $FZF_*_OPTS ]]; then $FZF_Expabd_glob oh wed probably need a for loop
+# iterating over the globbed env var array. huh that's a good roadmap tho
+
 
 # Remember to keep this below set -o vi or else FZF won't inherit vim keybindings!
 if [[ -f ~/.fzf.bash ]]; then
     export FZF_TMUX_HEIGHT=80%
     # shellcheck source=/home/faris/.fzf.bash
     source "$HOME/.fzf.bash"
+    # should we do else; git clone fzf repo?
 fi
 
 if [[ -n "$(command -v rg)" ]]; then  # {{{1
 
     # Base command: {{{2
     # Apr 18, 2019: rg shitting the bed idk whats happening
-    # export FZF_DEFAULT_COMMAND="rg --hidden --no-messages --files $*"
-    export FZF_DEFAULT_COMMAND="fd --hidden --follow --type file --max-depth 25  --absolute-path --color always $*"
-    export FZF_DEFAULT_OPTS='--multi --cycle  --ansi'
+    export FZF_DEFAULT_COMMAND="rg --hidden --no-messages --files $*"
+    # export FZF_DEFAULT_COMMAND="fd --hidden --follow --type file --max-depth 25 --color always $*"
+    export FZF_DEFAULT_OPTS='--multi --cycle --tiebreak=index --ansi'
 
     # <Ctrl-t>: {{{2
     # Might be implemented as __fzf_select__
-    # export FZF_CTRL_T_COMMAND="rg --hidden --no-messages --passthru --files"
-    export FZF_CTRL_T_COMMAND="fd --hidden --follow --type file --max-depth 25 --color always $*"
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
+    # Also i think its the fzf-file-widget you see in the autocomplete suggestion so add --filepath-word
+    export FZF_CTRL_T_COMMAND="rg --hidden --no-messages --passthru --files"
+    # export FZF_CTRL_T_COMMAND="fd --hidden --follow --type file --max-depth 25 --color always $*"
+    export FZF_CTRL_T_OPTS='--multi --cycle --filepath-word --border --reverse --preview-window=right:60%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
 
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb ]]; then
         export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
@@ -37,8 +49,10 @@ if [[ -n "$(command -v rg)" ]]; then  # {{{1
     # idk what dirs only is but A-c now works!
     # export FZF_ALT_C_COMMAND="rg --files $*"
     if [[ -n "$(command -v fd)" ]]; then
-        export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+        export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git $* "
     fi
+
+    export FZF_ALT_C_OPTS="--cycle --ansi --tiebreak=index --no-multi --filepath-word"
 
     Ag() { ag -l -g "" | fzf; };
     Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
@@ -66,7 +80,7 @@ fi
 # More: {{{1
 # termux doesnt have xclip or xsel
 
-command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "
+command -v tree > /dev/null && export FZF_ALT_C_OPTS+="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.

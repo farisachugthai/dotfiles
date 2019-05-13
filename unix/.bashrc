@@ -148,7 +148,6 @@ shopt -s direxpand
 shopt -s autocd
 shopt -s cdable_vars
 
-<<<<<<< HEAD
 # Pagers: {{{1
 
 if [[ -n "$(command -v bat)" ]]; then
