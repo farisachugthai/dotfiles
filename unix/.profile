@@ -51,6 +51,9 @@ fi
 # Apr 23, 2019: Add pythonx so we can get clang formatters
 pathadd "$XDG_CONFIG_HOME/nvim/pythonx"
 
+# Will this give us relative imports?
+export PYTHONPATH="$PYTHONPATH:$XDG_CONFIG_HOME/rplugin/python3"
+
 # User dirs first: {{{1
 
 # Set PATH so it includes user's private bin directories and set them first in path

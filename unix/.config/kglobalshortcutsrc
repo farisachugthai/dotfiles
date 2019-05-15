@@ -3,7 +3,7 @@ _k_friendly_name=Activity Manager
 switch-to-activity-7f86fd99-5dc0-4ada-81ef-bab4eed2a2f6=none,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
-Switch to Next Keyboard Layout=,Ctrl+Alt+K,Switch to Next Keyboard Layout
+Switch to Next Keyboard Layout=none,Ctrl+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=KDE Daemon
 
 [firefox.desktop]
