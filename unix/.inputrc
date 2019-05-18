@@ -2,6 +2,11 @@
 # Includes all persistant modifications to GNU readline
 # Maintainer: Faris Chugthai
 
+# Binds: {{{1
+# To a shocking extent termux has nothijg set up
+
+bind '"\C-w": unix-filename-rubout"
+
 # Switch keymaps: {{{1
 # Apr 17, 2019: Running `bind -p` showed that nothing is bound to emacs editing mode.
 # Let's bind it to the keys described in rluserman
