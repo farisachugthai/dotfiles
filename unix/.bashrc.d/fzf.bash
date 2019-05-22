@@ -25,14 +25,14 @@ if [[ -n "$(command -v rg)" ]]; then  # {{{1
 
     # Base command: {{{2
     # Apr 18, 2019: rg shitting the bed idk whats happening
-    export FZF_DEFAULT_COMMAND="rg --hidden --no-messages --files $*"
+    export FZF_DEFAULT_COMMAND="rg --hidden --no-messages --files $@"
     # export FZF_DEFAULT_COMMAND="fd --hidden --follow --type file --max-depth 25 --color always $*"
     export FZF_DEFAULT_OPTS='--multi --cycle --tiebreak=index --ansi'
 
     # <Ctrl-t>: {{{2
     # Might be implemented as __fzf_select__
     # Also i think its the fzf-file-widget you see in the autocomplete suggestion so add --filepath-word
-    export FZF_CTRL_T_COMMAND="rg --hidden --no-messages --passthru --files"
+    export FZF_CTRL_T_COMMAND="rg --hidden --no-messages --passthru --files $* "
     # export FZF_CTRL_T_COMMAND="fd --hidden --follow --type file --max-depth 25 --color always $*"
     export FZF_CTRL_T_OPTS='--multi --cycle --filepath-word --border --reverse --preview-window=right:60%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview." '
 
@@ -43,8 +43,8 @@ if [[ -n "$(command -v rg)" ]]; then  # {{{1
     fi
 
     # __fzf_history__: {{{2
-    export FZF_CTRL_R_COMMAND="rg --no-messages $*"
-    export FZF_CTRL_R_OPTS="--cycle --ansi --preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+    export FZF_CTRL_R_COMMAND="rg --no-messages $* "
+    export FZF_CTRL_R_OPTS="--cycle --history-size=10000 --history=~/.bash_history --ansi --preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
     # idk what dirs only is but A-c now works!
     # export FZF_ALT_C_COMMAND="rg --files $*"
@@ -60,7 +60,7 @@ if [[ -n "$(command -v rg)" ]]; then  # {{{1
 
 elif [[ -n "$(command -v fd)" ]]; then  # {{{2
 
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow -j 8 -d 6 --exclude .git'
+    export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow -j 8 -d 6 --exclude .git $@"
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
     export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
 
@@ -71,7 +71,7 @@ elif [[ -n "$(command -v fd)" ]]; then  # {{{2
     fi
 
 else  # {{{2
-    export FZF_DEFAULT_COMMAND='find * -type f'
+    export FZF_DEFAULT_COMMAND="find * -type f $@"
 
     # Options for FZF no matter what.
     export FZF_DEFAULT_OPTS=' --cycle'
@@ -97,5 +97,5 @@ if [[ -n "$(command -v fd)" ]]; then
     }
 fi
 
-complete -F _fzf_path_completion -o default -o bashdefault ag
+complete -F _fzf_path_completion -o default -o bashdefault rg
 complete -F _fzf_dir_completion -o default -o bashdefault tree

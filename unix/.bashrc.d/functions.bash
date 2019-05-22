@@ -153,3 +153,12 @@ tm() {
   fi
   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
+
+# lk: {{{1 show symbolic links using fd or fallback to grep
+lk() {
+    if [[ -n "$(fd)" ]]; then
+        ls -Fo --color=always -A $@ | fd --type link --maxdepth 1 --hidden --color always
+    else
+        ls -Fo --color=always $@ | grep ^l
+    fi
+}

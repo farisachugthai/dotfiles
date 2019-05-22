@@ -14,6 +14,8 @@
     git_setup
     evil_setup
     org_setup
+    eshell_setup
+    add_pretty_symbols
     ))
 
 (defun dotspacemacs/layers ()
@@ -39,6 +41,8 @@ This function should only modify configuration layer settings."
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation nil
+   ;; If non-nil layers with lazy install support are lazy installed.
+   ;; List of additional paths where to look for configuration layers.
 
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
@@ -97,7 +101,15 @@ This function should only modify configuration layer settings."
      markdown
      neotree
      (org :variables
+          org-enable-sticky-header t
           org-enable-github-support t
+          org-enable-org-journal-support t
+          org-journal-dir "~/org/journal/"
+          org-journal-file-format "%Y-%m-%d"
+          org-journal-date-prefix "#+TITLE: "
+          org-journal-date-format "%A, %B %d %Y"
+          org-journal-time-prefix "* "
+          org-journal-time-format ""
           org-startup-indented t
           org-want-todo-bindings t)
      (python :variables
@@ -144,8 +156,8 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
-
+   dotspacemacs-excluded-packages '(
+                                    treemacs powerline)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and deletes any unused
@@ -559,9 +571,9 @@ like this:
     )
 #+END_SRC
 
-From the spacemacs FAQ."
+From the Spacemacs FAQ."
 
-  ;; first things first we should define use-package
+  ;; This is only needed once, near the top of the file
   (eval-when-compile
     (require 'use-package))
 
@@ -583,6 +595,8 @@ From the spacemacs FAQ."
 
 ;; The rest is general setup
 
+  (global-hl-line-mode t)
+
   '(hl-todo-keyword-faces
     (quote
      (("TODO" . "#dc752f")
@@ -601,11 +615,6 @@ From the spacemacs FAQ."
       ("XXX" . "#dc752f")
       ("XXXX" . "#dc752f")
       ("???" . "#dc752f"))))
-
-  ;; The package is "python" but the mode is "python-mode":
-  (use-package python
-    :mode ("\\.py\\'" . python-mode)
-    :interpreter ("ipython3" . python-mode))
 
   (use-package auto-package-update
     :config
@@ -650,9 +659,16 @@ From the spacemacs FAQ."
 
   (setq-default info-lookup-history)
 
+  ;; disable backup
+  (setq-default backup-inhibited t)
+  ;; disable auto save
+  (setq-default auto-save-default nil)
+  (put 'erase-buffer 'disabled nil)
+
+  (setq-default paradox-execute-asynchronously t)
   )
 
-(defun your_spacemacs/evil-setup ()
+(defun your_spacemacs/evil_setup ()
   "Setup evil and related packages.
 
 Also note that if you want, the info page on Viper: 3.1 Rudimentary Changes
@@ -681,38 +697,40 @@ Add new surround pairs
 To change the default evil-surround-pairs-alist you have to use
 \"setq-default\", for example to remove all default pairs:
 
-(setq-default evil-surround-pairs-alist '())
+\(setq-default evil-surround-pairs-alist '\(\)\)
 
 or to add a pair that surrounds with two ` if you enter ~:
 
-(setq-default evil-surround-pairs-alist
-              (push '(?~ . (\"``\" . \"``\"\)) evil-surround-pairs-alist))"
+\(setq-default evil-surround-pairs-alist
+              \(push '\(?~ . \(\"``\" . \"``\"\)\) evil-surround-pairs-alist\)\)
+
+I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
+ bunch of things."
   ;; from the github page for evil-collection
   (use-package evil
     :defer t
     :init
     (setq-default evil-want-keybinding nil)
     :config
-    (evil-shift-width 4)
-    (evil-mode 1))
+    (evil-mode 1)
+    (evil-switch-indent 4))
 
     ;; After major mode has changed, reset evil-shift-width
     (add-hook 'after-change-major-mode-hook 'spacemacs//set-evil-shift-width 'append)
 
   (use-package evil-collection
     :after evil
-    :ensure t
     :custom (evil-collection-setup-minibuffer t)
     :init (evil-collection-init))
 
   (use-package evil-matchit
     :ensure t
+    :after evil
     :config
     (global-evil-matchit-mode t))
 
   (use-package evil-surround
     :after evil
-    :ensure t
     :config
     (global-evil-surround-mode t))
 
@@ -720,25 +738,32 @@ or to add a pair that surrounds with two ` if you enter ~:
     :after evil
     :ensure t
     :config
-    (global-evil-tabs-mode t))
+    (global-evil-tabs-mode))
 
+    (with-eval-after-load evil
+        (progn
+        (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+        (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+        ;; Also in visual mode
+        (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+        (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
-  (with-eval-after-load evil
-    (progn
-      (
+        ;; Split navigation.
         (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
         (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
         (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-        (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+        (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
+
+
+    (setq-default evil-normal-state-modes (append evil-motion-state-modes evil-normal-state-modes))
+    (setq-default evil-motion-state-modes nil)
 
         (define-key evil-motion-state-map "j" 'evil-next-visual-line)
         (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
         ;; Also in visual mode
         (define-key evil-visual-state-map "j" 'evil-next-visual-line)
         (define-key evil-visual-state-map "k" 'evil-previous-visual-line))))
-
 )
-
 
 (defun your_spacemacs/org_setup ()
    "Set up org mode.
@@ -755,19 +780,39 @@ or to add a pair that surrounds with two ` if you enter ~:
    (progn
      (
        (setq-default
+         org-bullets-bullet-list '("■" "◆" "▲" "▶")
          org-confirm-babel-evaluate nil
          org-refile-use-cache t
          org-log-done 'time
          org-log-redeadline 'time
          org-log-refile 'time
-         org-log-reschedule 'time))))
+         org-log-reschedule 'time
+         spaceline-org-clock-p t))))
    ;; haven't tried yasnippet in org mode but let's try this in advance
    (add-hook 'org-mode-hook
                  (lambda ()
                    (setq-default yas/trigger-key [tab])
                    (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+                spacemacs-space-doc-modificators
+                '(center-buffer-mode
+                  org-indent-mode
+                  view-mode
+                  hide-line-numbers
+                  alternative-emphasis
+                  alternative-tags-look
+                  link-protocol
+                  org-block-line-face-remap
+                  org-kbd-face-remap
+                  resize-inline-images))))
 
-    ;;; If this doesn't fix it
+    ;; haven't tried yasnippet in org mode but let's try this in advance
+    (add-hook 'org-mode-hook
+                  (lambda ()
+                    (setq-default yas/trigger-key [tab])
+                    (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+
+
+    ;;; if this doesn't fix it
 
     ;; (defun yas/org-very-safe-expand ()
     ;;   (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
@@ -780,15 +825,51 @@ or to add a pair that surrounds with two ` if you enter ~:
     ;;             (setq yas/trigger-key [tab])
     ;;             (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
     ;;             (define-key yas/keymap [tab] 'yas/next-field)))
+
+    (with-eval-after-load 'org-agenda
+      (require 'org-projectile)
+      (mapcar '(lambda (file)
+                 (when (file-exists-p file)
+                   (push file org-agenda-files)))
+              (org-projectile-todo-files)))
+)
+
+(defun yourspacemacs/add_pretty_symbols ()
+  "From ergoemacs.org."
+  (setq-default prettify-symbols-alist
+        '(
+          ("lambda" . 955)
+          ("-->" . 8594)
+          ("==>" . 8658)
+          ("map" . 8614)
+          ))
+  (add-hook 'emacs-lisp-mode-hook 'yourspacemacs/add_pretty_symbols)
+)
+
+
+(defun yourspacemacs/eshell_setup()
+"Initialize eshell.
+
++TODO: Add docstrings to these variables I guess"
+  (with-eval-after-load 'eshell
+    (progn
+      (setq-default
+        ;; so then it falls to HISTSIZE. how do we set env vars in emacs
+        ;; eshell-history-size nil)
+        eshell-hist-ignoredups t
+        eshell-cd-shows-directory t
+        eshell-ls-dired-initial-args "-hF --color always --dired"
+   )))
+
 )
 
 (defun your-spacemacs-setup/comint_setup ()
   "From use-package info page."
 
-  (use-package comint
-    :custom
-    (comint-buffer-maximum-size 20000 "Increase comint buffer size.")
-    (comint-prompt-read-only t "Make the prompt read only."))
+(use-package comint
+  :custom
+  (comint-buffer-maximum-size 20000 "Increase comint buffer size.")
+  (comint-prompt-read-only t "Make the prompt read only."))
 )
 
 (defun yourspacemacs/git_setup ()
@@ -866,6 +947,24 @@ or to add a pair that surrounds with two ` if you enter ~:
 
 )
 
+(defun yourspacemacs/yasnippet_setup ()
+"Setup yasnippet."
+(use-package 'yasnippet
+  :config
+  (yas-minor-mode on)
+  (yas-load-directory "~/.emacs.d/private/snippets")))
+
+(defun yourspacemacs/python_setup ()
+  "Setup IPython on emacs."
+;; The package is "python" but the mode is "python-mode":
+
+   (add-hook 'python-mode-hook
+     (use-package python
+       :mode ("\\.py\\'" . python-mode)
+       :interpreter ("ipython3" . python-mode))
+     (define-key evil-normal-state-map (kbd "[F5]") 'spacemacs/python-execute-file))
+
+)
 
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
@@ -879,7 +978,44 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (auto-package-update yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org tagedit symon symbol-overlay string-inflection spaceline-all-the-icons smex smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs realgud ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file ob-ipython neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lsp-ui lsp-treemacs lorem-ipsum live-py-mode link-hint json-navigator json-mode jinja2-mode indent-guide importmagic impatient-mode ibuffer-projectile hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elpy elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl define-word dap-mode dactyl-mode cython-mode counsel-projectile company-web company-statistics company-quickhelp company-lsp company-ansible company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+    (
+     auto-package-update yasnippet-snippets yapfify yaml-mode xterm-color
+     ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights
+     vimrc-mode vi-tilde-fringe uuidgen use-package unfill treemacs-projectile
+     treemacs-evil toc-org tagedit symon symbol-overlay string-inflection
+     spaceline-all-the-icons smex smeargle slim-mode shell-pop scss-mode sass-mode
+     restart-emacs realgud ranger rainbow-mode rainbow-identifiers rainbow-delimiters
+     racket-mode pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel
+     pipenv pip-requirements persp-mode pcre2el password-generator paradox
+     overseer orgit org-projectile org-present org-pomodoro org-mime
+     org-download org-cliplink org-bullets org-brain open-junk-file ob-ipython
+     neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn
+     magit-gitflow macrostep lsp-ui lsp-treemacs lorem-ipsum live-py-mode
+     link-hint json-navigator json-mode jinja2-mode indent-guide importmagic
+     impatient-mode ibuffer-projectile hungry-delete hl-todo highlight-parentheses
+     highlight-numbers helm-xref helm-themes helm-swoop helm-pydoc helm-purpose
+     helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore
+     helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet
+     helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates
+     github-search github-clone gitconfig-mode gitattributes-mode git-timemachine
+     git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy
+     forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package
+     flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar
+     evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs
+     evil-surround evil-snipe evil-org evil-numbers evil-nerd-commenter evil-mc
+     evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus
+     evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff
+     evil-commentary evil-collection evil-cleverparens evil-args evil-anzu
+     eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elpy
+     elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline
+     diminish diff-hl define-word dap-mode dactyl-mode cython-mode
+     counsel-projectile company-web company-statistics company-quickhelp
+     company-lsp company-ansible company-anaconda column-enforce-mode
+     color-identifiers-mode clean-aindent-mode centered-cursor-mode
+     browse-at-remote bm blacken auto-yasnippet auto-highlight-symbol
+     auto-dictionary auto-complete-rst auto-compile ansible-doc
+     ansible aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
