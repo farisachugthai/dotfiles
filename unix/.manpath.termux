@@ -26,19 +26,19 @@ MANDATORY_MANPATH			$PREFIX/usr/local/share/man
 #
 #		*PATH*        ->	        *MANPATH*
 #
-MANPATH_MAP	$PREFIX/bin		        $PREFIX/usr/share/man
+MANPATH_MAP	$PREFIX/bin		            $PREFIX/usr/share/man
 MANPATH_MAP	$PREFIX/usr/bin		        $PREFIX/usr/share/man
-MANPATH_MAP	$PREFIX/sbin			$PREFIX/usr/share/man
-MANPATH_MAP	$PREFIX/usr/sbin		$PREFIX/usr/share/man
+MANPATH_MAP	$PREFIX/sbin		    	$PREFIX/usr/share/man
+MANPATH_MAP	$PREFIX/usr/sbin		    $PREFIX/usr/share/man
 MANPATH_MAP	$PREFIX/usr/local/bin		$PREFIX/usr/local/man
 MANPATH_MAP	$PREFIX/usr/local/bin		$PREFIX/usr/local/share/man
 MANPATH_MAP	$PREFIX/usr/local/sbin		$PREFIX/usr/local/man
 MANPATH_MAP	$PREFIX/usr/local/sbin		$PREFIX/usr/local/share/man
-:ANPATH_MAP	$PREFIX/usr/X11R6/bin		$PREFIX/usr/X11R6/man
-MANPATH_MAP	$PREFIX/usr/bin/X11		$PREFIX/usr/X11R6/man
-MANPATH_MAP	$PREFIX/usr/games		$PREFIX/usr/share/man
+MANPATH_MAP	$PREFIX/usr/X11R6/bin		$PREFIX/usr/X11R6/man
+MANPATH_MAP	$PREFIX/usr/bin/X11		    $PREFIX/usr/bin/X11R6/man
+MANPATH_MAP	$PREFIX/usr/games		    $PREFIX/usr/share/man
 MANPATH_MAP	$PREFIX/opt/bin		        $PREFIX/opt/man
-MANPATH_MAP	$PREFIX/opt/sbin		$PREFIX/opt/man
+MANPATH_MAP	$PREFIX/opt/sbin		    $PREFIX/opt/man
 #---------------------------------------------------------
 # For a manpath element to be treated as a system manpath (as most of those
 # above should normally be), it must be mentioned below. Each line may have
@@ -76,7 +76,7 @@ MANDB_MAP	$PREFIX/opt/man		        $PREFIX/var/cache/man/opt
 # definition and modify it.
 #
 #DEFINE 	pager	pager
-#DEFINE 	cat	cat
+DEFINE 	cat	bat
 #DEFINE 	tr	tr '\255\267\264\327' '\055\157\047\170'
 #DEFINE		grep	grep
 #DEFINE 	troff 	groff -mandoc

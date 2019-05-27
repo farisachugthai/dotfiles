@@ -44,7 +44,7 @@ if [[ -n "$(command -v rg)" ]]; then  # {{{1
 
     # __fzf_history__: {{{2
     export FZF_CTRL_R_COMMAND="rg --no-messages $* "
-    export FZF_CTRL_R_OPTS="--cycle --history-size=10000 --history=~/.bash_history --ansi --preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+    export FZF_CTRL_R_OPTS="--cycle --history-size=10000 --ansi --preview 'echo {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
     # idk what dirs only is but A-c now works!
     # export FZF_ALT_C_COMMAND="rg --files $*"
