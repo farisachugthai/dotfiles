@@ -1,14 +1,42 @@
 """Configuration file for jupyter-qtconsole.
 
-Do we need to use the IPython idiom
+May 27, 2019:
 
-.. code-block:: python3
 
-    from IPython import get_ipython
-    c = get_ipython()
+.. code-block:: none
+
+    (ins)(navigator) faris@faris-U56E:~$ jupyter-qtconsole
+    xkbcommon: ERROR: failed to add default include path
+    Qt: Failed to create XKB context!
+    Use QT_XKB_CONFIG_ROOT environmental variable to provide an additional
+    search path, add ':' as separator to provide several search paths and/or
+    make sure that XKB configuration data directory contains recent enough contents, to update please see http://cgit.freedesktop.org/xkeyboard-config/ .
+
+
+So we have to debug that because the keyboard isn't working on jupyter
+qtconsole :/
 
 """
-# from JupyterWidget import
+import logging
+from pathlib import Path
+import shutil
+
+from traitlets.config import get_config
+
+c = get_config()
+
+LOGGER = logging.basicConfig(level=logging.WARNING)
+
+
+def get_home():
+    """Returns the user's home directory."""
+    try:
+        home = Path().home()
+    except Exception as e:
+        LOGGER.error("There was an error determining home directory: %s" % e)
+    else:
+        return home
+
 # ------------------------------------------------------------------------------
 # connectionFileMixin(LoggingConfigurable) configuration
 # ------------------------------------------------------------------------------
@@ -42,7 +70,6 @@ Do we need to use the IPython idiom
 # set the stdin (ROUTER) port [default: random]
 # c.ConnectionFileMixin.stdin_port = 0
 
-#
 # c.ConnectionFileMixin.transport = 'tcp'
 
 # ------------------------------------------------------------------------------
@@ -72,13 +99,13 @@ c.JupyterConsoleApp.kernel_name = 'python3'
 # This is an application.
 
 # The date format used by logging formatters for %(asctime)s
-# c.Application.log_datefmt = '%Y-%m-%d %H:%M:%S'
+c.Application.log_datefmt = '%Y-%m-%d %H:%M:%S'
 
 # The Logging format template
-# c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
+c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
 
 # Set the log level by value or name.
-# c.Application.log_level = 30
+c.Application.log_level = 30
 
 # ------------------------------------------------------------------------------
 # JupyterApp(Application) configuration
@@ -133,6 +160,7 @@ c.JupyterQtConsoleApp.display_banner = False
 #  ConsoleWidget also provides a number of utility methods that will be
 #  convenient to implementors of a console-style widget.
 
+# Surprisingly windows handles this correctly
 # Whether to process ANSI escape codes.
 # c.ConsoleWidget.ansi_codes = True
 
@@ -158,11 +186,13 @@ c.ConsoleWidget.console_width = 120
 # The font family to use for the console. On OSX this defaults to Monaco, on
 #  Windows the default is Consolas with fallback of Courier, and on other
 #  platforms the default is Monospace.
-c.ConsoleWidget.font_family = 'Fira Code'
+
+# I wonder if we can give multiple values
+c.ConsoleWidget.font_family = 'Fira Mono, Hack, Consolas'
 
 # The font size. If unconfigured, Qt will be entrusted with the size of the
 #  font.
-c.ConsoleWidget.font_size = 10
+c.ConsoleWidget.font_size = 14
 
 # The type of completer to use. Valid values are:
 #
@@ -213,7 +243,6 @@ c.ConsoleWidget.paging = 'vsplit'
 # A ConsoleWidget that keeps a history of the commands that have been executed
 #  and provides a readline-esque interface to this history.
 
-#
 c.HistoryConsoleWidget.history_lock = True
 
 # ------------------------------------------------------------------------------
@@ -222,7 +251,6 @@ c.HistoryConsoleWidget.history_lock = True
 
 # A Qt frontend for a generic Python kernel.
 
-#
 # c.FrontendWidget.banner = ''
 
 # Whether to clear the console when the kernel is restarted
@@ -253,26 +281,28 @@ c.HistoryConsoleWidget.history_lock = True
 #  format specifier, it will be used. Otherwise, the filename will be appended to
 #  the end the command. To use a terminal text editor, the command should launch
 #  a new terminal, e.g. ``"gnome-terminal -- vim"``.
-c.JupyterWidget.editor = 'nvim-qt'
+
+
+# Shit we have to specify the terminal too? This just got 40000 more complicated.
+# Gotta determine OS, version, what terminal I'm using ugh
+if shutil.which('nvim-qt'):
+    c.JupyterWidget.editor = 'nvim-qt'
+else:
+    c.JupyterWidget.editor = 'nvim'
 
 # The editor command to use when a specific line number is requested. The string
-#  should contain two format specifiers: {line} and {filename}. If this parameter
-#  is not specified, the line number option to the %edit magic will be ignored.
+# should contain two format specifiers: {line} and {filename}. If this parameter
+# is not specified, the line number option to the %edit magic will be ignored.
 # c.JupyterWidget.editor_line = ''
 
-#
 # c.JupyterWidget.in_prompt = 'In [<span class="in-prompt-number">%i</span>]: '
 
-#
 # c.JupyterWidget.input_sep = '\n'
 
-#
 # c.JupyterWidget.out_prompt = 'Out[<span class="out-prompt-number">%i</span>]: '
 
-#
 # c.JupyterWidget.output_sep = ''
 
-#
 # c.JupyterWidget.output_sep2 = ''
 
 # A CSS stylesheet. The stylesheet can contain classes for:
@@ -283,7 +313,10 @@ c.JupyterWidget.editor = 'nvim-qt'
 
 # If not empty, use this Pygments style for syntax highlighting. Otherwise, the
 #  style sheet is queried for Pygments style information.
-c.JupyterWidget.syntax_style = 'gruvbox'
+try:
+    c.JupyterWidget.syntax_style = 'Gruvbox'
+except Exception:  # noqa
+    c.JupyterWidget.syntax_style = 'Solarized Dark'
 
 # ------------------------------------------------------------------------------
 # KernelManager(ConnectionFileMixin) configuration
@@ -420,4 +453,4 @@ c.JupyterWidget.syntax_style = 'gruvbox'
 # c.Session.unpacker = 'json'
 
 # Username for the Session. Default is your system username.
-# c.Session.username = 'faris'
+c.Session.username = 'faris'

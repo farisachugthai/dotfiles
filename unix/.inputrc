@@ -56,11 +56,6 @@ set show-mode-in-prompt On
 # Apr 12, 2019: Line 3200 man bash
 set blink-matching-paren
 
-# should we? default off. my arrow keys work idk
-# set enable-keypad
-
-set input-meta
-set output-meta
 
 # words which have more than one possible completion without any possible
 # partial completion (the possible completions don't share a common prefix)
@@ -68,6 +63,18 @@ set output-meta
 set show-all-if-unmodified
 
 set expand-tilde
+
+# From /usr/share/readline/inputrc example: {{{2
+set bell-style none
+
+# should we? default off. my arrow keys work idk
+# not the arrow keys the application keypad too. do it
+set enable-keypad on
+
+# 8 bit clean
+set input-meta on
+set output-meta on
+set convert-meta off
 
 # History Search: {{{1
 
@@ -87,3 +94,52 @@ bind '"\e[D": backward-char'
 
 # Include: {{{1
 # $include  /etc/inputrc
+#
+# Bindings: {{{1
+
+# some defaults / modifications for the emacs mode
+# $if mode=emacs
+# jk do it no matter what these are useful
+
+# allow the use of the Home/End keys
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+
+# allow the use of the Delete/Insert keys
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+
+# mappings for "page up" and "page down" to step to the beginning/end
+# of the history
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+
+# alternate mappings for "page up" and "page down" to search the history
+# "\e[5~": history-search-backward
+# "\e[6~": history-search-forward
+
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+# I don't know what these escape codes mean so leave them commented out
+# $if term=rxvt
+# "\e[7~": beginning-of-line
+# "\e[8~": end-of-line
+# "\eOc": forward-word
+# "\eOd": backward-word
+# $endif
+
+# # for non RH/Debian xterm, can't hurt for RH/Debian xterm
+# # "\eOH": beginning-of-line
+# # "\eOF": end-of-line
+
+# # for freebsd console
+# # "\e[H": beginning-of-line
+# # "\e[F": end-of-line
+
+# $endif
