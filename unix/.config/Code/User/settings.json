@@ -121,5 +121,54 @@
     "workbench.quickOpen.preserveInput": true,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.settings.openDefaultKeybindings": true,
-    "restructuredtext.experimental": true
+    "restructuredtext.experimental": true,
+    "gitlens.views.search.enabled": false,
+    "gitlens.menus": {
+        "editor": {
+            "blame": true,
+            "clipboard": true,
+            "compare": true,
+            "details": true,
+            "history": true,
+            "remote": false
+        },
+        "editorGroup": {
+            "blame": true,
+            "compare": true
+        },
+        "editorTab": {
+            "clipboard": true,
+            "compare": true,
+            "history": true,
+            "remote": true
+        },
+        "explorer": {
+            "clipboard": true,
+            "compare": true,
+            "history": true,
+            "remote": true
+        },
+        "scmGroup": {
+            "compare": true,
+            "openClose": true,
+            "stash": true,
+            "stashInline": true
+        },
+        "scmItem": {
+            "clipboard": true,
+            "compare": true,
+            "history": true,
+            "remote": true,
+            "stash": true
+        }
+    },
+    "gitlens.views.repositories.location": "scm",
+    "gitlens.views.fileHistory.location": "explorer",
+    "gitlens.views.lineHistory.location": "explorer",
+    "gitlens.views.compare.location": "gitlens",
+    "gitlens.views.search.location": "gitlens",
+    "workbench.colorTheme": "Material Theme Darker",
+    "merge-conflict.autoNavigateNextConflict.enabled": true,
+    "materialTheme.accent": "Orange",
+    "material-icon-theme.activeIconPack": "react"
 }

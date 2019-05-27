@@ -14,7 +14,7 @@ new-window=Meta+Shift+N,none,Open a New Window
 
 [guake.desktop]
 _k_friendly_name=Launch Guake Terminal
-_launch=F12,none,Launch Guake Terminal
+_launch=Alt+F12,none,Launch Guake Terminal
 
 [kaccess]
 Toggle Screen Reader On and Off=Meta+Alt+S,Meta+Alt+S,Toggle Screen Reader On and Off
@@ -277,6 +277,10 @@ nextmedia=Media Next,Media Next,Media playback next
 playpausemedia=Media Play,Media Play,Play/Pause media playback
 previousmedia=Media Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback
+
+[nvim-qt.desktop]
+_k_friendly_name=Launch Neovim-Qt
+_launch=Meta+N\tMeta+Shift+Return,none,Launch Neovim-Qt
 
 [org.keepassxc.KeePassXC.desktop]
 _k_friendly_name=KeePassXC
