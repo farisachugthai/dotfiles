@@ -17,6 +17,7 @@ So we have to debug that because the keyboard isn't working on jupyter
 qtconsole :/
 
 """
+<<<<<<< Updated upstream
 import logging
 from pathlib import Path
 import shutil
@@ -37,6 +38,13 @@ def get_home():
     else:
         return home
 
+||||||| merged common ancestors
+# from JupyterWidget import
+=======
+from traitlets.config import get_config
+c = get_config()
+# from JupyterWidget import
+>>>>>>> Stashed changes
 # ------------------------------------------------------------------------------
 # connectionFileMixin(LoggingConfigurable) configuration
 # ------------------------------------------------------------------------------
@@ -186,9 +194,15 @@ c.ConsoleWidget.console_width = 120
 # The font family to use for the console. On OSX this defaults to Monaco, on
 #  Windows the default is Consolas with fallback of Courier, and on other
 #  platforms the default is Monospace.
+<<<<<<< Updated upstream
 
 # I wonder if we can give multiple values
 c.ConsoleWidget.font_family = 'Fira Mono, Hack, Consolas'
+||||||| merged common ancestors
+c.ConsoleWidget.font_family = 'Fira Code'
+=======
+c.ConsoleWidget.font_family = 'Fira Mono'
+>>>>>>> Stashed changes
 
 # The font size. If unconfigured, Qt will be entrusted with the size of the
 #  font.
@@ -313,10 +327,19 @@ else:
 
 # If not empty, use this Pygments style for syntax highlighting. Otherwise, the
 #  style sheet is queried for Pygments style information.
+<<<<<<< Updated upstream
 try:
     c.JupyterWidget.syntax_style = 'Gruvbox'
 except Exception:  # noqa
     c.JupyterWidget.syntax_style = 'Solarized Dark'
+||||||| merged common ancestors
+c.JupyterWidget.syntax_style = 'gruvbox'
+=======
+try:
+    c.JupyterWidget.syntax_style = 'Gruvbox'
+except:
+    c.JupyterWidget.syntax_style = 'Monokai'
+>>>>>>> Stashed changes
 
 # ------------------------------------------------------------------------------
 # KernelManager(ConnectionFileMixin) configuration

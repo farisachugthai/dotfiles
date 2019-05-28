@@ -89,7 +89,6 @@ values."
           global-git-gutter+-mode t
           magit-repository-directories
           '(("~/projects" . 2)("~/src/" . 2)))
-     github
      (helm :variables
            helm-enable-auto-resize t
            helm-M-x-fuzzy-match t  ;; optional fuzzy matching for helm-M-x
@@ -115,10 +114,6 @@ values."
           org-startup-indented t
           org-want-todo-bindings t)
      ;; also check the var org-startup-options
-     (shell :variables
-            shell-default-height 30
-            shell-default-shell 'eshell
-            shell-default-position 'bottom)
      (python :variables
              python-backend 'lsp
              python-enable-yapf-format-on-save t
@@ -157,14 +152,13 @@ values."
      spacemacs-org
      sphinx
      ;; spell-checking
-     sql
      syntax-checking
      unicode-fonts
      vagrant
      version-control
-     windows-scripts
      vimscript
      vinegar
+     windows-scripts
      xclipboard
      yaml)
 
@@ -175,14 +169,17 @@ values."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(evil-tabs elpy gruvbox-theme evil-collection evil-tabs)
+   dotspacemacs-additional-packages '(elpy evil-collection
+                                           auto-package-update
+                                           use-package-ensure-system-package)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(
-                                    treemacs powerline)
+                                    treemacs lsp-treemacs powerline
+                                             treemacs-projectile treemacs-evil)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -697,6 +694,13 @@ From the Spacemacs FAQ."
 
   (setq-default paradox-execute-asynchronously t)
 
+  ;; from info - emacs - ch49 - init file
+  (if (fboundp 'blink-cursor-mode)
+      (blink-cursor-mode 0))
+
+  (if (boundp 'coding-category-utf-8)
+      (set-coding-priority '(coding-category-utf-8)))
+
 )
 
 
@@ -784,8 +788,10 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
         (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
 
 
-    (setq-default evil-normal-state-modes (append evil-motion-state-modes evil-normal-state-modes))
-    (setq-default evil-motion-state-modes nil)
+    (with-eval-after-load evil
+      (progn
+        (setq-default evil-normal-state-modes (append evil-motion-state-modes evil-normal-state-modes))
+        (setq-default evil-motion-state-modes nil)))
 
 )
 
@@ -977,7 +983,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (org-journal tree-mode treemacs-projectile treemacs-evil evil-nerd-commenter evil-mc yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key volatile-highlights vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unicode-fonts toc-org symon symbol-overlay string-inflection sql-indent spaceline-all-the-icons smeargle slime-company shell-pop seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe restart-emacs realgud rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters pytest pyenv-mode py-isort powershell popwin pippel pipenv pip-requirements persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless multi-term move-text mmm-mode minitest markdown-toc magit-svn magit-gitflow lsp-ui lsp-treemacs lorem-ipsum live-py-mode link-hint jinja2-mode indent-guide importmagic ibuffer-projectile hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate google-c-style golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md geiser fuzzy forge font-lock+ flycheck-rtags flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elpy elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline disaster diminish diff-hl define-word dap-mode dactyl-mode cython-mode csv-mode cquery counsel-projectile company-statistics company-rtags company-quickhelp company-lsp company-c-headers company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode clang-format chruby centered-cursor-mode ccls bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+    (auto-package-update use-package-ensure-system-package org-journal tree-mode evil-nerd-commenter evil-mc yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key volatile-highlights vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unicode-fonts toc-org symon symbol-overlay string-inflection sql-indent spaceline-all-the-icons smeargle slime-company shell-pop seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode restart-emacs realgud rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters pytest pyenv-mode py-isort powershell popwin pippel pipenv pip-requirements persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless multi-term move-text mmm-mode minitest markdown-toc magit-svn magit-gitflow lsp-ui lorem-ipsum live-py-mode link-hint jinja2-mode indent-guide importmagic ibuffer-projectile hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate google-c-style golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md geiser fuzzy forge font-lock+ flycheck-rtags flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elpy elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline disaster diminish diff-hl define-word dap-mode dactyl-mode cython-mode csv-mode cquery counsel-projectile company-statistics company-rtags company-quickhelp company-c-headers company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode clang-format chruby centered-cursor-mode ccls bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
