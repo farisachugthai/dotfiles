@@ -67,7 +67,9 @@ values."
                       auto-completion-idle-delay 0.2
                       uto-completion-private-snippets-directory "~/.emacs.d/private/snippets"
                       auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'cycle)
+                      auto-completion-tab-key-behavior 'cycle
+                      spacemacs-default-company-backends '(company-ispell company-files))
+
      autohotkey
      ;; doesn't do anything when (evil-mode 1) == t better-defaults
      bm  ;; bookmarks!
