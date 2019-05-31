@@ -9,7 +9,26 @@
     }
   },
   "load_extensions": {
-    "nbextensions_configurator/config_menu/main": false,
-    "ipyparallel": false
+    "nbextensions_configurator/config_menu/main": true,
+    "ipyparallel": false,
+    "contrib_nbextensions_help_item/main": true,
+    "keyboard_shortcut_editor/main": true,
+    "snippets/main": true,
+    "navigation-hotkeys/main": true,
+    "snippets_menu/main": true,
+    "select_keymap/main": true,
+    "varInspector/main": true
+  },
+  "varInspector": {
+    "window_display": true
+  },
+  "keys": {
+    "command": {
+      "bind": {
+        ":": "jupyter-notebook:show-command-palette",
+        "shift-;": "jupyter-notebook:show-command-palette",
+        "ctrl-m": "jupyter-notebook:change-cell-to-markdown"
+      }
+    }
   }
 }
