@@ -105,7 +105,7 @@ This function should only modify configuration layer settings."
      neotree
      org  ;; go down to view configuration
      (python :variables
-             python-backend 'lsp
+             python-backend 'anaconda
              python-enable-yapf-format-on-save t
              python-fill-column 120
              python-formatter 'yapf
@@ -149,13 +149,20 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
+   ;; yup. all the helm packages all the evil ones
    dotspacemacs-additional-packages '(
-                                      elpy
-                                      evil-collection
-                                      evil-magit
-                                      evil-tabs
-                                      auto-package-update)
-
+      helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle
+      helm-mode-manager helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds
+      helm-css-scss helm-c-yasnippet helm-ag gruvbox-theme
+      evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor
+      evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers
+      evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus
+      evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff
+      evil-commentary evil-cleverparens evil-args evil-anzu evil-collection
+      evil-magit evil-tabs
+                                      elpy python-mode sphinx-mode
+                                      auto-package-update
+                                      use-package-ensure-system-package)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
@@ -960,7 +967,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 
 (defun yourspacemacs/yasnippet_setup ()
 "Setup yasnippet."
-(use-package 'yasnippet
+(use-package yasnippet
   :config
   (yas-minor-mode on)
   (yas-load-directory "~/.emacs.d/private/snippets")))
@@ -977,6 +984,30 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 
 )
 
+(defun yourspacemacs/company_setup ()
+ "Completion will start automatically after you type a few letters. Use M-n and M-p to select, <return> to complete or <tab> to complete the common part. Search through the completions with C-s, C-r and C-o. Press M-(digit) to quickly complete with one of the first 10 candidates.
+
+  Type M-x company-complete to initiate completion manually. Bind this command to a key combination of your choice.
+
+  When the completion candidates are shown, press <f1> to display the documentation for the selected candidate, or C-w to see its source. Not all back-ends support this."
+
+ ;; (use-package 'company
+ ;;   :config
+ ;;   (add-hook 'after-init-hook 'global-company-mode))
+
+ ;; (with-eval-after-load 'company
+ ;;   (use-package 'company-quickhelp
+ ;;     (:bind
+ ;;     '(company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
+ (add-hook 'after-init-hook 'global-company-mode)
+
+ (eval-after-load 'company '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))
+
+ (add-to-list 'company-backends '(company-jedi company-files))
+
+)
+
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -989,7 +1020,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (use-package-ensure-system-package yapfify yaml-mode ws-butler writeroom-mode winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection spaceline-all-the-icons smex smeargle slim-mode shell-pop scss-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-bullets org-brain open-junk-file ob-ipython neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum live-py-mode link-hint json-navigator json-mode jinja2-mode indent-guide importmagic impatient-mode ibuffer-projectile hungry-delete hl-todo highlight-parentheses highlight-numbers helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dotenv-mode doom-modeline diminish diff-hl define-word dap-mode dactyl-mode cython-mode company-web company-statistics company-quickhelp company-lsp company-ansible company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+    (yapfify yaml-mode ws-butler writeroom-mode winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection spaceline-all-the-icons smex smeargle slim-mode shell-pop scss-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-bullets org-brain open-junk-file ob-ipython neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum live-py-mode link-hint json-navigator json-mode jinja2-mode indent-guide importmagic impatient-mode ibuffer-projectile hungry-delete hl-todo highlight-parentheses highlight-numbers  google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region  eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dotenv-mode doom-modeline diminish diff-hl define-word dap-mode dactyl-mode cython-mode company-web company-statistics company-quickhelp company-lsp company-ansible company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

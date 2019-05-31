@@ -93,8 +93,8 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
 fi
 
 # Vim: {{{1
-
-set -o vi
+# here goes nothing. gulp.
+# set -o vi
 
 if [[ -n "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
