@@ -155,10 +155,10 @@ tm() {
 }
 
 # lk: {{{1 show symbolic links using fd or fallback to grep
-lk() {
+function lk {
     if [[ -n "$(fd)" ]]; then
-        ls -Fo --color=always -A $@ | fd --type link --maxdepth 1 --hidden --color always
+        ls -Fo --color=always -A "$@" | fd --type link --maxdepth 1 --hidden --color always
     else
-        ls -Fo --color=always $@ | grep ^l
+        ls -Fo --color=always "$@" | grep ^l
     fi
 }

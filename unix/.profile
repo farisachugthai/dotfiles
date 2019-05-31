@@ -38,7 +38,7 @@ if [[ -n "$PREFIX" ]]; then
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
     pathadd "$_ROOT/libexec"
 else
-    export BROWSER="firefox --profile-manager $*"
+    export BROWSER="firefox "
     export SHELL=/bin/bash
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
     # You forgot the one for snaps!
@@ -151,6 +151,8 @@ if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 # Disable MSFT pwsh telemetry: {{{2
 export POWERSHELL_TELEMETRY_OPTOUT=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export IHOPEYOUALLKNOWITHINKYOUAREFUCKINGCLOWNS=1
+export CLOUDSDK_CORE_DISABLE_USAGE_REPORTING=1
 
 # cURL: {{{2
 export CURL_HOME="$HOME/.config/curl/curlrc"

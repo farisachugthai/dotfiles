@@ -1,4 +1,5 @@
 # pycodestyle
+# as a heads up this is getting loaded by pyls. just read it in the debug info
 
 [pycodestyle]
 max-line-length = 120
