@@ -105,7 +105,7 @@ c.Application.log_datefmt = '%Y-%m-%d %H:%M:%S'
 c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
 
 # Set the log level by value or name.
-c.Application.log_level = 30
+c.Application.log_level = 20
 
 # ------------------------------------------------------------------------------
 # JupyterApp(Application) configuration
@@ -360,7 +360,7 @@ except Exception:  # noqa
 #  Has to be set explicitly, because there will be *a lot* of output.
 # c.KernelRestarter.debug = False
 
-# Whether to choose new random ports when restarting before 
+# Whether to choose new random ports when restarting before
 # the kernel is alive.
 # c.KernelRestarter.random_ports_until_alive = True
 

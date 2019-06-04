@@ -67,13 +67,13 @@ c.JupyterConsoleApp.confirm_exit = "False"
 # This is an application.
 
 # The date format used by logging formatters for %(asctime)s
-# c.Application.log_datefmt = '%Y-%m-%d %H:%M:%S'
+c.Application.log_datefmt = '%Y-%m-%d %H:%M:%S'
 
 # The Logging format template
-# c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
+c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
 
 # Set the log level by value or name.
-# c.Application.log_level = 30
+c.Application.log_level = 20
 
 # -----------------------------------------------------------------------------
 # JupyterApp(Application) configuration
@@ -195,7 +195,7 @@ c.ZMQTerminalInteractiveShell.include_other_output = True
 # Use 24bit colors instead of 256 colors in prompt highlighting. If your
 #  terminal supports true color, the following command should print 'TRUECOLOR'
 #  in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
-# c.ZMQTerminalInteractiveShell.true_color = False
+c.ZMQTerminalInteractiveShell.true_color = True
 
 # Whether to use the kernel's is_complete message handling. If False, then the
 #  frontend will use its own is_complete handler.

@@ -6,5 +6,9 @@
     ],
     "settings": {
         "restructuredtext.languageServer.disabled": false,
+        "telemetry.enableTelemetry": false,
+        "telemetry.enableCrashReporter": false,
+        "files.trimTrailingWhitespace": true,
+        "files.trimFinalNewlines": true,
     }
 }
