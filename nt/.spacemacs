@@ -1,5 +1,5 @@
-;;; Spacemacs --- personal config
-;; -*- mode: emacs-lisp -*-
+;;; .spacemacs --- Spacemacs
+;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 ;; Vim: set ft=lisp:commentstring=;\ %s
@@ -8,19 +8,22 @@
 ;;; Commentary:
 
 ;;; Code:
+;; if for no other reason than keeping book-keeping
 
-(defconst yourspacemacs/vars
-  '(
-    evil_setup
-    org_setup
-    eshell_setup
-    add_pretty_symbols
-    ))
+(defvar yourspacemacs/functions '(
+                        git_setup
+                        evil_setup
+                        org_setup
+                        eshell_setup
+                        add_pretty_symbols
+                        comint_setup
+                        savehist_setup
+                        yasnippet_setup
+                        python_setup))
 
 (defun dotspacemacs/layers ()
-  "Configuration Layers declaration.
-You should not put any user code in this function besides modifying the variable
-values."
+  "Layer configuration:
+This function should only modify configuration layer settings."
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
@@ -45,6 +48,7 @@ values."
    ;; List of additional paths where to look for configuration layers.
 
    ;; If non-nil layers with lazy install support are lazy installed.
+   ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '("~/.emacs.d/private/layers")
 
@@ -53,8 +57,8 @@ values."
    '(
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
+     ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
+     ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ansible
      (auto-completion :variables
@@ -65,24 +69,21 @@ values."
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-front-end 'company
                       auto-completion-idle-delay 0.2
-                      uto-completion-private-snippets-directory "~/.emacs.d/private/snippets"
+                      auto-completion-private-snippets-directory "~/.emacs.d/private/snippets"
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
-                      spacemacs-default-company-backends '(company-ispell company-files))
-
+                      spacemacs-default-company-backends '(company-ispell company-files company-anaconda))
      autohotkey
-     ;; doesn't do anything when (evil-mode 1) == t better-defaults
      bm  ;; bookmarks!
-     c-c++
      (colors :variables
              colors-colorize-identifiers 'all
              colors-enable-nyan-cat-progress-bar (display-graphic-p))
-     common-lisp
      csv
-     dap
+     dap  ;; note this is a full GUI debugger dude. it's the Debug Adapter Protocol
      debug
      django
      emacs-lisp
+     emoji
      evil-commentary
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
      (git :variables
@@ -91,42 +92,40 @@ values."
           global-git-gutter+-mode t
           magit-repository-directories
           '(("~/projects" . 2)("~/src/" . 2)))
+     github
      (helm :variables
            helm-enable-auto-resize t
+           helm-elisp-show-doc-modeline t  ;; is this a default?
            helm-M-x-fuzzy-match t  ;; optional fuzzy matching for helm-M-x
            helm-buffers-fuzzy-matching t
            helm-recentf-fuzzy-match t)
-     html
-     hy
+     (html :variables web-fmt-tool 'prettier)
+     hy  ;; this mode is so fucking cool
      (ibuffer :variables
-              ibuffer-group-buffers-by 'projects)
+              ibuffer-group-buffers-by "projects")
+
      imenu-list  ;; tagbar
+     ipython-notebook
+     json
      lsp
      markdown
+     (multiple-cursors :variables
+                       multiple-cursors-backend 'mc
+                       mc/cmds-to-run-once '(upcase-region))
      neotree
-     (org :variables
-          org-enable-github-support t
-          org-enable-org-journal-support t
-          org-journal-dir "~/org/journal/"
-          org-journal-file-format "%Y-%m-%d"
-          org-journal-date-prefix "#+TITLE: "
-          org-journal-date-format "%A, %B %d %Y"
-          org-journal-time-prefix "* "
-          org-journal-time-format ""
-          org-startup-indented t
-          org-want-todo-bindings t)
-     ;; also check the var org-startup-options
+     org  ;; go down to yourspacemacs/org_setup to see the vars
+     prettier
      (python :variables
              python-backend 'lsp
              python-enable-yapf-format-on-save t
              python-fill-column 120
              python-formatter 'yapf
              python-format-on-save t
+             python-indent-offset 4
              python-sort-imports-on-save t
              python-shell-interpreter "ipython3"
              python-shell-interpreter-args "-i --simple-prompt"
              python-test-runner '(pytest nose unittest))
-     racket
      (ranger :variables
              ranger-cleanup-on-disable t
              ranger-ignored-extensions '("mkv" "iso" "mp4")
@@ -135,13 +134,10 @@ values."
              ranger-show-preview t
              ranger-show-hidden t)
      restructuredtext
-     ruby
-     scheme
      (shell :variables
             shell-default-height 30
             shell-default-shell 'eshell
             shell-default-position 'bottom)
-     shell-scripts
      spacemacs
      spacemacs-completion
      spacemacs-docker
@@ -150,18 +146,27 @@ values."
      spacemacs-evil
      spacemacs-language
      spacemacs-layouts
-     spacemacs-purpose
+     spacemacs-misc
+     spacemacs-modeline
+     spacemacs-navigation
      spacemacs-org
+     spacemacs-purpose
+     spacemacs-visual
+     speed-reading
+     (spell-checking :variables spell-checking-enable-by-default nil)
      sphinx
-     ;; spell-checking
-     syntax-checking
+     spotify
+     (syntax-checking :variables syntax-checking-enable-by-default nil
+                      syntax-checking-enable-tooltips t)
+     templates
+     theming
+     (typography :variables typography-enable-typographic-editing t)
      unicode-fonts
      vagrant
-     version-control
+     (version-control :variables version-control-diff-tool 'diff-hl)
      vimscript
      vinegar
      windows-scripts
-     xclipboard
      yaml)
 
    ;; List of additional packages that will be installed without being
@@ -171,24 +176,29 @@ values."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(elpy evil-collection
-                                           auto-package-update
-                                           use-package-ensure-system-package)
+   dotspacemacs-additional-packages '(evil-tabs
+                                      elpy
+                                      evil-collection
+                                      fzf
+                                      realgud-ipdb
+                                      use-package-ensure-system-package
+                                      auto-package-update
+                                      python-mode sphinx-mode
+                                      )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(
-                                    treemacs lsp-treemacs powerline
-                                             treemacs-projectile treemacs-evil)
+   dotspacemacs-excluded-packages '(treemacs treemacs-lsp treemacs-projectile lsp-treemacs chinese-wbim chinese-conv)
+
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
-   ;; `used-only' installs only explicitly used packages and uninstall any
-   ;; unused packages as well as their unused dependencies.
-   ;; `used-but-keep-unused' installs only the used packages but won't uninstall
-   ;; them if they become unused. `all' installs *all* packages supported by
-   ;; Spacemacs and never uninstall them. (default is `used-only')
+   ;; `used-only' installs only explicitly used packages and deletes any unused
+   ;; packages as well as their unused dependencies. `used-but-keep-unused'
+   ;; installs only the used packages but won't delete unused ones. `all'
+   ;; installs *all* packages supported by Spacemacs and never uninstalls them.
+   ;; (default is `used-only')
    dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
@@ -291,7 +301,6 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-startup-buffer-responsive t
 
    ;; Default major mode of the scratch buffer (default `text-mode')
-   ;; let's try it
    dotspacemacs-scratch-mode 'org-mode
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
@@ -317,8 +326,8 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Fira Code"
-                               :size 16
+   dotspacemacs-default-font '("Hack"
+                               :size 15
                                :weight normal
                                :width normal)
 
@@ -345,9 +354,9 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
 
    ;; These variables control whether separate commands are bound in the GUI to
-   ;; the key pairs C-i, TAB and C-m, RET.
-   ;; Setting it to a non-nil value, allows for separate commands under <C-i>
-   ;; and TAB or <C-m> and RET.
+   ;; the key pairs `C-i', `TAB' and `C-m', `RET'.
+   ;; Setting it to a non-nil value, allows for separate commands under `C-i'
+   ;; and TAB or `C-m' and `RET'.
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
    dotspacemacs-distinguish-gui-tab nil
@@ -512,9 +521,9 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-persistent-server nil
 
    ;; List of search tool executable names. Spacemacs uses the first installed
-   ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
-   ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("ag" "grep")
+   ;; tool of the list. Supported tools are `rg', `ag', `pt', `ack' and `grep'.
+   ;; (default '("rg" "ag" "pt" "ack" "grep"))
+   dotspacemacs-search-tools '("rg" "ag" "ack" "grep")
 
    ;; Format specification for setting the frame title.
    ;; %a - the `abbreviated-file-name', or `buffer-name'
@@ -564,18 +573,19 @@ See the header of this file for more information."
   (spacemacs/load-spacemacs-env))
 
 (defun dotspacemacs/user-init ()
-  "Initialization function for user code.
-It is called immediately after `dotspacemacs/init', before layer configuration
-executes.
- This function is mostly useful for variables that need to be set
-before packages are loaded. If you are unsure, you should try in setting them in
-`dotspacemacs/user-config' first."
+  "Initialization for user code:
+This function is called immediately after `dotspacemacs/init', before layer
+configuration.
+It is mostly for variables that should be set before packages are loaded.
+If you are unsure, try setting them in `dotspacemacs/user-config' first."
   )
 
-(defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
+(defun dotspacemacs/user-load ()
+  "Library to load while dumping.
+This function is called only while dumping Spacemacs configuration. You can
+`require' or `load' the libraries of your choice that will be included in the
+dump.
+
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here.
@@ -597,8 +607,62 @@ like this:
 From the Spacemacs FAQ."
 
   ;; This is only needed once, near the top of the file
-  (eval-when-compile
-    (require 'use-package))
+  ;; (eval-when-compile
+    ;; (require 'use-package))
+
+  ;; The :ensure-system-package keyword allows you to ensure system binaries exist alongside your package declarations.
+
+  ;; First, you will want to make sure exec-path is cognisant of all binary
+  ;; package names that you would like to ensure are installed.
+  ;; exec-path-from-shell is often a good way to do this.
+
+  ;; To enable the extension after you've loaded use-package:
+  ;; (use-package use-package-ensure-system-package
+  ;;   :ensure t)
+
+  ;; made this up as an example
+  ;; (use-package lsp
+  ;;   :ensure-system-package python-language-server)
+
+  ;; ooo here's a great example
+  ;; (use-package tern
+  ;;   :ensure-system-package (tern . "npm i -g tern"))
+
+  ;; The package is "python" but the mode is "python-mode": Can we put ipython for the interpreter?
+  (use-package python
+    :mode ("\\.py\\'" . python-mode)
+    :interpreter ("python" . python-mode))
+
+  (use-package auto-package-update
+    :config
+    (setq-default auto-package-update-delete-old-versions t)
+    (setq-default auto-package-update-hide-results t)
+    (auto-package-update-maybe))
+
+
+    (setq-default scroll-margin 5
+                  scroll-conservatively 9999
+                  scroll-step 1)
+
+  (setq-default tab-width 4 indent-tabs-mode nil)
+  (define-key global-map (kbd "RET") 'newline-and-indent)
+
+  ;; The following is from Section 3 in the Info page on 'woman'.
+  ;; 3.1.2 Using the "Word at Point" as a Topic Suggestion
+  ;; -----------------------------------------------------
+
+  ;; By default, the ‘woman’ command uses the word nearest to point in the
+  ;; current buffer as a suggestion for the topic to look up, if it exists as
+  ;; a valid topic.  The topic can be confirmed or edited in the minibuffer.
+
+
+  ;; Dude you can still access registers like Vim. "*p just worked I love you spacemacs
+  ;; Btw yes I checked to see that this was still available
+  (global-set-key
+    (kbd "C-c w")
+      (lambda ()
+        (interactive)
+          (let ((woman-use-topic-at-point t)) (woman))))
 
   '(hl-todo-keyword-faces
     (quote
@@ -619,71 +683,6 @@ From the Spacemacs FAQ."
       ("XXXX" . "#dc752f")
       ("???" . "#dc752f"))))
 
-  (setq-default tab-width 4 indent-tabs-mode nil)
-  (define-key global-map (kbd "RET") 'newline-and-indent)
-
-  ;; Save/restore command history etc across sessions.
-  (with-eval-after-load 'savehist
-    (setq-default savehist-additional-variables '(extended-command-history global-mark-ring mark-ring search-ring regexp-search-ring))
-    (setq-default savehist-file "~/.emacs.d/savehist")
-    (setq-default history-length 10000)
-    (savehist-mode 1))
-
-  ;; The following is from Section 3 in the Info page on 'woman'.
-  ;; 3.1.2 Using the "Word at Point" as a Topic Suggestion
-  ;; -----------------------------------------------------
-
-  ;; By default, the ‘woman’ command uses the word nearest to point in the
-  ;; current buffer as a suggestion for the topic to look up, if it exists as
-  ;; a valid topic.  The topic can be confirmed or edited in the minibuffer.
-
-  (global-set-key "\C-cw"
-                (lambda ()
-                  (interactive)
-                  (let ((woman-use-topic-at-point t))
-                    (woman))))
-
-
-  (global-prettify-symbols-mode 1)
-
-
-  ;; <C-h> i --> Emacs --> Init File
-  ;; case-sensitive searches in all buffers that don't override this
-  (setq-default case-fold-search nil)
-
-  (setq-default user-mail-address "farischugthai@gmail.com")
-
-  (set-language-environment "utf-8")
-
-  ;; The :ensure-system-package keyword allows you to ensure system binaries exist alongside your package declarations.
-
-  ;; First, you will want to make sure exec-path is cognisant of all binary
-  ;; package names that you would like to ensure are installed.
-  ;; exec-path-from-shell is often a good way to do this.
-
-  ;; To enable the extension after you've loaded use-package:
-  (use-package use-package-ensure-system-package
-    :ensure t)
-
-  ;; made this up as an example
-  ;; (use-package lsp
-  ;;   :ensure-system-package python-language-server)
-
-  ;; ooo here's a great example
-  (use-package tern
-    :ensure-system-package (tern . "npm i -g tern"))
-
-  ;; The package is "python" but the mode is "python-mode":
-  (use-package python
-    :mode ("\\.py\\'" . python-mode)
-    :interpreter ("python" . python-mode))
-
-  (use-package auto-package-update
-    :config
-    (setq-default auto-package-update-delete-old-versions t)
-    (setq-default auto-package-update-hide-results t)
-    (auto-package-update-maybe))
-
   ;; Activate evil-smartparens when I'm in a common lisp filetype
   (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-common-lisp-mode)
   ;; And a racket file
@@ -691,39 +690,52 @@ From the Spacemacs FAQ."
 
   (setq-default info-lookup-history)
 
-  ;; lol looks like ass on windows
-  ;; (spacemacs/toggle-tool-bar-on)
+  (spacemacs/toggle-tool-bar-on)
 
+  ;; disable backup
+  (setq-default backup-inhibited t)
+  ;; disable auto save
+  (setq-default auto-save-default nil)
+  (put 'erase-buffer 'disabled nil)
+
+  (paradox-enable)
   (setq-default paradox-execute-asynchronously t)
 
-  ;; from info - emacs - ch49 - init file
+  (global-flycheck-mode)
+  (global-visual-fill-column-mode)
+
+  (setq-default case-fold-search nil)
+
+  (setq-default user-mail-address "farischugthai@gmail.com")
+
+  ;; (set-language-environment "utf-8")
   (if (fboundp 'blink-cursor-mode)
       (blink-cursor-mode 0))
 
   (if (boundp 'coding-category-utf-8)
-      (set-coding-priority '(coding-category-utf-8)))
+      (set-coding-priority '(code-category-utf-8)))
 
 )
 
-
 (defun your_spacemacs/evil_setup ()
-"This might be a better way to organize the code I have already.
+  "Setup evil and related packages.
 
-Also note that if you want, the info page on Viper: 3.1 Rudimentary Changes
-goes through a list of all configurable options.
+  Also note that if you want, the info page on Viper: 3.1 Rudimentary Changes
+  goes through a list of all configurable options.
 
-Plus it's a good read as it goes through a lot of `good to know` type things
-with ample summaries of keybindings.
+  Plus it's a good read as it goes through a lot of `good to know` type things
+  with ample summaries of keybindings.
 
-Damnit. This is gonna get complicated. IF you checkout spacemacs-bootstrap you'll
-run into the function init-evil. evil's already required :/
+  Damnit. This is gonna get complicated. If you checkout
+  the spacemacs-bootstrap layer you'll
+  run into the function init-evil. Evil's already required :/
 
+  Found the evil-surround repo.
 
-Found the evil-surround repo.
-Add surrounding
+** Add surrounding
 
 You can surround in visual-state with S<textobject> or gS<textobject>.
- Or in normal-state with ys<textobject> or yS<textobject>.
+Or in normal-state with ys<textobject> or yS<textobject>.
 Change surrounding
 
 You can change a surrounding with cs<old-textobject><new-textobject>.
@@ -746,21 +758,22 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
  bunch of things."
   ;; from the github page for evil-collection
   (use-package evil
+    :ensure t
     :init
     (setq-default evil-want-keybinding nil)
     :config
     (evil-mode 1)
-    (evil-switch-indent 4))
+    (setq evil-shift-width 4))
+
+  ;; After major mode has changed, reset evil-shift-width
+  (add-hook 'after-change-major-mode-hook 'spacemacs//set-evil-shift-width 'append)
 
   (use-package evil-collection
     :after evil
-    :config
-    (evil-collection-init))
-
-  (use-package evil-tabs
-    :after evil
-    :config
-    (global-evil-tabs-mode t))
+    :ensure t
+    ;; got this from the github. EVIL IN THE MINIBUFFER!
+    :custom (evil-collection-setup-minibuffer t)
+    :init (evil-collection-init))
 
   (use-package evil-matchit
     :ensure t
@@ -769,14 +782,17 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     (global-evil-matchit-mode t))
 
   (use-package evil-surround
-    :ensure t
     :after evil
     :config
     (global-evil-surround-mode t))
 
+  (use-package evil-tabs
+    :after evil
+    :ensure t
+    :config
+    (global-evil-tabs-mode))
 
     (with-eval-after-load evil
-        (progn
         (define-key evil-motion-state-map "j" 'evil-next-visual-line)
         (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
         ;; Also in visual mode
@@ -787,16 +803,20 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
         (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
         (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
         (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-        (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
+        (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 
-
-    (with-eval-after-load evil
-      (progn
         (setq-default evil-normal-state-modes (append evil-motion-state-modes evil-normal-state-modes))
-        (setq-default evil-motion-state-modes nil)))
+        (setq-default evil-motion-state-modes nil)
+
+        (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+        (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+        ;; Also in visual mode
+        (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+        (define-key evil-visual-state-map "k" 'evil-previous-visual-line))
 
 )
 
+(with-eval-after-load 'org
 (defun your_spacemacs/org_setup ()
     "Set up org configuration.
 
@@ -808,24 +828,25 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
       (not (string= lang \"ditaa\")))  ;don't ask for ditaa
     (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)"
 
-    (with-eval-after-load 'org
-      (progn
         (setq-default
-                org-confirm-babel-evaluate nil
-                org-refile-use-cache t
-                org-log-done 'time
-                org-log-redeadline 'time
-                org-log-refile 'time
-                org-enable-bootstrap-support t
-                org-log-reschedule 'time
-                org-enable-github-support t
-                org-enable-hugo-support t  ;; didn't know this was a thing thanks autocompletion!
-                org-startup-indented t
-                org-enable-org-journal-support t
-                org-enable-sticky-header t
-                org-return-follows-link t
-                spaceline-org-clock-p t
-                spacemacs-space-doc-modificators
+          org-bullets-bullet-list '("■" "◆" "▲" "▶")
+          org-confirm-babel-evaluate nil
+          org-enable-github-support t
+          org-enable-org-journal-support t
+          org-log-done 'time
+          org-log-redeadline 'time
+          org-log-refile 'time
+          org-log-reschedule 'time
+          org-journal-dir "~/org/journal/"
+          org-journal-file-format "%Y-%m-%d"
+          org-journal-date-prefix "#+TITLE: "
+          org-journal-date-format "%A, %B %d %Y"
+          org-journal-time-prefix "* "
+          org-journal-time-format ""
+          org-startup-indented t
+          org-refile-use-cache t)
+
+                (spacemacs-space-doc-modificators
                 '(center-buffer-mode
                   org-indent-mode
                   view-mode
@@ -835,17 +856,13 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
                   link-protocol
                   org-block-line-face-remap
                   org-kbd-face-remap
-                  resize-inline-images))))
-
+                  resize-inline-images))
     ;; haven't tried yasnippet in org mode but let's try this in advance
     (add-hook 'org-mode-hook
                   (lambda ()
                     (setq-default yas/trigger-key [tab])
                     (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
-
-
-    ;;; if this doesn't fix it
-
+    ;;; If this doesn't fix it
     ;; (defun yas/org-very-safe-expand ()
     ;;   (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
 
@@ -857,12 +874,34 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     ;;             (setq yas/trigger-key [tab])
     ;;             (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
     ;;             (define-key yas/keymap [tab] 'yas/next-field)))
+
+    (with-eval-after-load 'org-agenda
+      (require 'org-projectile)
+      (mapcar '(lambda (file)
+                 (when (file-exists-p file)
+                   (push file org-agenda-files)))
+              (org-projectile-todo-files)))
+
+))
+
+
+(defun your-spacemacs/comint_setup ()
+  "From use-package info page.
+
+I'm gonna add some stuff for ielm here too because why not?"
+
+  (use-package comint
+    :custom
+    (comint-buffer-maximum-size 20000 "Increase comint buffer size.")
+    (comint-prompt-read-only t "Make the prompt read only."))
+
+  (with-eval-after-load
+      (progn
+        (setq-default ielm-noise nil)
+        (setq-default ielm-prompt-read-only nil)))
 )
 
-)
-
-
-(defun yourspacemacs/add_pretty_symbols ()
+(defun your_spacemacs/add_pretty_symbols ()
   "From ergoemacs.org."
   (setq-default prettify-symbols-alist
         '(
@@ -875,104 +914,98 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 )
 
 
-(defun yourspacemacs/eshell_setup()
+(defun your_spacemacs/eshell_setup()
 "Initialize eshell.
 
 +TODO: Add docstrings to these variables I guess"
   (with-eval-after-load 'eshell
     (progn
       (setq-default
-        ;; so then it falls to HISTSIZE. how do we set env vars in emacs
-        ;; eshell-history-size nil)
-        eshell-hist-ignoredups t
-        eshell-cd-shows-directory t
-        eshell-ls-dired-initial-args "-hF --color always --dired"
-   )))
+       ;; so then it falls to HISTSIZE. how do we set env vars in emacs
+       ;; eshell-history-size nil)
+       eshell-hist-ignoredups t
+       eshell-cd-shows-directory t
+       eshell-ls-dired-initial-args "-hF --color always --dired")))
 
 )
 
-(defun your-spacemacs-setup/comint_setup ()
-  "From use-package info page."
 
-(use-package comint
-  :custom
-  (comint-buffer-maximum-size 20000 "Increase comint buffer size.")
-  (comint-prompt-read-only t "Make the prompt read only."))
+(defun your_spacemacs/savehist_setup ()
+  "Save/restore command history etc across sessions."
+  (use-package savehist
+    :ensure t
+    :defer t)
+
+  (with-eval-after-load 'savehist
+    (progn
+      (setq-default savehist-additional-variables '(extended-command-history global-mark-ring mark-ring search-ring regexp-search-ring))
+      (setq-default savehist-file "~/.emacs.d/savehist")
+      (setq-default history-length 10000)
+      (savehist-mode 1)))
+
 )
 
 
-(defun your-spacemacs-setup/evil-tab ()
-"I'm not saying it's the right thing to do, but evil-tabs is only 95 lines long in total..."
+(defun your_spacemacs/yasnippet_setup ()
+"Setup yasnippet."
+(use-package yasnippet
+  :config
+  (yas-minor-mode on)
+  (yas-load-directory "~/.emacs.d/private/snippets"))
+
+)
 
 
-(use-package elscreen
-  :ensure t
-  :autoload t
-  )
+(defun your_spacemacs/python_setup ()
+  "Setup IPython on Emacs. Set up some rst thanks to Matplotlib!
 
-   (defvar evil-tabs-mode-map (make-sparse-keymap)
-   "Evil-tabs-mode's keymap.")
+Here are useful bindings for rst.
 
-   (evil-define-command evil-tabs-tabedit (file)
-   (interactive "<f>")
-   (elscreen-find-file file))
+C-c TAB - rst-toc-insert
 
-   (evil-define-command evil-tab-sensitive-quit (&optional bang)
-   :repeat nil
-   (interactive "<!>")
-   (if (> (length (elscreen-get-screen-list)) 1)
-   (elscreen-kill)
-   (evil-quit bang)))
+  Insert table of contents at point
 
-   (evil-define-command evil-tabs-current-buffer-to-tab ()
-   (let ((nwindows (length (window-list)))
-   (cb (current-buffer)))
-   (when (> nwindows 1)
-   (delete-window)
-   (elscreen-create)
-   (switch-to-buffer cb))))
+C-c C-u - rst-toc-update
 
-   (evil-define-motion evil-tabs-goto-tab (&optional count)
-   (if count
-   (elscreen-goto (- count 1))
-   (elscreen-next)))
+    Update the table of contents at point
 
-   (evil-ex-define-cmd "tabe[dit]" 'evil-tabs-tabedit)
-   (evil-ex-define-cmd "tabclone" 'elscreen-clone)
-   (evil-ex-define-cmd "tabc[lose]" 'elscreen-kill)
-   (evil-ex-define-cmd "tabd[isplay]" 'elscreen-toggle-display-tab)
-   (evil-ex-define-cmd "tabg[oto]" 'elscreen-goto)
-   (evil-ex-define-cmd "tabo[nly]" 'elscreen-kill-others)
-   (evil-ex-define-cmd "tabnew" 'elscreen-create)
-   (evil-ex-define-cmd "tabn[ext]" 'elscreen-next)
-   (evil-ex-define-cmd "tabp[rev]" 'elscreen-previous)
-   (evil-ex-define-cmd "tabr[ename]" 'elscreen-screen-nickname)
-   (evil-ex-define-cmd "tabs[elect]" 'elscreen-select-and-goto)
-   (evil-ex-define-cmd "tabw[ith]" 'elscreen-find-and-goto-by-buffer)
-   (evil-ex-define-cmd "q[uit]" 'evil-tab-sensitive-quit)
+C-c C-l rst-shift-region-left
 
-   (evil-define-key 'normal evil-tabs-mode-map
-   "gt" 'elscreen-next
-   "gT" 'elscreen-previous
-   "gt" 'evil-tabs-goto-tab
-   "T" 'evil-tabs-current-buffer-to-tab)
+    Shift region to the left
 
-   ;;;###autoload
-   (define-minor-mode evil-tabs-mode
-   "Integrating Vim-style tabs for Evil mode users."
-   :global t
-   :keymap evil-tabs-mode-map
-   (let ((prev-state evil-state))
-   (evil-normal-state)
-   (evil-change-state prev-state)
+C-c C-r rst-shift-region-right
 
-   (elscreen-start)))
+    Shift region to the right"
+;; The package is "python" but the mode is "python-mode":
 
-   )
+   (add-hook 'python-mode-hook
+     (use-package python
+       :mode ("\\.py\\'" . python-mode)
+       :interpreter ("ipython3" . python-mode))
+     (define-key evil-normal-state-map (kbd "[F5]") 'spacemacs/python-execute-file))
+
+   (use-package rst-mode
+     :defer t
+     :config
+     (setq auto-mode-alist
+         (append '(("\\.txt$" . rst-mode)
+                   ("\\.rst$" . rst-mode)
+                   ("\\.rest$" . rst-mode)) auto-mode-alist)))
+
+   (use-package python-mode-hook
+     :ensure t)
+
+   (use-package sphinx-mode
+     :ensure t)
+
+   (use-package python-x
+     :config
+     (python-x-setup))
+
+)
 
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
+;; spacemacs ends here
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -985,8 +1018,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (auto-package-update use-package-ensure-system-package org-journal tree-mode evil-nerd-commenter evil-mc yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key volatile-highlights vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unicode-fonts toc-org symon symbol-overlay string-inflection sql-indent spaceline-all-the-icons smeargle slime-company shell-pop seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode restart-emacs realgud rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters pytest pyenv-mode py-isort powershell popwin pippel pipenv pip-requirements persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless multi-term move-text mmm-mode minitest markdown-toc magit-svn magit-gitflow lsp-ui lorem-ipsum live-py-mode link-hint jinja2-mode indent-guide importmagic ibuffer-projectile hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate google-c-style golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md geiser fuzzy forge font-lock+ flycheck-rtags flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elpy elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline disaster diminish diff-hl define-word dap-mode dactyl-mode cython-mode csv-mode cquery counsel-projectile company-statistics company-rtags company-quickhelp company-c-headers company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode clang-format chruby centered-cursor-mode ccls bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
- '(paradox-github-token t))
+    (zenburn-theme zen-and-art-theme yatemplate yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum white-sand-theme which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package-ensure-system-package unicode-fonts underwater-theme ujelly-theme typo twilight-theme twilight-bright-theme twilight-anti-bright-theme treemacs-projectile treemacs-evil toxi-theme toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit systemd symon symbol-overlay sunny-day-theme sublime-themes subatomic256-theme subatomic-theme string-inflection stickyfunc-enhance srefactor sqlup-mode sql-indent spray spotify sphinx-mode spaceline-all-the-icons spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smeargle slime-company slim-mode shell-pop seti-theme seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe reverse-theme restart-emacs rebecca-theme realgud-ipdb rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters railscasts-theme racket-mode python-mode pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme prettier-js powershell popwin pony-mode planet-theme pippel pipenv pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode password-generator paradox pandoc-mode ox-pandoc overseer orgit organic-green-theme org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme ob-ipython ob-hy noctilux-theme neotree naquadah-theme nameless mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minitest minimal-theme material-theme markdown-toc majapahit-theme magit-svn magit-gitflow madhat2r-theme lush-theme lsp-ui lsp-julia lorem-ipsum livid-mode live-py-mode link-hint light-soap-theme kaolin-themes julia-repl julia-mode json-navigator json-mode js2-refactor js-doc jinja2-mode jbeans-theme jazz-theme ir-black-theme insert-shebang inkpot-theme indent-guide importmagic impatient-mode ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers heroku-theme hemisu-theme helm-xref helm-themes helm-swoop helm-spotify-plus helm-rtags helm-pydoc helm-purpose helm-projectile helm-pass helm-org-rifle helm-mu helm-mode-manager helm-make helm-lsp helm-hoogle helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-ctest helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md geiser gandalf-theme fzf fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-bashate flx-ido flatui-theme flatland-theme fish-mode fill-column-indicator farmhouse-theme fancy-battery eziam-theme eyebrowse expand-region exotica-theme evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor-ja evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-ledger evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu espresso-theme eshell-z eshell-prompt-extras esh-help engine-mode emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig dumb-jump dracula-theme dotenv-mode doom-themes doom-modeline django-theme diminish diff-hl devdocs define-word darktooth-theme darkokai-theme darkmine-theme darkburn-theme dap-mode dakrone-theme dactyl-mode cython-mode cyberpunk-theme csv-mode counsel-projectile company-web company-tern company-statistics company-shell company-quickhelp company-lua company-lsp company-emoji company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme clean-aindent-mode chruby cherry-blossom-theme centered-cursor-mode busybee-theme bundler bubbleberry-theme browse-at-remote bm blacken birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile apropospriate-theme anti-zenburn-theme ansible-doc ansible ample-zen-theme ample-theme alect-themes ahk-mode aggressive-indent afternoon-theme ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -994,6 +1026,3 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
-;; provide 'spacemacs
-
-;;; .spacemacs ends here
