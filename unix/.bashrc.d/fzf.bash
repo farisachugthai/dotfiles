@@ -17,8 +17,9 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
 
     # Base FZF command: {{{2
     # May 28, 2019: works
-    # Display recursive files line by line
-    export FZF_DEFAULT_COMMAND="rg --hidden --no-messages --follow --passthru -e . "
+    # I wanna see a line but only one at a time. Also check the ripgreprc. 
+    export FZF_DEFAULT_COMMAND="rg --column --line-number --no-heading --color=always --smart-case "
+    # export FZF_DEFAULT_COMMAND="rg --follow --vimgrep -e ^.*$ "
     # export FZF_DEFAULT_COMMAND="fd --hidden --follow --type file --max-dept 25 --color always $*"
     export FZF_DEFAULT_OPTS=' --multi --cycle --tiebreak=index --ansi --filepath-word --border'
 
