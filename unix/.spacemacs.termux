@@ -12,7 +12,7 @@
 
 ;;; Code:
 
-(defvar  yourspacemacs/constants
+(defvar  your_spacemacs/constants
   '(
     git_setup
     evil_setup
@@ -93,6 +93,7 @@ This function should only modify configuration layer settings."
      github
      (helm :variables
            helm-enable-auto-resize t
+           helm-elisp-show-doc-modeline t  ;; is this a default?
            helm-M-x-fuzzy-match t  ;; optional fuzzy matching for helm-M-x
            helm-buffers-fuzzy-matching t
            helm-recentf-fuzzy-match t)
@@ -100,6 +101,7 @@ This function should only modify configuration layer settings."
      (ibuffer :variables
               ibuffer-group-buffers-by "projects")
      imenu-list  ;; tagbar
+     ipython-notebook
      lsp
      markdown
      neotree
@@ -278,7 +280,6 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-startup-buffer-responsive t
 
    ;; Default major mode of the scratch buffer (default `text-mode')
-   ;; let's try it
    dotspacemacs-scratch-mode 'org-mode
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
@@ -607,30 +608,10 @@ From the Spacemacs FAQ."
   ;; (use-package lsp
   ;;   :ensure-system-package python-language-server)
 
-  ;; ooo here's a great example
-
-;; The rest is general setup
-
-  (global-hl-line-mode t)
-
-  '(hl-todo-keyword-faces
-    (quote
-     (("TODO" . "#dc752f")
-      ("NEXT" . "#dc752f")
-      ("THEM" . "#2d9574")
-      ("PROG" . "#4f97d7")
-      ("OKAY" . "#4f97d7")
-      ("DONT" . "#f2241f")
-      ("FAIL" . "#f2241f")
-      ("DONE" . "#86dc2f")
-      ("NOTE" . "#b1951d")
-      ("KLUDGE" . "#b1951d")
-      ("HACK" . "#b1951d")
-      ("TEMP" . "#b1951d")
-      ("FIXME" . "#dc752f")
-      ("XXX" . "#dc752f")
-      ("XXXX" . "#dc752f")
-      ("???" . "#dc752f"))))
+  ;; The package is "python" but the mode is "python-mode":
+  (use-package python
+    :mode ("\\.py\\'" . python-mode)
+    :interpreter ("python" . python-mode))
 
   (use-package auto-package-update
     :config
@@ -638,10 +619,11 @@ From the Spacemacs FAQ."
     (setq-default auto-package-update-hide-results t)
     (auto-package-update-maybe))
 
+
   (progn
     (setq-default scroll-margin 5
-        scroll-conservatively 9999
-        scroll-step 1))
+                  scroll-conservatively 9999
+                  scroll-step 1))
 
   (setq-default tab-width 4 indent-tabs-mode nil)
   (define-key global-map (kbd "RET") 'newline-and-indent)
@@ -672,6 +654,24 @@ From the Spacemacs FAQ."
                   (let ((woman-use-topic-at-point t))
                     (woman))))
 
+  '(hl-todo-keyword-faces
+    (quote
+     (("TODO" . "#dc752f")
+      ("NEXT" . "#dc752f")
+      ("THEM" . "#2d9574")
+      ("PROG" . "#4f97d7")
+      ("OKAY" . "#4f97d7")
+      ("DONT" . "#f2241f")
+      ("FAIL" . "#f2241f")
+      ("DONE" . "#86dc2f")
+      ("NOTE" . "#b1951d")
+      ("KLUDGE" . "#b1951d")
+      ("HACK" . "#b1951d")
+      ("TEMP" . "#b1951d")
+      ("FIXME" . "#dc752f")
+      ("XXX" . "#dc752f")
+      ("XXXX" . "#dc752f")
+      ("???" . "#dc752f"))))
 
   (global-prettify-symbols-mode 1)
 
@@ -728,6 +728,10 @@ From the Spacemacs FAQ."
 
   (setq-default paradox-execute-asynchronously t)
 
+  (global-flycheck-mode t)
+
+  (spacemacs/toggle-relative-line-numbers-on)
+
 )
 
 (defun your_spacemacs/evil_setup ()
@@ -770,17 +774,20 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
  bunch of things."
   ;; from the github page for evil-collection
   (use-package evil
+    :ensure t
     :init
     (setq-default evil-want-keybinding nil)
     :config
     (evil-mode 1)
-    (evil-switch-indent 4))
+    (setq-default evil-switch-indent 4))
 
-    ;; After major mode has changed, reset evil-shift-width
-    (add-hook 'after-change-major-mode-hook 'spacemacs//set-evil-shift-width 'append)
+  ;; After major mode has changed, reset evil-shift-width
+  (add-hook 'after-change-major-mode-hook 'spacemacs//set-evil-shift-width 'append)
 
   (use-package evil-collection
     :after evil
+    :ensure t
+    ;; got this from the github. EVIL IN THE MINIBUFFER!
     :custom (evil-collection-setup-minibuffer t)
     :init (evil-collection-init))
 
@@ -790,16 +797,20 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     :config
     (global-evil-matchit-mode t))
 
+
   (use-package evil-surround
     :after evil
-    :config
+    :command
     (global-evil-surround-mode t))
 
   (use-package evil-tabs
     :after evil
     :ensure t
-    :config
-    (global-evil-tabs-mode))
+    :commands
+    (global-evil-tabs-mode t))
+
+  (setq-default evil-normal-state-modes (append evil-motion-state-modes evil-normal-state-modes))
+  (setq-default evil-motion-state-modes nil)
 
     (with-eval-after-load evil
         (progn
@@ -825,12 +836,13 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
         ;; Also in visual mode
         (define-key evil-visual-state-map "j" 'evil-next-visual-line)
         (define-key evil-visual-state-map "k" 'evil-previous-visual-line)))
+
 )
 
 ;; Let's just wrap the whole function with this eval after load
 (with-eval-after-load 'org
 (defun your_spacemacs/org_setup ()
-   "Set up org mode.
+    "Set up org configuration.
 
    https://orgmode.org/org.html#Code-Evaluation-Security
    Yeah that link has some good info like check this guy out.
@@ -840,9 +852,10 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
      (not (string= lang \"ditaa\")))  ;don't ask for ditaa
    (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)"
 
-   (progn
-     (
-       (setq-default
+    (with-eval-after-load 'org
+      (progn
+        (
+        (setq-default
          org-bullets-bullet-list '("■" "◆" "▲" "▶")
          org-confirm-babel-evaluate nil
          org-enable-sticky-header t
@@ -861,7 +874,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
          org-startup-indented t
          org-refile-use-cache t
          org-want-todo-bindings t
-         spaceline-org-clock-p t)))
+         spaceline-org-clock-p t))))
 
    ;; haven't tried yasnippet in org mode but let's try this in advance
    (add-hook 'org-mode-hook
@@ -885,10 +898,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
                   (lambda ()
                     (setq-default yas/trigger-key [tab])
                     (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
-
-
-    ;;; if this doesn't fix it
-
+    ;;; If this doesn't fix it
     ;; (defun yas/org-very-safe-expand ()
     ;;   (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
 
@@ -908,8 +918,17 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
                    (push file org-agenda-files)))
               (org-projectile-todo-files)))
 ))
+u(defun your_spacemacs/comint_setup ()
+  "From use-package info page."
 
-(defun yourspacemacs/add_pretty_symbols ()
+  (use-package comint
+    :custom
+    (comint-buffer-maximum-size 20000 "Increase comint buffer size.")
+    (comint-prompt-read-only t "Make the prompt read only."))
+)
+
+
+(defun your_spacemacs/add_pretty_symbols ()
   "From ergoemacs.org."
   (setq-default prettify-symbols-alist
         '(
@@ -922,7 +941,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 )
 
 
-(defun yourspacemacs/eshell_setup()
+(defun your_spacemacs/eshell_setup()
 "Initialize eshell.
 
 +TODO: Add docstrings to these variables I guess"
@@ -938,21 +957,11 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 
 )
 
-(defun your-spacemacs-setup/comint_setup ()
-  "From use-package info page."
-
-(use-package comint
-  :custom
-  (comint-buffer-maximum-size 20000 "Increase comint buffer size.")
-  (comint-prompt-read-only t "Make the prompt read only."))
-)
-
-(defun yourspacemacs/git_setup ()
+(defun your_spacemacs/git_setup ()
   "Setup git and magit."
   (use-package magit
     :ensure t
-    :defer t
-    )
+    :defer t)
 
 (use-package evil-magit
   :ensure t
@@ -965,15 +974,37 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 
 )
 
-(defun yourspacemacs/yasnippet_setup ()
+
+(defun your_spacemacs/yasnippet_setup ()
 "Setup yasnippet."
 (use-package yasnippet
   :config
   (yas-minor-mode on)
   (yas-load-directory "~/.emacs.d/private/snippets")))
 
-(defun yourspacemacs/python_setup ()
-  "Setup IPython on emacs."
+
+(defun your_spacemacs/python_setup ()
+  "Setup IPython on Emacs. Also sets up some rst thanks to Matplotlib!
+
+Here are useful bindings for rst.
+C-c TAB - rst-toc-insert
+
+  Insert table of contents at point
+
+C-c C-u - rst-toc-update
+
+    Update the table of contents at point
+
+C-c C-l rst-shift-region-left
+
+    Shift region to the left
+
+C-c C-r rst-shift-region-right
+
+    Shift region to the right
+
+  When the completion candidates are shown, press <f1> to display the documentation for the selected candidate, or C-w to see its source. Not all back-ends support this."
+
 ;; The package is "python" but the mode is "python-mode":
 
    (add-hook 'python-mode-hook
@@ -982,14 +1013,17 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
        :interpreter ("ipython3" . python-mode))
      (define-key evil-normal-state-map (kbd "[F5]") 'spacemacs/python-execute-file))
 
-)
+   (use-package rst-mode
+     :defer t
+     :config
+     (setq auto-mode-alist
+         (append '(("\\.txt$" . rst-mode)
+                   ("\\.rst$" . rst-mode)
+                   ("\\.rest$" . rst-mode)) auto-mode-alist)))
 
-(defun yourspacemacs/company_setup ()
- "Completion will start automatically after you type a few letters. Use M-n and M-p to select, <return> to complete or <tab> to complete the common part. Search through the completions with C-s, C-r and C-o. Press M-(digit) to quickly complete with one of the first 10 candidates.
+   (use-package python-mode-hook
+     :ensure t)
 
-  Type M-x company-complete to initiate completion manually. Bind this command to a key combination of your choice.
-
-  When the completion candidates are shown, press <f1> to display the documentation for the selected candidate, or C-w to see its source. Not all back-ends support this."
 
  ;; (use-package 'company
  ;;   :config
@@ -1032,3 +1066,24 @@ This function is called at the very end of Spacemacs initialization."
 ;; provide 'spacemacs
 
 ;;; .spacemacs ends here
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (treemacs-projectile treemacs-evil treemacs pfuture evil-nerd-commenter evil-mc yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package toc-org tagedit symon symbol-overlay string-inflection sphinx-mode spaceline-all-the-icons smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs realgud ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode python-mode pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file ob-ipython neotree nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lsp-ui lorem-ipsum live-py-mode link-hint jinja2-mode indent-guide importmagic impatient-mode ibuffer-projectile hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elpy elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode counsel-projectile company-web company-statistics company-quickhelp company-lsp company-ansible company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(paradox-github-token t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)

@@ -155,7 +155,5 @@ alias redo='fc -s'
 alias r='fc -s'
 
 alias spacemacs='emacs -l ~/.spacemacs'
-if [[ -n "$(command -v bat)" ]]; then
-    alias cat=bat
-fi
-alias n="nvim $* "
+alias cat=bat
+alias n='nvim $*'

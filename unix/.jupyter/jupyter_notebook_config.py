@@ -2,15 +2,22 @@
 # -*- coding: utf-8 -*-
 """Configuration file for jupyter-notebook.
 
-================
+################
 Jupyter Notebook
-================
+################
+
+Mar 27, 2019:
+
+    Hey you! Don't forget you initialize the Notebook config to the letter
+    :kbd:`j` instead of the default :kbd:`c`.
+
+    So don't let me see any more ^c.Param's anymore!
+
 
 """
 from traitlets.config import get_config
 
 j = get_config()
-
 # -----------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
 # -----------------------------------------------------------------------------
@@ -414,7 +421,7 @@ j.NotebookApp.webbrowser_open_new = 1
 # j.ConnectionFileMixin.connection_file = ''
 
 ## JSON file in which to store connection info [default: kernel-<pid>.json]
-#
+#  
 #  This file will contain the IP, ports, and authentication key needed to connect
 #  clients to this kernel. By default, this file will be created in the security
 #  dir of the current profile, but can be specified by absolute path.
@@ -450,7 +457,7 @@ j.NotebookApp.webbrowser_open_new = 1
 #c.KernelManager.autorestart = True
 
 ## DEPRECATED: Use kernel_name instead.
-#
+#  
 #  The Popen Command to launch the kernel. Override this if you have a custom
 #  kernel. If kernel_cmd is specified in a configuration file, Jupyter does not
 #  pass any arguments to the kernel, because it cannot make any assumptions about
@@ -478,27 +485,27 @@ j.NotebookApp.webbrowser_open_new = 1
 # -----------------------------------------------------------------------------
 
 ## Object for handling serialization and sending of messages.
-#
+#  
 #  The Session object handles building messages and sending them with ZMQ sockets
 #  or ZMQStream objects.  Objects can communicate with each other over the
 #  network via Session objects, and only need to work with the dict-based IPython
 #  message spec. The Session will handle serialization/deserialization, security,
 #  and metadata.
-#
+#  
 #  Sessions support configurable serialization via packer/unpacker traits, and
 #  signing with HMAC digests via the key/keyfile traits.
-#
+#  
 #  Parameters ----------
-#
+#  
 #  debug : bool
 #      whether to trigger extra debugging statements
 #  packer/unpacker : str : 'json', 'pickle' or import_string
 #      importstrings for methods to serialize message parts.  If just
 #      'json' or 'pickle', predefined JSON and pickle packers will be used.
 #      Otherwise, the entire importstring must be used.
-#
+#  
 #      The functions must accept at least valid JSON input, and output *bytes*.
-#
+#  
 #      For example, to use msgpack:
 #      packer = 'msgpack.packb', unpacker='msgpack.unpackb'
 #  pack/unpack : callables
@@ -519,7 +526,7 @@ j.NotebookApp.webbrowser_open_new = 1
 #c.Session.buffer_threshold = 1024
 
 ## Whether to check PID to protect against calls after fork.
-#
+#  
 #  This check can be disabled if fork-safety is handled elsewhere.
 #c.Session.check_pid = True
 
@@ -530,7 +537,7 @@ j.NotebookApp.webbrowser_open_new = 1
 #c.Session.debug = False
 
 ## The maximum number of digests to remember.
-#
+#  
 #  The digest history will be culled when it exceeds this value.
 #c.Session.digest_history_size = 65536
 
@@ -671,10 +678,10 @@ j.NotebookApp.webbrowser_open_new = 1
 
 ## Whether messages from kernels whose frontends have disconnected should be
 #  buffered in-memory.
-#
+#  
 #  When True (default), messages are buffered and replayed on reconnect, avoiding
 #  lost messages due to interrupted connectivity.
-#
+#  
 #  Disable if long-running kernels will produce too much output while no
 #  frontends are connected.
 #c.MappingKernelManager.buffer_offline_messages = True
@@ -697,7 +704,7 @@ j.NotebookApp.webbrowser_open_new = 1
 #c.MappingKernelManager.cull_interval = 300
 
 ## Timeout for giving up on a kernel (in seconds).
-#
+#  
 #  On starting and restarting kernels, we check whether the kernel is running and
 #  responsive by sending kernel_info_requests. This sets the timeout in seconds
 #  for how long the kernel can take before being presumed dead.  This affects the
@@ -745,13 +752,13 @@ j.MappingKernelManager.cull_interval = 3000
 # -----------------------------------------------------------------------------
 
 ## Base class for serving files and directories.
-#
+#  
 #  This serves any text or binary file, as well as directories, with special
 #  handling for JSON notebook documents.
-#
+#  
 #  Most APIs take a path argument, which is always an API-style unicode path, and
 #  always refers to a directory.
-#
+#  
 #  - unicode, not url-escaped
 #  - '/'-separated
 #  - leading and trailing '/' will be stripped
@@ -858,16 +865,16 @@ j.ContentsManager.hide_globs = ['__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*
 # j.FileContentsManager.delete_to_trash = True
 
 ## Python callable or importstring thereof
-#
+#  
 #  to be called on the path of a file just saved.
-#
+#  
 #  This can be used to process the file on disk, such as converting the notebook
 #  to a script or HTML via nbconvert.
-#
+#  
 #  It will be called as (all arguments passed by keyword)::
-#
+#  
 #      hook(os_path=os_path, model=model, contents_manager=instance)
-#
+#  
 #  - path: the filesystem path to the file just written - model: the model
 #  representing the file - contents_manager: this ContentsManager instance
 #c.FileContentsManager.post_save_hook = None

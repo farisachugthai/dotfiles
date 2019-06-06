@@ -139,8 +139,15 @@ tre(){
     # executable files, a `>' for doors (Solaris) and a `|' for
     # FIFO's, as per ls -F
     # Also, and I don't know why, the a and I must be together to ignore .git
+    # Jun 02, 2019: This got way more complicated now that i considered accepting arguments
+    if [[ -n "$1" ]]; then
     # In addition they MUST come last or .git gets included. Idk why man
-    tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -aI '.git'
+        "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -I '.git' -a -- $1"
+    elif [[ -n "$2" ]]; then
+        "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -I '.git' -a -- $@"
+    else
+        "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -ah -L 5 -F -I '.git' "
+    fi
 }
 
 # tm - create new tmux session, or switch to existing one. Works from within tmux too. {{{1

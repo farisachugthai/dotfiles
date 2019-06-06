@@ -105,7 +105,7 @@ c.Application.log_datefmt = '%Y-%m-%d %H:%M:%S'
 c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
 
 # Set the log level by value or name.
-c.Application.log_level = 20
+c.Application.log_level = 30
 
 # ------------------------------------------------------------------------------
 # JupyterApp(Application) configuration
@@ -178,9 +178,9 @@ c.ConsoleWidget.console_width = 120
 
 # Whether to automatically execute on syntactically complete input.
 #
-# If False, Shift-Enter is required to submit each execution. Disabling this is
-# mainly useful for non-Python kernels, where the completion check would be
-# wrong.
+#  If False, Shift-Enter is required to submit each execution. Disabling this is
+#  mainly useful for non-Python kernels, where the completion check would be
+#  wrong.
 # c.ConsoleWidget.execute_on_complete_input = True
 
 # The font family to use for the console. On OSX this defaults to Monaco, on
@@ -189,7 +189,6 @@ c.ConsoleWidget.console_width = 120
 
 # I wonder if we can give multiple values
 c.ConsoleWidget.font_family = 'Fira Mono, Hack, Consolas'
-# c.ConsoleWidget.font_family = 'Fira Mono'
 
 # The font size. If unconfigured, Qt will be entrusted with the size of the
 #  font.
@@ -279,23 +278,17 @@ c.HistoryConsoleWidget.history_lock = True
 # A FrontendWidget for a Jupyter kernel.
 
 # A command for invoking a GUI text editor. If the string contains a {filename}
-# format specifier, it will be used. Otherwise, the filename will be appended to
-# the end the command. To use a terminal text editor, the command should launch
-# a new terminal, e.g. ``"gnome-terminal -- vim"``.
+#  format specifier, it will be used. Otherwise, the filename will be appended to
+#  the end the command. To use a terminal text editor, the command should launch
+#  a new terminal, e.g. ``"gnome-terminal -- vim"``.
 
 
 # Shit we have to specify the terminal too? This just got 40000 more complicated.
 # Gotta determine OS, version, what terminal I'm using ugh
-if os.name is not 'Windows-NT':
-    if shutil.which('nvim-qt'):
-        c.JupyterWidget.editor = 'nvim-qt'
-    else:
-        c.JupyterWidget.editor = 'nvim'
+if shutil.which('nvim-qt'):
+    c.JupyterWidget.editor = 'nvim-qt'
 else:
-    if shutil.which('nvim-qt'):
-        c.JupyterWidget.editor = 'nvim-qt.exe'
-    else:
-        c.JupyterWidget.editor = 'nvim.exe'
+    c.JupyterWidget.editor = 'nvim'
 
 # The editor command to use when a specific line number is requested. The string
 # should contain two format specifiers: {line} and {filename}. If this parameter
@@ -338,12 +331,12 @@ except Exception:  # noqa
 
 # DEPRECATED: Use kernel_name instead.
 #
-# The Popen Command to launch the kernel. Override this if you have a custom
-# kernel. If kernel_cmd is specified in a configuration file, Jupyter does not
-# pass any arguments to the kernel, because it cannot make any assumptions about
-# the arguments that the kernel understands. In particular, this means that the
-# kernel does not receive the option --debug if it given on the Jupyter command
-# line.
+#  The Popen Command to launch the kernel. Override this if you have a custom
+#  kernel. If kernel_cmd is specified in a configuration file, Jupyter does not
+#  pass any arguments to the kernel, because it cannot make any assumptions about
+#  the arguments that the kernel understands. In particular, this means that the
+#  kernel does not receive the option --debug if it given on the Jupyter command
+#  line.
 # c.KernelManager.kernel_cmd = []
 
 # Time to wait for a kernel to terminate before killing it, in seconds.
@@ -360,8 +353,7 @@ except Exception:  # noqa
 #  Has to be set explicitly, because there will be *a lot* of output.
 # c.KernelRestarter.debug = False
 
-# Whether to choose new random ports when restarting before
-# the kernel is alive.
+# Whether to choose new random ports when restarting before the kernel is alive.
 # c.KernelRestarter.random_ports_until_alive = True
 
 # The number of consecutive autorestarts before the kernel is presumed dead.

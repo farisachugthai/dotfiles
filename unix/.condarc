@@ -4,15 +4,12 @@
 # Nov 03, 2018
 # Pinning conda because the update is breaking my setup
 
-# 05/20/2019
-# sequence type is now a tuple
-# pinned_packages (sequence: tuple)
+# pinned_packages (sequence: str)
 #   string delimiter: '&'
 #   A list of package specs to pin for every environment resolution. This
 #   parameter is in BETA, and its behavior may change in a future release.
 #
-pinned_packages: ('conda',)
-
+# pinned_packages: [conda]
 allow_conda_downgrades: false
 
 # add_pip_as_python_dependency (bool)
@@ -37,9 +34,7 @@ channels:
   - conda-forge
   - conda-canary
   - free
-
 channel_priority: false
-
 
 # From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
 # Non-url channels will be interpreted as Anaconda.org usernames

@@ -1,16 +1,3 @@
 {
-    "restructuredtext.confPath": "",
-    "editor.mouseWheelZoom": true,
-    "editor.fontLigatures": true,
-    "editor.formatOnSave": true,
-    "files.eol": "\n",
-    "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true,
-    "restructuredtext.experimental": true,
-    "restructuredtext.languageServer.disabled": false,
-    "git.enableSmartCommit": true,
-    "git.fetchOnPull": true,
-    "eslint.provideLintTask": true,
-    "search.useGlobalIgnoreFiles": true,
-    "python.pythonPath": "C:\\Users\\faris\\Anaconda3\\envs\\dynamic\\python.exe"
+    "restructuredtext.confPath": ""
 }

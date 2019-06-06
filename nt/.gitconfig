@@ -1,153 +1,91 @@
-# Global Git Config
-# Vim: set ft=gitconfig:
+# Global Git Config for Windows.
 
-[alias]
-    # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliase
-    ci = commit
-    co = checkout
-    last = log -- HEAD $*
-    unstage = reset HEAD -- $*
-
-    # From varying Gists
-    rel = rev-parse --show-prefix
-    root = rev-parse --show-toplevel
-    staged = diff --cached $*
-    unstaged = diff $*
-
-    # From: https://githowto.com/history
-    # Run check git-log
-    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short $*
-
-    # General.
-    br = branch $*
-    bra = branch -a
-    cl =  clone
-    cls= clone --depth 1
-    d = diff
-    dt = difftool
-    f = fetch --all
-    m = merge
-    mt = mergetool
-    s = status -sb
-    r = remote -v
-
-    # stashes
-    sh = stash --all
-    sha = stash apply
-    shc = stash clear
-    shd = stash drop
-    shl = stash list
-    shp = stash pop
-
-    switch = !legit switch
-    sync = !legit sync
-    publish = !legit publish
-    unpublish = !legit unpublish
-    undo = !legit undo
-    branches = !legit branches
-
-[cola]
-    spellcheck = true
-    tabwidth = 4
-    expandtab = true
-
-[core]
-    autocrlf=input
-    eol=lf
-    fscache = true
-
-    # If true, Git will avoid using lstat() calls to detect if files have
-    # changed by setting the "assume-unchanged" bit for those tracked files
-    # which it has updated identically in both the index and working tree.
-
-    # When files are modified outside of Git, the user will need to stage the
-    # modified files explicitly (e.g. see Examples section in
-    # git-update-index(1)). Git will not normally detect changes to those files.
-
-    # This is useful on systems where lstat() calls are very slow, such as
-    # CIFS/Microsoft Windows.
-
-    # False by default.
-    ignorestat = true
-
-[credential]
-    helper = manager
-
-[credential "https://www.github.com"]
-    username = farisachugthai
-
-# If difftool settings havent been set, fall back to mergetool
-[diff]
-    prompt = false
-    # detect copied files as well as renames. affects merge and status.rename
-    renames = copy
-    strategy-option = resolve
-    # astextplain.textconv=astextplain
-
-# [filter]
-    # lfs.clean=git-lfs clean -- %f
-    # lfs.process=git-lfs filter-process
-    # lfs.required=true
-    # lfs.smudge=git-lfs smudge -- %f
-
-[gui]
-    editor = nvim-qt.exe
-    encoding = utf-8
-    fontui = -family \"Fira Code\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-    fontdiff = -family \"Fira Code Light\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-    newbranchtemplate = nt
-    tabsize = 4
-    warndetachedcommit = true
-	recentrepo = C:/Users/faris/projects/utilities
-	recentrepo = C:/Users/faris/projects/dotfiles
-
-[help]
-    autocorrect = 1
-	format = man
-    format=html
-    # yeah so apparently that messes up mingw64
-    # format = browser
-
-[html]
-    sslbackend=openssl
-    sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
-
-[merge]
-    autoStash
-    conflictstyle = diff3
-    mergestyle = diff3
-    prompt = false
-    strategy-option = resolve
-    tool = vimdiff
-    summary = true
-
-# this is from justinmk
-# https://github.com/neovim/neovim/issues/2377
-[mergetool "vimdiff"]
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-    # if it's not immediately clear what's going on, read up from this link:
-    # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
-    # from this link we see that BASE is the commit that the file diverged at.
-    # local and remote are the 2 paths we're trying to merge, and we can
-    # determine which changes are necessary and what needs to be kept by
-    # looking at those 4 buffers as a timeline
-
-[pull]
-    rebase = preserve
-
-[push]
-    default = simple
-
-[rebase]
-    stat = True
-
-[sequence]
-    editor = nvim
-
-[status]
-    showStash = True
-    showUntrackedFiles = all
-
-[user]
-    email = farischugthai@gmail.com
-    name = farisachugthai
+# 04/28/2019
+# It's a whole ton of stuff and more than a few apps set their own configuration settings
+# So it looks quite different than the Unix one
+alias.br=branch
+alias.bra=branch -a
+alias.branches=!legit branches
+alias.ci=commit
+alias.cl=clon
+alias.cls=clone --depth 1
+alias.co=checkout
+alias.d=diff
+alias.dt=difftool
+alias.f=fetch --all
+alias.hist=log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+alias.last=log -- HEAD
+alias.m=merge
+alias.mt=mergetool
+alias.publish=!legit publish
+alias.r=remote -v
+alias.rel=rev-parse --show-prefix
+alias.root=rev-parse --show-toplevel
+alias.s=status -sb
+alias.sh=stash --all
+alias.sha=stash apply
+alias.shc=stash clear
+alias.shd=stash drop
+alias.shl=stash list
+alias.shp=stash pop
+alias.staged=diff --cached
+alias.switch=!legit switch
+alias.sync=!legit sync
+alias.undo=!legit undo
+alias.unpublish=!legit unpublish
+alias.unstage=reset HEAD --
+alias.unstaged=diff
+cola.expandtab=true
+cola.spellcheck=true
+cola.tabwidth=4
+color.branch=auto
+color.diff=auto
+color.interactive=true
+color.status=auto
+core.autocrlf=true
+core.fscache=true
+core.symlinks=false
+credential.helper=manager
+credential.https://www.github.comm.helper=manager
+credential.https://www.github.comm.username=farisachugthai
+diff.astextplain.textconv=astextplain
+diff.prompt=false
+diff.renames=copy
+diff.strategy-option=resolve
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+filter.lfs.smudge=git-lfs smudge -- %f
+gui.editor=nvim-qt.exe
+gui.encoding=utf-8
+gui.fontdiff=-family "Fira Code Light" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+gui.fontui=-family "Fira Code" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+gui.newbranchtemplate=nt
+gui.tabsize=4
+gui.warndetachedcommit=true
+help.autocorrect=1
+help.format=browser
+help.format=html
+help.format=man
+http.sslbackend=openssl
+http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+merge.autostash
+merge.conflictstyle=diff3
+merge.mergestyle=diff3
+merge.prompt=false
+merge.strategy-option=resolve
+merge.summary=true
+merge.tool=vimdiff
+mergetool.vimdiff.cmd=nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+pull.rebase=preserve
+push.default=simple
+rebase.autosquash=true
+rebase.autostash=True
+rebase.stat=True
+rebase.usebuiltin=true
+sequence.editor=nvim
+stash.usebuiltin=true
+status.showstash=True
+status.showuntrackedfiles=all
+user.email=farischugthai@gmail.com
+user.name=farisachugthai
