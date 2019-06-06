@@ -1,4 +1,9 @@
-# Configuration file for jupyter-nbconvert.
+"""Configuration file for jupyter-nbconvert.
+
+Jesus Christ this file is long. I guess rearrange stuff so the docstring becomes
+easier to read.
+"""
+from traitlets.config import get_config
 
 c = get_config()
 # ------------------------------------------------------------------------------
@@ -8,13 +13,13 @@ c = get_config()
 # This is an application.
 
 # The date format used by logging formatters for %(asctime)s
-# c.Application.log_datefmt = '%Y-%m-%d %H:%M:%S'
+c.Application.log_datefmt = '%Y-%m-%d %H:%M:%S'
 
 # The Logging format template
-# c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
+c.Application.log_format = '[%(name)s]%(highlevel)s %(message)s'
 
 # Set the log level by value or name.
-# c.Application.log_level = 30
+c.Application.log_level = 20
 
 # ------------------------------------------------------------------------------
 # JupyterApp(Application) configuration
@@ -598,7 +603,6 @@ c.NbConvertApp.export_format = 'executable'
 
 # ------------------------------------------------------------------------------
 # ServePostProcessor(PostProcessorBase) configuration
-3g------------------------------------------------------------------------------
 
 # Post processor designed to serve files
 #

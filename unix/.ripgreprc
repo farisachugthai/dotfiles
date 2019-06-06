@@ -1,15 +1,13 @@
 # ripgrep
 # Vim: set commentstring=#\ %s:
 # You gotta rework the whole thing it actually jams rg in its current state
-#
-# I think its the ignores
 
-# -g '!.git/*'
+-g '!.git/*'
 # -g '!*/.svn'
 # -g '!*/.hg'
 # -g '!*/CVS'
 # -g '!*/.DS_Store'
-# -g '!node_modules/*'
+-g '!node_modules/*'
 
 --hidden
 
@@ -18,15 +16,10 @@
 # don't match more than 50 lines
 # --max-count 50
 
---max-depth=8
+# --max-depth 8
 
 # if you need to debug run --messages on the command line.
 --no-messages
-
-# Jun 04, 2019: Let's make this better for fzf in nvim
---vimgrep
-
---color=always
 
 # Colors are limited to one of eight choices: red, blue, green, cyan,
 # magenta, yellow, white and black. Styles are limited to nobold,
