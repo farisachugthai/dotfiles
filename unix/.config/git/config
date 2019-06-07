@@ -61,6 +61,10 @@
 [branch]
     autosetupmerge = true
 
+[checkout]
+    # Jun 01, 2019: Automatically follow remote branches withe same name
+    defaultRemote = origin
+
 [cola]
     spellcheck = true
     tabwidth = 4
@@ -72,6 +76,8 @@
     filemode = false
     logallrefupdates = true
     repositoryformatversion = 0
+    eol = lf
+    autocrlf = input
 
 [credential]
     helper = cache --timeout=86400
