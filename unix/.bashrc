@@ -20,7 +20,7 @@ pathadd() {  # {{{1
 setup_ssh () {
     local env
     env=~/.ssh/agent.env
-    test -f "$env" && . "$env" >| /dev/null
+    test -f "$env" && . "$env" >| /dev/null || exit
     # agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
     agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
 
@@ -85,7 +85,7 @@ fi
 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
-[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
+[[ -x lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
@@ -233,6 +233,10 @@ if [ -f '/home/faris/google-cloud-sdk/path.bash.inc' ]; then . '/home/faris/goog
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/faris/google-cloud-sdk/completion.bash.inc' ]; then . '/home/faris/google-cloud-sdk/completion.bash.inc'; fi
+
+# Prompt: {{{1
+# I'm gonna try and stay conservative here.
+export PS1="\\t \\u@\\h \\d \w \n $: "
 
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
