@@ -55,6 +55,8 @@
     autocrlf=input
     eol=lf
     fscache = true
+    # whoever set this to false what the fuck
+    symlink = true
 
     # If true, Git will avoid using lstat() calls to detect if files have
     # changed by setting the "assume-unchanged" bit for those tracked files
@@ -133,7 +135,11 @@
     # looking at those 4 buffers as a timeline
 
 [pull]
-    rebase = preserve
+    # When merges, pass the --rebase-merges option to git rebase so that the local merge commits are included in the rebase (see git-rebase(1) for details).
+    rebase = merges
+
+    # rebase = interactive
+    # this forces every pull to require a no-op merge commit jesus christ
 
 [push]
     default = simple
@@ -151,3 +157,5 @@
 [user]
     email = farischugthai@gmail.com
     name = farisachugthai
+[credential "https://source.developers.google.com"]
+	helper = gcloud.cmd

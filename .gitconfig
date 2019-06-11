@@ -1,4 +1,1 @@
-[core]
-    eol=lf
-    autocrlf=input
-
+unix/.config/git/config
