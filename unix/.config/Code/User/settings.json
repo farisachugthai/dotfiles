@@ -54,7 +54,7 @@
     "python.linting.pydocstyleEnabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.pylintUseMinimalCheckers": false,
-    "python.pythonPath": "/home/faris/miniconda3/envs/neovim/bin/python",
+    "python.pythonPath": "/home/faris/miniconda3/envs/dynamic/bin/python",
     "python.terminal.executeInFileDir": true,
     "python.venvPath": "~/miniconda3/envs/",
     "restructuredtext.builtDocumentationPath": "${workspaceFolder}/docs/_build/html",
@@ -182,5 +182,6 @@
     "python.testing.pyTestEnabled": true,
     "python.testing.unittestEnabled": true,
     "vim.visualstar": true,
-    "bracketPairColorizer.highlightActiveScope": true
+    "bracketPairColorizer.highlightActiveScope": true,
+    "editor.formatOnSave": true
 }
