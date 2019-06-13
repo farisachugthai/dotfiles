@@ -14,25 +14,30 @@ pathadd() {  # {{{1
     fi
 }
 
+
 # ssh-agent: {{{1
 # Refactored https://help.github.com/en/articles/working-with-ssh-key-passphrases
 # to be one function and make variables they unset local so we don't need to
-setup_ssh () {
-    local env
-    env=~/.ssh/agent.env
-    test -f "$env" && . "$env" >| /dev/null
-    # agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
-    agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
 
-    if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
-        (umask 077; ssh-agent >| "$env")
-        . "$env" >| /dev/null
-        ssh-add
-    elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-        ssh-add
-    fi
-}
-setup_ssh
+# A) please don't put at the beginning of the file now it takes forever after
+# pw input
+# B) uhhhh. well there is no B but this is pretty annoying
+# setup_ssh () {
+#     local env
+#     env=~/.ssh/agent.env
+#     test -f "$env" && . "$env" >| /dev/null
+#     # agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
+#     agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+#     if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+#         (umask 077; ssh-agent >| "$env")
+#         . "$env" >| /dev/null
+#         ssh-add
+#     elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+#         ssh-add
+#     fi
+# }
+# setup_ssh
 
 # $_ROOT: {{{1
 # shellcheck disable=2153
@@ -239,3 +244,5 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
