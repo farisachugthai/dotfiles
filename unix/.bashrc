@@ -16,9 +16,6 @@ pathadd() {  # {{{1
 
 
 # ssh-agent: {{{1
-# Refactored https://help.github.com/en/articles/working-with-ssh-key-passphrases
-# to be one function and make variables they unset local so we don't need to
-
 # A) please don't put at the beginning of the file now it takes forever after
 # pw input
 # B) uhhhh. well there is no B but this is pretty annoying
@@ -90,7 +87,7 @@ fi
 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
-[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
+[[ -x lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
@@ -238,6 +235,10 @@ if [ -f '/home/faris/google-cloud-sdk/path.bash.inc' ]; then . '/home/faris/goog
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/faris/google-cloud-sdk/completion.bash.inc' ]; then . '/home/faris/google-cloud-sdk/completion.bash.inc'; fi
+
+# Prompt: {{{1
+# I'm gonna try and stay conservative here.
+export PS1="\\t \\u@\\h \\d \w \n $: "
 
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then

@@ -146,7 +146,7 @@ tre(){
     elif [[ -n "$2" ]]; then
         "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -I '.git' -a -- $@"
     else
-        "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -ah -L 5 -F -I '.git' "
+        "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -L 5 -F -ah "
     fi
 }
 
