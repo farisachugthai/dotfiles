@@ -142,7 +142,7 @@
     # looking at those 4 buffers as a timeline
 
 [pull]
-    rebase = preserve
+    rebase = merges
     renormalize
 
 [push]

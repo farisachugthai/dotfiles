@@ -14,27 +14,7 @@ pathadd() {  # {{{1
     fi
 }
 
-
-# ssh-agent: {{{1
-# A) please don't put at the beginning of the file now it takes forever after
-# pw input
-# B) uhhhh. well there is no B but this is pretty annoying
-# setup_ssh () {
-#     local env
-#     env=~/.ssh/agent.env
-#     test -f "$env" && . "$env" >| /dev/null
-#     # agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
-#     agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
-
-#     if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
-#         (umask 077; ssh-agent >| "$env")
-#         . "$env" >| /dev/null
-#         ssh-add
-#     elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-#         ssh-add
-#     fi
-# }
-# setup_ssh
+[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
 # $_ROOT: {{{1
 # shellcheck disable=2153
@@ -45,7 +25,6 @@ else
 fi
 
 # Python: {{{1
-
 # Put python first because we need conda initialized right away
 
 # Conda: {{{2
@@ -66,7 +45,6 @@ unset __conda_setup
 # <<< conda initialize <<<
 fi
 
-# }}}
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 if [[ -n "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
@@ -74,7 +52,7 @@ fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
-# GCloud: {{{2
+# GCloud: {{{1
 
 if [[ -d ~/google-cloud-sdk ]]; then
     # shellcheck source=~/google-cloud-sdk/completion.bash.inc
@@ -95,9 +73,6 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
 fi
 
 # Vim: {{{1
-# here goes nothing. gulp.
-# set -o vi
-
 if [[ -n "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
 else
@@ -161,13 +136,14 @@ shopt -s shift_verbose
 shopt -s no_empty_cmd_completion
 # If set, and the cmdhist option is enabled, multi-line commands are saved to
 # the history with embedded newlines rather than using semicolon separators
-# where possible.
 shopt -s lithist
 
 shopt -s direxpand
 
 shopt -s autocd
 shopt -s cdable_vars
+
+set -o pipefail  # if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
 
 # Pagers: {{{1
 
@@ -245,5 +221,3 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash

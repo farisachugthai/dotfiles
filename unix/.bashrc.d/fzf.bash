@@ -3,6 +3,9 @@
 #  DESCRIPTION:  From my bashrc
 #==============================================================================
 
+# Jun 11, 2019: Just had the passing thought...only the exports and the tests
+# make this bash specific. Sub those out and this is a ps1 script too
+
 # Check that the main entry point is there. {{{1
 if [[ -f ~/.fzf.bash ]]; then
     export FZF_TMUX_HEIGHT=80%
