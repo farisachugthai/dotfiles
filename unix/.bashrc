@@ -33,7 +33,8 @@ setup_ssh () {
         ssh-add
     fi
 }
-setup_ssh
+
+[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
 # $_ROOT: {{{1
 # shellcheck disable=2153
@@ -44,7 +45,6 @@ else
 fi
 
 # Python: {{{1
-
 # Put python first because we need conda initialized right away
 
 # Conda: {{{2
@@ -65,7 +65,6 @@ unset __conda_setup
 # <<< conda initialize <<<
 fi
 
-# }}}
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 if [[ -n "$(command -v pip)" ]]; then
     eval "$(pip completion --bash)"
@@ -73,7 +72,7 @@ fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
-# GCloud: {{{2
+# GCloud: {{{1
 
 if [[ -d ~/google-cloud-sdk ]]; then
     # shellcheck source=~/google-cloud-sdk/completion.bash.inc
@@ -86,7 +85,7 @@ fi
 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
-[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
+[[ -x lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
@@ -94,9 +93,6 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
 fi
 
 # Vim: {{{1
-# here goes nothing. gulp.
-# set -o vi
-
 if [[ -n "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
 else
@@ -160,13 +156,14 @@ shopt -s shift_verbose
 shopt -s no_empty_cmd_completion
 # If set, and the cmdhist option is enabled, multi-line commands are saved to
 # the history with embedded newlines rather than using semicolon separators
-# where possible.
 shopt -s lithist
 
 shopt -s direxpand
 
 shopt -s autocd
 shopt -s cdable_vars
+
+set -o pipefail  # if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
 
 # Pagers: {{{1
 
@@ -234,6 +231,10 @@ if [ -f '/home/faris/google-cloud-sdk/path.bash.inc' ]; then . '/home/faris/goog
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/faris/google-cloud-sdk/completion.bash.inc' ]; then . '/home/faris/google-cloud-sdk/completion.bash.inc'; fi
+
+# Prompt: {{{1
+# I'm gonna try and stay conservative here.
+export PS1="\\t \\u@\\h \\d \w \n $: "
 
 # Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then

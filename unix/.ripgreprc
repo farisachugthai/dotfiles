@@ -18,15 +18,17 @@
 # don't match more than 50 lines
 # --max-count 50
 
---max-depth=8
+"--max-depth 8"
+"-m 50"
 
 # if you need to debug run --messages on the command line.
 --no-messages
 
 # Jun 04, 2019: Let's make this better for fzf in nvim
---vimgrep
+# --vimgrep
 
---color=always
+# Needs quotes!
+"--color ansi"
 
 # Colors are limited to one of eight choices: red, blue, green, cyan,
 # magenta, yellow, white and black. Styles are limited to nobold,

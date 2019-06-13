@@ -82,6 +82,8 @@ This function should only modify configuration layer settings."
           global-git-gutter+-mode t
           magit-repository-directories
           '(("~/projects" . 2)("~/src/" . 2)))
+     ;; dude holy fuck does the github layer fuck up windows. it requires
+     ;; emacsql which doesn't run on windows and mannnnnnnnnnn
      (helm :variables
            helm-enable-auto-resize t
            helm-elisp-show-doc-modeline t  ;; is this a default?
@@ -126,7 +128,8 @@ This function should only modify configuration layer settings."
             shell-default-shell 'eshell
             shell-default-term-shell 'eshell
             shell-default-position 'bottom)
-     spacemacs
+     ;; requires treemacs so don't list it anymore
+     ;; spacemacs
      spacemacs-completion
      spacemacs-docker
      spacemacs-editing
@@ -763,6 +766,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     (setq evil-shift-width 4))
 
   ;; After major mode has changed, reset evil-shift-width
+
   (add-hook 'after-change-major-mode-hook 'spacemacs//set-evil-shift-width 'append)
 
   (use-package evil-collection
@@ -846,7 +850,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
    (add-hook 'org-mode-hook
                  (lambda ()
                    (setq-default yas/trigger-key [tab])
-                   (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+                   (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand))))
 
                 (spacemacs-space-docs-modificators
                 '(center-buffer-mode
@@ -858,7 +862,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
                   link-protocol
                   org-block-line-face-remap
                   org-kbd-face-remap
-                  resize-inline-images)))
+                  resize-inline-images))
     ;; haven't tried yasnippet in org mode but let's try this in advance
     (add-hook 'org-mode-hook
                   (lambda ()
@@ -911,9 +915,8 @@ I'm gonna add some stuff for ielm here too because why not?"
     (comint-prompt-read-only t "Make the prompt read only."))
 
   (with-eval-after-load
-      (progn
         (setq-default ielm-noise nil)
-        (setq-default ielm-prompt-read-only nil)))
+        (setq-default ielm-prompt-read-only nil))
 )
 
 
@@ -935,13 +938,20 @@ I'm gonna add some stuff for ielm here too because why not?"
 
 +TODO: Add docstrings to these variables I guess"
   (with-eval-after-load 'eshell
-    (progn
       (setq-default
        ;; so then it falls to HISTSIZE. how do we set env vars in emacs
        ;; eshell-history-size nil)
        eshell-hist-ignoredups t
        eshell-cd-shows-directory t
-       eshell-ls-dired-initial-args "-hF --color always --dired")))
+       eshell-ls-dired-initial-args "-hF --color always --dired"))
+
+  (with-eval-after-load "esh-opt"
+    (require 'virtualenvwrapper)
+    (venv-initialize-eshell)
+    (autoload 'epe-theme-lambda "eshell-prompt-extras")
+    (setq eshell-highlight-prompt nil
+          eshell-prompt-function 'epe-theme-lambda))
+
 )
 
 (defun your_spacemacs/term_setup()
@@ -957,6 +967,15 @@ means that that package will be autoloaded"
          ("M-o" . other-window)
          ("M-p" . term-send-up)
          ("M-n" . term-send-down)))
+
+   ((require 'conda)
+    ;; if you want interactive shell support, include:
+    (conda-env-initialize-interactive-shells)
+    ;; if you want eshell support, include:
+    (conda-env-initialize-eshell)
+    ;; if you want auto-activation (see below for details), include:
+    (conda-env-autoactivate-mode t))
+
 )
 
 (defun your_spacemacs/savehist_setup ()

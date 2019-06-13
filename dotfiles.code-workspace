@@ -10,5 +10,13 @@
         "telemetry.enableCrashReporter": false,
         "files.trimTrailingWhitespace": true,
         "files.trimFinalNewlines": true,
+        "python.analysis.openFilesOnly": false,
+        "python.autoComplete.addBrackets": true,
+        "python.dataScience.exportWithOutputEnabled": true,
+        "python.dataScience.sendSelectionToInteractiveWindow": true,
+        "python.linting.flake8Enabled": true,
+        "python.linting.pydocstyleEnabled": true,
+        "python.linting.pylintEnabled": false,
+        "python.terminal.executeInFileDir": true,
     }
 }

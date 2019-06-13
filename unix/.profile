@@ -80,15 +80,6 @@ if [[ -n "$(command -v rvm)" ]]; then
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 fi
 
-# Go: {{{1
-# Add the Go std lib to the PATH if that's where it was put
-
-# Utilize GOPATH.
-if [[ -n "$(command -v go)" ]]; then
-    pathadd "$_ROOT/local/go/bin"
-    export GOPATH="$(go env GOPATH)"
-    export PATH="$PATH:$GOPATH/bin"
-fi
 
 # JavaScript: {{{1
 if [[ -n "$(command -v yarn)" ]]; then
