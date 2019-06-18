@@ -6,22 +6,8 @@
 ;; I'm incurable
 
 ;;; Commentary:
-;; No idea if I'm using defconst right there...
-;; But its currently the list of all my functions defined below
-;; dotspacemacs/user-init. Do I define them inside user_init?
 
 ;;; Code:
-
-(defvar  your_spacemacs/constants
-  '(git_setup
-    evil_setup
-    org_setup
-    eshell_setup
-    add_pretty_symbols
-    comint_setup
-    python_setup
-    yasnippet_setup))
-
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
@@ -65,14 +51,15 @@ This function should only modify configuration layer settings."
      (auto-completion :variables
                       auto-completion-complete-with-key-sequence "jk"
                       auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-enable-help-tooltip t
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t
-                      auto-completion-enable-help-tooltip t
+                      auto-completion-front-end 'company
                       auto-completion-idle-delay 0.2
                       auto-completion-private-snippets-directory "~/.emacs.d/private/snippets"
                       auto-completion-return-key-behavior 'complete
-                      auto-completion-front-end 'company
-                      auto-completion-tab-key-behavior 'cycle)
+                      auto-completion-tab-key-behavior 'cycle
+                      spacemacs-default-company-backends '(company-ispell company-files company-anaconda))
      bm  ;; bookmarks!
      (colors :variables
              colors-colorize-identifiers 'all
@@ -125,6 +112,7 @@ This function should only modify configuration layer settings."
      restructuredtext
      (shell :variables
             shell-default-height 30
+            shell-default-shell 'eshell
             shell-default-term-shell 'eshell
             shell-default-position 'bottom)
      spacemacs-completion
@@ -614,14 +602,6 @@ From the Spacemacs FAQ."
   (setq-default tab-width 4 indent-tabs-mode nil)
   (define-key global-map (kbd "RET") 'newline-and-indent)
 
-  ;; Save/restore command history etc across sessions.
-  (with-eval-after-load 'savehist
-    (require 'savehist)
-    (progn
-      (setq-default savehist-additional-variables '(extended-command-history global-mark-ring mark-ring search-ring regexp-search-ring))
-      (setq-default savehist-file "~/.emacs.d/savehist")
-      (setq-default history-length 10000)
-      (savehist-mode 1)))
 
   ;; The following is from Section 3 in the Info page on 'woman'.
   ;; 3.1.2 Using the "Word at Point" as a Topic Suggestion
@@ -634,7 +614,7 @@ From the Spacemacs FAQ."
 
   ;; Dude you can still access registers like Vim. "*p just worked I love you spacemacs
   ;; Btw yes I checked to see that this was still available
-  (global-set-key "\C-cw"
+  (global-set-key (kbd "C-c w")
                 (lambda ()
                   (interactive)
                   (let ((woman-use-topic-at-point t))
@@ -691,7 +671,7 @@ From the Spacemacs FAQ."
   ;; The package is "python" but the mode is "python-mode":
   (use-package python
     :mode ("\\.py\\'" . python-mode)
-    :interpreter ("python" . python-mode))
+ vk   :interpreter ("python" . python-mode))
 
   (use-package auto-package-update
     :config
@@ -715,9 +695,20 @@ From the Spacemacs FAQ."
   (setq-default paradox-execute-asynchronously t)
 
   (global-flycheck-mode t)
+  (global-visual-fill-column-mode)
+
+  (setq-default case-fold-search nil)
+
+  (setq-default user-mail-address "farischugthai@gmail.com")
 
   (spacemacs/toggle-relative-line-numbers-on)
 
+  (if (fboundp 'blink-cursor-mode)
+      (blink-cursor-mode 0))
+
+  ;; goddamn why does this invoke the debugger
+  ;; (if (boundp 'coding-category-utf-8)
+  ;;     (set-coding-priority '(code-category-utf-8)))
 )
 
 (defun your_spacemacs/evil_setup ()
@@ -846,7 +837,6 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
          org-confirm-babel-evaluate nil
          org-enable-sticky-header t
          org-enable-github-support t
-         org-enable-org-journal-support t
          org-log-done 'time
          org-log-redeadline 'time
          org-log-refile 'time
@@ -862,6 +852,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
          org-want-todo-bindings t
          spaceline-org-clock-p t))))
 
+    (setq org-enable-org-journal-support t)
    ;; haven't tried yasnippet in org mode but let's try this in advance
    (add-hook 'org-mode-hook
                  (lambda ()
@@ -913,6 +904,11 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     :custom
     (comint-buffer-maximum-size 20000 "Increase comint buffer size.")
     (comint-prompt-read-only t "Make the prompt read only."))
+  (with-eval-after-load
+      (progn
+       (setq-default ielm-noise nil)
+       (setq-default ielm-prompt-read-only nil)))
+
 )
 
 
@@ -941,8 +937,20 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
         eshell-hist-ignoredups t
         eshell-cd-shows-directory t
         eshell-ls-dired-initial-args "-hF --color always --dired")))
-
 )
+
+
+(defun your_spacemacs/savehist ()
+"Save/restore command history etc across sessions."
+  (with-eval-after-load 'savehist
+    (require 'savehist)
+    (progn
+      (setq-default savehist-additional-variables '(extended-command-history global-mark-ring mark-ring search-ring regexp-search-ring))
+      (setq-default savehist-file "~/.emacs.d/savehist")
+      (setq-default history-length 10000)
+      (savehist-mode 1)))
+)
+
 
 (defun your_spacemacs/git_setup ()
   "Setup git and magit."
@@ -958,7 +966,6 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
   (setq-default evil-magit-state 'normal)
   (evil-magit-want-horizontal-movement t)
   (evil-magit-use-z-for-folds t))
-
 )
 
 
@@ -966,7 +973,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 "Setup yasnippet."
 (use-package yasnippet
   :config
-  (yas-minor-mode on)
+  (yas-minor-mode t)
   (yas-load-directory "~/.emacs.d/private/snippets")))
 
 
@@ -975,11 +982,11 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 
 Here are useful bindings for rst.
 
-\C-c TAB - rst-toc-insert
+\\C-c\\TAB & \\rst-toc-insert
 
   Insert table of contents at point
 
-\C-c C-u - rst-toc-update
+\\C-c C-u - rst-toc-update
 
     Update the table of contents at point
 

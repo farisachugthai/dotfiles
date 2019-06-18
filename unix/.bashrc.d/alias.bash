@@ -99,12 +99,14 @@ fi
 alias g='git diff --stat --staged'
 alias ga='git add'
 alias ga.='git add .'
-alias gar='git add --renormalize'
+alias gar="git add --renormalize -A $* "
 alias gb='git branch -a'
+alias gbl="git blame $* "
+alias gbr="git branch $* "
 alias gci='git commit'
 alias gcia='git commit --amend'
-alias gcid='git commit --date='
-alias gciad='git commit --amend --date='
+alias gcid="git commit --date=$* "
+alias gciad="git commit --amend --date=$* "
 alias gcl='git clone'
 alias gcls='git clone --depth 1'
 alias gco='git checkout'
@@ -118,6 +120,8 @@ alias gl='git log'
 alias glo="git log --graph --decorate --abbrev-commit --branches --all --date=short --oneline $*"
 alias gls='git ls-tree'
 alias gm='git merge --no-ff'
+alias gma="git merge --abort $* "
+alias gmc="git merge --continue $* "
 alias gmm='git merge master'
 alias gmt='git mergetool'
 alias gp='git pull --all'
@@ -126,7 +130,7 @@ alias gpom='git pull origin master'
 alias gpu='git push'
 alias gr='git remote -v'
 alias gs='git status'
-alias gsh='git stash'
+alias gsh='git stash --all'
 alias gsha='git stash apply'
 alias gshc='git stash clear'
 alias gshd='git stash drop'
