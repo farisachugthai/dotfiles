@@ -18,5 +18,12 @@
         "python.linting.pydocstyleEnabled": true,
         "python.linting.pylintEnabled": false,
         "python.terminal.executeInFileDir": true,
+        "git.allowForcePush": true,
+        "git.autofetch": true,
+        "git.autoStash": true,
+        "git.fetchOnPull": true,
+        "git.showPushSuccessNotification": true,
+        "gitHistory.hideCommitViewExplorer": true,
+        "search.useGlobalIgnoreFiles": true,
     }
 }

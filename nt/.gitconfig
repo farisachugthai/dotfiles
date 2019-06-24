@@ -45,11 +45,28 @@
     unpublish = !legit unpublish
     undo = !legit undo
     branches = !legit branches
+    # May 27, 2019
+    amend = commit --amend
+  
+    # from man git-alias. added '-msg' to make distinct from other last
+    last-msg = cat-file commit HEAD
+
+    rank = shortlog -sn --no-merges
+    whatis = show -s --pretty=´tformat:%h (%s, %ad)´ --date=short
+    whois = !sh -c ´git log -i -1 --pretty="format:%an <%ae>"
+
+[branch]
+    autosetupmerge = true
+
+[checkout]
+    # Jun 01, 2019: Automatically follow remote branches withe same name
+    defaultRemote = origin
 
 [cola]
     spellcheck = true
     tabwidth = 4
     expandtab = true
+    boldheaders = true
 
 [core]
     autocrlf=input
@@ -71,12 +88,12 @@
 
     # False by default.
     ignorestat = true
-
-[credential]
-    helper = manager
-
+	sshCommand = C:/WINDOWS/System32/OpenSSH/ssh.exe
 [credential "https://www.github.com"]
     username = farisachugthai
+
+[credential "https://source.developers.google.com"]
+	helper = gcloud.cmd
 
 # If difftool settings havent been set, fall back to mergetool
 [diff]
@@ -92,6 +109,10 @@
     # lfs.required=true
     # lfs.smudge=git-lfs smudge -- %f
 
+[grep]
+    lineNumber = true
+    extendedRegexp = true
+
 [gui]
     editor = nvim-qt.exe
     encoding = utf-8
@@ -105,8 +126,8 @@
 
 [help]
     autocorrect = 1
-	format = man
-    format=html
+    # format = man
+    format = html
     # yeah so apparently that messes up mingw64
     # format = browser
 
@@ -114,18 +135,24 @@
     sslbackend=openssl
     sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
 
+[log]
+    abbrevCommit = true
+
 [merge]
     autoStash
     conflictstyle = diff3
+    diffstat = true
     mergestyle = diff3
     prompt = false
+    renormalize
     strategy-option = resolve
-    tool = vimdiff
     summary = true
+    tool = nvim-merge
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
-[mergetool "vimdiff"]
+[mergetool "nvim-merge"]
+    cmd = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
@@ -137,7 +164,7 @@
 [pull]
     # When merges, pass the --rebase-merges option to git rebase so that the local merge commits are included in the rebase (see git-rebase(1) for details).
     rebase = merges
-
+    renormalize
     # rebase = interactive
     # this forces every pull to require a no-op merge commit jesus christ
 
@@ -145,7 +172,9 @@
     default = simple
 
 [rebase]
+    autoStash = True
     stat = True
+    missingCommitsCheck = "warn"
 
 [sequence]
     editor = nvim
@@ -157,5 +186,13 @@
 [user]
     email = farischugthai@gmail.com
     name = farisachugthai
-[credential "https://source.developers.google.com"]
-	helper = gcloud.cmd
+
+
+[url "git://github.com"]
+    insteadOf = g:
+    # insteadOf = https://github.com
+    name = farisachugthai
+
+[url "git@gist.github.com"]
+    insteadOf = "gist:"
+    pushInsteadOf = "gist:"
