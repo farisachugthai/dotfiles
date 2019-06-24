@@ -803,7 +803,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     :after evil
     :ensure t
     :config
-    (global-evil-tabs-mode))
+    (setq global-evil-tabs-mode t))
 
     (with-eval-after-load evil
         (progn
@@ -831,6 +831,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 
 )
 
+(with-eval-after-load 'org
 (defun your_spacemacs/org_setup ()
     "Set up org configuration.
 
@@ -842,11 +843,10 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
       (not (string= lang \"ditaa\")))  ;don't ask for ditaa
     (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)"
 
-    (with-eval-after-load 'org
       (progn
         (
         (setq-default
-          org-bullets-bullet-list '("■" "◆" "▲" "▶")
+          (org-bullets-bullet-list '("■" "◆" "▲" "▶"))
           org-confirm-babel-evaluate nil
           org-enable-github-support t
           org-enable-org-journal-support t
@@ -861,7 +861,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
           org-journal-time-prefix "* "
           org-journal-time-format ""
           org-startup-indented t
-          org-refile-use-cache t))))
+          org-refile-use-cache t)))
 
                 (spacemacs-space-doc-modificators
                 '(center-buffer-mode
@@ -874,6 +874,8 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
                   org-block-line-face-remap
                   org-kbd-face-remap
                   resize-inline-images))
+
+
     ;; haven't tried yasnippet in org mode but let's try this in advance
     (add-hook 'org-mode-hook
                   (lambda ()
@@ -899,7 +901,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
                    (push file org-agenda-files)))
               (org-projectile-todo-files)))
 
-)
+    ))
 
 
 (defun your_spacemacs/comint_setup ()
