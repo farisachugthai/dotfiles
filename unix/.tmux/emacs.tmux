@@ -34,12 +34,15 @@ bind-key    -T copy-mode-vi    C-s               command-prompt -i -I "#{pane_se
 # bind-key    -T copy-mode-vi    n                 send-keys -X search-again
 # bind-key    -T copy-mode-vi    t                 command-prompt -1 -p "(jump to forward)" "send -X jump-to-forward \"%%%\""
 bind-key    -T copy-mode-vi    MouseDown1Pane    select-pane
-bind-key    -T copy-mode-vi    MouseDrag1Pane    select-pane ; send-keys -X begin-selection
-bind-key    -T copy-mode-vi    MouseDragEnd1Pane send-keys -X copy-selection-and-cancel
-bind-key    -T copy-mode-vi    WheelUpPane       select-pane ; send-keys -X -N 5 scroll-up
-bind-key    -T copy-mode-vi    WheelDownPane     select-pane ; send-keys -X -N 5 scroll-down
-bind-key    -T copy-mode-vi    DoubleClick1Pane  select-pane ; send-keys -X select-word
-bind-key    -T copy-mode-vi    TripleClick1Pane  select-pane ; send-keys -X select-line
+
+# termux complains about these bindings. debug later.
+# bind-key    -T copy-mode-vi    MouseDrag1Pane    select-pane ; send-keys -X begin-selection
+# bind-key    -T copy-mode-vi    MouseDragEnd1Pane send-keys -X copy-selection-and-cancel
+# bind-key    -T copy-mode-vi    WheelUpPane       select-pane ; send-keys -X -N 5 scroll-up
+# bind-key    -T copy-mode-vi    WheelDownPane     select-pane ; send-keys -X -N 5 scroll-down
+# bind-key    -T copy-mode-vi    DoubleClick1Pane  select-pane ; send-keys -X select-word
+# bind-key    -T copy-mode-vi    TripleClick1Pane  select-pane ; send-keys -X select-line
+
 bind-key    -T copy-mode-vi    Home              send-keys -X start-of-line
 bind-key    -T copy-mode-vi    End               send-keys -X end-of-line
 bind-key    -T copy-mode-vi    NPage             send-keys -X page-down
