@@ -51,7 +51,8 @@ fi
 pathadd "$XDG_CONFIG_HOME/nvim/pythonx"
 
 # Will this give us relative imports?
-export PYTHONPATH="$PYTHONPATH:$XDG_CONFIG_HOME/rplugin/python3"
+export PYTHONPATH="$PATH:$PYTHONPATH"
+export PYTHONPATH+="$PYTHONPATH:$XDG_CONFIG_HOME/rplugin/python3"
 
 # User dirs first: {{{1
 

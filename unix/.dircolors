@@ -53,7 +53,7 @@
 
 
 # a foreword by dustin kirkland: {{{2
-DIR 38;5;5 # directory
+# DIR 38;5;5 # directory
 LINK 38;5;37 # symbolic link. (If you set this to 'target' instead of a
  # numerical value, the color is as for the file pointed to.)
 MULTIHARDLINK 00 # regular file with more than one link
@@ -121,6 +121,74 @@ EXEC 38;5;202
 .7z 01;31
 .rz 01;31
 
+# image formats
+.jpg 01;35
+.jpeg 01;35
+.gif 01;35
+.bmp 01;35
+.pbm 01;35
+.pgm 01;35
+.ppm 01;35
+.tga 01;35
+.xbm 01;35
+.xpm 01;35
+.tif 01;35
+.tiff 01;35
+.png 01;35
+.svg 01;35
+.svgz 01;35
+.mng 01;35
+.pcx 01;35
+.mov 01;35
+.mpg 01;35
+.mpeg 01;35
+.m2v 01;35
+.mkv 01;35
+.webm 01;35
+.ogm 01;35
+.mp4 01;35
+.m4v 01;35
+.mp4v 01;35
+.vob 01;35
+.qt 01;35
+.nuv 01;35
+.wmv 01;35
+.asf 01;35
+.rm 01;35
+.rmvb 01;35
+.flc 01;35
+.avi 01;35
+.fli 01;35
+.flv 01;35
+.gl 01;35
+.dl 01;35
+.xcf 01;35
+.xwd 01;35
+.yuv 01;35
+.cgm 01;35
+.emf 01;35
+# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
+.axv 01;35
+.anx 01;35
+.ogv 01;35
+.ogx 01;35
+# audio formats
+.aac 00;36
+.au 00;36
+.flac 00;36
+.mid 00;36
+.midi 00;36
+.mka 00;36
+.mp3 00;36
+.mpc 00;36
+.ogg 00;36
+.ra 00;36
+.wav 00;36
+# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
+.axa 00;36
+.oga 00;36
+.spx 00;36
+.xspf 00;36
 # Trapdoor: {{{2
 RESET 0 # reset to "normal" color
 # BLK                   38;5;68
@@ -128,7 +196,7 @@ RESET 0 # reset to "normal" color
 CHR                   38;5;113;1
 DIR                   38;5;30
 DOOR                  38;5;127
-EXEC                  38;5;208;1
+# EXEC                  38;5;208;1
 FIFO                  38;5;126
 # FILE                  0
 # LINK                  target
@@ -148,11 +216,11 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 *LS_COLORS 48;5;89;38;5;197;1;3;4;7 # :-)
 
 # documents {{{1
-*README               38;5;220;1
-*README.rst           38;5;220;1
-*README.md            38;5;220;1
-*LICENSE              38;5;220;1
-*COPYING              38;5;220;1
+*README               38;5;220;1;4
+*README.rst           38;5;220;1;4
+*README.md            38;5;220;1;4
+*LICENSE*             38;5;220;
+*COPYING              38;5;220;
 *INSTALL              38;5;220;1
 *COPYRIGHT            38;5;220;1
 *AUTHORS              38;5;220;1
@@ -250,24 +318,35 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # version control {{{2
 .git                  38;5;197
 .gitignore            38;5;197
+.gitconfig            38;5;197
 .gitattributes        38;5;197
 .gitmodules           38;5;197
 
 # shell {{{2
 .awk                  38;5;172
 .bash                 38;5;172
+.bashrc*              38;5;172
+.profile*             38;5;172
 .bat                  38;5;172
 .BAT                  38;5;172
 .sed                  38;5;172
 .sh                   38;5;172
-.zsh                  38;5;172
+.shada                38;5;214
+.tmux                 38;5;11
 .vim                  38;5;172
+.viminfo              38;5;214
+.zsh                  38;5;172
+
 
 # interpreted {{{2
 .ahk                  38;5;41
 # python
 .py                   38;5;41
-.ipynb                38;5;41
+.ipynb                38;5;45
+.ipy                  38;5;42;1
+requirements*.txt     38;5;248
+.pdbrc                38;5;41
+
 # ruby
 .rb                   38;5;41
 .gemspec              38;5;41
@@ -288,13 +367,16 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # GrADS script
 .gs                   38;5;81
 
+# History: {{{1
+.bash_history*        38;5;221
+.python_history*      38;5;221
+
 # compiled {{{2
-#
+
 #   assembly language
 .asm                  38;5;81
 #   LISP
 # While we're on the topic of lisp, no el, no org? Tisk tisk
-
 .cl                   38;5;81
 .lisp                 38;5;81
 .el                   38;5;81
@@ -356,7 +438,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .tf                   38;5;168
 .tfstate              38;5;168
 .tfvars               38;5;168
-# orchestration 2}}}
 # html {{{2
 .css                  38;5;125;1
 .less                 38;5;125;1
@@ -369,10 +450,13 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .eml                  38;5;125;1
 .mustache             38;5;125;1
 
-# java {{{2
+# java and js {{{2
 .coffee               38;5;074;1
 .java                 38;5;074;1
 .js                   38;5;074;1
+.npmrc                38;5;195;1
+.yarnrc               38;5;195;1
+.yarnclean            38;5;195;1
 .mjs                  38;5;074;1
 .jsm                  38;5;074;1
 .jsm                  38;5;074;1
@@ -389,13 +473,12 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .vb                   38;5;81
 .vba                  38;5;81
 .vbs                  38;5;81
-# 2}}}
 # Build stuff {{{2
 *Dockerfile           38;5;155
-.dockerignore         38;5;240
+.dockerignore         38;5;248
 *Makefile             38;5;155
 *MANIFEST             38;5;243
-*pm_to_blib           38;5;240
+*pm_to_blib           38;5;248
 # ruby rake
 .rake                 38;5;155
 # automake
@@ -407,6 +490,10 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .old                  38;5;242
 .out                  38;5;242
 .SKIP                 38;5;244
+.ignore               38;5;244
+.agignore             38;5;244
+.rgignore             38;5;244
+.npmignore            38;5;244
 
 # patch files {{{2
 .diff                 48;5;197;38;5;232
@@ -500,7 +587,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .wv                   38;5;136;1
 .wvc                  38;5;136;1
 
-
 # fonts {{{1
 .afm                  38;5;66
 .fon                  38;5;66
@@ -570,20 +656,20 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .vmdk                 38;5;124
 
 # databases {{{2
-.accdb                38;5;60
-.accde                38;5;60
-.accdr                38;5;60
-.accdt                38;5;60
-.db                   38;5;60
-.fmp12                38;5;60
-.fp7                  38;5;60
-.localstorage         38;5;60
-.mdb                  38;5;60
-.mde                  38;5;60
-.sqlite               38;5;60
-.typelib              38;5;60
+.accdb                38;5;222
+.accde                38;5;222
+.accdr                38;5;222
+.accdt                38;5;222
+.db                   38;5;222
+.fmp12                38;5;222
+.fp7                  38;5;222
+.localstorage         38;5;222
+.mdb                  38;5;222
+.mde                  38;5;222
+.sqlite               38;5;222
+.typelib              38;5;222
 # NetCDF database
-.nc                   38;5;60
+.nc                   38;5;222
 
 # tempfiles {{{1
 # undo files
@@ -592,7 +678,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .orig                 38;5;241
 # backups
 .BUP                  38;5;241
-.bak                  38;5;241
+.bak                  38;5;248
 .o                    38;5;241 #   *nix Object file (shared libraries, core dumps etc)
 *core                 38;5;241 #   Linux user core dump file (from /proc/sys/kernel/core_pattern)
 .rlib                 38;5;241 #   Static rust library

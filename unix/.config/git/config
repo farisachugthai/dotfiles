@@ -10,7 +10,7 @@
     co = checkout
     last = log -1 HEAD
     unstage = reset HEAD --
- 
+
     # From varying Gists
     rel = rev-parse --show-prefix
     root = rev-parse --show-toplevel
@@ -22,25 +22,53 @@
     hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 
     # General.
-    br = branch
-    bra = branch -a
+    a = add
+    ar = add --renormalize -A
+    b = branch
+    bl = blame
+    br = branch -a
+    cia = commit --amend
+    cid = commit --date=
+    ciad = commit --amend --date=
     cl =  clone
     cls= clone --depth 1
+    cob = checkout -b
     d = diff
+    ds = diff --staged
+    ds2 = diff --stat --staged
     dt = difftool
     f = fetch --all
-    m = merge
+    fe = fetch
+    l = log
+    lo = log --graph --decorate --abbrev-commit --branches --all --date=short --oneline
+    ls = ls-tree
+    m = merge --no-ff
+    ma = merge --abort
+    mc = merge --continue
+    mm = merge master
     mt = mergetool
-    s = status -sb
+    p = pull --all
+    po = pull origin
+    pom = pull origin master
+    pu = push
     r = remote -v
+    re = rebase
+    rea = rebase --abort
+    rec = rebase --continue
+    rei = rebase -i
+    s = status -s
+    st = diff --stat
+    t = tag --list
 
     # stashes
     sh = stash --all
-    shp = stash pop
-    shl = stash list
-    shd = stash drop
-    shc = stash clear
     sha = stash apply
+    shc = stash clear
+    shd = stash drop
+    shl = stash list
+    shp = stash pop
+    shs = stash show
+    shsp = stash show --patch
 	switch = !legit switch
 	sync = !legit sync
 	publish = !legit publish
@@ -50,7 +78,7 @@
 
     # May 27, 2019
     amend = commit --amend
-  
+
     # from man git-alias. added '-msg' to make distinct from other last
     last-msg = cat-file commit HEAD
 
