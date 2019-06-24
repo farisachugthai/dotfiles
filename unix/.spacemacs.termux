@@ -114,6 +114,7 @@ This function should only modify configuration layer settings."
             shell-default-height 30
             shell-default-shell 'eshell
             shell-default-term-shell 'eshell
+            shell-enable-smart-eshell t
             shell-default-position 'bottom)
      spacemacs-completion
      spacemacs-editing

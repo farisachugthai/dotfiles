@@ -119,6 +119,7 @@ shopt -s histappend
 shopt -s histreedit
 
 # Shopt: {{{1
+set -o emacs
 
 # Be notified of asynchronous jobs completing in the background
 set -o notify

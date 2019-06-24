@@ -55,11 +55,9 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     export FZF_CTRL_R_OPTS=" --cycle --history-size=10000 --ansi --preview 'bat {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
     # Change dirs with Alt C: {{{2
-    # doesn't
-    # idk what dirs only is but A-c now works!
-    # export FZF_ALT_C_COMMAND="rg --files $*"
+    # TODO: else
     if [[ -n "$(command -v fd)" ]]; then
-        export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git "
+        export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
     fi
 
     export FZF_ALT_C_OPTS=" --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --header 'TODO: Should come up with some binds.' "
