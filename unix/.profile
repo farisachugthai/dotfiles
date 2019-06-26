@@ -92,8 +92,8 @@ if [[ -n "$(command -v yarn)" ]]; then
         # shellcheck source=./.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash disable=1091
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
-
 fi
+export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 
 # Lisp: {{{1
 pathadd "$HOME/.racket/7.1/bin"
