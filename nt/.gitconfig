@@ -1,5 +1,8 @@
 # Global Git Config
-# Vim: set ft=gitconfig:
+
+[user]
+    email = farischugthai@gmail.com
+    name = farisachugthai
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliase
@@ -19,17 +22,43 @@
     hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short $*
 
     # General.
+    a = add
+    ar = add --renormalize -A
+    b = branch
+    bl = blame
+    br = branch -a
+    cia = commit --amend
     br = branch $*
     bra = branch -a
     cl =  clone
     cls= clone --depth 1
+    cob = checkout -b
     d = diff
+    ds = diff --staged
+    ds2 = diff --stat --staged
     dt = difftool
     f = fetch --all
-    m = merge
+    fe = fetch
+    l = log
+    lo = log --graph --decorate --abbrev-commit --branches --all --date=short --oneline
+    ls = ls-tree
+    m = merge --no-ff
+    ma = merge --abort
+    mc = merge --continue
+    mm = merge master
     mt = mergetool
-    s = status -sb
+    p = pull --all
+    po = pull origin
+    pom = pull origin master
+    pu = push
     r = remote -v
+    re = rebase
+    rea = rebase --abort
+    rec = rebase --continue
+    rei = rebase -i
+    s = status -s
+    st = diff --stat
+    t = tag --list
 
     # stashes
     sh = stash --all
@@ -38,6 +67,14 @@
     shd = stash drop
     shl = stash list
     shp = stash pop
+    shs = stash show
+    shsp = stash show --patch
+	switch = !legit switch
+	sync = !legit sync
+	publish = !legit publish
+	unpublish = !legit unpublish
+	undo = !legit undo
+	branches = !legit branches
 
     switch = !legit switch
     sync = !legit sync
@@ -47,7 +84,7 @@
     branches = !legit branches
     # May 27, 2019
     amend = commit --amend
-  
+
     # from man git-alias. added '-msg' to make distinct from other last
     last-msg = cat-file commit HEAD
 
@@ -70,7 +107,10 @@
 
 [core]
     autocrlf=input
-    eol=lf
+    editor = nvim-qt
+    editor = nvim
+    editor = vim
+    # eol=lf
     fscache = true
     # whoever set this to false what the fuck
     symlink = true
@@ -89,6 +129,8 @@
     # False by default.
     ignorestat = true
 	sshCommand = C:/WINDOWS/System32/OpenSSH/ssh.exe
+	editor = nvim
+
 [credential "https://www.github.com"]
     username = farisachugthai
 
@@ -102,6 +144,12 @@
     renames = copy
     strategy-option = resolve
     # astextplain.textconv=astextplain
+    tool = nvimdiff
+
+[difftool "nvimdiff"]
+    cmd = nvim-qt.exe -d $LOCAL $REMOTE
+    cmd = nvim -d $LOCAL $REMOTE
+    prompt = false
 
 # [filter]
     # lfs.clean=git-lfs clean -- %f
@@ -116,13 +164,21 @@
 [gui]
     editor = nvim-qt.exe
     encoding = utf-8
-    fontui = -family \"Fira Code\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-    fontdiff = -family \"Fira Code Light\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontui = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
     newbranchtemplate = nt
     tabsize = 4
     warndetachedcommit = true
 	recentrepo = C:/Users/faris/projects/utilities
 	recentrepo = C:/Users/faris/projects/dotfiles
+	recentrepo = C:/Users/faris/projects/dynamic_ipython
+	pruneduringfetch = true
+	diffcontext = 2
+	matchtrackingbranch = true
+
+[grep]
+    lineNumber = true
+    extendedRegexp = true
 
 [help]
     autocorrect = 1
@@ -179,18 +235,16 @@
 [sequence]
     editor = nvim
 
+
+[ssh]
+    variant = "ssh -p 8022 $*"
+
 [status]
     showStash = True
     showUntrackedFiles = all
 
-[user]
-    email = farischugthai@gmail.com
-    name = farisachugthai
-
-
 [url "git://github.com"]
     insteadOf = g:
-    # insteadOf = https://github.com
     name = farisachugthai
 
 [url "git@gist.github.com"]

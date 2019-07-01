@@ -49,20 +49,27 @@ fi
 
 # Conda: {{{2
 if [[ -d "$HOME/miniconda3/bin/" ]]; then
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/faris/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/home/faris/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="/home/faris/miniconda3/bin:$PATH"
+        if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/home/faris/miniconda3/bin:$PATH"
+        fi
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+    unset __conda_setup
+    # <<< conda initialize <<<
+
+elif  [[ -d 'C:/Users/faris/miniconda3/Scripts' ]]; then
+    # futureeeeeee
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    eval "$('/c/Users/faris/Anaconda3/Scripts/conda.exe' 'shell.bash' 'hook')"
+    # <<< conda initialize <<<
 fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion

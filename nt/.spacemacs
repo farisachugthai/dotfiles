@@ -72,6 +72,7 @@ This function should only modify configuration layer settings."
      csv
      dap  ;; note this is a full GUI debugger dude. it's the Debug Adapter Protocol
      debug
+     docker
      dotnet
      django
      emacs-lisp
@@ -104,6 +105,7 @@ This function should only modify configuration layer settings."
      markdown
      neotree
      org  ;; go down to yourspacemacs/org_setup to see the vars
+     pandoc
      (python :variables
              python-auto-set-local-pyenv-version nil
              python-auto-set-local-pyvenv-virtualenv nil
@@ -181,7 +183,10 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(treemacs treemacs-lsp treemacs-projectile lsp-treemacs chinese-wbim chinese-conv)
+   dotspacemacs-excluded-packages '(treemacs treemacs-lsp treemacs-projectile
+                                             lsp-treemacs chinese-wbim
+                                             chinese-conv treemacs-evil
+                                             powerline)
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -602,8 +607,8 @@ like this:
 From the Spacemacs FAQ."
 
   ;; This is only needed once, near the top of the file
-  ;; (eval-when-compile
-    ;; (require 'use-package))
+  (eval-when-compile
+    (require 'use-package))
 
   ;; The :ensure-system-package keyword allows you to ensure system binaries exist alongside your package declarations.
 
@@ -626,6 +631,7 @@ From the Spacemacs FAQ."
   ;; The package is "python" but the mode is "python-mode": Can we put ipython for the interpreter?
 
   (use-package auto-package-update
+    :defer t
     :config
     (setq-default auto-package-update-delete-old-versions t)
     (setq-default auto-package-update-hide-results t)
@@ -777,25 +783,26 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 
   (use-package evil-collection
     :after evil
-    :ensure t
+    :defer t
     ;; got this from the github. EVIL IN THE MINIBUFFER!
     :custom (evil-collection-setup-minibuffer t)
     :init (evil-collection-init))
 
   (use-package evil-matchit
-    :ensure t
     :after evil
+    :defer t
     :config
     (global-evil-matchit-mode t))
 
   (use-package evil-surround
     :after evil
+    :defer t
     :config
     (global-evil-surround-mode t))
 
   (use-package evil-tabs
     :after evil
-    :ensure t
+    :defer t
     :config
     (global-evil-tabs-mode))
 
@@ -835,9 +842,9 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
       (not (string= lang \"ditaa\")))  ;don't ask for ditaa
     (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)"
 
-    (with-eval-after load 'org
-                     (
-          org-bullets-bullet-list '("■" "◆" "▲" "▶")
+    (progn
+      (setq '(
+              (org-bullets-bullet-list '("■" "◆" "▲" "▶"))
           org-confirm-babel-evaluate nil
           org-log-done 'time
           org-log-redeadline 'time
@@ -849,7 +856,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
           org-journal-date-format "%A, %B %d %Y"
           org-journal-time-prefix "* "
           org-journal-time-format ""
-          spaceline-org-clock-p t))
+          spaceline-org-clock-p t)))
 
 
                 (spacemacs-space-doc-modificators
@@ -965,6 +972,7 @@ I'm gonna add some stuff for ielm here too because why not?"
 Shows a good example of using bind and map. Calling a package with use-package's *bind* keyword
 means that that package will be autoloaded"
 (use-package term
+  :defer t
   :bind (("C-c t" . term)
          :map term-mode-map
          ("M-p" . term-send-up)
@@ -987,7 +995,6 @@ means that that package will be autoloaded"
 (defun your_spacemacs/savehist_setup ()
   "Save/restore command history etc across sessions."
   (use-package savehist
-    :ensure t
     :defer t)
 
   (with-eval-after-load 'savehist
@@ -1004,6 +1011,7 @@ means that that package will be autoloaded"
 "Setup yasnippet. I don't know why it doesn't seem to be working.
 Enabled it twice and I still am loading yasnippet manually. Hm."
 (use-package yasnippet
+  :defer t
   :config
   (yas-minor-mode on)
   (yas-load-directory "~/.emacs.d/private/snippets"))
@@ -1037,6 +1045,7 @@ C-c C-r rst-shift-region-right
 
    (add-hook 'python-mode-hook
      (use-package python
+       :defer t
        :mode ("\\.py\\'" . python-mode)
        :interpreter ("ipython3" . python-mode))
      (define-key evil-normal-state-map (kbd "[F5]") 'spacemacs/python-execute-file))
@@ -1050,12 +1059,15 @@ C-c C-r rst-shift-region-right
                    ("\\.rest$" . rst-mode)) auto-mode-alist)))
 
    (use-package python-mode-hook
-     :ensure t)
+     :defer t)
 
    (use-package sphinx-mode
-     :ensure t)
+     :defer t
+     :config
+     (setq rst-slides-program "firefox"))
 
    (use-package python-x
+     :defer t
      :config
      (python-x-setup))
 
@@ -1073,20 +1085,34 @@ C-c C-r rst-shift-region-right
 (eval-after-load 'company '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))
 
 (use-package company-jedi
+  :defer t
   :commands (jedi:goto-definition jedi-mode company-jedi)
   :bind (:map python-mode-map
               ("M-." . jedi:goto-definition)
-              ("M-," . jedi:goto-definition-pop-marker))
+              ("M-," . jedi:goto-definition-pop-marker))
   :config
   (progn
     (setq jedi:complete-on-dot t)
     (setq jedi:imenu-create-index-function 'jedi:create-flat-imenu-index)))
+
+(use-package elpy
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
+
+
+(use-package anaconda-mode
+  :defer t)
+
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
 )
 
 (defun your_spacemacs/paradox_setup ()
   "Load paradox."
   (use-package paradox
+    :defer t
     :commands (paradox-upgrade-packages paradox-list-packages)
     :config
     (progn
@@ -1108,10 +1134,11 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(global-evil-tabs-mode t)
  '(org-agenda-files (quote ("~/org/first_agenda.org")))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package unicode-fonts toc-org tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets open-junk-file ob-ipython ob-hy nodejs-repl neotree nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide importmagic impatient-mode ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-quickhelp company-lsp company-emoji company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ahk-mode aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package unicode-fonts toc-org tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets open-junk-file ob-ipython ob-hy nodejs-repl neotree nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide importmagic impatient-mode ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-quickhelp company-lsp company-emoji company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ahk-mode aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -101,17 +101,30 @@
 
 [core]
     excludesfile = "$HOME/.config/git/ignore"
-    filemode = false
-    logallrefupdates = true
-    repositoryformatversion = 0
-    eol = lf
     autocrlf = input
+
+    # If true, Git will avoid using lstat() calls to detect if files have
+    # changed by setting the "assume-unchanged" bit for those tracked files
+    # which it has updated identically in both the index and working tree.
+
+    # When files are modified outside of Git, the user will need to stage the
+    # modified files explicitly (e.g. see Examples section in
+    # git-update-index(1)). Git will not normally detect changes to those files.
+
+    # This is useful on systems where lstat() calls are very slow, such as
+    # CIFS/Microsoft Windows.
+
+    # False by default.
+    ignorestat = true
 
 [credential]
     helper = cache --timeout=86400
 
 [credential "https://www.github.comm"]
     username = farisachugthai
+
+[credential "https://source.developers.google.com"]
+	helper = gcloud.cmd
 
 # Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
@@ -190,7 +203,6 @@
 
 [url "git://github.com"]
     insteadOf = g:
-    insteadOf = https://github.com
     name = farisachugthai
 
 [url "git@gist.github.com"]
