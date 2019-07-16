@@ -1,8 +1,5 @@
 # ripgrep
 # Vim: set commentstring=#\ %s:
-# You gotta rework the whole thing it actually jams rg in its current state
-#
-# I think its the ignores
 
 # -g '!.git/*'
 # -g '!*/.svn'
@@ -10,16 +7,21 @@
 # -g '!*/CVS'
 # -g '!*/.DS_Store'
 # -g '!node_modules/*'
+--glob=!.git/*
 
 --hidden
 
-# could add colors and stuff
+# don't match super long lines
+--max-columns=300
 
-# don't match more than 50 lines
-# --max-count 50
+# but don't just omit the whole line
+--max-columns-preview
 
-"--max-depth 8"
-"-m 50"
+# don't match more than 50 lines per files
+--max-count=50
+
+# How recursive should we go?
+--max-depth=8
 
 # if you need to debug run --messages on the command line.
 --no-messages
@@ -28,14 +30,23 @@
 # --vimgrep
 
 # Needs quotes!
-"--color ansi"
+--color=ansi
+
+--no-column
+--no-line-number
+
+--no-heading
 
 # Colors are limited to one of eight choices: red, blue, green, cyan,
 # magenta, yellow, white and black. Styles are limited to nobold,
 # bold, nointense, intense, nounderline or underline.
 
-# The format of the flag is {type}:{attribute}:{value}.  {type}
-# should be one of path, line, column or match.  {attribute} can be
-# fg, bg or style.  {value} is either a color (for fg and bg) or a
-# text style. A special format, {type}:none, will clear all color
-# settings for {type}.
+# The format of the flag is {type}:{attribute}:{value}.
+
+# {type} should be one of path, line, column or match.
+
+# {attribute} can be fg, bg or style.
+
+# {value} is either a color (for fg and bg) or a text style.
+
+# A special format, {type}:none, will clear all color settings for {type}.

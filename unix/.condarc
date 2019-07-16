@@ -230,7 +230,6 @@ clobber: true
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
-#   - https://repo.anaconda.com/pkgs/r
   - https://repo.anaconda.com/pkgs/pro
 
 # disallowed_packages (sequence: str)

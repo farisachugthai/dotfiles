@@ -110,7 +110,7 @@
     editor = nvim-qt
     editor = nvim
     editor = vim
-    # eol=lf
+    eol = crlf
     fscache = true
     # whoever set this to false what the fuck
     symlink = true
@@ -250,3 +250,7 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
+
+[add]
+    # windows has to do this every single time :/ might as well be default
+    renormalize
