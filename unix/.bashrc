@@ -134,6 +134,10 @@ set -o notify
 # Now the default in Bash 5!!!
 shopt -s checkwinsize
 
+# Why the hell does termux have this listed as off?
+# if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
+shopt -s lastpipe
+
 # ** will match all files and zero or more directories and subdirectories.
 # shellcheck disable=SC2128
 if [[ $BASH_VERSINFO -gt 3 ]]; then
@@ -168,16 +172,12 @@ shopt -s lithist
 
 shopt -s direxpand
 
-shopt -s autocd
-shopt -s cdable_vars
-
-set -o pipefail  # if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
 
 # Pagers: {{{1
 
 if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME="OneHalfDark"
-    export PAGER="bat --italic-text always --wrap never $*"
+    export BAT_THEME="TwoDark"
+    export PAGER="bat --italic-text always --wrap character $*"
     export BAT_STYLE="changes,numbers"
     export BAT_PAGER="less -JRKML"
 else
@@ -212,6 +212,15 @@ fi
 
 # Testing out the language servers to see if they'll link up with neovim
 pathadd "$HOME/.local/share/nvim/site/node_modules/.bin"
+
+# Fasd: {{{1
+
+fasd_cache="$HOME/.fasd-init-bash"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+    fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
 
 # Sourced files: {{{1
 
@@ -249,3 +258,5 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

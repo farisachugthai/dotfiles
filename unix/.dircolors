@@ -381,6 +381,7 @@ requirements*.txt     38;5;248
 .lisp                 38;5;81
 .el                   38;5;81
 .org                  38;5;111
+.spacemacs*           38;5;81
 
 #   lua
 .lua                  38;5;81

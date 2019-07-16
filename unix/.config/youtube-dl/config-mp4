@@ -10,12 +10,13 @@
 # Filenames
 --restrict-filenames
 
-# Output location
--o "$HOME/storage/shared/Videos/%(uploader)s/%(title)s.%(ext)s"
-
 # Metadata
 --add-metadata
---metadata-from-title "%(artist)s - %(title)s"
+# --metadata-from-title "%(artist)s - %(title)s"
+--metadata-from-title "(?P<artist>.+?) - (?P<title>.+)"
+
+# Output location
+-o "$HOME/storage/shared/Videos/%(artist)s/%(title)s.%(ext)s"
 
 # Modification time
 --no-mtime

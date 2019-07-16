@@ -41,7 +41,7 @@
     fe = fetch
     l = log
     lo = log --graph --decorate --abbrev-commit --branches --all --date=short --oneline
-    ls = ls-tree
+    ls = ls-tree -rl --abbrev master
     m = merge --no-ff
     ma = merge --abort
     mc = merge --continue

@@ -147,7 +147,7 @@
 $if mode = vi
     "\C-e": set emacs-editing-mode
 $else
-    "\C-M-j": set vi-movement-mode
+    "\e\C-j": set vi-movement-mode
 $endif
 
 # emacs-editing-mode (C-e)
@@ -157,6 +157,8 @@ $endif
 #     When in emacs editing mode, this causes a switch to vi editing mode.
 
 # In an attempt to prevent RSI: {{{1
+# Woops. I just realized set -o emacs is still set in bashrc. Was wondering
+# why things were behaving oddly
 set editing-mode vi
 set keymap vi
 

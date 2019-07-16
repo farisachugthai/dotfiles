@@ -26,11 +26,11 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
     # Filepath helps you jump directories quickly, tiebreak begin makes a ton
     # of difference, ansi colors dude this is sweet
-    export FZF_DEFAULT_COMMAND='rg --hidden --color ansi --follow --no-messages --no-heading --smart-case  --glob "!.git/*" -g "!vendor/*" -m 20 --passthru *  | tr -d "\017" '
+    export FZF_DEFAULT_COMMAND='rg --hidden --color ansi --follow --no-messages --no-heading --smart-case --no-filename --glob "!.git/*" -g "!vendor/*" -m 20 --passthru *  | tr -d "\017" '
 
     # export FZF_DEFAULT_COMMAND="rg --follow --vimgrep -e ^.*$ "
     # export FZF_DEFAULT_COMMAND="fd --hidden --follow --type file --max-dept 25 --color always $*"
-    export FZF_DEFAULT_OPTS=' --multi --cycle --tiebreak begin,length,index --ansi --filepath-word --border '
+    export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser" --tiebreak begin,length,index '
 
     # <Ctrl-t>: {{{2
     # Might be implemented as __fzf_select__
@@ -40,7 +40,7 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # Display only filenames but provide a previee window
     export FZF_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
     # export FZF_CTRL_T_COMMAND="fd --hidden --follow --type file --max-depth 25 --color always $*"
-    export FZF_CTRL_T_OPTS=' --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview." '
+    export FZF_CTRL_T_OPTS=' --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview." --tiebreak begin,length,index '
 
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb ]]; then
         # doesn't this stop tilde expansion?
@@ -51,8 +51,8 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
 
     # __fzf_history__: {{{2
     # works
-    export FZF_CTRL_R_COMMAND=" rg --hidden --no-messages $* "
-    export FZF_CTRL_R_OPTS=" --cycle --history-size=10000 --ansi --preview 'bat {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+    export FZF_CTRL_R_COMMAND=" rg --hidden --color ansi --no-heading --no-filename --no-messages "
+    export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --preview 'bat {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
     # Change dirs with Alt C: {{{2
     # TODO: else
@@ -88,7 +88,7 @@ else  # no rg or fd {{{1
     export FZF_DEFAULT_COMMAND="find * -type f $@"
 
     # Options for FZF no matter what.
-    export FZF_DEFAULT_OPTS=' --cycle'
+    export FZF_DEFAULT_OPTS=' --cycle --multi --border --ansi '
 fi
 
 # More additions: {{{1
@@ -118,6 +118,8 @@ complete -F _fzf_path_completion -o default -o bashdefault rg
 complete -F _fzf_dir_completion -o default -o bashdefault tree
 
 # Universal Options: {{{1
+
+# TODO: Add prompts to this as well
 
 # Colors: {{{2
 

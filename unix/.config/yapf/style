@@ -62,7 +62,7 @@ blank_line_before_nested_class_or_def=True
 #        'key1': 'value1',
 #        'key2': 'value2',
 #    })
-coalesce_brackets=True
+coalesce_brackets=False
 
 # The column limit.
 column_limit=79
@@ -102,14 +102,14 @@ continuation_indent_width=4
 #       start_ts=now()-timedelta(days=3),
 #       end_ts=now(),
 #   )        # <--- this bracket is dedented and on a separate line
-dedent_closing_brackets=False
+dedent_closing_brackets=True
 
 # Disable the heuristic which places each list element on a separate line
 # if the list is comma-terminated.
 disable_ending_comma_heuristic=False
 
 # Place each dictionary entry onto its own line.
-each_dict_entry_on_separate_line=True
+each_dict_entry_on_separate_line=False
 
 # The regex for an i18n comment. The presence of this comment stops
 # reformatting of that line, because the comments are required to be
@@ -121,6 +121,9 @@ i18n_comment=
 # away from the i18n comment.
 i18n_function_call=
 
+# Indent blank lines.
+indent_blank_lines=False
+
 # Indent the dictionary value if it cannot fit on the same line as the
 # dictionary key. For example:
 #
@@ -130,7 +133,7 @@ i18n_function_call=
 #       'key2': value1 +
 #               value2,
 #   }
-indent_dictionary_value=False
+indent_dictionary_value=True
 
 # The number of columns to use for indentation.
 indent_width=4
@@ -201,7 +204,7 @@ split_before_expression_after_opening_paren=False
 
 # If an argument / parameter list is going to be split, then split before
 # the first argument.
-split_before_first_argument=False
+split_before_first_argument=True
 
 # Set to True to prefer splitting before 'and' or 'or' rather than
 # after.

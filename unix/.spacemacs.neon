@@ -93,7 +93,6 @@ This function should only modify configuration layer settings."
           global-git-gutter+-mode t
           magit-repository-directories
           '(("~/projects" . 2)("~/src/" . 2)))
-     github
      (helm :variables
            helm-enable-auto-resize t
            helm-elisp-show-doc-modeline t  ;; is this a default?

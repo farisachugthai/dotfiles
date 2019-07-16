@@ -13,8 +13,23 @@ ignore =
     E302             # Guido doesn't even do this. Who are you?
     E402,            # module level import not at top of file
 
+    C,               # fucking pylint.
+
 # the defaults for excluded files are
-# exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.tox
+
+exclude =
+
+    .svn,
+    CVS,
+    .bzr,
+    .hg,
+    .git,
+    __pycache__,
+    .tox,
+    build,
+    dist
+    .egg*
+    docs/build/
 
 # Comma-separated list of errors and warnings to enable.
 # Defaults listed below
