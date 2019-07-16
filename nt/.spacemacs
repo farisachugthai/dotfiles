@@ -50,6 +50,7 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ansible
      (auto-completion :variables
                       auto-completion-complete-with-key-sequence "jk"
                       auto-completion-complete-with-key-sequence-delay 0.1
@@ -102,6 +103,7 @@ This function should only modify configuration layer settings."
      javascript
      json
      lsp
+     lua
      markdown
      neotree
      org  ;; go down to yourspacemacs/org_setup to see the vars
@@ -136,6 +138,7 @@ This function should only modify configuration layer settings."
      shell-scripts
      ;; requires treemacs so don't list it anymore
      ;; spacemacs
+     ;; holy shit outside of base and bootstrap this is all of them
      spacemacs-completion
      spacemacs-docker
      spacemacs-editing
@@ -147,6 +150,7 @@ This function should only modify configuration layer settings."
      spacemacs-modeline
      spacemacs-navigation
      spacemacs-org
+     spacemacs-project
      spacemacs-purpose
      spacemacs-visual
      (spell-checking :variables spell-checking-enable-by-default nil)
@@ -616,18 +620,6 @@ From the Spacemacs FAQ."
   ;; package names that you would like to ensure are installed.
   ;; exec-path-from-shell is often a good way to do this.
 
-  ;; To enable the extension after you've loaded use-package:
-  ;; (use-package use-package-ensure-system-package
-  ;;   :ensure t)
-
-  ;; made this up as an example
-  ;; (use-package lsp
-  ;;   :ensure-system-package python-language-server)
-
-  ;; ooo here's a great example
-  ;; (use-package tern
-  ;;   :ensure-system-package (tern . "npm i -g tern"))
-
   ;; The package is "python" but the mode is "python-mode": Can we put ipython for the interpreter?
 
   (use-package auto-package-update
@@ -638,9 +630,10 @@ From the Spacemacs FAQ."
     (auto-package-update-maybe))
 
 
+  (progn
     (setq-default scroll-margin 5
                   scroll-conservatively 9999
-                  scroll-step 1)
+                  scroll-step 1))
 
   (setq-default tab-width 4 indent-tabs-mode nil)
   (define-key global-map (kbd "RET") 'newline-and-indent)
@@ -696,6 +689,11 @@ From the Spacemacs FAQ."
   (setq-default auto-save-default nil)
   (put 'erase-buffer 'disabled nil)
 
+  (setq-default paradox-execute-asynchronously t)
+  ;; will this autoupdate our packages or does the ensure-package thing do that for us?
+  ;; (paradox-upgrade-packages)
+
+  (setenv "TERM" "dumb")
 
   (global-flycheck-mode)
   (global-visual-fill-column-mode)
@@ -726,6 +724,15 @@ From the Spacemacs FAQ."
   ;; (spacemacs/linum-relative-toggle)
 
   (setq speedbar-show-unknown-files t)
+
+
+  (global-git-commit-mode)
+
+  (global-git-gutter+-mode)
+
+  ;; might have to itneractively call this but if there was a global setting for it, enable it
+  (which-function-mode)
+
 )
 
 
@@ -770,7 +777,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
  bunch of things."
   ;; from the github page for evil-collection
   (use-package evil
-    :ensure t
+    :defer t
     :init
     (setq-default evil-want-keybinding nil)
     :config
@@ -804,8 +811,10 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     :after evil
     :defer t
     :config
-    (global-evil-tabs-mode))
+    (setq global-evil-tabs-mode t))
 
+    (with-eval-after-load evil
+        (progn
         (define-key evil-motion-state-map "j" 'evil-next-visual-line)
         (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
         ;; Also in visual mode
@@ -816,7 +825,8 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
         (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
         (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
         (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-        (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+        (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
+
 
         (setq-default evil-normal-state-modes (append evil-motion-state-modes evil-normal-state-modes))
         (setq-default evil-motion-state-modes nil)
@@ -826,7 +836,6 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
         ;; Also in visual mode
         (define-key evil-visual-state-map "j" 'evil-next-visual-line)
         (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
-
 
 )
 
@@ -843,9 +852,11 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)"
 
     (progn
-      (setq '(
-              (org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+      (setq
+          (org-bullets-bullet-list '("■" "◆" "▲" "▶")
           org-confirm-babel-evaluate nil
+          org-enable-github-support t
+          org-enable-org-journal-support t
           org-log-done 'time
           org-log-redeadline 'time
           org-log-refile 'time
@@ -856,16 +867,11 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
           org-journal-date-format "%A, %B %d %Y"
           org-journal-time-prefix "* "
           org-journal-time-format ""
+          org-startup-indented t
+          org-refile-use-cache t
           spaceline-org-clock-p t)))
 
-
                 (spacemacs-space-doc-modificators
-   (add-hook 'org-mode-hook
-                 (lambda ()
-                   (setq-default yas/trigger-key [tab])
-                   (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand))))
-
-                (spacemacs-space-docs-modificators
                 '(center-buffer-mode
                   org-indent-mode
                   view-mode
@@ -876,23 +882,12 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
                   org-block-line-face-remap
                   org-kbd-face-remap
                   resize-inline-images))
-    ;; haven't tried yasnippet in org mode but let's try this in advance
-    (add-hook 'org-mode-hook
-                  (lambda ()
-                    (setq-default yas/trigger-key [tab])
-                    (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
-    ;;; If this doesn't fix it
-    ;; (defun yas/org-very-safe-expand ()
-    ;;   (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
 
-    ;; Then, tell Org mode to use that function:
 
-    ;; (add-hook 'org-mode-hook
-    ;;           (lambda ()
-    ;;             (make-variable-buffer-local 'yas/trigger-key)
-    ;;             (setq yas/trigger-key [tab])
-    ;;             (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-    ;;             (define-key yas/keymap [tab] 'yas/next-field)))
+   (add-hook 'org-mode-hook
+                 (lambda ()
+                   (setq-default yas/trigger-key [tab])
+                   (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
 
     (with-eval-after-load 'org-agenda
       (require 'org-projectile)
@@ -913,16 +908,16 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
       (org-indent-mode))
 
     (setq helm-org-headings-fontify t)
-
 ))
 
 
-(defun your-spacemacs/comint_setup ()
+(defun your_spacemacs/comint_setup ()
   "From use-package info page.
 
 I'm gonna add some stuff for ielm here too because why not?"
 
   (use-package comint
+    :defer t
     :custom
     (comint-buffer-maximum-size 20000 "Increase comint buffer size.")
     (comint-prompt-read-only t "Make the prompt read only."))
@@ -951,12 +946,13 @@ I'm gonna add some stuff for ielm here too because why not?"
 
 +TODO: Add docstrings to these variables I guess"
   (with-eval-after-load 'eshell
+    (progn
       (setq-default
        ;; so then it falls to HISTSIZE. how do we set env vars in emacs
        ;; eshell-history-size nil)
        eshell-hist-ignoredups t
        eshell-cd-shows-directory t
-       eshell-ls-dired-initial-args "-hF --color always --dired"))
+       eshell-ls-dired-initial-args "-hF --color always --dired")))
 
   (with-eval-after-load "esh-opt"
     (require 'virtualenvwrapper)
@@ -964,12 +960,12 @@ I'm gonna add some stuff for ielm here too because why not?"
     (autoload 'epe-theme-lambda "eshell-prompt-extras")
     (setq eshell-highlight-prompt nil
           eshell-prompt-function 'epe-theme-lambda))
-
 )
 
 (defun your_spacemacs/term_setup()
-  "Copied from jwiegley and the README of his `use-package.'
-Shows a good example of using bind and map. Calling a package with use-package's *bind* keyword
+  "This was copied from jwiegley and the README of his `use-package.'
+Shows a good example of using bind and map. Calling a package with use-package's
+*bind* keyword
 means that that package will be autoloaded"
 (use-package term
   :defer t
@@ -995,6 +991,7 @@ means that that package will be autoloaded"
 (defun your_spacemacs/savehist_setup ()
   "Save/restore command history etc across sessions."
   (use-package savehist
+    :ensure t
     :defer t)
 
   (with-eval-after-load 'savehist
@@ -1016,13 +1013,30 @@ Enabled it twice and I still am loading yasnippet manually. Hm."
   (yas-minor-mode on)
   (yas-load-directory "~/.emacs.d/private/snippets"))
 
-(yas-global-mode)
+(setq yas-global-mode t)
+
+)
+
+
+(defun your_spacemacs/company_setup ()
+  "I guess setup company before python."
+  (use-package company
+    :ensure t
+    :init
+    (global-company-mode))
+
+    (use-package company-anaconda
+      :ensure t
+      :after company)
+
+    (with-eval-after-load "company"
+      '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
 
 )
 
 
 (defun your_spacemacs/python_setup ()
-  "Setup IPython on Emacs. Set up some rst thanks to Matplotlib!
+  "Setup IPython on Emacs. Also sets up some rst thanks to Matplotlib!
 
 Here are useful bindings for rst.
 
@@ -1122,7 +1136,11 @@ C-c C-r rst-shift-region-right
 (defun your_spacemacs/fzf-setup ()
   "Configure FZF. https://github.com/bling/fzf.el for the source."
   ;; (setq fzf)
-  )
+  (use-package fzf
+    :defer t
+    :commands
+    )
+)
 
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
@@ -1138,7 +1156,49 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files (quote ("~/org/first_agenda.org")))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package unicode-fonts toc-org tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets open-junk-file ob-ipython ob-hy nodejs-repl neotree nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide importmagic impatient-mode ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-quickhelp company-lsp company-emoji company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ahk-mode aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (helpful yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package unicode-fonts toc-org tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets open-junk-file ob-ipython ob-hy nodejs-repl neotree nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide importmagic impatient-mode ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-quickhelp company-lsp company-emoji company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ahk-mode aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(paradox-github-token t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
+
+(provide spacemacs)
+;;; .spacemacs ends here
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(paradox-github-token t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package-ensure-system-package unicode-fonts treemacs-projectile treemacs-evil toc-org tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox pandoc-mode ox-pandoc overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file ob-hy nodejs-repl neotree nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator js2-refactor js-doc insert-shebang indent-guide importmagic impatient-mode ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helpful helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help engine-mode emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav editorconfig dumb-jump dotnet dotenv-mode doom-modeline dockerfile-mode docker diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-shell company-quickhelp company-lsp company-emoji company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

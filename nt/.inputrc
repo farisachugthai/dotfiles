@@ -1,0 +1,332 @@
+# inputrc
+# Includes all persistant modifications to GNU readline
+# Maintainer: Faris Chugthai
+
+# Options: {{{1
+# From Arch Wiki and man bash
+
+# When using TAB for completions, the double tab can be changed to a single tab
+# This also shows all partial completions
+set show-all-if-ambiguous on
+
+# Color files by types
+set colored-stats On
+
+# Append char to indicate type
+set visible-stats On
+#
+# Mark symlinked directories
+set mark-symlinked-directories On
+
+# Color the common prefix
+set colored-completion-prefix On
+
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix On
+
+# When set to On, readline will configure the terminal that will enable it to
+# insert each paste as a single string of characters, instead of treating each
+# character as if it had been read from the keyboard.  This can
+# prevent pasted characters from being interpreted as editing commands.
+set enable-bracketed-paste On
+
+# Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
+set show-mode-in-prompt On
+
+# Apr 12, 2019: Line 3200 man bash
+set blink-matching-paren
+
+
+# words which have more than one possible completion without any possible
+# partial completion (the possible completions don't share a common prefix)
+# cause the matches to be listed immediately instead of ringing the bell.
+set show-all-if-unmodified
+
+set expand-tilde
+
+# From clink: {{{1
+
+# Pleasantly surprised with these!
+
+set keymap emacs
+"\t":               clink-completion-shim
+C-v:                paste-from-clipboard
+C-q:                reload-lua-state
+C-z:                undo
+M-h:                show-rl-help
+M-C-c:              copy-line-to-clipboard
+C-c:                ctrl-c
+M-a:                "..\\"
+
+set keymap vi-insert
+"\t":               clink-completion-shim
+C-v:                paste-from-clipboard
+C-z:                undo
+M-h:                show-rl-help
+M-C-c:              copy-line-to-clipboard
+C-c:                ctrl-c
+M-a:                "..\\"
+
+set keymap vi-move
+C-v:                paste-from-clipboard
+C-z:                undo
+M-h:                show-rl-help
+M-C-c:              copy-line-to-clipboard
+C-c:                ctrl-c
+M-a:                "..\\"
+
+$if cmd.exe
+    set keymap emacs
+    "\e`U":         up-directory
+    M-C-u:          up-directory
+    M-C-e:          expand-env-vars
+
+    set keymap vi-insert
+    "\e`U":         up-directory
+    M-C-u:          up-directory
+    M-C-e:          expand-env-vars
+
+    set keymap vi-move
+    "\e`U":         up-directory
+    M-C-u:          up-directory
+    M-C-e:          expand-env-vars
+$endif
+
+set keymap emacs
+
+# Uncomment these two lines for vanilla cmd.exe style completion.
+# "\t": clink-menu-completion-shim
+# "\e`Z": clink-backward-menu-completion-shim
+
+# From /usr/share/readline/inputrc example: {{{1
+set bell-style none
+
+# should we? default off. my arrow keys work idk
+# not the arrow keys the application keypad too. do it
+set enable-keypad on
+
+# 8 bit clean
+set input-meta on
+set output-meta on
+
+# is this supposed to be on or off
+set convert-meta on
+
+set skip-completed-text on
+
+# Bindings: {{{1
+
+# some defaults / modifications for the emacs mode
+# $if mode=emacs
+# jk do it no matter what these are useful
+
+# allow the use of the Home/End keys
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+
+# allow the use of the Delete/Insert keys
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+
+# mappings for "page up" and "page down" to step to the beginning/end
+# of the history
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+
+# alternate mappings for "page up" and "page down" to search the history
+# "\e[5~": history-search-backward
+# "\e[6~": history-search-forward
+
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+# I don't know what these escape codes mean so leave them commented out
+# $if term=rxvt
+# "\e[7~": beginning-of-line
+# "\e[8~": end-of-line
+# "\eOc": forward-word
+# "\eOd": backward-word
+# $endif
+
+# # for non RH/Debian xterm, can't hurt for RH/Debian xterm
+# # "\eOH": beginning-of-line
+# # "\eOF": end-of-line
+
+# # for freebsd console
+# # "\e[H": beginning-of-line
+# # "\e[F": end-of-line
+
+# $endif
+# Every binding set -o emacs has that vim doesn't: {{{1
+# As a reminder \e == Alt == Esc + Pause
+#
+"\C-g": abort
+"\C-x\C-g": abort
+"\e\C-g": abort
+
+# "\C-b": self-insert
+# like why
+
+"\C-a": beginning-of-line
+"\C-b": backward-char
+"\C-d": delete-char
+"\C-l": clear-screen
+"\e\C-i": dynamic-complete-history
+"\C-x\C-e": edit-and-execute-command
+
+"\eOD": backward-char
+"\e[D": backward-char
+"\e\C-h": backward-kill-word
+"\e\C-?": backward-kill-word
+"\C-x\C-?": backward-kill-line
+"\e[1;3D": backward-word
+"\e[1;5D": backward-word
+"\eb": backward-word
+"\e<": beginning-of-history
+"\eOH": beginning-of-line
+"\e[H": beginning-of-line
+"\e[200~": bracketed-paste-begin
+"\C-xe": call-last-kbd-macro
+"\ec": capitalize-word
+"\C-]": character-search
+"\e\C-]": character-search-backward
+"\e\e": complete
+"\e!": complete-command
+"\e/": complete-filename
+"\e@": complete-hostname
+"\e{": complete-into-braces
+"\e~": complete-username
+"\e$": complete-variable
+"\e[3~": delete-char
+"\e\\": delete-horizontal-space
+"\el": downcase-word
+"\C-x\C-v": display-shell-version
+"\C-x)": end-kbd-macro
+"\e>": end-of-history
+"\eOF": end-of-line
+"\e[F": end-of-line
+"\C-x\C-x": exchange-point-and-mark
+"\C-f": forward-char
+"\eOC": forward-char
+"\e[C": forward-char
+"\C-s": forward-search-history
+"\e[1;3C": forward-word
+"\e[1;5C": forward-word
+"\ef": forward-word
+"\eg": glob-complete-word
+"\C-x*": glob-expand-word
+"\C-xg": glob-list-expansions
+"\e#": insert-comment
+"\e*": insert-completions
+"\e.": insert-last-argument
+"\e_": insert-last-argument
+"\C-k": kill-line
+"\e[3;5~": kill-word
+"\ed": kill-word
+"\C-n": next-history
+"\eOB": next-history
+"\e[B": next-history
+"\en": non-incremental-forward-search-history
+"\ep": non-incremental-reverse-search-history
+"\C-o": operate-and-get-next
+"\e[2~": overwrite-mode
+"\C-x!": possible-command-completions
+"\e=": possible-completions
+"\e?": possible-completions
+"\C-x/": possible-filename-completions
+"\C-x@": possible-hostname-completions
+"\C-x~": possible-username-completions
+"\C-x$": possible-variable-completions
+"\C-p": previous-history
+"\eOA": previous-history
+"\e[A": previous-history
+"\C-x\C-r": re-read-init-file
+"\C-r": reverse-search-history
+"\e\C-r": revert-line
+"\er": revert-line
+"\C-@": set-mark
+"\e ": set-mark
+"\C-t": transpose-chars
+"\e\C-e": shell-expand-line
+"\C-x(": start-kbd-macro
+"\et": transpose-words
+"\C-x\C-u": undo
+"\C-_": undo
+
+
+# All options set by set -o vim
+"\eOD": backward-char
+"\e[D": backward-char
+"\C-h": backward-delete-char
+"\C-?": backward-delete-char
+"\e[1;3D": backward-word
+"\e[1;5D": backward-word
+"\eOH": beginning-of-line
+"\e[H": beginning-of-line
+"\e[200~": bracketed-paste-begin
+"\e[3~": delete-char
+"\C-d": vi-eof-maybe
+"\C-i": complete
+"\C-n": menu-complete
+"\C-p": menu-complete-backward
+"\C-r": reverse-search-history
+"\C-v": quoted-insert
+"\eOB": next-history
+"\e[B": next-history
+"\C-u": unix-line-discard
+"\e": vi-movement-mode
+"\C-w": vi-unix-word-rubout
+"\C-y": yank
+
+"\eOC": forward-char
+"\e[C": forward-char
+"\C-s": forward-search-history
+"\e[1;3C": forward-word
+"\e[1;5C": forward-word
+"\e[3;5~": kill-word
+"\e[2~": overwrite-mode
+"\eOA": previous-history
+"\e[A": previous-history
+# Yup. That's it. 32 bindings by default...
+
+# To a shocking extent termux has nothing set up
+
+"\C-w": unix-filename-rubout
+
+# Switch Keymaps: {{{1
+# emacs-editing-mode (not bound)
+# vi-movement-mode (not bound)
+# Let's bind it to the keys described in rluserman
+
+$if mode = vi
+    "\C-e": set emacs-editing-mode
+$else
+    "\C-M-j": set vi-movement-mode
+$endif
+
+# emacs-editing-mode (C-e)
+#     When in vi command mode, this causes a switch to emacs editing mode.
+
+# vi-editing-mode (M-C-j)
+#     When in emacs editing mode, this causes a switch to vi editing mode.
+
+# History Search: {{{1
+
+# https://ss64.com/bash/bind.html
+# Setup the shell to perform a history search when the Up and Down arrow keys are used.
+# This allows typing part of a command and then using the arrows to select
+# matching commands from history.
+# (by default Up and Down will just select previous commands without any
+# matching against history.)
+
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+bind '"\e[C": forward-char'
+bind '"\e[D": backward-char'
+
+# The last two bindings ensure that the left and right keys continue to work correctly.

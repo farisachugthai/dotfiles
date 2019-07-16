@@ -37,7 +37,6 @@
 --no-column
 --no-line-number
 
-
 # Don't group matches by each file. If --no-heading is provided in
 # addition to the -H/--with-filename flag, then file paths will be
 # printed as a prefix for every matched line. This is the default
@@ -45,6 +44,7 @@
 --no-heading
 
 # --with-filename
+
 
 # Colors: {{{1
 # Colors are limited to one of eight choices: red, blue, green, cyan,
