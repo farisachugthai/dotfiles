@@ -37,16 +37,20 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # Also i think its the fzf-file-widget you see in the autocomplete suggestion so add --filepath-word
 
     # Works perfectly!!!
-    # Display only filenames but provide a previee window
-    export FZF_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
+    # Display only filenames but provide a preview window
+    # export FZF_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
+    # Jul 04, 2019: Copied the old command because it was too exciting getting it to work it have to search a git log -p
+    export FZF_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 * $* | tr -d '\017' "
     # export FZF_CTRL_T_COMMAND="fd --hidden --follow --type file --max-depth 25 --color always $*"
-    export FZF_CTRL_T_OPTS=' --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview." --tiebreak begin,length,index '
+    export FZF_CTRL_T_OPTS=' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview." '
 
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb ]]; then
         # doesn't this stop tilde expansion?
         export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb {} | bat - ' "
-    else
+    elif [[ -x bat ]]; then
         export FZF_CTRL_T_OPTS+=' --preview "bat {} " '
+    else
+        export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " '
     fi
 
     # __fzf_history__: {{{2

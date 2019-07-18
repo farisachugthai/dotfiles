@@ -83,6 +83,7 @@ EXEC 38;5;202
 .com 01;32
 .btm 01;32
 .bat 01;32
+
 # Or if you want to colorize scripts even if they do not have the
 # executable bit actually set.
 .sh 01;32
@@ -367,7 +368,11 @@ requirements*.txt     38;5;248
 # GrADS script
 .gs                   38;5;81
 
-# History: {{{1
+# powershell
+.ps1                  38;5;64;1
+.ps1xml               38;5;64;1
+
+# History: {{{2
 .bash_history*        38;5;221
 .python_history*      38;5;221
 

@@ -45,14 +45,6 @@ else
     pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
 fi
 
-# I mean I guess if this exists on both. Only observed on termux
-
-# Apr 23, 2019: Add pythonx so we can get clang formatters
-pathadd "$XDG_CONFIG_HOME/nvim/pythonx"
-
-# Will this give us relative imports?
-export PYTHONPATH="$PATH:$PYTHONPATH"
-export PYTHONPATH+="$PYTHONPATH:$XDG_CONFIG_HOME/rplugin/python3"
 
 # User dirs first: {{{1
 
@@ -118,10 +110,11 @@ if [[ -n "$(command -v cheat)" ]];then
 fi
 
 # Set locale if it isn't explicitly stated elsewhere: {{{2
-export LANG=en_US.UTF-8                 # gathered from localectl
-export LC_MESSAGES=C                    # man i3: Prevents program output translation
-export LANGUAGE=en                      # nvim complains us region not supported
-export LC_CTYPE=C.UTF-8                 # the python default
+# export LANG="en_US.UTF-8"                 # gathered from localectl
+# export LC_MESSAGES="C"                    # man i3: Prevents program output translation
+# export LANGUAGE="en"                      # nvim complains us region not supported
+# export LC_CTYPE="C"                 # the python default
+export LC_ALL="C.UTF-8"
 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources

@@ -14,26 +14,6 @@ pathadd() {  # {{{1
     fi
 }
 
-# ssh-agent: {{{1
-# Refactored https://help.github.com/en/articles/working-with-ssh-key-passphrases
-# to be one function and make variables they unset local so we don't need to
-setup_ssh () {
-    local env
-    env=~/.ssh/agent.env
-
-    test -f "$env" && . "$env" >| /dev/null || break
-    # agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
-    agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
-
-    if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
-        (umask 077; ssh-agent >| "$env")
-        . "$env" >| /dev/null
-        ssh-add
-    elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-        ssh-add
-    fi
-}
-
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
 # $_ROOT: {{{1
@@ -140,9 +120,7 @@ shopt -s lastpipe
 
 # ** will match all files and zero or more directories and subdirectories.
 # shellcheck disable=SC2128
-if [[ $BASH_VERSINFO -gt 3 ]]; then
-    shopt -s globstar
-fi
+if [[ $BASH_VERSINFO -gt 3 ]]; then shopt -s globstar; fi
 
 # If an attempt is made to exit bash , list currently running jobs, their status and a warning
 shopt -s checkjobs
@@ -158,9 +136,7 @@ shopt -s cdspell
 shopt -s hostcomplete
 
 # If you try to complete something that isn't a command, check if its an alias
-if [[ $BASH_VERSINFO -gt 4 ]]; then
-    shopt -s progcomp_alias
-fi
+if [[ $BASH_VERSINFO -gt 4 ]]; then shopt -s progcomp_alias; fi
 
 # Print verbose error messages when using shift
 shopt -s shift_verbose
@@ -172,6 +148,8 @@ shopt -s lithist
 
 shopt -s direxpand
 
+# if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
+shopt -s lastpipe
 
 # Pagers: {{{1
 
@@ -216,11 +194,13 @@ pathadd "$HOME/.local/share/nvim/site/node_modules/.bin"
 # Fasd: {{{1
 
 fasd_cache="$HOME/.fasd-init-bash"
-if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-    fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
+if [[ -n "$(command -v fasd)" ]]; then
+    if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+        fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
+    fi
+    source "$fasd_cache"
+    unset fasd_cache
 fi
-source "$fasd_cache"
-unset fasd_cache
 
 # Sourced files: {{{1
 
