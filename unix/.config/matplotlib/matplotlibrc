@@ -233,7 +233,7 @@ backend      : qt5agg
 # The font.size property is the default font size for text, given in pts.
 # 10 pt is the standard value.
 
-#font.family         : sans-serif
+font.family         : Hack
 #font.style          : normal
 #font.variant        : normal
 #font.weight         : normal

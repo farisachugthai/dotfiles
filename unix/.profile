@@ -36,6 +36,9 @@ if [[ -n "$PREFIX" ]]; then
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
     pathadd "$_ROOT/libexec"
+    pathadd "$_ROOT/libexec/git-core"
+    export CFLAGS='-I/data/data/com.termux/files/usr/includes'
+    export CC='aarch64-linux-android-clang'
 else
     export BROWSER="firefox "
     export SHELL=/bin/bash
@@ -50,14 +53,18 @@ fi
 
 # Set PATH so it includes user's private bin directories and set them first in path
 
-if [[ -d "$HOME/bin" ]]; then export PATH="$HOME/bin:$PATH"; fi
-if [[ -d "$HOME/.local/bin" ]]; then export PATH="$HOME/.local/bin:$PATH"; fi
+pathadd "$HOME/bin"
+pathadd "$HOME/.local/bin"
 
 # Python: {{{1
 
 export PYTHONIOENCODING=utf-8:surrogateescape
 export PYTHONDONTWRITEBYTECODE=1
 export IPYTHONDIR="$HOME/.ipython"
+export PYTHONCOERCECLOCALE=warn
+if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
+export PYTHONUNBUFFERED=1
+# export PYTHONVERBOSE=1
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -73,6 +80,8 @@ if [[ -n "$(command -v rvm)" ]]; then
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 fi
 
+export GEM_HOME="$HOME/.gem"
+export GEM_PATH="$GEM_PATH:$HOME/.gem:$_ROOT/lib/ruby"  # idk if this is right
 
 # JavaScript: {{{1
 if [[ -n "$(command -v yarn)" ]]; then
@@ -110,11 +119,14 @@ if [[ -n "$(command -v cheat)" ]];then
 fi
 
 # Set locale if it isn't explicitly stated elsewhere: {{{2
-# export LANG="en_US.UTF-8"                 # gathered from localectl
-# export LC_MESSAGES="C"                    # man i3: Prevents program output translation
-# export LANGUAGE="en"                      # nvim complains us region not supported
-# export LC_CTYPE="C"                 # the python default
-export LC_ALL="C.UTF-8"
+export LANG=en_US.UTF-8                # gathered from localectl
+export LC_MESSAGES=en_US.UTF-8                    # man i3: Prevents program output translation
+export LANGUAGE=en_US                     # nvim complains us region not supported
+export LC_CTYPE=C.UTF-8                       # the python default
+# export LC_ALL="C.UTF-8
+
+# Idk if this is or isn't a bad idea
+export LDFLAGS=" -lm"
 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources

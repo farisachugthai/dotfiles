@@ -9,7 +9,7 @@
 # -g '!*/CVS'
 # -g '!*/.DS_Store'
 # -g '!node_modules/*'
---glob=!.git/*
+# --glob=!.git/*
 
 --hidden
 

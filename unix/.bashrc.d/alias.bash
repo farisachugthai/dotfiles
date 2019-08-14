@@ -162,4 +162,7 @@ alias spacemacs='emacs -l ~/.spacemacs'
 if [[ -n "$(command -v bat)" ]]; then
     alias cat=bat
 fi
+
 alias n="nvim $* "
+
+alias fuck="sudo !!"

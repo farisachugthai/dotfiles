@@ -44,11 +44,11 @@ if [[ -d "$HOME/miniconda3/bin/" ]]; then
     unset __conda_setup
     # <<< conda initialize <<<
 
-elif  [[ -d 'C:/Users/faris/miniconda3/Scripts' ]]; then
+elif  [[ -d '/c/tools/miniconda3/Scripts' ]]; then
     # futureeeeeee
     # >>> conda initialize >>>
     # !! Contents within this block are managed by 'conda init' !!
-    eval "$('/c/Users/faris/Anaconda3/Scripts/conda.exe' 'shell.bash' 'hook')"
+    eval "$('/c/tools/miniconda3/Scripts/conda.exe' 'shell.bash' 'hook')"
     # <<< conda initialize <<<
 fi
 
@@ -152,31 +152,18 @@ shopt -s direxpand
 shopt -s lastpipe
 
 # Pagers: {{{1
-
-if [[ -n "$(command -v bat)" ]]; then
-    export BAT_THEME="TwoDark"
-    export PAGER="bat --italic-text always --wrap character $*"
-    export BAT_STYLE="changes,numbers"
-    export BAT_PAGER="less -JRKML"
-else
 # -J displays a status column at the left edge of the screen
 # -R is what we need for ansi colors
 # -K: exit less in response to Ctrl-C
 # -M: Verbose prompt
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-    export PAGER="less -JRKML"
-fi
+export PAGER="less -JRKML"
+export LESSOPEN="|lesspipe.sh %s"
 
 export BYOBU_PAGER="nvim"
 export COLORTERM="truecolor"
 
 # JavaScript: {{{1
-
-# Source npm completion if its installed.
-if [[ -n "$(command -v npm)" ]]; then
-    # shellcheck source=/home/faris/.bashrc.d/npm-completion.bash
-    source ~/.bashrc.d/npm-completion.bash
-fi
 
 # Export nvm if the directory exists
 if [[ -d "$HOME/.nvm" ]]; then
@@ -215,6 +202,14 @@ if [[ -d ~/.bashrc.d ]]; then
     unset -v config
 fi
 
+# Dynamic Completions: {{{2
+
+_completion_loader()
+{
+    . "$_ROOT/share/bash_completion/completions/*" >/dev/null 2>&1 && return 124
+}
+complete -D -F _completion_loader -o bashdefault -o default
+
 # Here's one for the terminal
 if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
@@ -222,12 +217,6 @@ fi
 
 # add some cool colors to ls
 eval "$( dircolors -b ~/.dircolors )"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/faris/google-cloud-sdk/path.bash.inc' ]; then . '/home/faris/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/faris/google-cloud-sdk/completion.bash.inc' ]; then . '/home/faris/google-cloud-sdk/completion.bash.inc'; fi
 
 # Prompt: {{{1
 # I'm gonna try and stay conservative here.
@@ -238,5 +227,3 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

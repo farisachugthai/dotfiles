@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/bin/bash
 # YouTube Downloader Configuration
 # Maintainer: Faris Chugthai
 
@@ -22,7 +22,7 @@
 --no-mtime
 
 # Thumbnails
-# --embed-thumbnail
+--embed-thumbnail
 
 # Don't phone home
 --no-call-home

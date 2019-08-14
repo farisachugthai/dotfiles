@@ -5,6 +5,8 @@
 
 # Jun 11, 2019: Just had the passing thought...only the exports and the tests
 # make this bash specific. Sub those out and this is a ps1 script too
+# So we tested it out and pwsh doesn't like the local keyword at the bottom.
+# Otherwise good to go!
 
 # Check that the main entry point is there. {{{1
 if [[ -f ~/.fzf.bash ]]; then
@@ -26,11 +28,10 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
     # Filepath helps you jump directories quickly, tiebreak begin makes a ton
     # of difference, ansi colors dude this is sweet
-    export FZF_DEFAULT_COMMAND='rg --hidden --color ansi --follow --no-messages --no-heading --smart-case --no-filename --glob "!.git/*" -g "!vendor/*" -m 20 --passthru *  | tr -d "\017" '
+    export FZF_DEFAULT_COMMAND='rg --hidden --color=ansi --follow --no-messages --no-heading --smart-case --no-filename --glob "!.git/*" -g "!vendor/*" --passthru  --max-depth 10 --max-count 20 --max-columns 200 -C 0 .'
 
     # export FZF_DEFAULT_COMMAND="rg --follow --vimgrep -e ^.*$ "
-    # export FZF_DEFAULT_COMMAND="fd --hidden --follow --type file --max-dept 25 --color always $*"
-    export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser" --tiebreak begin,length,index '
+    export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
 
     # <Ctrl-t>: {{{2
     # Might be implemented as __fzf_select__
@@ -39,12 +40,12 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # Works perfectly!!!
     # Display only filenames but provide a preview window
     # export FZF_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
-    # Jul 04, 2019: Copied the old command because it was too exciting getting it to work it have to search a git log -p
-    export FZF_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 * $* | tr -d '\017' "
-    # export FZF_CTRL_T_COMMAND="fd --hidden --follow --type file --max-depth 25 --color always $*"
+    # Jul 04, 2019: Copied the old command because it was too exciting getting it to work to then
+    # have to search `git log -p`
+    export FZF_CTRL_T_COMMAND=" rg --hidden --color=ansi --no-messages --follow --files --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 * $* | tr -d '\017' "
     export FZF_CTRL_T_OPTS=' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview." '
 
-    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb ]]; then
+    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb && -n "$(command -v ruby)" ]]; then
         # doesn't this stop tilde expansion?
         export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb {} | bat - ' "
     elif [[ -x bat ]]; then
@@ -55,8 +56,8 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
 
     # __fzf_history__: {{{2
     # works
-    export FZF_CTRL_R_COMMAND=" rg --hidden --color ansi --no-heading --no-filename --no-messages "
-    export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --preview 'bat {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+    export FZF_CTRL_R_COMMAND=" rg --hidden --color=ansi --smart-case --no-heading --no-filename --no-messages  --max-depth 10 --max-count 20 --max-columns 200 -C 0 "
+    export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi  --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
     # Change dirs with Alt C: {{{2
     # TODO: else
@@ -64,10 +65,10 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
         export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
     fi
 
-    export FZF_ALT_C_OPTS=" --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --header 'TODO: Should come up with some binds.' "
+    export FZF_ALT_C_OPTS=' --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind "?:toggle-preview" --header "Press ? to toggle preview." --border --prompt "FZF Dir Finder" '
 
     # Extra funcs from fzf
-    Ag() { ag -l -g "" | fzf; };
+    Ag() { ag -l -g "" | fzf-tmux $FZF_DEFAULT_OPTS - ; };
     Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
 
 
@@ -97,7 +98,7 @@ fi
 
 # More additions: {{{1
 
-# todo:
+# TODO:
 # termux doesnt have xclip or xsel
 
 command -v tree > /dev/null && export FZF_ALT_C_OPTS+="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "

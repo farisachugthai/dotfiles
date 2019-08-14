@@ -69,12 +69,12 @@
     shp = stash pop
     shs = stash show
     shsp = stash show --patch
-	switch = !legit switch
-	sync = !legit sync
-	publish = !legit publish
-	unpublish = !legit unpublish
-	undo = !legit undo
-	branches = !legit branches
+	; switch = !legit switch
+	; sync = !legit sync
+	; publish = !legit publish
+	; unpublish = !legit unpublish
+	; undo = !legit undo
+	; branches = !legit branches
 
     # May 27, 2019
     amend = commit --amend
@@ -99,9 +99,14 @@
     expandtab = true
     boldheaders = true
 
+[commit]
+    verbose
+
 [core]
     excludesfile = "$HOME/.config/git/ignore"
     autocrlf = input
+
+    safecrlf = True
 
     # If true, Git will avoid using lstat() calls to detect if files have
     # changed by setting the "assume-unchanged" bit for those tracked files
@@ -116,6 +121,7 @@
 
     # False by default.
     ignorestat = true
+	compression = 5
 
 [credential]
     helper = cache --timeout=86400
@@ -134,9 +140,9 @@
     strategy-option = resolve
     tool = nvimdiff
 
-[difftool "nvimdiff"]
-    cmd = nvim-qt.exe -d $LOCAL $REMOTE
-    cmd = nvim -d $LOCAL $REMOTE
+[difftool]
+    nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
+    nvimdiff = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     prompt = false
 
 [grep]
@@ -172,9 +178,9 @@
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
-[mergetool "nvim-merge"]
-    cmd = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[mergetool]
+    nvim-merge = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    nvim-merge = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
     # from this link we see that BASE is the commit that the file diverged at.

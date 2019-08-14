@@ -255,6 +255,7 @@ bind '"\e[D": backward-char'
 "\e[6~": end-of-history
 
 # alternate mappings for "page up" and "page down" to search the history
+# i think ctrl up and ctrl down
 # "\e[5~": history-search-backward
 # "\e[6~": history-search-forward
 
@@ -281,5 +282,3 @@ bind '"\e[D": backward-char'
 # # for freebsd console
 # # "\e[H": beginning-of-line
 # # "\e[F": end-of-line
-
-# $endif

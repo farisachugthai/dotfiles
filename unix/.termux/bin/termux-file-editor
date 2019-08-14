@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# Maintainer: Faris Chugthai
-
-# set -euo pipefail
-
-# The syntax for brace expansion with variables is ${}
-# { Variable you want:-fallback str }
-# This is also a good method to concatenate vars and strs
-${"EDITOR:-vim"} "$@"

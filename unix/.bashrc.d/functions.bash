@@ -71,10 +71,6 @@ infovi () {
     info "$1" | "$PAGER"
 }
 
-# byobu_prompt_status: From byobu: {{{1
-byobu_prompt_status() { local e=$?; [ $e != 0 ] && echo -e "$e "; }
-
-
 # Dropbox: {{{1
 tldrbox_cheat() {
     tldr -m "$1" >> "$HOME/.cheat/$1" && termux-share "$1"
@@ -146,25 +142,14 @@ tre(){
     elif [[ -n "$2" ]]; then
         "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -I '.git' -a -- $@"
     else
-        "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -L 5 -F -ah "
+        "tree -I '**node_modules**' -hFAC $*"
     fi
 }
 
-# tm - create new tmux session, or switch to existing one. Works from within tmux too. {{{1
-# `tm` will allow you to select your tmux session via fzf.
-# `tm irc` will attach to the irc session (if it exists), else it will create it.
-tm() {
-  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
-  if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
-  fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
-}
-
 # lk: {{{1 show symbolic links using fd or fallback to grep
-function lk {
+lk() {
     if [[ -n "$(fd)" ]]; then
-        ls -Fo --color=always -A "$@" | fd --type link --maxdepth 1 --hidden --color always
+        ls -Fo --color=always -A "$@" | fd --type symlink --maxdepth 1 --hidden --color always
     else
         ls -Fo --color=always "$@" | grep ^l
     fi
@@ -173,7 +158,7 @@ function lk {
 # ssh-agent: {{{1
 # Refactored https://help.github.com/en/articles/working-with-ssh-key-passphrases
 # to be one function and make variables they unset local so we don't need to
-setup_ssh () {
+setup_ssh() {
     local env
     env=~/.ssh/agent.env
 
@@ -187,5 +172,22 @@ setup_ssh () {
         ssh-add
     elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
         ssh-add
+    fi
+}
+
+filetree() {  # {{{1
+    if [[ -n "$1" ]]; then
+        ls -R "$1" | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'   
+    else
+        ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+    fi
+}
+
+
+recursive_line_count() {  # {{{1
+    if [[ -z "$1" ]]; then
+        fd -H --follow -t f . | xargs cat | wc -l
+    else
+        fd -H --follow -t f . "$1" | xargs cat | wc -l
     fi
 }
