@@ -28,34 +28,12 @@ fi
 # Put python first because we need conda initialized right away
 
 # Conda: {{{2
-if [[ -d "$HOME/miniconda3/bin/" ]]; then
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/home/faris/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "/home/faris/miniconda3/etc/profile.d/conda.sh"
-        else
-            export PATH="/home/faris/miniconda3/bin:$PATH"
-        fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
-
-elif  [[ -d '/c/tools/miniconda3/Scripts' ]]; then
-    # futureeeeeee
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    eval "$('/c/tools/miniconda3/Scripts/conda.exe' 'shell.bash' 'hook')"
-    # <<< conda initialize <<<
-fi
 
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
-if [[ -n "$(command -v pip)" ]]; then
-    eval "$(pip completion --bash)"
-fi
+# Wouldn't stop emitting an error jesus christ
+# if [[ -n "$(command -v pip)" ]]; then
+#     eval "$(pip completion --bash)"
+# fi
 
 export PYTHONDONTWRITEBYTECODE=1
 
@@ -208,7 +186,7 @@ _completion_loader()
 {
     . "$_ROOT/share/bash_completion/completions/*" >/dev/null 2>&1 && return 124
 }
-complete -D -F _completion_loader -o bashdefault -o default
+# complete -D -F _completion_loader -o bashdefault -o default
 
 # Here's one for the terminal
 if [[ -n "$(command -v kitty)" ]]; then
@@ -227,3 +205,19 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/faris/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/faris/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

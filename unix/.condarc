@@ -15,12 +15,9 @@
 #   The list of conda channels to include for relevant operations.
 
 channels:
-  - conda-canary
   - defaults
+  - conda-canary
   - conda-forge
-
-# channel_alias (str)
-#   The prepended url location to associate with channel names.
 channel_alias: https://conda.anaconda.org
 
 # default_channels (sequence: str)
@@ -58,9 +55,8 @@ default_channels:
 #   https://anaconda-repo.dev/packages/conda-forge/linux-64/repodata.json,
 #   add an entry 'conda-forge: https://anaconda-repo.dev/packages'.
 #
-custom_channels: {
-    'pkgs/pro': https://repo.anaconda.com'
-}
+custom_channels:
+  pkgs/pro: https://repo.anaconda.com
 
 # custom_multichannels (map: list)
 #   A multichannel is a metachannel composed of multiple channels. The two
@@ -71,20 +67,18 @@ custom_channels: {
 #   can be defined with custom_multichannels, where the key is the
 #   multichannel name and the value is a list of channel names and/or
 #   channel urls.
-
 # custom_multichannels: {}
-
 
 # migrated_channel_aliases (sequence: str)
 #   env var string delimiter: ','
 #   A list of previously-used channel_alias values. Useful when switching
 #   between different Anaconda Repository instances.
-migrated_channel_aliases: []
+# migrated_channel_aliases: []
 
 # migrated_custom_channels (map: str)
 #   A map of key-value pairs where the key is a channel name and the value
 #   is the previous location of the channel.
-migrated_custom_channels: {}
+# migrated_custom_channels: {}
 
 # add_anaconda_token (bool)
 #   aliases: add_binstar_token
@@ -93,13 +87,75 @@ migrated_custom_channels: {}
 #   Anaconda Server API site using `anaconda login`, automatically apply a
 #   matching private token to enable access to private packages and
 #   channels.
-
-add_anaconda_token: true
+# add_anaconda_token: true
 
 # allow_non_channel_urls (bool)
 #   Warn, but do not fail, when conda detects a channel url is not a valid
 #   channel.
-allow_non_channel_urls: false
+allow_non_channel_urls: true
+
+# restore_free_channel (bool)
+#   "                 Add the "free" channel back into defaults, behind
+#   "main" in priority. The "free"                 channel was removed
+#   from the collection of default channels in conda 4.7.0.
+#
+restore_free_channel: true
+
+# repodata_fns (sequence: str)
+#   env var string delimiter: ','
+#   Specify filenames for repodata fetching. The default is
+#   ('current_repodata.json', 'repodata.json'), which tries a subset of
+#   the full index containing only the latest version for each package,
+#   then falls back to repodata.json.  You may want to specify something
+#   else to use an alternate index that has been reduced somehow.
+# 
+repodata_fns:
+  - current_repodata.json
+  - repodata.json
+
+# use_only_tar_bz2 (NoneType, bool)
+#   A boolean indicating that only .tar.bz2 conda packages should be
+#   downloaded. This is forced to True if conda-build is installed and
+#   older than 3.18.3, because older versions of conda break when conda
+#   feeds it the new file format.
+# use_only_tar_bz2:
+
+# repodata_threads (int)
+#   Threads to use when downloading and reading repodata.  When not set,
+#   defaults to None, which uses the default ThreadPoolExecutor behavior.
+# repodata_threads: 0
+
+
+######################################################
+##            Basic Conda Configuration             ##
+######################################################
+
+# TODO: Hasn't been a problem on linux but on NT I think this ends up as 3
+# different dirs somehow which quickly makes envs inconsistent
+# envs_dirs (sequence: str)
+#   aliases: envs_path
+#   env var string delimiter: ':'
+#   The list of directories to search for named environments. When
+#   creating a new named environment, the environment will be placed in
+#   the first writable location.
+# envs_dirs: []
+
+# pkgs_dirs (sequence: str)
+#   env var string delimiter: ','
+#   The list of directories where locally-available packages are linked
+#   from at install time. Packages not locally available are downloaded
+#   and extracted into the first writable directory.
+# pkgs_dirs: []
+
+# default_threads (int)
+#   Threads to use by default for parallel operations.  Default is None,
+#   which allows operations to choose themselves.  For more specific
+#   control, see the other *_threads parameters:     * repodata_threads -
+#   for fetching/loading repodata     * verify_threads - for verifying
+#   package contents in transactions     * execute_threads - for carrying
+#   out the unlinking and linking steps
+# default_threads: 0
+
 
 ######################################################
 ##              Network Configuration               ##
@@ -186,8 +242,7 @@ aggressive_update_packages:
 #   aliases: self_update
 #   Automatically update conda when a newer or higher priority version is
 #   detected.
-#
-# auto_update_conda: true
+auto_update_conda: false
 
 # channel_priority (ChannelPriority)
 #   Accepts values of 'strict', 'flexible', and 'disabled'. The default
@@ -200,8 +255,7 @@ aggressive_update_packages:
 #   configured priority of channels is used only to break ties. In
 #   previous versions of conda, this parameter was configured as either
 #   True or False. True is now an alias to 'flexible'.
-#
-channel_priority: flexible
+channel_priority: disabled
 
 # create_default_packages (sequence: str)
 #   env var string delimiter: ','
@@ -219,32 +273,134 @@ channel_priority: flexible
 #   Ensure that any user-requested package for the current operation is
 #   uninstalled and reinstalled, even if that package already exists in
 #   the environment.
-#
 # force_reinstall: false
+
+# pinned_packages (sequence: str)
+#   env var string delimiter: '&'
+#   A list of package specs to pin for every environment resolution. This
+#   parameter is in BETA, and its behavior may change in a future release.
+# pinned_packages: []
+pinned_packages:
+  - conda
+
+
+# pip_interop_enabled (bool)
+#   Allow the conda solver to interact with non-conda-installed python
+#   packages.
+pip_interop_enabled: true
 
 # prune (bool)
 #   Remove packages that have previously been brought into an environment
 #   to satisfy dependencies of user-requested packages, but are no longer
 #   needed.
-prune: true
+# prune: true
 
 # track_features (sequence: str)
 #   env var string delimiter: ','
 #   A list of features that are tracked by default. An entry here is
 #   similar to adding an entry to the create_default_packages list.
-#
-track_features: []
+# track_features: []
 
 # TODO: what is this option?
+# Aug 20, 2019: Inexplicabily, it's been disabled in conda 4.7.11 so...
 channel_flexibility: disabled
 
 # From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
 # Non-url channels will be interpreted as Anaconda.org usernames
 # (this can be changed by modifying the channel_alias key; see below).
 
-# Show channel URLs when displaying what is going to be downloaded
-# and in 'conda list'. The default is False.
-show_channel_urls: true
+######################################################
+##  Package Linking and Install-time Configuration  ##
+######################################################
+
+# allow_softlinks (bool)
+#   When allow_softlinks is True, conda uses hard-links when possible, and
+#   soft-links (symlinks) when hard-links are not possible, such as when
+#   installing on a different filesystem than the one that the package
+#   cache is on. When allow_softlinks is False, conda still uses hard-
+#   links when possible, but when it is not possible, conda copies files.
+#   Individual packages can override this setting, specifying that certain
+#   files should never be soft-linked (see the no_link option in the build
+#   recipe documentation).
+# 
+allow_softlinks: false
+
+# always_copy (bool)
+#   aliases: copy
+#   Register a preference that files be copied into a prefix during
+#   install rather than hard-linked.
+# 
+always_copy: false
+
+# always_softlink (bool)
+#   aliases: softlink
+#   Register a preference that files be soft-linked (symlinked) into a
+#   prefix during install rather than hard-linked. The link source is the
+#   'pkgs_dir' package cache from where the package is being linked.
+#   WARNING: Using this option can result in corruption of long-lived
+#   conda environments. Package caches are *caches*, which means there is
+#   some churn and invalidation. With this option, the contents of
+#   environments can be switched out (or erased) via operations on other
+#   environments.
+# 
+always_softlink: false
+
+# path_conflict (PathConflict)
+#   The method by which conda handle's conflicting/overlapping paths
+#   during a create, install, or update operation. The value must be one
+#   of 'clobber', 'warn', or 'prevent'. The '--clobber' command-line flag
+#   or clobber configuration parameter overrides path_conflict set to
+#   'prevent'.
+# 
+path_conflict: clobber
+
+# rollback_enabled (bool)
+#   Should any error occur during an unlink/link transaction, revert any
+#   disk mutations made to that point in the transaction.
+# 
+rollback_enabled: true
+
+# safety_checks (SafetyChecks)
+#   Enforce available safety guarantees during package installation. The
+#   value must be one of 'enabled', 'warn', or 'disabled'.
+# 
+safety_checks: warn
+
+# extra_safety_checks (bool)
+#   Spend extra time validating package contents.  Currently, runs sha256
+#   verification on every file within each package during installation.
+# 
+extra_safety_checks: true
+
+# shortcuts (bool)
+#   Allow packages to create OS-specific shortcuts (e.g. in the Windows
+#   Start Menu) at install time.
+# 
+shortcuts: true
+
+# non_admin_enabled (bool)
+#   Allows completion of conda's create, install, update, and remove
+#   operations, for non-privileged (non-root or non-administrator) users.
+# non_admin_enabled: true
+
+# separate_format_cache (bool)
+#   Treat .tar.bz2 files as different from .conda packages when filenames
+#   are otherwise similar. This defaults to False, so that your package
+#   cache doesn't churn when rolling out the new package format. If you'd
+#   rather not assume that a .tar.bz2 and .conda from the same place
+#   represent the same content, set this to True.
+# separate_format_cache: false
+
+# verify_threads (int)
+#   Threads to use when performing the transaction verification step.
+#   When not set, defaults to 1.
+# verify_threads: 0
+
+# execute_threads (int)
+#   Threads to use when performing the unlink/link transaction.  When not
+#   set, defaults to 1.  This step is pretty strongly I/O limited, and you
+#   may not see much benefit here.
+# execute_threads: 0
 
 ######################################################
 ##  Output, Prompt, and Flow Control Configuration  ##
@@ -258,7 +414,7 @@ show_channel_urls: true
 # always_yes:
 
 # auto_activate_base (bool)
-#   Automatically activate the base environment during she initialization.
+#   Automatically activate the base environment during the initialization.
 # auto_activate_base: true
 
 # changeps1 (bool)
@@ -285,7 +441,7 @@ env_prompt: '({prefix}) '
 # notify_outdated_conda (bool)
 #   Notify if a newer version of conda is detected during create,
 #   install, update, or remove operation.
-# notify_outdated_conda: true
+notify_outdated_conda: false
 
 # quiet (bool)
 #   Disable progress bar display and other output.
@@ -295,10 +451,11 @@ env_prompt: '({prefix}) '
 #   Opt in, or opt out, of automatic error reporting to co maintainers.
 #   Error reports are anonymous, with only the error stack race and
 #   information given by `conda info` being sent. report_errors:
+report_errors: false
 
 # show_channel_urls (NoneType, bool)
 #   Show channel URLs when displaying what is going to be wnloaded.
-# show_channel_urls:
+show_channel_urls: true
 
 # verbosity (int)
 #   aliases: verbose
@@ -309,23 +466,19 @@ env_prompt: '({prefix}) '
 ######################################################
 ##            Conda-build Configuration             ##
 ######################################################
-                                                           
 # bld_path (str)
 #   The location where conda-build will put built packages Same as
 #   'croot', but 'croot' takes precedence when both are de ned. Also used
 #   in construction of the 'local' multichannel. bld_path: ''
-                                                           
 # croot (str)
 #   The location where conda-build will put built packages Same as
 #   'bld_path', but 'croot' takes precedence when both are efined. Also
 #   used in construction of the 'local' multichannel.
 # croot: ''
-                                                           
 # anaconda_upload (NoneType, bool)
 #   aliases: binstar_upload
 #   Automatically upload packages built with conda build t anaconda.org.
 # anaconda_upload:
-                                                           
 # conda_build (map: str)
 #   aliases: conda-build
 #   General configuration parameters for conda-build.
@@ -371,11 +524,6 @@ clobber: true
 #   the first writable location.
 # envs_dirs: []
 
-# extra_safety_checks (bool)
-#   Spend extra time validating package contents.  Currently, runs sha256
-#   verification on every file within each package during installation.
-extra_safety_checks: true
-
 # force (bool)
 #   Override any of conda's objections and safeguards for installing
 #   packages and potentially breaking environments. Also re-installs the
@@ -420,11 +568,6 @@ max_shlvl: 2
 #
 # non_admin_enabled: true
 
-# notify_outdated_conda (bool)
-#   Notify if a newer version of conda is detected during a create,
-#   install, update, or remove operation.
-# notify_outdated_conda: true
-
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
 #
@@ -454,10 +597,6 @@ pkgs_dirs: []
 #   'user:password' inclusion enables HTTP Basic Auth with your proxy.
 # proxy_servers: {}
 
-# quiet (bool)
-#   Disable progress bar display and other output.
-# quiet: false
-
 # remote_connect_timeout_secs (float)
 #   The number seconds conda will wait for your client to establish a
 #   connection to a remote url resource.
@@ -472,43 +611,6 @@ pkgs_dirs: []
 #   request, the read timeout is the number of seconds conda will wait for
 #   the server to send a response.
 # remote_read_timeout_secs: 60.0
-
-# report_errors (NoneType, bool)
-#   Opt in, or opt out, of automatic error reporting to core maintainers.
-#   Error reports are anonymous, with only the error stack trace and
-#   information given by `conda info` being sent.
-report_errors: false
-
-# rollback_enabled (bool)
-#   Should any error occur during an unlink/link transaction, revert any
-#   disk mutations made to that point in the transaction.
-# rollback_enabled: true
-
-# safety_checks (SafetyChecks)
-#   Enforce available safety guarantees during package installation. The
-#   value must be one of 'enabled', 'warn', or 'disabled'.
-safety_checks: warn
-
-# shortcuts (bool)
-#   Allow packages to create OS-specific shortcuts (e.g. in the Windows
-#   Start Menu) at install time.
-shortcuts: true
-
-# ssl_verify (bool, str)
-#   aliases: verify_ssl
-#   Conda verifies SSL certificates for HTTPS requests, just like a web
-#   browser. By default, SSL verification is enabled, and conda operations
-#   will fail if a required url's certificate cannot be verified. Setting
-#   ssl_verify to False disables certification verificaiton. The value for
-#   ssl_verify can also be (1) a path to a CA bundle file, or (2) a path
-#   to a directory containing certificates of trusted CA.
-# ssl_verify: true
-
-# track_features (sequence: str)
-#   string delimiter: ','
-#   A list of features that are tracked by default. An entry here is
-#   similar to adding an entry to the create_default_packages list.
-# track_features: []
 
 # use_index_cache (bool)
 #   Use cache of channel index files, even if it has expired.
@@ -525,3 +627,4 @@ shortcuts: true
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.
 #
 # verbosity: 0
+ssl_verify: true

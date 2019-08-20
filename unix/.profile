@@ -29,12 +29,13 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # this is what xdg data dirs is set to with no modification on my part. That has so many simple errors in it
 # /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:
 
+# Jul 25, 2019: Just realized I haven't added MIME dirs to the data dirs
 # Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
 if [[ -n "$PREFIX" ]]; then
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man:$_ROOT/share/fish/man"
     export SHELL="$PREFIX/bin/bash"
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
-    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share:$XDG_DATA_HOME/mime"
     pathadd "$_ROOT/libexec"
     pathadd "$_ROOT/libexec/git-core"
     export CFLAGS='-I/data/data/com.termux/files/usr/includes'
@@ -44,7 +45,7 @@ else
     export SHELL=/bin/bash
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
     # You forgot the one for snaps!
-    export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
     pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
 fi
 
@@ -52,7 +53,6 @@ fi
 # User dirs first: {{{1
 
 # Set PATH so it includes user's private bin directories and set them first in path
-
 pathadd "$HOME/bin"
 pathadd "$HOME/.local/bin"
 
@@ -64,7 +64,6 @@ export IPYTHONDIR="$HOME/.ipython"
 export PYTHONCOERCECLOCALE=warn
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
 export PYTHONUNBUFFERED=1
-# export PYTHONVERBOSE=1
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -119,14 +118,19 @@ if [[ -n "$(command -v cheat)" ]];then
 fi
 
 # Set locale if it isn't explicitly stated elsewhere: {{{2
-export LANG=en_US.UTF-8                # gathered from localectl
-export LC_MESSAGES=en_US.UTF-8                    # man i3: Prevents program output translation
-export LANGUAGE=en_US                     # nvim complains us region not supported
-export LC_CTYPE=C.UTF-8                       # the python default
-# export LC_ALL="C.UTF-8
+# This lang setting messes up neon
+# export LANG=en_US.UTF-8               # gathered from localectl
+export LANG=C.UTF-8
+export LC_MESSAGES=C.UTF-8              # man i3: Prevents program output translation
+# export LANGUAGE=en_US                   # nvim complains us region not supported
+export LC_CTYPE=C.UTF-8                 # the python default
+# export LC_IDENTIFICATION=en_US          # got this from `locale -c language` I don't know if set right
+export LC_COLLATE=C.UTF-8
+export LC_ALL=C.UTF-8
 
 # Idk if this is or isn't a bad idea
 export LDFLAGS=" -lm"
+# export LANG="en_US.UTF-8"                 # gathered from localectl
 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources

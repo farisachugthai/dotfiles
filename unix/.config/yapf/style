@@ -25,7 +25,8 @@ allow_multiline_dictionary_keys=True
 allow_multiline_lambdas=False
 
 # Allow splits before the dictionary value.
-allow_split_before_dict_value=True
+# **DON'T**
+allow_split_before_dict_value=False
 
 # Number of blank lines surrounding top-level function and class
 # definitions.

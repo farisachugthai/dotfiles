@@ -50,7 +50,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_themes_dir() .. "default/zenburn.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -600,7 +600,7 @@ theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font      = "Hack 18"
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"
