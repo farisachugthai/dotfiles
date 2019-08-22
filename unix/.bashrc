@@ -14,7 +14,6 @@ pathadd() {  # {{{1
     fi
 }
 
-[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
 # $_ROOT: {{{1
 # shellcheck disable=2153
@@ -85,7 +84,8 @@ shopt -s histreedit
 
 # Shopt: {{{1
 set -o emacs
-
+# I always forget keep this below set -o vi!
+[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 # Be notified of asynchronous jobs completing in the background
 set -o notify
 # Check the window size after each command and update the values of LINES and COLUMNS.

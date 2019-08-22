@@ -7,3 +7,8 @@
 *.ttf binary
 
 text=auto
+
+text eol=input
+*.txt text
+*.py diff=python
+*.sh eol=lf

@@ -11,7 +11,7 @@
 # --glob=!.git/*
 
 # Aug 19, 2019: Did you know this was a setting?
---path-separator='/'
+--path-separator='\'
 
 --hidden
 
@@ -75,6 +75,15 @@
 # This flag can be disabled with --no-auto-hybrid-regex.
 
 --auto-hybrid-regex
+
+# Windows Specific: {{{1
+
+
+--crlf
+
+--type-add=exe:*.exe
+
+--type-add=bat:*.bat
 
 # Colors: {{{1
 # Colors are limited to one of eight choices: red, blue, green, cyan,

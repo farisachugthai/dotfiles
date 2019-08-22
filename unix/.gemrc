@@ -1,5 +1,8 @@
 ---
-# Vim: set ft=yaml:
+# Gemrc
+# Jul 23, 2019
+
+
 # If you do not wish to install this documentation in the future, use the
 # --no-document flag, or set it as the default in your ~/.gemrc file. See
 # 'gem help env' for details.
@@ -7,3 +10,12 @@
 :no-document: true
 install: --no-document
 update: --no-document
+
+gem: --no-ri --no-rdoc
+
+# Idk if you're supposed to do --no-document
+# As an aside this could be used in place of the gem wide config above
+# install: --no-rdoc --no-ri
+# update: --no-rdoc --no-ri
+
+# Vim: set ft=yaml:
