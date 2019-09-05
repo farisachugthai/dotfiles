@@ -318,6 +318,10 @@ _launch=Meta+N\tMeta+Shift+Return,none,Launch Neovim-Qt
 [nvim-qt.desktop][Global Shortcuts]
 _k_friendly_name=
 
+[org.kde.dolphin.desktop]
+_k_friendly_name=Dolphin
+_launch=Meta+E,Meta+E,Dolphin
+
 [org.kde.ksysguard.desktop]
 _k_friendly_name=Launch KSysGuard
 _launch=Ctrl+Shift+Esc,none,Launch KSysGuard
@@ -327,7 +331,7 @@ _k_friendly_name=
 
 [org.kde.spectacle.desktop]
 ActiveWindowScreenShot=Meta+Print,Meta+Print,Capture Active Window
-CurrentMonitorScreenShot=,,Capture Current Monitor
+CurrentMonitorScreenShot=,none,Capture Current Monitor
 FullScreenScreenShot=Shift+Print,Shift+Print,Capture Entire Desktop
 RectangularRegionScreenShot=Meta+Shift+Print,Meta+Shift+Print,Capture Rectangular Region
 _k_friendly_name=Spectacle

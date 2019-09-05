@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
 
@@ -41,12 +41,12 @@ if [[ -n "$PREFIX" ]]; then
     export CFLAGS='-I/data/data/com.termux/files/usr/includes'
     export CC='aarch64-linux-android-clang'
 else
-    export BROWSER="firefox "
     export SHELL=/bin/bash
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
     # You forgot the one for snaps!
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
     pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
+    export CC=clang
 fi
 
 
@@ -107,6 +107,15 @@ pathadd "$HOME/.cargo/bin"
 
 if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
 
+# GO: {{{1
+
+# Also check out :Man go and !go env
+export GOPATH="$HOME/go"
+export GOHOME="$HOME/go"
+export GOTMPDIR="/tmp"
+
+pathadd "$GOPATH/bin"
+pathadd "/usr/local/go/bin"
 # Other Environment Variables: {{{1
 
 # colored GCC warnings and errors

@@ -4,6 +4,12 @@
     email = farischugthai@gmail.com
     name = farisachugthai
 
+[add]
+    ignoreErrors
+
+[apply]
+    ignoreWhitespace = False  # don't fuck up the whitespace
+
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
     ci = commit
@@ -99,12 +105,15 @@
     expandtab = true
     boldheaders = true
 
+[column]
+    clean = never  # git shows files it's gonna wipe with git clean in columns and i hate it
+
 [commit]
     verbose
 
 [core]
-    excludesfile = "$HOME/.config/git/ignore"
     autocrlf = input
+    excludesfile = "$HOME/.config/git/ignore"
 
     safecrlf = True
 
@@ -135,15 +144,24 @@
 # Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
 [diff]
+    context = 0
+    mnemonicPrefix = true  # holy shit if this is real then this might be awesome
     prompt = false
     # detect copied files as well as renames. affects merge and status.renames
+    renames = copy
     strategy-option = resolve
+    suppressBlankEmpty = true  # dude copy pastin is gonna be so much easy
     tool = nvimdiff
+    word-diff = color
+    wsErrorHighlight = all
 
 [difftool]
     nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
     nvimdiff = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     prompt = false
+
+[gc]
+    auto = 3000   # the default is 6700 but that sounds really high
 
 [grep]
     lineNumber = true
@@ -190,6 +208,7 @@
 
 [pull]
     rebase = merges
+    rebase = interactive  # can it be both?
     renormalize
 
 [push]
@@ -204,8 +223,12 @@
     variant = "ssh -p 8022 $*"
 
 [status]
+    branch = true
+    displayCommentPrefix = True  # git comments out its own output for easier copy pasting!
+    renames = copy
     showStash = True
     showUntrackedFiles = all
+    submoduleSummary = true
 
 [url "git://github.com"]
     insteadOf = g:

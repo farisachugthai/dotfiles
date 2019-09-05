@@ -578,8 +578,8 @@ client.connect_signal("mouse::enter", function(c)
     end
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+-- client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+-- client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 --
 -- Nov 15, 2018: It doesn't appear that at any point I set a theme. Zenburn?
@@ -603,10 +603,10 @@ theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
 theme.font      = "Hack 18"
 
 -- {{{ Colors
-theme.fg_normal  = "#DCDCCC"
+theme.fg_normal  = "#EDBDBB"
 theme.fg_focus   = "#F0DFAF"
 theme.fg_urgent  = "#CC9393"
-theme.bg_normal  = "#3F3F3F"
+theme.bg_normal  = "#1D2021"
 theme.bg_focus   = "#1E2320"
 theme.bg_urgent  = "#3F3F3F"
 theme.bg_systray = theme.bg_normal
@@ -615,14 +615,14 @@ theme.bg_systray = theme.bg_normal
 -- {{{ Borders
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(2)
-theme.border_normal = "#3F3F3F"
-theme.border_focus  = "#6F6F6F"
-theme.border_marked = "#CC9393"
+theme.border_normal = "#1D2021"
+theme.border_focus  = "#1D2021"
+theme.border_marked = "#FE8019"
 -- }}}
 
 -- {{{ Titlebars
-theme.titlebar_bg_focus  = "#3F3F3F"
-theme.titlebar_bg_normal = "#3F3F3F"
+theme.titlebar_bg_focus  = "#1d2021"
+theme.titlebar_bg_normal = "#3C3836"
 -- }}}
 
 -- There are other variable sets
@@ -632,18 +632,18 @@ theme.titlebar_bg_normal = "#3F3F3F"
 -- titlebar_[normal|focus]
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
 -- Example:
---theme.taglist_bg_focus = "#CC9393"
+theme.taglist_bg_focus = "#CC9393"
 -- }}}
 
 -- {{{ Widgets
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
---theme.fg_widget        = "#AECF96"
---theme.fg_center_widget = "#88A175"
---theme.fg_end_widget    = "#FF5656"
---theme.bg_widget        = "#494B4F"
---theme.border_widget    = "#3F3F3F"
+theme.fg_widget        = "#AECF96"
+theme.fg_center_widget = "#88A175"
+theme.fg_end_widget    = "#FF5656"
+theme.bg_widget        = "#494B4F"
+theme.border_widget    = "#3F3F3F"
 -- }}}
 
 -- {{{ Mouse finder

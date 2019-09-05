@@ -1,0 +1,165 @@
+# Lesskey
+# Sep 04, 2019:
+# Found out today that less has a dedicated file where you can group all functionality together
+# Good to free up some space in the bashrc
+
+# Jesus Christ look at what the **default** prompt for less is...
+# Yeah that didn't work
+# export LESSPROMPT='?f%f .?n?m(%T %i of %m) ..?ltlines %lt-%lb?L/%L. : byte %bB?s/%s. .?e(END) ?x- Next\: %x.:?pB%pB\%..%t'
+
+
+# The default value for lessedit. I just thought it was neat.
+#env LESSEDIT='%E ?lm+%lm. %f'
+
+
+# Holy hell check out `man lesskey` it defines all standard less keybindings
+
+#command
+\r        forw-line
+\n        forw-line
+e         forw-line
+j         forw-line
+\kd       forw-line
+^E        forw-line
+^N        forw-line
+k         back-line
+y         back-line
+^Y        back-line
+^K        back-line
+^P        back-line
+J         forw-line-force
+K         back-line-force
+Y         back-line-force
+d         forw-scroll
+^D        forw-scroll
+u         back-scroll
+^U        back-scroll
+\40       forw-screen
+f         forw-screen
+^F        forw-screen
+^V        forw-screen
+\kD       forw-screen
+b         back-screen
+^B        back-screen
+\ev       back-screen
+\kU       back-screen
+z         forw-window
+w         back-window
+\e\40          forw-screen-force
+F         forw-forever
+\eF       forw-until-hilite
+R         repaint-flush
+r         repaint
+^R        repaint
+^L        repaint
+\eu       undo-hilite
+g         goto-line
+\kh       goto-line
+<         goto-line
+\e<       goto-line
+p         percent
+%         percent
+\e[       left-scroll
+\e]       right-scroll
+\e(       left-scroll
+\e)       right-scroll
+\kl       left-scroll
+\kr       right-scroll
+\e{       no-scroll
+\e}       end-scroll
+{         forw-bracket {}
+}         back-bracket {}
+(         forw-bracket ()
+)         back-bracket ()
+[         forw-bracket []
+]         back-bracket []
+\e^F      forw-bracket
+\e^B      back-bracket
+G         goto-end
+\e>       goto-end
+>         goto-end
+\ke       goto-end
+\eG       goto-end-buffered
+=         status
+^G        status
+:f        status
+/         forw-search
+?         back-search
+\e/       forw-search *
+\e?       back-search *
+n         repeat-search
+\en       repeat-search-all
+N         reverse-search
+\eN       reverse-search-all
+&         filter
+m         set-mark
+'         goto-mark
+^X^X      goto-mark
+E         examine
+:e        examine
+^X^V      examine
+:n        next-file
+:p        prev-file
+t         next-tag
+T         prev-tag
+:x        index-file
+:d        remove-file
+-         toggle-option
+:t        toggle-option t
+s         toggle-option o
+_         display-option
+|         pipe
+v         visual
+!         shell
++         firstcmd
+H         help
+h         help
+V         version
+0         digit
+1         digit
+2         digit
+3         digit
+4         digit
+5         digit
+6         digit
+7         digit
+8         digit
+9         digit
+q         quit
+Q         quit
+:q        quit
+:Q        quit
+ZZ        quit
+
+# Here are all the default line editing keys. Dude I've been using Unix
+# for years now and never realized how complicated fucking **less** was
+
+#line-edit
+\t        forw-complete
+\17       back-complete
+\e\t      back-complete
+^L        expand
+^V        literal
+^A        literal
+\el       right
+\kr       right
+\eh       left
+\kl       left
+\eb       word-left
+\e\kl     word-left
+\ew       word-right
+\e\kr     word-right
+\ei       insert
+\ex       delete
+\kx       delete
+\eX       word-delete
+\ekx      word-delete
+\e\b      word-backspace
+\e0       home
+\kh       home
+\e$       end
+\ke       end
+\ek       up
+\ku       up
+\ej       down
+^G        abort
