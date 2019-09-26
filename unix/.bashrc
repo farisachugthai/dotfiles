@@ -30,19 +30,28 @@ export PYTHONDONTWRITEBYTECODE=1
 # LDflags gets defined in here and as a result numpy fails to build
 export NPY_DISTUTILS_APPEND_FLAGS=1
 
-# >>> conda initialize >>> : {{{2
+export PYTHONDOCS="$HOME/python/official-python-docs/3.7/"
+
+export PYTHONIOENCODING=utf-8:surrogateescape
+export IPYTHONDIR="$HOME/.ipython"
+export PYTHONCOERCECLOCALE=warn
+if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
+export PYTHONUNBUFFERED=1
+
+# Conda: {{{2
+# >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/faris/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/faris/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/faris/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+    elseif [[ -d "$HOME/miniconda3/bin" ]]
+        pathadd "$HOME/miniconda3/bin"
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<<
-
 
 # GCloud: {{{2
 
@@ -90,8 +99,9 @@ export HISTFILE="$HOME/.bash_history"
 shopt -s histappend
 shopt -s histreedit
 
+
 # Shopt: {{{1
-set -o emacs
+
 # I always forget keep this below set -o vi!
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 # Be notified of asynchronous jobs completing in the background
@@ -149,6 +159,8 @@ export COLORTERM="truecolor"
 # -i: Ignore case. Works similarly to how modern programs handle smart case!
 # --mouse: Take a guess
 export PAGER="less -JRKMLi" 
+export PAGER="less -JRKML"
+export LESSHISTSIZE=5000  # default is 100
 
 # Oh shit! --mouse is a bash>5 feature!
 if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse"; fi
@@ -185,7 +197,7 @@ fi
 # Sourced files: {{{1
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
-test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion" && echo 'Sourced completion'
+test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion" && echo 'sourced completion'
 
 if [[ -d ~/.bashrc.d ]]; then
     for config in $HOME/.bashrc.d/*.bash; do
@@ -194,6 +206,14 @@ if [[ -d ~/.bashrc.d ]]; then
     done
     unset -v config
 fi
+firstpath() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        export PATH="$1:${PATH:+"$PATH"}"
+    fi
+}
+
+firstpath "$HOME/bin"
+firstpath "$HOME/.local/bin"
 
 # Dynamic Completions: {{{2
 
@@ -201,7 +221,7 @@ _completion_loader()
 {
     . "$_ROOT/share/bash_completion/completions/*" >/dev/null 2>&1 && return 124
 }
-# complete -D -F _completion_loader -o bashdefault -o default
+complete -D -F _completion_loader -o bashdefault -o default
 
 # Here's one for the terminal
 if [[ -n "$(command -v kitty)" ]]; then

@@ -126,25 +126,6 @@ nman(){
     nvim -c "Man $1" -c'wincmd T'
 }
 
-# tre: tree with way too many options to memorize: {{{1
-tre(){
-    # Let's review a few of these options.
-    # -L is max dir depth
-    # -F:
-    # Append a `/' for directories, a `=' for socket files, a `*' for
-    # executable files, a `>' for doors (Solaris) and a `|' for
-    # FIFO's, as per ls -F
-    # Also, and I don't know why, the a and I must be together to ignore .git
-    # Jun 02, 2019: This got way more complicated now that i considered accepting arguments
-    if [[ -n "$1" ]]; then
-    # In addition they MUST come last or .git gets included. Idk why man
-        "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -I '.git' -a -- $1"
-    elif [[ -n "$2" ]]; then
-        "tree  -I '__pycache__' -I 'node_modules' --dirsfirst -h -L 5 -F -I '.git' -a -- $@"
-    else
-        "tree -I '**node_modules**' -hFAC $*"
-    fi
-}
 
 # lk: {{{1 show symbolic links using fd or fallback to grep
 lk() {

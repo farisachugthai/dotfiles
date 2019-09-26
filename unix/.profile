@@ -26,13 +26,9 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
-# this is what xdg data dirs is set to with no modification on my part. That has so many simple errors in it
-# /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:
+if [[ -n "$ANDROID_DATA" ]]; then
 
-# Jul 25, 2019: Just realized I haven't added MIME dirs to the data dirs
-# Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
-if [[ -n "$PREFIX" ]]; then
-    export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man:$_ROOT/share/fish/man"
+    export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man:$_ROOT/share/fish/man:$PREFIX/lib/node_modules/npm/man"
     export SHELL="$PREFIX/bin/bash"
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share:$XDG_DATA_HOME/mime"
@@ -40,30 +36,38 @@ if [[ -n "$PREFIX" ]]; then
     pathadd "$_ROOT/libexec/git-core"
     export CFLAGS='-I/data/data/com.termux/files/usr/includes'
     export CC='aarch64-linux-android-clang'
+
 else
+
     export SHELL=/bin/bash
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
     # You forgot the one for snaps!
-    export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
     pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
     export CC=clang
 fi
 
+# GNU specified directory vars: {{{2
+# https://www.gnu.org/prep/standards/html_node/Directory-Variables.html
+if [[ -n "$ANDROID_DATA" ]]; then
+    export SYSCONFDIR="$PREFIX/local/etc"
+    export BINDIR="$PREFIX/local/bin"
+    export DATADIR="$PREFIX/local/share"
+    export DATAROOTDIR="$PREFIX/share"
+    export INCLUDEDIR="$PREFIX/local/include"
+else
+    export SYSCONFDIR="/usr/local/etc"
+    export BINDIR="/usr/local/bin"
+    export DATADIR="/usr/local/share"
+    export DATAROOTDIR="/usr/share"
+    export INCLUDEDIR="/usr/local/include"
+fi
 
 # User dirs first: {{{1
 
 # Set PATH so it includes user's private bin directories and set them first in path
 pathadd "$HOME/bin"
 pathadd "$HOME/.local/bin"
-
-# Python: {{{1
-
-export PYTHONIOENCODING=utf-8:surrogateescape
-export PYTHONDONTWRITEBYTECODE=1
-export IPYTHONDIR="$HOME/.ipython"
-export PYTHONCOERCECLOCALE=warn
-if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
-export PYTHONUNBUFFERED=1
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -95,9 +99,6 @@ if [[ -n "$(command -v yarn)" ]]; then
 fi
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 
-# Lisp: {{{1
-pathadd "$HOME/.racket/7.1/bin"
-
 # Rust: {{{1
 
 # Remember to keep rust above the environment variables. If ./.cargo/bin isn't
@@ -107,7 +108,7 @@ pathadd "$HOME/.cargo/bin"
 
 if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
 
-# GO: {{{1
+# Go: {{{1
 
 # Also check out :Man go and !go env
 export GOPATH="$HOME/go"
@@ -116,6 +117,7 @@ export GOTMPDIR="/tmp"
 
 pathadd "$GOPATH/bin"
 pathadd "/usr/local/go/bin"
+
 # Other Environment Variables: {{{1
 
 # colored GCC warnings and errors
@@ -127,19 +129,14 @@ if [[ -n "$(command -v cheat)" ]];then
 fi
 
 # Set locale if it isn't explicitly stated elsewhere: {{{2
-# This lang setting messes up neon
-# export LANG=en_US.UTF-8               # gathered from localectl
-export LANG=C.UTF-8
+export LANG=C
 export LC_MESSAGES=C.UTF-8              # man i3: Prevents program output translation
-# export LANGUAGE=en_US                   # nvim complains us region not supported
 export LC_CTYPE=C.UTF-8                 # the python default
-# export LC_IDENTIFICATION=en_US          # got this from `locale -c language` I don't know if set right
+export LC_IDENTIFICATION=C          # got this from `locale -c language` I don't know if set right
 export LC_COLLATE=C.UTF-8
-export LC_ALL=C.UTF-8
 
 # Idk if this is or isn't a bad idea
-export LDFLAGS=" -lm"
-# export LANG="en_US.UTF-8"                 # gathered from localectl
+export LDFLAGS="$LDFLAGS -lm"
 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources
@@ -167,8 +164,6 @@ export CLOUDSDK_CORE_DISABLE_USAGE_REPORTING=1
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Sourced Files: {{{1
-
-# Setup completions correctly.
 
 # Help find your dotfiles faster and setup nvim
 export DOT="$HOME/projects/dotfiles"

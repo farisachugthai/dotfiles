@@ -166,3 +166,5 @@ fi
 alias n="nvim $* "
 
 alias fuck="sudo !!"
+
+alias tre="tree -a -I .git $*"

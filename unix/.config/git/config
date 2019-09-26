@@ -144,13 +144,16 @@
 # Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
 [diff]
+    algorithm = patience
+    autoRefreshIndex
     context = 0
+    dirstat = files,10,cumulative
     mnemonicPrefix = true  # holy shit if this is real then this might be awesome
     prompt = false
     # detect copied files as well as renames. affects merge and status.renames
-    renames = copy
     strategy-option = resolve
     suppressBlankEmpty = true  # dude copy pastin is gonna be so much easy
+    suppressBlankLines
     tool = nvimdiff
     word-diff = color
     wsErrorHighlight = all
@@ -182,6 +185,7 @@
 
 [log]
     abbrevCommit = true
+    showSignature = true
 
 [merge]
     autoStash
@@ -189,7 +193,7 @@
     diffstat = true
     mergestyle = diff3
     prompt = false
-    renormalize
+    renames = true
     strategy-option = resolve
     summary = true
     tool = nvim-merge
@@ -205,11 +209,6 @@
     # local and remote are the 2 paths we're trying to merge, and we can
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
-
-[pull]
-    rebase = merges
-    rebase = interactive  # can it be both?
-    renormalize
 
 [push]
     default = simple

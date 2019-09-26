@@ -3,7 +3,7 @@
 # By: Faris Chugthai
 # 01/06/19
 
-# LS_COLORS: {{{1
+# LS_COLORS: 
 
 # trapdoor ls colors
 # Maintainers: Magnus Woldrich <m@japh.se>,
@@ -39,7 +39,7 @@
 # You should have received a copy of the Perl Artistic License along
 # with this program.  If not, see <http://www.perlfoundation.org/artistic_license_1_0>.
 
-# :core: {{{1
+# :core: 
 # Below are the color init strings for the basic file types. A color init
 # string consists of one or more of the following numeric codes:
 # Attribute codes:
@@ -52,7 +52,7 @@
 #FILE 00 # regular file: use no color at all
 
 
-# a foreword by dustin kirkland: {{{2
+# a foreword by dustin kirkland: 
 # DIR 38;5;5 # directory
 LINK 38;5;37 # symbolic link. (If you set this to 'target' instead of a
  # numerical value, the color is as for the file pointed to.)
@@ -190,7 +190,7 @@ EXEC 38;5;202
 .oga 00;36
 .spx 00;36
 .xspf 00;36
-# Trapdoor: {{{2
+# Trapdoor: 
 RESET 0 # reset to "normal" color
 # BLK                   38;5;68
 # CAPABILITY            38;5;17
@@ -216,25 +216,26 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 
 *LS_COLORS 48;5;89;38;5;197;1;3;4;7 # :-)
 
-# documents {{{1
-*README               38;5;220;1;4
-*README.rst           38;5;220;1;4
-*README.md            38;5;220;1;4
-*LICENSE*             38;5;220;
+# documents 
+*README               38;5;220;1;3;4
+*README.rst           38;5;220;1;3;4
+*README.md            38;5;220;1;3;4
+*MANIFEST.in          38;5;222;1;4
+*LICENSE              38;5;220;
 *COPYING              38;5;220;
 *INSTALL              38;5;220;1
 *COPYRIGHT            38;5;220;1
 *AUTHORS              38;5;220;1
-*HISTORY              38;5;220;1
+*HISTORY*             38;5;220
 *CONTRIBUTORS         38;5;220;1
 *PATENTS              38;5;220;1
 *VERSION              38;5;220;1
 *NOTICE               38;5;220;1
 *CHANGES              38;5;220;1
-.log                  38;5;190
-# plain-text {{{2
+.log                  38;5;190;3
+# plain-text 
 .txt                  38;5;253
-# markup {{{2
+# markup 
 .etx                  38;5;184
 .info                 38;5;184
 .markdown             38;5;184
@@ -246,7 +247,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .rst                  38;5;215
 .tex                  38;5;184
 .textile              38;5;184
-# key-value, non-relational data {{{2
+# key-value, non-relational data 
 .bib                  38;5;178
 .json                 38;5;178
 .msg                  38;5;178
@@ -258,7 +259,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .RData                38;5;178
 .rdata                38;5;178
 
-# binary {{{2
+# binary 
 .cbr                  38;5;141
 .cbz                  38;5;141
 .chm                  38;5;141
@@ -267,7 +268,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .PDF                  38;5;141
 .mobi                 38;5;141
 .epub                 38;5;141
-# words {{{3
+# words 
 .docm                 38;5;111
 .doc                  38;5;111
 .docx                 38;5;111
@@ -276,7 +277,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .odb                  38;5;111
 .odt                  38;5;111
 .rtf                  38;5;111
-# presentation {{{3
+# presentation 
 .odp                  38;5;166
 .pps                  38;5;166
 .ppt                  38;5;166
@@ -287,7 +288,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .pptxm                38;5;166;4
 #   Powerpoint show with enabled macros
 .pptsm                38;5;166;4
-# spreadsheet {{{3
+# spreadsheet 
 .csv                  38;5;78
 #   Open document spreadsheet
 .ods                  38;5;112
@@ -302,28 +303,26 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .xltx                 38;5;73
 
 
-# configs {{{2
-*cfg                  1
-*conf                 1
-*rc                   1
-.ini                  1
+# configs 
+*cfg                  38;5;133;1
+*conf                 38;5;131;1
+*rc                   38;5;174;1
+.ini                  38;5;173;1
 .plist                1
-#   vim
-.viminfo              1
 #   cisco VPN client configuration
 .pcf                  1
 #   adobe photoshop proof settings file
 .psf                  1
-# }}}
-# code {{{1
-# version control {{{2
+
+# code 
+# version control 
 .git                  38;5;197
 .gitignore            38;5;197
 .gitconfig            38;5;197
 .gitattributes        38;5;197
 .gitmodules           38;5;197
 
-# shell {{{2
+# shell 
 .awk                  38;5;172
 .bash                 38;5;172
 .bashrc*              38;5;172
@@ -338,14 +337,14 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .viminfo              38;5;214
 .zsh                  38;5;172
 
-
-# interpreted {{{2
+# interpreted 
 .ahk                  38;5;41
 # python
 .py                   38;5;41
 .ipynb                38;5;45
 .ipy                  38;5;42;1
-requirements*.txt     38;5;248
+*requirements*        38;5;222
+*Pipfile*             38;5;222;3
 .pdbrc                38;5;41
 
 # ruby
@@ -372,11 +371,7 @@ requirements*.txt     38;5;248
 .ps1                  38;5;64;1
 .ps1xml               38;5;64;1
 
-# History: {{{2
-.bash_history*        38;5;221
-.python_history*      38;5;221
-
-# compiled {{{2
+# compiled 
 
 #   assembly language
 .asm                  38;5;81
@@ -436,15 +431,15 @@ requirements*.txt     38;5;248
 .hs                   38;5;81
 .lhs                  38;5;81
 
-# binaries {{{2
+# binaries 
 # compiled apps for interpreted languages
 .pyc                  38;5;240
 
-# orchestration {{{2
+# orchestration 
 .tf                   38;5;168
 .tfstate              38;5;168
 .tfvars               38;5;168
-# html {{{2
+# html 
 .css                  38;5;125;1
 .less                 38;5;125;1
 .sass                 38;5;125;1
@@ -456,7 +451,7 @@ requirements*.txt     38;5;248
 .eml                  38;5;125;1
 .mustache             38;5;125;1
 
-# java and js {{{2
+# java and js 
 .coffee               38;5;074;1
 .java                 38;5;074;1
 .js                   38;5;074;1
@@ -468,28 +463,27 @@ requirements*.txt     38;5;248
 .jsm                  38;5;074;1
 .jsp                  38;5;074;1
 
-# php {{{2
+# php 
 .php                  38;5;81
 #   CakePHP view scripts and helpers
 .ctp                  38;5;81
 #   Twig template engine
 .twig                 38;5;81
 
-# vb/a {{{2
+# vb/a 
 .vb                   38;5;81
 .vba                  38;5;81
 .vbs                  38;5;81
-# Build stuff {{{2
+# Build stuff 
 *Dockerfile           38;5;155
 .dockerignore         38;5;248
 *Makefile             38;5;155
-*MANIFEST             38;5;243
+.configure            38;5;155
 *pm_to_blib           38;5;248
 # ruby rake
 .rake                 38;5;155
 # automake
 .am                   38;5;242
-.in                   38;5;242
 .hin                  38;5;242
 .scan                 38;5;242
 .m4                   38;5;242
@@ -501,11 +495,13 @@ requirements*.txt     38;5;248
 .rgignore             38;5;244
 .npmignore            38;5;244
 
-# patch files {{{2
+# patch files: TODO 
+# ...Eww
 .diff                 48;5;197;38;5;232
 .patch                48;5;197;38;5;232;1
-#}}}
-# graphics {{{1
+
+# graphics 
+# pics: 
 .bmp                  38;5;97
 .tiff                 38;5;97
 .tif                  38;5;97
@@ -521,7 +517,7 @@ requirements*.txt     38;5;248
 .psd                  38;5;97
 .xpm                  38;5;97
 
-# vector {{{1
+# vector 
 .ai                   38;5;99
 .eps                  38;5;99
 .epsf                 38;5;99
@@ -529,7 +525,7 @@ requirements*.txt     38;5;248
 .ps                   38;5;99
 .svg                  38;5;99
 
-# video {{{1
+# video 
 .avi                  38;5;114
 .divx                 38;5;114
 .IFO                  38;5;114
@@ -545,7 +541,7 @@ requirements*.txt     38;5;248
 .rmvb                 38;5;114
 .sample               38;5;114
 .wmv                  38;5;114
-  # mobile/streaming {{{2
+  # mobile/streaming 
 .3g2                  38;5;115
 .3gp                  38;5;115
 .gp3                  38;5;115
@@ -557,11 +553,11 @@ requirements*.txt     38;5;248
 .ogv                  38;5;115
 .f4v                  38;5;115
 
-  # lossless {{{2
+  # lossless 
 .VOB                  38;5;115;1
 .vob                  38;5;115;1
 
-# audio {{{1
+# audio 
 .3ga                  38;5;137;1
 .S3M                  38;5;137;1
 .aac                  38;5;137;1
@@ -593,7 +589,7 @@ requirements*.txt     38;5;248
 .wv                   38;5;136;1
 .wvc                  38;5;136;1
 
-# fonts {{{1
+# fonts 
 .afm                  38;5;66
 .fon                  38;5;66
 .fnt                  38;5;66
@@ -605,7 +601,7 @@ requirements*.txt     38;5;248
 .PFA                  38;5;66
 .pfa                  38;5;66
 
-# archives {{{1
+# archives 
 .7z                   38;5;40
 .a                    38;5;40
 .arj                  38;5;40
@@ -629,7 +625,7 @@ requirements*.txt     38;5;248
 .zoo                  38;5;40
 .zpaq                 38;5;40
 .zz                   38;5;40
-  # packaged apps {{{2
+  # packaged apps 
 .apk                  38;5;215
 .deb                  38;5;215
 .rpm                  38;5;215
@@ -643,14 +639,14 @@ requirements*.txt     38;5;248
 .bsp                  38;5;215
 .dmg                  38;5;215
 
-  # segments from 0 to three digits after first extension letter {{{2
+  # segments from 0 to three digits after first extension letter 
 .r[0-9]{0,2}          38;5;239
 .zx[0-9]{0,2}         38;5;239
 .z[0-9]{0,2}          38;5;239
 # partial files
 .part                 38;5;239
 
-# partition images {{{2
+# partition images 
 .dmg                  38;5;124
 .iso                  38;5;124
 .bin                  38;5;124
@@ -661,7 +657,7 @@ requirements*.txt     38;5;248
 .vcd                  38;5;124
 .vmdk                 38;5;124
 
-# databases {{{2
+# databases 
 .accdb                38;5;222
 .accde                38;5;222
 .accdr                38;5;222
@@ -677,7 +673,7 @@ requirements*.txt     38;5;248
 # NetCDF database
 .nc                   38;5;222
 
-# tempfiles {{{1
+# tempfiles: {{{1
 # undo files
 .pacnew               38;5;33
 .un~                  38;5;241
@@ -717,12 +713,12 @@ requirements*.txt     38;5;248
 .localized            38;5;239
 .CFUserTextEncoding   38;5;239
 
-# hosts {{{1
+# hosts 
 # /etc/hosts.{deny,allow}
 .allow                38;5;112
 .deny                 38;5;196
 
-# systemd {{{1
+# systemd 
 # http://www.freedesktop.org/software/systemd/man/systemd.unit.html
 .service              38;5;45
 *@.service            38;5;45
@@ -736,7 +732,7 @@ requirements*.txt     38;5;248
 .timer                38;5;45
 .snapshot             38;5;45
 
-# metadata {{{1
+# metadata 
 .application          38;5;116
 .cue                  38;5;116
 .description          38;5;116
@@ -752,7 +748,7 @@ requirements*.txt     38;5;248
 .torrent              38;5;116
 .urlview              38;5;116
 
-# encrypted data {{{1
+# encrypted data 
 .asc                  38;5;192;3
 .bfe                  38;5;192;3
 .enc                  38;5;192;3
@@ -766,8 +762,8 @@ requirements*.txt     38;5;248
 .enc                  38;5;192;3
 .sig                  38;5;192;3
 .p7s                  38;5;192;3
-# 1}}}
-# emulators {{{1
+# 1
+# emulators 
 .32x                  38;5;213
 .cdi                  38;5;213
 .fm2                  38;5;213
@@ -796,7 +792,7 @@ requirements*.txt     38;5;248
   # Sega
 .sms                  38;5;213
 
-# unsorted {{{1
+# unsorted 
 #
 #   Portable Object Translation for GNU Gettext
 .pot                  38;5;7
@@ -857,7 +853,7 @@ requirements*.txt     38;5;248
 .xcsettings           1
 .xib                  38;5;208
 
-# termcap {{{1
+# termcap 
 
 ###############
 #  terminals  #
@@ -929,5 +925,5 @@ TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
 TERM xterm-kitty
-# }}}
+
 # vim: ft=dircolors:fdm=marker:et:sw=2:
