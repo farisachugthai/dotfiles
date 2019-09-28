@@ -17,7 +17,6 @@ if [[ -f ~/.fzf.bash ]]; then
     # should we do else; git clone fzf repo?
 else
     echo -e 'FZF not installed.'
-    exit 1
 fi
 
 
@@ -31,7 +30,7 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
     # Filepath helps you jump directories quickly, tiebreak begin makes a ton
     # of difference, ansi colors dude this is sweet
-    export FZF_DEFAULT_COMMAND='rg --hidden --color=ansi --follow --no-messages --smart-case --glob "!.git/*" -g "!node_modules/*" --passthru  --max-depth 10 --max-count 20 --max-columns 200 -C 0 --files'
+    export FZF_DEFAULT_COMMAND='rg --hidden --color=ansi --follow --no-messages --no-heading --smart-case --no-filename --glob "!.git/*" -g "!node_modules/*" --passthru  --max-depth 10 --max-count 20 --max-columns 200 -C 0 --files'
 
     # export FZF_DEFAULT_COMMAND="rg --follow --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '

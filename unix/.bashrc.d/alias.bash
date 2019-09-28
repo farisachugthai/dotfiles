@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Maintainer: Faris Chugthai
 
 # set -euo pipefail
@@ -27,17 +27,17 @@ alias cd......="cd ../../../../.."
 # -F classifies. indicators for symlinks and dirs are provided
 # -o is similar to -l but don't print group
 # -p means append / indicator to directoreis
-alias l='ls -F'
-alias la='ls -AF'
-alias ldir='ls -po | grep /$'
-alias lf='ls -Fo | grep ^-'
-alias ll='ls -AlF'
-alias lr='ls -AlFr'
-alias ls='ls -F'
-alias lt='ls -Altcr'
-alias lx='ls -Fo | grep ^-..x'
+alias l='ls -F --color=always'
+alias la='ls -AF --color=always'
+alias ldir='ls -po --color=always | grep /$'
+alias lf='ls -Fo --color=always | grep ^-'
+alias ll='ls -AFho --color=always'
+alias lr='ls -AgFhr --color=always'
+alias ls='ls -F --color=always'
+alias lt='ls -Aghtc --color=always'
+alias lx='ls -Fo --color=always | grep ^-..x'
 
-# alert: {{{1
+# Alert: {{{1
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -48,8 +48,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Let's not clobber other files as we go. Bash's namespace? Clobber everything
 # Please don't turn the p flag for rmdir again.
 # You're lucky parent dirs weren't empty
-alias cp='cp -iv'
-alias mv='mv -iv'
+alias cp='cp -v'
+alias mv='mv -v'
 alias mkdir='mkdir -pv'
 alias rmdir='rmdir -v'
 # Less annoying than i but more safe
@@ -164,7 +164,5 @@ if [[ -n "$(command -v bat)" ]]; then
 fi
 
 alias n="nvim $* "
-
-alias fuck="sudo !!"
 
 alias tre="tree -a -I .git $*"
