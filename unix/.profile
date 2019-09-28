@@ -26,6 +26,11 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
+# this is what xdg data dirs is set to with no modification on my part. That has so many simple errors in it
+# /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:
+
+# Jul 25, 2019: Just realized I haven't added MIME dirs to the data dirs
+# Plasma isn't a dir. flatpak is but exports isn't. same thing with var lib.
 if [[ -n "$ANDROID_DATA" ]]; then
 
     export MANPATH="$_ROOT/local/share/man:$_ROOT/share/man:$HOME/.fzf/man:$_ROOT/share/fish/man:$PREFIX/lib/node_modules/npm/man"
@@ -42,7 +47,7 @@ else
     export SHELL=/bin/bash
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:/etc/xdg:/usr/share/xsessions"
     # You forgot the one for snaps!
-    export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
+    export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
     pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
     export CC=clang
 fi
@@ -68,6 +73,15 @@ fi
 # Set PATH so it includes user's private bin directories and set them first in path
 pathadd "$HOME/bin"
 pathadd "$HOME/.local/bin"
+
+# Python: {{{1
+
+export PYTHONIOENCODING=utf-8:surrogateescape
+export PYTHONDONTWRITEBYTECODE=1
+export IPYTHONDIR="$HOME/.ipython"
+export PYTHONCOERCECLOCALE=warn
+if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
+export PYTHONUNBUFFERED=1
 
 # Ruby: {{{1
 # This is gonna need a for loop soon.
@@ -134,6 +148,7 @@ export LC_MESSAGES=C.UTF-8              # man i3: Prevents program output transl
 export LC_CTYPE=C.UTF-8                 # the python default
 export LC_IDENTIFICATION=C          # got this from `locale -c language` I don't know if set right
 export LC_COLLATE=C.UTF-8
+export LC_ALL=C.UTF-8
 
 # Idk if this is or isn't a bad idea
 export LDFLAGS="$LDFLAGS -lm"
@@ -164,6 +179,8 @@ export CLOUDSDK_CORE_DISABLE_USAGE_REPORTING=1
 export CURL_HOME="$HOME/.config/curl/curlrc"
 
 # Sourced Files: {{{1
+
+# Setup completions correctly.
 
 # Help find your dotfiles faster and setup nvim
 export DOT="$HOME/projects/dotfiles"

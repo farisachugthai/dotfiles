@@ -13,10 +13,15 @@
 #   aliases: channel
 #   env var string delimiter: ','
 #   The list of conda channels to include for relevant operations.
+#   Bokeh at the top because start more specific and keep going to more general
+#   sites with more packages until we max out at forge.
+#   Definitely worth noting that bokeh has its own channel though.
+
 channels:
   - defaults
-  - conda-forge
+  - bokeh
   - conda-canary
+  - conda-forge
 channel_alias: https://conda.anaconda.org
 
 # default_channels (sequence: str)
@@ -27,7 +32,7 @@ default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/msys2
 
-    # Frustratingly these don't work
+  # Frustratingly these don't work
   # - https://repo.anaconda.com/pkgs/r
   # - https://repo.anaconda.com/pkgs/free
   # - https://repo.anaconda.com/pkgs/archive
@@ -56,7 +61,7 @@ default_channels:
 #   https://anaconda-repo.dev/packages/conda-forge/linux-64/repodata.json,
 #   add an entry 'conda-forge: https://anaconda-repo.dev/packages'.
 #
-custom_channels: {'pkgs/pro: https://repo.anaconda.com': !!null ''}
+custom_channels: {pro: 'pkgs/pro: https://repo.anaconda.com'}
 
 
 # custom_multichannels (map: list)
@@ -93,14 +98,13 @@ custom_channels: {'pkgs/pro: https://repo.anaconda.com': !!null ''}
 # allow_non_channel_urls (bool)
 #   Warn, but do not fail, when conda detects a channel url is not a valid
 #   channel.
-# 
-allow_non_channel_urls: false
+allow_non_channel_urls: true
 
 # restore_free_channel (bool)
-#   "                 Add the "free" channel back into defaults, behind
-#   "main" in priority. The "free"                 channel was removed
+#   Add the "free" channel back into defaults, behind
+#   "main" in priority. The "free" channel was removed
 #   from the collection of default channels in conda 4.7.0.
-# 
+#
 restore_free_channel: true
 
 # repodata_fns (sequence: str)
@@ -110,7 +114,7 @@ restore_free_channel: true
 #   the full index containing only the latest version for each package,
 #   then falls back to repodata.json.  You may want to specify something
 #   else to use an alternate index that has been reduced somehow.
-# 
+#
 # repodata_fns:
 #   - current_repodata.json
 #   - repodata.json
@@ -120,7 +124,7 @@ restore_free_channel: true
 #   downloaded. This is forced to True if conda-build is installed and
 #   older than 3.18.3, because older versions of conda break when conda
 #   feeds it the new file format.
-# 
+#
 # use_only_tar_bz2:
 
 
@@ -142,7 +146,7 @@ restore_free_channel: true
 #   The list of directories where locally-available packages are linked
 #   from at install time. Packages not locally available are downloaded
 #   and extracted into the first writable directory.
-# 
+#
 # pkgs_dirs: []
 
 
@@ -155,13 +159,13 @@ restore_free_channel: true
 #   A path to a single file containing a private key and certificate (e.g.
 #   .pem file). Alternately, use client_ssl_cert_key in conjuction with
 #   client_ssl_cert for individual files.
-# 
+#
 # client_ssl_cert:
 
 # client_ssl_cert_key (NoneType, str)
 #   aliases: client_cert_key
 #   Used in conjunction with client_ssl_cert for a matching key file.
-# 
+#
 # client_ssl_cert_key:
 
 # local_repodata_ttl (bool, int)
@@ -170,12 +174,12 @@ restore_free_channel: true
 #   Cache-Control max-age header. Any other positive integer values is the
 #   number of seconds to locally cache repodata before checking the remote
 #   server for an update.
-# 
+#
 # local_repodata_ttl: 1
 
 # offline (bool)
 #   Restrict conda to cached download content and file:// based urls.
-# 
+#
 # offline: false
 
 # proxy_servers (map: NoneType, str)
@@ -185,7 +189,7 @@ restore_free_channel: true
 #   requests to that scheme. Values are are the actual proxy server, and
 #   are of the form 'scheme://[user:password@]host[:port]'. The optional
 #   'user:password' inclusion enables HTTP Basic Auth with your proxy.
-# 
+#
 # proxy_servers: {}
 
 # remote_connect_timeout_secs (float)
@@ -215,14 +219,14 @@ restore_free_channel: true
 
 
 ######################################################
-##               Solver Configuration               ##
+#                Solver Configuration                #
 ######################################################
 
 # aggressive_update_packages (sequence: str)
 #   env var string delimiter: ','
 #   A list of packages that, if installed, are always updated to the
 #   latest possible version.
-# 
+#
 aggressive_update_packages:
   - ca-certificates
   - certifi
@@ -280,12 +284,12 @@ pip_interop_enabled: true
 #   env var string delimiter: ','
 #   A list of features that are tracked by default. An entry here is
 #   similar to adding an entry to the create_default_packages list.
-# 
+#
 # track_features: []
 
 
 ######################################################
-##  Package Linking and Install-time Configuration  ##
+#   Package Linking and Install-time Configuration   #
 ######################################################
 
 # allow_softlinks (bool)
@@ -297,14 +301,14 @@ pip_interop_enabled: true
 #   Individual packages can override this setting, specifying that certain
 #   files should never be soft-linked (see the no_link option in the build
 #   recipe documentation).
-# 
+#
 # allow_softlinks: false
 
 # always_copy (bool)
 #   aliases: copy
 #   Register a preference that files be copied into a prefix during
 #   install rather than hard-linked.
-# 
+#
 # always_copy: false
 
 # always_softlink (bool)
@@ -317,7 +321,7 @@ pip_interop_enabled: true
 #   some churn and invalidation. With this option, the contents of
 #   environments can be switched out (or erased) via operations on other
 #   environments.
-# 
+#
 # always_softlink: false
 
 # path_conflict (PathConflict)
@@ -407,7 +411,7 @@ extra_safety_checks: true
 # changeps1 (bool)
 #   When using activate, change the command prompt ($PS1) to include the
 #   activated environment.
-# 
+#
 # changeps1: true
 
 # env_prompt (str)
@@ -419,23 +423,21 @@ extra_safety_checks: true
 #   environment is a conda named environment ('-n' flag), or otherwise
 #   holds the value of '{prefix}'. Templating uses python's str.format()
 #   method.
-# 
+#
 env_prompt: '({prefix}) '
 
 # json (bool)
 #   Ensure all output written to stdout is structured json.
-# 
+#
 # json: false
 
 # notify_outdated_conda (bool)
 #   Notify if a newer version of conda is detected during a create,
 #   install, update, or remove operation.
-# 
 notify_outdated_conda: false
 
 # quiet (bool)
 #   Disable progress bar display and other output.
-# 
 quiet: false
 
 # report_errors (NoneType, bool)
@@ -444,7 +446,9 @@ quiet: false
 #   information given by `conda info` being sent.
 report_errors: false
 
+# TODO: Where did the help docs for this go?
 ssl_verify: true
+
 # show_channel_urls (NoneType, bool)
 #   Show channel URLs when displaying what is going to be downloaded.
 # show_channel_urls:

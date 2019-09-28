@@ -4,6 +4,9 @@
     email = farischugthai@gmail.com
     name = farisachugthai
 
+[add]
+    ignoreErrors = true
+
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliase
     ci = commit
@@ -69,19 +72,6 @@
     shp = stash pop
     shs = stash show
     shsp = stash show --patch
-	switch = !legit switch
-	sync = !legit sync
-	publish = !legit publish
-	unpublish = !legit unpublish
-	undo = !legit undo
-	branches = !legit branches
-
-    switch = !legit switch
-    sync = !legit sync
-    publish = !legit publish
-    unpublish = !legit unpublish
-    undo = !legit undo
-    branches = !legit branches
     # May 27, 2019
     amend = commit --amend
 
@@ -93,11 +83,14 @@
     whois = !sh -c ´git log -i -1 --pretty="format:%an <%ae>"
 
 [branch]
-    autosetupmerge = true
+    autoSetupMerge = true
 
 [checkout]
     # Jun 01, 2019: Automatically follow remote branches withe same name
     defaultRemote = origin
+
+[clean]
+    requireForce = false
 
 [cola]
     spellcheck = true
@@ -109,8 +102,6 @@
     autocrlf=input
     editor = nvim-qt
     editor = nvim
-    editor = vim
-    eol = crlf
     fscache = true
     # whoever set this to false what the fuck
     symlink = true
@@ -128,8 +119,17 @@
 
     # False by default.
     ignorestat = true
+
 	sshCommand = C:/WINDOWS/System32/OpenSSH/ssh.exe
-	editor = nvim
+
+    pager = less -JRKMLi
+
+; [credential] 
+;     helper = store
+[credential]
+    helper = manager
+    modalPrompt = True
+    username = farisachugthai
 
 [credential "https://www.github.com"]
     username = farisachugthai
@@ -139,11 +139,17 @@
 
 # If difftool settings havent been set, fall back to mergetool
 [diff]
+    context = 0
+    dirstat = changes,files,10,cumulative
+    indentHeuristic = true
+    interHunkContext = 0
+    mnemonicPrefix = true
     prompt = false
     # detect copied files as well as renames. affects merge and status.rename
     renames = copy
     strategy-option = resolve
-    # astextplain.textconv=astextplain
+    # Idk if this is a new option but man am I glad to have stumbled upon it
+    supressBlankEmpty = true
     tool = nvimdiff
 
 [difftool "nvimdiff"]
@@ -156,6 +162,9 @@
     # lfs.process=git-lfs filter-process
     # lfs.required=true
     # lfs.smudge=git-lfs smudge -- %f
+
+[gc]
+    auto = 3000
 
 [grep]
     lineNumber = true
@@ -173,7 +182,7 @@
 	recentrepo = C:/Users/faris/projects/dotfiles
 	recentrepo = C:/Users/faris/projects/dynamic_ipython
 	pruneduringfetch = true
-	diffcontext = 2
+	diffcontext = 1
 	matchtrackingbranch = true
 
 [grep]
@@ -182,10 +191,9 @@
 
 [help]
     autocorrect = 1
-    # format = man
+    format = man
     format = html
-    # yeah so apparently that messes up mingw64
-    # format = browser
+    # store
 
 [html]
     sslbackend=openssl
@@ -217,13 +225,6 @@
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
 
-[pull]
-    # When merges, pass the --rebase-merges option to git rebase so that the local merge commits are included in the rebase (see git-rebase(1) for details).
-    rebase = merges
-    renormalize
-    # rebase = interactive
-    # this forces every pull to require a no-op merge commit jesus christ
-
 [push]
     default = simple
 
@@ -250,7 +251,3 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
-
-[add]
-    # windows has to do this every single time :/ might as well be default
-    renormalize

@@ -39,19 +39,21 @@ if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
 export PYTHONUNBUFFERED=1
 
 # Conda: {{{2
-# >>> conda initialize >>>
+# >>> conda initialize >>>  {{{2
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/faris/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+    if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
+        source "$HOME/miniconda3/etc/profile.d/conda.sh"
     elseif [[ -d "$HOME/miniconda3/bin" ]]
         pathadd "$HOME/miniconda3/bin"
     fi
 fi
 unset __conda_setup
+# <<< conda initialize <<<
+
 
 # GCloud: {{{2
 
@@ -98,9 +100,10 @@ export HISTFILE="$HOME/.bash_history"
 # Append to the history file, don't overwrite it
 shopt -s histappend
 shopt -s histreedit
-
-
-# Shopt: {{{1
+# Shopt and set: {{{1
+set -o emacs
+# To check what options you've set with set, check the output of: $: echo $- 
+# As of Aug 28, 2019 I got: bhimBCHs
 
 # I always forget keep this below set -o vi!
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
@@ -159,7 +162,6 @@ export COLORTERM="truecolor"
 # -i: Ignore case. Works similarly to how modern programs handle smart case!
 # --mouse: Take a guess
 export PAGER="less -JRKMLi" 
-export PAGER="less -JRKML"
 export LESSHISTSIZE=5000  # default is 100
 
 # Oh shit! --mouse is a bash>5 feature!
@@ -177,7 +179,7 @@ if [[ -d "$HOME/.nvm" ]]; then
     [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
     # shellcheck source=/home/faris/.nvm/bash_completion
     [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
-    pathadd "/home/faris/.nvm/"  # Not a ton of good reasons but good to see it in path
+    pathadd "$HOME/.nvm"  # Not a ton of good reasons but good to see it in path
 fi
 
 # Testing out the language servers to see if they'll link up with neovim

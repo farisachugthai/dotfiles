@@ -6,8 +6,6 @@
 # for history search don't work
 # fzf will still take you far but this isn't okay
 
-
-
 # To view currently set options run
 # `bind -v`
 # Kill the wole line regardless of cursor position
@@ -208,6 +206,12 @@ set visible-stats On
 # Mark symlinked directories
 set mark-symlinked-directories On
 
+# If set to On, history lines that have been modified are displayed with a
+# preceding asterisk (*).
+# Otherwise you just go back, modify history and it never shows you that it 
+# wasn't the original command which I find confusing.
+set mark-modified-lines On
+
 # Color the common prefix
 set colored-completion-prefix On
 
@@ -221,8 +225,6 @@ set menu-complete-display-prefix On
 set enable-bracketed-paste On
 
 # Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
-# set show-mode-in-prompt On
-
 # Apr 12, 2019: Line 3200 man bash
 set blink-matching-paren
 
@@ -266,15 +268,15 @@ set mark-modified-lines on
 # (by default Up and Down will just select previous commands without any
 # matching against history.)
 
-bind '"\e[A":history-search-backward'
-bind '"\e[B":history-search-forward'
-bind '"\e[C": forward-char'
-bind '"\e[D": backward-char'
+"\e[A":history-search-backward
+"\e[B":history-search-forward
+"\e[C": forward-char
+"\e[D": backward-char
 
 # The last two bindings ensure that the left and right keys continue to work correctly.
 
 # isn't working
-set history-size 100000
+set history-size 10000
 
 # what are these? from bind -v
 # set completion-display-width -1

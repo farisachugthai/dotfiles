@@ -1,9 +1,9 @@
 ThemeFile=
-Transparency=medium
+Transparency=glass
 OpaqueWhenFocused=yes
 CursorType=block
 CursorBlinks=no
-Font=Source Code Pro
+Font=Cascadia Code
 FontHeight=14
 FontSmoothing=full
 BoldAsFont=yes
@@ -14,7 +14,7 @@ BellType=0
 ScrollMod=ctrl
 PgUpDnScroll=yes
 Language=en_US
-ClickTargetMod=ctrl
+ClickTargetMod=alt
 
 # Gruvbox Colorscheme
 ForegroundColour=235,219,178
@@ -36,3 +36,7 @@ Cyan=104,157,106
 BoldCyan=142,192,124
 White=168,153,132
 BoldWhite=235,219,178
+ClicksTargetApp=no
+Columns=77
+Rows=36
+CtrlShiftShortcuts=yes
