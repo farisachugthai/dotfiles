@@ -15,6 +15,9 @@ if [[ -f ~/.fzf.bash ]]; then
     # shellcheck source=/home/faris/.fzf.bash
     source "$HOME/.fzf.bash"
     # should we do else; git clone fzf repo?
+else
+    echo -e 'FZF not installed.'
+    # exit 1
 fi
 
 
@@ -28,7 +31,7 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
     # Filepath helps you jump directories quickly, tiebreak begin makes a ton
     # of difference, ansi colors dude this is sweet
-    export FZF_DEFAULT_COMMAND='rg --hidden --color=ansi --follow --no-messages --no-heading --smart-case --no-filename --glob "!.git/*" -g "!vendor/*" --passthru  --max-depth 10 --max-count 20 --max-columns 200 -C 0 .'
+    export FZF_DEFAULT_COMMAND='rg --hidden --color=ansi --follow --no-messages --no-heading --smart-case --no-filename --glob "!.git/*" -g "!node_modules/*" --passthru  --max-depth 10 --max-count 20 --max-columns 200 -C 0 --files'
 
     # export FZF_DEFAULT_COMMAND="rg --follow --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
@@ -42,7 +45,7 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # export FZF_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
     # Jul 04, 2019: Copied the old command because it was too exciting getting it to work to then
     # have to search `git log -p`
-    export FZF_CTRL_T_COMMAND=" rg --hidden --color=ansi --no-messages --follow --files --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 * $* | tr -d '\017' "
+    export FZF_CTRL_T_COMMAND=" rg --hidden --color=ansi --no-messages --follow --files --smart-case --glob '!.git/*' -g '!node_modules/*' --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 * $* | tr -d '\017' "
     export FZF_CTRL_T_OPTS=' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview." '
 
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb && -n "$(command -v ruby)" ]]; then
@@ -56,7 +59,7 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
 
     # __fzf_history__: {{{2
     # works
-    export FZF_CTRL_R_COMMAND=" rg --hidden --color=ansi --smart-case --no-heading --no-filename --no-messages  --max-depth 10 --max-count 20 --max-columns 200 -C 0 "
+    export FZF_CTRL_R_COMMAND=" rg --hidden --color=ansi --smart-case --no-heading --no-filename --no-messages --smart-case --glob '!.git/*' -g '!node_modules/*' --max-depth 10 --max-count 20 --max-columns 200 -C 0 "
     export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi  --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
     # Change dirs with Alt C: {{{2

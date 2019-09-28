@@ -173,10 +173,6 @@
     cmd = nvim -d $LOCAL $REMOTE
     trustexitcode = true
 
-[grep]
-    lineNumber = true
-    extendedRegexp = true
-
 [help]
     autocorrect = 1
 
@@ -207,9 +203,7 @@
     # looking at those 4 buffers as a timeline
 
 [pull]
-    rebase = merges
-    rebase = interactive  # can it be both?
-    renormalize
+    rebase
 
 [push]
     default = simple

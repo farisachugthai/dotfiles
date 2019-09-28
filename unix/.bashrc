@@ -130,7 +130,7 @@ shopt -s shift_verbose
 shopt -s no_empty_cmd_completion
 # If set, and the cmdhist option is enabled, multi-line commands are saved to
 # the history with embedded newlines rather than using semicolon separators
-shopt -s lithist
+shopt -s lithist cmdhist
 
 shopt -s direxpand
 
