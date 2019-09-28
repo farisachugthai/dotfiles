@@ -17,7 +17,6 @@ if [[ -f ~/.fzf.bash ]]; then
     # should we do else; git clone fzf repo?
 else
     echo -e 'FZF not installed.'
-    # exit 1
 fi
 
 

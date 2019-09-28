@@ -2,6 +2,17 @@
 # Includes all persistant modifications to GNU readline
 # Maintainer: Faris Chugthai
 
+# something got messed up because now tab for completion and up down
+# for history search don't work
+# fzf will still take you far but this isn't okay
+
+
+
+# To view currently set options run
+# `bind -v`
+# Kill the wole line regardless of cursor position
+Control-k: kill-whole-line
+set revert-all-at-newline on
 # Every binding set -o emacs has that vim doesn't: {{{1
 # As a reminder \e == Alt == Esc + Pause
 #
@@ -116,8 +127,9 @@
 "\C-p": menu-complete-backward
 "\C-r": reverse-search-history
 "\C-v": quoted-insert
-"\eOB": next-history
-"\e[B": next-history
+# Commented out possible bad macro
+# "\eOB": next-history
+# "\e[B": next-history
 "\C-u": unix-line-discard
 "\e": vi-movement-mode
 "\C-w": vi-unix-word-rubout
@@ -146,7 +158,22 @@
 
 $if mode = vi
     "\C-e": set emacs-editing-mode
+# FZF: {{{1
+# Definitely go through everything and optimize
+bind '"\er": redraw-current-line'
+bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
+bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
+bind '"\C-g\C-t": "$(fgt)\e\C-e\er"'
+bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
+bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
+
 $else
+bind '"\er": redraw-current-line'
+bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
+bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
+bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
+bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
+bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
     "\e\C-j": set vi-movement-mode
 $endif
 
@@ -159,8 +186,11 @@ $endif
 # In an attempt to prevent RSI: {{{1
 # Woops. I just realized set -o emacs is still set in bashrc. Was wondering
 # why things were behaving oddly
-set editing-mode vi
-set keymap vi
+# set editing-mode vi
+# set keymap vi
+set editing-mode emacs
+set keymap emacs
+# Leave it on emacs they have so many more keys
 
 # Options: {{{1
 # From Arch Wiki and man bash
@@ -191,18 +221,22 @@ set menu-complete-display-prefix On
 set enable-bracketed-paste On
 
 # Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
-set show-mode-in-prompt On
+# set show-mode-in-prompt On
 
 # Apr 12, 2019: Line 3200 man bash
 set blink-matching-paren
 
+# Times out too fast at 500
+set keyseq-timeout 1000
 
 # words which have more than one possible completion without any possible
 # partial completion (the possible completions don't share a common prefix)
 # cause the matches to be listed immediately instead of ringing the bell.
 set show-all-if-unmodified
 
-set expand-tilde
+set expand-tilde on
+
+set completion-ignore-case on
 
 # From /usr/share/readline/inputrc example: {{{2
 set bell-style none
@@ -216,8 +250,15 @@ set input-meta on
 set output-meta on
 set convert-meta off
 
+set mark-symlinked-directories on
+
+set skip-completed-text on
+
 # History Search: {{{1
 
+set history-preserve-point on
+
+set mark-modified-lines on
 # https://ss64.com/bash/bind.html
 # Setup the shell to perform a history search when the Up and Down arrow keys are used.
 # This allows typing part of a command and then using the arrows to select
@@ -232,9 +273,16 @@ bind '"\e[D": backward-char'
 
 # The last two bindings ensure that the left and right keys continue to work correctly.
 
+# isn't working
+set history-size 100000
+
+# what are these? from bind -v
+# set completion-display-width -1
+# set completion-prefix-display-length 0
+
 # Include: {{{1
 # $include  /etc/inputrc
-#
+
 # Bindings: {{{1
 
 # some defaults / modifications for the emacs mode

@@ -17,7 +17,9 @@
 #
 #MANDATORY_MANPATH 			/usr/src/pvm3/man
 #
+MANDATORY_MANPATH			$HOME/.fzf/man
 MANDATORY_MANPATH			$PREFIX/usr/man
+MANDATORY_MANPATH			$PREFIX/usr/lib/node_modules/npm/man
 MANDATORY_MANPATH			$PREFIX/usr/share/man
 MANDATORY_MANPATH			$PREFIX/usr/local/share/man
 #---------------------------------------------------------
@@ -129,3 +131,5 @@ SECTION		1 n l 8 3 2 3posix 3pm 3perl 5 4 9 6 7
 # Flags.
 # NOCACHE keeps man from creating cat pages.
 #NOCACHE
+#
+# Vim: set ft=manconf:

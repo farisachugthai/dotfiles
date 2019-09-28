@@ -1,4 +1,4 @@
-#i!/bin/bash
+#!/bin/bash
 # Maintainer: Faris Chugthai
 
 # set -euo pipefail
@@ -164,3 +164,5 @@ if [[ -n "$(command -v bat)" ]]; then
 fi
 
 alias n="nvim $* "
+
+alias tre="tree -a -I .git $*"
