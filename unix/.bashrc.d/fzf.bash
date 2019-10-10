@@ -19,6 +19,7 @@ else
     echo -e 'FZF not installed.'
 fi
 
+# }}}
 
 if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
 
@@ -34,6 +35,7 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
 
     # export FZF_DEFAULT_COMMAND="rg --follow --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
+    
 
     # <Ctrl-t>: {{{2
     # Might be implemented as __fzf_select__
@@ -44,22 +46,31 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     # export FZF_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
     # Jul 04, 2019: Copied the old command because it was too exciting getting it to work to then
     # have to search `git log -p`
-    export FZF_CTRL_T_COMMAND=" rg --hidden --color=ansi --no-messages --follow --files --smart-case --glob '!.git/*' -g '!node_modules/*' --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 * $* | tr -d '\017' "
-    export FZF_CTRL_T_OPTS=' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview." '
+
+    # Oct 08, 2019: Added nvim binding.
+    export FZF_CTRL_T_COMMAND=" rg --hidden --color=ansi --no-messages --follow --files --smart-case --glob '!.git/*' -g '!node_modules/*' --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 "
+
+    export FZF_CTRL_T_OPTS=' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview. Alt-n to launch nvim. " --bind "alt-n:execute(nvim {}) " '
 
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb && -n "$(command -v ruby)" ]]; then
         # doesn't this stop tilde expansion?
         export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb {} | bat - ' "
-    elif [[ -x bat ]]; then
-        export FZF_CTRL_T_OPTS+=' --preview "bat {} " '
+
+    elif [[ -n "$(command -v bat)" ]]; then
+        # TODO: Fzf is reading these as options to itself not as bats options
+        export FZF_DEFAULT_BAT_OPTS=' "--italic-text always" "--wrap character" "--color always" "--paging always" {} '
+
+        # export FZF_CTRL_T_OPTS+="--preview $FZF_DEFAULT_BAT_OPTS"
+        export FZF_CTRL_T_OPTS+='--preview "bat {}" '
+
     else
         export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " '
     fi
 
     # __fzf_history__: {{{2
     # works
-    export FZF_CTRL_R_COMMAND=" rg --hidden --color=ansi --smart-case --no-heading --no-filename --no-messages --smart-case --glob '!.git/*' -g '!node_modules/*' --max-depth 10 --max-count 20 --max-columns 200 -C 0 "
-    export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi  --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+    export FZF_CTRL_R_COMMAND=" rg --hidden --color=ansi --smart-case --no-heading --no-filename --no-messages --smart-case --glob '!.git/*' -g '!node_modules/*' "
+    export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
     # Change dirs with Alt C: {{{2
     # TODO: else
@@ -74,7 +85,7 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
     Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
 
 
-elif [[ -n "$(command -v fd)" ]]; then  # fd {{{1
+elif [[ -n "$(command -v fd)" ]]; then  # fd {{{2
 
     # Base FZF command: {{2
     export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow -j 8 -d 6 --exclude .git $@"
@@ -100,6 +111,11 @@ fi
 
 # More additions: {{{1
 
+if [[ -n "$(command -v bat)" ]]; then
+    export BAT_PAGER="less -JRKMLige" 
+    export BAT_THEME="base16"
+    export BAT_STYLE="full"
+fi
 # TODO:
 # termux doesnt have xclip or xsel
 

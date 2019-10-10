@@ -161,11 +161,14 @@ export COLORTERM="truecolor"
 # -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
 # -i: Ignore case. Works similarly to how modern programs handle smart case!
 # --mouse: Take a guess
-export PAGER="less -JRKMLi" 
+# -g only one  search match highlighted
+# -e EOF reached twice? Close automatically.
+# -N always display line nrs
+export PAGER="less -JRKMLigeN" 
 export LESSHISTSIZE=5000  # default is 100
 
 # Oh shit! --mouse is a bash>5 feature!
-if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse"; fi
+if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
 
 if [[ -x lesspipe.sh ]]; then export LESSOPEN="|lesspipe.sh %s"; fi
 

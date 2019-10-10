@@ -39,7 +39,7 @@ if [[ -n "$ANDROID_DATA" ]]; then
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share:$XDG_DATA_HOME/mime"
     pathadd "$_ROOT/libexec"
     pathadd "$_ROOT/libexec/git-core"
-    export CFLAGS='-I/data/data/com.termux/files/usr/includes'
+    export CFLAGS=" $CFLAGS -I/data/data/com.termux/files/usr/includes "
     export CC='aarch64-linux-android-clang'
 
 else
@@ -55,11 +55,11 @@ fi
 # GNU specified directory vars: {{{2
 # https://www.gnu.org/prep/standards/html_node/Directory-Variables.html
 if [[ -n "$ANDROID_DATA" ]]; then
-    export SYSCONFDIR="$PREFIX/local/etc"
-    export BINDIR="$PREFIX/local/bin"
-    export DATADIR="$PREFIX/local/share"
+    export SYSCONFDIR="$PREFIX/etc"
+    export BINDIR="$PREFIX/bin"
+    export DATADIR="$PREFIX/share"
     export DATAROOTDIR="$PREFIX/share"
-    export INCLUDEDIR="$PREFIX/local/include"
+    export INCLUDEDIR="$PREFIX/include"
 else
     export SYSCONFDIR="/usr/local/etc"
     export BINDIR="/usr/local/bin"
@@ -98,7 +98,7 @@ if [[ -n "$(command -v rvm)" ]]; then
 fi
 
 export GEM_HOME="$HOME/.gem"
-export GEM_PATH="$GEM_PATH:$HOME/.gem:$_ROOT/lib/ruby"  # idk if this is right
+export GEM_PATH="$GEM_PATH:$GEM_HOME:$_ROOT/lib/ruby"  # idk if this is right
 
 # JavaScript: {{{1
 if [[ -n "$(command -v yarn)" ]]; then
@@ -123,15 +123,15 @@ pathadd "$HOME/.cargo/bin"
 if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
 
 # Go: {{{1
-
 # Also check out :Man go and !go env
-export GOPATH="$HOME/go"
-export GOHOME="$HOME/go"
-export GOTMPDIR="/tmp"
+if [[ -n "$(command -v go)" ]]; then
+    export GOPATH="$HOME/go"
+    export GOHOME="$HOME/go"
+    export GOTMPDIR="/tmp"
 
-pathadd "$GOPATH/bin"
-pathadd "/usr/local/go/bin"
-
+    pathadd "$GOPATH/bin"
+    pathadd "/usr/local/go/bin"
+fi
 # Other Environment Variables: {{{1
 
 # colored GCC warnings and errors
@@ -172,8 +172,8 @@ if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 # Disable MSFT pwsh telemetry: {{{2
 export POWERSHELL_TELEMETRY_OPTOUT=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export IHOPEYOUALLKNOWITHINKYOUAREFUCKINGCLOWNS=1
 export CLOUDSDK_CORE_DISABLE_USAGE_REPORTING=1
+export IHOPEYOUALLKNOWITHINKYOUAREFUCKINGCLOWNS=1
 
 # cURL: {{{2
 export CURL_HOME="$HOME/.config/curl/curlrc"

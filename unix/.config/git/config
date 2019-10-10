@@ -135,8 +135,8 @@
 [credential]
     helper = cache --timeout=86400
 
-[credential "https://www.github.comm"]
-    username = farisachugthai
+; [credential "https://www.github.comm"]
+;     username = farisachugthai
 
 [credential "https://source.developers.google.com"]
 	helper = gcloud.cmd
@@ -151,6 +151,7 @@
     mnemonicPrefix = true  # holy shit if this is real then this might be awesome
     prompt = false
     # detect copied files as well as renames. affects merge and status.renames
+    renames = copy
     strategy-option = resolve
     suppressBlankEmpty = true  # dude copy pastin is gonna be so much easy
     suppressBlankLines
@@ -189,6 +190,7 @@
     diffstat = true
     mergestyle = diff3
     prompt = false
+    renormalize
     renames = true
     strategy-option = resolve
     summary = true
@@ -206,6 +208,8 @@
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
 [pull]
+    renormalize
+    renames = true
     rebase
 
 [push]
@@ -215,9 +219,6 @@
     autoStash = True
     stat = True
     missingCommitsCheck = "warn"  # jesus christ Git why are all your defaults destructive??
-
-[ssh]
-    variant = "ssh -p 8022 $*"
 
 [status]
     branch = true

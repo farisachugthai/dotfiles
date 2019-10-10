@@ -54,7 +54,7 @@ alias mkdir='mkdir -pv'
 alias rmdir='rmdir -v'
 # Less annoying than i but more safe
 # only prompts with more than 3 files or recursed dirs.
-alias rm='rm -I'
+alias rm='rm -Iv'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -165,4 +165,4 @@ fi
 
 alias n="nvim $* "
 
-alias tre="tree -a -I .git $*"
+alias tre="tree -FCa -I .git $*"
