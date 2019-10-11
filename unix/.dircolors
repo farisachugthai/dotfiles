@@ -221,7 +221,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 *README.rst           38;5;220;1;4
 *README.md            38;5;220;1;4
 *MANIFEST.in          38;5;222;1;4
-*LICENSE*              38;5;220;
+*LICENSE*             38;5;220;4
 *COPYING              38;5;220;
 *INSTALL              38;5;220;1
 *COPYRIGHT            38;5;220;1
@@ -862,10 +862,10 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 #  terminals  #
 ###############
 
-
+TERM *color*
+TERM Eterm
 TERM ansi
 TERM color-xterm
-TERM *color*
 TERM con132x25
 TERM con132x30
 TERM con132x43
@@ -877,14 +877,13 @@ TERM con80x43
 TERM con80x50
 TERM con80x60
 TERM con80x60
-TERM cons25
 TERM con[0-9]*x[0-9]*
+TERM cons25
 TERM console
 TERM cygwin
 TERM dtterm
 TERM dvtm
 TERM dvtm-256color
-TERM Eterm
 TERM eterm-color
 TERM fbterm
 TERM gnome
@@ -901,14 +900,14 @@ TERM mlterm
 TERM putty
 TERM putty-256color
 TERM rxvt*
-TERM rxvt-unicode
 TERM rxvt-256color
 TERM rxvt-cygwin
 TERM rxvt-cygwin-native
 TERM rxvt-unicode
+TERM rxvt-unicode
 TERM rxvt-unicode-256color
 TERM rxvt-unicode256
-TERM screen
+TERM screen*
 TERM screen-256color
 TERM screen-256color-bce
 TERM screen-bce
@@ -917,11 +916,11 @@ TERM screen.linux
 TERM screen.rxvt
 TERM st
 TERM st-256color
+TERM terminator
 TERM tmux*
 TERM tmux-256color
-TERM terminator
 TERM vt100
-TERM xterm
+TERM xterm*
 TERM xterm-16color
 TERM xterm-256color
 TERM xterm-88color

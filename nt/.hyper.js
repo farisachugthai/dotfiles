@@ -1,3 +1,4 @@
+// .. todo:: Why isn't hyper parsing the Escape key anymore?? That's concerning...
 // Future versions of Hyper may add additional config options,
 // which will not automatically be merged into this file.
 // See https://hyper.is#cfg for all currently supported options.
@@ -9,7 +10,7 @@ module.exports = {
     updateChannel: "canary",
 
     // default font size in pixels for all tabs
-    fontSize: 12,
+    fontSize: 17,
 
     // font family with optional fallbacks
     fontFamily:
@@ -119,36 +120,37 @@ module.exports = {
     // shell: "C:\\tools\\Cmder\\vendor\\conemu-maximus5\\ConEmuC.exe -Run",
     // Doesn't work.
     // shell: "C:\\tools\\Cmder\\vendor\\conemu-maximus5\\ConEmu\\ConEmuC64.exe",
-    shell: "pwsh",
+    shell: "C:\\pwsh\\7-preview\\pwsh.exe",
 
     shellArgs: [
       "-ExecutionPolicy",
       "Bypass",
       "-NoLogo",
-      "-NoProfile",
       "-NoExit",
       "-Command",
-      "Invoke-Expression [CMDER_ROOT]\\vendor\\profile.ps1"
+      "Invoke-Expression C:\\tools\\Cmder\\vendor\\profile.ps1"
     ],
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used
-    // shellArgs: ["-NoProfile", "-NoLogo"],
+
+    // if you want to use cmd these are some good shell args
     //shellArgs: ['/k', '[cmder_root]\\vendor\\init.bat'],
+
+    // shell: ['ConEmu']
     // shellArgs: [
-    //   "/C",
-    //   "pwsh",
-    //   "-Command",
-    //   "Set-Location C:\\Users\\faris",
-    //   "-ArgumentList",
-    //   "-NoExit",
-    //   "-NoLogo",
-    //   "-new_console:z"
-    //   // "Invoke-Expression [CMDER_ROOT]]\\vendor\\profile.ps1"
+    //   '/C',
+    //   'pwsh',
+    //   '-Command',
+    //   'Set-Location C:\\Users\\faris',
+    //   '-ArgumentList',
+    //   '-NoExit',
+    //   '-NoLogo',
+    //   '-new_console:z'
+    //   // 'Invoke-Expression [CMDER_ROOT]]\\vendor\\profile.ps1'
     // ],
 
     // shell: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe',
     //  shellArgs: ['-ExecutionPolicy', 'Bypass', '-NoLogo', '-NoProfile', '-NoExit', '-Command', 'Invoke-Expression [CMDER_ROOT]\\vendor\\profile.ps1'],
-    //  env: { 'TERM':'cygwin' },
     //  if you want a custom dir to start cmd in:
     // shellArgs: ['/k', 'cd /d D:\\Custom^ Folder & %CMDER_ROOT%\\vendor\\init.bat'],
     // and for powershell
@@ -210,19 +212,19 @@ module.exports = {
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  localPlugins: ["hyper-gruvbox"],
+  localPlugins: ["hyper-init", "hypertabs"],
 
   keymaps: {
     // Example
     // 'window:devtools': 'cmd+alt+o',
     // all the linux ones
     "window:devtools": "ctrl+shift+i",
-    // "window:reload": "ctrl+shift+r",
-    // "window:reload": "Cmd+Alt+r",
+    // 'window:reload': 'ctrl+shift+r',
+    // 'window:reload': 'Cmd+Alt+r',
     "window:reloadFull": "ctrl+shift+f5",
     "window:preferences": "ctrl+,",
     // NO DON'T DO THIS
-    // "window:hamburgerMenu": "alt",
+    // 'window:hamburgerMenu': 'alt',
     "window:hamburgerMenu": "Ctrl+Alt+F1+F2+F3+F4+F5+Cmd+Del",
     "zoom:reset": "ctrl+0",
     "zoom:in": "ctrl+=",
@@ -234,18 +236,18 @@ module.exports = {
     "tab:new": "ctrl+shift+t",
     "tab:next": [
       "ctrl+shift+]",
-      "ctrl+shift+right",
-      "ctrl+alt+right"
-      // "ctrl+tab"
+      // "ctrl+shift+right",
+      // "ctrl+alt+right"
+      // 'ctrl+tab'
     ],
     "tab:prev": [
       "ctrl+shift+[",
-      "ctrl+shift+left",
-      "ctrl+alt+left"
-      // "ctrl+shift+tab"
+      // "ctrl+shift+left",
+      // "ctrl+alt+left"
+      // 'ctrl+shift+tab'
     ],
     // wth?
-    // "tab:jump:prefix": "ctrl",
+    // 'tab:jump:prefix': 'ctrl',
     "pane:next": "ctrl+pageup",
     "pane:prev": "ctrl+pagedown",
     "editor:undo": "ctrl+shift+z",
@@ -256,38 +258,38 @@ module.exports = {
     "editor:selectAll": "ctrl+shift+a",
     "editor:movePreviousWord": [
       "ctrl+left"
-      // "Alt+b"
+      // 'Alt+b'
     ],
     "editor:moveNextWord": [
       "ctrl+right"
-      // "Alt+f"
+      // 'Alt+f'
     ],
     "editor:moveBeginningLine": [
       "home"
-      //   "Ctrl-a"
+      //   'Ctrl-a'
     ],
     "editor:moveEndLine": [
       "end"
-      // "Ctrl-e"
+      // 'Ctrl-e'
     ],
     "editor:deletePreviousWord": [
       "ctrl+backspace"
-      // "Ctrl-w"
+      // 'Ctrl-w'
     ],
     "editor:deleteNextWord": [
       "ctrl+del"
-      //  "Meta+d"
+      //  'Meta+d'
     ],
     "editor:deleteBeginningLine": [
       "ctrl+home"
-      // "Ctrl+u"
+      // 'Ctrl+u'
     ],
     "editor:deleteEndLine": [
       "ctrl+end"
-      // "Ctrl+k"
+      // 'Ctrl+k'
     ]
-    // "editor:clearBuffer": "ctrl+shift+l",
-    // "editor:break": "ctrl+c",
-    // "plugins:update": "ctrl+shift+u"
+    // 'editor:clearBuffer': 'ctrl+shift+l',
+    // 'editor:break': 'ctrl+c',
+    // 'plugins:update': 'ctrl+shift+u'
   }
 };

@@ -30,7 +30,7 @@ export PYTHONDONTWRITEBYTECODE=1
 # LDflags gets defined in here and as a result numpy fails to build
 export NPY_DISTUTILS_APPEND_FLAGS=1
 
-export PYTHONDOCS="$HOME/python/official-python-docs/3.7/"
+export PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
 
 export PYTHONIOENCODING=utf-8:surrogateescape
 export IPYTHONDIR="$HOME/.ipython"
@@ -82,6 +82,13 @@ else
     export VISUAL="vim"
 fi
 export EDITOR="$VISUAL"
+
+# Doing this entirely for nvim
+if [[ -n "$(command -v luarocks)" ]]; then
+    eval "$(luarocks path)"
+fi
+
+pathadd "$HOME/.luarocks/bin"
 
 # History: {{{1
 
@@ -172,7 +179,7 @@ if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups -
 
 if [[ -x lesspipe.sh ]]; then export LESSOPEN="|lesspipe.sh %s"; fi
 
-# JavaScript: {{{1
+# JavaScript: {{{2
 
 # Export nvm if the directory exists
 if [[ -d "$HOME/.nvm" ]]; then
@@ -183,12 +190,14 @@ if [[ -d "$HOME/.nvm" ]]; then
     # shellcheck source=/home/faris/.nvm/bash_completion
     [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
     pathadd "$HOME/.nvm"  # Not a ton of good reasons but good to see it in path
+    npm config delete prefix
+    nvm use default --delete-prefix
 fi
 
 # Testing out the language servers to see if they'll link up with neovim
 pathadd "$HOME/.local/share/nvim/site/node_modules/.bin"
 
-# Fasd: {{{1
+# Fasd: {{{2
 
 fasd_cache="$HOME/.fasd-init-bash"
 if [[ -n "$(command -v fasd)" ]]; then
@@ -199,7 +208,7 @@ if [[ -n "$(command -v fasd)" ]]; then
     unset fasd_cache
 fi
 
-# Sourced files: {{{1
+# Sourced files: {{{2
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
 test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion" && echo 'sourced completion'
@@ -220,7 +229,7 @@ firstpath() {
 firstpath "$HOME/bin"
 firstpath "$HOME/.local/bin"
 
-# Dynamic Completions: {{{2
+# Dynamic Completions: {{{1
 
 _completion_loader()
 {
@@ -228,20 +237,25 @@ _completion_loader()
 }
 complete -D -F _completion_loader -o bashdefault -o default
 
+# From /usr/share/doc/bash/README.md.bash-completion
+export COMP_CONFIGURE_HINTS=1
+
 # Here's one for the terminal
 if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
 fi
 
-# add some cool colors to ls
-eval "$( dircolors -b ~/.dircolors )"
+# other: {{{2
 
-# Prompt: {{{1
+# add some cool colors to ls
+eval "$( dircolors -b $HOME/.dircolors )"
+
 # I'm gonna try and stay conservative here.
 export PS1="\\t \\u@\\h \\d \w \n $: "
 
-# Secrets: {{{1
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

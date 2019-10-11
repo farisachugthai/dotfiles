@@ -49,7 +49,14 @@ else
     # You forgot the one for snaps!
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
     pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
+fi
+
+# Useful for build environments: {{{1
+
+if [[ -n "$(command -v clang)" ]]; then
     export CC=clang
+else
+    export CC=gcc
 fi
 
 # GNU specified directory vars: {{{2
@@ -67,6 +74,16 @@ else
     export DATAROOTDIR="/usr/share"
     export INCLUDEDIR="/usr/local/include"
 fi
+
+# Pkgconfig: {{{2
+if [[ -d "$_ROOT/share/pkgconfig" ]]; then
+    export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"
+# TODO
+# export PKG_CONFIG_PATH=/mnt/c/Users/faris/src/neovim/.deps/usr/lib/pkgconfig
+# need a pathadd function for all these pkg_config dirs i'm finding
+# /usr/lib/x86_64-linux-gnu/pkgconfig
+fi
+
 
 # User dirs first: {{{1
 
@@ -152,6 +169,9 @@ export LC_ALL=C.UTF-8
 
 # Idk if this is or isn't a bad idea
 export LDFLAGS="$LDFLAGS -lm"
+if [[ -d "/mnt/c/Users/faris/src/neovim/.deps/usr/lib" ]]; then  # literally only true on wsl in win10
+   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/mnt/c/Users/faris/src/neovim/.deps/usr/lib"
+fi
 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources

@@ -75,13 +75,6 @@
     shp = stash pop
     shs = stash show
     shsp = stash show --patch
-	; switch = !legit switch
-	; sync = !legit sync
-	; publish = !legit publish
-	; unpublish = !legit unpublish
-	; undo = !legit undo
-	; branches = !legit branches
-
     # May 27, 2019
     amend = commit --amend
 
@@ -99,6 +92,9 @@
     # Jun 01, 2019: Automatically follow remote branches withe same name
     defaultRemote = origin
 
+[clean]
+    requireForce = false
+
 [cola]
     spellcheck = true
     tabwidth = 4
@@ -113,9 +109,11 @@
 
 [core]
     autocrlf = input
+	compression = 5
+    editor = nvim-qt
+    editor = nvim
     excludesfile = "$HOME/.config/git/ignore"
-
-    safecrlf = True
+    fscache = true
 
     # If true, Git will avoid using lstat() calls to detect if files have
     # changed by setting the "assume-unchanged" bit for those tracked files
@@ -130,13 +128,20 @@
 
     # False by default.
     ignorestat = true
-	compression = 5
+
+    pager = less -JRKMLieg
+    safecrlf = True
+    sshCommand = /usr/bin/ssh
+    symlink = true
 
 [credential]
+    store = approve
     helper = cache --timeout=86400
+    helper = manager
+    modalPrompt = True
 
-; [credential "https://www.github.comm"]
-;     username = farisachugthai
+[credential "https://www.github.com"]
+    username = farisachugthai
 
 [credential "https://source.developers.google.com"]
 	helper = gcloud.cmd
@@ -147,13 +152,16 @@
     algorithm = patience
     autoRefreshIndex
     context = 0
-    dirstat = files,10,cumulative
-    mnemonicPrefix = true  # holy shit if this is real then this might be awesome
+    dirstat = changes,files,10,cumulative
+    indentHeuristic = true
+    interHunkContext = 0
+    mnemonicPrefix = true
     prompt = false
     # detect copied files as well as renames. affects merge and status.renames
     renames = copy
     strategy-option = resolve
-    suppressBlankEmpty = true  # dude copy pastin is gonna be so much easy
+    # Idk if this is a new option but man am I glad to have stumbled upon it
+    suppressBlankEmpty = true
     suppressBlankLines
     tool = nvimdiff
     word-diff = color
@@ -163,6 +171,12 @@
     nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
     nvimdiff = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     prompt = false
+
+# [filter]
+    # lfs.clean=git-lfs clean -- %f
+    # lfs.process=git-lfs filter-process
+    # lfs.required=true
+    # lfs.smudge=git-lfs smudge -- %f
 
 [gc]
     auto = 3000   # the default is 6700 but that sounds really high
@@ -175,10 +189,31 @@
     editor = nvim-qt.exe
     editor = nvim
     cmd = nvim -d $LOCAL $REMOTE
-    trustexitcode = true
+    encoding = utf-8
+	fontui = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+    newbranchtemplate = nt
+    tabsize = 4
+    warndetachedcommit = true
+	pruneduringfetch = true
+	diffcontext = 1
+	matchtrackingbranch = true
+
+[grep]
+    lineNumber = true
+    extendedRegexp = true
 
 [help]
     autocorrect = 1
+    format = man
+    format = html
+
+; [include]
+;     path = ~/.config/git/config
+    ; path = C:/ProgramData/Git/config
+
+[html]
+    sslbackend=openssl
 
 [log]
     abbrevCommit = true
@@ -207,18 +242,25 @@
     # local and remote are the 2 paths we're trying to merge, and we can
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
+
 [pull]
-    renormalize
-    renames = true
+    progress
     rebase
+    renames = true
+    renormalize
+    stat
 
 [push]
+    stat
     default = simple
 
 [rebase]
     autoStash = True
     stat = True
     missingCommitsCheck = "warn"  # jesus christ Git why are all your defaults destructive??
+
+[sequence]
+    editor = nvim
 
 [status]
     branch = true
@@ -235,3 +277,5 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
+[winUpdater]
+	recentlySeenVersion = 2.23.0.windows.1

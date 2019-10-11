@@ -163,6 +163,4 @@ if [[ -n "$(command -v bat)" ]]; then
     alias cat=bat
 fi
 
-alias n="nvim $* "
-
 alias tre="tree -FCa -I .git $*"

@@ -5,24 +5,27 @@
     name = farisachugthai
 
 [add]
-    ignoreErrors = true
+    ignoreErrors
+
+[apply]
+    ignoreWhitespace = False  # don't fuck up the whitespace
 
 [alias]
-    # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliase
+    # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
     ci = commit
     co = checkout
-    last = log -- HEAD $*
-    unstage = reset HEAD -- $*
+    last = log -1 HEAD
+    unstage = reset HEAD --
 
     # From varying Gists
     rel = rev-parse --show-prefix
     root = rev-parse --show-toplevel
-    staged = diff --cached $*
-    unstaged = diff $*
+    staged = diff --cached
+    unstaged = diff
 
     # From: https://githowto.com/history
     # Run check git-log
-    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short $*
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 
     # General.
     a = add
@@ -31,8 +34,8 @@
     bl = blame
     br = branch -a
     cia = commit --amend
-    br = branch $*
-    bra = branch -a
+    cid = commit --date=
+    ciad = commit --amend --date=
     cl =  clone
     cls= clone --depth 1
     cob = checkout -b
@@ -44,7 +47,7 @@
     fe = fetch
     l = log
     lo = log --graph --decorate --abbrev-commit --branches --all --date=short --oneline
-    ls = ls-tree
+    ls = ls-tree -rl --abbrev master
     m = merge --no-ff
     ma = merge --abort
     mc = merge --continue
@@ -98,13 +101,19 @@
     expandtab = true
     boldheaders = true
 
+[column]
+    clean = never  # git shows files it's gonna wipe with git clean in columns and i hate it
+
+[commit]
+    verbose
+
 [core]
-    autocrlf=input
+    autocrlf = input
+	compression = 5
     editor = nvim-qt
     editor = nvim
+    excludesfile = "$HOME/.config/git/ignore"
     fscache = true
-    # whoever set this to false what the fuck
-    symlink = true
 
     # If true, Git will avoid using lstat() calls to detect if files have
     # changed by setting the "assume-unchanged" bit for those tracked files
@@ -120,16 +129,16 @@
     # False by default.
     ignorestat = true
 
-	sshCommand = C:/WINDOWS/System32/OpenSSH/ssh.exe
+    pager = less -JRKMLieg
+    safecrlf = true
+    # sshCommand = C:/WINDOWS/System32/OpenSSH/ssh.exe
+    symlink = true
 
-    pager = less -JRKMLi
-
-; [credential] 
-;     helper = store
 [credential]
+    store = approve
+    helper = cache --timeout=86400
     helper = manager
     modalPrompt = True
-    username = farisachugthai
 
 [credential "https://www.github.com"]
     username = farisachugthai
@@ -137,24 +146,30 @@
 [credential "https://source.developers.google.com"]
 	helper = gcloud.cmd
 
+# Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
 [diff]
+    algorithm = patience
+    autoRefreshIndex
     context = 0
     dirstat = changes,files,10,cumulative
     indentHeuristic = true
     interHunkContext = 0
     mnemonicPrefix = true
     prompt = false
-    # detect copied files as well as renames. affects merge and status.rename
+    # detect copied files as well as renames. affects merge and status.renames
     renames = copy
     strategy-option = resolve
     # Idk if this is a new option but man am I glad to have stumbled upon it
-    supressBlankEmpty = true
+    suppressBlankEmpty = true
+    suppressBlankLines
     tool = nvimdiff
+    word-diff = color
+    wsErrorHighlight = all
 
-[difftool "nvimdiff"]
-    cmd = nvim-qt.exe -d $LOCAL $REMOTE
-    cmd = nvim -d $LOCAL $REMOTE
+[difftool]
+    nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
+    nvimdiff = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     prompt = false
 
 # [filter]
@@ -164,7 +179,7 @@
     # lfs.smudge=git-lfs smudge -- %f
 
 [gc]
-    auto = 3000
+    auto = 3000   # the default is 6700 but that sounds really high
 
 [grep]
     lineNumber = true
@@ -172,15 +187,14 @@
 
 [gui]
     editor = nvim-qt.exe
+    editor = nvim
+    cmd = nvim -d $LOCAL $REMOTE
     encoding = utf-8
-	fontui = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-	fontdiff = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontui = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
     newbranchtemplate = nt
     tabsize = 4
     warndetachedcommit = true
-	recentrepo = C:/Users/faris/projects/utilities
-	recentrepo = C:/Users/faris/projects/dotfiles
-	recentrepo = C:/Users/faris/projects/dynamic_ipython
 	pruneduringfetch = true
 	diffcontext = 1
 	matchtrackingbranch = true
@@ -193,7 +207,10 @@
     autocorrect = 1
     format = man
     format = html
-    # store
+
+; [include]
+;     path = ~/.config/git/config
+    ; path = C:/ProgramData/Git/config
 
 [html]
     sslbackend=openssl
@@ -201,6 +218,7 @@
 
 [log]
     abbrevCommit = true
+    showSignature = true
 
 [merge]
     autoStash
@@ -209,15 +227,16 @@
     mergestyle = diff3
     prompt = false
     renormalize
+    renames = true
     strategy-option = resolve
     summary = true
     tool = nvim-merge
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
-[mergetool "nvim-merge"]
-    cmd = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[mergetool]
+    nvim-merge = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    nvim-merge = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
     # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
     # from this link we see that BASE is the commit that the file diverged at.
@@ -225,7 +244,15 @@
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
 
+[pull]
+    progress
+    rebase
+    renames = true
+    renormalize
+    stat
+
 [push]
+    stat
     default = simple
 
 [rebase]
@@ -236,13 +263,13 @@
 [sequence]
     editor = nvim
 
-
-[ssh]
-    variant = "ssh -p 8022 $*"
-
 [status]
+    branch = true
+    displayCommentPrefix = True  # git comments out its own output for easier copy pasting!
+    renames = copy
     showStash = True
     showUntrackedFiles = all
+    submoduleSummary = true
 
 [url "git://github.com"]
     insteadOf = g:
@@ -251,3 +278,5 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
+[winUpdater]
+	recentlySeenVersion = 2.23.0.windows.1

@@ -15,33 +15,21 @@ set revert-all-at-newline on
 # As a reminder \e == Alt == Esc + Pause
 #
 "\C-g": abort
-"\C-x\C-g": abort
-"\e\C-g": abort
-
-# "\C-b": self-insert
-# like why
-
 "\C-a": beginning-of-line
 "\C-b": backward-char
 "\C-d": delete-char
 "\C-l": clear-screen
+
+# Alt-Tab I think
 "\e\C-i": dynamic-complete-history
+
+# Yeah this is the chord C-x C-e
 "\C-x\C-e": edit-and-execute-command
 
-"\eOD": backward-char
-"\e[D": backward-char
+# Alt-BS
 "\e\C-h": backward-kill-word
-"\e\C-?": backward-kill-word
-"\C-x\C-?": backward-kill-line
-"\e[1;3D": backward-word
-"\e[1;5D": backward-word
-"\eb": backward-word
 "\e<": beginning-of-history
-"\eOH": beginning-of-line
-"\e[H": beginning-of-line
 "\e[200~": bracketed-paste-begin
-"\C-xe": call-last-kbd-macro
-"\ec": capitalize-word
 "\C-]": character-search
 "\e\C-]": character-search-backward
 "\e\e": complete
@@ -51,23 +39,21 @@ set revert-all-at-newline on
 "\e{": complete-into-braces
 "\e~": complete-username
 "\e$": complete-variable
-"\e[3~": delete-char
-"\e\\": delete-horizontal-space
-"\el": downcase-word
+
 "\C-x\C-v": display-shell-version
+
 "\C-x)": end-kbd-macro
+
 "\e>": end-of-history
+
+# EOF! I get it now!!!
 "\eOF": end-of-line
 "\e[F": end-of-line
+
 "\C-x\C-x": exchange-point-and-mark
+
 "\C-f": forward-char
-"\eOC": forward-char
-"\e[C": forward-char
 "\C-s": forward-search-history
-"\e[1;3C": forward-word
-"\e[1;5C": forward-word
-"\ef": forward-word
-"\eg": glob-complete-word
 "\C-x*": glob-expand-word
 "\C-xg": glob-list-expansions
 "\e#": insert-comment
@@ -75,15 +61,9 @@ set revert-all-at-newline on
 "\e.": insert-last-argument
 "\e_": insert-last-argument
 "\C-k": kill-line
-"\e[3;5~": kill-word
 "\ed": kill-word
 "\C-n": next-history
-"\eOB": next-history
-"\e[B": next-history
-"\en": non-incremental-forward-search-history
-"\ep": non-incremental-reverse-search-history
-"\C-o": operate-and-get-next
-"\e[2~": overwrite-mode
+
 "\C-x!": possible-command-completions
 "\e=": possible-completions
 "\e?": possible-completions
@@ -92,8 +72,6 @@ set revert-all-at-newline on
 "\C-x~": possible-username-completions
 "\C-x$": possible-variable-completions
 "\C-p": previous-history
-"\eOA": previous-history
-"\e[A": previous-history
 "\C-x\C-r": re-read-init-file
 "\C-r": reverse-search-history
 "\e\C-r": revert-line
@@ -109,70 +87,62 @@ set revert-all-at-newline on
 
 
 # All options set by set -o vim
-"\eOD": backward-char
-"\e[D": backward-char
 "\C-h": backward-delete-char
 "\C-?": backward-delete-char
-"\e[1;3D": backward-word
-"\e[1;5D": backward-word
-"\eOH": beginning-of-line
-"\e[H": beginning-of-line
-"\e[200~": bracketed-paste-begin
-"\e[3~": delete-char
 "\C-d": vi-eof-maybe
-"\C-i": complete
 "\C-n": menu-complete
 "\C-p": menu-complete-backward
-"\C-r": reverse-search-history
+
+# Let's use one of the other history searches there are so many functions for this
+# "\C-r": reverse-search-history
 "\C-v": quoted-insert
-# Commented out possible bad macro
-# "\eOB": next-history
-# "\e[B": next-history
+
 "\C-u": unix-line-discard
-"\e": vi-movement-mode
 "\C-w": vi-unix-word-rubout
 "\C-y": yank
-
-"\eOC": forward-char
-"\e[C": forward-char
-"\C-s": forward-search-history
-"\e[1;3C": forward-word
-"\e[1;5C": forward-word
-"\e[3;5~": kill-word
-"\e[2~": overwrite-mode
-"\eOA": previous-history
-"\e[A": previous-history
-# Yup. That's it. 32 bindings by default...
 
 # Binds: {{{1
 # To a shocking extent termux has nothing set up
 
-"\C-w": unix-filename-rubout
+# "\C-w": unix-filename-rubout
 
 # Switch Keymaps: {{{1
+
 # emacs-editing-mode (not bound)
 # vi-movement-mode (not bound)
-# Let's bind it to the keys described in rluserman
 
-$if mode = vi
-    "\C-e": set emacs-editing-mode
+# Let's bind it to the keys described in the readline library docs
+# In order to switch interactively between emacs and vi editing modes, use the
+# command M-C-j (bound to emacs-editing-mode when in vi mode and to
+# vi-editing-mode in emacs mode). The Readline default is emacs mode.
+
 # FZF: {{{1
-# Definitely go through everything and optimize
-bind '"\er": redraw-current-line'
-bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
-bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
-bind '"\C-g\C-t": "$(fgt)\e\C-e\er"'
-bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
-bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
+# Yeah definitely make sure all of these work though...
+$if mode = vi
+
+"\e\C-j": set emacs-editing-mode
+
+# bind '"\er": redraw-current-line'
+# bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
+# bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
+# bind '"\C-g\C-t": "$(fgt)\e\C-e\er"'
+# bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
+# bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
 
 $else
-bind '"\er": redraw-current-line'
-bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
-bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
-bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
-bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
-bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
-    "\e\C-j": set vi-movement-mode
+
+    # damn after removing a ton of bindings
+    # *which btw leave them out i didn't know what most did
+    # i came to the realization my readline bugs were from these bindings right here
+# bind '"\er": redraw-current-line'
+# bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
+# bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
+# bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
+# bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
+# bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
+
+"\e\C-j": set vi-movement-mode
+
 $endif
 
 # emacs-editing-mode (C-e)
@@ -208,7 +178,7 @@ set mark-symlinked-directories On
 
 # If set to On, history lines that have been modified are displayed with a
 # preceding asterisk (*).
-# Otherwise you just go back, modify history and it never shows you that it 
+# Otherwise you just go back, modify history and it never shows you that it
 # wasn't the original command which I find confusing.
 set mark-modified-lines On
 
@@ -325,10 +295,92 @@ set history-size 10000
 # "\eOd": backward-word
 # $endif
 
-# # for non RH/Debian xterm, can't hurt for RH/Debian xterm
-# # "\eOH": beginning-of-line
-# # "\eOF": end-of-line
+ # for non RH/Debian xterm, can't hurt for RH/Debian xterm
+ # "\eOH": beginning-of-line
+ # "\eOF": end-of-line
 
-# # for freebsd console
-# # "\e[H": beginning-of-line
-# # "\e[F": end-of-line
+ # for freebsd console
+ # "\e[H": beginning-of-line
+ # "\e[F": end-of-line
+
+# From /usr/share/doc/bash/inputrc.arrows
+# This file controls the behaviour of line input editing for
+# programs that use the Gnu Readline library.
+#
+# Arrow keys in keypad mode
+#
+# "\C-[OD"        backward-char
+# "\C-[OC"        forward-char
+# "\C-[OA"        previous-history
+# "\C-[OB"        next-history
+#
+# Arrow keys in ANSI mode
+#
+# "\C-[[D"        backward-char
+# "\C-[[C"        forward-char
+# "\C-[[A"        previous-history
+# "\C-[[B"        next-history
+#
+# Arrow keys in 8 bit keypad mode
+# So we enabled keypad earlier so I'm gonna say this one
+"\C-M-OD"       backward-char
+"\C-M-OC"       forward-char
+"\C-M-OA"       previous-history
+"\C-M-OB"       next-history
+#
+# Arrow keys in 8 bit ANSI mode
+#
+# "\C-M-[D"       backward-char
+# "\C-M-[C"       forward-char
+# "\C-M-[A"       previous-history
+# "\C-M-[B"       next-history
+
+
+# From clink: {{{1
+
+# Pleasantly surprised with these!
+# Gotta figure out how to check for the conditional clink tho
+
+# "\t":               clink-completion-shim
+# C-v:                paste-from-clipboard
+# C-q:                reload-lua-state
+# C-z:                undo
+# M-h:                show-rl-help
+# M-C-c:              copy-line-to-clipboard
+# C-c:                ctrl-c
+# M-a:                "..\\"
+
+# set keymap vi-insert
+# "\t":               clink-completion-shim
+# C-v:                paste-from-clipboard
+# C-z:                undo
+# M-h:                show-rl-help
+# M-C-c:              copy-line-to-clipboard
+# C-c:                ctrl-c
+# M-a:                "..\\"
+#
+# set keymap vi-move
+# C-v:                paste-from-clipboard
+# C-z:                undo
+# M-h:                show-rl-help
+# M-C-c:              copy-line-to-clipboard
+# C-c:                ctrl-c
+# M-a:                "..\\"
+
+$if cmd.exe
+    set keymap emacs
+    "\e`U":         up-directory
+    M-C-u:          up-directory
+    M-C-e:          expand-env-vars
+
+    set keymap vi-insert
+    "\e`U":         up-directory
+    M-C-u:          up-directory
+    M-C-e:          expand-env-vars
+
+    set keymap vi-move
+    "\e`U":         up-directory
+    M-C-u:          up-directory
+    M-C-e:          expand-env-vars
+$endif
+#                                                 j)
