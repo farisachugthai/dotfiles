@@ -5,7 +5,7 @@
 # Don't run if not interactive: {{{1
 case $- in
     *i*);;
-    *) return 0;;
+    *) exit 0;;
 esac
 
 pathadd() {  # {{{1
@@ -41,7 +41,7 @@ export PYTHONUNBUFFERED=1
 # Conda: {{{2
 # >>> conda initialize >>>  {{{2
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/faris/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
@@ -83,13 +83,10 @@ else
 fi
 export EDITOR="$VISUAL"
 
-# Doing this entirely for nvim
-if [[ -n "$(command -v luarocks)" ]]; then
-    eval "$(luarocks path)"
-fi
+# Builds: {{{1
 
-pathadd "$HOME/.luarocks/bin"
-
+export PKG_CONFIG_PATH='/usr/share/pkgconfig'
+test "$(command -v luarocks)" && eval "$(luarocks path; luarocks path --append)"
 # History: {{{1
 
 # Don't put duplicate lines or lines starting with space in the history.
@@ -109,7 +106,7 @@ shopt -s histappend
 shopt -s histreedit
 # Shopt and set: {{{1
 set -o emacs
-# To check what options you've set with set, check the output of: $: echo $- 
+# To check what options you've set with set, check the output of: $: echo $-
 # As of Aug 28, 2019 I got: bhimBCHs
 
 # I always forget keep this below set -o vi!
@@ -245,8 +242,6 @@ if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
 fi
 
-# other: {{{2
-
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"
 
@@ -257,5 +252,3 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

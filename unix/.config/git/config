@@ -8,7 +8,7 @@
     ignoreErrors
 
 [apply]
-    ignoreWhitespace = False  # don't fuck up the whitespace
+    # ignoreWhitespace = False  # don't fuck up the whitespace
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
@@ -227,9 +227,13 @@
     prompt = false
     renormalize
     renames = true
-    strategy-option = resolve
+    renormalize
+    strategy = recursive
+    # strategy-option = resolve
+    strategy-option = patience
     summary = true
     tool = nvim-merge
+	strategy-option--diff-algorithm = --set
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377

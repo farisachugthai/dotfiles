@@ -1,18 +1,13 @@
 [Desktop Entry]
-Categories=
+Categories=Utilities
 Comment=Community-driven port of the Windows application “KeePass Password Safe”
 Exec=keepassxc %f
 GenericName=Password Manager
-GenericName[de]=Passwortverwaltung
-GenericName[es]=Gestor de contraseñas
-GenericName[fr]=Gestionnaire de mot de passe
-GenericName[ru]=менеджер паролей
-Hidden=true
 Icon=keepassxc
 MimeType=application/x-keepass2;
 Name=KeePassXC
 StartupWMClass=keepassxc
 Terminal=false
-TryExec=keepassxc
+TryExec=keepassxc %f
 Type=Application
 Version=1.0

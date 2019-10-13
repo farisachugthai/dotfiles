@@ -39,7 +39,7 @@ if [[ -n "$ANDROID_DATA" ]]; then
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share:$XDG_DATA_HOME/mime"
     pathadd "$_ROOT/libexec"
     pathadd "$_ROOT/libexec/git-core"
-    export CFLAGS=" $CFLAGS -I/data/data/com.termux/files/usr/includes "
+    export CFLAGS=" $CFLAGS -I$_ROOT/include "
     export CC='aarch64-linux-android-clang'
 
 else
@@ -49,14 +49,9 @@ else
     # You forgot the one for snaps!
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
     pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
+    umask 0022
 fi
 
-# Useful for build environments: {{{1
-
-if [[ -n "$(command -v clang)" ]]; then
-    export CC=clang
-else
-    export CC=gcc
 fi
 
 # GNU specified directory vars: {{{2
@@ -68,11 +63,11 @@ if [[ -n "$ANDROID_DATA" ]]; then
     export DATAROOTDIR="$PREFIX/share"
     export INCLUDEDIR="$PREFIX/include"
 else
-    export SYSCONFDIR="/usr/local/etc"
-    export BINDIR="/usr/local/bin"
+    export SYSCONFDIR="/etc"
+    export BINDIR="/usr/bin"
     export DATADIR="/usr/local/share"
     export DATAROOTDIR="/usr/share"
-    export INCLUDEDIR="/usr/local/include"
+    export INCLUDEDIR="/usr/include"
 fi
 
 # Pkgconfig: {{{2

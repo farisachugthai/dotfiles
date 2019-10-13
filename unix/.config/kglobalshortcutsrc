@@ -8,7 +8,7 @@ _k_friendly_name=
 [KDE Keyboard Layout Switcher]
 Switch keyboard layout to English (US)=none,none,Switch keyboard layout to English (US)
 Switch to Next Keyboard Layout=none,Ctrl+Alt+K,Switch to Next Keyboard Layout
-_k_friendly_name=KDE Daemon
+_k_friendly_name=System Settings
 
 [firefox.desktop]
 _k_friendly_name=Firefox Web Browser
@@ -82,7 +82,7 @@ _k_friendly_name=
 
 [ksmserver]
 Halt Without Confirmation=Ctrl+Alt+Shift+PgDown,none,Halt Without Confirmation
-Lock Session=Ctrl+Alt+L\tScreensaver,Meta+L\tCtrl+Alt+L\tScreensaver,Lock Session
+Lock Session=none,Meta+L\tCtrl+Alt+L\tScreensaver,Lock Session
 Log Out=Ctrl+Alt+Del,none,Log Out
 Log Out Without Confirmation=Ctrl+Alt+Shift+Del,none,Log Out Without Confirmation
 Reboot Without Confirmation=Ctrl+Alt+Shift+PgUp,none,Reboot Without Confirmation

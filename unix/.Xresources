@@ -202,7 +202,7 @@ UXTerm*boldMode:           false
 UXTerm*colorBDMode:        true
 UXTerm*colorBD:            rgb:3f/3f/3f
 
-! Here's a general colorscheme for the X server as a whole
+! Heres a general colorscheme for the X server as a whole
 ! include ~/.Xresources.d/addy
 
 ! Xresources colorscheme I came up with myself
