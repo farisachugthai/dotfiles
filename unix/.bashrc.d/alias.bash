@@ -96,7 +96,7 @@ fi
 # Git aliases. {{{1
 
 # for complicated git log calls funcs are better
-alias g='git diff --stat --staged'
+alias g="git diff --stat --staged $* "
 alias ga='git add'
 alias ga.='git add .'
 alias gar="git add --renormalize -A $* "

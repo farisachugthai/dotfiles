@@ -250,6 +250,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # key-value, non-relational data {{{2
 .bib                  38;5;178
 .json                 38;5;178
+.code-workspace       38;5;178
 .msg                  38;5;178
 .pgn                  38;5;178
 .rss                  38;5;178
@@ -305,7 +306,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 
 # configs: {{{2
 *cfg                  38;5;133;1
-*conf                 38;5;131;1
+*.conf                38;5;131;1
+*.cnf                 38;5;131;1
 *rc                   38;5;174;1
 .ini                  38;5;173;1
 #   cisco VPN client configuration
@@ -343,8 +345,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .py                   38;5;41
 .ipynb                38;5;45
 .ipy                  38;5;42;1
-*requirements*        38;5;222
-*Pipfile*             38;5;222;3
+requirements*        38;5;222
+Pipfile*             38;5;222;3
 .pdbrc                38;5;41
 
 # ruby

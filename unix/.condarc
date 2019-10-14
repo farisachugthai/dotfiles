@@ -17,6 +17,10 @@
 #   sites with more packages until we max out at forge.
 #   Definitely worth noting that bokeh has its own channel though.
 #
+#   Bokeh at the top because start more specific and keep going to more general
+#   sites with more packages until we max out at forge.
+#   Definitely worth noting that bokeh has its own channel though.
+
 channels:
   - defaults
   - bokeh
@@ -35,6 +39,11 @@ default_channels:
 #   - https://repo.anaconda.com/pkgs/r
   - https://repo.anaconda.com/pkgs/pro
   - https://repo.anaconda.com/pkgs/msys2
+
+  # Frustratingly these don't work
+  # - https://repo.anaconda.com/pkgs/r
+  # - https://repo.anaconda.com/pkgs/free
+  # - https://repo.anaconda.com/pkgs/archive
 
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
@@ -300,7 +309,7 @@ channel_priority: disabled
 #   parameter is in BETA, and its behavior may change in a future release.
 # pinned_packages: []
 pinned_packages:
-  - conda
+ - conda
 
 
 # pip_interop_enabled (bool)
@@ -342,6 +351,7 @@ channel_flexibility: disabled
 #   Individual packages can override this setting, specifying that certain
 #   files should never be soft-linked (see the no_link option in the build
 #   recipe documentation).
+<<<<<<< Updated upstream
 #
 # !!!! WTH
 allow_softlinks: true
@@ -351,6 +361,7 @@ allow_softlinks: true
 #   Register a preference that files be copied into a prefix during
 #   install rather than hard-linked.
 #
+# always_copy: false
 # always_copy: false
 
 # always_softlink (bool)
@@ -414,13 +425,38 @@ extra_safety_checks: true
 #   When not set, defaults to 1.
 #
 # verify_threads: 0
-
 # execute_threads (int)
 #   Threads to use when performing the unlink/link transaction.  When not
 #   set, defaults to 1.  This step is pretty strongly I/O limited, and you
 #   may not see much benefit here.
-#
-# execute_threads: 0
+
+
+######################################################
+##            Conda-build Configuration             ##
+######################################################
+
+# bld_path (str)
+#   The location where conda-build will put built packages. Same as
+#   'croot', but 'croot' takes precedence when both are defined. Also used
+#   in construction of the 'local' multichannel.
+# bld_path: ''
+
+# croot (str)
+#   The location where conda-build will put built packages. Same as
+#   'bld_path', but 'croot' takes precedence when both are defined. Also
+#   used in construction of the 'local' multichannel.
+# croot: ''
+
+# anaconda_upload (NoneType, bool)
+#   aliases: binstar_upload
+#   Automatically upload packages built with conda build to anaconda.org.
+# anaconda_upload:
+
+# conda_build (map: str)
+#   aliases: conda-build
+#   General configuration parameters for conda-build.
+# conda_build: {}
+
 
 ######################################################
 ##  Output, Prompt, and Flow Control Configuration  ##
@@ -437,6 +473,7 @@ extra_safety_checks: true
 #   Automatically activate the base environment during shell
 #   initialization.
 #
+#   Automatically activate the base environment during the initialization.
 # auto_activate_base: true
 
 # changeps1 (bool)
@@ -464,7 +501,7 @@ env_prompt: '({prefix}) '
 # json: false
 
 # notify_outdated_conda (bool)
-#   Notify if a newer version of conda is detected during create,
+#   Notify if a newer version of conda is detected during a create,
 #   install, update, or remove operation.
 #
 notify_outdated_conda: false
@@ -485,8 +522,190 @@ report_errors: false
 #   Show channel URLs when displaying what is going to be downloaded.
 #
 show_channel_urls: true
+#   Opt in, or opt out, of automatic error reporting to co maintainers.
+#   Error reports are anonymous, with only the error stack race and
+#   information given by `conda info` being sent. report_errors:
+report_errors: false
 
-ssl_verify: true
+# show_channel_urls (NoneType, bool)
+#   Show channel URLs when displaying what is going to be wnloaded.
+show_channel_urls: true
+
+# verbosity (int)
+#   aliases: verbose
+#   Sets output log level. 0 is warn. 1 is info. 2 is debu 3 is trace.
+# verbosity: 0
+
+
+######################################################
+##            Conda-build Configuration             ##
+######################################################
+# bld_path (str)
+#   The location where conda-build will put built packages Same as
+#   'croot', but 'croot' takes precedence when both are de ned. Also used
+#   in construction of the 'local' multichannel. bld_path: ''
+# croot (str)
+#   The location where conda-build will put built packages Same as
+#   'bld_path', but 'croot' takes precedence when both are efined. Also
+#   used in construction of the 'local' multichannel.
+# croot: ''
+# anaconda_upload (NoneType, bool)
+#   aliases: binstar_upload
+#   Automatically upload packages built with conda build t anaconda.org.
+# anaconda_upload:
+# conda_build (map: str)
+#   aliases: conda-build
+#   General configuration parameters for conda-build.
+# conda_build: {}
+
+
+######################################################
+##            Basic Conda Configuration             ##
+######################################################
+
+allow_conda_downgrades: true
+
+# add_pip_as_python_dependency (bool)
+#   Add pip, wheel and setuptools as dependencies of python. This ensures
+#   pip, wheel and setuptools will always be installed any time python is
+#   installed.
+#
+add_pip_as_python_dependency: true
+
+# clobber (bool)
+#   Allow clobbering of overlapping file paths within packages, and
+#   suppress related warnings. Overrides the path_conflict configuration
+#   value when set to 'warn' or 'prevent'.
+clobber: true
+
+# disallowed_packages (sequence: str)
+#   aliases: disallow
+#   string delimiter: '&'
+#   Package specifications to disallow installing. The default is to allow
+#   all packages.
+# disallowed_packages: []
+
+# download_only (bool)
+#   Solve an environment and ensure package caches are populated, but exit
+#   prior to unlinking and linking packages into the prefix
+# download_only: false
+
+# envs_dirs (sequence: str)
+#   aliases: envs_path
+#   string delimiter: ':'
+#   The list of directories to search for named environments. When
+#   creating a new named environment, the environment will be placed in
+#   the first writable location.
+# envs_dirs: []
+
+# force (bool)
+#   Override any of conda's objections and safeguards for installing
+#   packages and potentially breaking environments. Also re-installs the
+#   package, even if the package is already installed. Implies --no-deps.
+# force: false
+
+# local_repodata_ttl (bool, int)
+#   For a value of False or 0, always fetch remote repodata (HTTP 304
+#   responses respected). For a value of True or 1, respect the HTTP
+#   Cache-Control max-age header. Any other positive integer values is the
+#   number of seconds to locally cache repodata before checking the remote
+#   server for an update.
+# local_repodata_ttl: 1
+
+# json (bool)
+#   Ensure all output written to stdout is structured json
+#
+# json: false
+
+
+# max_shlvl (int)
+#   The maximum number of stacked active conda environments.
+max_shlvl: 2
+
+# migrated_channel_aliases (sequence: str)
+#   string delimiter: ','
+#   A list of previously-used channel_alias values, useful for example
+#   when switching between different Anaconda Repository instances.
+# migrated_channel_aliases: []
+
+# no_dependencies (bool)
+#   aliases: no_deps
+#   Do not install, update, remove, or change dependencies. This WILL lead
+#   to broken environments and inconsistent behavior. Use at your own
+#   risk.
+#
+# no_dependencies: false
+
+# non_admin_enabled (bool)
+#   Allows completion of conda's create, install, update, and remove
+#   operations, for non-privileged (non-root or non-administrator) users.
+#
+# non_admin_enabled: true
+
+# override_channels_enabled (bool)
+#   Permit use of the --overide-channels command-line flag.
+#
+# override_channels_enabled: true
+
+# path_conflict (PathConflict)
+#   The method by which conda handle's conflicting/overlapping paths
+#   during a create, install, or update operation. The value must be one
+#   of 'clobber', 'warn', or 'prevent'. The '--clobber' command-line flag
+#   or clobber configuration parameter overrides path_conflict set to
+#   'prevent'.
+# path_conflict: warn
+
+# pkgs_dirs (sequence: str)
+#   env var string delimiter: ','
+#   The list of directories where locally-available packages are linked
+#   from at install time. Packages not locally available are downloaded
+#   and extracted into the first writable directory.
+pkgs_dirs: []
+
+# proxy_servers (map: NoneType, str)
+#   A mapping to enable proxy settings. Keys can be either (1) a
+#   scheme://hostname form, which will match any request to the given
+#   scheme and exact hostname, or (2) just a scheme, which will match
+#   requests to that scheme. Values are are the actual proxy server, and
+#   are of the form 'scheme://[user:password@]host[:port]'. The optional
+#   'user:password' inclusion enables HTTP Basic Auth with your proxy.
+# proxy_servers: {}
+
+# remote_connect_timeout_secs (float)
+#   The number seconds conda will wait for your client to establish a
+#   connection to a remote url resource.
+# remote_connect_timeout_secs: 9.15
+
+# remote_max_retries (int)
+#   The maximum number of retries each HTTP connection should attempt.
+# remote_max_retries: 3
+
+# remote_read_timeout_secs (float)
+#   Once conda has connected to a remote resource and sent an HTTP
+#   request, the read timeout is the number of seconds conda will wait for
+#   the server to send a response.
+# remote_read_timeout_secs: 60.0
+
+# use_index_cache (bool)
+#   Use cache of channel index files, even if it has expired.
+# use_index_cache: false
+
+#   Opt in, or opt out, of automatic error reporting to core maintainers.
+#   Error reports are anonymous, with only the error stack trace and
+#   information given by `conda info` being sent.
+report_errors: false
+
+
+# use_index_cache (bool)
+#   Use cache of channel index files, even if it has expired.
+# use_index_cache: false
+
+# use_pip (bool)
+#   Include non-conda-installed python packages with conda list. This does
+#   not affect any conda command or functionality other than the output of
+#   the command conda list.
+# use_pip: true
+
 # verbosity (int)
 #   aliases: verbose
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.

@@ -36,6 +36,11 @@ default_channels:
   - https://repo.anaconda.com/pkgs/pro
   - https://repo.anaconda.com/pkgs/msys2
 
+  # Frustratingly these don't work
+  # - https://repo.anaconda.com/pkgs/r
+  # - https://repo.anaconda.com/pkgs/free
+  # - https://repo.anaconda.com/pkgs/archive
+
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
 #
@@ -115,10 +120,9 @@ restore_free_channel: true
 #   then falls back to repodata.json.  You may want to specify something
 #   else to use an alternate index that has been reduced somehow.
 #
-#
 # repodata_fns:
 #   - current_repodata.json
-#   - repodata.json
+# - repodata.json
 
 # use_only_tar_bz2 (NoneType, bool)
 #   A boolean indicating that only .tar.bz2 conda packages should be
@@ -131,7 +135,7 @@ restore_free_channel: true
 # repodata_threads (int)
 #   Threads to use when downloading and reading repodata.  When not set,
 #   defaults to None, which uses the default ThreadPoolExecutor behavior.
-#
+
 # repodata_threads: 0
 
 
@@ -270,8 +274,14 @@ auto_update_conda: false
 #   configured priority of channels is used only to break ties. In
 #   previous versions of conda, this parameter was configured as either
 #   True or False. True is now an alias to 'flexible'.
+<<<<<<< Updated upstream
 #
 channel_priority: disabled
+||||||| merged common ancestors
+# channel_priority: flexible
+=======
+channel_priority: disabled
+>>>>>>> Stashed changes
 
 # create_default_packages (sequence: str)
 #   env var string delimiter: ','
@@ -298,9 +308,12 @@ channel_priority: disabled
 #   env var string delimiter: '&'
 #   A list of package specs to pin for every environment resolution. This
 #   parameter is in BETA, and its behavior may change in a future release.
-# pinned_packages: []
 pinned_packages:
   - conda
+
+# pinned_packages: []
+pinned_packages:
+ - conda
 
 
 # pip_interop_enabled (bool)
@@ -387,12 +400,14 @@ safety_checks: enabled
 # extra_safety_checks (bool)
 #   Spend extra time validating package contents.  Currently, runs sha256
 #   verification on every file within each package during installation.
+# 
 extra_safety_checks: true
 
 # shortcuts (bool)
 #   Allow packages to create OS-specific shortcuts (e.g. in the Windows
 #   Start Menu) at install time.
-# shortcuts: true
+# 
+shortcuts: true
 
 # non_admin_enabled (bool)
 #   Allows completion of conda's create, install, update, and remove
@@ -409,18 +424,33 @@ extra_safety_checks: true
 #
 # separate_format_cache: false
 
-# verify_threads (int)
-#   Threads to use when performing the transaction verification step.
-#   When not set, defaults to 1.
-#
-# verify_threads: 0
 
-# execute_threads (int)
-#   Threads to use when performing the unlink/link transaction.  When not
-#   set, defaults to 1.  This step is pretty strongly I/O limited, and you
-#   may not see much benefit here.
-#
-# execute_threads: 0
+######################################################
+##            Conda-build Configuration             ##
+######################################################
+
+# bld_path (str)
+#   The location where conda-build will put built packages. Same as
+#   'croot', but 'croot' takes precedence when both are defined. Also used
+#   in construction of the 'local' multichannel.
+# bld_path: ''
+
+# croot (str)
+#   The location where conda-build will put built packages. Same as
+#   'bld_path', but 'croot' takes precedence when both are defined. Also
+#   used in construction of the 'local' multichannel.
+# croot: ''
+
+# anaconda_upload (NoneType, bool)
+#   aliases: binstar_upload
+#   Automatically upload packages built with conda build to anaconda.org.
+# anaconda_upload:
+
+# conda_build (map: str)
+#   aliases: conda-buil
+#   General configuration parameters for conda-build.
+# conda_build: {}
+
 
 ######################################################
 ##  Output, Prompt, and Flow Control Configuration  ##
@@ -486,7 +516,6 @@ report_errors: false
 #
 show_channel_urls: true
 
-ssl_verify: true
 # verbosity (int)
 #   aliases: verbose
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.

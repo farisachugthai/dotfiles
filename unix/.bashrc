@@ -14,7 +14,6 @@ pathadd() {  # {{{1
     fi
 }
 
-
 # $_ROOT: {{{1
 # shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
@@ -38,7 +37,6 @@ export PYTHONCOERCECLOCALE=warn
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
 export PYTHONUNBUFFERED=1
 
-# Conda: {{{2
 # >>> conda initialize >>>  {{{2
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -52,8 +50,6 @@ else
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<<
-
 
 # GCloud: {{{2
 
@@ -87,6 +83,7 @@ export EDITOR="$VISUAL"
 
 export PKG_CONFIG_PATH='/usr/share/pkgconfig'
 test "$(command -v luarocks)" && eval "$(luarocks path; luarocks path --append)"
+
 # History: {{{1
 
 # Don't put duplicate lines or lines starting with space in the history.
@@ -104,15 +101,22 @@ export HISTFILE="$HOME/.bash_history"
 # Append to the history file, don't overwrite it
 shopt -s histappend
 shopt -s histreedit
+
+# So on a related note let's set up shell options
+
 # Shopt and set: {{{1
+
 set -o emacs
 # To check what options you've set with set, check the output of: $: echo $-
+# Don't just run `set` on the command line! It'll echo every var that's been set.
 # As of Aug 28, 2019 I got: bhimBCHs
 
 # I always forget keep this below set -o vi!
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+
 # Be notified of asynchronous jobs completing in the background
 set -o notify
+
 # Check the window size after each command and update the values of LINES and COLUMNS.
 # Now the default in Bash 5!!!
 shopt -s checkwinsize
@@ -145,6 +149,7 @@ if [[ $BASH_VERSINFO -gt 4 ]]; then shopt -s progcomp_alias; fi
 shopt -s shift_verbose
 
 shopt -s no_empty_cmd_completion
+
 # If set, and the cmdhist option is enabled, multi-line commands are saved to
 # the history with embedded newlines rather than using semicolon separators
 shopt -s lithist cmdhist
@@ -191,9 +196,6 @@ if [[ -d "$HOME/.nvm" ]]; then
     nvm use default --delete-prefix
 fi
 
-# Testing out the language servers to see if they'll link up with neovim
-pathadd "$HOME/.local/share/nvim/site/node_modules/.bin"
-
 # Fasd: {{{2
 
 fasd_cache="$HOME/.fasd-init-bash"
@@ -217,7 +219,9 @@ if [[ -d ~/.bashrc.d ]]; then
     done
     unset -v config
 fi
+
 firstpath() {
+    # Check if a dir exists and if it does, prepend it to the $PATH.
     if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
         export PATH="$1:${PATH:+"$PATH"}"
     fi

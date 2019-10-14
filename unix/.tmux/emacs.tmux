@@ -14,6 +14,10 @@
 # But we don't get anything with Alt, PgUp, PgDown like don't make me compromise
 # usability because I like vi!! *glares in readline*
 
+# Leave in root
+bind-key -T root PageUp copy-mode -eu
+bind-key -T copy-mode-vi PageUp send-keys -X scroll-up
+
 
 bind-key    -T copy-mode-vi    C-Space           send-keys -X begin-selection
 bind-key    -T copy-mode-vi    C-g               send-keys -X clear-selection
@@ -75,3 +79,5 @@ bind-key    -T copy-mode-vi    M-Up              send-keys -X halfpage-up
 bind-key    -T copy-mode-vi    M-Down            send-keys -X halfpage-down
 bind-key    -T copy-mode-vi    C-Up              send-keys -X scroll-up
 bind-key    -T copy-mode-vi    C-Down            send-keys -X scroll-down
+
+# Vim: set ft=tmux:

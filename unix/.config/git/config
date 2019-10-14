@@ -14,8 +14,8 @@
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
     ci = commit
     co = checkout
-    last = log -1 HEAD
-    unstage = reset HEAD --
+    last = log -- HEAD $*
+    unstage = reset HEAD -- $*
 
     # From varying Gists
     rel = rev-parse --show-prefix
@@ -39,9 +39,9 @@
     cl =  clone
     cls= clone --depth 1
     cob = checkout -b
-    d = diff
-    ds = diff --staged
-    ds2 = diff --stat --staged
+    d = diff --check
+    ds = diff --staged --check
+    ds2 = diff --stat --staged --check
     dt = difftool
     f = fetch --all
     fe = fetch
@@ -139,6 +139,7 @@
     helper = cache --timeout=86400
     helper = manager
     modalPrompt = True
+    username = farisachugthai
 
 [credential "https://www.github.com"]
     username = farisachugthai
@@ -156,6 +157,8 @@
     indentHeuristic = true
     interHunkContext = 0
     mnemonicPrefix = true
+    # color-moved-ws?
+    find-renames = true
     prompt = false
     # detect copied files as well as renames. affects merge and status.renames
     renames = copy
@@ -164,8 +167,9 @@
     suppressBlankEmpty = true
     suppressBlankLines
     tool = nvimdiff
+    # unified ?
     word-diff = color
-    wsErrorHighlight = all
+    wsErrorHighlight = context
 
 [difftool]
     nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
@@ -186,18 +190,18 @@
     extendedRegexp = true
 
 [gui]
+	diffcontext = 1
     editor = nvim-qt.exe
     editor = nvim
-    cmd = nvim -d $LOCAL $REMOTE
     encoding = utf-8
 	fontui = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-    newbranchtemplate = nt
-    tabsize = 4
-    warndetachedcommit = true
-	pruneduringfetch = true
-	diffcontext = 1
 	matchtrackingbranch = true
+    newbranchtemplate = nt
+	pruneduringfetch = true
+    tabsize = 4
+    trustexitcode = true
+    warndetachedcommit = true
 
 [grep]
     lineNumber = true
@@ -214,6 +218,9 @@
 
 [html]
     sslbackend=openssl
+    format = man
+    format = html
+    sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
 
 [log]
     abbrevCommit = true
@@ -261,10 +268,13 @@
 [rebase]
     autoStash = True
     stat = True
-    missingCommitsCheck = "warn"  # jesus christ Git why are all your defaults destructive??
+    missingCommitsCheck = "warn"
 
 [sequence]
     editor = nvim
+
+[ssh]
+    variant = "ssh -p 8022 $*"
 
 [status]
     branch = true
@@ -281,5 +291,6 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
+
 [winUpdater]
 	recentlySeenVersion = 2.23.0.windows.1
