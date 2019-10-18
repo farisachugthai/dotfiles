@@ -53,8 +53,6 @@ else
     umask 0022
 fi
 
-fi
-
 # GNU specified directory vars: {{{2
 # https://www.gnu.org/prep/standards/html_node/Directory-Variables.html
 if [[ -n "$ANDROID_DATA" ]]; then

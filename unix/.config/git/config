@@ -108,7 +108,6 @@
     verbose
 
 [core]
-    autocrlf = input
 	compression = 5
     editor = nvim-qt
     editor = nvim

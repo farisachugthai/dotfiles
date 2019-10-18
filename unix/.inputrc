@@ -122,6 +122,12 @@ $if mode = vi
 
 "\e\C-j": set emacs-editing-mode
 
+set keymap vi-insert
+"jj": vi-movement-mode
+
+set keymap vi-command
+"gg": beginning-of-history
+"G": end-of-history
 # bind '"\er": redraw-current-line'
 # bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
 # bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
@@ -141,7 +147,7 @@ $else
 # bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
 # bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 
-"\e\C-j": set vi-movement-mode
+"\e\C-j": vi-movement-mode
 
 $endif
 
@@ -342,10 +348,10 @@ set history-size 10000
 # Gotta figure out how to check for the conditional clink tho
 
 # "\t":               clink-completion-shim
-# C-v:                paste-from-clipboard
+"C-V":                paste-from-clipboard
 # C-q:                reload-lua-state
 # C-z:                undo
-# M-h:                show-rl-help
+"M-h":                show-rl-help
 # M-C-c:              copy-line-to-clipboard
 # C-c:                ctrl-c
 # M-a:                "..\\"
@@ -383,4 +389,8 @@ $if cmd.exe
     M-C-u:          up-directory
     M-C-e:          expand-env-vars
 $endif
-#                                                 j)
+
+$if Bash
+    Space: magic-space
+    "C-SPC": menu-complete
+$endif

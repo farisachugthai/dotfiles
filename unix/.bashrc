@@ -9,7 +9,7 @@ case $- in
 esac
 
 pathadd() {  # {{{1
-    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+    if [ -d "$1" ] && [ ":$PATH:" != *":$1:"* ]; then
         PATH="${PATH:+"$PATH:"}$1"
     fi
 }
@@ -81,8 +81,9 @@ export EDITOR="$VISUAL"
 
 # Builds: {{{1
 
-export PKG_CONFIG_PATH='/usr/share/pkgconfig'
-test "$(command -v luarocks)" && eval "$(luarocks path; luarocks path --append)"
+if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
+
+test "$(command -v luarocks)" && eval "$(luarocks path --bin)"
 
 # History: {{{1
 
@@ -101,7 +102,7 @@ export HISTFILE="$HOME/.bash_history"
 # Append to the history file, don't overwrite it
 shopt -s histappend
 shopt -s histreedit
-
+shopt -s histverify
 # So on a related note let's set up shell options
 
 # Shopt and set: {{{1
@@ -110,6 +111,13 @@ set -o emacs
 # To check what options you've set with set, check the output of: $: echo $-
 # Don't just run `set` on the command line! It'll echo every var that's been set.
 # As of Aug 28, 2019 I got: bhimBCHs
+# Also you can run set -o
+set -o histexpand
+# set -o keyword  don't ever set it echoes EVERYTHING
+# set -o nounset Autocompletion gets annoying
+shopt -s autocd
+shopt -s dotglob
+shopt -s checkhash
 
 # I always forget keep this below set -o vi!
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
@@ -134,6 +142,7 @@ shopt -s checkjobs
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
+shopt -s nocasematch
 set -o noclobber        # Still dont want to clobber things
 shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
 shopt -s dirspell       # Autocorrect the spelling if it can
@@ -195,6 +204,11 @@ if [[ -d "$HOME/.nvm" ]]; then
     npm config delete prefix
     nvm use default --delete-prefix
 fi
+export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
+export NODE_PRESERVE_SYMLINKS=1
+
+pathadd "$HOME/.yarn/bin"
+pathadd "$HOME/.config/yarn/global/node_modules/.bin"
 
 # Fasd: {{{2
 
@@ -256,3 +270,4 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+

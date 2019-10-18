@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Maintainer: Faris Chugthai
 
 # set -euo pipefail
 
-.git/hooks/ctags >/dev/null 2>&1 &
+ctags >/dev/null 2>&1 &
 
 exit 0
