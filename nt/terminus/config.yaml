@@ -1,0 +1,184 @@
+hotkeys:
+  shell: {}
+  profile: {}
+  split-left:
+    - - Ctrl-Shift-Left
+  split-right:
+    - - Ctrl-Shift-Right
+  rename-tab:
+    - - Alt-Shift-R
+  close-pane: []
+  toggle-window:
+    - - Alt-Space
+    - - Ctrl-`
+  split-bottom:
+    - - Ctrl-Shift-Down
+  pane-nav-up:
+    - - Alt-Up
+  pane-nav-down:
+    - - Alt-Down
+  split-top:
+    - - Ctrl-Shift-Up
+  pane-nav-left:
+    - - Alt-Left
+  pane-nav-right:
+    - - Alt-Right
+  next-tab: []
+  previous-tab: []
+  new-window: []
+  search:
+    - - Alt-/
+  end:
+    - - End
+    - - Ctrl-E
+  home:
+    - - Home
+    - - Ctrl-A
+  previous-word:
+    - - Ctrl-Left
+    - - Alt-B
+  next-word:
+    - - Ctrl-Right
+    - - Alt-F
+  delete-previous-word:
+    - - Ctrl-Backspace
+    - - Ctrl-W
+  delete-next-word:
+    - - Ctrl-Delete
+  close-tab:
+    - - Ctrl-Shift-W
+    - - Alt-F4
+  clear: []
+  paste:
+    - - Ctrl-Shift-V
+    - - Shift-Insert
+ssh:
+  connections:
+    - name: neon
+      host: 192.168.1.159
+      port: 8022
+      user: faris
+      algorithms:
+        hmac:
+          - hmac-sha2-256
+          - hmac-sha2-512
+          - hmac-sha1
+          - hmac-sha2-256-96
+          - hmac-sha2-512-96
+        kex:
+          - ecdh-sha2-nistp256
+          - ecdh-sha2-nistp384
+          - ecdh-sha2-nistp521
+          - diffie-hellman-group-exchange-sha256
+          - diffie-hellman-group14-sha1
+          - diffie-hellman-group1-sha1
+          - diffie-hellman-group-exchange-sha1
+        cipher:
+          - aes128-ctr
+          - aes192-ctr
+          - aes256-ctr
+          - aes128-gcm
+          - aes128-gcm@openssh.com
+          - aes256-gcm
+          - aes256-gcm@openssh.com
+        serverHostKey:
+          - ssh-rsa
+          - ecdsa-sha2-nistp256
+          - ecdsa-sha2-nistp384
+          - ecdsa-sha2-nistp521
+      scripts:
+        - expect: ''
+          send: ''
+        - expect: ''
+          send: ''
+      group: personal
+      privateKey: 'C:\Users\faris\.ssh\id_ed25519'
+terminal:
+  colorScheme:
+    name: Gruvbox Dark
+    foreground: '#e6d4a3'
+    background: '#1e1e1e'
+    cursor: '#bbbbbb'
+    colors:
+      - '#161819'
+      - '#f73028'
+      - '#aab01e'
+      - '#f7b125'
+      - '#719586'
+      - '#c77089'
+      - '#7db669'
+      - '#faefbb'
+      - '#7f7061'
+      - '#be0f17'
+      - '#868715'
+      - '#cc881a'
+      - '#377375'
+      - '#a04b73'
+      - '#578e57'
+      - '#e6d4a3'
+  frontend: xterm-webgl
+  font: Source Code Pro Black Regular
+  ligatures: true
+  cursor: block
+  cursorBlink: false
+  environment: {}
+  profile: powershell-core
+  autoOpen: false
+  bracketedPaste: true
+  copyOnSelect: true
+  altIsMeta: true
+  background: colorScheme
+  fontSize: 16
+  profiles:
+    - name: Admin Cmder PowerShell - Dude read the arguments
+      sessionOptions:
+        command: powershell.exe
+        args:
+          - '-ExecutionPolicy'
+          - Bypass
+          - '-nologo'
+          - '-noprofile'
+          - '-noexit'
+          - '-command'
+          - 'Invoke-Expression ''. ''''C:\tools\Cmder\vendor\profile.ps1'''''''
+        env:
+          TERM: cygwin
+        runAsAdministrator: true
+        cwd: 'C:\Users\faris'
+    - name: pwsh7
+      sessionOptions:
+        command: 'C:\pwsh\7-preview\pwsh.exe'
+        args:
+          - '-nologo'
+        env: {}
+        cwd: 'C:\Users\faris'
+    - name: ipython
+      sessionOptions:
+        command: cmd
+        args:
+          - /K conda activate flask & conda run ipython
+          - ''
+        env: {}
+        cwd: 'C:\Users\faris'
+        runAsAdministrator: true
+  workingDirectory: 'C:\Users\faris'
+  scrollOnInput: true
+appearance:
+  vibrancy: true
+  opacity: 0.91
+  frame: thin
+  dock: top
+  theme: Gruvbox
+  vibrancyType: fluent
+  dockScreen: current
+  tabsLocation: top
+  dockFill: 0.76
+enableAnalytics: false
+pluginBlacklist: []
+qc:
+  cmds:
+    - name: IPython Quick Cmd
+      text: ipython
+      appendCR: true
+      group: group1
+enableWelcomeTab: false

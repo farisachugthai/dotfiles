@@ -27,7 +27,10 @@ channels:
   - conda-canary
   - conda-forge
 
-channel_alias: https://conda.anaconda.org
+# channel_alias (str)
+#   The prepended url location to associate with channel names.
+#
+# channel_alias: https://conda.anaconda.org
 
 # default_channels (sequence: str)
 #   env var string delimiter: ','
@@ -330,13 +333,6 @@ pip_interop_enabled: true
 #
 # track_features: []
 
-# TODO: what is this option?
-# Aug 20, 2019: Inexplicabily, it's been disabled in conda 4.7.11 so...
-channel_flexibility: disabled
-
-# From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
-# Non-url channels will be interpreted as Anaconda.org usernames
-# (this can be changed by modifying the channel_alias key; see below).
 
 ######################################################
 #   Package Linking and Install-time Configuration   #
@@ -384,6 +380,7 @@ allow_softlinks: true
 #   or clobber configuration parameter overrides path_conflict set to
 #   'prevent'.
 # path_conflict: warn
+# Oct 11, 2019: new default is clobber
 
 # rollback_enabled (bool)
 #   Should any error occur during an unlink/link transaction, revert any
@@ -455,6 +452,38 @@ extra_safety_checks: true
 # conda_build (map: str)
 #   aliases: conda-build
 #   General configuration parameters for conda-build.
+# conda_build: {}
+
+
+
+######################################################
+##            Conda-build Configuration             ##
+######################################################
+
+# bld_path (str)
+#   The location where conda-build will put built packages. Same as
+#   'croot', but 'croot' takes precedence when both are defined. Also used
+#   in construction of the 'local' multichannel.
+#
+# bld_path: ''
+
+# croot (str)
+#   The location where conda-build will put built packages. Same as
+#   'bld_path', but 'croot' takes precedence when both are defined. Also
+#   used in construction of the 'local' multichannel.
+#
+# croot: ''
+
+# anaconda_upload (NoneType, bool)
+#   aliases: binstar_upload
+#   Automatically upload packages built with conda build to anaconda.org.
+#
+# anaconda_upload:
+
+# conda_build (map: str)
+#   aliases: conda-build
+#   General configuration parameters for conda-build.
+#
 # conda_build: {}
 
 
@@ -711,5 +740,13 @@ report_errors: false
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.
 #
 # verbosity: 0
+
+
+# unsatisfiable_hints (bool)
+#   A boolean to determine if conda should find conflicting packages in
+#   the case of a failed install.
+#
+# unsatisfiable_hints: true
+
 
 # Vim: set ft=yaml:

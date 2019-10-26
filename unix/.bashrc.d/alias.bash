@@ -25,16 +25,17 @@ alias cd......="cd ../../../../.."
 # -A all except implied . and ..
 # -c sort by ctime.
 # -F classifies. indicators for symlinks and dirs are provided
-# -o is similar to -l but don't print group
+# -o is similar to -l but don't print group. So wait that's the same thing
+# as -lg...? Why.
 # -p means append / indicator to directoreis
 alias l='ls -F --color=always'
 alias la='ls -AF --color=always'
 alias ldir='ls -po --color=always | grep /$'
 alias lf='ls -Fo --color=always | grep ^-'
-alias ll='ls -AFho --color=always'
-alias lr='ls -AgFhr --color=always'
+alias ll='ls -AFhog --color=always'
+alias lr='ls -AlgFhr --color=always'
 alias ls='ls -F --color=always'
-alias lt='ls -Aghtc --color=always'
+alias lt='ls -Alght --color=always'
 alias lx='ls -Fo --color=always | grep ^-..x'
 
 # Alert: {{{1

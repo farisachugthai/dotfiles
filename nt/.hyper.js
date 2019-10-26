@@ -159,8 +159,10 @@ module.exports = {
     // shellArgs: ['/k', 'title Cmder & %CMDER_ROOT%\\vendor\\init.bat'],
 
     // for environment variables
+    // unset cmder_root it's fucking up pipenv
     env: {
-      TERM: "cygwin"
+      "TERM": "cygwin",
+      "CMDER_ROOT": ""
     },
     // env: {},
 

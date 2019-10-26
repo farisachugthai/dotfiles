@@ -111,6 +111,7 @@
 	compression = 5
     editor = nvim-qt
     editor = nvim
+    eol = lf
     excludesfile = "$HOME/.config/git/ignore"
     fscache = true
 
@@ -219,7 +220,6 @@
     sslbackend=openssl
     format = man
     format = html
-    sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
 
 [log]
     abbrevCommit = true
@@ -239,7 +239,6 @@
     strategy-option = patience
     summary = true
     tool = nvim-merge
-	strategy-option--diff-algorithm = --set
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
@@ -272,8 +271,8 @@
 [sequence]
     editor = nvim
 
-[ssh]
-    variant = "ssh -p 8022 $*"
+; [ssh]
+;     variant = "ssh -p 8022 $*"
 
 [status]
     branch = true
@@ -291,5 +290,5 @@
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
 
-[winUpdater]
-	recentlySeenVersion = 2.23.0.windows.1
+; [winUpdater]
+; 	recentlySeenVersion = 2.23.0.windows.1

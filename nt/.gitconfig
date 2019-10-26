@@ -7,9 +7,6 @@
 [add]
     ignoreErrors
 
-[apply]
-    ignoreWhitespace = False  # don't fuck up the whitespace
-
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
     ci = commit
@@ -108,10 +105,10 @@
     verbose
 
 [core]
-    autocrlf = input
 	compression = 5
     editor = nvim-qt
     editor = nvim
+    eol = lf
     excludesfile = "$HOME/.config/git/ignore"
     fscache = true
 
@@ -130,8 +127,7 @@
     ignorestat = true
 
     pager = less -JRKMLieg
-    safecrlf = true
-    # sshCommand = C:/WINDOWS/System32/OpenSSH/ssh.exe
+    sshCommand = C:/WINDOWS/System32/OpenSSH/ssh.exe
     symlink = true
 
 [credential]
@@ -156,6 +152,8 @@
     indentHeuristic = true
     interHunkContext = 0
     mnemonicPrefix = true
+    # color-moved-ws?
+    find-renames = true
     prompt = false
     # detect copied files as well as renames. affects merge and status.renames
     renames = copy
@@ -186,18 +184,19 @@
     extendedRegexp = true
 
 [gui]
+    cmd = nvim -d $LOCAL $REMOTE
+	diffcontext = 1
     editor = nvim-qt.exe
     editor = nvim
-    cmd = nvim -d $LOCAL $REMOTE
     encoding = utf-8
 	fontui = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-    newbranchtemplate = nt
-    tabsize = 4
-    warndetachedcommit = true
-	pruneduringfetch = true
-	diffcontext = 1
 	matchtrackingbranch = true
+    newbranchtemplate = nt
+	pruneduringfetch = true
+    tabsize = 4
+    trustexitcode = false
+    warndetachedcommit = true
 
 [grep]
     lineNumber = true
@@ -214,6 +213,8 @@
 
 [html]
     sslbackend=openssl
+    format = man
+    format = html
     sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
 
 [log]
@@ -228,7 +229,11 @@
     prompt = false
     renormalize
     renames = true
-    strategy-option = resolve
+    renormalize
+    strategy = recursive
+    # strategy-option = resolve
+    strategy-option = patience
+    # strategy-option--diff-algorithm = --set
     summary = true
     tool = nvim-merge
 
@@ -263,6 +268,9 @@
 [sequence]
     editor = nvim
 
+; [ssh]
+;     variant = "ssh -p 8022 $*"
+
 [status]
     branch = true
     displayCommentPrefix = True  # git comments out its own output for easier copy pasting!
@@ -278,5 +286,6 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
+
 [winUpdater]
 	recentlySeenVersion = 2.23.0.windows.1
