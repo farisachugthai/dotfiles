@@ -2,6 +2,10 @@
 # Vim: set commentstring=#\ %s:
 
 # Options: {{{1
+
+# Globs: {{{2
+--glob-case-insensitive
+
 # -g '!.git/*'
 # -g '!*/.svn'
 # -g '!*/.hg'
@@ -10,42 +14,50 @@
 # -g '!node_modules/*'
 # --glob=!.git/*
 
+# --follow
+
 # Aug 19, 2019: Did you know this was a setting?
---path-separator='/'
+# --path-separator='/'
 
 --hidden
 
+--smart-case
+
+# Limiting output: {{{2
 # don't match super long lines
 --max-columns=300
 
 # How recursive should we go?
---max-depth=8
+# --max-depth=8
 
 # don't match more than 50 lines per files
---max-count=50
+# --max-count=50
 
 # but don't just omit the whole line
 --max-columns-preview
 
 # if you need to debug run --messages on the command line.
 --no-messages
+--no-ignore-messages
 
+# Other: {{{2
 # Jun 04, 2019: Let's make this better for fzf in nvim
 # --vimgrep
 
 --color=ansi
 
---no-column
---no-line-number
+# --no-column
+# --no-line-number
 
 # Don't group matches by each file. If --no-heading is provided in
 # addition to the -H/--with-filename flag, then file paths will be
 # printed as a prefix for every matched line. This is the default
 # mode when not printing to a terminal.
---no-heading
+# --no-heading
 
 # --with-filename
 
+# Auto hybrid regex: {{{2
 # Aug 01, 2019: Dude check this shit out
 
 # When this flag is used, ripgrep will dynamically choose between supported regex
@@ -73,10 +85,9 @@
 # backreferences without explicitly needing to enable them.
 
 # This flag can be disabled with --no-auto-hybrid-regex.
+# --auto-hybrid-regex
 
---auto-hybrid-regex
-
-# Colors: {{{1
+# Colors: {{{2
 # Colors are limited to one of eight choices: red, blue, green, cyan,
 # magenta, yellow, white and black. Styles are limited to nobold,
 # bold, nointense, intense, nounderline or underline.

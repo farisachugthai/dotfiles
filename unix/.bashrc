@@ -207,9 +207,6 @@ fi
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 export NODE_PRESERVE_SYMLINKS=1
 
-pathadd "$HOME/.yarn/bin"
-pathadd "$HOME/.config/yarn/global/node_modules/.bin"
-
 # Fasd: {{{2
 
 fasd_cache="$HOME/.fasd-init-bash"

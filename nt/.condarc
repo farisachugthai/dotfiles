@@ -25,11 +25,25 @@ error_upload_url: ''
 #   sites with more packages until we max out at forge.
 #   Definitely worth noting that bokeh has its own channel though.
 #
+#   Bokeh at the top because start more specific and keep going to more general
+#   sites with more packages until we max out at forge.
+#   Definitely worth noting that bokeh has its own channel though.
+
 channels:
   - defaults
   - bokeh
   - conda-canary
   - conda-forge
+
+# channel_alias (str)
+#   The prepended url location to associate with channel names.
+#
+# channel_alias: https://conda.anaconda.org
+
+# default_channels (sequence: str)
+#   env var string delimiter: ','
+#   The list of channel names and/or urls used for the 'defaults'
+#   multichannel.
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
@@ -125,6 +139,7 @@ restore_free_channel: true
 #   then falls back to repodata.json.  You may want to specify something
 #   else to use an alternate index that has been reduced somehow.
 #
+#
 # repodata_fns:
 #   - current_repodata.json
 # - repodata.json
@@ -140,7 +155,7 @@ restore_free_channel: true
 # repodata_threads (int)
 #   Threads to use when downloading and reading repodata.  When not set,
 #   defaults to None, which uses the default ThreadPoolExecutor behavior.
-
+#
 # repodata_threads: 0
 
 
@@ -312,12 +327,10 @@ channel_priority: disabled
 #   env var string delimiter: '&'
 #   A list of package specs to pin for every environment resolution. This
 #   parameter is in BETA, and its behavior may change in a future release.
-#
 #   pinned_packages: []
 # was the default
 pinned_packages:
   - conda
-
 
 # pip_interop_enabled (bool)
 #   Allow the conda solver to interact with non-conda-installed python
@@ -337,6 +350,13 @@ pip_interop_enabled: true
 #
 # track_features: []
 
+# TODO: what is this option?
+# Aug 20, 2019: Inexplicabily, it's been disabled in conda 4.7.11 so...
+channel_flexibility: disabled
+
+# From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
+# Non-url channels will be interpreted as Anaconda.org usernames
+# (this can be changed by modifying the channel_alias key; see below).
 
 ######################################################
 #   Package Linking and Install-time Configuration   #
@@ -461,8 +481,6 @@ shortcuts: true
 #
 # anaconda_upload:
 
-
-
 # conda_build (map: str)
 #   aliases: conda-build
 #   General configuration parameters for conda-build.
@@ -478,13 +496,13 @@ shortcuts: true
 #   Automatically choose the 'yes' option whenever asked to proceed with a
 #   conda operation, such as when running `conda install`.
 #
-#
 # always_yes:
 
 # auto_activate_base (bool)
 #   Automatically activate the base environment during shell
 #   initialization.
 #
+# Automatically activate the base environment during the initialization.
 # auto_activate_base: true
 
 # changeps1 (bool)
@@ -535,16 +553,15 @@ report_errors: false
 #
 show_channel_urls: true
 
-ssl_verify: true
 # verbosity (int)
 #   aliases: verbose
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.
 # verbosity: 0
 
-
 # unsatisfiable_hints (bool)
 #   A boolean to determine if conda should find conflicting packages in
 #   the case of a failed install.
+#
 # unsatisfiable_hints: true
 
 

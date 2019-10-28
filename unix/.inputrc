@@ -2,15 +2,9 @@
 # Includes all persistant modifications to GNU readline
 # Maintainer: Faris Chugthai
 
-# something got messed up because now tab for completion and up down
-# for history search don't work
-# fzf will still take you far but this isn't okay
-
 # To view currently set options run
 # `bind -v`
-# Kill the wole line regardless of cursor position
-Control-k: kill-whole-line
-set revert-all-at-newline on
+
 # Every binding set -o emacs has that vim doesn't: {{{1
 # As a reminder \e == Alt == Esc + Pause
 #
@@ -28,7 +22,19 @@ set revert-all-at-newline on
 
 # Alt-BS
 "\e\C-h": backward-kill-word
-"\e<": beginning-of-history
+
+# info rluserman: {{{1
+
+"M-p": non-incremental-reverse-search-history
+"M-n": non-incremental-forward-search-history
+
+"\C-q": quoted-insert
+
+# Kill the wole line regardless of cursor position
+Control-k: kill-whole-line
+set revert-all-at-newline on
+# Other: {{{1
+"\e<": beginning-of-historyhttps://youtu.be/bM1SdNnzqm8
 "\e[200~": bracketed-paste-begin
 "\C-]": character-search
 "\e\C-]": character-search-backward
@@ -394,3 +400,5 @@ $if Bash
     Space: magic-space
     "C-SPC": menu-complete
 $endif
+
+# Vim: set fdl=0 fdls:0

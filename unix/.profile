@@ -42,7 +42,7 @@ if [[ -n "$ANDROID_DATA" ]]; then
     pathadd "$_ROOT/libexec/git-core"
     export CFLAGS=" $CFLAGS -I$_ROOT/include "
     export CC='aarch64-linux-android-clang'
-
+    umask 0077
 else
 
     export SHELL=/bin/bash
@@ -97,6 +97,7 @@ export PYTHONUNBUFFERED=1
 # Ruby: {{{1
 # This is gonna need a for loop soon.
 
+pathadd "$HOME/.gem/bin"
 pathadd "$HOME/.gem/ruby/2.5.0/bin"
 pathadd "$HOME/.gem/ruby/2.6.0/bin"
 pathadd "$HOME/.gem/ruby/2.7.0/bin"
@@ -141,7 +142,7 @@ if [[ -n "$(command -v go)" ]]; then
     export GOTMPDIR="/tmp"
 
     pathadd "$GOPATH/bin"
-    pathadd "/usr/local/go/bin"
+    pathadd "$_ROOT/local/go/bin"
 fi
 # Other Environment Variables: {{{1
 
@@ -154,12 +155,11 @@ if [[ -n "$(command -v cheat)" ]];then
 fi
 
 # Set locale if it isn't explicitly stated elsewhere: {{{2
-export LANG=C
+export LANG=C.UTF-8
 export LC_MESSAGES=C.UTF-8              # man i3: Prevents program output translation
 export LC_CTYPE=C.UTF-8                 # the python default
 export LC_IDENTIFICATION=C          # got this from `locale -c language` I don't know if set right
 export LC_COLLATE=C.UTF-8
-export LC_ALL=C.UTF-8
 
 # Idk if this is or isn't a bad idea
 export LDFLAGS="$LDFLAGS -lm"
@@ -174,12 +174,13 @@ export XENVIRONMENT=~/.Xresources
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
-    if [[ -d "/tmp" ]]; then
+    if [[ -s "_ROOT/tmp" ]]; then
         # don't have tmp set to more than one thing dingus
-        export TMP="/var/tmp"
-        export TMPDIR="/var/tmp"
+        export TMP="$_ROOT/var/tmp"
+        export TMPDIR="$_ROOT/var/tmp"
     fi
 fi
+export TEMP="$TMP"
 
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 

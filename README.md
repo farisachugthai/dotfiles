@@ -3,6 +3,8 @@
 A repository that hosts the dotfiles for my Ubuntu workstations and a Termux
 development environment.
 
+## Overview
+
 Code for a Windows 10 laptop is slowly working it's way in, though the
 transition to a typical Windows workflow has been different than Linux.
 
@@ -31,8 +33,6 @@ and [Anaconda](./unix/.condarc) exist.
 
 A configuration for [Tmux](./unix/.tmux.conf) exists as well.
 
-![Termux_Using_Git_Python_Tmux_Vim](./images/Termux_Using_Git_Python_Tmux_Vim.jpg "Termux using Git and Python in Tmux")
-
 These configurations exist primarily for Linux only platforms as there
 are extensively commented files for [Xmodmap](./unix/.Xmodmap),
 [.xbindkeys](./unix/.xbindkeys), [.Xresources](./unix/.Xresources),
@@ -41,6 +41,13 @@ has been made portable to Windows.
 
 In situations where this proved excessively difficult, separate files have been
 included in [nt](nt).
+
+## Contributing
+
+While most people consider dotfiles very personal, I've posted as many as I
+found reasonable with the intention of encouraging some discussion on how
+to solve common problems more seemlessly.
+
 
 ## License
 
