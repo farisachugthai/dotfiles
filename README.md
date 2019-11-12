@@ -23,8 +23,11 @@ programming and conventional Unix terminal workflows.
 Configurations exist for:
 
 * Emacs {in multiple locations}
+ 
 * [ansible](unix/.ansible.cfg)
+
 * A 1000+ line [dircolors](unix/.dircolors)
+
 * [Modifications](unix/.profile) [for](unix/.bashrc) [bash](unix/.bash_logout)
   [are](unix/.bashrc.d/alias.bash) [abundant](unix/.bashrc.d/functions.bash).
 

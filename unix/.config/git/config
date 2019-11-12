@@ -39,9 +39,9 @@
     cl =  clone
     cls= clone --depth 1
     cob = checkout -b
-    d = diff --check
-    ds = diff --staged --check
-    ds2 = diff --stat --staged --check
+    d = diff
+    ds = diff --staged
+    ds2 = diff --stat --staged
     dt = difftool
     f = fetch --all
     fe = fetch
@@ -130,7 +130,6 @@
     ignorestat = true
 
     pager = less -JRKMLieg
-    safecrlf = True
     sshCommand = /usr/bin/ssh
     symlink = true
 

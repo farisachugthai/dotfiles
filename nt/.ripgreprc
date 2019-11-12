@@ -11,15 +11,16 @@
 # --glob=!.git/*
 
 # Aug 19, 2019: Did you know this was a setting?
---path-separator='\'
+#--path-separator='\'
+--smart-case
 
 --hidden
 
 # don't match super long lines
---max-columns=300
+# --max-columns=300
 
 # How recursive should we go?
---max-depth=8
+# --max-depth=8
 
 # don't match more than 50 lines per files
 --max-count=50
@@ -35,14 +36,14 @@
 
 --color=ansi
 
---no-column
---no-line-number
+# --no-column
+# --no-line-number
 
 # Don't group matches by each file. If --no-heading is provided in
 # addition to the -H/--with-filename flag, then file paths will be
 # printed as a prefix for every matched line. This is the default
 # mode when not printing to a terminal.
---no-heading
+# --no-heading
 
 # --with-filename
 
@@ -74,12 +75,12 @@
 
 # This flag can be disabled with --no-auto-hybrid-regex.
 
---auto-hybrid-regex
+# --auto-hybrid-regex
 
 # Windows Specific: {{{1
 
 
---crlf
+# --crlf
 
 --type-add=exe:*.exe
 

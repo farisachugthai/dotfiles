@@ -82,6 +82,8 @@
     whatis = show -s --pretty=´tformat:%h (%s, %ad)´ --date=short
     whois = !sh -c ´git log -i -1 --pretty="format:%an <%ae>"
 
+    url = ls-remote --get-url
+
 [branch]
     autoSetupMerge = true
 
@@ -105,6 +107,7 @@
     verbose
 
 [core]
+    autocrlf = false
 	compression = 5
     editor = nvim-qt
     editor = nvim
@@ -122,12 +125,10 @@
 
     # This is useful on systems where lstat() calls are very slow, such as
     # CIFS/Microsoft Windows.
-
     # False by default.
     ignorestat = true
 
     pager = less -JRKMLieg
-    sshCommand = C:/WINDOWS/System32/OpenSSH/ssh.exe
     symlink = true
 
 [credential]
@@ -169,6 +170,10 @@
     nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
     nvimdiff = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     prompt = false
+
+
+[fetch]
+    prune = true  # if they deleted it on the remote, delete ours too
 
 # [filter]
     # lfs.clean=git-lfs clean -- %f

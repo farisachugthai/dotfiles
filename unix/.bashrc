@@ -182,7 +182,7 @@ export COLORTERM="truecolor"
 # -g only one  search match highlighted
 # -e EOF reached twice? Close automatically.
 # -N always display line nrs
-export PAGER="less -JRKMLigeN" 
+export PAGER="less -JRKMLigeN"
 export LESSHISTSIZE=5000  # default is 100
 
 # Oh shit! --mouse is a bash>5 feature!

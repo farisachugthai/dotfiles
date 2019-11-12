@@ -25,25 +25,16 @@ error_upload_url: ''
 #   sites with more packages until we max out at forge.
 #   Definitely worth noting that bokeh has its own channel though.
 #
-#   Bokeh at the top because start more specific and keep going to more general
-#   sites with more packages until we max out at forge.
-#   Definitely worth noting that bokeh has its own channel though.
-
 channels:
+
   - defaults
   - bokeh
   - conda-canary
   - conda-forge
-
-# channel_alias (str)
-#   The prepended url location to associate with channel names.
-#
-# channel_alias: https://conda.anaconda.org
-
-# default_channels (sequence: str)
-#   env var string delimiter: ','
-#   The list of channel names and/or urls used for the 'defaults'
-#   multichannel.
+  - intel
+  - pytorch
+  - anaconda
+  - bioconda
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
@@ -51,10 +42,11 @@ default_channels:
   - https://repo.anaconda.com/pkgs/pro
   - https://repo.anaconda.com/pkgs/msys2
 
-  # Frustratingly these don't work
-  # - https://repo.anaconda.com/pkgs/r
-  # - https://repo.anaconda.com/pkgs/free
-  # - https://repo.anaconda.com/pkgs/archive
+
+# Frustratingly these don't work
+# - https://repo.anaconda.com/pkgs/r
+# - https://repo.anaconda.com/pkgs/free
+# - https://repo.anaconda.com/pkgs/archive
 
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
@@ -80,8 +72,8 @@ default_channels:
 #   https://anaconda-repo.dev/packages/conda-forge/linux-64/repodata.json,
 #   add an entry 'conda-forge: https://anaconda-repo.dev/packages'.
 #
-custom_channels:
-  pkgs/pro: https://repo.anaconda.com
+# custom_channels:
+#   pkgs/pro: https://repo.anaconda.com
 
 # custom_multichannels (map: list)
 #   A multichannel is a metachannel composed of multiple channels. The two
@@ -140,9 +132,9 @@ restore_free_channel: true
 #   else to use an alternate index that has been reduced somehow.
 #
 #
-# repodata_fns:
-#   - current_repodata.json
-# - repodata.json
+repodata_fns:
+  - current_repodata.json
+  - repodata.json
 
 # use_only_tar_bz2 (NoneType, bool)
 #   A boolean indicating that only .tar.bz2 conda packages should be
@@ -170,7 +162,7 @@ restore_free_channel: true
 #   creating a new named environment, the environment will be placed in
 #   the first writable location.
 envs_dirs:
-  - C:\tools\miniconda3\envs;
+  - C:\tools\miniconda3\envs
 
 # pkgs_dirs (sequence: str)
 #   env var string delimiter: ','
@@ -182,8 +174,8 @@ envs_dirs:
 # Oooo actually can we add one to the base of big envs?
 pkgs_dirs:
   - C:\tools\miniconda3\pkgs
-  - C:\tools\miniconda3\envs\working\pkgs
-  - C:\tools\miniconda3\envs\anaconda\pkgs
+  # - C:\tools\miniconda3\envs\working\pkgs
+  # - C:\tools\miniconda3\envs\anaconda\pkgs
 
 # default_threads (int)
 #   Threads to use by default for parallel operations.  Default is None,
@@ -553,6 +545,7 @@ report_errors: false
 #
 show_channel_urls: true
 
+ssl_verify: true
 # verbosity (int)
 #   aliases: verbose
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.

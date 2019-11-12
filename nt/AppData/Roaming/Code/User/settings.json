@@ -1,0 +1,465 @@
+{
+  "C_Cpp.clang_format_sortIncludes": true,
+  "C_Cpp.default.browse.path": [
+    "C:\\Program Files (x86)\\Windows Kits\\10"
+  ],
+  "C_Cpp.default.cStandard": "c11",
+  "C_Cpp.default.cppStandard": "c++11",
+  "C_Cpp.default.intelliSenseMode": "msvc-x64",
+  "C_Cpp.experimentalFeatures": "Enabled",
+  "C_Cpp.intelliSenseEngine": "Tag Parser",
+  "C_Cpp.intelliSenseEngineFallback": "Enabled",
+  "C_Cpp.updateChannel": "Insiders",
+  "C_Cpp.vcpkg.enabled": false,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.rulers": []
+  },
+  "[jupyter]": {},
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "comments": false,
+      "other": false,
+      "strings": false
+    },
+    "editor.rulers": [
+      80
+    ]
+  },
+  "[plaintext]": {
+    "editor.quickSuggestions": {
+      "comments": false,
+      "other": false,
+      "strings": false
+    },
+    "editor.rulers": [
+      80
+    ]
+  },
+  "[python]": {
+    "editor.rulers": [
+      80
+    ]
+  },
+  "[restructuredtext]": {
+    "editor.quickSuggestions": {
+      "comments": false,
+      "other": false,
+      "strings": false
+    },
+    "editor.rulers": [
+      80
+    ]
+  },
+  "[rust]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.rulers": []
+  },
+  "[yaml]": {
+    "editor.rulers": []
+  },
+  "csharp.suppressHiddenDiagnostics": false,
+  "css.trace.server": "messages",
+  "debug.allowBreakpointsEverywhere": true,
+  "debug.console.fontSize": 18,
+  "debug.console.lineHeight": 1,
+  "debug.console.wordWrap": false,
+  "debug.enableAllHovers": true,
+  "debug.inlineValues": true,
+  "debug.openExplorerOnEnd": true,
+  "debug.showSubSessionsInToolBar": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": true,
+  "docker.attachShellCommand.windowsContainer": "\"C:\\Git\\bin\\bash.exe\" --login -i \"C:\\Program Files\\Docker Toolbox\\start.sh\"",
+  "docker.machineName": "win10",
+  "editor.cursorSmoothCaretAnimation": true,
+  "editor.cursorStyle": "line-thin",
+  "editor.cursorSurroundingLines": 2,
+  "editor.fontFamily": "Source Code Pro, Hack, 'Fira Code'",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 18,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.gotoLocation.multiple": "gotoAndPeek",
+  "editor.insertSpaces": true,
+  "editor.mouseWheelZoom": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.parameterHints.cycle": true,
+  "editor.quickSuggestions": {
+    "comments": false,
+    "other": true,
+    "strings": false
+  },
+  "editor.quickSuggestionsDelay": 100,
+  "editor.renderLineHighlight": "all",
+  "editor.renderWhitespace": "none",
+  "editor.smoothScrolling": true,
+  "editor.snippetSuggestions": "top",
+  "editor.suggest.localityBonus": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on",
+  "editor.wordWrap": "wordWrapColumn",
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.experimental.incrementalSync": true,
+  "eslint.lintTask.enable": true,
+  "extensions.autoCheckUpdates": true,
+  "extensions.autoUpdate": false,
+  "extensions.closeExtensionDetailsOnViewChange": true,
+  "extensions.ignoreRecommendations": true,
+  "extensions.showRecommendationsOnlyOnDemand": true,
+  "files.associations": {
+    "**/*.yml": "ansible",
+    "*.ipy": "python",
+    "*.vim": "viml",
+    "vimrc": "viml",
+    "winrc": "viml"
+  },
+  "files.autoSave": "afterDelay",
+  "files.defaultLanguage": "English",
+  "files.eol": "\n",
+  "files.exclude": {
+    "**/*.egg-info": true,
+    "**/.coverage": true,
+    "**/.eggs": true,
+    "**/.mypy_cache": true,
+    "**/.pytest_cache": true,
+    "**/__pycache__": true,
+    "**/node_modules": true
+  },
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "files.watcherExclude": {
+    "**/__pycache__/**": true
+  },
+  "git.allowForcePush": true,
+  "git.autoStash": true,
+  "git.autofetch": true,
+  "git.defaultCloneDirectory": "%userprofile%\\projects",
+  "git.enableSmartCommit": true,
+  "git.fetchOnPull": true,
+  "git.promptToSaveFilesBeforeCommit": "always",
+  "git.rebaseWhenSync": true,
+  "git.showPushSuccessNotification": true,
+  "git.smartCommitChanges": "tracked",
+  "git.supportCancellation": true,
+  "githd.logView.expressMode": true,
+  "gitlens.advanced.repositorySearchDepth": 2,
+  "gitlens.advanced.similarityThreshold": 50,
+  "gitlens.advanced.telemetry.enabled": false,
+  "gitlens.blame.avatars": false,
+  "gitlens.codeLens.authors.command": "gitlens.diffWithPrevious",
+  "gitlens.codeLens.enabled": false,
+  "gitlens.codeLens.includeSingleLineSymbols": true,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.gitCommands.search.matchAll": true,
+  "gitlens.hovers.annotations.enabled": false,
+  "gitlens.hovers.currentLine.enabled": false,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.hovers.enabled": false,
+  "gitlens.insiders": true,
+  "gitlens.keymap": "alternate",
+  "gitlens.statusbar.reduceFlicker": true,
+  "gitlens.views.compare.avatars": false,
+  "gitlens.views.compare.files.layout": "tree",
+  "gitlens.views.fileHistory.avatars": false,
+  "gitlens.views.lineHistory.avatars": false,
+  "gitlens.views.repositories.autoRefresh": false,
+  "gitlens.views.repositories.avatars": false,
+  "gitlens.views.repositories.branches.layout": "list",
+  "gitlens.views.search.avatars": false,
+  "gitlens.views.search.files.layout": "tree",
+  "gitlens.views.statusFileFormat": "'Status: ' ${status} ${working} : :w${file}",
+  "html.format.indentHandlebars": true,
+  "html.format.indentInnerHtml": true,
+  "html.trace.server": "messages",
+  "javascript.implicitProjectConfig.checkJs": true,
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "json.trace.server": "messages",
+  "markdown.links.openLocation": "beside",
+  "markdown.preview.fontFamily": "'Fira Code', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif",
+  "markdown.preview.fontSize": 18,
+  "markdown.trace": "verbose",
+  "markdownlint.config": {
+    "MD013": false,
+    "MD033": false
+  },
+  "merge-conflict.autoNavigateNextConflict.enabled": true,
+  "npm.enableScriptExplorer": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.path": "latest",
+  "php.suggest.basic": false,
+  "php.validate.enable": false,
+  "powershell.codeFormatting.autoCorrectAliases": true,
+  "powershell.codeFormatting.preset": "Allman",
+  "powershell.codeFormatting.useCorrectCasing": true,
+  "powershell.debugging.createTemporaryIntegratedConsole": true,
+  "powershell.developer.powerShellExeIsWindowsDevBuild": true,
+  "powershell.powerShellExePath": "C:\\pwsh\\7-preview\\pwsh.exe",
+  "powershell.promptToUpdatePowerShell": false,
+  "powershell.scriptAnalysis.settingsPath": "C:\\Users\\faris\\Documents\\WindowsPowershell\\PSScriptAnalyzerSettings.psd1",
+  "python.analysis.cacheFolderPath": "~/AppData/Local/vscode",
+  "python.analysis.cachingLevel": "System",
+  "python.analysis.downloadChannel": "beta",
+  "python.analysis.logLevel": "Warning",
+  "python.autoComplete.addBrackets": true,
+  "python.condaPath": "C:\\tools\\miniconda3\\Scripts\\conda.exe",
+  "python.dataScience.enableGather": true,
+  "python.dataScience.exportWithOutputEnabled": true,
+  "python.dataScience.sendSelectionToInteractiveWindow": true,
+  "python.diagnostics.sourceMapsEnabled": false,
+  "python.disableInstallationCheck": true,
+  "python.experiments.enabled": false,
+  "python.insidersChannel": "off",
+  "python.jediEnabled": false,
+  "python.jediPath": "jedi",
+  "python.linting.enabled": true,
+  "python.linting.flake8Args": [
+    "--config-file",
+    "C:\\Users\\faris\\AppData\\Local\\flake8"
+  ],
+  "python.linting.flake8Enabled": true,
+  "python.linting.maxNumberOfProblems": 25,
+  "python.linting.pydocstyleArgs": [
+    "--exclude",
+    "D105  # docstrings in magic methods"
+  ],
+  "python.linting.pydocstyleEnabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.pythonPath": "C:\\tools\\miniconda3\\envs\\working\\python.exe",
+  "python.terminal.executeInFileDir": true,
+  "python.terminal.launchArgs": [
+    "-m",
+    "IPython"
+  ],
+  "python.testing.nosetestsEnabled": true,
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": true,
+  "python.venvPath": "C:\\tools\\miniconda3\\envs",
+  "python.workspaceSymbols.ctagsPath": "C:\\Users\\faris\\ctags.exe",
+  "python.workspaceSymbols.exclusionPatterns": [
+    "**/site-packages/**",
+    "**.venv**"
+  ],
+  "razor.languageServer.debug": true,
+  "razor.trace": "Messages",
+  "references.preferredLocation": "view",
+  "remote.SSH.allowLocalServerDownload": true,
+  "remote.SSH.configFile": "~/.ssh/config",
+  "remote.SSH.defaultExtensions": [
+    "python"
+  ],
+  "remote.SSH.showLoginTerminal": true,
+  "remote.SSH.useLocalServer": true,
+  "remote.WSL.debug": true,
+  "remote.WSL.fileWatcher.polling": true,
+  "remote.containers.workspaceMountConsistency": "consistent",
+  "restructuredtext.builtDocumentationPath": "${workspaceFolder}/build/html",
+  "restructuredtext.confPath": "${workspaceFolder}/source",
+  "restructuredtext.experimental": true,
+  "restructuredtext.languageServer.disabled": false,
+  "restructuredtext.languageServer.trace.server": "messages",
+  "restructuredtext.linter.run": "onSave",
+  "restructuredtext.preview.fontSize": 18,
+  "restructuredtext.updateDelay": 800,
+  "restructuredtext.updateOnTextChanged": "false",
+  "scm.alwaysShowActions": true,
+  "scm.countBadge": "focused",
+  "scm.defaultViewMode": "tree",
+  "scm.diffDecorations": "gutter",
+  "search.exclude": {
+    "**/.git": true,
+    "**/.venv": true,
+    "**/bower_components": true,
+    "**/node_modules": true
+  },
+  "search.quickOpen.includeSymbols": true,
+  "search.runInExtensionHost": true,
+  "search.showLineNumbers": true,
+  "search.smartCase": true,
+  "search.useGlobalIgnoreFiles": true,
+  "shellcheck.ignoreFileSchemes": [
+    "**.git"
+  ],
+  "shellcheck.useWSL": true,
+  "shellcheck.useWorkspaceRootAsCwd": true,
+  "sqlite.logLevel": "INFO",
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "terminal.external.linuxExec": "kitty",
+  "terminal.external.windowsExec": "pwsh",
+  "terminal.integrated.automationShell.linux": "tmux",
+  "terminal.integrated.automationShell.windows": "C:\\Users\\faris\\AppData\\Local\\hyper\\hyper.exe",
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.experimentalRefreshOnResume": true,
+  "terminal.integrated.experimentalUseTitleEvent": true,
+  "terminal.integrated.fontFamily": "'Fira Code', 'Hack', 'monospace'",
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.fontWeightBold": "normal",
+  "terminal.integrated.rendererType": "dom",
+  "terminal.integrated.shell.linux": "/bin/bash",
+  "terminal.integrated.shell.windows": "C:\\pwsh\\7-preview\\pwsh.exe",
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.locale": "en",
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.tsserver.log": "terse",
+  "typescript.tsserver.trace": "messages",
+  "update.enableWindowsBackgroundUpdates": false,
+  "update.mode": "manual",
+  "vim.camelCaseMotion.enable": true,
+  "vim.changeWordIncludesWhitespace": false,
+  "vim.debug.loggingLevelForConsole": "debug",
+  "vim.easymotion": true,
+  "vim.easymotionMarkerFontFamily": "Hack",
+  "vim.easymotionMarkerFontSize": "18",
+  "vim.enableNeovim": true,
+  "vim.foldfix": true,
+  "vim.handleKeys": {
+    "<C-k>": true
+  },
+  "vim.highlightedyank.enable": true,
+  "vim.history": 10000,
+  "vim.hlsearch": true,
+  "vim.leader": "<Space>",
+  "vim.neovimPath": "C:\\Neovim\\bin\\nvim.exe",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "Z",
+        "Z"
+      ],
+      "commands": [
+        ":wq"
+      ]
+    },
+    {
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
+    },
+    {
+      "after": [
+        "g",
+        "j"
+      ],
+      "before": [
+        "j"
+      ]
+    },
+    {
+      "after": [
+        "g",
+        "k"
+      ],
+      "before": [
+        "k"
+      ]
+    },
+    {
+      "after": [
+        "\"",
+        "+",
+        "p"
+      ],
+      "before": [
+        "p"
+      ]
+    },
+    {
+      "after": [
+        "\"",
+        "+",
+        "P"
+      ],
+      "before": [
+        "P"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "S"
+      ],
+      "commands": [
+        "workbench.action.files.save"
+      ]
+    }
+  ],
+  "vim.replaceWithRegister": true,
+  "vim.sneak": true,
+  "vim.sneakReplacesF": true,
+  "vim.sneakUseIgnorecaseAndSmartcase": true,
+  "vim.statusBarColors.insert": "#83a598",
+  "vim.statusBarColors.visual": [
+    "#1d2021",
+    "#fe8019"
+  ],
+  "vim.surround": true,
+  "vim.useSystemClipboard": true,
+  "vim.visualstar": true,
+  "vim.whichwrap": "<,>,[,],h,l,<BS>",
+  "vsicons.dontShowNewVersionMessage": true,
+  "vsicons.presets.angular": true,
+  "vsicons.presets.foldersAllDefaultIcon": true,
+  "vsicons.presets.jsOfficial": true,
+  "vsicons.presets.jsonOfficial": true,
+  "vsicons.presets.tsOfficial": true,
+  "vsicons.projectDetection.autoReload": true,
+  "window.zoomLevel": -1,
+  "workbench.activityBar.visible": true,
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f"
+  },
+  "workbench.colorTheme": "Gruvbox Material Hard Dark",
+  "workbench.commandPalette.history": 500,
+  "workbench.commandPalette.preserveInput": true,
+  "workbench.editor.closeOnFileDelete": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.revealIfOpen": true,
+  "workbench.enableExperiments": false,
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.list.openMode": "doubleClick",
+  "workbench.settings.editor": "json",
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "workbench.settings.openDefaultKeybindings": true,
+  "workbench.settings.openDefaultSettings": true,
+  "workbench.settings.useSplitJSON": true,
+  "workbench.sideBar.location": "right",
+  "workbench.statusBar.visible": true,
+  "workbench.tree.renderIndentGuides": "onHover",
+  "yaml.completion": true,
+  "yaml.format.enable": true,
+  "yaml.trace.server": "messages",
+  "csharp.unitTestDebuggingOptions": {},
+  "omnisharp.maxProjectResults": 25,
+  "omnisharp.minFindSymbolsFilterLength": 2,
+  "razor.devmode": true,
+  "terminal.integrated.detectLocale": "on",
+  "powershell.powerShellAdditionalExePaths": [
+    "C:\\pwsh\\7-preview\\pwsh.exe"
+  ],
+  "powershell.powerShellDefaultVersion": "Powershell Core 7 (x64)"
+}

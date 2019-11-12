@@ -95,13 +95,7 @@ if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
 export PYTHONUNBUFFERED=1
 
 # Ruby: {{{1
-# This is gonna need a for loop soon.
-
 pathadd "$HOME/.gem/bin"
-pathadd "$HOME/.gem/ruby/2.5.0/bin"
-pathadd "$HOME/.gem/ruby/2.6.0/bin"
-pathadd "$HOME/.gem/ruby/2.7.0/bin"
-
 if [[ -n "$(command -v rvm)" ]]; then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
     pathadd "$HOME/.rvm/bin"

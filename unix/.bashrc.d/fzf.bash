@@ -35,7 +35,7 @@ if [[ -n "$(command -v rg)" ]]; then  # Rg {{{1
 
     # export FZF_DEFAULT_COMMAND="rg --follow --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
-    
+
 
     # <Ctrl-t>: {{{2
     # Might be implemented as __fzf_select__
@@ -112,7 +112,7 @@ fi
 # More additions: {{{1
 
 if [[ -n "$(command -v bat)" ]]; then
-    export BAT_PAGER="less -JRKMLige" 
+    export BAT_PAGER="less -JRKMLige"
     export BAT_THEME="base16"
     export BAT_STYLE="full"
 fi
