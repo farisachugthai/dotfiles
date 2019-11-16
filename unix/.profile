@@ -38,8 +38,6 @@ if [[ -n "$ANDROID_DATA" ]]; then
     export SHELL="$PREFIX/bin/bash"
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share:$XDG_DATA_HOME/mime"
-    pathadd "$_ROOT/libexec"
-    pathadd "$_ROOT/libexec/git-core"
     export CFLAGS=" $CFLAGS -I$_ROOT/include "
     export CC='aarch64-linux-android-clang'
     umask 0077
@@ -61,6 +59,8 @@ if [[ -n "$ANDROID_DATA" ]]; then
     export DATADIR="$PREFIX/share"
     export DATAROOTDIR="$PREFIX/share"
     export INCLUDEDIR="$PREFIX/include"
+    # cscope
+    export INCDIR="$PREFIX/include"
 else
     export SYSCONFDIR="/etc"
     export BINDIR="/usr/bin"
@@ -138,6 +138,17 @@ if [[ -n "$(command -v go)" ]]; then
     pathadd "$GOPATH/bin"
     pathadd "$_ROOT/local/go/bin"
 fi
+
+# Locale: {{{1
+export LANG=C.UTF-8
+export LC_CTYPE=C.UTF-8                 # the python default
+export LC_IDENTIFICATION=C          	# got this from `locale -c language` I don't know if set right
+export LC_COLLATE=C.UTF-8
+export LC_MESSAGES=C.UTF-8              # man i3: Prevents program output translation
+export LC_NUMERIC="C.UTF-8"
+export LC_MONETARY="C.UTF-8"
+export LC_TIME="C.UTF-8"
+
 # Other Environment Variables: {{{1
 
 # colored GCC warnings and errors
@@ -147,13 +158,6 @@ if [[ -n "$(command -v cheat)" ]];then
     export CHEATCOLORS=true
     export CHEATPATH="$HOME/python/tutorials:$HOME/python/site-packages:$CHEATPATH"
 fi
-
-# Set locale if it isn't explicitly stated elsewhere: {{{2
-export LANG=C.UTF-8
-export LC_MESSAGES=C.UTF-8              # man i3: Prevents program output translation
-export LC_CTYPE=C.UTF-8                 # the python default
-export LC_IDENTIFICATION=C          # got this from `locale -c language` I don't know if set right
-export LC_COLLATE=C.UTF-8
 
 # Idk if this is or isn't a bad idea
 export LDFLAGS="$LDFLAGS -lm"

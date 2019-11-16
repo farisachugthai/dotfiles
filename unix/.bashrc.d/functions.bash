@@ -130,9 +130,9 @@ nman(){
 # lk: {{{1 show symbolic links using fd or fallback to grep
 lk() {
     if [[ -n "$(fd)" ]]; then
-        ls -Fo --color=always -A "$@" | fd --type symlink --maxdepth 1 --hidden --color always
+        ls -Fo -A "$@" | fd --type symlink --maxdepth 1
     else
-        ls -Fo --color=always "$@" | grep ^l
+        ls -Fo "$@" | grep ^l
     fi
 }
 

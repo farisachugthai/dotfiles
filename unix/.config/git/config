@@ -8,7 +8,7 @@
     ignoreErrors
 
 [apply]
-    # ignoreWhitespace = False  # don't fuck up the whitespace
+    ignoreWhitespace = no  # don't fuck up the whitespace
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
@@ -46,7 +46,7 @@
     f = fetch --all
     fe = fetch
     l = log
-    lo = log --graph --decorate --abbrev-commit --branches --all --date=short --oneline
+    lo = log --graph --decorate --abbrev-commit --branches --date=short --oneline
     ls = ls-tree -rl --abbrev master
     m = merge --no-ff
     ma = merge --abort
@@ -108,6 +108,7 @@
     verbose
 
 [core]
+    autocrlf = false
 	compression = 5
     editor = nvim-qt
     editor = nvim
@@ -136,7 +137,6 @@
 [credential]
     store = approve
     helper = cache --timeout=86400
-    helper = manager
     modalPrompt = True
     username = farisachugthai
 
@@ -174,6 +174,9 @@
     nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
     nvimdiff = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     prompt = false
+
+[fetch]
+    prune = true
 
 # [filter]
     # lfs.clean=git-lfs clean -- %f
@@ -223,11 +226,28 @@
 [log]
     abbrevCommit = true
     showSignature = true
+	format =
 
 [merge]
     autoStash
     conflictstyle = diff3
     diffstat = true
+
+       ; merge.directoryRenames
+       ;     Whether Git detects directory renames, affecting what happens at
+       ;     merge time to new files added to a directory on one side of history
+       ;     when that directory was renamed on the other side of history. If
+       ;     merge.directoryRenames is set to "false", directory rename
+       ;     detection is disabled, meaning that such new files will be left
+       ;     behind in the old directory. If set to "true", directory rename
+       ;     detection is enabled, meaning that such new files will be moved
+       ;     into the new directory. If set to "conflict", a conflict will be
+       ;     reported for such paths. If merge.renames is false,
+       ;     merge.directoryRenames is ignored and treated as false. Defaults to
+       ;     "conflict".
+
+    directoryRenames = True
+    log = 3
     mergestyle = diff3
     prompt = false
     renormalize
@@ -250,6 +270,8 @@
     # local and remote are the 2 paths we're trying to merge, and we can
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
+    prompt = False
+    writeToTemp = True
 
 [pull]
     progress
@@ -260,9 +282,24 @@
 
 [push]
     stat
-    default = simple
+    recurseSubmodules = check
+    followTags = True
+       ; push.default
+       ;     Defines the action git push should take if no refspec is explicitly
+       ;     given. Different values are well-suited for specific workflows; for
+       ;     instance, in a purely central workflow (i.e. the fetch source is
+       ;     equal to the push destination), upstream is probably what you want.
+       ;     Possible values are:
+
+       ;     ...
+
+       ;     ·   current - push the current branch to update a branch with the
+       ;         same name on the receiving end. Works in both central and
+       ;         non-central workflows.
+    default = current
 
 [rebase]
+    # autoSquash = True
     autoStash = True
     stat = True
     missingCommitsCheck = "warn"
@@ -280,6 +317,12 @@
     showStash = True
     showUntrackedFiles = all
     submoduleSummary = true
+
+[submodule]
+    alternateErrorStrategy = info
+
+[tar]
+    umask = 0022
 
 [url "git://github.com"]
     insteadOf = g:
