@@ -13,7 +13,8 @@ new-window
 split-window -d -h
 
 # Create third window (and name it) running Midnight Commander
-new-window -d -n MdnghtCmdr mc
+# new-window -d -n MdnghtCmdr mc
+new-window -d -n ranger ranger
 
 # Create fourth window (and name it) running htop
 new-window -d -n htop htop

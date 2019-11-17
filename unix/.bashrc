@@ -183,7 +183,7 @@ export COLORTERM="truecolor"
 # -e EOF reached twice? Close automatically.
 # -N always display line nrs
 # -S set wrap or "squeeze" long lines
-export PAGER="less -JRKMLigeNS"
+export PAGER="less -JRKMLige"
 export LESSHISTSIZE=5000  # default is 100
 
 # Oh shit! --mouse is a bash>5 feature!

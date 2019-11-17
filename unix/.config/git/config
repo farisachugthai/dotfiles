@@ -5,7 +5,7 @@
     name = farisachugthai
 
 [add]
-    ignoreErrors
+    ignoreErrors = true
 
 [apply]
     ignoreWhitespace = no  # don't fuck up the whitespace
@@ -85,6 +85,11 @@
     whatis = show -s --pretty=´tformat:%h (%s, %ad)´ --date=short
     whois = !sh -c ´git log -i -1 --pretty="format:%an <%ae>"
 
+    # i hate typing for any reason
+    g = grep
+    h = help
+
+
 [branch]
     autosetupmerge = true
 
@@ -105,7 +110,7 @@
     clean = never  # git shows files it's gonna wipe with git clean in columns and i hate it
 
 [commit]
-    verbose
+    verbose = true
 
 [core]
     autocrlf = false
@@ -176,6 +181,7 @@
     prompt = false
 
 [fetch]
+    recurseSubmodules = true
     prune = true
 
 # [filter]
@@ -230,7 +236,9 @@
 
 [merge]
     autoStash
+    branchdesc = True
     conflictstyle = diff3
+    defaultToUpstream = True
     diffstat = true
 
        ; merge.directoryRenames
@@ -247,6 +255,7 @@
        ;     "conflict".
 
     directoryRenames = True
+    ff = true
     log = 3
     mergestyle = diff3
     prompt = false
@@ -273,11 +282,21 @@
     prompt = False
     writeToTemp = True
 
+
+; pretty.<name>
+;     Alias for a --pretty= format string, as specified in git-log(1).
+;     Any aliases defined here can be used just as the built-in pretty
+;     formats could. For example, running git config pretty.changelog
+;     "format:* %H %s" would cause the invocation git log
+;     --pretty=changelog to be equivalent to running git log
+;     "--pretty=format:* %H %s". Note that an alias with the same name as
+;     a built-in format will be silently ignored.
+# well thats cool as shit
+
 [pull]
     progress
-    rebase
+    rebase = merges
     renames = true
-    renormalize
     stat
 
 [push]
