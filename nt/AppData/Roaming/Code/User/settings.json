@@ -1,16 +1,30 @@
 {
+  "C_Cpp.clang_format_path": "C:\\tools\\vs\\2019\\Community\\VC\\Tools\\Llvm\\bin\\clang-format.exe",
   "C_Cpp.clang_format_sortIncludes": true,
+  "C_Cpp.commentContinuationPatterns": [
+    "/**"
+  ],
+  "C_Cpp.default.browse.limitSymbolsToIncludedHeaders": false,
   "C_Cpp.default.browse.path": [
     "C:\\Program Files (x86)\\Windows Kits\\10"
   ],
   "C_Cpp.default.cStandard": "c11",
+  "C_Cpp.default.compileCommands": null,
+  "C_Cpp.default.compilerPath": null,
   "C_Cpp.default.cppStandard": "c++11",
+  "C_Cpp.default.enableConfigurationSquiggles": true,
+  "C_Cpp.default.includePath": null,
   "C_Cpp.default.intelliSenseMode": "msvc-x64",
+  "C_Cpp.default.systemIncludePath": null,
+  "C_Cpp.default.windowsSdkVersion": null,
   "C_Cpp.experimentalFeatures": "Enabled",
-  "C_Cpp.intelliSenseEngine": "Tag Parser",
+  "C_Cpp.intelliSenseEngine": "Default",
   "C_Cpp.intelliSenseEngineFallback": "Enabled",
+  "C_Cpp.loggingLevel": "Warning",
+  "C_Cpp.suggestSnippets": true,
   "C_Cpp.updateChannel": "Insiders",
-  "C_Cpp.vcpkg.enabled": false,
+  "C_Cpp.workspaceParsingPriority": "low",
+  "C_Cpp.workspaceSymbols": "All",
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.rulers": []
@@ -37,6 +51,7 @@
     ]
   },
   "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
     "editor.rulers": [
       80
     ]
@@ -74,6 +89,9 @@
   "diffEditor.renderSideBySide": true,
   "docker.attachShellCommand.windowsContainer": "\"C:\\Git\\bin\\bash.exe\" --login -i \"C:\\Program Files\\Docker Toolbox\\start.sh\"",
   "docker.machineName": "win10",
+  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.codeActionsOnSave": {},
+  "editor.codeActionsOnSaveTimeout": 750,
   "editor.cursorSmoothCaretAnimation": true,
   "editor.cursorStyle": "line-thin",
   "editor.cursorSurroundingLines": 2,
@@ -90,7 +108,7 @@
   "editor.quickSuggestions": {
     "comments": false,
     "other": true,
-    "strings": false
+    "strings": true
   },
   "editor.quickSuggestionsDelay": 100,
   "editor.renderLineHighlight": "all",
@@ -99,8 +117,11 @@
   "editor.snippetSuggestions": "top",
   "editor.suggest.localityBonus": true,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.suggestFontSize": 0,
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
+  "editor.tokenColorCustomizations": {},
+  "editor.wordSeparators": ".",
   "editor.wordWrap": "wordWrapColumn",
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": true,
@@ -181,6 +202,7 @@
   "javascript.implicitProjectConfig.checkJs": true,
   "javascript.referencesCodeLens.enabled": true,
   "javascript.suggest.completeFunctionCalls": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "json.trace.server": "messages",
   "markdown.links.openLocation": "beside",
   "markdown.preview.fontFamily": "'Fira Code', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif",
@@ -195,6 +217,8 @@
   "omnisharp.enableEditorConfigSupport": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
   "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.maxProjectResults": 25,
+  "omnisharp.minFindSymbolsFilterLength": 2,
   "omnisharp.path": "latest",
   "php.suggest.basic": false,
   "php.validate.enable": false,
@@ -203,20 +227,22 @@
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.debugging.createTemporaryIntegratedConsole": true,
   "powershell.developer.powerShellExeIsWindowsDevBuild": true,
+  "powershell.powerShellAdditionalExePaths": [
+    "C:\\pwsh\\7-preview\\pwsh.exe"
+  ],
+  "powershell.powerShellDefaultVersion": "Powershell Core 7 (x64)",
   "powershell.powerShellExePath": "C:\\pwsh\\7-preview\\pwsh.exe",
   "powershell.promptToUpdatePowerShell": false,
   "powershell.scriptAnalysis.settingsPath": "C:\\Users\\faris\\Documents\\WindowsPowershell\\PSScriptAnalyzerSettings.psd1",
   "python.analysis.cacheFolderPath": "~/AppData/Local/vscode",
-  "python.analysis.cachingLevel": "System",
-  "python.analysis.downloadChannel": "beta",
+  "python.analysis.cachingLevel": "Library",
   "python.analysis.logLevel": "Warning",
   "python.autoComplete.addBrackets": true,
   "python.condaPath": "C:\\tools\\miniconda3\\Scripts\\conda.exe",
   "python.dataScience.enableGather": true,
   "python.dataScience.exportWithOutputEnabled": true,
   "python.dataScience.sendSelectionToInteractiveWindow": true,
-  "python.diagnostics.sourceMapsEnabled": false,
-  "python.disableInstallationCheck": true,
+  "python.diagnostics.sourceMapsEnabled": true,
   "python.experiments.enabled": false,
   "python.insidersChannel": "off",
   "python.jediEnabled": false,
@@ -243,12 +269,16 @@
   "python.testing.nosetestsEnabled": true,
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": true,
+  "python.venvFolders": [
+    "~/.local/share/virtualenvs"
+  ],
   "python.venvPath": "C:\\tools\\miniconda3\\envs",
   "python.workspaceSymbols.ctagsPath": "C:\\Users\\faris\\ctags.exe",
   "python.workspaceSymbols.exclusionPatterns": [
     "**/site-packages/**",
     "**.venv**"
   ],
+  "razor.devmode": true,
   "razor.languageServer.debug": true,
   "razor.trace": "Messages",
   "references.preferredLocation": "view",
@@ -300,6 +330,7 @@
   "terminal.integrated.automationShell.windows": "C:\\Users\\faris\\AppData\\Local\\hyper\\hyper.exe",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.detectLocale": "on",
   "terminal.integrated.experimentalRefreshOnResume": true,
   "terminal.integrated.experimentalUseTitleEvent": true,
   "terminal.integrated.fontFamily": "'Fira Code', 'Hack', 'monospace'",
@@ -315,7 +346,7 @@
   "typescript.tsserver.log": "terse",
   "typescript.tsserver.trace": "messages",
   "update.enableWindowsBackgroundUpdates": false,
-  "update.mode": "manual",
+  "update.mode": "start",
   "vim.camelCaseMotion.enable": true,
   "vim.changeWordIncludesWhitespace": false,
   "vim.debug.loggingLevelForConsole": "debug",
@@ -430,8 +461,8 @@
   "workbench.activityBar.visible": true,
   "workbench.colorCustomizations": {
     "statusBar.background": "#005f5f",
-    "statusBar.noFolderBackground": "#005f5f",
-    "statusBar.debuggingBackground": "#005f5f"
+    "statusBar.debuggingBackground": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f"
   },
   "workbench.colorTheme": "Gruvbox Material Hard Dark",
   "workbench.commandPalette.history": 500,
@@ -439,7 +470,14 @@
   "workbench.editor.closeOnFileDelete": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.revealIfOpen": true,
+  "workbench.editor.splitSizing": "split",
+  "workbench.editor.tabSizing": "shrink",
   "workbench.enableExperiments": false,
+  "workbench.experimental.editorAssociations": [
+    {
+      "rst": "nvim"
+    }
+  ],
   "workbench.iconTheme": "vscode-icons",
   "workbench.list.openMode": "doubleClick",
   "workbench.settings.editor": "json",
@@ -452,14 +490,5 @@
   "workbench.tree.renderIndentGuides": "onHover",
   "yaml.completion": true,
   "yaml.format.enable": true,
-  "yaml.trace.server": "messages",
-  "csharp.unitTestDebuggingOptions": {},
-  "omnisharp.maxProjectResults": 25,
-  "omnisharp.minFindSymbolsFilterLength": 2,
-  "razor.devmode": true,
-  "terminal.integrated.detectLocale": "on",
-  "powershell.powerShellAdditionalExePaths": [
-    "C:\\pwsh\\7-preview\\pwsh.exe"
-  ],
-  "powershell.powerShellDefaultVersion": "Powershell Core 7 (x64)"
+  "yaml.trace.server": "messages"
 }

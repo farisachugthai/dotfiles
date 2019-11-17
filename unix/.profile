@@ -67,6 +67,8 @@ else
     export DATADIR="/usr/local/share"
     export DATAROOTDIR="/usr/share"
     export INCLUDEDIR="/usr/include"
+    export INCDIR="/usr/include"
+    export INCLUDEDIRS="/usr/include:/usr/local/include"
 fi
 
 # Pkgconfig: {{{2
@@ -205,5 +207,9 @@ export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
 pathadd "$_ROOT/local/bin"
 
 # Source the bashrc last.
+
+# oh one last thing. why isn't this showing up???
+
+shopt -s hostcomplete
 # shellcheck source=/home/faris/.bashrc
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi

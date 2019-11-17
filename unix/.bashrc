@@ -65,6 +65,8 @@ fi
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
 [[ -x lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
+# how did this happen twice?
+# if [[ -x lesspipe.sh ]]; then export LESSOPEN="|lesspipe.sh %s"; fi
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
@@ -189,7 +191,6 @@ export LESSHISTSIZE=5000  # default is 100
 # Oh shit! --mouse is a bash>5 feature!
 if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
 
-if [[ -x lesspipe.sh ]]; then export LESSOPEN="|lesspipe.sh %s"; fi
 
 # JavaScript: {{{2
 

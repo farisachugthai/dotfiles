@@ -34,7 +34,7 @@
 Control-k: kill-whole-line
 set revert-all-at-newline on
 # Other: {{{1
-"\e<": beginning-of-historyhttps://youtu.be/bM1SdNnzqm8
+"\e<": beginning-of-history
 "\e[200~": bracketed-paste-begin
 "\C-]": character-search
 "\e\C-]": character-search-backward
@@ -107,6 +107,12 @@ set revert-all-at-newline on
 "\C-w": vi-unix-word-rubout
 "\C-y": yank
 
+# Pyreadline: {{{1
+
+# Use up down keys in a sensible manner and complete what i already typed
+"\e[B": history-search-forward
+"\e[A": history-search-backward
+
 # Binds: {{{1
 # To a shocking extent termux has nothing set up
 
@@ -126,7 +132,7 @@ set revert-all-at-newline on
 # Yeah definitely make sure all of these work though...
 $if mode = vi
 
-"\e\C-j": set emacs-editing-mode
+"\e\C-j": emacs-editing-mode
 
 set keymap vi-insert
 "jj": vi-movement-mode
@@ -153,7 +159,7 @@ $else
 # bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
 # bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 
-"\e\C-j": vi-movement-mode
+"\e\C-j": vi-editing-mode
 
 $endif
 
@@ -232,7 +238,9 @@ set enable-keypad on
 # 8 bit clean
 set input-meta on
 set output-meta on
-set convert-meta off
+
+# YO! don't do this we don't need fucking umlauts i need teh ALT key
+# set convert-meta off
 
 set mark-symlinked-directories on
 
@@ -357,7 +365,7 @@ set history-size 10000
 "C-V":                paste-from-clipboard
 # C-q:                reload-lua-state
 # C-z:                undo
-"M-h":                show-rl-help
+# "M-h":                show-rl-help
 # M-C-c:              copy-line-to-clipboard
 # C-c:                ctrl-c
 # M-a:                "..\\"
@@ -400,5 +408,3 @@ $if Bash
     Space: magic-space
     "C-SPC": menu-complete
 $endif
-
-# Vim: set fdl=0 fdls:0

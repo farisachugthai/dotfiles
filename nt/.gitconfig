@@ -225,6 +225,8 @@
 [log]
     abbrevCommit = true
     showSignature = true
+    # default log format. why not i guess
+    format = '%h %ad | %s%d [%an]'
 
 [merge]
     autoStash
