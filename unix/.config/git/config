@@ -5,10 +5,11 @@
     name = farisachugthai
 
 [add]
-    ignoreErrors = true
+    ignoreErrors = True
 
 [apply]
-    ignoreWhitespace = no  # don't fuck up the whitespace
+    # ignoreWhitespace = no  # don't fuck up the whitespace
+    ignoreWhitespace = change
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
@@ -88,38 +89,41 @@
     # i hate typing for any reason
     g = grep
     h = help
+    url = ls-remote --get-url
 
+[blame]
+    coloring = highlightRecent
 
 [branch]
-    autosetupmerge = true
+    autosetupmerge = True
 
 [checkout]
     # Jun 01, 2019: Automatically follow remote branches withe same name
     defaultRemote = origin
 
 [clean]
-    requireForce = false
+    requireForce = False
 
 [cola]
-    spellcheck = true
+    spellcheck = True
     tabwidth = 4
-    expandtab = true
-    boldheaders = true
+    expandtab = True
+    boldheaders = True
 
 [column]
     clean = never  # git shows files it's gonna wipe with git clean in columns and i hate it
 
 [commit]
-    verbose = true
+    verbose = True
 
 [core]
-    autocrlf = false
+    autocrlf = False
 	compression = 5
     editor = nvim-qt
     editor = nvim
     eol = lf
     excludesfile = "$HOME/.config/git/ignore"
-    fscache = true
+    fscache = True
 
     # If true, Git will avoid using lstat() calls to detect if files have
     # changed by setting the "assume-unchanged" bit for those tracked files
@@ -133,15 +137,21 @@
     # CIFS/Microsoft Windows.
 
     # False by default.
-    ignorestat = true
+    ignorestat = True
 
+    # cmder and less aren't getting along
+    # paging = False
+    pager = bat
     pager = less -JRKMLieg
-    sshCommand = /usr/bin/ssh
-    symlink = true
+    # sshCommand = /usr/bin/ssh
+    symlink = True
+    untrackedCache = True
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 
 [credential]
     store = approve
-    helper = cache --timeout=86400
+    ; helper = cache --timeout=86400
+    helper = manager
     modalPrompt = True
     username = farisachugthai
 
@@ -174,15 +184,22 @@
     # unified ?
     word-diff = color
     wsErrorHighlight = context
+    # wsErrorHighlight = all
 
 [difftool]
+    cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
     nvimdiff = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     prompt = false
 
+[feature]
+    manyFiles = True
+    experimental = True
+
 [fetch]
-    recurseSubmodules = true
+    negotiationAlgorithm = skipping
     prune = true
+    recurseSubmodules = true
 
 # [filter]
     # lfs.clean=git-lfs clean -- %f
@@ -194,21 +211,23 @@
     auto = 3000   # the default is 6700 but that sounds really high
 
 [grep]
-    lineNumber = true
-    extendedRegexp = true
+    fallbackToNoIndex = True
+    lineNumber = True
+    extendedRegexp = True
 
 [gui]
+    cmd = nvim -d $LOCAL $REMOTE
 	diffcontext = 1
     editor = nvim-qt.exe
     editor = nvim
     encoding = utf-8
-	fontui = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-	fontdiff = -family Hack -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontui = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
 	matchtrackingbranch = true
     newbranchtemplate = nt
 	pruneduringfetch = true
     tabsize = 4
-    trustexitcode = true
+    trustexitcode = false
     warndetachedcommit = true
 
 [grep]
@@ -216,9 +235,12 @@
     extendedRegexp = true
 
 [help]
-    autocorrect = 1
+    autocorrect = 5
     format = man
     format = html
+
+[index]
+    version = 4
 
 ; [include]
 ;     path = ~/.config/git/config
@@ -226,13 +248,21 @@
 
 [html]
     sslbackend=openssl
-    format = man
-    format = html
 
 [log]
     abbrevCommit = true
     showSignature = true
-	format =
+    # default log format. why not i guess
+    format = '%h %ad | %s%d [%an]'
+    # cross your finger that neovim just starts auto highlighting
+    graphColors=#e3a84e,#ea6962,#7daea3
+
+[man]
+    viewer = bat,less,nvim,cat
+
+# lets see if this works
+[man.nvim]
+    cmd = -c':tabe' -c':Man '
 
 [merge]
     autoStash
@@ -265,6 +295,7 @@
     strategy = recursive
     # strategy-option = resolve
     strategy-option = patience
+    # strategy-option--diff-algorithm = --set
     summary = true
     tool = nvim-merge
 
@@ -294,10 +325,11 @@
 # well thats cool as shit
 
 [pull]
-    progress
+    progress = True
     rebase = merges
-    renames = true
-    stat
+    renames = True
+    # renormalize
+    stat = True
 
 [push]
     stat
@@ -330,12 +362,12 @@
 ;     variant = "ssh -p 8022 $*"
 
 [status]
-    branch = true
+    branch = True
     displayCommentPrefix = True  # git comments out its own output for easier copy pasting!
     renames = copy
     showStash = True
     showUntrackedFiles = all
-    submoduleSummary = true
+    submoduleSummary = True
 
 [submodule]
     alternateErrorStrategy = info
@@ -353,3 +385,5 @@
 
 ; [winUpdater]
 ; 	recentlySeenVersion = 2.23.0.windows.1
+;
+; Vim: et:sws=4:ts=4:sw=4:

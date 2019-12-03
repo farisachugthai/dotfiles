@@ -1,7 +1,7 @@
 # dircolors
 # The amalgation of different resources I've found
 # By: Faris Chugthai
-# 01/06/19
+# Dec 02, 2019
 
 # LS_COLORS: {{{1
 
@@ -40,39 +40,59 @@
 # with this program.  If not, see <http://www.perlfoundation.org/artistic_license_1_0>.
 
 # :core: {{{1
+#
 # Below are the color init strings for the basic file types. A color init
 # string consists of one or more of the following numeric codes:
+#
 # Attribute codes:
 # 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
+#
 # Text color codes:
 # 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+#
 # Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+
+RESET 0 # reset to "normal" color
+
+NORMAL                38;5;254
 #NORMAL 00 # no color code at all
 #FILE 00 # regular file: use no color at all
 
-
-# a foreword by dustin kirkland: {{{2
+DIR                   38;5;30
 # DIR 38;5;5 # directory
+
 # LINK 38;5;37 # symbolic link. (If you set this to 'target' instead of a
- # numerical value, the color is as for the file pointed to.)
+# numerical value, the color is as for the file pointed to.)
+LINK target
+
 # MULTIHARDLINK 00 # regular file with more than one link
 # FIFO 40;33 # pipe
 # SOCK 01;35 # socket
 # DOOR 01;35 # door
 # BLK 40;33;01 # block device driver
 # CHR 40;33;01 # character device driver
-# ORPHAN 40;31;01 # symlink to nonexistent file, or non-stat'able file
+ORPHAN 40;31;01 # symlink to nonexistent file, or non-stat'able file
+
 # SETUID 37;41 # file that is setuid (u+s)
 # SETGID 30;43 # file that is setgid (g+s)
 # CAPABILITY 30;41 # file with capability
 # STICKY_OTHER_WRITABLE 3;28 # dir that is sticky and other-writable (+t,o+w)
+# Wasn't this one
+# Actually it was!
+
+##########
+# If everything in WSL looks horrible change this value!
+##########
+OTHER_WRITABLE        38;5;30;4
+
+
 # OTHER_WRITABLE 34;42 # dir that is other-writable (o+w) and not sticky
 # STICKY 37;44 # dir with the sticky bit set (+t) and not other-writable
 
 # This is for files with execute permission:
 # can't do this on WSL it engulfs everything
-# EXEC 38;5;202
+EXEC 00
 
 # List any file extensions like '.gz' or '.tar' that you would like ls
 # to colorize below. Put the extension, a space, and the color init string.
@@ -193,28 +213,23 @@
 .xspf 00;36
 
 # Trapdoor: {{{2
-# RESET 0 # reset to "normal" color
-# BLK                   38;5;68
-# CAPABILITY            38;5;17
-# CHR                   38;5;113;1
-# DIR                   38;5;30
-# DOOR                  38;5;127
+BLK                   38;5;68
+CAPABILITY            38;5;17
+CHR                   38;5;113;1
+DOOR                  38;5;127
 # EXEC                  38;5;208;1
-# FIFO                  38;5;126
+FIFO                  38;5;126
 # FILE                  0
-# LINK                  target
-# MULTIHARDLINK         38;5;222;1
+MULTIHARDLINK         38;5;222;1
 # "NORMAL don't reset the bold attribute -
 # https://github.com/trapd00r/LS_COLORS/issues/11
-#NORMAL                38;5;254
 # NORMAL                0
 # ORPHAN                48;5;196;38;5;232;1
-# OTHER_WRITABLE        38;5;220;1
 # SETGID                48;5;3;38;5;0
 # SETUID                38;5;220;1;3;100;1
 # SOCK                  38;5;197
-# STICKY                38;5;86;48;5;234
-# STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
+STICKY                38;5;86;48;5;234
+STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 
 # *LS_COLORS 48;5;89;38;5;197;1;3;4;7 # :-)
 
@@ -235,8 +250,10 @@
 *NOTICE               38;5;220;1
 *CHANGES              38;5;220;1
 .log                  38;5;190;3
+
 # plain-text {{{2
 .txt                  38;5;253
+
 # markup {{{2
 .etx                  38;5;184
 .info                 38;5;184

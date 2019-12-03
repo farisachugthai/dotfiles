@@ -83,6 +83,11 @@ export EDITOR="$VISUAL"
 
 # Builds: {{{1
 
+# Shellcheck
+if [[ -n "$(command -v shellcheck)" ]]; then
+  export SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
+fi
+
 if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
 
 test "$(command -v luarocks)" && eval "$(luarocks path --bin)"
@@ -185,14 +190,36 @@ export COLORTERM="truecolor"
 # -e EOF reached twice? Close automatically.
 # -N always display line nrs
 # -S set wrap or "squeeze" long lines
-export PAGER="less -JRKMLige"
+# -F: Quit automatically if one screen
+export PAGER="less -JRKMLigeF"
 export LESSHISTSIZE=5000  # default is 100
 
 # Oh shit! --mouse is a bash>5 feature!
 if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
 
+if [[ -n "$(command -v bat)" ]]; then
+    export BAT_PAGER="less -JRKMLige"
+    export BAT_THEME="base16"
+    export BAT_STYLE="full"
+  # TODO: This doesn't work for me
+  # export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export MANROFFOPT="-c"
+  if [[ -d "$HOME/faris/AppData/Roaming" ]]; then
+    export BATCONFIGFILE="$HOME/faris/AppData/Roaming/bat/config"
+  fi
+fi
 
-# JavaScript: {{{2
+# Thank byobu for these ones. Man pages now look pretty awesome
+export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
+export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
+export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
+export LESS_TERMCAP_me=$(printf '\e[0m')           # turn off all appearance modes (mb, md, so, us)
+export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
+export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
+export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
+export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
+
+# JavaScript: {{{1
 
 # Export nvm if the directory exists
 if [[ -d "$HOME/.nvm" ]]; then
@@ -209,7 +236,7 @@ fi
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 export NODE_PRESERVE_SYMLINKS=1
 
-# Fasd: {{{2
+# Fasd: {{{1
 
 fasd_cache="$HOME/.fasd-init-bash"
 if [[ -n "$(command -v fasd)" ]]; then
@@ -220,7 +247,7 @@ if [[ -n "$(command -v fasd)" ]]; then
     unset fasd_cache
 fi
 
-# Sourced files: {{{2
+# Sourced files: {{{1
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
 test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion" && echo 'sourced completion'
@@ -270,3 +297,5 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
 
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

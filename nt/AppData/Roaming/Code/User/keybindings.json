@@ -1,0 +1,134 @@
+// Place your key bindings in this file to override the defaults
+[
+  {
+    "key": "ctrl+shift+; shift+alt+;",
+    "command": "vim.showQuickpickCmdLine"
+  },
+  {
+    "key": "ctrl+shift+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.closeWindow",
+    "when": "!editorIsOpen && !multipleEditorGroups"
+  },
+  {
+    "key": "ctrl+shift+w",
+    "command": "-workbench.action.closeWindow"
+  },
+  {
+    "key": "f5",
+    "command": "restructuredtext.preview.refresh",
+    "when": "editorLangId == 'restructuredtext'"
+  },
+  {
+    "key": "alt+f4",
+    "command": "workbench.action.closeAllEditors"
+  },
+  {
+    "key": "Meta+Shift+h",
+    "command": "workbench.action.terminal.newWithCwd",
+    "args": {
+      "cwd": "${fileDirname}"
+    }
+  },
+  {
+    "key": "Ctrl+K Ctrl+W",
+    "command": "-workbench.action.closeAllEditors"
+  },
+  {
+    "key": "]+q",
+    "command": "editor.action.marker.nextInFiles",
+    "when": "editorFocus && !editorReadonly"
+  },
+  {
+    "key": "F8",
+    "command": "-editor.action.marker.nextInFiles",
+    "when": "editorFocus && !editorReadonly"
+  },
+  {
+    "key": "[+q",
+    "command": "editor.action.marker.prevInFiles",
+    "when": "editorFocus && !editorReadonly"
+  },
+  {
+    "key": "Shift+F8",
+    "command": "-editor.action.marker.prevInFiles",
+    "when": "editorFocus && !editorReadonly"
+  },
+  {
+    "key": "Ctrl+Shift+M",
+    "command": "-workbench.actions.view.problems"
+  },
+  {
+    "key": "Ctrl+j",
+    "command": "selectNextSuggestion",
+    "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+  },
+  {
+    "key": "Ctrl+k",
+    "command": "selectPrevSuggestion",
+    "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+  },
+  {
+    "key": "Ctrl+f",
+    "command": "-workbench.action.terminal.focusFindWidget",
+    "when": "-workbench.action.terminal.focusFindWidget"
+  },
+  {
+    "key": "Ctrl+j",
+    "command": "workbench.action.quickOpenNavigateNext",
+    "when": "inQuickOpen"
+  },
+  {
+    "key": "Ctrl+k",
+    "command": "workbench.action.quickOpenNavigatePrevious",
+    "when": "inQuickOpen"
+  },
+  {
+    "key": "Ctrl+h",
+    "command": "workbench.action.focusLeftGroup"
+  },
+  {
+    "key": "Ctrl+j",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "!suggestWidgetMultipleSuggestions && !inQuickOpen"
+  },
+  {
+    "key": "Ctrl+k",
+    "command": "workbench.action.focusBelowGroup",
+    "when": "!suggestWidgetMultipleSuggestions && !inQuickOpen"
+  },
+  {
+    "key": "Ctrl+l",
+    "command": "workbench.action.focusRightGroup"
+  },
+  {
+    "key": "Ctrl+W s",
+    "command": "workbench.action.splitEditorDown"
+  },
+  {
+    "key": "Ctrl+W c",
+    "command": "workbench.action.closeActiveEditor"
+  },
+  {
+    "key": "Ctrl+W o",
+    "command": "workbench.action.closeEditorsInOtherGroups"
+  },
+  {
+    "key": "Ctrl+W v",
+    "command": "workbench.action.splitEditorRight"
+  },
+  {
+    "key": "Ctrl+[",
+    "command": "editor.action.marker.prev",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "Ctrl+]",
+    "command": "editor.action.marker.next",
+    "when": "editorTextFocus && !editorReadonly"
+  }
+]

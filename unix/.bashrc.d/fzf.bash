@@ -109,14 +109,8 @@ fi
 
 # More additions: {{{1
 
-if [[ -n "$(command -v bat)" ]]; then
-    export BAT_PAGER="less -JRKMLige"
-    export BAT_THEME="base16"
-    export BAT_STYLE="full"
-fi
 # TODO:
 # termux doesnt have xclip or xsel
-
 command -v tree > /dev/null && export FZF_ALT_C_OPTS+="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "
 
 # Enhance path completion: {{{2

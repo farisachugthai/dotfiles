@@ -10,12 +10,17 @@
   ],
   "C_Cpp.default.cStandard": "c11",
   "C_Cpp.default.compileCommands": null,
-  "C_Cpp.default.compilerPath": null,
+  "C_Cpp.default.compilerPath": "C:",
   "C_Cpp.default.cppStandard": "c++11",
   "C_Cpp.default.enableConfigurationSquiggles": true,
-  "C_Cpp.default.includePath": null,
+  "C_Cpp.default.includePath": [
+    "C:/tools/vs/2019/Community/VC/Tools/MSVC/14.23.28105/include",
+    "C:/tools/vs/2019/Community/VC/Tools/MSVC/14.23.28105/atlmfc/include"
+  ],
   "C_Cpp.default.intelliSenseMode": "msvc-x64",
-  "C_Cpp.default.systemIncludePath": null,
+  "C_Cpp.default.systemIncludePath": [
+    "C:\\tools\\vs\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.23.28105\\include"
+  ],
   "C_Cpp.default.windowsSdkVersion": null,
   "C_Cpp.experimentalFeatures": "Enabled",
   "C_Cpp.intelliSenseEngine": "Default",
@@ -73,14 +78,21 @@
     "editor.rulers": []
   },
   "[yaml]": {
-    "editor.rulers": []
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.rulers": [],
+    "editor.autoIndent": false
   },
   "csharp.suppressHiddenDiagnostics": false,
   "css.trace.server": "messages",
   "debug.allowBreakpointsEverywhere": true,
-  "debug.console.fontSize": 18,
-  "debug.console.lineHeight": 1,
-  "debug.console.wordWrap": false,
+  "debug.console.fontSize": 14,
+  "debug.console.wordWrap": true,
   "debug.enableAllHovers": true,
   "debug.inlineValues": true,
   "debug.openExplorerOnEnd": true,
@@ -114,14 +126,13 @@
   "editor.renderLineHighlight": "all",
   "editor.renderWhitespace": "none",
   "editor.smoothScrolling": true,
-  "editor.snippetSuggestions": "top",
+  "editor.snippetSuggestions": "inline",
   "editor.suggest.localityBonus": true,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.suggestFontSize": 0,
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
   "editor.tokenColorCustomizations": {},
-  "editor.wordSeparators": ".",
   "editor.wordWrap": "wordWrapColumn",
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": true,
@@ -170,32 +181,6 @@
   "git.smartCommitChanges": "tracked",
   "git.supportCancellation": true,
   "githd.logView.expressMode": true,
-  "gitlens.advanced.repositorySearchDepth": 2,
-  "gitlens.advanced.similarityThreshold": 50,
-  "gitlens.advanced.telemetry.enabled": false,
-  "gitlens.blame.avatars": false,
-  "gitlens.codeLens.authors.command": "gitlens.diffWithPrevious",
-  "gitlens.codeLens.enabled": false,
-  "gitlens.codeLens.includeSingleLineSymbols": true,
-  "gitlens.currentLine.enabled": false,
-  "gitlens.gitCommands.search.matchAll": true,
-  "gitlens.hovers.annotations.enabled": false,
-  "gitlens.hovers.currentLine.enabled": false,
-  "gitlens.hovers.currentLine.over": "line",
-  "gitlens.hovers.enabled": false,
-  "gitlens.insiders": true,
-  "gitlens.keymap": "alternate",
-  "gitlens.statusbar.reduceFlicker": true,
-  "gitlens.views.compare.avatars": false,
-  "gitlens.views.compare.files.layout": "tree",
-  "gitlens.views.fileHistory.avatars": false,
-  "gitlens.views.lineHistory.avatars": false,
-  "gitlens.views.repositories.autoRefresh": false,
-  "gitlens.views.repositories.avatars": false,
-  "gitlens.views.repositories.branches.layout": "list",
-  "gitlens.views.search.avatars": false,
-  "gitlens.views.search.files.layout": "tree",
-  "gitlens.views.statusFileFormat": "'Status: ' ${status} ${working} : :w${file}",
   "html.format.indentHandlebars": true,
   "html.format.indentInnerHtml": true,
   "html.trace.server": "messages",
@@ -227,24 +212,80 @@
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.debugging.createTemporaryIntegratedConsole": true,
   "powershell.developer.powerShellExeIsWindowsDevBuild": true,
-  "powershell.powerShellAdditionalExePaths": [
-    "C:\\pwsh\\7-preview\\pwsh.exe"
-  ],
   "powershell.powerShellDefaultVersion": "Powershell Core 7 (x64)",
   "powershell.powerShellExePath": "C:\\pwsh\\7-preview\\pwsh.exe",
   "powershell.promptToUpdatePowerShell": false,
   "powershell.scriptAnalysis.settingsPath": "C:\\Users\\faris\\Documents\\WindowsPowershell\\PSScriptAnalyzerSettings.psd1",
-  "python.analysis.cacheFolderPath": "~/AppData/Local/vscode",
-  "python.analysis.cachingLevel": "Library",
+  "python.analysis.cacheFolderPath": "C:/Users/faris/AppData/Roaming/Code/Cache",
+  "python.analysis.cachingLevel": "Default",
   "python.analysis.logLevel": "Warning",
   "python.autoComplete.addBrackets": true,
   "python.condaPath": "C:\\tools\\miniconda3\\Scripts\\conda.exe",
   "python.dataScience.enableGather": true,
   "python.dataScience.exportWithOutputEnabled": true,
+  "python.dataScience.gatherRules": [
+    {
+      "doesNotModify": [
+        "OBJECT"
+      ],
+      "functionName": "head",
+      "objectName": "df"
+    },
+    {
+      "doesNotModify": [
+        "OBJECT"
+      ],
+      "functionName": "describe",
+      "objectName": "df"
+    },
+    {
+      "doesNotModify": [
+        "OBJECT"
+      ],
+      "functionName": "tail",
+      "objectName": "df"
+    },
+    {
+      "doesNotModify": [
+        "ARGUMENTS"
+      ],
+      "functionName": "print"
+    },
+    {
+      "doesNotModify": [
+        "ARGUMENTS"
+      ],
+      "functionName": "KMeans"
+    },
+    {
+      "doesNotModify": [
+        "ARGUMENTS"
+      ],
+      "functionName": "scatter"
+    },
+    {
+      "doesNotModify": [
+        "ARGUMENTS"
+      ],
+      "functionName": "fit"
+    },
+    {
+      "doesNotModify": [
+        "ARGUMENTS"
+      ],
+      "functionName": "sum"
+    },
+    {
+      "doesNotModify": [
+        "ARGUMENTS"
+      ],
+      "functionName": "len"
+    }
+  ],
   "python.dataScience.sendSelectionToInteractiveWindow": true,
   "python.diagnostics.sourceMapsEnabled": true,
   "python.experiments.enabled": false,
-  "python.insidersChannel": "off",
+  "python.insidersChannel": "daily",
   "python.jediEnabled": false,
   "python.jediPath": "jedi",
   "python.linting.enabled": true,
@@ -270,17 +311,14 @@
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": true,
   "python.venvFolders": [
+    "C:\\tools\\miniconda3\\envs",
     "~/.local/share/virtualenvs"
   ],
-  "python.venvPath": "C:\\tools\\miniconda3\\envs",
   "python.workspaceSymbols.ctagsPath": "C:\\Users\\faris\\ctags.exe",
   "python.workspaceSymbols.exclusionPatterns": [
     "**/site-packages/**",
     "**.venv**"
   ],
-  "razor.devmode": true,
-  "razor.languageServer.debug": true,
-  "razor.trace": "Messages",
   "references.preferredLocation": "view",
   "remote.SSH.allowLocalServerDownload": true,
   "remote.SSH.configFile": "~/.ssh/config",
@@ -291,7 +329,7 @@
   "remote.SSH.useLocalServer": true,
   "remote.WSL.debug": true,
   "remote.WSL.fileWatcher.polling": true,
-  "remote.containers.workspaceMountConsistency": "consistent",
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "restructuredtext.builtDocumentationPath": "${workspaceFolder}/build/html",
   "restructuredtext.confPath": "${workspaceFolder}/source",
   "restructuredtext.experimental": true,
@@ -312,7 +350,6 @@
     "**/node_modules": true
   },
   "search.quickOpen.includeSymbols": true,
-  "search.runInExtensionHost": true,
   "search.showLineNumbers": true,
   "search.smartCase": true,
   "search.useGlobalIgnoreFiles": true,
@@ -321,7 +358,6 @@
   ],
   "shellcheck.useWSL": true,
   "shellcheck.useWorkspaceRootAsCwd": true,
-  "sqlite.logLevel": "INFO",
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "terminal.external.linuxExec": "kitty",
@@ -338,13 +374,7 @@
   "terminal.integrated.fontWeightBold": "normal",
   "terminal.integrated.rendererType": "dom",
   "terminal.integrated.shell.linux": "/bin/bash",
-  "terminal.integrated.shell.windows": "C:\\pwsh\\7-preview\\pwsh.exe",
-  "typescript.implementationsCodeLens.enabled": true,
-  "typescript.locale": "en",
-  "typescript.referencesCodeLens.enabled": true,
-  "typescript.suggest.completeFunctionCalls": true,
-  "typescript.tsserver.log": "terse",
-  "typescript.tsserver.trace": "messages",
+  "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
   "update.enableWindowsBackgroundUpdates": false,
   "update.mode": "start",
   "vim.camelCaseMotion.enable": true,
@@ -459,11 +489,6 @@
   "vsicons.projectDetection.autoReload": true,
   "window.zoomLevel": -1,
   "workbench.activityBar.visible": true,
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#005f5f",
-    "statusBar.debuggingBackground": "#005f5f",
-    "statusBar.noFolderBackground": "#005f5f"
-  },
   "workbench.colorTheme": "Gruvbox Material Hard Dark",
   "workbench.commandPalette.history": 500,
   "workbench.commandPalette.preserveInput": true,
@@ -479,6 +504,11 @@
     }
   ],
   "workbench.iconTheme": "vscode-icons",
+  "workbench.tips.enabled": false,
+  "workbench.editor.restoreViewState": true,
+  "workbench.panel.defaultLocation": "bottom",
+  "powershell.codeFormatting.openBraceOnSameLine": false,
+  "workbench.list.keyboardNavigation": "highlight",
   "workbench.list.openMode": "doubleClick",
   "workbench.settings.editor": "json",
   "workbench.settings.enableNaturalLanguageSearch": false,
@@ -490,5 +520,32 @@
   "workbench.tree.renderIndentGuides": "onHover",
   "yaml.completion": true,
   "yaml.format.enable": true,
-  "yaml.trace.server": "messages"
+  "yaml.trace.server": "messages",
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f"
+  },
+  "[go]": {
+    "editor.insertSpaces": false
+  },
+  "vim.startofline": false,
+  "python.dataScience.codeRegularExpression": "^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])",
+  "python.dataScience.markdownRegularExpression": "^(#\\s*%%\\s*\\[markdown\\]|#\\s*\\<markdowncell\\>)",
+  "vim.easymotionJumpToAnywhereRegex": "\\b[A-Za-z0-9]|[A-Za-z0-9]\\b|_.|#.|[a-z][A-Z]",
+  "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf;",
+  "vim.overrideCopy": true,
+  "debug.console.fontFamily": "Hack",
+  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+  "debug.showBreakpointsInOverviewRuler": true,
+  "debug.toolBarLocation": "docked",
+  "python.dataScience.debugCodeLenses": "python.datascience.debugcontinue, python.datascience.debugstop, python.datascience.debugstepover",
+  "python.dataScience.codeLenses": "python.datascience.runcell,  python.datascience.runallcellsabove, python.datascience.debugcell",
+  "python.pipenvPath": "python -m pipenv",
+  "yaml.schemas": {
+    "file:///c%3A/Users/faris/.vscode/extensions/docsmsft.docs-yaml-0.2.4/schemas/toc.schema.json": "/toc\\.yml/i"
+  },
+  "editor.maxTokenizationLineLength": 2000,
+  "vim.iskeyword": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+  "pyright.useLibraryCodeForTypes": true
 }

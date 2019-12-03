@@ -27,10 +27,10 @@ error_upload_url: ''
 #
 channels:
 
+  - conda-forge
   - defaults
   - bokeh
   - conda-canary
-  - conda-forge
   - intel
   - pytorch
   - anaconda
