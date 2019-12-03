@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Maintainer: Faris Chugthai
 
 # Functions to make the day a little easier
@@ -158,7 +158,7 @@ setup_ssh() {
 
 filetree() {  # {{{1
     if [[ -n "$1" ]]; then
-        ls -R "$1" | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'   
+        ls -R "$1" | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
     else
         ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
     fi

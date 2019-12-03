@@ -8,8 +8,8 @@
     ignoreErrors = True
 
 [apply]
-    # ignoreWhitespace = no  # don't fuck up the whitespace
     ignoreWhitespace = change
+    whitespace = fix
 
 [alias]
     # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
@@ -118,6 +118,8 @@
 
 [core]
     autocrlf = False
+    autocrlf = false
+    askPass = sshpass
 	compression = 5
     editor = nvim-qt
     editor = nvim
@@ -143,16 +145,15 @@
     # paging = False
     pager = bat
     pager = less -JRKMLieg
-    # sshCommand = /usr/bin/ssh
+    sshcommand = ssh
     symlink = True
     untrackedCache = True
-	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 
 [credential]
-    store = approve
-    ; helper = cache --timeout=86400
     helper = manager
+    helper = cache --timeout=86400
     modalPrompt = True
+    store = approve
     username = farisachugthai
 
 [credential "https://www.github.com"]
@@ -168,18 +169,17 @@
     autoRefreshIndex
     context = 0
     dirstat = changes,files,10,cumulative
+    # color-moved-ws?
+    find-renames = true
     indentHeuristic = true
     interHunkContext = 0
     mnemonicPrefix = true
-    # color-moved-ws?
-    find-renames = true
     prompt = false
     # detect copied files as well as renames. affects merge and status.renames
     renames = copy
     strategy-option = resolve
     # Idk if this is a new option but man am I glad to have stumbled upon it
     suppressBlankEmpty = true
-    suppressBlankLines
     tool = nvimdiff
     # unified ?
     word-diff = color
@@ -323,6 +323,9 @@
 ;     "--pretty=format:* %H %s". Note that an alias with the same name as
 ;     a built-in format will be silently ignored.
 # well thats cool as shit
+
+[protocol]
+    ssh = True
 
 [pull]
     progress = True

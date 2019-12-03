@@ -145,7 +145,7 @@ alias gt='git tag --list'
 # Other: {{{1
 
 # enable color support of ls and also add handy aliases
-if [[ -x /usr/bin/dircolors ]]; then
+if [[ -x "$PREFIX/dircolors" ]]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls -F --color=auto'
     alias dir='dir --color=auto'
@@ -159,7 +159,10 @@ fi
 alias redo='fc -s'
 alias r='fc -s'
 
-alias spacemacs='emacs -l ~/.spacemacs'
+if [[ -n "$(command -v emacs)" ]]; then
+    alias spacemacs='emacs -l ~/.spacemacs'
+fi
+
 if [[ -n "$(command -v bat)" ]]; then
     alias cat=bat
 fi

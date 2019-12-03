@@ -73,8 +73,8 @@ bind-key    -T copy-mode-vi    M-m               send-keys -X back-to-indentatio
 bind-key    -T copy-mode-vi    M-r               send-keys -X middle-line
 bind-key    -T copy-mode-vi    M-v               send-keys -X page-up
 bind-key    -T copy-mode-vi    M-w               send-keys -X copy-selection-and-cancel
-bind-key    -T copy-mode-vi    M-{               send-keys -X previous-paragraph
-bind-key    -T copy-mode-vi    M-}               send-keys -X next-paragraph
+# bind-key    -T copy-mode-vi    M-{               send-keys -X previous-paragraph
+# bind-key    -T copy-mode-vi    M-}               send-keys -X next-paragraph
 bind-key    -T copy-mode-vi    M-Up              send-keys -X halfpage-up
 bind-key    -T copy-mode-vi    M-Down            send-keys -X halfpage-down
 bind-key    -T copy-mode-vi    C-Up              send-keys -X scroll-up
