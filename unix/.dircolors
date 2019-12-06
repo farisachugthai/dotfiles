@@ -52,46 +52,10 @@
 # Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 
-RESET 0 # reset to "normal" color
-
-NORMAL                38;5;254
-#NORMAL 00 # no color code at all
-#FILE 00 # regular file: use no color at all
-
-DIR                   38;5;30
-# DIR 38;5;5 # directory
-
-# LINK 38;5;37 # symbolic link. (If you set this to 'target' instead of a
-# numerical value, the color is as for the file pointed to.)
-LINK target
-
-# MULTIHARDLINK 00 # regular file with more than one link
-# FIFO 40;33 # pipe
-# SOCK 01;35 # socket
-# DOOR 01;35 # door
-# BLK 40;33;01 # block device driver
-# CHR 40;33;01 # character device driver
-ORPHAN 40;31;01 # symlink to nonexistent file, or non-stat'able file
-
-# SETUID 37;41 # file that is setuid (u+s)
-# SETGID 30;43 # file that is setgid (g+s)
-# CAPABILITY 30;41 # file with capability
-# STICKY_OTHER_WRITABLE 3;28 # dir that is sticky and other-writable (+t,o+w)
-# Wasn't this one
-# Actually it was!
-
-##########
-# If everything in WSL looks horrible change this value!
-##########
-OTHER_WRITABLE        38;5;30;4
-
-
-# OTHER_WRITABLE 34;42 # dir that is other-writable (o+w) and not sticky
-# STICKY 37;44 # dir with the sticky bit set (+t) and not other-writable
-
-# This is for files with execute permission:
-# can't do this on WSL it engulfs everything
-EXEC 00
+# OTHER_WRITABLE 34;42
+# # dir that is other-writable (o+w) and not sticky
+# STICKY 37;44
+# dir with the sticky bit set (+t) and not other-writable
 
 # List any file extensions like '.gz' or '.tar' that you would like ls
 # to colorize below. Put the extension, a space, and the color init string.
@@ -212,16 +176,26 @@ EXEC 00
 .xspf 00;36
 
 # Trapdoor: {{{2
+
+RESET 0 # reset to "normal" color
+NORMAL                38;5;254
+##########
+# If everything in WSL looks horrible change this value!
+##########
+OTHER_WRITABLE        38;5;30;4
 BLK                   38;5;68
 CAPABILITY            38;5;17
 CHR                   38;5;113;1
+DIR                   38;5;30
 DOOR                  38;5;127
 # EXEC                  38;5;208;1
+
+# This is for files with execute permission:
+# can't do this on WSL it engulfs everything
+EXEC 00
 FIFO                  38;5;126
-# FILE                  0
 MULTIHARDLINK         38;5;222;1
 # "NORMAL don't reset the bold attribute -
-RESET 0 # reset to "normal" color
 BLK                   38;5;68
 CAPABILITY            38;5;17
 CHR                   38;5;113;1
@@ -243,9 +217,9 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 *LS_COLORS 48;5;89;38;5;197;1;3;4;7 # :-)
 
 # documents: {{{1
-*README               38;5;220;1;4
-*README.rst           38;5;220;1;4
-*README.md            38;5;220;1;4
+.README                38;5;29;1;4
+.README.rst           38;5;29;1;4
+.README.md             38;5;29;1;4
 *MANIFEST.in          38;5;222;1;4
 *LICENSE*             38;5;220;4
 *COPYING              38;5;220;
@@ -826,8 +800,8 @@ Pipfile*             38;5;222;3
   # Sega
 .sms                  38;5;213
 
-# unsorted {{{1
-#
+# Unsorted: TODO {{{1
+
 #   Portable Object Translation for GNU Gettext
 .pot                  38;5;7
 #   CAD files for printed circuit boards
@@ -838,13 +812,13 @@ Pipfile*             38;5;222;3
 .pod                  38;5;7
 #   GIMP brush
 .gbr                  38;5;7
-# printer spool file
+# printer spool
 .spl                  38;5;7
-#   GIMP project file
+#   GIMP project
 .scm                  38;5;7
-# RStudio project file
+# RStudio project
 .Rproj                38;5;11
-#   Nokia Symbian OS files
+#   Nokia Symbian OS
 .sis                  38;5;7
 
 .1p                   38;5;7
@@ -877,9 +851,9 @@ Pipfile*             38;5;222;3
 .vcard                38;5;7
 .vcf                  38;5;7
 .xln                  38;5;7
-#   AppCode files
+#   AppCode
 .iml                  38;5;166
-#   Xcode files
+#   Xcode
 .xcconfig             1
 .entitlements         1
 .strings              1
@@ -948,15 +922,21 @@ TERM screen.rxvt
 TERM st
 TERM st-256color
 TERM terminator
+TERM tmux
 TERM tmux*
 TERM tmux-256color
 TERM vt100
 TERM xterm*
+TERM xterm
 TERM xterm-16color
 TERM xterm-256color
+TERM xterm+256color
 TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
 TERM xterm-kitty
+TERM xterm-new
+TERM xterm-termite
+TERM xterm-termite
 # }}}
 # vim: ft=dircolors:fdm=marker:et:sw=2:
