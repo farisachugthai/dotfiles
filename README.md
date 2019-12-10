@@ -49,16 +49,53 @@ included in [nt](nt).
 
 The $PAGER is highly customized. From my bashrc.
 
--J: displays a status column at the left edge of the screen
--R: is what we need for ansi colors
--K: exit less in response to Ctrl-C
--M: Verbose prompt
--L: Line numbers. Open a man page and hit 'G' to see what you're getting into
--i: Ignore case. Works similarly to how modern programs handle smart case!
---mouse: Take a guess
--g: only one  search match highlighted
--e: EOF reached twice? Close automatically.
--N: always display line numbers. Actually annoying.
+```bash
+
+# -J: displays a status column at the left edge of the screen
+# -R: is what we need for ansi colors
+# -K: exit less in response to Ctrl-C
+# -M: Verbose prompt
+# -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
+# -i: Ignore case. Works similarly to how modern programs handle smart case!
+# --mouse: Take a guess
+# -g: only one  search match highlighted
+# -e EOF reached twice? Close automatically.
+# -S set wrap or "squeeze" long lines
+# -F: Quit automatically if one screen
+
+export PAGER="less -JRKMLigeF"
+export LESSHISTSIZE=5000  # default is 100
+
+# Oh shit! --mouse is a bash>5 feature!
+if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
+
+# Thank byobu for these ones. Man pages now look pretty awesome
+export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
+export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
+export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
+export LESS_TERMCAP_me=$(printf '\e[0m')           # turn off all appearance modes (mb, md, so, us)
+export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
+export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
+export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
+export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
+
+if [[ -n "$(command -v bat)" ]]; then
+    export BAT_PAGER="less -JRKMLige"
+    export BAT_THEME="base16"
+    export BAT_STYLE="full"
+  # TODO: This doesn't work for me
+  # export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export MANROFFOPT="-c"
+  if [[ -d "$HOME/faris/AppData/Roaming" ]]; then
+    export BATCONFIGFILE="$HOME/faris/AppData/Roaming/bat/config"
+  fi
+fi
+
+```
+
+This is just a simple example of how extensive some frequently used options
+have gotten.
+
 
 ## Contributing
 

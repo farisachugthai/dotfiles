@@ -18,7 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-unbind-key -n C-a
 set -g prefix ^A
 set -g prefix2 F12
 bind a send-prefix
@@ -87,6 +86,3 @@ bind-key -n S-F12 source $BYOBU_PREFIX/share/byobu/keybindings/f-keys.tmux \; so
 unbind-key -n M-F12
 unbind-key -n C-S-F12
 unbind-key -n M-IC
-unbind-key -n C-a
-
-# Vim: set ft=tmux:

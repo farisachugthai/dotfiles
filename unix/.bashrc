@@ -178,19 +178,6 @@ shopt -s lastpipe
 export COLORTERM="truecolor"
 
 # Less And $PAGER --- Checkout .lesskey for more {{{1
-
-# -J displays a status column at the left edge of the screen
-# -R is what we need for ansi colors
-# -K: exit less in response to Ctrl-C
-# -M: Verbose prompt
-# -L: Line numbers. Open a man page and hit 'G' to see what you're getting into
-# -i: Ignore case. Works similarly to how modern programs handle smart case!
-# --mouse: Take a guess
-# -g only one  search match highlighted
-# -e EOF reached twice? Close automatically.
-# -N always display line nrs
-# -S set wrap or "squeeze" long lines
-# -F: Quit automatically if one screen
 export PAGER="less -JRKMLigeF"
 export LESSHISTSIZE=5000  # default is 100
 
