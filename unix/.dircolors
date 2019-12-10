@@ -57,6 +57,47 @@
 # STICKY 37;44
 # dir with the sticky bit set (+t) and not other-writable
 
+# LINK 38;5;37 # symbolic link. (If you set this to 'target' instead of a
+# numerical value, the color is as for the file pointed to.)
+# MULTIHARDLINK 00 # regular file with more than one link
+# FIFO 40;33 # pipe
+# SOCK 01;35 # socket
+# DOOR 01;35 # door
+# BLK 40;33;01 # block device driver
+# CHR 40;33;01 # character device driver
+# SETUID 37;41 # file that is setuid (u+s)
+# SETGID 30;43 # file that is setgid (g+s)
+# CAPABILITY 30;41 # file with capability
+# STICKY_OTHER_WRITABLE 3;28 # dir that is sticky and other-writable (+t,o+w)
+# Wasn't this one
+# Actually it was!
+
+##########
+# If everything in WSL looks horrible change this value!
+##########
+OTHER_WRITABLE        38;5;30;4
+
+
+# OTHER_WRITABLE 34;42 # dir that is other-writable (o+w) and not sticky
+# STICKY 37;44 # dir with the sticky bit set (+t) and not other-writable
+
+# This is for files with execute permission:
+# can't do this on WSL it engulfs everything
+EXEC 00
+
+RESET 0 # reset to "normal" color
+NORMAL                38;5;254
+DIR                   38;5;30
+
+##########
+# If everything in WSL looks horrible change this value!
+##########
+OTHER_WRITABLE        38;5;30;4
+
+
+# OTHER_WRITABLE 34;42 # dir that is other-writable (o+w) and not sticky
+# STICKY 37;44 # dir with the sticky bit set (+t) and not other-writable
+
 # List any file extensions like '.gz' or '.tar' that you would like ls
 # to colorize below. Put the extension, a space, and the color init string.
 # (and any comments you want to add after a '#')
@@ -182,6 +223,7 @@ NORMAL                38;5;254
 ##########
 # If everything in WSL looks horrible change this value!
 ##########
+
 OTHER_WRITABLE        38;5;30;4
 BLK                   38;5;68
 CAPABILITY            38;5;17
@@ -189,23 +231,24 @@ CHR                   38;5;113;1
 DIR                   38;5;30
 DOOR                  38;5;127
 # EXEC                  38;5;208;1
-
 # This is for files with execute permission:
 # can't do this on WSL it engulfs everything
-EXEC 00
+
 FIFO                  38;5;126
 MULTIHARDLINK         38;5;222;1
 # "NORMAL don't reset the bold attribute -
+RESET 0 # reset to "normal" color
 BLK                   38;5;68
 CAPABILITY            38;5;17
 CHR                   38;5;113;1
 DIR                   38;5;30
+DIR                   38;5;30
 DOOR                  38;5;127
 EXEC                  38;5;208;1
 FIFO                  38;5;126
-FILE                  0
 LINK                  target
 MULTIHARDLINK         38;5;222;1
+NORMAL                38;5;254
 ORPHAN                48;5;196;38;5;232;1
 OTHER_WRITABLE        38;5;220;1
 SETGID                48;5;3;38;5;0

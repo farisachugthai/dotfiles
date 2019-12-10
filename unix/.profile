@@ -77,7 +77,7 @@ if [[ -d "$_ROOT/share/pkgconfig" ]]; then
 # TODO
 # export PKG_CONFIG_PATH=/mnt/c/Users/faris/src/neovim/.deps/usr/lib/pkgconfig
 # need a pathadd function for all these pkg_config dirs i'm finding
-# /usr/lib/x86_64-linux-gnu/pkgconfig
+    export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/x86_64-linux-gnu/pkgconfig"
 fi
 
 
@@ -141,7 +141,7 @@ if [[ -n "$(command -v go)" ]]; then
     pathadd "$_ROOT/local/go/bin"
 fi
 
-# Locale: {{{1
+# Miscellaneous: {{{1
 export LANG=C.UTF-8
 export LC_CTYPE=C.UTF-8                 # the python default
 export LC_IDENTIFICATION=C          	# got this from `locale -c language` I don't know if set right
@@ -150,6 +150,8 @@ export LC_MESSAGES=C.UTF-8              # man i3: Prevents program output transl
 export LC_NUMERIC="C.UTF-8"
 export LC_MONETARY="C.UTF-8"
 export LC_TIME="C.UTF-8"
+
+pathadd "$_ROOT/games"
 
 # Other Environment Variables: {{{1
 

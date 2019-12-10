@@ -30,6 +30,9 @@
   "C_Cpp.updateChannel": "Insiders",
   "C_Cpp.workspaceParsingPriority": "low",
   "C_Cpp.workspaceSymbols": "All",
+  "[go]": {
+    "editor.insertSpaces": false
+  },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.rulers": []
@@ -78,25 +81,28 @@
     "editor.rulers": []
   },
   "[yaml]": {
+    "editor.autoIndent": false,
     "editor.insertSpaces": true,
-    "editor.tabSize": 2,
     "editor.quickSuggestions": {
-      "other": true,
       "comments": false,
+      "other": true,
       "strings": true
     },
     "editor.rulers": [],
-    "editor.autoIndent": false
+    "editor.tabSize": 2
   },
   "csharp.suppressHiddenDiagnostics": false,
   "css.trace.server": "messages",
   "debug.allowBreakpointsEverywhere": true,
+  "debug.console.fontFamily": "Hack",
   "debug.console.fontSize": 14,
   "debug.console.wordWrap": true,
   "debug.enableAllHovers": true,
   "debug.inlineValues": true,
   "debug.openExplorerOnEnd": true,
+  "debug.showBreakpointsInOverviewRuler": true,
   "debug.showSubSessionsInToolBar": true,
+  "debug.toolBarLocation": "docked",
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
   "docker.attachShellCommand.windowsContainer": "\"C:\\Git\\bin\\bash.exe\" --login -i \"C:\\Program Files\\Docker Toolbox\\start.sh\"",
@@ -114,6 +120,7 @@
   "editor.formatOnType": true,
   "editor.gotoLocation.multiple": "gotoAndPeek",
   "editor.insertSpaces": true,
+  "editor.maxTokenizationLineLength": 2000,
   "editor.mouseWheelZoom": true,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.parameterHints.cycle": true,
@@ -133,6 +140,7 @@
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
   "editor.tokenColorCustomizations": {},
+  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
   "editor.wordWrap": "wordWrapColumn",
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": true,
@@ -158,10 +166,15 @@
   "files.exclude": {
     "**/*.egg-info": true,
     "**/.coverage": true,
+    "{workspaceFolder}/build": true,
+    "{workspaceFolder}/**/_static": true,
+    "{workspaceFolder}/dist": true,
+    "{workspaceFolder}/.idea": true,
     "**/.eggs": true,
     "**/.mypy_cache": true,
     "**/.pytest_cache": true,
     "**/__pycache__": true,
+    "{workspaceFolder}/.tox": true,
     "**/node_modules": true
   },
   "files.trimFinalNewlines": true,
@@ -208,6 +221,7 @@
   "php.suggest.basic": false,
   "php.validate.enable": false,
   "powershell.codeFormatting.autoCorrectAliases": true,
+  "powershell.codeFormatting.openBraceOnSameLine": false,
   "powershell.codeFormatting.preset": "Allman",
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.debugging.createTemporaryIntegratedConsole": true,
@@ -218,9 +232,14 @@
   "powershell.scriptAnalysis.settingsPath": "C:\\Users\\faris\\Documents\\WindowsPowershell\\PSScriptAnalyzerSettings.psd1",
   "python.analysis.cacheFolderPath": "C:/Users/faris/AppData/Roaming/Code/Cache",
   "python.analysis.cachingLevel": "Default",
-  "python.analysis.logLevel": "Warning",
+  "python.analysis.logLevel": "Information",
   "python.autoComplete.addBrackets": true,
   "python.condaPath": "C:\\tools\\miniconda3\\Scripts\\conda.exe",
+  "python.dataScience.changeDirOnImportExport": true,
+  "python.dataScience.codeLenses": "python.datascience.runcell,  python.datascience.runallcellsabove, python.datascience.debugcell",
+  "python.dataScience.codeRegularExpression": "^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])",
+  "python.dataScience.collapseCellInputCodeByDefault": true,
+  "python.dataScience.debugCodeLenses": "python.datascience.debugcontinue, python.datascience.debugstop, python.datascience.debugstepover",
   "python.dataScience.enableGather": true,
   "python.dataScience.exportWithOutputEnabled": true,
   "python.dataScience.gatherRules": [
@@ -282,6 +301,7 @@
       "functionName": "len"
     }
   ],
+  "python.dataScience.markdownRegularExpression": "^(#\\s*%%\\s*\\[markdown\\]|#\\s*\\<markdowncell\\>)",
   "python.dataScience.sendSelectionToInteractiveWindow": true,
   "python.diagnostics.sourceMapsEnabled": true,
   "python.experiments.enabled": false,
@@ -294,6 +314,7 @@
     "C:\\Users\\faris\\AppData\\Local\\flake8"
   ],
   "python.linting.flake8Enabled": true,
+  "python.linting.lintOnSave": false,
   "python.linting.maxNumberOfProblems": 25,
   "python.linting.pydocstyleArgs": [
     "--exclude",
@@ -301,7 +322,10 @@
   ],
   "python.linting.pydocstyleEnabled": true,
   "python.linting.pylintEnabled": false,
+  "python.pipenvPath": "python -m pipenv",
   "python.pythonPath": "C:\\tools\\miniconda3\\envs\\working\\python.exe",
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.terminal.activateEnvironment": true,
   "python.terminal.executeInFileDir": true,
   "python.terminal.launchArgs": [
     "-m",
@@ -329,7 +353,6 @@
   "remote.SSH.useLocalServer": true,
   "remote.WSL.debug": true,
   "remote.WSL.fileWatcher.polling": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
   "restructuredtext.builtDocumentationPath": "${workspaceFolder}/build/html",
   "restructuredtext.confPath": "${workspaceFolder}/source",
   "restructuredtext.experimental": true,
@@ -361,9 +384,9 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "terminal.external.linuxExec": "kitty",
-  "terminal.external.windowsExec": "pwsh",
+  "terminal.external.windowsExec": "C:\\Windows\\System32\\cmd.exe",
   "terminal.integrated.automationShell.linux": "tmux",
-  "terminal.integrated.automationShell.windows": "C:\\Users\\faris\\AppData\\Local\\hyper\\hyper.exe",
+  "terminal.integrated.confirmOnExit": true,
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.detectLocale": "on",
@@ -373,14 +396,27 @@
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeightBold": "normal",
   "terminal.integrated.rendererType": "dom",
+  "terminal.integrated.scrollback": 10000,
   "terminal.integrated.shell.linux": "/bin/bash",
   "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+  "terminal.integrated.shellArgs.windows": [
+    "/U",
+    "E:ON",
+    "F:ON",
+    "V:ON",
+    "/K",
+    "C:\\tools\\Cmder\\vendor\\init.bat"
+  ],
+  "terminal.integrated.windowsEnableConpty": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "update.enableWindowsBackgroundUpdates": false,
   "update.mode": "start",
   "vim.camelCaseMotion.enable": true,
   "vim.changeWordIncludesWhitespace": false,
   "vim.debug.loggingLevelForConsole": "debug",
   "vim.easymotion": true,
+  "vim.easymotionJumpToAnywhereRegex": "\\b[A-Za-z0-9]|[A-Za-z0-9]\\b|_.|#.|[a-z][A-Z]",
+  "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf;",
   "vim.easymotionMarkerFontFamily": "Hack",
   "vim.easymotionMarkerFontSize": "18",
   "vim.enableNeovim": true,
@@ -391,6 +427,7 @@
   "vim.highlightedyank.enable": true,
   "vim.history": 10000,
   "vim.hlsearch": true,
+  "vim.iskeyword": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
   "vim.leader": "<Space>",
   "vim.neovimPath": "C:\\Neovim\\bin\\nvim.exe",
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -467,10 +504,12 @@
       ]
     }
   ],
+  "vim.overrideCopy": true,
   "vim.replaceWithRegister": true,
   "vim.sneak": true,
   "vim.sneakReplacesF": true,
   "vim.sneakUseIgnorecaseAndSmartcase": true,
+  "vim.startofline": false,
   "vim.statusBarColors.insert": "#83a598",
   "vim.statusBarColors.visual": [
     "#1d2021",
@@ -489,27 +528,25 @@
   "vsicons.projectDetection.autoReload": true,
   "window.zoomLevel": -1,
   "workbench.activityBar.visible": true,
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f"
+  },
   "workbench.colorTheme": "Gruvbox Material Hard Dark",
   "workbench.commandPalette.history": 500,
   "workbench.commandPalette.preserveInput": true,
   "workbench.editor.closeOnFileDelete": true,
   "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.restoreViewState": true,
   "workbench.editor.revealIfOpen": true,
   "workbench.editor.splitSizing": "split",
   "workbench.editor.tabSizing": "shrink",
   "workbench.enableExperiments": false,
-  "workbench.experimental.editorAssociations": [
-    {
-      "rst": "nvim"
-    }
-  ],
   "workbench.iconTheme": "vscode-icons",
-  "workbench.tips.enabled": false,
-  "workbench.editor.restoreViewState": true,
-  "workbench.panel.defaultLocation": "bottom",
-  "powershell.codeFormatting.openBraceOnSameLine": false,
   "workbench.list.keyboardNavigation": "highlight",
   "workbench.list.openMode": "doubleClick",
+  "workbench.panel.defaultLocation": "bottom",
   "workbench.settings.editor": "json",
   "workbench.settings.enableNaturalLanguageSearch": false,
   "workbench.settings.openDefaultKeybindings": true,
@@ -517,35 +554,12 @@
   "workbench.settings.useSplitJSON": true,
   "workbench.sideBar.location": "right",
   "workbench.statusBar.visible": true,
+  "workbench.tips.enabled": false,
   "workbench.tree.renderIndentGuides": "onHover",
   "yaml.completion": true,
   "yaml.format.enable": true,
-  "yaml.trace.server": "messages",
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#005f5f",
-    "statusBar.noFolderBackground": "#005f5f",
-    "statusBar.debuggingBackground": "#005f5f"
-  },
-  "[go]": {
-    "editor.insertSpaces": false
-  },
-  "vim.startofline": false,
-  "python.dataScience.codeRegularExpression": "^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])",
-  "python.dataScience.markdownRegularExpression": "^(#\\s*%%\\s*\\[markdown\\]|#\\s*\\<markdowncell\\>)",
-  "vim.easymotionJumpToAnywhereRegex": "\\b[A-Za-z0-9]|[A-Za-z0-9]\\b|_.|#.|[a-z][A-Z]",
-  "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf;",
-  "vim.overrideCopy": true,
-  "debug.console.fontFamily": "Hack",
-  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
-  "debug.showBreakpointsInOverviewRuler": true,
-  "debug.toolBarLocation": "docked",
-  "python.dataScience.debugCodeLenses": "python.datascience.debugcontinue, python.datascience.debugstop, python.datascience.debugstepover",
-  "python.dataScience.codeLenses": "python.datascience.runcell,  python.datascience.runallcellsabove, python.datascience.debugcell",
-  "python.pipenvPath": "python -m pipenv",
   "yaml.schemas": {
     "file:///c%3A/Users/faris/.vscode/extensions/docsmsft.docs-yaml-0.2.4/schemas/toc.schema.json": "/toc\\.yml/i"
   },
-  "editor.maxTokenizationLineLength": 2000,
-  "vim.iskeyword": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
-  "pyright.useLibraryCodeForTypes": true
+  "yaml.trace.server": "messages"
 }

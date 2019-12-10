@@ -20,13 +20,11 @@ if [[ -n "$(command -v rg)" ]]; then  #: {{{1
     # Base FZF command: `fzf`: {{{1
     # May 28, 2019: works
     # I wanna see a line but only one at a time. Also check the ripgreprc.
-    # export FZF_DEFAULT_COMMAND="rg --hidden --no-messages --follow "
-
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
     # Filepath helps you jump directories quickly, tiebreak begin makes a ton
     # of difference, ansi colors dude this is sweet
     export FZF_DEFAULT_COMMAND='rg --hidden  --no-messages --smart-case  --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 -- ^ .'
-    # export FZF_DEFAULT_COMMAND="rg --follow --vimgrep -e ^.*$ "
+    export FZF_BACKUP_DEFAULT_COMMAND="rg --follow --hidden --smart-case --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
 
     # fzf-file-widget: <Ctrl-t>: {{{1
@@ -36,7 +34,6 @@ if [[ -n "$(command -v rg)" ]]; then  #: {{{1
     # Works perfectly!!!
     # Display only filenames but provide a preview window.
     export FZF_BACKUP_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
-
     # Oct 08, 2019: Added nvim binding.
     export FZF_CTRL_T_COMMAND=" rg --hidden --no-messages --follow --files --smart-case --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 --files "
 
@@ -49,16 +46,13 @@ if [[ -n "$(command -v rg)" ]]; then  #: {{{1
     elif [[ -n "$(command -v bat)" ]]; then
         # TODO: Fzf is reading these as options to itself not as bats options
         # export FZF_DEFAULT_BAT_OPTS=' "--italic-text always" "--wrap character" "--color always" "--paging always" {} '
-
         # export FZF_CTRL_T_OPTS+="--preview $FZF_DEFAULT_BAT_OPTS"
         export FZF_CTRL_T_OPTS+='--preview "bat {}" '
-
     else
         export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " '
     fi
 
     # __fzf_history__: <Ctrl-r>: {{{1
-    # works
     export FZF_CTRL_R_COMMAND=" rg --hidden --color=ansi --smart-case --no-heading --no-filename --no-messages --smart-case --glob '!.git/*' -g '!node_modules/*' "
     export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
@@ -66,14 +60,11 @@ if [[ -n "$(command -v rg)" ]]; then  #: {{{1
     if [[ -n "$(command -v fd)" ]]; then  # Change dirs with Alt C: {{{2
         export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
     # TODO: else
-
     fi
 
     export FZF_ALT_C_OPTS=' --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind "?:toggle-preview" --header "Press ? to toggle preview." --border --prompt "FZF Dir Finder" '
 
-
 elif [[ -n "$(command -v fd)" ]]; then  # fd {{{1
-
     # Base FZF command: {{2
     export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow -j 8 -d 6 --exclude .git $@"
 
@@ -99,7 +90,6 @@ fi
 # Extra funcs from fzf: {{{1
 Ag() { ag -l -g "" | fzf-tmux $FZF_DEFAULT_OPTS - ; };
 Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
-
 
 # TODO:
 # termux doesnt have xclip or xsel
@@ -145,12 +135,12 @@ local color0D='#83a598'
 local color0E='#d3869b'
 local color0F='#d65d0e'
 
-export FZF_COLORSCHEME="
+export FZF_COLORSCHEME="\
   --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D
   --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C
-  --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D
-"
+  --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"
 }
+
 _gen_fzf_default_opts
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_COLORSCHEME"

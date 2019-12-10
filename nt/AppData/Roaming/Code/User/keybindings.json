@@ -1,134 +1,182 @@
-// Place your key bindings in this file to override the defaults
 [
   {
-    "key": "ctrl+shift+; shift+alt+;",
-    "command": "vim.showQuickpickCmdLine"
+    "command": "vim.showQuickpickCmdLine",
+    "key": "ctrl+shift+; shift+alt+;"
   },
   {
-    "key": "ctrl+shift+c",
     "command": "-workbench.action.terminal.openNativeConsole",
+    "key": "ctrl+shift+c",
     "when": "!terminalFocus"
   },
   {
-    "key": "ctrl+w",
     "command": "-workbench.action.closeWindow",
+    "key": "ctrl+w",
     "when": "!editorIsOpen && !multipleEditorGroups"
   },
   {
-    "key": "ctrl+shift+w",
-    "command": "-workbench.action.closeWindow"
+    "command": "-workbench.action.closeWindow",
+    "key": "ctrl+shift+w"
   },
   {
-    "key": "f5",
+    "key": "ctrl+f",
+    "command": "-workbench.action.terminal.focusFindWidget",
+    "when": "terminalFocus"
+  },
+  {
     "command": "restructuredtext.preview.refresh",
+    "key": "f5",
     "when": "editorLangId == 'restructuredtext'"
   },
   {
-    "key": "alt+f4",
-    "command": "workbench.action.closeAllEditors"
+    "command": "workbench.action.closeAllEditors",
+    "key": "alt+f4"
   },
   {
-    "key": "Meta+Shift+h",
-    "command": "workbench.action.terminal.newWithCwd",
     "args": {
       "cwd": "${fileDirname}"
-    }
+    },
+    "command": "workbench.action.terminal.newWithCwd",
+    "key": "Meta+Shift+h"
   },
   {
-    "key": "Ctrl+K Ctrl+W",
-    "command": "-workbench.action.closeAllEditors"
+    "command": "-workbench.action.closeAllEditors",
+    "key": "Ctrl+K Ctrl+W"
   },
   {
-    "key": "]+q",
     "command": "editor.action.marker.nextInFiles",
+    "key": "]+q",
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "F8",
     "command": "-editor.action.marker.nextInFiles",
+    "key": "F8",
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "[+q",
     "command": "editor.action.marker.prevInFiles",
+    "key": "[+q",
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "Shift+F8",
     "command": "-editor.action.marker.prevInFiles",
+    "key": "Shift+F8",
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "Ctrl+Shift+M",
-    "command": "-workbench.actions.view.problems"
+    "command": "-workbench.actions.view.problems",
+    "key": "Ctrl+Shift+M"
   },
   {
-    "key": "Ctrl+j",
     "command": "selectNextSuggestion",
+    "key": "Ctrl+j",
     "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
   },
   {
-    "key": "Ctrl+k",
     "command": "selectPrevSuggestion",
+    "key": "Ctrl+k",
     "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
   },
   {
-    "key": "Ctrl+f",
     "command": "-workbench.action.terminal.focusFindWidget",
+    "key": "Ctrl+f",
     "when": "-workbench.action.terminal.focusFindWidget"
   },
   {
-    "key": "Ctrl+j",
     "command": "workbench.action.quickOpenNavigateNext",
-    "when": "inQuickOpen"
-  },
-  {
-    "key": "Ctrl+k",
-    "command": "workbench.action.quickOpenNavigatePrevious",
-    "when": "inQuickOpen"
-  },
-  {
-    "key": "Ctrl+h",
-    "command": "workbench.action.focusLeftGroup"
-  },
-  {
     "key": "Ctrl+j",
-    "command": "workbench.action.focusAboveGroup",
-    "when": "!suggestWidgetMultipleSuggestions && !inQuickOpen"
+    "when": "inQuickOpen"
   },
   {
+    "command": "workbench.action.quickOpenNavigatePrevious",
     "key": "Ctrl+k",
-    "command": "workbench.action.focusBelowGroup",
+    "when": "inQuickOpen"
+  },
+  {
+    "command": "workbench.action.focusLeftGroup",
+    "key": "Ctrl+h"
+  },
+  {
+    "command": "workbench.action.focusAboveGroup",
+    "key": "Ctrl+j",
     "when": "!suggestWidgetMultipleSuggestions && !inQuickOpen"
   },
   {
-    "key": "Ctrl+l",
-    "command": "workbench.action.focusRightGroup"
+    "command": "workbench.action.focusBelowGroup",
+    "key": "Ctrl+k",
+    "when": "!suggestWidgetMultipleSuggestions && !inQuickOpen"
   },
   {
-    "key": "Ctrl+W s",
-    "command": "workbench.action.splitEditorDown"
+    "command": "workbench.action.focusRightGroup",
+    "key": "Ctrl+l"
   },
   {
-    "key": "Ctrl+W c",
-    "command": "workbench.action.closeActiveEditor"
+    "command": "workbench.action.splitEditorDown",
+    "key": "Ctrl+W s"
   },
   {
-    "key": "Ctrl+W o",
-    "command": "workbench.action.closeEditorsInOtherGroups"
+    "command": "workbench.action.closeActiveEditor",
+    "key": "Ctrl+W c"
   },
   {
-    "key": "Ctrl+W v",
-    "command": "workbench.action.splitEditorRight"
+    "command": "workbench.action.closeEditorsInOtherGroups",
+    "key": "Ctrl+W o"
   },
   {
-    "key": "Ctrl+[",
+    "command": "workbench.action.splitEditorRight",
+    "key": "Ctrl+W v"
+  },
+  {
     "command": "editor.action.marker.prev",
+    "key": "Ctrl+[",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "Ctrl+]",
+    "command": "restructuredtext.showPreview",
+    "key": "Ctrl+Enter",
+    "when": "editorTextFocus && editorLangId == 'restructuredtext'"
+  },
+  {
+    "args": "-m IPython",
+    "command": "python.createTerminal",
+    "key": "Ctrl+`",
+    "when": "!terminalFocus"
+  },
+  // {
+    // when i'm not focused on the terminal jump to it. might be easier as C-k Down. oh shit C-k jumps to the other window! That's easy enough
+    // "when": "!terminalFocus && editorTextFocus && "
+// - workbench.action.terminal.focus
+  // }
+  {
+    "command": "python.execInTerminal",
+    "key": "Ctrl+Enter",
+    "when": "editorTextFocus && editorLangId == 'python'"
+  },
+  {
+    "command": "python.execSelectionInTerminal",
+    "key": "Ctrl+Enter",
+    "when": "editorTextFocus && !editorReadonly && editorLangId == 'python'"
+  },
+  {
+    "key": "Ctrl+\\",
+    "command": "-workbench.action.splitEditor"
+  },
+  {
+    "command": "workbench.action.toggleMaximizedPanel",
+    "key": "Ctrl+\\"
+  },
+  {
     "command": "editor.action.marker.next",
+    "key": "Ctrl+]",
     "when": "editorTextFocus && !editorReadonly"
-  }
+  },
+    {
+        "key": "f5",
+        "command": "python.datascience.notebookeditor.runallcells",
+        "when": "editorTextFocus && python.datascience.featureenabled && editorLangId == 'python' && python.datascience.hascodecells && !editorHasSelection"
+    },
+    {
+        "key": "f5",
+        "command": "python.debugTestNode",
+        "when": "editorLangId == 'python && editorTextFocus && !inDebugRepl"
+    }
 ]
