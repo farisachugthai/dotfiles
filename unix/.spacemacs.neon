@@ -6,7 +6,6 @@
 ;; I'm incurable
 
 ;;; Commentary:
-
 ;;; Code:
 
 (defun dotspacemacs/layers ()

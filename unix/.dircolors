@@ -57,7 +57,7 @@
 # STICKY 37;44
 # dir with the sticky bit set (+t) and not other-writable
 
-# LINK 38;5;37 # symbolic link. (If you set this to 'target' instead of a
+LINK 38;5;37 # symbolic link. (If you set this to 'target' instead of a
 # numerical value, the color is as for the file pointed to.)
 # MULTIHARDLINK 00 # regular file with more than one link
 # FIFO 40;33 # pipe
@@ -246,7 +246,7 @@ DIR                   38;5;30
 DOOR                  38;5;127
 EXEC                  38;5;208;1
 FIFO                  38;5;126
-LINK                  target
+# LINK                  target
 MULTIHARDLINK         38;5;222;1
 NORMAL                38;5;254
 ORPHAN                48;5;196;38;5;232;1

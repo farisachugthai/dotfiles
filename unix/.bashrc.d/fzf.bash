@@ -23,7 +23,7 @@ if [[ -n "$(command -v rg)" ]]; then  #: {{{1
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
     # Filepath helps you jump directories quickly, tiebreak begin makes a ton
     # of difference, ansi colors dude this is sweet
-    export FZF_DEFAULT_COMMAND='rg --hidden  --no-messages --smart-case  --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 -- ^ .'
+    export FZF_DEFAULT_COMMAND='rg --hidden  --no-messages --smart-case  --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 -- ^ '
     export FZF_BACKUP_DEFAULT_COMMAND="rg --follow --hidden --smart-case --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
 
@@ -35,7 +35,7 @@ if [[ -n "$(command -v rg)" ]]; then  #: {{{1
     # Display only filenames but provide a preview window.
     export FZF_BACKUP_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
     # Oct 08, 2019: Added nvim binding.
-    export FZF_CTRL_T_COMMAND=" rg --hidden --no-messages --follow --files --smart-case --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 --files "
+    export FZF_CTRL_T_COMMAND=" rg --hidden --follow --smart-case --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0  "
 
     export FZF_CTRL_T_OPTS=' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview. Alt-n to launch nvim. " --bind "alt-n:execute(nvim {}) " '
 

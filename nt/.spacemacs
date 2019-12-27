@@ -6,7 +6,7 @@
 ;; I'm incurable
 
 ;;; Commentary:
-;; For a short time kept track of functions with a (defvar). Then found imenu-list
+;; For a short time kept track of functions with a (defvar).  Then found imenu-list
 ;; in spacemacs that's <SPC> b i btw
 
 ;;; Code:
@@ -62,19 +62,24 @@ This function should only modify configuration layer settings."
                       auto-completion-private-snippets-directory "~/.emacs.d/private/snippets"
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
-                      (setq-default company-auto-complete t)
-                      spacemacs-default-company-backends '(company-ispell company-files company-anaconda))
+                      (setq-default (company-auto-complete t)))
      autohotkey
+     better-defaults
      bm  ;; bookmarks!
+     chrome
+     coffeescript
      (colors :variables
              colors-colorize-identifiers 'all
              colors-enable-nyan-cat-progress-bar (display-graphic-p))
      common-lisp  ;; without this we don't get slime
+     conda
      csv
-     dap  ;; note this is a full GUI debugger dude. it's the Debug Adapter Protocol
+     (dap :variables
+      ;; note this is a full GUI debugger dude. it's the Debug Adapter Protocol
+        dap-enable-mouse-support t)
      debug
-     django
-     docker
+     ;; django
+     ;; docker
      dotnet
      emacs-lisp
      emoji
@@ -98,17 +103,42 @@ This function should only modify configuration layer settings."
      hy  ;; this mode is so fucking cool
      (ibuffer :variables
               ibuffer-group-buffers-by "projects")
-     imenu-list  ;; tagbar
-     ;; ipython-notebook
+     imenu-list  ;; Tagbar
+     ipython-notebook
      javascript
      json
      lsp
      lua
-     markdown
+     (markdown
+     :variables markdown-mmm-auto-modes '("c" "c++" "python" "scala" ("elisp" "emacs-lisp")))
+     ;; so <Spc> hl doesn't mention in this the docs, but <C-c><C-x><CR> and <C-c><C-x><C-f>
+     ;; toggle
+     ;; 1) markup hiding AKA :set conceallevel=2 and
+     ;; 2) native syntax highlighting for code blocks
+
+     multiple-cursors
      neotree
-     org  ;; go down to yourspacemacs/org_setup to see the vars
+     (org :variables
+           org-enable-org-journal-support t
+           org-journal-dir "~/org/journal/"
+           org-journal-file-format "%Y-%m-%d"
+           org-journal-date-prefix "#+TITLE: "
+           org-journal-date-format "%A, %B %d %Y"
+           org-journal-time-prefix "* "
+            org-confirm-babel-evaluate nil
+            org-enable-github-support t
+            org-enable-org-journal-support t
+            org-log-done 'time
+            org-log-redeadline 'time
+            org-log-refile 'time
+            org-log-reschedule 'time
+            org-startup-indented t
+            org-refile-use-cache t
+            org-enable-sticky-header t
+           org-journal-time-format "")
+      ;; go down to yourspacemacs/org_setup to see the vars
      pandoc
-     pdf
+     ;; pdf
      prettier
      (python :variables
              python-auto-set-local-pyenv-version nil
@@ -123,6 +153,7 @@ This function should only modify configuration layer settings."
              python-shell-interpreter "ipython3"
              python-shell-interpreter-args "-i --simple-prompt"
              python-test-runner '(pytest nose unittest))
+     racket
      (ranger :variables
              ranger-cleanup-on-disable t
              ranger-ignored-extensions '("mkv" "iso" "mp4")
@@ -131,11 +162,12 @@ This function should only modify configuration layer settings."
              ranger-show-preview t
              ranger-show-hidden t)
      restructuredtext
+     scheme
      search-engine
+     semantic
      (shell :variables
             shell-default-height 30
             shell-default-shell 'eshell
-            shell-default-term-shell 'eshell
             shell-default-position 'bottom)
      shell-scripts
      ;; requires treemacs so don't list it anymore
@@ -160,6 +192,12 @@ This function should only modify configuration layer settings."
      spotify
      (syntax-checking :variables syntax-checking-enable-by-default nil
                       syntax-checking-enable-tooltips t)
+     systemd
+     templates
+     theming
+     themes-megapack
+     tmux
+     (typography :variables typography-enable-typographic-editing t)
      unicode-fonts
      vagrant
      (version-control :variables version-control-diff-tool 'diff-hl)
@@ -182,6 +220,7 @@ This function should only modify configuration layer settings."
                                       realgud-ipdb
                                       use-package-ensure-system-package
                                       auto-package-update
+                                      exec-path-from-shell
                                       gruvbox-theme
                                       python-mode sphinx-mode)
 
@@ -190,7 +229,7 @@ This function should only modify configuration layer settings."
 
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(treemacs treemacs-lsp treemacs-projectile
-                                             lsp-treemacs chinese-wbim
+                                             lsp-treemacs treemacs chinese-wbim
                                              chinese-conv treemacs-evil
                                              powerline)
 
@@ -201,12 +240,16 @@ This function should only modify configuration layer settings."
    ;; installs only the used packages but won't delete unused ones. `all'
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+   dotspacemacs-install-packages 'used-only)
+
+  )
 
 (defun dotspacemacs/init ()
   "Initialization:
 This function is called at the very beginning of Spacemacs startup,
 before layer configuration.
+You should not put any user code in there besides modifying the variable
+values.
 It should only modify the values of Spacemacs settings."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
@@ -254,8 +297,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-use-spacelpa nil
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
-   ;; (default nil)
-   dotspacemacs-verify-spacelpa-archives nil
+   ;; (default t)
+   dotspacemacs-verify-spacelpa-archives t
 
    ;; If non-nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
@@ -302,12 +345,17 @@ It should only modify the values of Spacemacs settings."
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
 
+   ;; Default major mode for a new empty buffer. Possible values are mode
+   ;; names such as `text-mode'; and `nil' to use Fundamental mode.
+   ;; (default `text-mode')
+   dotspacemacs-new-empty-buffer-major-mode 'org-mode
+
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'org-mode
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
    ;; (default nil)
-   dotspacemacs-initial-scratch-message "* Happy Hacking <3"
+   dotspacemacs-initial-scratch-message "# Happy Hacking <3"
 
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
@@ -329,7 +377,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Hack"
-                               :size 15
+                               :size 18
                                :weight normal
                                :width normal)
 
@@ -362,6 +410,19 @@ It should only modify the values of Spacemacs settings."
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
    dotspacemacs-distinguish-gui-tab nil
+
+   ;; If non nil `Y' is remapped to `y$' in Evil states. (default nil)
+   dotspacemacs-remap-Y-to-y$ nil
+
+   ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
+   ;; there. (default t)
+   dotspacemacs-retain-visual-state-on-shift t
+   ;; If non-nil, J and K move lines up and down when in visual mode.
+   ;; (default nil)
+   dotspacemacs-visual-line-move-text nil
+   ;; If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
+   ;; (default nil)
+   dotspacemacs-ex-substitute-global nil
 
    ;; Name of the default layout (default "Default")
    dotspacemacs-default-layout-name "Default"
@@ -452,15 +513,20 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil) (Emacs 24.4+ only)
    dotspacemacs-maximized-at-startup nil
 
+   ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
+   ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
+   ;; borderless fullscreen. (default nil)
+   dotspacemacs-undecorated-at-startup nil
+
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 100
+   dotspacemacs-active-transparency 90
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 100
+   dotspacemacs-inactive-transparency 90
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -479,10 +545,14 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-smooth-scrolling t
 
    ;; Control line numbers activation.
-   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
-   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
+   ;; `prog-mode' and `text-mode' derivatives. If set to `relative', line
+   ;; numbers are relative. If set to `visual', line numbers are also relative,
+   ;; but lines are only visual lines are counted. For example, folded lines
+   ;; will not be counted and wrapped lines are counted as multiple lines.
    ;; This variable can also be set to a property list for finer control:
    ;; '(:relative nil
+   ;;   :visual nil
    ;;   :disabled-for-modes dired-mode
    ;;                       doc-view-mode
    ;;                       markdown-mode
@@ -490,6 +560,7 @@ It should only modify the values of Spacemacs settings."
    ;;                       pdf-view-mode
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
+   ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
    dotspacemacs-line-numbers 'relative
 
@@ -502,7 +573,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-smartparens-strict-mode nil
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
-   ;; over any automatically added closing parenthesis, bracket, quote, etc…
+   ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
    dotspacemacs-smart-closing-parenthesis nil
 
@@ -513,7 +584,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server t
+   dotspacemacs-enable-server nil
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -612,9 +683,14 @@ like this:
 
 From the Spacemacs FAQ."
 
-  ;; This is only needed once, near the top of the file
+
+  ;;use-package.el is no longer needed at runtime
+
+  ;; This means you should put the following at the top of your Emacs, to further reduce load time:
   (eval-when-compile
     (require 'use-package))
+  (require 'diminish)                ;; if you use :diminish
+  (require 'bind-key)                ;; if you use any :bind variant
 
   ;; The :ensure-system-package keyword allows you to ensure system binaries exist alongside your package declarations.
 
@@ -627,10 +703,12 @@ From the Spacemacs FAQ."
     :defer t)
 
   ;; ooo here's a great example
-  (use-package tern
-    :defer t
-    :ensure-system-package (tern . "npm i -g tern"))
-
+  ;; (use-package tern
+  ;;   :defer t
+  ;;   :ensure-system-package (tern . "npm i -g tern"))
+  (use-package rg
+    :ensure-system-package
+    (rg.exe . ripgrep.exe))
 
   (use-package auto-package-update
     :defer t
@@ -793,15 +871,16 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     (setq evil-shift-width 4))
 
   ;; After major mode has changed, reset evil-shift-width
-
   (add-hook 'after-change-major-mode-hook 'spacemacs//set-evil-shift-width 'append)
 
   (use-package evil-collection
     :after evil
     :defer t
+    :ensure t
     ;; got this from the github. EVIL IN THE MINIBUFFER!
     :custom (evil-collection-setup-minibuffer t)
-    :init (evil-collection-init))
+    :init
+    (evil-collection-init))
 
   (use-package evil-matchit
     :after evil
@@ -856,28 +935,16 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 
     (defun my-org-confirm-babel-evaluate (lang body)
       (not (string= lang \"ditaa\")))  ;don't ask for ditaa
-    (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)"
+    (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)
+
+TODO: The first 2 sexp's [is that what they're called? Hit % on the ( of the first progn] raise errors.
+"
 
     (progn
       (
       (setq
-          (org-bullets-bullet-list '("■" "◆" "▲" "▶")
-          org-confirm-babel-evaluate nil
-          org-enable-github-support t
-          org-enable-org-journal-support t
-          org-log-done 'time
-          org-log-redeadline 'time
-          org-log-refile 'time
-          org-log-reschedule 'time
-          org-journal-dir "~/org/journal/"
-          org-journal-file-format "%Y-%m-%d"
-          org-journal-date-prefix "#+TITLE: "
-          org-journal-date-format "%A, %B %d %Y"
-          org-journal-time-prefix "* "
-          org-journal-time-format ""
-          org-startup-indented t
-          org-refile-use-cache t
-          spaceline-org-clock-p t)))
+       (org-bullets-bullet-list '("■" "◆" "▲" "▶")
+          spaceline-org-clock-p t))))
 
                 (spacemacs-space-doc-modificators
                 '(center-buffer-mode
@@ -889,7 +956,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
                   link-protocol
                   org-block-line-face-remap
                   org-kbd-face-remap
-                  resize-inline-images)))
+                  resize-inline-images))
 
 
     ;; haven't tried yasnippet in org mode but let's try this in advance
@@ -929,6 +996,10 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
       (setq org-want-todo-bindings t)
       (org-indent-mode)
     (setq helm-org-headings-fontify t))
+
+    (setq evil-org-retain-visual-state-on-shift t)
+    (setq-local diary-file '(~/.emacs.d/private/diary))
+
 ))
 
 (defun your_spacemacs/comint_setup ()
@@ -1051,7 +1122,21 @@ Enabled it twice and I still am loading yasnippet manually. Hm."
 
     (with-eval-after-load "company"
       '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
-(setq yas-global-mode t)
+
+
+)
+
+(defun your_spacemacs/conda_setup()
+  "Instructions from the readme."
+  (use-package conda
+    :defer t
+    :init
+    ;; if you want interactive shell support, include:
+    (conda-env-initialize-interactive-shells)
+    ;; if you want eshell support, include:
+    (conda-env-initialize-eshell)
+    ;; if you want auto-activation (see below for details), include:
+    (conda-env-autoactivate-mode t))
 
 )
 
@@ -1084,10 +1169,10 @@ C-c C-r rst-shift-region-right
        :interpreter ("ipython3" . python-mode))
      (define-key evil-normal-state-map (kbd "[F5]") 'spacemacs/python-execute-file))
 
-   ;; ;; The package is "python" but the mode is "python-mode":
-   ;; (use-package python
-   ;;   :mode ("\\.py\\'" . python-mode)
-   ;;   :interpreter ("python" . python-mode))
+   ;; The package is "python" but the mode is "python-mode":
+   (use-package python
+     :mode ("\\.py\\'" . python-mode)
+     :interpreter ("python" . python-mode))
 
    (use-package rst-mode
      :defer t
@@ -1097,8 +1182,6 @@ C-c C-r rst-shift-region-right
                    ("\\.rst$" . rst-mode)
                    ("\\.rest$" . rst-mode)) auto-mode-alist)))
 
-   (use-package python-mode-hook
-     :defer t)
 
    (use-package sphinx-mode
      :defer t
@@ -1121,7 +1204,7 @@ C-c C-r rst-shift-region-right
  ;;     '(company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
  (add-hook 'after-init-hook 'global-company-mode)
 
-(eval-after-load 'company '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))
+(with-eval-after-load 'company '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))
 
 (use-package company-jedi
   :defer t
@@ -1143,7 +1226,58 @@ C-c C-r rst-shift-region-right
   :defer t)
 
 (add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+
+;; (require C:/Users/faris/.emacs.d/elpa/26.2/develop/python-mode-20191220.1543/completion/pycomplete)
+;; obviously the date is gonna change too often so figure out a different way to do this
+
+)
+
+
+(defun your_spacemacs/helm_ipython_setup()
+
+  (use-package helm-ipython
+    :config
+    (define-key python-mode-map (kbd "<M-tab>") 'helm-ipython-complete)
+    (define-key inferior-python-mode-map (kbd "C-i") 'helm-ipython-complete)
+    (define-key python-mode-map (kbd "C-c C-i") 'helm-ipython-import-modules-from-buffer))
+
+)
+
+(defun your_spacemacs/lsp_setup()
+
+  (use-package lsp-ui
+    :ensure t
+    :config
+    (setq lsp-ui-doc-max-height 20
+          lsp-ui-doc-max-width 50
+          lsp-ui-sideline-ignore-duplicate t
+          lsp-ui-peek-always-show t))
+
+  (use-package company
+    :ensure t
+    :config
+    (setq company-minimum-prefix-length 1
+          company-idle-delay 0
+          company-tooltip-limit 10
+          company-transformers nil
+          company-show-numbers t)
+    (global-company-mode +1))
+
+  (use-package company-lsp
+    :ensure t
+    :commands (company-lsp))
+
+  (use-package company-box
+    :ensure t
+    :hook (company-mode . company-box-mode))
+
+  (use-package ms-python
+    :config
+    (add-hook 'python-mode-hook #'lsp))
+
+)
+
 
 (defun your_spacemacs/paradox_setup ()
   "Load paradox."
@@ -1176,7 +1310,83 @@ Check whether your Flycheck setup is complete with C-c ! v."
   :ensure t
   :init (global-flycheck-mode))
 
-  )
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
+
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
+
+(global-flycheck-mode 1)
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
+
+)
+
+(defun your_spacemacs/abbrev-setup()
+  "Diminishing and delighting minor modes
+
+use-package also provides built-in support for the diminish and delight utilities -- if you have them installed. Their purpose is to remove or change minor mode strings in your mode-line.
+
+diminish is invoked with the :diminish keyword, which is passed either a minor
+mode symbol, a cons of the symbol and its replacement string, or just a
+replacement string, in which case the minor mode symbol is guessed to be the
+package name with "-mode" appended at the end:"
+
+(use-package abbrev
+  :diminish abbrev-mode
+  :config
+  (if (file-exists-p abbrev-file-name)
+      (quietly-read-abbrev-file))))
+
+;; (defun your_spacemacs/persp_setup()
+;;   )
+
+(defun your_spacemacs/magit_setup()
+  "I was a little amazed to realize I hadn't set this up yet."
+
+;; fun fact. quoting magit like 'magit raises an error.
+(use-package magit
+  ;; are defer and ensure mutually exclusive?
+  :defer t
+  ;; oh shit this worked!
+  :config (global-set-key (kbd "C-x g") 'magit-status)
+  :ensure t)
+
+(use-package libegit
+  :defer t)
+
+)
+
+(defun your_spacemacs/path_setup()
+
+  (use-package exec-path-from-shell
+    :defer t)
+  (exec-path-from-shell-initialize)
+
+  (exec-path-from-shell-copy-env "PYTHONPATH")
+
+)
+
+(defun your_spacemacs/evil_commenter_setup()
+
+  (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
+
+  (require 'evil-leader)
+  (global-evil-leader-mode)
+  (evil-leader/set-key
+    "ci" 'evilnc-comment-or-uncomment-lines
+    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+    ;; Or use `evilnc-comment-and-kill-ring-save' instead
+    "cc" 'evilnc-copy-and-comment-lines
+    "cp" 'evilnc-comment-or-uncomment-paragraphs
+    "cr" 'comment-or-uncomment-region
+    "cv" 'evilnc-toggle-invert-comment-line-by-line
+    "."  'evilnc-copy-and-comment-operator
+    "\\" 'evilnc-comment-operator)
+
+)
+
 
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
@@ -1188,12 +1398,32 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(global-evil-tabs-mode t)
- '(org-agenda-files (quote ("~/org/first_agenda.org")))
+ '(evil-want-Y-yank-to-eol nil)
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#4f97d7")
+     ("OKAY" . "#4f97d7")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#86dc2f")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX+" . "#dc752f")
+     ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (conda helpful yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package unicode-fonts toc-org tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pony-mode pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets open-junk-file ob-ipython ob-hy nodejs-repl neotree nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide importmagic impatient-mode ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lsp helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-quickhelp company-lsp company-emoji company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ahk-mode aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(paradox-github-token t))
+    (company-box treemacs-projectile treemacs-evil evil-nerd-commenter yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package-ensure-system-package unicode-fonts unfill toc-org terminal-here tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox ox-gfm overseer orgit org-sticky-header org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-bullets org-brain open-junk-file ob-hy nodejs-repl neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode insert-shebang indent-guide importmagic impatient-mode ibuffer-projectile hybrid-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help engine-mode emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav editorconfig dumb-jump dotnet dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode conda company-web company-tern company-statistics company-shell company-quickhelp company-lsp company-emoji company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+ '(paradox-github-token t)
+ '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
+ '(py-auto-complete-p t)
+ '(py-keep-shell-dir-when-execute-p t)
+ '(py-known-shells (quote ("ipython" "ipython3" "python" "python3" "pypy"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1201,3 +1431,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
+
+(provide '.spacemacs)
+
+;;; .spacemacs ends here

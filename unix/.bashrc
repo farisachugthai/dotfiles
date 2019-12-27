@@ -45,7 +45,7 @@ if [ $? -eq 0 ]; then
 else
     if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
         source "$HOME/miniconda3/etc/profile.d/conda.sh"
-    elseif [[ -d "$HOME/miniconda3/bin" ]]
+    elif [[ -d "$HOME/miniconda3/bin" ]]; then
         pathadd "$HOME/miniconda3/bin"
     fi
 fi
@@ -223,6 +223,8 @@ fi
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 export NODE_PRESERVE_SYMLINKS=1
 
+source <(npx --shell-auto-fallback bash)
+
 # Fasd: {{{1
 
 fasd_cache="$HOME/.fasd-init-bash"
@@ -276,6 +278,8 @@ fi
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"
 
+complete -F _longopt ctags
+
 # I'm gonna try and stay conservative here.
 export PS1="\\t \\u@\\h \\d \w \n $: "
 
@@ -283,3 +287,5 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

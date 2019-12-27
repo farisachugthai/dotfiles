@@ -3,6 +3,9 @@
 
 # For more information about this file see:
 # https://conda.io/docs/user-guide/configuration/use-condarc.html
+# enable_private_envs: true
+
+# default_python: 3.8
 
 # Don't know where this option is listed in conda config --describe.
 # Shit I mean it probably isn't
@@ -24,30 +27,20 @@ error_upload_url: ''
 #   Bokeh at the top because start more specific and keep going to more general
 #   sites with more packages until we max out at forge.
 #   Definitely worth noting that bokeh has its own channel though.
-#
-#   Bokeh at the top because start more specific and keep going to more general
-#   sites with more packages until we max out at forge.
-#   Definitely worth noting that bokeh has its own channel though.
 
 channels:
+  - conda-forge
   - defaults
   - bokeh
   - conda-canary
-  - conda-forge
+  - intel
+  - pytorch
+  - anaconda
+  - bioconda
 
-# channel_alias (str)
-#   The prepended url location to associate with channel names.
-#
-# channel_alias: https://conda.anaconda.org
-
-# default_channels (sequence: str)
-#   env var string delimiter: ','
-#   The list of channel names and/or urls used for the 'defaults'
-#   multichannel.
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
-#   - https://repo.anaconda.com/pkgs/r
   - https://repo.anaconda.com/pkgs/pro
   - https://repo.anaconda.com/pkgs/msys2
 
@@ -169,8 +162,6 @@ restore_free_channel: true
 #   The list of directories to search for named environments. When
 #   creating a new named environment, the environment will be placed in
 #   the first writable location.
-envs_dirs:
-  - C:\tools\miniconda3\envs;
 
 # pkgs_dirs (sequence: str)
 #   env var string delimiter: ','
@@ -180,10 +171,6 @@ envs_dirs:
 #
 # Oct 18, 2019: Had to update because there were 3 listed for no reason
 # Oooo actually can we add one to the base of big envs?
-pkgs_dirs:
-  - C:\tools\miniconda3\pkgs
-  - C:\tools\miniconda3\envs\working\pkgs
-  - C:\tools\miniconda3\envs\anaconda\pkgs
 
 # default_threads (int)
 #   Threads to use by default for parallel operations.  Default is None,
@@ -299,7 +286,7 @@ auto_update_conda: false
 #   previous versions of conda, this parameter was configured as either
 #   True or False. True is now an alias to 'flexible'.
 #
-channel_priority: disabled
+# channel_priority: disabled
 
 # create_default_packages (sequence: str)
 #   env var string delimiter: ','
@@ -330,7 +317,7 @@ channel_priority: disabled
 # pinned_packages: []
 # was the default
 pinned_packages:
- - conda
+  - conda
 
 # pip_interop_enabled (bool)
 #   Allow the conda solver to interact with non-conda-installed python
@@ -352,7 +339,7 @@ pip_interop_enabled: true
 
 # TODO: what is this option?
 # Aug 20, 2019: Inexplicabily, it's been disabled in conda 4.7.11 so...
-channel_flexibility: disabled
+# channel_flexibility: disabled
 
 # From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
 # Non-url channels will be interpreted as Anaconda.org usernames
@@ -418,13 +405,13 @@ safety_checks: enabled
 # extra_safety_checks (bool)
 #   Spend extra time validating package contents.  Currently, runs sha256
 #   verification on every file within each package during installation.
-# 
-extra_safety_checks: true
+#
+# extra_safety_checks: true
 
 # shortcuts (bool)
 #   Allow packages to create OS-specific shortcuts (e.g. in the Windows
 #   Start Menu) at install time.
-# 
+#
 shortcuts: true
 
 # non_admin_enabled (bool)
@@ -495,8 +482,9 @@ shortcuts: true
 #   aliases: yes
 #   Automatically choose the 'yes' option whenever asked to proceed with a
 #   conda operation, such as when running `conda install`.
+# Is this the fucking default now? Wth?
 #
-# always_yes:
+# always_yes: false
 
 # auto_activate_base (bool)
 #   Automatically activate the base environment during shell
@@ -522,7 +510,7 @@ shortcuts: true
 #   method.
 #
 # env_prompt: '({default_env}) '
-env_prompt: '({prefix}) '
+env_prompt: '({name}) '
 
 # json (bool)
 #   Ensure all output written to stdout is structured json.
@@ -533,7 +521,7 @@ env_prompt: '({prefix}) '
 #   Notify if a newer version of conda is detected during a create,
 #   install, update, or remove operation.
 #
-notify_outdated_conda: false
+# notify_outdated_conda: false
 
 # quiet (bool)
 #   Disable progress bar display and other output.

@@ -6,39 +6,37 @@
 set -g status "on"
 set -g status-interval 1
 set -g status-keys emacs
-set -g status-left-style "none"
-set -g status-right-style "none"
+# set -g status-left-style "none"
+# set -g status-right-style "none"
 set -g status-justify "centre"                    # put the windows in the middle
 # set -g status-justify "left"
 
-# set -g status-right-length "100"
 # Doesnt do well on termux
-set -g status-left-length "100"
+set -g status-left-length "20"
+set -g status-right-length 150
+# NOTE: The super long format expressions are at the bottom
+set -g status-bg '#1d2021'
+set -g status-fg '#ebdbb2'
 
-# set -g status-bg '#1d2021'
-# set -g status-fg '#ebdbb2'
-
-# Basic Colors: {{{1
-set -g status-interval 1
 set -g status-style "none,bg=#282828"
+# This line below is the same color but not 16m.
 # set -g status-style "none,bg=colour237"
-
-# Panes: {{{1
 
 # I don't know how this isn't listed as being set but pane-active-border-style
 # could use work
-set-window-option -g pane-active-border-style "fg=#7daea3,bold" # bg='#
-# set-option -g pane-active-border-style fg=colour240 #fg=base01
+set-option -g pane-active-border-style "fg=#7daea3,bold"
 # set-window-option -g pane-border-style "fg=#7daea3"
+# set-option -g pane-active-border-style fg=colour240 #fg=base01
+
 # setw -g pane-border-status
+
 set -g pane-border-style "fg=#282828"
 # set -g pane-border-style "fg=colour237"
 # set -g pane-active-border-style "fg=#504945"
 
-# Windows: {{{1
 set-window-option -g window-status-style default
-setw -g window-status-format "#[fg=cyan] #I #[fg=colour253 #W "
-setw -g window-status-current-format "#[fg=cyan]#[fg=colour253] #I #[fg=colour253] #W #[fg=cyan]"
+setw -g window-status-format "#[fg=cyan] #I#F #[fg=colour253 #W "
+setw -g window-status-current-format "#[fg=cyan]#[fg=colour253] #I#F #[fg=colour253] #W #[fg=cyan]"
 
 # active window title colors
 set-window-option -g window-status-current-style fg=colour166,bg=default,bright # fg=orange
@@ -77,20 +75,26 @@ set -g message-style "fg=#dfbf8e,bg=#504945"
 
 # Format statements: {{{1
 
-set -g status-left "#[fg=#504945,bg=#dfbf8e] ▶ #S : #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics]»#[fg=colour246,bg=colour237] ▶ #(uptime  | cut -d \" \" -f 1,2,3) #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»"
+set -g status-left " #[fg=#504945,bg=#dfbf8e] ▶ #S: #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] » #[fg=colour246,bg=colour237] ▶ #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics] » "
 
-# set -g status-left "#[fg=colour246,bg=colour237] #S #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»#[fg=colour246,bg=colour237] #(whoami) ▶ #(uptime  | cut -d \" \" -f 1,2,3) #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»"
+# set -g status-left "#[fg=colour246,bg=colour237] #S #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»#[fg=colour246,bg=colour237] #(whoami) ▶  #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»"
 
-set -g status-right "#[fg=#504945,bg=#282828,nobold,nounderscore,noitalics]« #{?client_prefix,🚀 🚀 🚀,} #[fg=#dfbf8e,bg=#504945] #[fg=#dfbf8e,bg=#504945,nobold,nounderscore,noitalics]«#[fg=#504945,bg=#dfbf8e] ◀ "
+# Alright well this is dying on byobu so TODO: figure out a check for if wer're in their shell or tmux
+set -g status-right " #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] « #{?client_prefix,🚀 🚀 🚀,} #[fg=#dfbf8e,bg=#504945] %R ◀ %a ◀ %Y #[fg=#dfbf8e,bg=#504945,nobold,nounderscore,noitalics] « #[fg=#504945,bg=#dfbf8e] ◀ "
 
-# set -g status-right "#[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]«#[fg=colour246,bg=colour237] #(date) #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]«#[fg=colour246,bg=colour237] %R ◀ %a ◀ %Y #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]«#[fg=colour246,bg=colour237] #H "
+# "#(tmux right -R pane_id=\`tmux display -p #D`)"
+# This is the only part I really care about anyway
+# set -ag status-right "#{?client_prefix,🚀 🚀 🚀,}"
+
+# set -g status-right 
+# set -g status-right "#[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]«#[fg=colour246,bg=colour237] #(date) #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]«#[fg=colour246,bg=colour237] #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]«#[fg=colour246,bg=colour237] #H "
 
 
 # indicate whether Prefix has been captured + time in the right-status area
 # set -g status-left "#[fg=colour166] #h #[fg=colour166] #S "
 # set -g status-right '#[fg=colour66]#[fg=colour66] %H:%M '
 
-setw -g window-status-format "#[fg=#282828,bg=#282828,nobold,nounderscore,noitalics]»#[default] #I ▶ #W #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics]»"
-
-setw -g window-status-current-format "#[fg=#282828,bg=#504945,nobold,nounderscore,noitalics]»#[fg=#dfbf8e,bg=#504945] #I ▶ #W #F #[fg=#504945,bg=#282828,nobold,nounderscore,noitalics]»"
+setw -g window-status-format " #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics] » #[default] #I ▶ #W #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics] » "
+#dfbf8e
+setw -g window-status-current-format " #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] » #[fg=#dfbf8e,bg=#504945] #I#F ▶ #W #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] » "
 

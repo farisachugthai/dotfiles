@@ -35,18 +35,16 @@ channels:
   - pytorch
   - anaconda
   - bioconda
+
+
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
-#   - https://repo.anaconda.com/pkgs/r
   - https://repo.anaconda.com/pkgs/pro
   - https://repo.anaconda.com/pkgs/msys2
 
 
-# Frustratingly these don't work
 # - https://repo.anaconda.com/pkgs/r
-# - https://repo.anaconda.com/pkgs/free
-# - https://repo.anaconda.com/pkgs/archive
 
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
@@ -132,9 +130,9 @@ restore_free_channel: true
 #   else to use an alternate index that has been reduced somehow.
 #
 #
-repodata_fns:
-  - current_repodata.json
-  - repodata.json
+# repodata_fns:
+#   - current_repodata.json
+#   - repodata.json
 
 # use_only_tar_bz2 (NoneType, bool)
 #   A boolean indicating that only .tar.bz2 conda packages should be
@@ -162,8 +160,11 @@ repodata_fns:
 #   creating a new named environment, the environment will be placed in
 #   the first writable location.
 envs_dirs:
-  - C:\tools\miniconda3\envs
 
+  - C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\envs
+
+#   - C:\tools\miniconda3\envs
+#
 # pkgs_dirs (sequence: str)
 #   env var string delimiter: ','
 #   The list of directories where locally-available packages are linked
@@ -173,7 +174,11 @@ envs_dirs:
 # Oct 18, 2019: Had to update because there were 3 listed for no reason
 # Oooo actually can we add one to the base of big envs?
 pkgs_dirs:
-  - C:\tools\miniconda3\pkgs
+
+  - C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\pkgs
+
+
+#   - C:\tools\miniconda3\pkgs
   # - C:\tools\miniconda3\envs\working\pkgs
   # - C:\tools\miniconda3\envs\anaconda\pkgs
 
@@ -291,7 +296,7 @@ auto_update_conda: false
 #   previous versions of conda, this parameter was configured as either
 #   True or False. True is now an alias to 'flexible'.
 #
-channel_priority: disabled
+# channel_priority: disabled
 
 # create_default_packages (sequence: str)
 #   env var string delimiter: ','
@@ -344,7 +349,7 @@ pip_interop_enabled: true
 
 # TODO: what is this option?
 # Aug 20, 2019: Inexplicabily, it's been disabled in conda 4.7.11 so...
-channel_flexibility: disabled
+# channel_flexibility: disabled
 
 # From: https://conda.io/docs/user-guide/configuration/sample-condarc.html
 # Non-url channels will be interpreted as Anaconda.org usernames
@@ -514,7 +519,8 @@ shortcuts: true
 #   method.
 #
 # env_prompt: '({default_env}) '
-env_prompt: '({prefix}) '
+#
+env_prompt: '({name}) '
 
 # json (bool)
 #   Ensure all output written to stdout is structured json.

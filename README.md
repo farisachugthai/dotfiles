@@ -47,7 +47,7 @@ included in [nt](nt).
 
 ## Bash Configuration
 
-The $PAGER is highly customized. From my bashrc.
+The `$PAGER` is highly customized. From my bashrc.
 
 ```bash
 
@@ -96,6 +96,45 @@ fi
 This is just a simple example of how extensive some frequently used options
 have gotten.
 
+### Porting to Windows
+
+Has been nothing short of a massive pain in the ass.
+
+Hopefully these tips will help someone else one day.
+
+1. Break down every part of your previous setup from the ground up.
+   I've had powershell and conda inconsistently set the python environment.
+   I didn't imagine at any point that the shell itself was at fault, and
+   wasted a ton of time as a result. Then move forward.
+
+2. View your setup as it's individual components. This will be akin to unit
+   testing, and when you're in the middle of doing something will, *unfortunately*,
+   be the integration test.
+
+   - However doing this correctly can save you a lot of headache. Take
+     concatenating a file as a simple example. To page a file, requires cmd
+     to read it, pass it to less. If the pager was invoked automatically by
+     git, ensure that env var is consistent with the rest of your setup.
+     Not setting the `$TERM` envvar may cause issues here.
+
+      - Sticking with the pager example. `Git` called `bat`, a new version of `cat`
+        rewritten in rust. This called `less` to open the file. If `cmder`,
+        `powershell`, or `cmd` hadn't decoded/encoded the file incorrectly,
+        the colorscheme of the file would render the file practically illegible.
+        If this occurred while using `ipython` to run system commands, I would,
+        on occasion, have 5 different levels of the command to debug.
+
+3. A user can set parameters in the GUI using Control Panel as well as in the
+   registry. Registry problems are functionally impossible to debug, *at least
+   so far I've found*, and as a result, it will frequently be more easy to
+   recover from mistakes in classic ini-style config files.
+
+4. Use `*nix` line endings. Trust me.
+
+5. Use WSL when there aren't other options; however, make every attempt you can
+   to use native tools as possible.
+
+   - When in Rome!
 
 ## Contributing
 

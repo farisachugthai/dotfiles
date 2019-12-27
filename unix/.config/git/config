@@ -14,33 +14,19 @@
     whitespace = fix
 
 [alias]
-    # From: https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases
-    ci = commit
-    co = checkout
-    last = log -- HEAD $*
-    unstage = reset HEAD -- $*
-
-    # From varying Gists
-    rel = rev-parse --show-prefix
-    root = rev-parse --show-toplevel
-    staged = diff --cached
-    unstaged = diff
-
-    # From: https://githowto.com/history
-    # Run check git-log
-    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-
-    # General.
     a = add
+    amend = commit --amend
     ar = add --renormalize -A
-    b = branch
+    b = branch -rva
     bl = blame
-    br = branch -a
+    br = branch
+    ci = commit
     cia = commit --amend
-    cid = commit --date=
     ciad = commit --amend --date=
+    cid = commit --date=
     cl =  clone
     cls= clone --depth 1
+    co = checkout
     cob = checkout -b
     d = diff
     ds = diff --staged
@@ -48,29 +34,37 @@
     dt = difftool
     f = fetch --all
     fe = fetch
+    g = grep
+    h = help
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
     l = log
+    last = log -- HEAD $*
+    # from man git-alias. added '-msg' to make distinct from other last
+    last-msg = cat-file commit HEAD
+	lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     # What the hell is error 8? This command keeps dying
-    lo = log --graph --decorate --abbrev-commit --branches --all --pretty --oneline
+    lo = log --graph --decorate --abbrev-commit --branches --all --pretty=format:lg --oneline
     ls = ls-tree -rl --abbrev master
     m = merge --no-ff
     ma = merge --abort
     mc = merge --continue
-    mm = merge master
+    mm = merge --no-ff master
     mt = mergetool
-    p = pull --all
-    po = pull origin
-    pom = pull origin master
+    p = pull --all --verbose
+    po = pull --all --verbose origin
+    pom = pull --all --verbose -- origin master
     pu = push
+    pul = pull	# gotta imagine how annoying these are
+    pus = push
     r = remote -v
+    rank = shortlog -sn --no-merges
     re = rebase
     rea = rebase --abort
     rec = rebase --continue
     rei = rebase -i
+    rel = rev-parse --show-prefix
+    root = rev-parse --show-toplevel
     s = status -s
-    st = diff --stat
-    t = tag --list
-
-    # stashes
     sh = stash --all
     sha = stash apply
     shc = stash clear
@@ -79,21 +73,14 @@
     shp = stash pop
     shs = stash show
     shsp = stash show --patch
-    # May 27, 2019
-    amend = commit --amend
-
-    # from man git-alias. added '-msg' to make distinct from other last
-    last-msg = cat-file commit HEAD
-
-    rank = shortlog -sn --no-merges
+    st = diff --stat
+    staged = diff --cached
+    t = tag --list
+    unstage = reset HEAD -- $*
+    unstaged = diff
+    url = ls-remote --get-url
     whatis = show -s --pretty=´tformat:%h (%s, %ad)´ --date=short
     whois = !sh -c ´git log -i -1 --pretty="format:%an <%ae>"
-
-    # i hate typing for any reason
-    g = grep
-    h = help
-    url = ls-remote --get-url
-	lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 
 [blame]
     coloring = highlightRecent
@@ -116,7 +103,8 @@
 
 [color]
     # always and not auto because this setting still only affects porcelain commands
-    ui = always
+    ; ui = always
+    ; LIKE DIFFS IN FUGITIVE WHOA IS THIS IS A BAD IDEA
 
 [column]
     clean = never  # git shows files it's gonna wipe with git clean in columns and i hate it
@@ -153,7 +141,6 @@
     pager = less -JRKMLieg
     symlink = True
     untrackedCache = True
-	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 
 [credential]
     helper = manager
@@ -161,15 +148,13 @@
     modalPrompt = True
     store = approve
     username = farisachugthai
-	helper = wincred
-	helper = cache
-	helper = cache --timeout=86400
+	; helper = wincred
 
 [credential "https://www.github.com"]
     username = farisachugthai
 
 [credential "https://source.developers.google.com"]
-	helper = gcloud.cmd
+    helper = gcloud.cmd
 
 # Man git-difftool: Line 85
 # If difftool settings havent been set, fall back to mergetool
@@ -180,7 +165,7 @@
     dirstat = changes,files,10,cumulative
        ; --color-moved[=<mode>]
        ;     Moved lines of code are colored differently. The <mode> defaults to no if the option is not given and to zebra if the option with no mode is given. The mode must be one of:
-    color-moved=dimmed-zebra
+    color-moved = dimmed-zebra
     # color-moved-ws?
     # --no-color-moved-ws
     # Do not ignore whitespace when performing move detection. This can be used to override configuration settings. It is the same as --color-moved-ws=no.
@@ -195,16 +180,14 @@
     strategy-option = resolve
     # Idk if this is a new option but man am I glad to have stumbled upon it
     suppressBlankEmpty = true
-    tool = nvimdiff
+    # tool = vimdiff
     # unified ?
     word-diff = color
-    wsErrorHighlight = old,new,context   # same as all
+    wsErrorHighlight = old,new,context	 # same as all
     # wsErrorHighlight = all
 
 [difftool]
     cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
-    nvimdiff = nvim-qt.exe -d $LOCAL $REMOTE
-    nvimdiff = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
     prompt = false
 
 [feature]
@@ -257,9 +240,9 @@
 [index]
     version = 4
 
-; [include]
-;     path = ~/.config/git/config
-    ; path = C:/ProgramData/Git/config
+[include]
+    # how do we make this conditional again?
+    path = ~/nt.gitconfig
 
 [html]
     sslbackend=openssl
@@ -288,18 +271,18 @@
     defaultToUpstream = True
     diffstat = true
 
-       ; merge.directoryRenames
-       ;     Whether Git detects directory renames, affecting what happens at
-       ;     merge time to new files added to a directory on one side of history
-       ;     when that directory was renamed on the other side of history. If
-       ;     merge.directoryRenames is set to "false", directory rename
-       ;     detection is disabled, meaning that such new files will be left
-       ;     behind in the old directory. If set to "true", directory rename
-       ;     detection is enabled, meaning that such new files will be moved
-       ;     into the new directory. If set to "conflict", a conflict will be
-       ;     reported for such paths. If merge.renames is false,
-       ;     merge.directoryRenames is ignored and treated as false. Defaults to
-       ;     "conflict".
+    ; merge.directoryRenames
+    ;     Whether Git detects directory renames, affecting what happens at
+    ;     merge time to new files added to a directory on one side of history
+    ;     when that directory was renamed on the other side of history. If
+    ;     merge.directoryRenames is set to "false", directory rename
+    ;     detection is disabled, meaning that such new files will be left
+    ;     behind in the old directory. If set to "true", directory rename
+    ;     detection is enabled, meaning that such new files will be moved
+    ;     into the new directory. If set to "conflict", a conflict will be
+    ;     reported for such paths. If merge.renames is false,
+    ;     merge.directoryRenames is ignored and treated as false. Defaults to
+    ;     "conflict".
 
     directoryRenames = True
     # ff = true
@@ -367,9 +350,9 @@
 
        ;     ...
 
-       ;     ·   current - push the current branch to update a branch with the
-       ;         same name on the receiving end. Works in both central and
-       ;         non-central workflows.
+       ;     ·	 current - push the current branch to update a branch with the
+       ;	 same name on the receiving end. Works in both central and
+       ;	 non-central workflows.
     default = upstream
 
 [rebase]
@@ -415,8 +398,3 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
-
-; [winUpdater]
-; 	recentlySeenVersion = 2.23.0.windows.1
-;
-; Vim: et:sws=4:ts=4:sw=4:

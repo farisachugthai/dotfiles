@@ -4,6 +4,7 @@
   "copyOnSelect": true,
   "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
   "keybindings": [
+    // here's a not listed one. alt-enter. toggle fullscreen
     {
       "command": "closeTab",
       "keys": [
@@ -97,7 +98,7 @@
     {
       "command": "nextTab",
       "keys": [
-        "ctrl+tab"
+        "ctrl+shift+right"
       ]
     },
     {
@@ -121,7 +122,7 @@
     {
       "command": "prevTab",
       "keys": [
-        "ctrl+shift+tab"
+        "ctrl+shift+left"
       ]
     },
     {
@@ -220,7 +221,7 @@
       "acrylicOpacity": 0.9,
       "background": "#1d2021",
       "colorScheme": "Gruvbox",
-      "commandline": "wsl -e tmux",
+      "commandline": "wsl",
       "cursorShape": "emptyBox",
       "fontFace": "FuraMono Nerd Font Mono",
       "fontSize": 12,
@@ -275,9 +276,9 @@
     {
       "closeOnExit": true,
       "colorScheme": "Gruvbox",
-      "commandline": "cmd.exe /U /K C:/tools/Cmder/vendor/init.bat & chcp 65001",
+      "commandline": "cmd.exe /U /E:ON /F:ON /K call init.bat & chcp 65001",
       "cursorShape": "emptyBox",
-      "fontFace": "FuraMono Nerd Font Mono",
+      "fontFace": "Fira Code Light",
       "fontSize": 12,
       "foreground": "#EBDBB2",
       "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -285,9 +286,10 @@
       "historySize": 9001,
       "icon": "C:/tools/Cmder/icons/cmder_blue.ico",
       "name": "Homebrewed Cmder",
+      "padding": "8, 8, 8, 8",
       "scrollbarState": "visible",
       "snapOnInput": true,
-      "startingDirectory": "%USERPROFILE%",
+      "startingDirectory": "C:/tools/Cmder/vendor",
       "tabTitle": "Homebrewed Cmder"
     },
     {
@@ -310,6 +312,17 @@
       "hidden": false,
       "name": "Azure Cloud Shell",
       "source": "Windows.Terminal.Azure"
+    },
+    {
+      "acrylicOpacity": 0.85,
+      "colorScheme": "Gruvbox",
+      "commandline": "%PROGRAMFILES%\\Microsoft Visual Studio\\Shared\\Python37_64\\python.exe",
+      "fontFace": "FuraMono Nerd Font Mono",
+      "guid": "{e4aa321a-bd11-417e-b903-30cc78d46e30}",
+      "hidden": false,
+      "name": "python",
+      "startingDirectory": "%USERPROFILE%",
+      "useAcrylic": true
     },
     {
       "acrylicOpacity": 0.85,
