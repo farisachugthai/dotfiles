@@ -49,7 +49,6 @@ build/
 # https://raw.githubusercontent.com/github/gitignore/afbff9027d02ccfc680e031f6c295f79ad61662d/Global/Tags.gitignore
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
-*[Tt]ags*
 /tags/
 */tags/*
 TAGS

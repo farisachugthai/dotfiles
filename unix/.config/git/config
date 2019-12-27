@@ -144,11 +144,11 @@
 
 [credential]
     helper = manager
-    helper = cache --timeout=86400
+    ; helper = cache --timeout=86400
     modalPrompt = True
     store = approve
     username = farisachugthai
-	; helper = wincred
+	 ; helper = wincred
 
 [credential "https://www.github.com"]
     username = farisachugthai

@@ -1,0 +1,1 @@
+--regex-make=/^([^# \t]*):/\1/t,target/
