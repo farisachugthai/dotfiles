@@ -61,25 +61,25 @@ This function should only modify configuration layer settings."
                       auto-completion-idle-delay 0.2
                       auto-completion-private-snippets-directory "~/.emacs.d/private/snippets"
                       auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'cycle
-                      (setq-default (company-auto-complete t)))
+                      setq company-auto-complete t
+                      auto-completion-tab-key-behavior cycle)
      autohotkey
      better-defaults
      bm  ;; bookmarks!
      chrome
-     coffeescript
      (colors :variables
              colors-colorize-identifiers 'all
              colors-enable-nyan-cat-progress-bar (display-graphic-p))
-     common-lisp  ;; without this we don't get slime
-     conda
+     common-lisp
+     ;; without this we don't get slime. raises an error about sbcl?
+     ;; is this the search engine thing?
+     (conda :variables
+            conda-anaconda-home "C:/tools/vs/2019/Community/Common7/IDE/Extensions/Microsoft/Python/Miniconda/Miniconda3-x64")
      csv
      (dap :variables
       ;; note this is a full GUI debugger dude. it's the Debug Adapter Protocol
         dap-enable-mouse-support t)
      debug
-     ;; django
-     ;; docker
      dotnet
      emacs-lisp
      emoji
@@ -103,14 +103,14 @@ This function should only modify configuration layer settings."
      hy  ;; this mode is so fucking cool
      (ibuffer :variables
               ibuffer-group-buffers-by "projects")
+
      imenu-list  ;; Tagbar
      ipython-notebook
      javascript
      json
      lsp
      lua
-     (markdown
-     :variables markdown-mmm-auto-modes '("c" "c++" "python" "scala" ("elisp" "emacs-lisp")))
+     (markdown :variables markdown-mmm-auto-modes '("c" "c++" "python" "scala" ("elisp" "emacs-lisp")))
      ;; so <Spc> hl doesn't mention in this the docs, but <C-c><C-x><CR> and <C-c><C-x><C-f>
      ;; toggle
      ;; 1) markup hiding AKA :set conceallevel=2 and
@@ -119,31 +119,28 @@ This function should only modify configuration layer settings."
      multiple-cursors
      neotree
      (org :variables
-           org-enable-org-journal-support t
-           org-journal-dir "~/org/journal/"
-           org-journal-file-format "%Y-%m-%d"
-           org-journal-date-prefix "#+TITLE: "
-           org-journal-date-format "%A, %B %d %Y"
-           org-journal-time-prefix "* "
-            org-confirm-babel-evaluate nil
-            org-enable-github-support t
-            org-enable-org-journal-support t
-            org-log-done 'time
-            org-log-redeadline 'time
-            org-log-refile 'time
-            org-log-reschedule 'time
-            org-startup-indented t
-            org-refile-use-cache t
-            org-enable-sticky-header t
-           org-journal-time-format "")
+          org-enable-org-journal-support t
+          org-journal-dir "~/org/journal/"
+          org-journal-file-format "%Y-%m-%d"
+          org-journal-date-prefix "#+TITLE: "
+          org-journal-date-format "%A, %B %d %Y"
+          org-journal-time-prefix "* "
+          org-confirm-babel-evaluate nil
+          org-enable-github-support t
+          org-enable-org-journal-support t
+          org-log-done 'time
+          org-log-redeadline 'time
+          org-log-refile 'time
+          org-log-reschedule 'time
+          org-startup-indented t
+          org-refile-use-cache t
+          org-enable-sticky-header t
+          org-journal-time-format "")
       ;; go down to yourspacemacs/org_setup to see the vars
-     pandoc
-     ;; pdf
-     prettier
      (python :variables
-             python-auto-set-local-pyenv-version nil
-             python-auto-set-local-pyvenv-virtualenv nil
-             python-backend 'anaconda
+             python-auto-set-local-pyenv-version t
+             python-auto-set-local-pyvenv-virtualenv t
+             python-backend 'lsp
              python-enable-yapf-format-on-save t
              python-fill-column 120
              python-formatter 'yapf
@@ -162,9 +159,6 @@ This function should only modify configuration layer settings."
              ranger-show-preview t
              ranger-show-hidden t)
      restructuredtext
-     scheme
-     search-engine
-     semantic
      (shell :variables
             shell-default-height 30
             shell-default-shell 'eshell
@@ -174,7 +168,6 @@ This function should only modify configuration layer settings."
      ;; spacemacs
      ;; holy shit outside of base and bootstrap this is all of them
      spacemacs-completion
-     spacemacs-docker
      spacemacs-editing
      spacemacs-editing-visual
      spacemacs-evil
@@ -187,22 +180,15 @@ This function should only modify configuration layer settings."
      spacemacs-project
      spacemacs-purpose
      spacemacs-visual
+     speed-reading
      (spell-checking :variables spell-checking-enable-by-default nil)
      sphinx
-     spotify
+     (sql :variables sql-capitalize-keywords t)
      (syntax-checking :variables syntax-checking-enable-by-default nil
                       syntax-checking-enable-tooltips t)
-     systemd
-     templates
-     theming
-     themes-megapack
-     tmux
      (typography :variables typography-enable-typographic-editing t)
      unicode-fonts
-     vagrant
      (version-control :variables version-control-diff-tool 'diff-hl)
-     vimscript
-     vinegar
      windows-scripts
      yaml)
 
@@ -240,9 +226,7 @@ This function should only modify configuration layer settings."
    ;; installs only the used packages but won't delete unused ones. `all'
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
-   dotspacemacs-install-packages 'used-only)
-
-  )
+   dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -658,7 +642,8 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   )
 
 (defun dotspacemacs/user-load ()
-  "Library to load while dumping.
+  """Library to load while dumping.
+
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump.
@@ -681,7 +666,12 @@ like this:
     )
 #+END_SRC
 
-From the Spacemacs FAQ."
+From the Spacemacs FAQ.
+
+TODO:
+this would be dope
+(org-babel-load-file (expand-file-name "~/.emacs.d/README.org"))))
+"""
 
 
   ;;use-package.el is no longer needed at runtime
@@ -692,6 +682,8 @@ From the Spacemacs FAQ."
   (require 'diminish)                ;; if you use :diminish
   (require 'bind-key)                ;; if you use any :bind variant
 
+  ;; spacemacs additions to use-package
+  (setq use-package-inject-hooks t)
   ;; The :ensure-system-package keyword allows you to ensure system binaries exist alongside your package declarations.
 
   ;; First, you will want to make sure exec-path is cognisant of all binary
@@ -706,9 +698,9 @@ From the Spacemacs FAQ."
   ;; (use-package tern
   ;;   :defer t
   ;;   :ensure-system-package (tern . "npm i -g tern"))
-  (use-package rg
-    :ensure-system-package
-    (rg.exe . ripgrep.exe))
+  ;; (use-package rg
+  ;;   :ensure-system-package
+  ;;   (rg.exe . ripgrep.exe))
 
   (use-package auto-package-update
     :defer t
@@ -716,7 +708,6 @@ From the Spacemacs FAQ."
     (setq-default auto-package-update-delete-old-versions t)
     (setq-default auto-package-update-hide-results t)
     (auto-package-update-maybe))
-
 
   (progn
     (setq-default scroll-margin 5
@@ -821,7 +812,6 @@ From the Spacemacs FAQ."
 
 )
 
-
 (defun your_spacemacs/evil_setup ()
   "Setup evil and related packages.
 
@@ -879,8 +869,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     :ensure t
     ;; got this from the github. EVIL IN THE MINIBUFFER!
     :custom (evil-collection-setup-minibuffer t)
-    :init
-    (evil-collection-init))
+    :init (evil-collection-init))
 
   (use-package evil-matchit
     :after evil
@@ -925,9 +914,15 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
         (define-key evil-visual-state-map "k" 'evil-previous-visual-line)))
 )
 
+(defun viper_setup ()
+
+  (setq ex-cycle-through-non-files t)
+  )
+
+
 (with-eval-after-load 'org
 (defun your_spacemacs/org_setup ()
-    "Set up org configuration.
+    """Set up org configuration.
 
     https://orgmode.org/org.html#Code-Evaluation-Security
     Yeah that link has some good info like check this guy out.
@@ -938,7 +933,7 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
     (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate)
 
 TODO: The first 2 sexp's [is that what they're called? Hit % on the ( of the first progn] raise errors.
-"
+"""
 
     (progn
       (
@@ -979,7 +974,7 @@ TODO: The first 2 sexp's [is that what they're called? Hit % on the ( of the fir
 
     (with-eval-after-load 'org-agenda
       (require 'org-projectile)
-      (mapcar '(lambda (file)
+      (mapcar #'(lambda (file)
                  (when (file-exists-p file)
                    (push file org-agenda-files)))
               (org-projectile-todo-files)))
@@ -1017,7 +1012,6 @@ I'm gonna add some stuff for ielm here too because why not?"
         (setq-default ielm-noise nil)
         (setq-default ielm-prompt-read-only nil))
 )
-
 
 (defun your_spacemacs/add_pretty_symbols ()
   "From ergoemacs.org."
@@ -1070,14 +1064,6 @@ means that that package will be autoloaded"
          ("M-p" . term-send-up)
          ("M-n" . term-send-down)))
 
-   ((require 'conda)
-    ;; if you want interactive shell support, include:
-    (conda-env-initialize-interactive-shells)
-    ;; if you want eshell support, include:
-    (conda-env-initialize-eshell)
-    ;; if you want auto-activation (see below for details), include:
-    (conda-env-autoactivate-mode t))
-
 )
 
 (defun your_spacemacs/savehist_setup ()
@@ -1121,10 +1107,7 @@ Enabled it twice and I still am loading yasnippet manually. Hm."
       :after company)
 
     (with-eval-after-load "company"
-      '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
-
-
-)
+      '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
 
 (defun your_spacemacs/conda_setup()
   "Instructions from the readme."
@@ -1140,8 +1123,8 @@ Enabled it twice and I still am loading yasnippet manually. Hm."
 
 )
 
-(defun your_spacemacs/python_setup ()
-  "Setup IPython on Emacs. Also set up some rst thanks to Matplotlib!
+(defun your_spacemacs/rst_setup()
+  """Do this before python.
 
   Here are useful bindings for rst.
 
@@ -1159,21 +1142,21 @@ C-c C-l rst-shift-region-left
 
 C-c C-r rst-shift-region-right
 
-    Shift region to the right"
-;; The package is "python" but the mode is "python-mode":
+    Shift region to the right
 
-   (add-hook 'python-mode-hook
-     (use-package python
-       :defer t
-       :mode ("\\.py\\'" . python-mode)
-       :interpreter ("ipython3" . python-mode))
-     (define-key evil-normal-state-map (kbd "[F5]") 'spacemacs/python-execute-file))
+   ;; As a reminder:
+   ;;
+   ;; * Key bindings
 
-   ;; The package is "python" but the mode is "python-mode":
-   (use-package python
-     :mode ("\\.py\\'" . python-mode)
-     :interpreter ("python" . python-mode))
+   ;; | Key binding   | Description                             |
+   ;; |---------------+-----------------------------------------|
+   ;; | ~<SPC> m c c~ | compile projects                        |
+   ;; | ~<SPC> m c C~ | clean projects                          |
+   ;; | ~<SPC> m c r~ | rebuild projects                        |
+   ;; | ~<SPC> m g c~ | open =conf.py= of current project       |
+   ;; | ~<SPC> m o~   | open compiled HTML page of current page |
 
+"""
    (use-package rst-mode
      :defer t
      :config
@@ -1182,29 +1165,32 @@ C-c C-r rst-shift-region-right
                    ("\\.rst$" . rst-mode)
                    ("\\.rest$" . rst-mode)) auto-mode-alist)))
 
-
    (use-package sphinx-mode
      :defer t
      :config
-     (setq rst-slides-program "firefox"))
+     (setq rst-slides-program "firefox")
+     (setq rst-sphinx-target-parent "~/projects")
+     (setq rst-sphinx-target-projects
+           '(("dynamic_ipython" . (html "dynamic_ipython" t))
+             ("Gruvbox_IPython" . (html  "Gruvbox_IPython" t))))
+     )
+
+
+(defun your_spacemacs/python_setup ()
+  """Setup IPython on Emacs. Also set up some rst thanks to Matplotlib!"""
 
    (use-package python-x
      :defer t
      :config
      (python-x-setup))
 
+(add-hook 'after-init-hook 'global-company-mode)
 
- ;; (use-package 'company
- ;;   :config
- ;;   (add-hook 'after-init-hook 'global-company-mode))
-
- ;; (with-eval-after-load 'company
- ;;   (use-package 'company-quickhelp
- ;;     (:bind
- ;;     '(company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
- (add-hook 'after-init-hook 'global-company-mode)
-
-(with-eval-after-load 'company '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin))
+  (add-hook 'python-mode-hook
+            (use-package python
+              :mode ("\\.py\\'" . python-mode)
+              :interpreter ("ipython --simple-prompt" . python-mode))
+            (define-key evil-normal-state-map (kbd "[F5]") 'spacemacs/python-execute-file))
 
 (use-package company-jedi
   :defer t
@@ -1234,7 +1220,7 @@ C-c C-r rst-shift-region-right
 )
 
 
-(defun your_spacemacs/helm_ipython_setup()
+(defun your_spacemacs/ipython_setup()
 
   (use-package helm-ipython
     :config
@@ -1242,17 +1228,147 @@ C-c C-r rst-shift-region-right
     (define-key inferior-python-mode-map (kbd "C-i") 'helm-ipython-complete)
     (define-key python-mode-map (kbd "C-c C-i") 'helm-ipython-import-modules-from-buffer))
 
+(spacemacs/set-leader-keys-for-minor-mode 'ein:notebook
+      "y" 'ein:worksheet-copy-cell
+      "p" 'ein:worksheet-yank-cell
+      "d" 'ein:worksheet-kill-cell
+      "h" 'ein:notebook-worksheet-open-prev-or-last
+      "i" 'ein:worksheet-insert-cell-below
+      "I" 'ein:worksheet-insert-cell-above
+      "j" 'ein:worksheet-goto-next-input
+      "k" 'ein:worksheet-goto-prev-input
+      "l" 'ein:notebook-worksheet-open-next-or-first
+      "H" 'ein:notebook-worksheet-move-prev
+      "J" 'ein:worksheet-move-cell-down
+      "K" 'ein:worksheet-move-cell-up
+      "L" 'ein:notebook-worksheet-move-next
+      "t" 'ein:worksheet-toggle-output
+      "R" 'ein:worksheet-rename-sheet
+      "RET" 'ein:worksheet-execute-cell-and-goto-next
+      ;; Output
+      "C-l" 'ein:worksheet-clear-output
+      "C-S-l" 'ein:worksheet-clear-all-output
+      ;;Console
+      "C-o" 'ein:console-open
+      ;; Merge cells
+      "C-k" 'ein:worksheet-merge-cell
+      "C-j" 'spacemacs/ein:worksheet-merge-cell-next
+      "s" 'ein:worksheet-split-cell-at-point
+      ;; Notebook
+      "C-s" 'ein:notebook-save-notebook-command
+      "C-r" 'ein:notebook-rename-command
+      "1" 'ein:notebook-worksheet-open-1th
+      "2" 'ein:notebook-worksheet-open-2th
+      "3" 'ein:notebook-worksheet-open-3th
+      "4" 'ein:notebook-worksheet-open-4th
+      "5" 'ein:notebook-worksheet-open-5th
+      "6" 'ein:notebook-worksheet-open-6th
+      "7" 'ein:notebook-worksheet-open-7th
+      "8" 'ein:notebook-worksheet-open-8th
+      "9" 'ein:notebook-worksheet-open-last
+      "+" 'ein:notebook-worksheet-insert-next
+      "-" 'ein:notebook-worksheet-delete
+      "x" 'ein:notebook-close
+      "u" 'ein:worksheet-change-cell-type
+      "fs" 'ein:notebook-save-notebook-command)
+
+;; To get the transient commands working it appears the solution is to work off the ein:notebook minor mode:
+
+(spacemacs|define-transient-state ein-evil
+      :title "iPython Notebook Transient State"
+      :doc "
+ Operations on Cells^^^^^^            On Worksheets^^^^              Other
+ ----------------------------^^^^^^   ------------------------^^^^   ----------------------------------^^^^
+ [_k_/_j_]^^     select prev/next     [_h_/_l_]   select prev/next   [_t_]^^         toggle output
+ [_K_/_J_]^^     move up/down         [_H_/_L_]   move left/right    [_C-l_/_C-S-l_] clear/clear all output
+ [_C-k_/_C-j_]^^ merge above/below    [_1_.._9_]  open [1st..last]   [_C-o_]^^       open console
+ [_O_/_o_]^^     insert above/below   [_+_/_-_]   create/delete      [_C-s_/_C-r_]   save/rename notebook
+ [_y_/_p_/_d_]   copy/paste           ^^^^                           [_x_]^^         close notebook
+ [_u_]^^^^       change type          ^^^^                           [_q_]^^         quit transient-state
+ [_RET_]^^^^     execute"
+      :evil-leader-for-mode (ein:notebook . ".")
+      :bindings
+      ("q" nil :exit t)
+      ("?" spacemacs//ein-devel-ms-toggle-doc)
+      ("h" ein:notebook-worksheet-open-prev-or-last)
+      ("j" ein:worksheet-goto-next-input)
+      ("k" ein:worksheet-goto-prev-input)
+      ("l" ein:notebook-worksheet-open-next-or-first)
+      ("H" ein:notebook-worksheet-move-prev)
+      ("J" ein:worksheet-move-cell-down)
+      ("K" ein:worksheet-move-cell-up)
+      ("L" ein:notebook-worksheet-move-next)
+      ("t" ein:worksheet-toggle-output)
+      ("d" ein:worksheet-kill-cell)
+      ("R" ein:worksheet-rename-sheet)
+      ("y" ein:worksheet-copy-cell)
+      ("p" ein:worksheet-yank-cell)
+      ("o" ein:worksheet-insert-cell-below)
+      ("O" ein:worksheet-insert-cell-above)
+      ("u" ein:worksheet-change-cell-type)
+      ("RET" ein:worksheet-execute-cell-and-goto-next)
+      ;; Output
+      ("C-l" ein:worksheet-clear-output)
+      ("C-S-l" ein:worksheet-clear-all-output)
+      ;;Console
+      ("C-o" ein:console-open)
+      ;; Merge and split cells
+      ("C-k" ein:worksheet-merge-cell)
+      ("C-j" spacemacs/ein:worksheet-merge-cell-next)
+      ("s" ein:worksheet-split-cell-at-point)
+      ;; Notebook
+      ("C-s" ein:notebook-save-notebook-command)
+      ("C-r" ein:notebook-rename-command)
+      ("1" ein:notebook-worksheet-open-1th)
+      ("2" ein:notebook-worksheet-open-2th)
+      ("3" ein:notebook-worksheet-open-3th)
+      ("4" ein:notebook-worksheet-open-4th)
+      ("5" ein:notebook-worksheet-open-5th)
+      ("6" ein:notebook-worksheet-open-6th)
+      ("7" ein:notebook-worksheet-open-7th)
+      ("8" ein:notebook-worksheet-open-8th)
+      ("9" ein:notebook-worksheet-open-last)
+      ("+" ein:notebook-worksheet-insert-next)
+      ("-" ein:notebook-worksheet-delete)
+      ("x" ein:notebook-close))
+    (spacemacs/set-leader-keys "ein" 'spacemacs/ein-devel-transient-state/body)
+
 )
+
 
 (defun your_spacemacs/lsp_setup()
 
-  (use-package lsp-ui
-    :ensure t
-    :config
-    (setq lsp-ui-doc-max-height 20
-          lsp-ui-doc-max-width 50
-          lsp-ui-sideline-ignore-duplicate t
-          lsp-ui-peek-always-show t))
+(use-package lsp-ui
+  :after lsp-mode
+  :diminish
+  :commands lsp-ui-mode
+  :custom-face
+  (lsp-ui-doc-background ((t (:background nil))
+  (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
+  :bind (:map lsp-ui-mode-map
+              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+              ([remap xref-find-references] . lsp-ui-peek-find-references)
+              ("C-c u" . lsp-ui-imenu))
+  :custom
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-header t)
+  (lsp-ui-doc-include-signature t)
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-doc-border (face-foreground 'default))
+  (lsp-ui-sideline-enable nil)
+  (lsp-ui-sideline-ignore-duplicate t)
+  (lsp-ui-sideline-show-code-actions nil)
+  :config
+  (setq lsp-ui-doc-max-height 20
+        lsp-ui-doc-max-width 50
+        lsp-ui-sideline-ignore-duplicate t
+	;; Use lsp-ui-doc-webkit only in GUI
+  	lsp-ui-doc-use-webkit t
+        lsp-ui-peek-always-show t)
+  ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+  ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+  (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+        (setq mode-line-format nil)))))
 
   (use-package company
     :ensure t
@@ -1276,6 +1392,15 @@ C-c C-r rst-shift-region-right
     :config
     (add-hook 'python-mode-hook #'lsp))
 
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  ;; :custom
+  ;; (lsp-auto-guess-root nil)
+  ;; (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+  :bind (:map lsp-mode-map ("C-c C-f" . lsp-format-buffer))
+  :hook ((python-mode) . lsp))
+
 )
 
 
@@ -1294,13 +1419,6 @@ C-c C-r rst-shift-region-right
   (use-package fzf
     :defer t)
 )
-
-(defun your_spacemacs/helm-setup ()
-  "Enable the mouse."
-  (progn
-  (setq helm-allow-mouse t)
-  (setq helm-grep-default-function))
-  )
 
 (defun your_spacemacs/flycheck-setup()
 "Set up flycheck.
@@ -1342,7 +1460,10 @@ package name with "-mode" appended at the end:"
 ;;   )
 
 (defun your_spacemacs/magit_setup()
-  "I was a little amazed to realize I hadn't set this up yet."
+  "I was a little amazed to realize I hadn't set this up yet.
+
+Dude note magit-repolist-mode that shit is amazing.
+"
 
 ;; fun fact. quoting magit like 'magit raises an error.
 (use-package magit
@@ -1360,17 +1481,26 @@ package name with "-mode" appended at the end:"
 (defun your_spacemacs/path_setup()
 
   (use-package exec-path-from-shell
-    :defer t)
-  (exec-path-from-shell-initialize)
+    :defer t
+    :init
+    (exec-path-from-shell-initialize)
 
-  (exec-path-from-shell-copy-env "PYTHONPATH")
-
+    (exec-path-from-shell-copy-env "PYTHONPATH")
+    (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
 )
 
+(defun your_spacemacs/neotree_setup()
+  "Neotree. Pulled options from customize."
+  (setq neo-autorefresh t)
+  ;; (setq neo-cwd-line-style )
+  (setq neo-click-changes-root t)
+  (setq neo-show-hidden-files t))
+
+;; I know it looks lame but emacs is overwhelming without it
+(setq menu-bar-mode t)
+(setq polymode-minor-mode t)
+
 (defun your_spacemacs/evil_commenter_setup()
-
-  (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
-
   (require 'evil-leader)
   (global-evil-leader-mode)
   (evil-leader/set-key
@@ -1384,8 +1514,15 @@ package name with "-mode" appended at the end:"
     "cv" 'evilnc-toggle-invert-comment-line-by-line
     "."  'evilnc-copy-and-comment-operator
     "\\" 'evilnc-comment-operator)
-
 )
+
+
+(defun load-if-exists (f)
+  "load the elisp file only if it exists and is readable"
+  (if (file-readable-p f)
+      (load-file f)))
+
+(load-if-exists "~/.emacs.d/private/README.org")
 
 
 (defun dotspacemacs/emacs-custom-settings ()
@@ -1398,6 +1535,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(blink-cursor-mode nil)
+ '(column-number-mode t)
+ '(display-line-numbers-type (quote relative))
  '(evil-want-Y-yank-to-eol nil)
  '(hl-todo-keyword-faces
    (quote
@@ -1416,20 +1556,30 @@ This function is called at the very end of Spacemacs initialization."
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f"))))
+ '(lsp-clients-python-library-directories
+   (quote
+    ("/usr/" "C:\\tools\\vs\\2019\\Community\\Common7\\IDE\\Extensions\\Microsoft\\Python\\Miniconda\\Miniconda3-x64")))
+ '(lsp-pyls-plugins-flake8-enabled t)
+ '(lsp-pyls-plugins-pycodestyle-enabled nil)
+ '(lsp-pyls-plugins-pydocstyle-enabled t)
+ '(lsp-pyls-plugins-rope-completion-enabled t)
  '(package-selected-packages
    (quote
-    (company-box treemacs-projectile treemacs-evil evil-nerd-commenter yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package-ensure-system-package unicode-fonts unfill toc-org terminal-here tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox ox-gfm overseer orgit org-sticky-header org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-bullets org-brain open-junk-file ob-hy nodejs-repl neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode insert-shebang indent-guide importmagic impatient-mode ibuffer-projectile hybrid-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help engine-mode emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav editorconfig dumb-jump dotnet dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode conda company-web company-tern company-statistics company-shell company-quickhelp company-lsp company-emoji company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+    (pdf-tools company-box treemacs-projectile treemacs-evil evil-nerd-commenter yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package-ensure-system-package unicode-fonts unfill toc-org terminal-here tagedit symon symbol-overlay string-inflection spotify sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox ox-gfm overseer org-sticky-header org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-bullets org-brain open-junk-file ob-hy nodejs-repl neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode insert-shebang indent-guide importmagic impatient-mode ibuffer-projectile hybrid-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-spotify-plus helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fzf fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help engine-mode emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav editorconfig dumb-jump dotnet dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode conda company-web company-tern company-statistics company-shell company-quickhelp company-lsp company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
  '(py-auto-complete-p t)
  '(py-keep-shell-dir-when-execute-p t)
- '(py-known-shells (quote ("ipython" "ipython3" "python" "python3" "pypy"))))
+ '(py-known-shells (quote ("ipython" "ipython3" "python" "python3" "pypy")))
+ '(show-paren-mode t)
+ '(size-indication-mode t)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "FuraMono Nerd Font Mono" :foundry "outline" :slant normal :weight normal :height 120 :width normal)))))
 )
 
 (provide '.spacemacs)

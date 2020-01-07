@@ -143,12 +143,10 @@
     untrackedCache = True
 
 [credential]
-    helper = manager
-    ; helper = cache --timeout=86400
+    protocol = ssh
     modalPrompt = True
     store = approve
     username = farisachugthai
-	 ; helper = wincred
 
 [credential "https://www.github.com"]
     username = farisachugthai
@@ -254,7 +252,7 @@
     # NOTE: mirrored at pretty.format.lo [el oh]. So you can do git log --pretty=lo and get the same thing
     format = "format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"
     # cross your finger that neovim just starts auto highlighting
-    graphColors=#e3a84e,#ea6962,#7daea3
+    ; graphColors=#e3a84e,#ea6962,#7daea3
 
 
 [man]
@@ -398,3 +396,6 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
+[hub]
+	username = farisachugthai
+	oauthtoken = ff26ecd9116052f5f4b963e97a8297991888f5aa

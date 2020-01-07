@@ -3,11 +3,18 @@
 
 BYOBU_DARK='#1d2021'
 BYOBU_LIGHT='#ebdbb2'
+
+# here's 2 from /usr/lib/byobu/include/colors
+# Aubergine
+export BYOBU_ACCENT="\#75507B"
+
+# Ubuntu orange
+export BYOBU_HIGHLIGHT="\#DD4814"
 BYOBU_ACCENT='#fe8019'
 # MONOCHROME=
 # Not super noticeable since I usually use a similar background but I prefer
 # it that way
-BYOBU_HIGHLIGHT="#282828"
+# BYOBU_HIGHLIGHT="#282828"
 
 # WSL Defaults:
 

@@ -45,6 +45,7 @@ if [ $? -eq 0 ]; then
 else
     if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
         source "$HOME/miniconda3/etc/profile.d/conda.sh"
+        # commented out by conda initialize
     elif [[ -d "$HOME/miniconda3/bin" ]]; then
         pathadd "$HOME/miniconda3/bin"
     fi
@@ -223,7 +224,7 @@ fi
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 export NODE_PRESERVE_SYMLINKS=1
 
-source <(npx --shell-auto-fallback bash)
+# source <(npx --shell-auto-fallback bash)
 
 # Fasd: {{{1
 
@@ -283,9 +284,10 @@ complete -F _longopt ctags
 # I'm gonna try and stay conservative here.
 export PS1="\\t \\u@\\h \\d \w \n $: "
 
+export TEMP="$XDG_CACHE_HOME"
+export TMP="$XDG_CACHE_HOME"
+
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

@@ -4,6 +4,10 @@
 # For more information about this file see:
 # https://conda.io/docs/user-guide/configuration/use-condarc.html
 
+default_python: 3.8
+
+clobber: true
+
 # Don't know where this option is listed in conda config --describe.
 # Shit I mean it probably isn't
 allow_conda_downgrades: true
@@ -148,6 +152,45 @@ restore_free_channel: true
 #
 # repodata_threads: 0
 
+# as reference
+# channels:
+#   - conda-forge
+#   - defaults
+#   - bokeh
+#   - conda-canary
+#   - intel
+#   - pytorch
+#   - anaconda
+#   - bioconda
+# client_ssl_cert: None
+# client_ssl_cert_key: None
+# clobber: True
+# conda_build: {}
+# create_default_packages: []
+# croot: C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\conda-bld
+# custom_channels:
+#   pkgs/main: https://repo.anaconda.com
+#   pkgs/free: https://repo.anaconda.com
+#   pkgs/pro: https://repo.anaconda.com
+#   pkgs/msys2: https://repo.anaconda.com
+#   C:/tools/vs/2019/Community/Common7/IDE/Extensions/Microsoft/Python/Miniconda/Miniconda3-x64/conda-bld: file://
+# custom_multichannels:
+#   defaults:
+#     - https://repo.anaconda.com/pkgs/main
+#     - https://repo.anaconda.com/pkgs/free
+#     - https://repo.anaconda.com/pkgs/free
+#     - https://repo.anaconda.com/pkgs/pro
+#     - https://repo.anaconda.com/pkgs/msys2
+#   local:
+#     - file:///C:/tools/vs/2019/Community/Common7/IDE/Extensions/Microsoft/Python/Miniconda/Miniconda3-x64/conda-bld
+# debug: False
+# default_channels:
+#   - https://repo.anaconda.com/pkgs/main
+#   - https://repo.anaconda.com/pkgs/free
+#   - https://repo.anaconda.com/pkgs/free
+#   - https://repo.anaconda.com/pkgs/pro
+#   - https://repo.anaconda.com/pkgs/msys2
+# default_python: 3.8
 
 ######################################################
 ##            Basic Conda Configuration             ##
@@ -562,6 +605,5 @@ ssl_verify: true
 #   the case of a failed install.
 #
 # unsatisfiable_hints: true
-
 
 # Vim: set ft=yaml:

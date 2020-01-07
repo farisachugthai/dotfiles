@@ -541,6 +541,7 @@ report_errors: false
 #
 show_channel_urls: true
 
+anaconda_upload: false
 # verbosity (int)
 #   aliases: verbose
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.

@@ -3,8 +3,9 @@
   "alwaysShowTabs": true,
   "copyOnSelect": true,
   "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+  "initialCols": 100,
+  "initialRows": 30,
   "keybindings": [
-    // here's a not listed one. alt-enter. toggle fullscreen
     {
       "command": "closeTab",
       "keys": [
@@ -210,6 +211,12 @@
       ]
     },
     {
+      "command": "toggleFullscreen",
+      "keys": [
+        "F11"
+      ]
+    },
+    {
       "command": "increaseFontSize",
       "keys": [
         "ctrl+="
@@ -276,9 +283,11 @@
     {
       "closeOnExit": true,
       "colorScheme": "Gruvbox",
-      "commandline": "cmd.exe /U /E:ON /F:ON /K call init.bat & chcp 65001",
+      "acrylicOpacity": 0.90,
+      "commandline": "cmd.exe /U /E:ON /F:ON /K C:/tools/Cmder/vendor/init.bat & chcp 65001",
       "cursorShape": "emptyBox",
-      "fontFace": "Fira Code Light",
+      "experimental.retroTerminalEffect": true,
+      "fontFace": "Fira Code Retina",
       "fontSize": 12,
       "foreground": "#EBDBB2",
       "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -286,11 +295,13 @@
       "historySize": 9001,
       "icon": "C:/tools/Cmder/icons/cmder_blue.ico",
       "name": "Homebrewed Cmder",
-      "padding": "8, 8, 8, 8",
+      // "padding": "8, 18, 18, 8",
       "scrollbarState": "visible",
       "snapOnInput": true,
-      "startingDirectory": "C:/tools/Cmder/vendor",
-      "tabTitle": "Homebrewed Cmder"
+      "startingDirectory": "%USERPROFILE%",
+      "suppressApplicationTitle": true,
+      "tabTitle": "Homebrewed Cmder",
+      "useAcrylic": true
     },
     {
       "acrylicOpacity": 0.9,
@@ -337,7 +348,7 @@
       "useAcrylic": true
     }
   ],
-  "requestedTheme": "dark",
+  "requestedTheme": "One Half Dark",
   "schemes": [
     {
       "background": "#1e1e1e",
@@ -511,5 +522,5 @@
   ],
   "showTabsInTitlebar": true,
   "showTerminalTitleInTitlebar": true,
-  "wordDelimiters": " /\\()\"'-.,:;<>~_!@#$%^&*|+=[]{}~?│"
+  "wordDelimiters": " /\\()\"'-.:,;<>~_!@#$%^&*|+=[]{}~?|\u2502"
 }

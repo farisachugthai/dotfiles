@@ -28,6 +28,7 @@ SET CMDER_USER_FLAGS="/time_init"
 
 :: So this should stay at the top
 chcp 65001
+set "LC_ALL=en_US.UTF-8"
 
 :: Add *nix tools to end of path. 0 turns off *nix tools.
 :: So they're right 1 adsd it to the end, 0 turns it off. So if we set it to 2 can it prepend?
@@ -44,10 +45,7 @@ SET IPYTHONDIR=C:\Users\faris\.ipython
 :: Each click of the mouse wheel moves N lines.
 SET "PAGER=less -JRKMLiegF --mouse --save-marks --wheel-lines=5 "
 :: Idk if this work so comment out after the space
-SET "LESS=JRKMLiegF"
 :: apparently you're really not allowed to inline comments. Wtf?
-:: --mouse --save-marks --wheel-lines=5 "
-SET "BAT_PAGER=less -JRKMLiegF --mouse --save-marks --wheel-lines=5 "
 
 :: SET "LESSEDIT=nvim -q '%F %lm'"
 
