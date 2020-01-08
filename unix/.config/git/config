@@ -238,10 +238,6 @@
 [index]
     version = 4
 
-[include]
-    # how do we make this conditional again?
-    path = ~/nt.gitconfig
-
 [html]
     sslbackend=openssl
 
