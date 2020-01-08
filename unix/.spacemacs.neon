@@ -94,6 +94,7 @@ This function should only modify configuration layer settings."
            helm-M-x-fuzzy-match t  ;; optional fuzzy matching for helm-M-x
            helm-buffers-fuzzy-matching t
            helm-recentf-fuzzy-match t)
+     helpful
      (html :variables web-fmt-tool 'prettier)
      (ibuffer :variables
               ibuffer-group-buffers-by "projects")
@@ -119,7 +120,7 @@ This function should only modify configuration layer settings."
              python-backend 'lsp
              python-enable-yapf-format-on-save t
              python-fill-column 120
-             python-formatter 'yapf
+             python-formatter 'black
              python-format-on-save t
              python-indent-offset 4
              python-sort-imports-on-save t
@@ -1149,7 +1150,7 @@ C-c C-r rst-shift-region-right
      (setq rst-sphinx-target-parent "~/projects")
      (setq rst-sphinx-target-projects
            '(("dynamic_ipython" . (html "dynamic_ipython" t))
-             ("Gruvbox_IPython" . (html  "Gruvbox_IPython" t)))))
+             ("gruvbox_pygments" . (html  "gruvbox_pygments" t)))))
 
 )
    (add-hook 'rst-mode-hook '(your_spacemacs/rst_setup))
@@ -1170,7 +1171,8 @@ Probably would just make more sense to with-eval-after-load the whole function t
     :mode ("\\.py\\'" . python-mode)
     ;; (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
     :interpreter ("ipython --simple-prompt" . python-mode)
-    (define-key evil-normal-state-map (kbd "[F5]") 'spacemacs/python-execute-file))
+    :init
+    (define-key evil-normal-state-map "F5" 'spacemacs/python-execute-file))
 
   (use-package company-jedi
     :defer t
@@ -1543,21 +1545,25 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(blacken-allow-py36 t)
+ '(blacken-executable "pipenv run black")
+ '(blacken-line-length 88)
  '(blink-cursor-mode nil)
  '(column-number-mode t)
  '(company-auto-complete-chars (quote (32 40 41 46 39)))
  '(company-quickhelp-color-background "#4F4F4F")
  '(company-quickhelp-color-foreground "#DCDCCC")
- '(display-line-numbers-type (quote relative) t)
+ '(display-line-numbers-type (quote relative))
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-folding elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-autodoc elpy-module-sane-defaults)))
+ '(elpy-shell-add-to-shell-history t)
  '(elpy-test-pytest-runner-command (quote ("python -m pytest")))
  '(elpy-test-runner (quote elpy-test-pytest-runner))
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-color "#343d46")
  '(frame-brackground-mode (quote dark))
- '(global-eldoc-mode t)
+ '(global-eldoc-mode nil)
  '(global-evil-tabs-mode t)
  '(global-flycheck-mode t)
  '(helm-completion-style (quote emacs))
@@ -1594,7 +1600,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-use-speed-commands t)
  '(package-selected-packages
    (quote
-    (ox-rst org-evil literate-starter-kit xonsh-mode yatemplate yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify vterm volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package use-package-chords unicode-fonts unfill typo toc-org terminal-here tagedit symon symbol-overlay string-inflection stickyfunc-enhance srefactor sqlup-mode sql-indent spray sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox ox-gfm overseer orgit org-sticky-header org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-bullets open-junk-file omnisharp ob-ipython ob-hy nodejs-repl neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode insert-shebang indent-guide importmagic impatient-mode ibuffer-projectile hybrid-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gmail-message-mode gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags geiser fzf fuzzy font-lock+ flyspell-correct-helm flymd flycheck-pos-tip flycheck-package flycheck-elsa flycheck-bashate flx-ido fish-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig edit-server dumb-jump dotnet dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-gtags conda company-web company-tern company-statistics company-shell company-quickhelp company-lua company-lsp company-emoji company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+    (magit-libgit magithub magit-todos load-bash-alias ox-rst org-evil literate-starter-kit xonsh-mode yatemplate yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify vterm volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package use-package-chords unicode-fonts unfill typo toc-org terminal-here tagedit symon symbol-overlay string-inflection stickyfunc-enhance srefactor sqlup-mode sql-indent spray sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox ox-gfm overseer orgit org-sticky-header org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-bullets open-junk-file omnisharp ob-ipython ob-hy nodejs-repl neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode insert-shebang indent-guide importmagic impatient-mode ibuffer-projectile hybrid-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gmail-message-mode gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags geiser fzf fuzzy font-lock+ flyspell-correct-helm flymd flycheck-pos-tip flycheck-package flycheck-elsa flycheck-bashate flx-ido fish-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig edit-server dumb-jump dotnet dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-gtags conda company-web company-tern company-statistics company-shell company-quickhelp company-lua company-lsp company-emoji company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(pdf-view-midnight-colors (quote ("#fdf4c1" . "#1d2021")))
  '(pipenv-executable "python3 -m pipenv")
@@ -1602,13 +1608,13 @@ This function is called at the very end of Spacemacs initialization."
  '(py-auto-complete-p t)
  '(py-keep-shell-dir-when-execute-p t)
  '(py-known-shells (quote ("ipython" "ipython3" "python" "python3" "pypy")))
- '(python-indent-guess-indent-offset t)
  '(python-shell-buffer-name "**Python-Interactive-Shell**")
  '(python-shell-exec-path
    (quote
     ("(\"~/miniconda3\", \"~/miniconda3/envs\", \"~/.local/share/virtualenvs\", \"/usr/bin\", \"/usr/local/bin\", \"~/.local/bin\")")))
- '(pyvenv-default-virtual-env-name "~/.local/share/virtualenvs/dynamic_ipython-SU0AiBHn")
+ '(python-shell-interpreter-args "--simple-prompt")
  '(pyvenv-mode t)
+ '(pyvenv-tracking-ask-before-change t)
  '(size-indication-mode t)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
@@ -1638,5 +1644,6 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cursor ((t (:background "#ffffaf" :foreground "white"))))
  '(lsp-ui-doc-background ((t (:background nil)) (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic))))) :bind (:map lsp-ui-mode-map ([remap xref-find-definitions] . lsp-ui-peek-find-definitions) ([remap xref-find-references] . lsp-ui-peek-find-references) ("C-c u" . lsp-ui-imenu)) :custom (lsp-ui-doc-enable t) (lsp-ui-doc-header t) (lsp-ui-doc-include-signature t) (lsp-ui-doc-position (quote top)) (lsp-ui-doc-border (face-foreground (quote default))) (lsp-ui-sideline-enable nil) (lsp-ui-sideline-ignore-duplicate t) (lsp-ui-sideline-show-code-actions nil) :config (setq lsp-ui-doc-use-webkit t) (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate) (setq mode-line-format nil)))))
 )

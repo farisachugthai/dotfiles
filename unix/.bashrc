@@ -196,7 +196,7 @@ export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
 export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
 
 if [[ -n "$(command -v bat)" ]]; then
-    export BAT_PAGER="less -JRKMLige"
+    export BAT_PAGER="less -JRKMLigeF"
     export BAT_THEME="base16"
     export BAT_STYLE="full"
   # TODO: This doesn't work for me
@@ -275,6 +275,9 @@ export COMP_CONFIGURE_HINTS=1
 if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
 fi
+
+# Just figured this one out!
+complete -F _longopt ctags
 
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"

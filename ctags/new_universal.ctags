@@ -1,3 +1,6 @@
+--langdef=snippets
+--langmap=snippets:.snippets
+--regex-snippets=/^snippet (.*)/\1/s,snippet/
 --map-Json=.ipynb
 --map-Json=.json
 --recurse=yes
@@ -12,8 +15,11 @@
 --pseudo-tags=*
 --exclude=log
 --exclude=tmp
+--exclude=.git
+--exclude=node_modules
 --exclude=build
 --exclude=dist
+--exclude=.egg_info
 --exclude=.tox
 --exclude=.egg-info
 --exclude=_static

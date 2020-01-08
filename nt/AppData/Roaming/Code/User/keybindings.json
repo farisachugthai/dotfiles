@@ -1,4 +1,10 @@
 [
+  // what's the difference between editor.action.marker.next and editor.action.marker.nextInFiles?
+  {
+    "command": "editor.action.marker.next",
+    "key": "Ctrl+]",
+    "when": "editorTextFocus && !editorReadonly"
+  },
   {
     "command": "vim.showQuickpickCmdLine",
     "key": "ctrl+shift+; shift+alt+;"
@@ -18,8 +24,8 @@
     "key": "ctrl+shift+w"
   },
   {
-    "key": "ctrl+f",
     "command": "-workbench.action.terminal.focusFindWidget",
+    "key": "ctrl+f",
     "when": "terminalFocus"
   },
   {
@@ -139,7 +145,7 @@
     "args": "-m IPython",
     "command": "python.createTerminal",
     "key": "Ctrl+`",
-    "when": "!terminalFocus"
+    "when": "!terminalFocus && editorLangId == 'python'"
   },
   // {
     // when i'm not focused on the terminal jump to it. might be easier as C-k Down. oh shit C-k jumps to the other window! That's easy enough
@@ -157,26 +163,90 @@
     "when": "editorTextFocus && !editorReadonly && editorLangId == 'python'"
   },
   {
-    "key": "Ctrl+\\",
-    "command": "-workbench.action.splitEditor"
+    "command": "-workbench.action.splitEditor",
+    "key": "Ctrl+\\"
   },
   {
     "command": "workbench.action.toggleMaximizedPanel",
     "key": "Ctrl+\\"
   },
   {
-    "command": "editor.action.marker.next",
-    "key": "Ctrl+]",
-    "when": "editorTextFocus && !editorReadonly"
+    "command": "python.datascience.notebookeditor.runallcells",
+    "key": "f5",
+    "when": "editorTextFocus && python.datascience.featureenabled && editorLangId == 'python' && python.datascience.hascodecells && !editorHasSelection"
   },
-    {
-        "key": "f5",
-        "command": "python.datascience.notebookeditor.runallcells",
-        "when": "editorTextFocus && python.datascience.featureenabled && editorLangId == 'python' && python.datascience.hascodecells && !editorHasSelection"
-    },
-    {
-        "key": "f5",
-        "command": "python.debugTestNode",
-        "when": "editorLangId == 'python && editorTextFocus && !inDebugRepl"
-    }
+  {
+    "command": "python.debugTestNode",
+    "key": "f5",
+    "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
+  },
+  {
+    "command": "-repl.action.filter",
+    "key": "ctrl+f",
+    "when": "inDebugRepl && textInputFocus"
+  },
+  {
+    "command": "-workbench.action.terminal.clearSelection",
+    "key": "escape",
+    "when": "terminalFocus && terminalTextSelected && !terminalFindWidgetVisible"
+  },
+  {
+    "command": "-workbench.action.terminal.navigationModeExit",
+    "key": "escape",
+    "when": "accessibilityModeEnabled && terminalA11yTreeFocus"
+  },
+  {
+    "command": "-editor.action.diffReview.next",
+    "key": "f7",
+    "when": "isInDiffEditor"
+  },
+  {
+    "command": "-workbench.action.quickOpen",
+    "key": "ctrl+p"
+  },
+  {
+    "command": "-workbench.action.quickOpen",
+    "key": "ctrl+e"
+  },
+  {
+    "command": "workbench.action.terminal.runActiveFile",
+    "key": "shift+f5",
+    "when": "!editorReadOnly && !inDebugRepl"
+  },
+  {
+    "command": "python.viewOutput",
+    "key": "ctrl+g ctrl+p"
+  },
+  {
+    "command": "workbench.action.openActiveLogOutputFile",
+    "key": "ctrl+g l"
+  },
+  {
+    "command": "git.showOutput",
+    "key": "ctrl+g alt+g"
+  },
+  {
+    "command": "editor.action.fontZoomOut",
+    "key": "ctrl+-"
+  },
+  {
+    "command": "deleteFile",
+    "key": "delete",
+    "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "command": "-deleteFile",
+    "key": "delete",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "command": "editor.action.peekDeclaration",
+    "key": "ctrl+shift+]",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "python.debugTestNode",
+    "key": "f5",
+    "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
+  }
 ]

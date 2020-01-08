@@ -166,16 +166,16 @@
   "files.exclude": {
     "**/*.egg-info": true,
     "**/.coverage": true,
-    "{workspaceFolder}/build": true,
-    "{workspaceFolder}/**/_static": true,
-    "{workspaceFolder}/dist": true,
-    "{workspaceFolder}/.idea": true,
     "**/.eggs": true,
     "**/.mypy_cache": true,
     "**/.pytest_cache": true,
     "**/__pycache__": true,
+    "**/node_modules": true,
+    "{workspaceFolder}/**/_static": true,
+    "{workspaceFolder}/.idea": true,
     "{workspaceFolder}/.tox": true,
-    "**/node_modules": true
+    "{workspaceFolder}/build": true,
+    "{workspaceFolder}/dist": true
   },
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
