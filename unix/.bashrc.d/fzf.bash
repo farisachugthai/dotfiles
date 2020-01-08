@@ -2,8 +2,7 @@
 ##         NAME:  fzf.bash
 #  DESCRIPTION:  From my bashrc. Note also pwsh compatible.
 #==============================================================================
-
-# Check that the main entry point is there.: {{{1
+# Check that the main entry point is there.: {{{
 if [[ -f ~/.fzf.bash ]]; then
 
     export FZF_TMUX_HEIGHT=80%
@@ -15,19 +14,59 @@ else
     echo -e 'FZF not installed.'
 fi
 
-if [[ -n "$(command -v rg)" ]]; then  #: {{{1
+# Dont source directly!!
+# if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh ]]; then
+#     source ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh
+# fi
 
-    # Base FZF command: `fzf`: {{{1
+# Pushing fd up rg is being difficult to work with
+# }}}
+if [[ -n "$(command -v fd)" ]]; then  # fd {{{1
+
+    # Base FZF command: {{{2
+    export FZF_DEFAULT_COMMAND="fd --hidden --follow -j 8 -d 6 --exclude .git"
+
+    export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser. Press Alt-n to launch nvim. " --bind alt-n:execute:"nvim {}" '
+    #  --bind "?:toggle-preview" --preview-window=down:50%:wrap --preview "bat {}"
+    # }}}
+    # __fzf_history__: <Ctrl-r>: {{{2
+    export FZF_CTRL_R_COMMAND="fd "
+    export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+
+    # }}}
+    # Change dirs with Alt C: {{{2
+    export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
+
+    export FZF_ALT_C_OPTS=' --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind "?:toggle-preview" --header "Press ? to toggle preview." --border --prompt "FZF Dir Finder" '
+
+    # }}}
+    # fzf-file-widget: <Ctrl-t>: {{{2
+    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
+
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview."'
+    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh && -n "$(command -v ruby)" ]]; then
+        export FZF_CTRL_T_OPTS+=" --preview ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh {} | bat - "
+
+    elif [[ -n "$(command -v bat)" ]]; then
+        export FZF_CTRL_T_OPTS+='--preview "bat {}" '
+    else
+        export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " '
+    fi
+
+# }}}
+# }}}
+elif [[ -n "$(command -v rg)" ]]; then  #: {{{1
+    # Base FZF command: `fzf`: {{{2
     # May 28, 2019: works
     # I wanna see a line but only one at a time. Also check the ripgreprc.
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
     # Filepath helps you jump directories quickly, tiebreak begin makes a ton
     # of difference, ansi colors dude this is sweet
-    export FZF_DEFAULT_COMMAND='rg --hidden  --no-messages --smart-case  --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 -- ^ '
+    export FZF_DEFAULT_COMMAND='rg --hidden  --no-messages --smart-case  --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 -- .'
     export FZF_BACKUP_DEFAULT_COMMAND="rg --follow --hidden --smart-case --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
 
-    # fzf-file-widget: <Ctrl-t>: {{{1
+    # fzf-file-widget: <Ctrl-t>: {{{2
     # Might be implemented as __fzf_select__
     # Also i think its the fzf-file-widget you see in the autocomplete suggestion so add --filepath-word
 
@@ -39,9 +78,9 @@ if [[ -n "$(command -v rg)" ]]; then  #: {{{1
 
     export FZF_CTRL_T_OPTS=' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview. Alt-n to launch nvim. " --bind "alt-n:execute(nvim {}) " '
 
-    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb && -n "$(command -v ruby)" ]]; then
+    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh && -n "$(command -v ruby)" ]]; then
         # doesn't this stop tilde expansion?
-        export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb {} | bat - ' "
+        export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh {} | bat - ' "
 
     elif [[ -n "$(command -v bat)" ]]; then
         # TODO: Fzf is reading these as options to itself not as bats options
@@ -52,34 +91,14 @@ if [[ -n "$(command -v rg)" ]]; then  #: {{{1
         export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " '
     fi
 
-    # __fzf_history__: <Ctrl-r>: {{{1
+    # __fzf_history__: <Ctrl-r>: {{{2
     export FZF_CTRL_R_COMMAND=" rg --hidden --color=ansi --smart-case --no-heading --no-filename --no-messages --smart-case --glob '!.git/*' -g '!node_modules/*' "
     export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
-    # __fzf_cd__: <Alt-c>: {{{1
     if [[ -n "$(command -v fd)" ]]; then  # Change dirs with Alt C: {{{2
         export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
     # TODO: else
     fi
-
-    export FZF_ALT_C_OPTS=' --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind "?:toggle-preview" --header "Press ? to toggle preview." --border --prompt "FZF Dir Finder" '
-
-elif [[ -n "$(command -v fd)" ]]; then  # fd {{{1
-    # Base FZF command: {{2
-    export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow -j 8 -d 6 --exclude .git $@"
-
-    # Alt-C dir change: {{{2
-    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git '
-
-    # <Ctrl-t> file widget: {{{2
-    export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
-
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview "bat {}" --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview."'
-
-    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb ]]; then
-        export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.rb {} | bat -200'"
-    fi
-
 else  # no rg or fd: Use find. {{{1
     export FZF_DEFAULT_COMMAND="find * -type f $@"
 
@@ -87,6 +106,7 @@ else  # no rg or fd: Use find. {{{1
     export FZF_DEFAULT_OPTS=' --cycle --multi --border --ansi '
 fi
 
+# }}}
 # Extra funcs from fzf: {{{1
 Ag() { ag -l -g "" | fzf-tmux $FZF_DEFAULT_OPTS - ; };
 Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
@@ -95,7 +115,8 @@ Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
 # termux doesnt have xclip or xsel
 command -v tree > /dev/null && export FZF_ALT_C_OPTS+="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "
 
-# Enhance path completion: {{{2
+# }}}
+# Enhance path completion: {{{1
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
@@ -135,9 +156,8 @@ local color0D='#83a598'
 local color0E='#d3869b'
 local color0F='#d65d0e'
 
-export FZF_COLORSCHEME="\
-  --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D
-  --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C
+export FZF_COLORSCHEME="--color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D \
+  --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C \
   --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"
 }
 

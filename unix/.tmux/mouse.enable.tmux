@@ -11,9 +11,10 @@
 
 
 set -g mouse on
+
+# Copy mode mouse: {{{
 bind-key    -T copy-mode-vi    MouseDown1Pane         send-keys -M scroll-down
 bind-key    -T copy-mode-vi    MouseUp1Pane           send-keys -M scroll-up
-
 # Defaults but make sure
 bind-key    -T copy-mode-vi    MouseDrag1Pane        select-pane \; send-keys -M begin-selection
 bind-key    -T copy-mode-vi    MouseDragEnd1Pane     send-keys -M copy-selection-and-cancel
@@ -22,12 +23,13 @@ bind-key    -T copy-mode-vi    WheelDownPane         select-pane \; send-keys -M
 bind-key    -T copy-mode-vi    DoubleClick1Pane      select-pane \; send-keys -M select-word
 bind-key    -T copy-mode-vi    TripleClick1Pane      select-pane \; send-keys -M select-line
 
+# }}}
+
+# Root mouse:  {{{
 # Dude byobu went nuts on this one
 bind-key    -T root         MouseDown1Pane        select-pane -t = \; send-keys -M
 
 bind-key    -T root         MouseDown1Status      select-window -t =
-
-bind-key    -T root         MouseDown3Pane        if-shell -F -t = "#{||:#{mouse_any_flag},#{pane_in_mode}}" "select-pane -t=; send-keys -M" "display-menu -t= -xM -yM -T \"#[align=centre]#{pane_index} (#{pane_id})\"  '#{?mouse_word,Search For #[underscore]#{=/9/...:mouse_word},}' 'C-r' {copy-mode -t=; send -Xt= search-backward \"#{q:mouse_word}\"} '#{?mouse_word,Type #[underscore]#{=/9/...:mouse_word},}' 'C-y' {send-keys -l -- \"#{q:mouse_word}\"} '#{?mouse_word,Copy #[underscore]#{=/9/...:mouse_word},}' 'c' {set-buffer -- \"#{q:mouse_word}\"} '#{?mouse_line,Copy Line,}' 'l' {set-buffer -- \"#{q:mouse_line}\"} '' 'Horizontal Split' 'h' {split-window -h} 'Vertical Split' 'v' {split-window -v} '' 'Swap Up' 'u' {swap-pane -U} 'Swap Down' 'd' {swap-pane -D} '#{?pane_marked_set,,-}Swap Marked' 's' {swap-pane} '' 'Kill' 'X' {kill-pane} 'Respawn' 'R' {respawn-pane -k} '#{?pane_marked,Unmark,Mark}' 'm' {select-pane -m} '#{?window_zoomed_flag,Unzoom,Zoom}' 'z' {resize-pane -Z}"
 
 # So this is one of the ones that needs to be conditional
 # bind-key    -T root         MouseDown3Status      display-menu -T "#[align=centre]#{window_index}:#{window_name}" -t = -x W -y S "Swap Left" l "swap-window -t:-1" "Swap Right" r "swap-window -t:+1" "#{?pane_marked_set,,-}Swap Marked" s swap-window  Kill X kill-window Respawn R "respawn-window -k" "#{?pane_marked,Unmark,Mark}" m "select-pane -m" Rename n "command-prompt -I \"#W\" \"rename-window -- '%%'\""  "New After" w "new-window -a" "New At End" W new-window
@@ -46,10 +48,11 @@ bind-key    -T root         WheelUpStatus         previous-window
 bind-key    -T root         WheelDownStatus       next-window
 bind-key    -T root         PPage                 copy-mode -eu
 
-# So this is one of the ones that needs to be conditional
 # bind-key    -T root         M-MouseDown3Pane      display-menu -T "#[align=centre]#{pane_index} (#{pane_id})" -t = -x M -y M "#{?mouse_word,Search For #[underscore]#{=/9/...:mouse_word},}" C-r "copy-mode -t=; send -Xt= search-backward \"#{q:mouse_word}\"" "#{?mouse_word,Type #[underscore]#{=/9/...:mouse_word},}" C-y "send-keys -l -- \"#{q:mouse_word}\"" "#{?mouse_word,Copy #[underscore]#{=/9/...:mouse_word},}" c "set-buffer -- \"#{q:mouse_word}\"" "#{?mouse_line,Copy Line,}" l "set-buffer -- \"#{q:mouse_line}\""  "Horizontal Split" h "split-window -h" "Vertical Split" v "split-window -v"  "Swap Up" u "swap-pane -U" "Swap Down" d "swap-pane -D" "#{?pane_marked_set,,-}Swap Marked" s swap-pane  Kill X kill-pane Respawn R "respawn-pane -k" "#{?pane_marked,Unmark,Mark}" m "select-pane -m" "#{?window_zoomed_flag,Unzoom,Zoom}" z "resize-pane -Z"
 
 bind-key    -T root         S-F12                 source-file /data/data/com.termux/files/usr/share/byobu/keybindings/f-keys.tmux \; source-file /data/data/com.termux/files/home/.byobu/keybindings.tmux \; display-message "Byobu F-keys: ENABLED"
 
 # Why? I dont know. Also raised on error on tmux 2
 # display-message "Mouse: ON"
+
+# }}}

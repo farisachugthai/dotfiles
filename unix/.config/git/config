@@ -15,11 +15,20 @@
 
 [alias]
     a = add
+    aa = add --all
+    ai = add --interactive
     amend = commit --amend
     ar = add --renormalize -A
-    b = branch -rva
+    ap = add --patch
+    ar = add --renormalize
+    au = add --update
+    b = branch -va
+    bd = branch -d
+    bD = branch -D
     bl = blame
     br = branch
+    brd = branch -rd
+    brD = branch -rD
     ci = commit
     cia = commit --amend
     ciad = commit --amend --date=
@@ -105,6 +114,7 @@
     # always and not auto because this setting still only affects porcelain commands
     ; ui = always
     ; LIKE DIFFS IN FUGITIVE WHOA IS THIS IS A BAD IDEA
+    ; ui = always
 
 [column]
     clean = never  # git shows files it's gonna wipe with git clean in columns and i hate it
@@ -139,16 +149,16 @@
     # paging = False
     pager = bat
     pager = less -JRKMLieg
+    protocol = ssh
     symlink = True
+    sshCommand = ssh
     untrackedCache = True
 
 [credential]
-    helper = manager
-    ; helper = cache --timeout=86400
+    # helper = manager
     modalPrompt = True
     store = approve
     username = farisachugthai
-	 ; helper = wincred
 
 [credential "https://www.github.com"]
     username = farisachugthai
@@ -163,28 +173,27 @@
     autoRefreshIndex
     context = 0
     dirstat = changes,files,10,cumulative
+
        ; --color-moved[=<mode>]
-       ;     Moved lines of code are colored differently. The <mode> defaults to no if the option is not given and to zebra if the option with no mode is given. The mode must be one of:
+       ;     Moved lines of code are colored differently. The <mode> defaults to no if the option is not given and to zebra if the option with no mode is given.
+       ;     The mode must be one of:
     color-moved = dimmed-zebra
-    # color-moved-ws?
-    # --no-color-moved-ws
+
     # Do not ignore whitespace when performing move detection. This can be used to override configuration settings. It is the same as --color-moved-ws=no.
     color-moved-ws=no
     find-renames = true
     indentHeuristic = true
     interHunkContext = 0
     mnemonicPrefix = true
-    prompt = false
+
     # detect copied files as well as renames. affects merge and status.renames
     renames = copy
     strategy-option = resolve
     # Idk if this is a new option but man am I glad to have stumbled upon it
     suppressBlankEmpty = true
-    # tool = vimdiff
-    # unified ?
+    tool = vimdiff
     word-diff = color
     wsErrorHighlight = old,new,context	 # same as all
-    # wsErrorHighlight = all
 
 [difftool]
     cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c '$wincmd w' -c 'wincmd J'
@@ -296,13 +305,12 @@
     strategy-option = patience
     # strategy-option--diff-algorithm = --set
     summary = true
-    tool = nvim-merge
+    tool = vimdiff
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
 [mergetool]
-    nvim-merge = nvim-qt.exe -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-    nvim-merge = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    cmd = nvim -d $LOCAL $REMOTE $MERGED -c 'wincmd w' -c 'wincmd J'
     # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
     # from this link we see that BASE is the commit that the file diverged at.
@@ -310,7 +318,6 @@
     # determine which changes are necessary and what needs to be kept by
     # looking at those 4 buffers as a timeline
     prompt = False
-    writeToTemp = True
 
 
 [pretty]
@@ -398,3 +405,5 @@
 [url "git@gist.github.com"]
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
+
+; Vim: set et sts=4 ts=4 sw=4:

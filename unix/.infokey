@@ -36,7 +36,7 @@ N       search-previous
 \mf     xref-item
 ^xr     xref-item
 \mg     select-reference-this-line
-^x^j    select-reference-this-line 
+^x^j    select-reference-this-line
 ^x^m    select-reference-this-line
 ^c      abort-key
 
@@ -51,9 +51,13 @@ ZZ      quit
 \m$     echo-area-end-of-line
 \mw     echo-area-forward-word
 \mx     echo-area-delete
-\mu     echo-area-abort                            
+\mu     echo-area-abort
 ^v      echo-area-quoted-insert
 
 #var
 automatic-tiling=on
 automatic-footnotes=on
+highlight-searches=on
+match-style=underline,bold,nocolor
+mouse=normal-tracking
+nodeline=print
