@@ -93,6 +93,8 @@ if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/
 
 test "$(command -v luarocks)" && eval "$(luarocks path --bin)"
 
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
 # History: {{{1
 
 # Don't put duplicate lines or lines starting with space in the history.

@@ -151,9 +151,11 @@
   "editor.cursorStyle": "line-thin",
   "editor.cursorSurroundingLines": 2,
   "editor.find.autoFindInSelection": "multiline",
+  "editor.fontWeight": "400",
+  "editor.formatOnSaveTimeout": 3000,
   "editor.fontFamily": "Source Code Pro, Hack, 'Fira Code'",
   "editor.fontLigatures": true,
-  "editor.fontSize": 18,
+  "editor.fontSize": 13,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "editor.gotoLocation.multipleDeclarations": "gotoAndPeek",
@@ -179,11 +181,18 @@
   "editor.snippetSuggestions": "inline",
   "editor.suggest.localityBonus": true,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
+<<<<<<< Updated upstream
   "editor.suggestFontSize": 0,
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
   "editor.tokenColorCustomizations": {},
   "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+=======
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on",
+  "editor.tokenColorCustomizations": {},
+  "editor.wordSeparators": ".",
+>>>>>>> Stashed changes
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": true,
   "eslint.alwaysShowStatus": true,
@@ -248,8 +257,12 @@
   },
   "markdown.links.openLocation": "beside",
   "markdown.preview.fontFamily": "'Fira Code', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif",
+<<<<<<< Updated upstream
   "markdown.preview.fontSize": 18,
   "markdown.trace": "verbose",
+=======
+  "markdown.preview.fontSize": 13,
+>>>>>>> Stashed changes
   "markdownlint.config": {
     "MD013": false,
     "MD033": false
@@ -568,10 +581,6 @@
   "window.zoomLevel": 0,
   "workbench.activityBar.visible": true,
   "workbench.colorCustomizations": {
-    "statusBar.background": "#005f5f",
-    "statusBar.debuggingBackground": "#005f5f",
-    "statusBar.noFolderBackground": "#005f5f"
-  },
   "workbench.colorTheme": "Gruvbox Material Hard Dark",
   "workbench.commandPalette.history": 500,
   "workbench.commandPalette.preserveInput": true,

@@ -260,7 +260,7 @@
       "snapOnInput": true,
       "source": "Windows.Terminal.PowershellCore",
       "startingDirectory": "%USERPROFILE%",
-      "tabTitle": "powershellcore",
+      "tabTitle": "pwsh",
       "useAcrylic": true
     },
     {
@@ -281,13 +281,13 @@
       "useAcrylic": false
     },
     {
-      "closeOnExit": true,
+      "closeOnExit": false,
       "colorScheme": "Gruvbox",
       "acrylicOpacity": 0.90,
-      "commandline": "cmd.exe /U /E:ON /F:ON /K C:/tools/Cmder/vendor/init.bat & chcp 65001",
       "cursorShape": "emptyBox",
       "experimental.retroTerminalEffect": true,
       "fontFace": "Fira Code Retina",
+      "commandline": "cmd.exe /U /E:ON /F:ON /K C:/tools/Cmder/vendor/init.bat",
       "fontSize": 12,
       "foreground": "#EBDBB2",
       "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -295,7 +295,6 @@
       "historySize": 9001,
       "icon": "C:/tools/Cmder/icons/cmder_blue.ico",
       "name": "Homebrewed Cmder",
-      // "padding": "8, 18, 18, 8",
       "scrollbarState": "visible",
       "snapOnInput": true,
       "startingDirectory": "%USERPROFILE%",
@@ -319,58 +318,54 @@
       "useAcrylic": true
     },
     {
-      "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+      "acrylicOpacity": 0.85,
+      "closeOnExit": false,
+      "colorScheme": "Gruvbox",
+      "commandline": "cmd.exe /U /E:ON /F:ON /K C:/tools/Cmder/vendor/init.bat & C:\\tools\\vs\\2019\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
+      "cursorShape": "emptyBox",
+      "experimental.retroTerminalEffect": true,
+      "fontFace": "Fira Code Light",
+      "fontSize": 12,
+      "foreground": "#EBDBB2",
+      "guid": "{9e3761da-29da-4047-a640-912664a5be48}",
       "hidden": false,
+      "historySize": 9999,
+      "name": "VC64",
+      "snapOnInput": true,
+      "startingDirectory": "%USERPROFILE%",
+      "tabTitle": "VC64 + Cmder",
+      "useAcrylic": true
+    },
+    {
+      "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+      "hidden": true,
       "name": "Azure Cloud Shell",
       "source": "Windows.Terminal.Azure"
-    },
-    {
-      "acrylicOpacity": 0.85,
-      "colorScheme": "Gruvbox",
-      "commandline": "%PROGRAMFILES%\\Microsoft Visual Studio\\Shared\\Python37_64\\python.exe",
-      "fontFace": "FuraMono Nerd Font Mono",
-      "guid": "{e4aa321a-bd11-417e-b903-30cc78d46e30}",
-      "hidden": false,
-      "name": "python",
-      "startingDirectory": "%USERPROFILE%",
-      "useAcrylic": true
-    },
-    {
-      "acrylicOpacity": 0.85,
-      "colorScheme": "Gruvbox",
-      "commandline": "cmd.exe /K C:\\tools\\miniconda3\\Scripts\\activate.bat",
-      "fontFace": "FuraMono Nerd Font Mono",
-      "guid": "{889bd40b-4d83-4ced-8d1d-1901f41372c4}",
-      "hidden": false,
-      "icon": "C:/tools/miniconda3/Menu/anaconda-navigator.ico",
-      "name": "Conda",
-      "startingDirectory": "%USERPROFILE%",
-      "useAcrylic": true
     }
   ],
-  "requestedTheme": "One Half Dark",
+  "requestedTheme": "dark",
   "schemes": [
     {
       "background": "#1e1e1e",
       "black": "#1d2021",
-      "blue": "#377375",
+      "blue": "#7daea3",
       "brightBlack": "#7f7061",
       "brightBlue": "#8ec0e1",
       "brightCyan": "#89b482",
-      "brightGreen": "#aab01e",
+      "brightGreen": "#a9b665",
       "brightPurple": "#c77089",
       "brightRed": "#f73028",
       "brightWhite": "#F2F2F2",
       "brightYellow": "#f7b125",
       "cyan": "#61D6D6",
-      "foreground": "#e6d4a3",
+      "foreground": "#ebdbb2",
       "green": "#868715",
       "name": "Gruvbox",
       "purple": "#a04b73",
       "red": "#be0f17",
       "selectionBackground": "#1e1e1e",
       "white": "#978771",
-      "yellow": "#cc881a"
+      "yellow": "#e3a84e"
     },
     {
       "background": "#0C0C0C",

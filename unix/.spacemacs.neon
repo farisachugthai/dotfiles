@@ -52,8 +52,7 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      ansible
      (auto-completion :variables
-                      auto-completion-complete-with-key-sequence "jk"
-                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-complete-with-key-sequence-delay 0.5
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t
@@ -88,7 +87,7 @@ This function should only modify configuration layer settings."
           magit-repository-directories
           '(("~/projects" . 2)("~/src/" . 2)))
      (helm :variables
-     helm-allow-mouse t
+           helm-allow-mouse t
            helm-enable-auto-resize t
            helm-elisp-show-doc-modeline t  ;; is this a default?
            helm-M-x-fuzzy-match t  ;; optional fuzzy matching for helm-M-x
@@ -105,6 +104,7 @@ This function should only modify configuration layer settings."
      json
      (lsp :variables
           lsp-ui-sideline-show-symbol t)
+     lua
      (markdown :variables markdown-mmm-auto-modes '("c" "c++" "python" "scala" ("elisp" "emacs-lisp")))
      ;; so <Spc> hl doesn't mention in this the docs, but <C-c><C-x><CR> and <C-c><C-x><C-f>
      ;; toggle
@@ -506,19 +506,17 @@ It should only modify the values of Spacemacs settings."
    ;; but lines are only visual lines are counted. For example, folded lines
    ;; will not be counted and wrapped lines are counted as multiple lines.
    ;; This variable can also be set to a property list for finer control:
-   ;; '(:relative nil
-   ;;   :visual nil
-   ;;   :disabled-for-modes dired-mode
-   ;;                       doc-view-mode
-   ;;                       markdown-mode
-   ;;                       org-mode
-   ;;                       pdf-view-mode
-   ;;                       text-mode
-   ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers 'relative
-
+   dotspacemacs-line-numbers '(:relative nil
+               :visual nil
+               :disabled-for-modes dired-mode
+               doc-view-mode
+               markdown-mode
+               org-mode
+               pdf-view-mode
+               text-mode
+               :size-limit-kb 1000)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -530,7 +528,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis nil
+   dotspacemacs-smart-closing-parenthesis t
 
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
@@ -643,8 +641,6 @@ TODO:
 this would be dope
 (org-babel-load-file (expand-file-name "~/.emacs.d/README.org"))))
 """
-
-
   ;;use-package.el is no longer needed at runtime
 
   ;; This means you should put the following at the top of your Emacs, to further reduce load time:
@@ -664,14 +660,6 @@ this would be dope
   ;; To enable the extension after you've loaded use-package:
   (use-package use-package-ensure-system-package
     :defer t)
-
-  ;; ooo here's a great example
-  ;; (use-package tern
-  ;;   :defer t
-  ;;   :ensure-system-package (tern . "npm i -g tern"))
-  ;; (use-package rg
-  ;;   :ensure-system-package
-  ;;   (rg.exe . ripgrep.exe))
 
   (use-package auto-package-update
     :defer t
@@ -887,12 +875,9 @@ I deleted a bunch because flycheck was being bitchy. Then it auto-escaped a
 )
 
 (defun viper_setup ()
-
-  (setq ex-cycle-through-non-files t)
-)
+  (setq ex-cycle-through-non-files t))
 
 
-(with-eval-after-load 'org
 (defun your_spacemacs/org_setup ()
     """Set up org configuration.
 
@@ -956,7 +941,6 @@ TODO: The first 2 sexp's [is that what they're called? Hit % on the ( of the fir
 
     (setq org-use-speed-commands t)
 
-    (with-eval-after-load 'org
       (org-agenda-skip-deadline-prewarning-if-scheduled t)
       (org-agenda-skip-scheduled-if-done t)
       (org-enable-org-journal-support t)
@@ -968,12 +952,14 @@ TODO: The first 2 sexp's [is that what they're called? Hit % on the ( of the fir
     (setq helm-org-headings-fontify t))
 
     (setq evil-org-retain-visual-state-on-shift t)
-    (setq-local diary-file '(~/.emacs.d/private/diary)))
+    (setq-local diary-file '(~/.emacs.d/private/diary))
 
 ;; Added stuff to before last with eval)  and after the func
 (add-hook 'org-mode-hook 'turn-on-flyspell)
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
-)
+
+(with-eval-after-load 'org
+    (your_spacemacs/org_setup))
 
 (defun your_spacemacs/comint_setup ()
   "From use-package info page.
@@ -1100,10 +1086,8 @@ Enabled it twice and I still am loading yasnippet manually. Hm."
     ;; if you want auto-activation (see below for details), include:
     (conda-env-autoactivate-mode t)))
 
-
 (defun your_spacemacs/rst_setup()
   """Do this before python.
-
   Here are useful bindings for rst.
 
 C-c TAB - rst-toc-insert
@@ -1151,14 +1135,22 @@ C-c C-r rst-shift-region-right
      (setq rst-sphinx-target-projects
            '(("dynamic_ipython" . (html "dynamic_ipython" t))
              ("gruvbox_pygments" . (html  "gruvbox_pygments" t)))))
-
 )
-   (add-hook 'rst-mode-hook '(your_spacemacs/rst_setup))
+
+(add-hook 'rst-mode-hook '(your_spacemacs/rst_setup))
 
 (defun your_spacemacs/python_setup ()
   """Setup IPython on Emacs. Also set up some rst thanks to Matplotlib!
 
-Probably would just make more sense to with-eval-after-load the whole function then add it as a hook.
+  Probably would just make more sense to with-eval-after-load the whole
+  function then add it as a hook.
+
+  ;; todo:
+  ;; :init
+  ;; (conda-env-autoactive-mode t))
+  ;; (require C:/Users/faris/.emacs.d/elpa/26.2/develop/python-mode-20191220.1543/completion/pycomplete)
+  ;; obviously the date is gonna change too often so figure out a different way to do this
+
 """
 
    (use-package python-x
@@ -1191,7 +1183,7 @@ Probably would just make more sense to with-eval-after-load the whole function t
     :init
     (advice-add 'python-mode :before 'elpy-enable))
 
-(when (maybe-require-package 'anaconda-mode)
+(when (require-package 'anaconda-mode)
   (after-load 'python
               ;; Anaconda doesn't work on remote servers without some work, so
               ;; by default we enable it only when working locally.
@@ -1205,15 +1197,11 @@ Probably would just make more sense to with-eval-after-load the whole function t
     (after-load 'company
                 (after-load 'python
                                     (push 'company-anaconda company-backends)))))
-  ;; todo:
-  ;; :init
-  ;; (conda-env-autoactive-mode t))
-  ;; (require C:/Users/faris/.emacs.d/elpa/26.2/develop/python-mode-20191220.1543/completion/pycomplete)
-  ;; obviously the date is gonna change too often so figure out a different way to do this
 )
 
 (add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'python-mode-hook 'your_spacemacs/python_setup() )
+(with-eval-after-load 'python-mode
+    (add-hook 'python-mode-hook 'your_spacemacs/python_setup))
 
 (defun your_spacemacs/ipython_setup()
   """Here's a fun sentence from info python.
@@ -1422,14 +1410,12 @@ Probably would just make more sense to with-eval-after-load the whole function t
     (progn
       (setq paradox-execute-asynchronously t)))
 )
-
+      (setq paradox-execute-asynchronously t))))
 
 (defun your_spacemacs/fzf-setup ()
   "Configure FZF. https://github.com/bling/fzf.el for the source."
   (use-package fzf
-    :command fzf)
-
-)
+    :commands fzf))
 
 (defun your_spacemacs/flycheck-setup()
 "Set up flycheck.
@@ -1465,9 +1451,6 @@ package name with "-mode" appended at the end:"
   :config
   (if (file-exists-p abbrev-file-name)
       (quietly-read-abbrev-file))))
-
-;; (defun your_spacemacs/persp_setup()
-;;   )
 
 (defun your_spacemacs/magit_setup()
   "I was a little amazed to realize I hadn't set this up yet.
@@ -1553,7 +1536,6 @@ This function is called at the very end of Spacemacs initialization."
  '(company-auto-complete-chars (quote (32 40 41 46 39)))
  '(company-quickhelp-color-background "#4F4F4F")
  '(company-quickhelp-color-foreground "#DCDCCC")
- '(display-line-numbers-type (quote relative))
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-folding elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-autodoc elpy-module-sane-defaults)))
@@ -1600,7 +1582,6 @@ This function is called at the very end of Spacemacs initialization."
  '(org-use-speed-commands t)
  '(package-selected-packages
    (quote
-    (magit-libgit magithub magit-todos load-bash-alias ox-rst org-evil literate-starter-kit xonsh-mode yatemplate yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify vterm volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package-ensure-system-package use-package-chords unicode-fonts unfill typo toc-org terminal-here tagedit symon symbol-overlay string-inflection stickyfunc-enhance srefactor sqlup-mode sql-indent spray sphinx-mode spaceline-all-the-icons smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud-ipdb ranger rainbow-mode rainbow-identifiers rainbow-delimiters racket-mode python-mode pytest pyenv-mode py-isort pug-mode prettier-js powershell popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox ox-gfm overseer orgit org-sticky-header org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-bullets open-junk-file omnisharp ob-ipython ob-hy nodejs-repl neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow lsp-ui lsp-python-ms lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc jinja2-mode insert-shebang indent-guide importmagic impatient-mode ibuffer-projectile hybrid-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gtags helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gmail-message-mode gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags geiser fzf fuzzy font-lock+ flyspell-correct-helm flymd flycheck-pos-tip flycheck-package flycheck-elsa flycheck-bashate flx-ido fish-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emojify emoji-cheat-sheet-plus emmet-mode elpy elisp-slime-nav ein editorconfig edit-server dumb-jump dotnet dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode dactyl-mode cython-mode csv-mode counsel-gtags conda company-web company-tern company-statistics company-shell company-quickhelp company-lua company-lsp company-emoji company-ansible company-anaconda common-lisp-snippets column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-dictionary auto-complete-rst auto-compile ansible-doc ansible ahk-mode aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(pdf-view-midnight-colors (quote ("#fdf4c1" . "#1d2021")))
  '(pipenv-executable "python3 -m pipenv")
@@ -1646,4 +1627,4 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(cursor ((t (:background "#ffffaf" :foreground "white"))))
  '(lsp-ui-doc-background ((t (:background nil)) (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic))))) :bind (:map lsp-ui-mode-map ([remap xref-find-definitions] . lsp-ui-peek-find-definitions) ([remap xref-find-references] . lsp-ui-peek-find-references) ("C-c u" . lsp-ui-imenu)) :custom (lsp-ui-doc-enable t) (lsp-ui-doc-header t) (lsp-ui-doc-include-signature t) (lsp-ui-doc-position (quote top)) (lsp-ui-doc-border (face-foreground (quote default))) (lsp-ui-sideline-enable nil) (lsp-ui-sideline-ignore-duplicate t) (lsp-ui-sideline-show-code-actions nil) :config (setq lsp-ui-doc-use-webkit t) (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate) (setq mode-line-format nil)))))
-)
+
