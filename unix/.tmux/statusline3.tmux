@@ -12,8 +12,8 @@ set -g status-justify "centre"                    # put the windows in the middl
 # set -g status-justify "left"
 
 # Doesnt do well on termux
-set -g status-left-length "20"
-set -g status-right-length 150
+set -g status-left-length "8"
+set -g status-right-length 30
 # NOTE: The super long format expressions are at the bottom
 set -g status-bg '#1d2021'
 set -g status-fg '#ebdbb2'
