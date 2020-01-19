@@ -17,7 +17,7 @@
 # --follow
 
 # Aug 19, 2019: Did you know this was a setting?
-# --path-separator='/'
+--path-separator='/'
 
 --hidden
 

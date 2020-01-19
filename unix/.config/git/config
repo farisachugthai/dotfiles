@@ -37,6 +37,8 @@
     cls= clone --depth 1
     co = checkout
     cob = checkout -b
+    # fucking gotta be kidding me
+    commi = commit
     d = diff
     ds = diff --staged
     ds2 = diff --stat --staged
@@ -100,6 +102,9 @@
 [checkout]
     # Jun 01, 2019: Automatically follow remote branches withe same name
     defaultRemote = origin
+    # the default is to overwrite ignored files. if you need to do so then
+    # override on the cmd line but otherwise encourage more safe behavior
+    no-overwrite-ignore = true
 
 [clean]
     requireForce = False
@@ -156,7 +161,6 @@
 
 [credential]
     protocol = ssh
-    helper = manager
     modalPrompt = True
     store = approve
     username = farisachugthai

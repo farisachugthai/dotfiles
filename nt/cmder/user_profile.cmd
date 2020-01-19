@@ -17,7 +17,7 @@ echo "Entering user_config."
 
 :: Obviously have to stay at the top
 SET time_init=1
-set debug_output=1
+SET debug_output=1
 SET CMDER_USER_FLAGS="/time_init"
 
 :: How do you correctly write this command?
@@ -28,7 +28,7 @@ SET CMDER_USER_FLAGS="/time_init"
 
 :: So this should stay at the top
 chcp 65001
-set "LC_ALL=en_US.UTF-8"
+SET "LC_ALL=en_US.UTF-8"
 
 :: Let's make sure that the rest of this runs by using an env at the end
 
@@ -45,7 +45,7 @@ SET IPYTHONDIR=C:\Users\faris\.ipython
 :: Retain marks across invocations of less.
 :: --wheel-lines=N
 :: Each click of the mouse wheel moves N lines.
-SET "PAGER=less -JRKMLiegF"
+:: SET "PAGER=less -JRKMLiegF"
 :: --mouse --save-marks --wheel-lines=5 "
 :: Idk if this work so comment out after the space
 :: SET "LESS=JRKMLiegF"
@@ -54,10 +54,17 @@ SET "PAGER=less -JRKMLiegF"
 :: SET "LESSEDIT=nvim -q '%F %lm'"
 
 SET "BROWSER=C:\Program Files\Firefox Nightly\firefox.exe"
+
+:: https://docs.python.org/3/using/cmdline.html
 SET "PYTHONIOENCODING=utf-8:strict"
 SET "PYTHONDONTWRITEBYTECODE=1"
 SET "PYTHONUNBUFFERED=1"
 SET "PYTHONDOCS=C:\Users\faris\Dropbox\python\official-python-docs\3.7"
+SET "PYTHONASYNCIODEBUG=1"
+SET "PYTHONCASEOK=1"
+:: Holy actual fuck does this get annoying
+:: SET "PYTHONPROFILEIMPORTTIME=1"
+SET "PYTHONMALLOC=debug"
 
 :: The FZF docs state this has to be unset but a LOT of things stop working then
 :: HOLY FUCKING SHIT FZF WORKS BETTER THAN EVER AHHHH
@@ -74,7 +81,6 @@ SET "LESSHISTSIZE=5000"
 :: nope
 :: dude fzf is NOT having it
 :: oh sweet cmder simply isn't executing these statements. wth?
-::
 SET "FZF_DEFAULT_COMMAND=fd -H -t f "
 
 :: This just worked interactively on the cmdline
@@ -84,15 +90,16 @@ SET "FZF_DEFAULT_OPTS=--ansi --border --multi --cycle --filepath-word --reverse 
 :: SET FZF_DEFAULT_OPTS=" --multi --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --ansi --filepath-word --border --header 'FZF: File Browser' "
 ::
 SET "FZF_CTRL_T_COMMAND=rg --hidden  --follow --no-messages --no-heading --smart-case --files --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 "
- set "FZF_CTRL_T_OPTS= --multi --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --ansi --filepath-word --border  --header 'FZF: File Browser: Press ? to toggle preview.' --preview 'bat {}' --preview-window=right:60%:wrap --bind '?:toggle-preview' "
 
-set "FZF_CTRL_R_COMMAND=rg  --smart-case  --no-messages "
+ SET "FZF_CTRL_T_OPTS= --multi --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --ansi --filepath-word --border  --header 'FZF: File Browser: Press ? to toggle preview.' --preview 'bat {}' --preview-window=right:60%:wrap --bind '?:toggle-preview' "
 
- set "FZF_CTRL_R_OPTS= --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --preview 'bat {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --header 'Press ? to toggle preview' "
+SET "FZF_CTRL_R_COMMAND=rg  --smart-case  --no-messages "
 
-set "FZF_ALT_C_COMMAND=fd --type d --hidden --color always "
+ SET "FZF_CTRL_R_OPTS= --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --preview 'bat {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --header 'Press ? to toggle preview' "
 
-set "FZF_ALT_C_OPTS=--cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind '?:toggle-preview' --header 'Press ? to toggle preview' --border --prompt 'FZF Dir Finder' --preview 'ls -lRhF --color=always {}' --preview-window=up:40:wrap | head -n 200 "
+SET "FZF_ALT_C_COMMAND=fd --type d --hidden --color always "
+
+SET "FZF_ALT_C_OPTS=--cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind '?:toggle-preview' --header 'Press ? to toggle preview' --border --prompt 'FZF Dir Finder' --preview 'ls -lRhF --color=always {}' --preview-window=up:40:wrap | head -n 200 "
 
 :: uncomment this to have the ssh agent load when cmder starts
 :: don't uncomment you'll get a password prompt
@@ -113,7 +120,10 @@ set "PATH=%PATH%;C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Pyt
 :: more useage can be seen by typing "cexec /?"
 
 :: Add the path to the Windows terminal
-set "PATH=%PATH%:C:\Users\faris\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminal_8wekyb3d8bbwe"
+set "PATH=%PATH%;C:\Users\faris\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminal_8wekyb3d8bbwe"
+
+:: TODO: add it the normal way
+set "PATH=%PATH%;C:\Program Files\nodejs"
 
 :: %ccall% "/customOption" "command/program"
 

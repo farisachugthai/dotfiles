@@ -1,3 +1,6 @@
+--langdef=orgmode
+--langmap=orgmode:.org
+--regex-orgmode=/<<([^>]+)>>/\1/d,definition/
 --langdef=snippets
 --langmap=snippets:.snippets
 --regex-snippets=/^snippet (.*)/\1/s,snippet/
@@ -5,14 +8,17 @@
 --map-Json=.json
 --recurse=yes
 --append=no
- --fields-Python=+{decorators}
+--fields-Python=+{decorators}
+--fields=*
 --kinds-python=+zl
+--kinds-all=*
 --langdef=UltiSnips
 --langmap=UltiSnips:.snippets
 --regex-UltiSnips=/^snippet (.*)/\1/s,snippet/
---extras=+fgqrs
---extras=+p
---pseudo-tags=*
+# --extras=+fgqrs
+# --extras=+p
+--extras=*
+# --pseudo-tags=*
 --exclude=log
 --exclude=tmp
 --exclude=.git
@@ -31,3 +37,5 @@
 --exclude=.ipynb_checkpoints
 --exclude=__pycache__
 --exclude=.pyc
+--exclude=elpy
+--exclude=elpa

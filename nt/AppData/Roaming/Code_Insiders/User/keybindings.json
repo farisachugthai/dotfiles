@@ -29,7 +29,7 @@
   },
   {
     "command": "workbench.action.closeAllEditors",
-    "key": "alt+f4"
+    "key": "Ctrl+F4"
   },
   {
     "args": {
@@ -56,6 +56,11 @@
     "command": "editor.action.marker.prevInFiles",
     "key": "[+q",
     "when": "editorFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+k ctrl+k",
+    "command": "editor.action.defineKeybinding",
+    "when": "editorTextFocus"
   },
   {
     "command": "-editor.action.marker.prevInFiles",
@@ -234,8 +239,44 @@
     "when": "editorTextFocus"
   },
   {
+    "command": "workbench.action.closeWindow",
+    "key": "Ctrl+F4",
+    "when": "terminalFocus"
+  },
+  {
     "command": "python.debugTestNode",
     "key": "f5",
     "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
+  },
+  {
+    "command": "workbench.action.openPreviousRecentlyUsedEditor",
+    "key": "Ctrl+w l",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "workbench.action.openPreviousRecentlyUsedEditor",
+    "key": "Ctrl+w l",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "workbench.action.showCommands",
+    "key": "Alt+x"
+  },
+  //{
+  //  "command": "editor.action.defineKeybinding",  // to remove the conditional aspect from the builtin
+  //  "key": "Ctrl+k Ctrl+k"
+  //},
+  {
+    //"command": "workbench.action.openDefaultKeybindingsFile"
+    "command": "workbench.action.openGlobalKeybindings",
+    "key": "Ctrl+k Ctrl+k"
+  }
+  {
+    "command": "-workbench.action.files.saveAs",
+    "key": "Ctrl-Shift-s"
+  },
+  {
+    "command": "workbench.action.files.saveAll",
+    "key": "Ctrl-Shift-s"
   }
 ]

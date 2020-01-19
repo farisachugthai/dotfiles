@@ -17,6 +17,7 @@ gl=git log --oneline --all --graph --decorate --pretty=format:lo $*
 history=cat -n "%CMDER_ROOT%\config\.history"
 l=ls -Fh --show-control-chars --append-exe --color $*
 ls=ls --show-control-chars --append-exe -F --color $*
+pro=nvim C:\tools\Cmder\config\user_profile.cmd
 pwd=cd
 unalias=alias /d $1
 vi=vim $*

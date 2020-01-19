@@ -44,7 +44,9 @@
   "[handlebars]": {
     "editor.suggest.insertMode": "replace"
   },
+  "editor.trimAutoWhitespace": true,
   "[json]": {
+    "editor.tabSize": 2,
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.quickSuggestions": {
       "strings": true
@@ -131,8 +133,6 @@
   "cmake.configureOnOpen": false,
   "csharp.suppressHiddenDiagnostics": false,
   "debug.allowBreakpointsEverywhere": true,
-  "debug.console.fontFamily": "Hack",
-  "debug.console.fontSize": 14,
   "debug.console.wordWrap": true,
   "debug.enableAllHovers": true,
   "debug.inlineValues": true,
@@ -153,7 +153,7 @@
   "editor.find.autoFindInSelection": "multiline",
   "editor.fontWeight": "400",
   "editor.formatOnSaveTimeout": 3000,
-  "editor.fontFamily": "Source Code Pro, Hack, 'Fira Code'",
+  "editor.fontFamily": "Inconsolata, Source Code Pro, Hack, 'Fira Code', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.formatOnSave": true,
@@ -165,7 +165,7 @@
   "editor.insertSpaces": true,
   "editor.lineNumbers": "relative",
   "editor.maxTokenizationLineLength": 2000,
-  "editor.minimap.enabled": false,
+  "editor.minimap.enabled": true,
   "editor.mouseWheelZoom": true,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.parameterHints.cycle": true,
@@ -181,18 +181,9 @@
   "editor.snippetSuggestions": "inline",
   "editor.suggest.localityBonus": true,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
-<<<<<<< Updated upstream
-  "editor.suggestFontSize": 0,
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
   "editor.tokenColorCustomizations": {},
-  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
-=======
-  "editor.suggestSelection": "first",
-  "editor.tabCompletion": "on",
-  "editor.tokenColorCustomizations": {},
-  "editor.wordSeparators": ".",
->>>>>>> Stashed changes
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": true,
   "eslint.alwaysShowStatus": true,
@@ -210,7 +201,8 @@
     "*.yml": "ansible",
     ".travis.yml": "yaml",
     "vimrc": "viml",
-    "winrc": "viml"
+    "winrc": "viml",
+    "*.xsh": "python"
   },
   "files.autoSave": "afterDelay",
   "files.defaultLanguage": "English",
@@ -257,12 +249,8 @@
   },
   "markdown.links.openLocation": "beside",
   "markdown.preview.fontFamily": "'Fira Code', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif",
-<<<<<<< Updated upstream
   "markdown.preview.fontSize": 18,
   "markdown.trace": "verbose",
-=======
-  "markdown.preview.fontSize": 13,
->>>>>>> Stashed changes
   "markdownlint.config": {
     "MD013": false,
     "MD033": false
@@ -443,8 +431,6 @@
   "terminal.integrated.detectLocale": "on",
   "terminal.integrated.experimentalRefreshOnResume": true,
   "terminal.integrated.experimentalUseTitleEvent": true,
-  "terminal.integrated.fontFamily": "'Fira Code', 'Hack', 'monospace'",
-  "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeightBold": "normal",
   "terminal.integrated.inheritEnv": false,
   "terminal.integrated.rendererType": "dom",
@@ -471,7 +457,6 @@
   "vim.easymotionJumpToAnywhereRegex": "\\b[A-Za-z0-9]|[A-Za-z0-9]\\b|_.|#.|[a-z][A-Z]",
   "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf;",
   "vim.easymotionMarkerFontFamily": "Hack",
-  "vim.easymotionMarkerFontSize": "18",
   "vim.enableNeovim": true,
   "vim.foldfix": true,
   "vim.handleKeys": {
@@ -570,18 +555,10 @@
   ],
   "vim.surround": true,
   "vim.useSystemClipboard": true,
-  "vim.vimrc.enable": true,
-  "vim.vimrc.path": "C:\\Users\\faris\\AppData\\Local\\nvim\\init.vim",
   "vim.visualstar": true,
   "vim.whichwrap": "<,>,[,],h,l,<BS>",
-  "vscode-neovim.mouseSelectionStartVisualMode": true,
-  "vscode-neovim.neovimInitPath": "~/.config/nvim/init.vim",
-  "vscode-neovim.neovimPath": "/usr/bin/nvim",
-  "vscode-neovim.useWSL": true,
   "window.zoomLevel": 0,
   "workbench.activityBar.visible": true,
-  "workbench.colorCustomizations": {
-  "workbench.colorTheme": "Gruvbox Material Hard Dark",
   "workbench.commandPalette.history": 500,
   "workbench.commandPalette.preserveInput": true,
   "workbench.editor.closeOnFileDelete": true,
@@ -600,15 +577,41 @@
   "workbench.settings.editor": "json",
   "workbench.settings.enableNaturalLanguageSearch": false,
   "workbench.settings.openDefaultKeybindings": true,
-  "workbench.settings.openDefaultSettings": true,
+  "workbench.settings.openDefaultSettings": false,
   "workbench.settings.useSplitJSON": true,
   "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
   "workbench.tips.enabled": false,
   "workbench.tree.renderIndentGuides": "onHover",
-  "yaml.completion": true,
-  "yaml.format.enable": true,
-  "yaml.schemas": {
-    "file:///c%3A/Users/faris/.vscode/extensions/docsmsft.docs-yaml-0.2.4/schemas/toc.schema.json": "/toc\\.yml/i"
-  }
+  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+  "python.workspaceSymbols.enabled": true,
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f"
+  },
+  "task.autoDetect": "on",
+  "rust-client.useWSL": true,
+  "merge-conflict.diffViewPosition": "Beside",
+  "problems.showCurrentInStatus": true,
+  "debug.node.useV3": true,
+  "window.menuBarVisibility": "toggle",
+  "window.newWindowDimensions": "inherit",
+  "editor.wrappingIndent": "deepIndent",
+  "workbench.editor.limit.perEditorGroup": true,
+  "git.confirmForcePush": false,
+  "search.enableSearchEditorPreview": true,
+  "git.alwaysShowStagedChangesResourceGroup": true,
+  "debug.extensionHost.useV3": true,
+  "debug.node.autoAttach": "on",
+  "typescript.surveys.enabled": false,
+  "vim.digraphs": {},
+  "powershell.codeFormatting.autoCorrectAliases": true,
+  "powershell.debugging.createTemporaryIntegratedConsole": true,
+  "powershell.developer.powerShellExeIsWindowsDevBuild": true,
+  "powershell.powerShellExePath": "C:\\pwsh\\7-preview\\pwsh.exe",
+  "powershell.startAutomatically": false,
+  "powershell.promptToUpdatePowerShell": false,
+  "workbench.colorTheme": "Gruvbox Material Soft Dark",
+  "editor.find.addExtraSpaceOnTop": false
 }
