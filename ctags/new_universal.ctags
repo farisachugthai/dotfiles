@@ -5,20 +5,19 @@
 --langmap=snippets:.snippets
 --regex-snippets=/^snippet (.*)/\1/s,snippet/
 --map-Json=.ipynb
+# using mappings removes the original definition
 --map-Json=.json
 --recurse=yes
 --append=no
 --fields-Python=+{decorators}
---fields=*
 --kinds-python=+zl
+--fields-all=*
 --kinds-all=*
 --langdef=UltiSnips
 --langmap=UltiSnips:.snippets
 --regex-UltiSnips=/^snippet (.*)/\1/s,snippet/
-# --extras=+fgqrs
-# --extras=+p
 --extras=*
-# --pseudo-tags=*
+--pseudo-tags=*
 --exclude=log
 --exclude=tmp
 --exclude=.git

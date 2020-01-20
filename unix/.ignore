@@ -1,5 +1,5 @@
 # ignore {new file type for both ag and rg}
-
+**tags**
 *.un~
 *.swp
 *.swo

@@ -134,4 +134,4 @@ EOF
     fi
 
 }
-complete -o default -o nospace -F _ipython ipython
+complete -o bashdefault -o default -o nospace -F _ipython ipython

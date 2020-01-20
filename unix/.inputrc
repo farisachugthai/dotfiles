@@ -94,11 +94,13 @@ set revert-all-at-newline on
 
 # All options set by set -o vim
 "\C-h": backward-delete-char
-"\C-?": backward-delete-char
+# "\C-?": backward-delete-char
 "\C-d": vi-eof-maybe
 "\C-n": menu-complete
 "\C-p": menu-complete-backward
 
+# This would be neat
+"\C-?": dump-functions
 # Let's use one of the other history searches there are so many functions for this
 # "\C-r": reverse-search-history
 "\C-v": quoted-insert

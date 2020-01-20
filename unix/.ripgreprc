@@ -101,6 +101,6 @@
 # {value} is either a color (for fg and bg) or a text style
 
 # A special format, {type}:none, will clear all color settings for {type}.
---colors 'path:fg:#7daea3'
---colors 'line:bg:#282828'
---colors 'line:fg:#ebdbb2'
+# '--colors=path:fg:#7daea3'
+# '--colors=line:bg:#282828'
+# '--colors=line:fg:#ebdbb2'

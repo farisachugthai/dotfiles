@@ -925,29 +925,21 @@ TODO: The first 2 sexp's [is that what they're called? Hit % on the ( of the fir
             (org-projectile-todo-files))))
 
 (defun your_spacemacs/so_much_org()
-  (progn (setq '
-          (org-use-speed-commands t)
-
-          (helm-org-headings-fontify t))))
-
-(with-eval-after-load 'org
-  (your_spacemacs/org_setup))
+  (progn '(org-use-speed-commands t)
+         (helm-org-headings-fontify t)))
 
 ;; Added stuff to before last with eval)  and after the func
 (add-hook 'org-mode-hook 'turn-on-flyspell)
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
 
-;; haven't tried yasnippet in org mode but let's try this in advance
-;; (add-hook 'org-mode-hook
-;;   (lambda ()
-;;     (setq-default yas/trigger-key [tab])
-;;     (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
-
-(setq org-ctags-path-to-ctags "$HOME/src/ctags/ctags")
 
 (add-hook 'org-mode-hook
   (lambda ()
   (define-key org-mode-map "\C-co" 'org-ctags-find-tag-interactive)))
+(setq org-ctags-path-to-ctags "$HOME/src/ctags/ctags")
+(with-eval-after-load 'org
+  (your_spacemacs/org_setup))
+
 
 (defun your_spacemacs/comint_setup ()
   "From use-package info page.
@@ -1025,9 +1017,6 @@ means that that package will be autoloaded"
       (setq-default savehist-file "~/.emacs.d/savehist")
       (setq-default history-length 10000)
       (savehist-mode 1))))
-
-(defclass foobar ()
-  "Docstring")
 
 (defclass person () ; No superclasses
   ((name :initarg :name
@@ -1394,22 +1383,15 @@ C-c C-r rst-shift-region-right
                               (setq mode-line-format nil)))))
   )
 
-;; (use-package ms-python
-;;   :config
-;;   (add-hook 'python-mode-hook #'lsp))
 
 (defun your_spacemacs/lsp_pyls()
 
-  (setq lsp-mode t)
-  (setq lsp-signature-mode t)
-  (setq lsp-ui-mode t)
-
-  '(lsp-auto-guess-root t)
   '(lsp-clients-python-library-directories (quote ("/usr/" "~/miniconda3")))
   '(lsp-print-performance t)
   '(lsp-pyls-plugins-flake8-config "~/AppData/Local/flake8.cfg")
   '(lsp-pyls-plugins-flake8-enabled t)
   '(lsp-pyls-plugins-flake8-max-line-length 88)
+
   (use-package lsp-mode
     :defer t
     :config
@@ -1430,7 +1412,7 @@ C-c C-r rst-shift-region-right
      (global-company-mode +1)))
 
   (use-package company-lsp
-    :ensure t
+    :after lsp
     :commands (company-lsp))
 
   (use-package company-box
@@ -1462,14 +1444,6 @@ Check whether your Flycheck setup is complete with C-c ! v."
 
 (use-package flycheck-pycheckers :after flycheck)
 
-;; (with-eval-after-load 'flycheck
-;;   (add-hook'Flycheck-mode-hook #'flycheck-inline-mode))
-
-;; (with-eval-after-load 'flycheck
-;;   (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
-)
-
-;; (your_spacemacs/flycheck-setup)
 
 (defun your_spacemacs/abbrev-setup()
   "Diminishing and delighting minor modes.
@@ -1495,14 +1469,6 @@ package name with -mode appended at the end:"
 Dude note magit-repolist-mode that shit is amazing.
 "
 
-;; fun fact. quoting magit like 'magit raises an error.
-(use-package magit
-  ;; are defer and ensure mutually exclusive?
-  :defer t
-  ;; oh shit this worked!
-  :config (global-set-key (kbd "C-x g") 'magit-status)
-  :ensure t)
-
 (use-package libegit
   :defer t)
 
@@ -1510,11 +1476,84 @@ Dude note magit-repolist-mode that shit is amazing.
   :defer t
   :config
   (setq evil-magit-state 'motion)
-        (setq evil-magit-use-z-for-folds t)))
+        (setq evil-magit-use-z-for-folds t))
+
+(use-package magit
+  :bind (("C-x g" . magit-status)
+         ("C-x G" . magit-status-with-prefix))
+  :bind (:map magit-mode-map
+              ("U" . magit-unstage-all)
+              ("M-h") ("M-s") ("M-m") ("M-w"))
+  :bind (:map magit-file-section-map ("<C-return>"))
+  :bind (:map magit-hunk-section-map ("<C-return>"))
+  :preface
+  ;; History can be viewed with:
+  ;; git log refs/snapshots/$(git symbolic-ref HEAD)
+  (defun magit-monitor (&optional no-display)
+    "Start git-monitor in the current directory."
+    (interactive)
+    (let* ((path (file-truename
+                  (directory-file-name
+                   (expand-file-name default-directory))))
+           (name (format "*git-monitor: %s*"
+                         (file-name-nondirectory path))))
+      (unless (and (get-buffer name)
+                   (with-current-buffer (get-buffer name)
+                     (string= path (directory-file-name default-directory))))
+        (with-current-buffer (get-buffer-create name)
+          (cd path)
+          (ignore-errors
+            (start-process "*git-monitor*" (current-buffer)
+                           "git-monitor" "-d" path))))))
+
+  (defun magit-status-with-prefix ()
+    (interactive)
+    (let ((current-prefix-arg '(4)))
+      (call-interactively 'magit-status)))
+
+  (defun endless/visit-pull-request-url ()
+    "Visit the current branch's PR on Github."
+    (interactive)
+    (browse-url
+     (format "https://github.com/%s/pull/new/%s"
+             (replace-regexp-in-string
+              "\\`.+github\\.com:\\(.+?\\)\\(\\.git\\)?\\'" "\\1"
+              (magit-get "remote" (magit-get-remote) "url"))
+             (magit-get-current-branch))))
+
+  :hook (magit-mode . hl-line-mode)
+  :config
+  (use-package magit-commit
+    :config
+    (use-package git-commit))
+
+  (use-package magit-files
+    :config
+    (global-magit-file-mode))
+
+  (add-hook 'magit-status-mode-hook #'(lambda () (magit-monitor t)))
+
+  (define-key magit-mode-map "G" #'endless/visit-pull-request-url)
+
+  (eval-after-load 'magit-pull
+    '(transient-insert-suffix 'magit-pull "p"
+       '("F" "default" magit-fetch-from-upstream)))
+
+  (eval-after-load 'magit-push
+    '(transient-insert-suffix 'magit-push "p"
+       '("P" "default" magit-push-current-to-upstream))))
+
+(use-package magit-popup
+  :defer t)
+
+(use-package magit-imerge
+  ;; jww (2017-12-10): Need to configure.
+  :disabled t
+  :after magit))
 
 (defun your_spacemacs/path_setup()
 
-  (use-package exec-path-from-shell
+ (use-package exec-path-from-shell
     :defer t
     :config
     (exec-path-from-shell-initialize)
@@ -1615,7 +1654,6 @@ Dude note magit-repolist-mode that shit is amazing.
 ;; before evil-tabs we need elscreen
 
 (setq elscreen-start t)
-'(global-evil-tabs-mode t)
 '(helm-completion-style (quote emacs))
 '(hl-sexp-background-color "#1c1f26")
 
@@ -1625,25 +1663,6 @@ Dude note magit-repolist-mode that shit is amazing.
 (define-key flycheck-mode-map (kbd "M-p") 'flycheck-goto-prev-error)
 
 (use-package use-package-chords :defer t)
-
-'(hl-todo-keyword-faces
-  (quote
-   (("TODO" . "#dc752f")
-    ("NEXT" . "#dc752f")
-    ("THEM" . "#2d9574")
-    ("PROG" . "#4f97d7")
-    ("OKAY" . "#4f97d7")
-    ("DONT" . "#f2241f")
-    ("FAIL" . "#f2241f")
-    ("DONE" . "#86dc2f")
-    ("NOTE" . "#b1951d")
-    ("KLUDGE" . "#b1951d")
-    ("HACK" . "#b1951d")
-    ("TEMP" . "#b1951d")
-    ("FIXME" . "#dc752f")
-    ("XXX+" . "#dc752f")
-    ("\\?\\?\\?+" . "#dc752f"))))
-
 
 '(nrepl-message-colors
   (quote
@@ -1659,9 +1678,7 @@ Dude note magit-repolist-mode that shit is amazing.
 '(org-agenda-insert-diary-extract-time t)
 '(org-agenda-menu-two-columns t)
 '(org-agenda-mouse-1-follows-link t)
-
-;; (use-package evil-org :after org)
-
+ '(org-use-speed-commands t)
 
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
@@ -1682,9 +1699,10 @@ This function is called at the very end of Spacemacs initialization."
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
-   )
-  )
+ '(cursor ((t (:background "#ffffaf" :foreground "white"))))
+ '(lsp-ui-doc-background ((t (:background nil)) (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic))))) :bind (:map lsp-ui-mode-map ([remap xref-find-definitions] . lsp-ui-peek-find-definitions) ([remap xref-find-references] . lsp-ui-peek-find-references) ("C-c u" . lsp-ui-imenu)) :custom (lsp-ui-doc-enable t) (lsp-ui-doc-header t) (lsp-ui-doc-include-signature t) (lsp-ui-doc-position (quote top)) (lsp-ui-doc-border (face-foreground (quote default))) (lsp-ui-sideline-enable nil) (lsp-ui-sideline-ignore-duplicate t) (lsp-ui-sideline-show-code-actions nil) :config (setq lsp-ui-doc-use-webkit t) (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate) (setq mode-line-format nil)))))
 
 (provide '.spacemacs)
 
 ;;; .spacemacs ends here
+;; Vim: set ft=lisp:

@@ -279,12 +279,12 @@ if [[ -n "$(command -v kitty)" ]]; then
 fi
 
 # Just figured this one out!
-complete -F _longopt ctags
+complete -o bashdefault -o default -F _longopt ctags
+
+test "$(command -v dlink2)" && complete -o bashdefault -o default -F _fzf_path_completion dlink2
 
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"
-
-complete -F _longopt ctags
 
 # I'm gonna try and stay conservative here.
 export PS1="\\t \\u@\\h \\d \w \n $: "
