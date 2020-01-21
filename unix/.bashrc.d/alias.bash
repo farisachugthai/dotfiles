@@ -28,13 +28,13 @@ alias cd......="cd ../../../../.."
 # -o is similar to -l but don't print group. So wait  that's  the  same  thing
 # as -lg...? Why.
 # -p means append / indicator to directoreis
-alias l='ls -F --color=always'
+alias l='ls -hF --color=always'
 alias la='ls -AF --color=always'
 alias ldir='ls -po --color=always | grep /$'
 alias lf='ls -Fo --color=always | grep ^-'
 alias ll='ls -AFhog --color=always'
 alias lr='ls -AlgFhr --color=always'
-alias ls='ls -F --color=always'
+alias ls='ls -hF --color=always'
 alias lt='ls -Alght --color=always'
 alias lx='ls -Fo --color=always | grep ^-..x'
 
@@ -112,11 +112,11 @@ alias gbrd="git branch -d $* "
 alias gbrD="git branch -D $* "
 alias gbrrd="git branch -rd $* "
 alias gbrrD="git branch -rD $* "
-alias   gbru="git   branch   --set-upstream-to   --verbose   origin    $*    "
+alias gbru="git branch --set-upstream-to --verbose origin"
 alias gci='git commit'
 alias gcia='git commit --amend'
-alias gcid="git commit --date=$* "
 alias gciad="git commit --amend --date=$* "
+alias gcid="git commit --date=$* "
 alias gcl='git clone --progress '
 alias gcls='git clone --progress --depth 1 '
 alias gco='git checkout'
@@ -138,7 +138,7 @@ alias gp='git pull --all'
 alias gpo='git pull origin'
 alias gpom='git pull origin master'
 alias gpu='git push'
-alias gr='git remote -v'
+alias gr='git remote -arv'
 alias grb='git rebase '
 alias grba='git rebase --abort '
 alias grbc='git rebase --continue '

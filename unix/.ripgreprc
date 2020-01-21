@@ -6,18 +6,8 @@
 # Globs: {{{2
 --glob-case-insensitive
 
-# -g '!.git/*'
-# -g '!*/.svn'
-# -g '!*/.hg'
-# -g '!*/CVS'
-# -g '!*/.DS_Store'
-# -g '!node_modules/*'
-# --glob=!.git/*
-
-# --follow
-
 # Aug 19, 2019: Did you know this was a setting?
---path-separator='/'
+--path-separator=/
 
 --hidden
 
@@ -28,10 +18,10 @@
 --max-columns=300
 
 # How recursive should we go?
-# --max-depth=8
+--max-depth=8
 
 # don't match more than 50 lines per files
-# --max-count=50
+--max-count=50
 
 # but don't just omit the whole line
 --max-columns-preview
@@ -40,14 +30,7 @@
 --no-messages
 --no-ignore-messages
 
-# Other: {{{2
-# Jun 04, 2019: Let's make this better for fzf in nvim
-# --vimgrep
-
 --color=ansi
-
-# --no-column
-# --no-line-number
 
 # Don't group matches by each file. If --no-heading is provided in
 # addition to the -H/--with-filename flag, then file paths will be
@@ -101,6 +84,14 @@
 # {value} is either a color (for fg and bg) or a text style
 
 # A special format, {type}:none, will clear all color settings for {type}.
-# '--colors=path:fg:#7daea3'
-# '--colors=line:bg:#282828'
-# '--colors=line:fg:#ebdbb2'
+# --colors=path:fg:#7daea3
+--colors=path:fg:blue
+# --colors=line:bg:#282828
+--colors=line:bg:black
+# --colors=line:fg:#ebdbb2
+--colors=line:fg:white
+
+--colors=column:style:underline
+--colors=column:fg:cyan
+
+--colors=match:style:intense

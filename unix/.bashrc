@@ -181,7 +181,7 @@ shopt -s lastpipe
 export COLORTERM="truecolor"
 
 # Less And $PAGER --- Checkout .lesskey for more {{{1
-export PAGER="less -JRKMLigeF"
+export PAGER="less -JRrKMLigeF"
 export LESSHISTSIZE=5000  # default is 100
 
 # Oh shit! --mouse is a bash>5 feature!
@@ -196,18 +196,6 @@ export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
 export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
 export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
 export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
-
-if [[ -n "$(command -v bat)" ]]; then
-    export BAT_PAGER="less -JRKMLigeF"
-    export BAT_THEME="base16"
-    export BAT_STYLE="full"
-  # TODO: This doesn't work for me
-  # export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-  export MANROFFOPT="-c"
-  if [[ -d "$HOME/faris/AppData/Roaming" ]]; then
-    export BATCONFIGFILE="$HOME/faris/AppData/Roaming/bat/config"
-  fi
-fi
 
 # JavaScript: {{{1
 
@@ -239,6 +227,28 @@ if [[ -n "$(command -v fasd)" ]]; then
     unset fasd_cache
 fi
 
+# Completions: {{{1
+
+_completion_loader()
+{
+    . "$_ROOT/share/bash_completion/completions/*" >/dev/null 2>&1 && return 124
+}
+complete -D -F _completion_loader -o bashdefault -o default
+
+# From /usr/share/doc/bash/README.md.bash-completion
+export COMP_CONFIGURE_HINTS=1
+
+# Here's one for the terminal
+if [[ -n "$(command -v kitty)" ]]; then
+    source <(kitty + complete setup bash)
+fi
+
+# Just figured this one out! Especially useful as I've been building universal-ctags from source
+complete -o bashdefault -o default -F _longopt ctags
+
+# I'm embarrassed by how happy figuring this out made me
+test "$(command -v dlink2)" && complete -o bashdefault -o default -F _fzf_path_completion dlink2
+
 # Sourced files: {{{1
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
@@ -261,27 +271,6 @@ firstpath() {
 
 firstpath "$HOME/bin"
 firstpath "$HOME/.local/bin"
-
-# Dynamic Completions: {{{1
-
-_completion_loader()
-{
-    . "$_ROOT/share/bash_completion/completions/*" >/dev/null 2>&1 && return 124
-}
-complete -D -F _completion_loader -o bashdefault -o default
-
-# From /usr/share/doc/bash/README.md.bash-completion
-export COMP_CONFIGURE_HINTS=1
-
-# Here's one for the terminal
-if [[ -n "$(command -v kitty)" ]]; then
-    source <(kitty + complete setup bash)
-fi
-
-# Just figured this one out!
-complete -o bashdefault -o default -F _longopt ctags
-
-test "$(command -v dlink2)" && complete -o bashdefault -o default -F _fzf_path_completion dlink2
 
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"

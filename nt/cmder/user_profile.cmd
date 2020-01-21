@@ -6,14 +6,18 @@
 :: use in front of the command to prevent printing the command
 :: @echo on
 
-::
+echo "Entering user_config."
+
 :: uncomment the next two lines to use pageant as the ssh authentication agent
 :: The script explicitly requires that this var is set
-:: SET SSH_AUTH_SOCK="%TMP%\ssh-pageant-auth-sock"
+SET SSH_AUTH_SOCK="%TMP%\.ssh-pageant-auth-sock"
 
-:: :: Wait i don't remember why i do one and not the other
-:: call "%GIT_INSTALL_ROOT%\cmd\start-ssh-pageant.cmd"
-echo "Entering user_config."
+:: uncomment this to have the ssh agent load when cmder starts
+:: don't uncomment you'll get a password prompt
+:: call "%GIT_INSTALL_ROOT%/cmd/start-ssh-agent.cmd" /k exit
+
+:: The quotes are getting in PATH and fucking shit up
+:: SET "GIT_INSTALL_ROOT=C:\git"
 
 :: Obviously have to stay at the top
 SET time_init=1
@@ -39,6 +43,10 @@ SET "LC_ALL=en_US.UTF-8"
 SET RIPGREP_CONFIG_PATH=C:\Users\faris\.ripgreprc
 SET IPYTHONDIR=C:\Users\faris\.ipython
 
+:: PAGER:
+set PAGER=less
+
+:: This is nice and all but it doesn't behave consistently IMO
 :: --mouse
 :: Enable mouse input.
 :: --save-marks
@@ -50,7 +58,6 @@ SET IPYTHONDIR=C:\Users\faris\.ipython
 :: Idk if this work so comment out after the space
 :: SET "LESS=JRKMLiegF"
 :: apparently you're really not allowed to inline comments. Wtf?
-
 :: SET "LESSEDIT=nvim -q '%F %lm'"
 
 SET "BROWSER=C:\Program Files\Firefox Nightly\firefox.exe"
@@ -84,7 +91,8 @@ SET "LESSHISTSIZE=5000"
 SET "FZF_DEFAULT_COMMAND=fd -H -t f "
 
 :: This just worked interactively on the cmdline
-SET "FZF_DEFAULT_OPTS=--ansi --border --multi --cycle --filepath-word --reverse --tiebreak begin,length,index --bind alt-n:execute:'nvim {}' --header 'FZF: File Browser. Press Alt-n to launch nvim. ' --prompt 'FZF: > ' --preview 'bat --theme OneHalfDark --color always {}' --preview-window=down:50%:wrap "
+:: whew. don't set window down it might start redrawing results over your window
+SET "FZF_DEFAULT_OPTS=--ansi --border --multi --cycle --filepath-word --reverse --tiebreak begin,length,index --bind alt-n:execute:'nvim {}' --header 'FZF: File Browser. Press Alt-n to launch nvim. ' --prompt 'FZF: > ' --preview 'bat --theme OneHalfDark --color always {}' --preview-window=right:50%:wrap "
 
 :: SET FZF_DEFAULT_COMMAND="rg --hidden  --smart-case --passthru ^ "
 :: SET FZF_DEFAULT_OPTS=" --multi --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --ansi --filepath-word --border --header 'FZF: File Browser' "
@@ -100,13 +108,6 @@ SET "FZF_CTRL_R_COMMAND=rg  --smart-case  --no-messages "
 SET "FZF_ALT_C_COMMAND=fd --type d --hidden --color always "
 
 SET "FZF_ALT_C_OPTS=--cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind '?:toggle-preview' --header 'Press ? to toggle preview' --border --prompt 'FZF Dir Finder' --preview 'ls -lRhF --color=always {}' --preview-window=up:40:wrap | head -n 200 "
-
-:: uncomment this to have the ssh agent load when cmder starts
-:: don't uncomment you'll get a password prompt
-:: call "%GIT_INSTALL_ROOT%/cmd/start-ssh-agent.cmd" /k exit
-
-:: The quotes are getting in PATH and fucking shit up
-:: SET "GIT_INSTALL_ROOT=C:\git"
 
 :: Don't do it like this. The var below is expanded from where you execute.
 :: So if you're in $HOME, it'll set CMDER_USER_CONFIG to home :/

@@ -50,7 +50,6 @@ included in [nt](nt).
 The `$PAGER` is highly customized. From my bashrc.
 
 ```bash
-
 # -J: displays a status column at the left edge of the screen
 # -R: is what we need for ansi colors
 # -K: exit less in response to Ctrl-C
@@ -135,6 +134,20 @@ Hopefully these tips will help someone else one day.
    to use native tools as possible.
 
    - When in Rome!
+
+### Cmder
+
+Something in these configuration files has to be set wrong.
+Interactively defining an alias on the cmdline destroys the alias file.
+It looks like an encoding problem which is definitely possible
+as nvim is set to automatically assume utf-8, as is the windows terminal and cmder.
+
+`chcp` is included as one of the first commands of my [user_profile.cmd](./nt/cmder/user_profile.cmd).
+
+However, if the alias command provided by ConEmu isn't aware of that, then
+any input from the terminal to the file will corrupt it.
+
+So be careful and simply define them non-interactively!
 
 ## Contributing
 

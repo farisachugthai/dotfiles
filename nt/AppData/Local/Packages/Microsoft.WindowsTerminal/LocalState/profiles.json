@@ -3,13 +3,91 @@
   "alwaysShowTabs": true,
   "copyOnSelect": true,
   "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-  "initialCols": 100,
+  "initialCols": 90,
   "initialRows": 30,
   "keybindings": [
     {
       "command": "closeTab",
       "keys": [
         "Ctrl-F4"
+      ]
+    },
+    {
+      "command": "toggleFullscreen",
+      "keys": [
+        "alt+enter"
+      ]
+    },
+    {
+      "command": {
+        "action": "resizePane",
+        "direction": "down"
+      },
+      "keys": [
+        "alt+shift+down"
+      ]
+    },
+    {
+      "command": {
+        "action": "resizePane",
+        "direction": "left"
+      },
+      "keys": [
+        "alt+shift+left"
+      ]
+    },
+    {
+      "command": {
+        "action": "resizePane",
+        "direction": "right"
+      },
+      "keys": [
+        "alt+shift+right"
+      ]
+    },
+    {
+      "command": {
+        "action": "resizePane",
+        "direction": "up"
+      },
+      "keys": [
+        "alt+shift+up"
+      ]
+    },
+    {
+      "command": {
+        "action": "moveFocus",
+        "direction": "down"
+      },
+      "keys": [
+        "alt+down"
+      ]
+    },
+    {
+      "command": {
+        "action": "moveFocus",
+        "direction": "left"
+      },
+      "keys": [
+        "alt+left"
+      ]
+    },
+    {
+      "command": {
+        "action": "moveFocus",
+        "direction": "right"
+      },
+      "keys": [
+        "alt+right"
+      ]
+    },
+    {
+      "command": {
+        "action": "moveFocus",
+        "direction": "up"
+      },
+      "keys": [
+        "alt+up"
       ]
     },
     {
@@ -225,6 +303,25 @@
   ],
   "profiles": [
     {
+      "closeOnExit": "graceful",
+      "colorScheme": "Campbell",
+      "commandline": "cmd.exe",
+      "cursorColor": "#FFFFFF",
+      "cursorShape": "bar",
+      "fontFace": "Consolas",
+      "fontSize": 12,
+      "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+      "hidden": false,
+      "historySize": 9001,
+      "icon": "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
+      "name": "cmd",
+      "padding": "8, 8, 8, 8",
+      "scrollbarState": "visible",
+      "snapOnInput": true,
+      "startingDirectory": "%USERPROFILE%",
+      "useAcrylic": false
+    },
+    {
       "acrylicOpacity": 0.9,
       "background": "#1d2021",
       "colorScheme": "Gruvbox",
@@ -238,6 +335,7 @@
       "historySize": 9999,
       "name": "Ubuntu",
       "padding": "8, 8, 8, 8",
+      "scrollbarState": "visible",
       "snapOnInput": true,
       "source": "Windows.Terminal.Wsl",
       "startingDirectory": "$HOME",
@@ -247,6 +345,7 @@
     {
       "acrylicOpacity": 0.95,
       "background": "#1d2021",
+      "closeOnExit": "graceful",
       "colorScheme": "Gruvbox",
       "commandline": "C:\\pwsh\\7-preview\\pwsh.exe",
       "cursorColor": "#FFFFFF",
@@ -265,7 +364,8 @@
       "useAcrylic": true
     },
     {
-      "closeOnExit": false,
+      "acrylicOpacity": 0.95,
+      "closeOnExit": "graceful",
       "colorScheme": "Gruvbox",
       "commandline": "powershell.exe",
       "cursorColor": "#FFFFFF",
@@ -284,9 +384,9 @@
     {
       "acrylicOpacity": 0.95,
       "background": "#1d2021",
+      "closeOnExit": "graceful",
       "colorScheme": "Gruvbox",
       "commandline": "cmd.exe /U /E:ON /F:ON /K C:/tools/Cmder/vendor/init.bat",
-      "closeOnExit": false,
       "cursorColor": "#FFFFFF",
       "cursorHeight": 80,
       "cursorShape": "emptyBox",
@@ -305,7 +405,7 @@
       "useAcrylic": true
     },
     {
-      "acrylicOpacity": 0.9,
+      "acrylicOpacity": 0.95,
       "colorScheme": "Gruvbox",
       "commandline": "C:\\pwsh\\7-preview\\pwsh.exe",
       "cursorShape": "emptyBox",
@@ -315,6 +415,7 @@
       "hidden": false,
       "historySize": 9999,
       "name": "PowerShell Core",
+      "scrollbarState": "visible",
       "snapOnInput": true,
       "source": "Windows.Terminal.PowershellCore",
       "startingDirectory": "%USERPROFILE%",
@@ -343,10 +444,17 @@
       "useAcrylic": true
     },
     {
+      "closeOnExit": "graceful",
+      "colorScheme": "Campbell",
+      "cursorColor": "#FFFFFF",
+      "cursorShape": "bar",
+      "fontFace": "Consolas",
+      "fontSize": 12,
       "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-      "hidden": true,
+      "historySize": 9001,
       "name": "Azure Cloud Shell",
-      "source": "Windows.Terminal.Azure"
+      "source": "Windows.Terminal.Azure",
+      "startingDirectory": "%USERPROFILE%"
     }
   ],
   "requestedTheme": "dark",
@@ -521,7 +629,10 @@
       "yellow": "#B58900"
     }
   ],
+  "rowsToScroll": 1,
   "showTabsInTitlebar": true,
   "showTerminalTitleInTitlebar": true,
-  "wordDelimiters": " /\\()\"'-.:,;<>~_!@#$%^&*|+=[]{}~?|\u2502"
+  "snapToGridOnResize": true,
+  "tabWidthMode": "equal",
+  "wordDelimiters": " /\\()\"'-.:,;<>~_!@#$%^&*|+=[]{}~?|│"
 }
