@@ -31,8 +31,9 @@
 "\C-q": quoted-insert
 
 # Kill the wole line regardless of cursor position
-Control-k: kill-whole-line
-set revert-all-at-newline on
+"\C-k": kill-whole-line
+
+
 # Other: {{{1
 "\e<": beginning-of-history
 "\e[200~": bracketed-paste-begin
@@ -181,6 +182,8 @@ set keymap emacs
 # Leave it on emacs they have so many more keys
 
 # Options: {{{1
+set revert-all-at-newline on
+
 # From Arch Wiki and man bash
 
 # When using TAB for completions, the double tab can be changed to a single tab
@@ -367,47 +370,47 @@ set history-size 10000
 $if cmd.exe
 
 "\t":               clink-completion-shim
-"C-V":                paste-from-clipboard
-"C-q":                reload-lua-state
-"C-z":                undo
-"M-h":                show-rl-help
-"M-C-c":              copy-line-to-clipboard
-"C-c":                ctrl-c
-"M-a":                "..\\"
+"\C-V":                paste-from-clipboard
+"\C-q":                reload-lua-state
+"\C-z":                undo
+"\M-h":                show-rl-help
+"\e\C-c":              copy-line-to-clipboard
+"\C-c":                ctrl-c
+"\e-a":                "..\\"
 
 "set" keymap vi-insert
 "\t":               clink-completion-shim
-"C-v":                paste-from-clipboard
-"C-z":                undo
-"M-h":                show-rl-help
-"M-C-c":              copy-line-to-clipboard
-"C-c":                ctrl-c
-"M-a":                "..\\"
+"\C-v":                paste-from-clipboard
+"\C-z":                undo
+"\e-h":                show-rl-help
+"\e\C-c":              copy-line-to-clipboard
+"\C-c":                ctrl-c
+"\e-a":                "..\\"
 #
 "set" keymap vi-move
-"C-v":                paste-from-clipboard
-"C-z":                undo
-"M-h":                show-rl-help
-"M-C-c":              copy-line-to-clipboard
-"C-c":                ctrl-c
-"M-a":                "..\\"
+"\C-v":                paste-from-clipboard
+"\C-z":                undo
+"\e\C-h":                show-rl-help
+"\e\C-c":              copy-line-to-clipboard
+"\C-c":                ctrl-c
+"\e-a":                "..\\"
 $endif
 
 $if cmd.exe
     set keymap emacs
     "\e`U":         up-directory
-    M-C-u:          up-directory
-    M-C-e:          expand-env-vars
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
 
     set keymap vi-insert
     "\e`U":         up-directory
-    M-C-u:          up-directory
-    M-C-e:          expand-env-vars
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
 
     set keymap vi-move
     "\e`U":         up-directory
-    M-C-u:          up-directory
-    M-C-e:          expand-env-vars
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
 $endif
 
 $if Bash

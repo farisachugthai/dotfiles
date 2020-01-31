@@ -64,6 +64,7 @@
     p = pull --all --verbose
     po = pull --all --verbose origin
     pom = pull --all --verbose -- origin master
+    psh = push  # goddamn
     pu = push
     pul = pull	# gotta imagine how annoying these are
     pus = push
@@ -259,7 +260,8 @@
 
 [log]
     abbrevCommit = true
-    showSignature = true
+    # DUDE! Don't turn showSignature on
+    showSignature = false
     # old: format = '%h %ad | %s%d [%an]'
     # NOTE: mirrored at pretty.format.lo [el oh]. So you can do git log --pretty=lo and get the same thing
     format = "format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"

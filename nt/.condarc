@@ -6,8 +6,6 @@
 
 default_python: 3.8
 
-clobber: true
-
 # Don't know where this option is listed in conda config --describe.
 # Shit I mean it probably isn't
 allow_conda_downgrades: true
@@ -39,6 +37,7 @@ channels:
   - pytorch
   - anaconda
   - bioconda
+  - mkl
 
 
 default_channels:

@@ -5,7 +5,7 @@
 # https://conda.io/docs/user-guide/configuration/use-condarc.html
 # enable_private_envs: true
 
-# default_python: 3.8
+default_python: 3.8
 
 # Don't know where this option is listed in conda config --describe.
 # Shit I mean it probably isn't
@@ -37,6 +37,7 @@ channels:
   - pytorch
   - anaconda
   - bioconda
+  - mkl
 
 default_channels:
   - https://repo.anaconda.com/pkgs/main

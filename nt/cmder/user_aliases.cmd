@@ -4,26 +4,29 @@
 ;= rem In batch mode, jump to the end of the file
 ;= goto:eof
 ;= Add aliases below here
-cat=bat $*
+alias=nvim C:\tools\Cmder\config\user_profile.cmd
 clear=cls
 clink="C:\tools\Cmder\vendor\clink/clink_x64.exe" --cfgdir "C:\tools\Cmder\config" $*
 cmderr=cd /d "%CMDER_ROOT%"
 conda="C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\condabin\conda.bat" $*
-cp=cp -v $*
+condad=cd "C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64" $*
 df=df -ah --total $*
+dir=dir /ON $*
+ddir=dir /Q /ON $*
 dus=du -d 1 -h -all $*
-e.=explorer .
+ex=explorer .
 free=free -mt $*
 
+git_alias="git config --get-regexp alias.*"
 g=git diff --stat --staged $*
 ga=git add --renormalize . $*
 gar=git add --renormalize . $*
-gb=git branch --all --remote --verbose $*
+gb=git branch --all --verbose $*
 gbl=git blame $*
 gbr=git branch $*
 gbrd=git branch -d $*
 gbrD=git branch -d $*
-gbru=git branch --set-upstream-to --verbose origin
+gbru=git branch --verbose --set-upstream-to origin $1
 gci=git commit $*
 gcia=git commit --amend $*
 gciad=git commit --amend --date=$*
@@ -35,9 +38,9 @@ gcob=git checkout -b $*
 gd=git diff $*
 gds=git diff --staged $*
 gds2=git diff --stat --staged $*
-gdt=git difftol $*
+gdt=git difftool $*
 gf=git fetch --all $*
-gl=git log --pretty=lo $*
+gl=git log --graph --decorate --all --abbrev --abbrev-commit --pretty=lo $*
 glo=git log $*
 gls=git ls-tree
 gm=git merge --no-ff $*
@@ -59,28 +62,26 @@ gs=git status $*
 gsh=git stash $*
 gshd=git stash -d $*
 gshl=git stash -l $*
-gshp=git stash -p $*
+gshp=git stash pop $*
 gshs=git stash show $*
-gshsp=git stash show -p $*
+gshsp=git stash show --patch $*
 gst=git diff --stat $*
 gsw=git switch --progress $*
 gt=git tag --list $*
 
 history=cat -n "%CMDER_ROOT%\config\.history"
+l=ls -Fh --show-control-chars --append-exe --color=always $*
 la=ls -AF --color=always $*
-ldir=ls -po --color=always | grep /$
-lf=ls -Fo --color=always | grep ^-
+ldir=ls -po --color=always | grep /$ $*
+lf=ls -Fo --color=always | grep ^- $*
 ll=ls -AFhog --color=always $*
-lr=ls -AlgFhr --color=always $*
+lr=ls -AlgFhtr --color=always $*
 ls=ls --show-control-chars --append-exe -Fh --color=always $*
 lt=ls -Alght --color=always $*
-lx=ls -Fo --color=always | grep ^-..x
-mkdir=mkdir -pv $*
-mv=mv -v $*
+lx=ls -Fo --color=always | grep ^-..x $*
 pro=nvim C:\tools\Cmder\config\user_profile.cmd
 pwd=cd
-rm=rm -Iv $*
-rmdir=rmdir -v $*
-tail=tail -n 30 $*
+sort=sort /L C $*
+tree=tree /F /A $*
 unalias=alias /d $1
 vi=vim $*

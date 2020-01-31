@@ -43,14 +43,15 @@ if [[ -n "$(command -v fd)" ]]; then  # fd {{{1
     # fzf-file-widget: <Ctrl-t>: {{{2
     export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
 
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --preview-window=down:50%:wrap --ansi --bind ?:toggle-preview --header "Press ? to toggle preview."'
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --ansi '
+
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh && -n "$(command -v ruby)" ]]; then
-        export FZF_CTRL_T_OPTS+=" --preview ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh {} | bat - "
+        export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh {} | bat -' "
 
     elif [[ -n "$(command -v bat)" ]]; then
-        export FZF_CTRL_T_OPTS+='--preview "bat {}" '
+        export FZF_CTRL_T_OPTS+='--preview "bat {}" --preview-window=down:50%:wrap --bind ?:toggle-preview --header "Press ? to toggle preview."'
     else
-        export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " '
+        export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " --preview-window=down:50%:wrap '
     fi
 
 # }}}

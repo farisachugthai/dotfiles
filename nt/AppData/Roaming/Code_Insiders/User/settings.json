@@ -153,7 +153,7 @@
   "editor.find.autoFindInSelection": "multiline",
   "editor.fontWeight": "400",
   "editor.formatOnSaveTimeout": 3000,
-  "editor.fontFamily": "Inconsolata, Source Code Pro, Hack, 'Fira Code', monospace",
+  "editor.fontFamily": "Hack-NF, 'Sauce Code Pro NF', 'Fira Code', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.formatOnSave": true,
@@ -167,7 +167,7 @@
   "editor.maxTokenizationLineLength": 2000,
   "editor.minimap.enabled": true,
   "editor.mouseWheelZoom": true,
-  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.multiCursorModifier": "alt",
   "editor.parameterHints.cycle": true,
   "editor.quickSuggestions": {
     "comments": false,
@@ -244,8 +244,65 @@
   "javascript.suggest.completeFunctionCalls": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "launch": {
-    "compounds": [],
-    "configurations": []
+    "configurations": [
+      {
+        "name": "Python: Current File (Integrated Terminal)",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "Python: Attach",
+        "type": "python",
+        "request": "attach",
+        "port": 5678,
+        "host": "localhost"
+      },
+      {
+        "name": "Python: Module",
+        "type": "python",
+        "request": "launch",
+        "module": "enter-your-module-name-here",
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "Python: Django",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/manage.py",
+        "console": "integratedTerminal",
+        "args": [
+          "runserver",
+          "--noreload",
+          "--nothreading"
+        ],
+        "django": true
+      },
+      {
+        "name": "Python: Flask",
+        "type": "python",
+        "request": "launch",
+        "module": "flask",
+        "env": {
+          "FLASK_APP": "app.py"
+        },
+        "args": [
+          "run",
+          "--no-debugger",
+          "--no-reload"
+        ],
+        "jinja": true
+      },
+      {
+        "name": "Python: Current File (External Terminal)",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "externalTerminal"
+      }
+    ],
+    "compounds": []
   },
   "markdown.links.openLocation": "beside",
   "markdown.preview.fontFamily": "'Fira Code', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif",
@@ -266,9 +323,7 @@
   "php.suggest.basic": false,
   "php.validate.enable": false,
   "pyright.openFilesOnly": true,
-  "python.analysis.cacheFolderPath": "C:/Users/faris/AppData/Roaming/Code/Cache",
-  "python.analysis.cachingLevel": "Default",
-  "python.analysis.logLevel": "Information",
+  "python.analysis.cacheFolderPath": "C:/Users/fac/AppData/Roaming/Code/Cache",
   "python.autoComplete.addBrackets": true,
   "python.dataScience.changeDirOnImportExport": true,
   "python.dataScience.codeLenses": "python.datascience.runcell,  python.datascience.runallcellsabove, python.datascience.debugcell",
@@ -343,7 +398,7 @@
   "python.dataScience.themeMatplotlibPlots": true,
   "python.diagnostics.sourceMapsEnabled": true,
   "python.experiments.enabled": false,
-  "python.insidersChannel": "off",
+  "python.insidersChannel": "daily",
   "python.jediEnabled": false,
   "python.jediPath": "jedi",
   "python.linting.enabled": true,
@@ -359,8 +414,8 @@
   ],
   "python.linting.pydocstyleEnabled": true,
   "python.linting.pylintEnabled": false,
-  "python.pipenvPath": "python -m pipenv",
-  "python.pythonPath": "C:\\Users\\faris\\projects\\dynamic_ipython\\.venv\\Scripts\\python.exe",
+  "python.pipenvPath": "py -m pipenv",
+  "python.pythonPath": "pipenv run python",
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.activateEnvironment": true,
   "python.terminal.executeInFileDir": true,
@@ -372,10 +427,9 @@
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": true,
   "python.venvFolders": [
-    "C:\\tools\\miniconda3\\envs",
     "~/.local/share/virtualenvs"
   ],
-  "python.workspaceSymbols.ctagsPath": "C:\\Users\\faris\\ctags.exe",
+  "python.workspaceSymbols.ctagsPath": "",
   "python.workspaceSymbols.exclusionPatterns": [
     "**/site-packages/**",
     "**.venv**"
@@ -390,7 +444,7 @@
   "remote.SSH.useLocalServer": true,
   "remote.WSL.debug": true,
   "remote.WSL.fileWatcher.polling": true,
-  "restructuredtext.builtDocumentationPath": "${workspaceFolder}/build/html",
+  "restructuredtext.builtDocumentationPath": "${workspaceFolder}/docs/build/html",
   "restructuredtext.confPath": "${workspaceFolder}/source",
   "restructuredtext.experimental": true,
   "restructuredtext.languageServer.disabled": false,
@@ -465,7 +519,6 @@
   "vim.highlightedyank.enable": true,
   "vim.history": 10000,
   "vim.hlsearch": true,
-  "vim.iskeyword": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
   "vim.leader": "<Space>",
   "vim.neovimPath": "C:\\\\Neovim\\\\bin\\\\nvim.exe",
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -558,7 +611,7 @@
   "vim.visualstar": true,
   "vim.whichwrap": "<,>,[,],h,l,<BS>",
   "window.zoomLevel": 0,
-  "workbench.activityBar.visible": true,
+  "workbench.activityBar.visible": false,
   "workbench.commandPalette.history": 500,
   "workbench.commandPalette.preserveInput": true,
   "workbench.editor.closeOnFileDelete": true,
@@ -579,18 +632,18 @@
   "workbench.settings.openDefaultKeybindings": true,
   "workbench.settings.openDefaultSettings": false,
   "workbench.settings.useSplitJSON": true,
-  "workbench.sideBar.location": "left",
+  "workbench.sideBar.location": "right",
   "workbench.statusBar.visible": true,
   "workbench.tips.enabled": false,
   "workbench.tree.renderIndentGuides": "onHover",
-  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+  "editor.wordSeparators": ".",
   "python.workspaceSymbols.enabled": true,
   "workbench.colorCustomizations": {
     "statusBar.background": "#005f5f",
     "statusBar.noFolderBackground": "#005f5f",
     "statusBar.debuggingBackground": "#005f5f"
   },
-  "task.autoDetect": "on",
+  "task.autoDetect": "off",
   "rust-client.useWSL": true,
   "merge-conflict.diffViewPosition": "Beside",
   "problems.showCurrentInStatus": true,
@@ -603,7 +656,7 @@
   "search.enableSearchEditorPreview": true,
   "git.alwaysShowStagedChangesResourceGroup": true,
   "debug.extensionHost.useV3": true,
-  "debug.node.autoAttach": "on",
+  "debug.node.autoAttach": "off",
   "typescript.surveys.enabled": false,
   "vim.digraphs": {},
   "powershell.codeFormatting.autoCorrectAliases": true,
@@ -612,6 +665,11 @@
   "powershell.powerShellExePath": "C:\\pwsh\\7-preview\\pwsh.exe",
   "powershell.startAutomatically": false,
   "powershell.promptToUpdatePowerShell": false,
-  "workbench.colorTheme": "Gruvbox Material Soft Dark",
-  "editor.find.addExtraSpaceOnTop": false
+  "editor.find.addExtraSpaceOnTop": false,
+  "python.linting.flake8CategorySeverity.F": "Information",
+  "python.linting.pylintCategorySeverity.convention": "Warning",
+  "workbench.colorTheme": "Gruvbox Dark Hard",
+  "[jinja]": {
+        
+    }
 }

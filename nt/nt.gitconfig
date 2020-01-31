@@ -1,11 +1,15 @@
 [core]
     sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
-    pager = bat
+    pager = less
 
 ; [winUpdater]
 ; 	recentlySeenVersion = 2.23.0.windows.1
+
 [include]
     path = C:/Users/faris/projects/dotfiles/unix/.config/git/config
 
 [includeIf]
-	path = ./.gitconfig.local
+	path = C:/Users/faris/.gitconfig.local
+[user]
+	email = farischugthai@gmail.com
+	name = Faris A. Chugthai

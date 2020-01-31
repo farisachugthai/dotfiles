@@ -44,7 +44,8 @@ SET RIPGREP_CONFIG_PATH=C:\Users\faris\.ripgreprc
 SET IPYTHONDIR=C:\Users\faris\.ipython
 
 :: PAGER:
-set PAGER=less
+:: set PAGER=less
+:: set BAT_PAGER=less
 
 :: This is nice and all but it doesn't behave consistently IMO
 :: --mouse
@@ -76,12 +77,8 @@ SET "PYTHONMALLOC=debug"
 :: The FZF docs state this has to be unset but a LOT of things stop working then
 :: HOLY FUCKING SHIT FZF WORKS BETTER THAN EVER AHHHH
 SET "TERM=cygwin"
-
 SET "CONEMU_ANSI=ON"
 
-::SET HOME=C:\Users\faris
-SET "BAT_THEME=TwoDark"
-SET "BAT_STYLE=full"
 SET "LESSHISTSIZE=5000"
 
 :: Let's see if giving this shit 2 parameters make its work
@@ -92,8 +89,9 @@ SET "FZF_DEFAULT_COMMAND=fd -H -t f "
 
 :: This just worked interactively on the cmdline
 :: whew. don't set window down it might start redrawing results over your window
-SET "FZF_DEFAULT_OPTS=--ansi --border --multi --cycle --filepath-word --reverse --tiebreak begin,length,index --bind alt-n:execute:'nvim {}' --header 'FZF: File Browser. Press Alt-n to launch nvim. ' --prompt 'FZF: > ' --preview 'bat --theme OneHalfDark --color always {}' --preview-window=right:50%:wrap "
+SET "FZF_DEFAULT_OPTS=--ansi --border --multi --cycle --filepath-word --reverse --tiebreak begin,length,index --bind alt-n:execute:'nvim {}' --header 'FZF: File Browser. Press Alt-n to launch nvim. ' --prompt 'FZF: > ' "
 
+:: --preview 'bat --theme OneHalfDark --color always {}' --preview-window=right:50%:wrap
 :: SET FZF_DEFAULT_COMMAND="rg --hidden  --smart-case --passthru ^ "
 :: SET FZF_DEFAULT_OPTS=" --multi --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --ansi --filepath-word --border --header 'FZF: File Browser' "
 ::
@@ -124,7 +122,9 @@ set "PATH=%PATH%;C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Pyt
 set "PATH=%PATH%;C:\Users\faris\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminal_8wekyb3d8bbwe"
 
 :: TODO: add it the normal way
-set "PATH=%PATH%;C:\Program Files\nodejs"
+set "PATH=%PATH%;C:\tools\nvm\v12.14.1"
+
+dircolors -c ~/.dircolors 1>nul
 
 :: %ccall% "/customOption" "command/program"
 

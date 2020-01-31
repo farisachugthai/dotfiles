@@ -13,8 +13,7 @@ esc_clears_line = False
 # type: int
 # Colour to use when displaying matches. A value less than 0 will be the
 # opposite brightness of the default colour.
-# No HEX! Letters fuck it up
-# match_colour = 3836
+match_colour = -1
 
 # name: Executable match style
 # type: enum
@@ -37,7 +36,7 @@ space_prefix_match_files = True
 # type: int
 # Surrounds the prompt in ANSI escape codes to set the prompt's colour. Disabled
 # when the value is less than 0.
-prompt_colour = #798340
+prompt_colour = "#e3a84e"
 
 # name: Auto-answer terminate prompt
 # type: enum
@@ -53,7 +52,7 @@ terminate_autoanswer = 1
 # When set to a positive integer this is the number of lines of history that
 # will persist when Clink saves the command history to disk. Use 0 for infinite
 # lines and <0 to disable history persistence.
-history_file_lines = 0
+history_file_lines = 10000
 
 # name: Skip adding lines prefixed with whitespace
 # type: bool

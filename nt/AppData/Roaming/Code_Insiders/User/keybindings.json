@@ -29,8 +29,14 @@
   },
   {
     "command": "workbench.action.closeAllEditors",
-    "key": "Ctrl+F4"
+    "key": "Ctrl+F4",
+    "when": "editorFocus"
   },
+  {
+    "command": "workbench.action.terminal.kill",
+    "key": "Ctrl+F4",
+    "when": "terminalFocus"
+  }
   {
     "args": {
       "cwd": "${fileDirname}"
@@ -249,13 +255,41 @@
     "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
   },
   {
-    "command": "workbench.action.openPreviousRecentlyUsedEditor",
-    "key": "Ctrl+w l",
+    "command": "workbench.action.openNextRecentlyUsedEditor",
+    "key": "Ctrl+w n",
     "when": "editorTextFocus"
   },
   {
     "command": "workbench.action.openPreviousRecentlyUsedEditor",
+    "key": "Ctrl+w p",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "-workbench.action.openNextRecentlyUsedEditor",
+    "key": "Ctrl-Tab"
+  },
+  {
+    "command": "-workbench.action.openPreviousRecentlyUsedEditor",
+    "key": "Ctrl-Shift-Tab"
+  },
+  {
+    "command": "workbench.action.focusRightGroup",
     "key": "Ctrl+w l",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "workbench.action.focusLeftGroup",
+    "key": "Ctrl+w h",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "workbench.action.focusAboveGroup",
+    "key": "Ctrl+w k",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "workbench.action.focusBelowGroup",
+    "key": "Ctrl+w j",
     "when": "editorTextFocus"
   },
   {
@@ -270,7 +304,7 @@
     //"command": "workbench.action.openDefaultKeybindingsFile"
     "command": "workbench.action.openGlobalKeybindings",
     "key": "Ctrl+k Ctrl+k"
-  }
+  },
   {
     "command": "-workbench.action.files.saveAs",
     "key": "Ctrl-Shift-s"
