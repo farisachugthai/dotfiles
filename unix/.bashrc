@@ -23,6 +23,8 @@ else
 fi
 
 # Python: {{{1
+
+export PYTHONASYNCIODEBUG=1
 # Put python first because we need conda initialized right away
 export PYTHONDONTWRITEBYTECODE=1
 
@@ -65,14 +67,7 @@ fi
 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
-[[ -x lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
-# how did this happen twice?
-# if [[ -x lesspipe.sh ]]; then export LESSOPEN="|lesspipe.sh %s"; fi
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
+[[ -x lesspipe ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(SHELL=/bin/bash lesspipe.sh)"
 
 # Vim: {{{1
 if [[ -n "$(command -v nvim)" ]]; then
@@ -252,7 +247,7 @@ test "$(command -v dlink2)" && complete -o bashdefault -o default -F _fzf_path_c
 # Sourced files: {{{1
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
-test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion" && echo 'sourced completion'
+test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
 
 if [[ -d ~/.bashrc.d ]]; then
     for config in $HOME/.bashrc.d/*.bash; do
@@ -274,9 +269,6 @@ firstpath "$HOME/.local/bin"
 
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"
-
-# I'm gonna try and stay conservative here.
-export PS1="\\t \\u@\\h \\d \w \n $: "
 
 export TEMP="$XDG_CACHE_HOME"
 export TMP="$XDG_CACHE_HOME"

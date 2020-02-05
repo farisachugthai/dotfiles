@@ -92,7 +92,8 @@
     "editor.defaultFormatter": "ms-python.python",
     "editor.rulers": [
       80
-    ]
+    ],
+    "editor.foldingStrategy": "indentation"
   },
   "[restructuredtext]": {
     "editor.quickSuggestions": {
@@ -152,12 +153,14 @@
   "editor.cursorSurroundingLines": 2,
   "editor.find.autoFindInSelection": "multiline",
   "editor.fontWeight": "400",
+  "editor.foldingStrategy": "auto",
   "editor.formatOnSaveTimeout": 3000,
-  "editor.fontFamily": "Hack-NF, 'Sauce Code Pro NF', 'Fira Code', monospace",
+  "editor.fontFamily": "'Source Code Pro', Hack, Menlo, monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
+  "editor.gotoLocation.alternativeTypeDefinitionCommand": "editor.action.goToReferences",
   "editor.gotoLocation.multipleDeclarations": "gotoAndPeek",
   "editor.gotoLocation.multipleDefinitions": "gotoAndPeek",
   "editor.gotoLocation.multipleReferences": "gotoAndPeek",
@@ -187,7 +190,6 @@
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": true,
   "eslint.alwaysShowStatus": true,
-  "eslint.autoFixOnSave": true,
   "eslint.experimental.incrementalSync": true,
   "eslint.lintTask.enable": true,
   "extensions.autoCheckUpdates": true,
@@ -246,11 +248,11 @@
   "launch": {
     "configurations": [
       {
+        "console": "integratedTerminal",
         "name": "Python: Current File (Integrated Terminal)",
-        "type": "python",
-        "request": "launch",
         "program": "${file}",
-        "console": "integratedTerminal"
+        "request": "launch",
+        "type": "python",
       },
       {
         "name": "Python: Attach",
@@ -280,26 +282,67 @@
         "django": true
       },
       {
-        "name": "Python: Flask",
-        "type": "python",
-        "request": "launch",
-        "module": "flask",
-        "env": {
-          "FLASK_APP": "app.py"
-        },
-        "args": [
-          "run",
-          "--no-debugger",
-          "--no-reload"
-        ],
-        "jinja": true
-      },
-      {
         "name": "Python: Current File (External Terminal)",
         "type": "python",
         "request": "launch",
         "program": "${file}",
         "console": "externalTerminal"
+      },
+      {
+        "name": "IPython Module",
+        "type": "python",
+        "request": "launch",
+        "pythonPath": "${config:python.pythonPath}",
+        "module": "IPython",
+        "console": "internalConsole"
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Yeoman generator",
+        "program": "${workspaceFolder}/node_modules/yo/lib/cli.js",
+        "args": [
+          "generator",
+          "code"
+        ],
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        "cwd": "${workspaceFolder}"
+      },
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Attach to Remote",
+        "address": "TCP/IP address of process to be debugged",
+        "port": 9229,
+        "localRoot": "${workspaceFolder}",
+        "remoteRoot": "Absolute path to the remote directory containing the program",
+        "skipFiles": [
+          "<node_internals>/**"
+        ]
+      },
+      {
+        "type": "extensionHost",
+        "request": "launch",
+        "name": "Launch Extension",
+        "runtimeExecutable": "${execPath}",
+        "args": [
+          "--extensionDevelopmentPath=${workspaceFolder}"
+        ],
+        "outFiles": [
+          "${workspaceFolder}/out/**/*.js"
+        ],
+        "preLaunchTask": "npm"
+      },
+      {
+        "name": "npm",
+        "request": "launch",
+        "args": [],
+        "type": "node",
+        "runtimeExecutable": "npm"
       }
     ],
     "compounds": []
@@ -396,9 +439,9 @@
   "python.dataScience.ptvsdDistPath": "/home/farbuntu/.vscode-server-insiders/extensions/ms-python.python-2019.11.50794/pythonFiles/ptvsd_launcher.py",
   "python.dataScience.sendSelectionToInteractiveWindow": true,
   "python.dataScience.themeMatplotlibPlots": true,
-  "python.diagnostics.sourceMapsEnabled": true,
+  "python.diagnostics.sourceMapsEnabled": false,
   "python.experiments.enabled": false,
-  "python.insidersChannel": "daily",
+  "python.insidersChannel": "off",
   "python.jediEnabled": false,
   "python.jediPath": "jedi",
   "python.linting.enabled": true,
@@ -414,22 +457,16 @@
   ],
   "python.linting.pydocstyleEnabled": true,
   "python.linting.pylintEnabled": false,
-  "python.pipenvPath": "py -m pipenv",
   "python.pythonPath": "pipenv run python",
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.activateEnvironment": true,
   "python.terminal.executeInFileDir": true,
-  "python.terminal.launchArgs": [
-    "-m",
-    "IPython"
-  ],
   "python.testing.nosetestsEnabled": true,
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": true,
   "python.venvFolders": [
     "~/.local/share/virtualenvs"
   ],
-  "python.workspaceSymbols.ctagsPath": "",
   "python.workspaceSymbols.exclusionPatterns": [
     "**/site-packages/**",
     "**.venv**"
@@ -457,10 +494,17 @@
   "scm.defaultViewMode": "tree",
   "scm.diffDecorations": "gutter",
   "search.exclude": {
+    "**/__pycache__/**": true,
     "**/.git": true,
     "**/.venv": true,
     "**/bower_components": true,
-    "**/node_modules": true
+    "**/node_modules": true,
+    "build": true,
+    "dist": true,
+    ".tox": true,
+    ".venv": true,
+    ".idea": true,
+    ".vscode": true
   },
   "search.quickOpen.includeSymbols": true,
   "search.showLineNumbers": true,
@@ -479,26 +523,19 @@
   "terminal.external.linuxExec": "kitty",
   "terminal.external.windowsExec": "C:\\Windows\\System32\\cmd.exe /U E:ON F:ON V:ON /K C:\\tools\\Cmder\\vendor\\init.bat",
   "terminal.integrated.automationShell.linux": "tmux",
-  "terminal.integrated.confirmOnExit": true,
+  "terminal.integrated.confirmOnExit": false,
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.detectLocale": "on",
   "terminal.integrated.experimentalRefreshOnResume": true,
   "terminal.integrated.experimentalUseTitleEvent": true,
+  "terminal.integrated.fontFamily": "monospace",
   "terminal.integrated.fontWeightBold": "normal",
   "terminal.integrated.inheritEnv": false,
-  "terminal.integrated.rendererType": "dom",
+  "terminal.integrated.rendererType": "experimentalWebgl",
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.shell.linux": "/usr/bin/tmux",
-  "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
-  "terminal.integrated.shellArgs.windows": [
-    "/U",
-    "E:ON",
-    "F:ON",
-    "V:ON",
-    "/K",
-    "C:\\tools\\Cmder\\vendor\\init.bat"
-  ],
+  "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\6\\pwsh.exe",
   "terminal.integrated.windowsEnableConpty": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "update.enableWindowsBackgroundUpdates": false,
@@ -514,7 +551,8 @@
   "vim.enableNeovim": true,
   "vim.foldfix": true,
   "vim.handleKeys": {
-    "<C-k>": true
+    "<C-k>": true,
+    "<C-o>": true
   },
   "vim.highlightedyank.enable": true,
   "vim.history": 10000,
@@ -632,7 +670,7 @@
   "workbench.settings.openDefaultKeybindings": true,
   "workbench.settings.openDefaultSettings": false,
   "workbench.settings.useSplitJSON": true,
-  "workbench.sideBar.location": "right",
+  "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
   "workbench.tips.enabled": false,
   "workbench.tree.renderIndentGuides": "onHover",
@@ -665,11 +703,12 @@
   "powershell.powerShellExePath": "C:\\pwsh\\7-preview\\pwsh.exe",
   "powershell.startAutomatically": false,
   "powershell.promptToUpdatePowerShell": false,
-  "editor.find.addExtraSpaceOnTop": false,
+  "editor.find.addExtraSpaceOnTop": true,
   "python.linting.flake8CategorySeverity.F": "Information",
-  "python.linting.pylintCategorySeverity.convention": "Warning",
   "workbench.colorTheme": "Gruvbox Dark Hard",
-  "[jinja]": {
-        
-    }
+  "editor.formatOnPaste": true,
+  "editor.multiCursorPaste": "full",
+  "explorer.incrementalNaming": "smart",
+  "debug.console.fontFamily": "'Source Code Pro', Hack, Menlo",
+  "breadcrumbs.enabled": true
 }

@@ -1,3 +1,5 @@
+// To view the default settings, hold "alt" while clicking on the "Settings" button.
+// For documentation on these settings, see: https://aka.ms/terminal-documentation
 {
   "$schema": "https://aka.ms/terminal-profiles-schema",
   "alwaysShowTabs": true,
@@ -5,6 +7,8 @@
   "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
   "initialCols": 90,
   "initialRows": 30,
+  // Add any keybinding overrides to this array.
+  // To unbind a default keybinding, set the command to "unbound"
   "keybindings": [
     {
       "command": "closeTab",
@@ -301,10 +305,37 @@
       ]
     }
   ],
+  "moveFocus": "",
   "profiles": [
-    {
+    {   // cmd
+      "acrylicOpacity": 0.95,
+      "background": "#1d2021",
+      "closeOnExit": "graceful",
+      "colorScheme": "Gruvbox",
+      "commandline": "cmd.exe",
+      "cursorColor": "#FFFFFF",
+      "cursorHeight": 80,
+      "cursorShape": "emptyBox",
+      "foreground": "#EBDBB2",
+      "fontFace": "Consolas",
+      "fontSize": 12,
+      "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+      "historySize": 9001,
+      "icon": "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
+      "name": "clink",
+      "padding": "8, 8, 8, 8",
+      "scrollbarState": "visible",
+      "selectionBackground": "#dfbf8e",
+      "snapOnInput": true,
+      "startingDirectory": "%USERPROFILE%",
+      "suppressApplicationTitle": true,
+      "tabTitle": "Clink:",
+      "useAcrylic": true
+    },
+    {  // wsl
       "acrylicOpacity": 0.9,
       "background": "#1d2021",
+      "closeOnExit": "graceful",
       "colorScheme": "Gruvbox",
       "commandline": "wsl",
       "cursorShape": "emptyBox",
@@ -314,20 +345,21 @@
       "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
       "hidden": false,
       "historySize": 9999,
-      "name": "Ubuntu",
+      "name": "Ubuntu-18.04",
       "padding": "8, 8, 8, 8",
       "scrollbarState": "visible",
       "snapOnInput": true,
       "source": "Windows.Terminal.Wsl",
       "startingDirectory": "$HOME",
+      "suppressApplicationTitle": true,
       "tabTitle": "WSL",
       "useAcrylic": true
     },
-    {
+    {  // powershell
       "acrylicOpacity": 0.95,
       "closeOnExit": "graceful",
       "colorScheme": "Gruvbox",
-      "commandline": "powershell.exe",
+      "commandline": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
       "cursorColor": "#FFFFFF",
       "cursorShape": "bar",
       "fontFace": "FuraMono Nerd Font Mono",
@@ -339,70 +371,50 @@
       "padding": "8, 8, 8, 8",
       "snapOnInput": true,
       "startingDirectory": "%USERPROFILE%",
-      "tabTitle": "powershell",
+      "suppressApplicationTitle": true,
+      "tabTitle": "Windows PowerShell",
       "useAcrylic": true
     },
-    {
+    {   // pwsh...again?
       "acrylicOpacity": 0.95,
       "background": "#1d2021",
-      "closeOnExit": "true",
+      "closeOnExit": "graceful",
       "colorScheme": "Gruvbox",
-      "commandline": "cmd.exe /U /E:ON /F:ON /K C:/tools/Cmder/vendor/init.bat",
+      "commandline": "C:\\Program Files\\PowerShell\\6\\pwsh.exe",
       "cursorColor": "#FFFFFF",
-      "cursorHeight": 80,
       "cursorShape": "emptyBox",
-      "fontFace": "FuraMono Nerd Font Mono",
+      "fontFace": "Hack-NF",
       "fontSize": 12,
-      "foreground": "#EBDBB2",
-      "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-      "hidden": false,
-      "historySize": 9001,
-      "icon": "C:/tools/Cmder/icons/cmder_blue.ico",
-      "name": "Homebrewed Cmder",
-      "scrollbarState": "visible",
-      "selectionBackground": "#dfbf8e",
-      "snapOnInput": true,
-      "startingDirectory": "%USERPROFILE%",
-      "suppressApplicationTitle": true,
-      "tabTitle": "Homebrewed Cmder",
-      "useAcrylic": true
-    },
-    {
-      "acrylicOpacity": 0.95,
-      "colorScheme": "Gruvbox",
-      "commandline": "C:\\pwsh\\7-preview\\pwsh.exe",
-      "cursorShape": "emptyBox",
-      "fontFace": "FuraMono Nerd Font Mono",
-      "fontSize": 12,
+      "foreground": "#ebdbb2",
       "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-      "hidden": false,
       "historySize": 9999,
       "name": "PowerShell Core",
       "scrollbarState": "visible",
       "snapOnInput": true,
+      "source": "Windows.Terminal.PowershellCore",
       "startingDirectory": "%USERPROFILE%",
-      "tabTitle": "pwshcore",
+      "suppressApplicationTitle": true,
+      "tabTitle": "pwsh core",
       "useAcrylic": true
     },
-    {
+    {   // pipenv
       "acrylicOpacity": 0.95,
       "background": "#1d2021",
-      "closeOnExit": false,
+      "closeOnExit": "graceful",
       "colorScheme": "Gruvbox",
-      "commandline": "cmd.exe /U /E:ON /F:ON /K C:/tools/Cmder/vendor/init.bat & C:\\tools\\vs\\2019\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
+      "commandline": "cmd /U /E:ON /F:ON /K pipenv shell",
       "cursorShape": "emptyBox",
-      "fontFace": "Fira Code Light",
       "fontSize": 12,
       "foreground": "#EBDBB2",
       "guid": "{9e3761da-29da-4047-a640-912664a5be48}",
       "hidden": false,
-      "historySize": 9001,
-      "name": "VC64",
+      "historySize": 9999,
+      "name": "pipenv",
       "scrollbarState": "visible",
       "snapOnInput": true,
-      "startingDirectory": "%USERPROFILE%",
+      "startingDirectory": "%USERPROFILE%\\projects\\dynamic_ipython",
       "suppressApplicationTitle": true,
-      "tabTitle": "VC64 + Cmder",
+      "tabTitle": "pipenv",
       "useAcrylic": true
     },
     {
@@ -439,7 +451,7 @@
       "startingDirectory": "%USERPROFILE%"
     }
   ],
-  "requestedTheme": "dark",
+  // Add custom color schemes to this array
   "schemes": [
     {
       "background": "#1e1e1e",
@@ -611,8 +623,8 @@
       "yellow": "#B58900"
     }
   ],
-  "rowsToScroll": 2,
-  "moveFocus": "",
+  "requestedTheme": "dark",
+  "rowsToScroll": 1,
   "showTabsInTitlebar": true,
   "showTerminalTitleInTitlebar": true,
   "snapToGridOnResize": true,

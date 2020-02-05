@@ -1,12 +1,13 @@
 [core]
     sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
     pager = less
+    editor = nvim
 
 ; [winUpdater]
 ; 	recentlySeenVersion = 2.23.0.windows.1
 
-[include]
-    path = C:/Users/faris/projects/dotfiles/unix/.config/git/config
+# [include]
+    # path = C:/Users/faris/projects/dotfiles/unix/.config/git/config
 
 [includeIf]
 	path = C:/Users/faris/.gitconfig.local

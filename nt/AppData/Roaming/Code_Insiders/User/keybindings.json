@@ -36,7 +36,7 @@
     "command": "workbench.action.terminal.kill",
     "key": "Ctrl+F4",
     "when": "terminalFocus"
-  }
+  },
   {
     "args": {
       "cwd": "${fileDirname}"
@@ -146,22 +146,22 @@
     "key": "Ctrl+Enter",
     "when": "editorTextFocus && editorLangId == 'restructuredtext'"
   },
-  {
-    "args": "-m IPython",
-    "command": "python.createTerminal",
-    "key": "ctrl+`",
-    "when": "!terminalFocus && editorLangId == 'python'"
-  },
-  {
-    "command": "python.execInTerminal",
-    "key": "Ctrl+Enter",
-    "when": "editorTextFocus && editorLangId == 'python'"
-  },
-  {
-    "command": "python.execSelectionInTerminal",
-    "key": "Ctrl+Enter",
-    "when": "editorTextFocus && !editorReadonly && editorLangId == 'python'"
-  },
+  // {
+  //   "args": "-m IPython",
+  //   "command": "python.createTerminal",
+  //   "key": "ctrl+`",
+  //   "when": "!terminalFocus && editorLangId == 'python'"
+  // },
+  // {
+  //   "command": "python.execInTerminal",
+  //   "key": "Ctrl+Enter",
+  //   "when": "editorTextFocus && editorLangId == 'python'"
+  // },
+  // {
+  //   "command": "python.execSelectionInTerminal",
+  //   "key": "Ctrl+Enter",
+  //   "when": "editorTextFocus && !editorReadonly && editorLangId == 'python'"
+  // },
   {
     "command": "-workbench.action.splitEditor",
     "key": "Ctrl+\\"
@@ -170,16 +170,16 @@
     "command": "workbench.action.toggleMaximizedPanel",
     "key": "Ctrl+\\"
   },
-  {
-    "command": "python.datascience.notebookeditor.runallcells",
-    "key": "f5",
-    "when": "editorTextFocus && python.datascience.featureenabled && editorLangId == 'python' && python.datascience.hascodecells && !editorHasSelection"
-  },
-  {
-    "command": "python.debugTestNode",
-    "key": "f5",
-    "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
-  },
+  // {
+  //   "command": "python.datascience.runallcells",
+  //   "key": "f5",
+  //   "when": "editorTextFocus && python.datascience.featureenabled && editorLangId == 'python' && python.datascience.hascodecells && !editorHasSelection"
+  // },
+  // {
+  //   "command": "python.selectAndDebugTestMethod",
+  //   "key": "f5",
+  //   "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
+  // },
   {
     "command": "-repl.action.filter",
     "key": "ctrl+f",
@@ -213,10 +213,10 @@
     "key": "shift+f5",
     "when": "!editorReadOnly && !inDebugRepl"
   },
-  {
-    "command": "python.viewOutput",
-    "key": "ctrl+g ctrl+p"
-  },
+  // {
+  //   "command": "python.datascience.viewJupyterOutput",
+  //   "key": "ctrl+g ctrl+p"
+  // },
   {
     "command": "workbench.action.openActiveLogOutputFile",
     "key": "ctrl+g l"
@@ -249,11 +249,11 @@
     "key": "Ctrl+F4",
     "when": "terminalFocus"
   },
-  {
-    "command": "python.debugTestNode",
-    "key": "f5",
-    "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
-  },
+  // {
+  //   "command": "python.execInTerminal",
+  //   "key": "f5",
+  //   "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
+  // },
   {
     "command": "workbench.action.openNextRecentlyUsedEditor",
     "key": "Ctrl+w n",
@@ -296,21 +296,86 @@
     "command": "workbench.action.showCommands",
     "key": "Alt+x"
   },
-  //{
-  //  "command": "editor.action.defineKeybinding",  // to remove the conditional aspect from the builtin
-  //  "key": "Ctrl+k Ctrl+k"
-  //},
   {
+    // alternatively
     //"command": "workbench.action.openDefaultKeybindingsFile"
     "command": "workbench.action.openGlobalKeybindings",
     "key": "Ctrl+k Ctrl+k"
   },
   {
     "command": "-workbench.action.files.saveAs",
-    "key": "Ctrl-Shift-s"
+    "key": "Ctrl+Shift+S"
   },
   {
     "command": "workbench.action.files.saveAll",
-    "key": "Ctrl-Shift-s"
+    "key": "Ctrl+Shift+S"
+  },
+  {
+    // let's add some of these git things in here
+    "command": "git.pullRebase",
+    "key": "Ctrl+x Shift+P"
+  },
+  {
+    "command": "git.fetchAll",
+    "key": "Ctrl+X Shift+F"
+  },
+  {
+    "command": "git.stash",
+    "key": "Ctrl+X Shift+Z"
+  },
+  {
+    "key": "shift+alt+f",
+    "command": "-filesExplorer.findInFolder",
+    "when": "explorerResourceIsFolder && explorerViewletVisible && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+alt+f",
+    "command": "editor.action.formatDocument.none",
+    "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorHasDocumentFormattingProvider && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+i",
+    "command": "-editor.action.formatDocument.none",
+    "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorHasDocumentFormattingProvider && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+f",
+    "command": "editor.action.formatDocument",
+    "when": "editorHasDocumentFormattingProvider && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+i",
+    "command": "-editor.action.formatDocument",
+    "when": "editorHasDocumentFormattingProvider && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+a",
+    "command": "editor.action.blockComment",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+a",
+    "command": "-editor.action.blockComment",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+down",
+    "command": "editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+alt+down",
+    "command": "-editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+up",
+    "command": "editor.action.copyLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+alt+up",
+    "command": "-editor.action.copyLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
   }
 ]

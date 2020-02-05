@@ -142,14 +142,14 @@ if [[ -n "$(command -v go)" ]]; then
 fi
 
 # Miscellaneous: {{{1
-export LANG=C.UTF-8
-export LC_CTYPE=C.UTF-8                 # the python default
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8                 # the python default
 export LC_IDENTIFICATION=C          	# got this from `locale -c language` I don't know if set right
-export LC_COLLATE=C.UTF-8
-export LC_MESSAGES=C.UTF-8              # man i3: Prevents program output translation
-export LC_NUMERIC="C.UTF-8"
-export LC_MONETARY="C.UTF-8"
-export LC_TIME="C.UTF-8"
+export LC_COLLATE=en_US.UTF-8
+export LC_MESSAGES=en_US.UTF-8              # man i3: Prevents program output translation
+export LC_NUMERIC="en_US.UTF-8"
+export LC_MONETARY="en_US.UTF-8"
+export LC_TIME="en_US.UTF-8"
 
 pathadd "$_ROOT/games"
 
