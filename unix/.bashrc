@@ -36,8 +36,13 @@ export PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
 export PYTHONIOENCODING=utf-8:surrogateescape
 export IPYTHONDIR="$HOME/.ipython"
 export PYTHONCOERCECLOCALE=warn
+
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
-export PYTHONUNBUFFERED=1
+
+export PYTHONUNBUFFERED=0
+
+export PYTHONASYNCIODEBUG=1
+export RANGER_LOAD_DEFAULT_RC=False
 
 # >>> conda initialize >>>  {{{2
 # !! Contents within this block are managed by 'conda init' !!
@@ -70,6 +75,7 @@ fi
 [[ -x lesspipe ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(SHELL=/bin/bash lesspipe.sh)"
 
 # Vim: {{{1
+
 if [[ -n "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
 else
@@ -77,6 +83,7 @@ else
 fi
 export EDITOR="$VISUAL"
 
+export FCEDIT=nvim
 # Builds: {{{1
 
 # Shellcheck
@@ -125,6 +132,8 @@ shopt -s dotglob
 shopt -s checkhash
 
 # I always forget keep this below set -o vi!
+# Dont know how i never thought source my shit first
+[[ -f ~/.bashrc.d/fzf.bash ]] && source ~/.bashrc.d/fzf.bash
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
 # Be notified of asynchronous jobs completing in the background
@@ -179,18 +188,10 @@ export COLORTERM="truecolor"
 export PAGER="less -JRrKMLigeF"
 export LESSHISTSIZE=5000  # default is 100
 
+LESSOPEN="|lesspipe.sh %s"; export LESSOPEN
+export LESSCOLORIZER=pygmentize
 # Oh shit! --mouse is a bash>5 feature!
 if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
-
-# Thank byobu for these ones. Man pages now look pretty awesome
-export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
-export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
-export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
-export LESS_TERMCAP_me=$(printf '\e[0m')           # turn off all appearance modes (mb, md, so, us)
-export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
-export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
-export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
-export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
 
 # JavaScript: {{{1
 
@@ -257,9 +258,10 @@ if [[ -d ~/.bashrc.d ]]; then
     unset -v config
 fi
 
+# IDK if this is working correctly .local bin isnt in termuxs path
 firstpath() {
     # Check if a dir exists and if it does, prepend it to the $PATH.
-    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+    if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
         export PATH="$1:${PATH:+"$PATH"}"
     fi
 }
@@ -270,10 +272,10 @@ firstpath "$HOME/.local/bin"
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"
 
-export TEMP="$XDG_CACHE_HOME"
-export TMP="$XDG_CACHE_HOME"
+export PS1="\u@\h \w \@\nIn [\#] \$: "
 
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+

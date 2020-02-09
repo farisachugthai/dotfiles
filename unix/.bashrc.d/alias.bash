@@ -1,9 +1,6 @@
 #!/bin/bash
 # Maintainer: Faris Chugthai
 
-# set -euo pipefail
-# Aliases for a more functional bash environment
-
 # cd aliases: {{{1
 # Make navigation easier
 alias ..="cd .."
@@ -98,11 +95,11 @@ fi
 
 # for complicated git log calls funcs are better
 alias g="git diff --stat --staged $* "
-alias ga='git add -v'
+alias ga="git add -v $* "
 alias gaa='git add --all'
 alias gai='git add --interactive'
 alias gap='git add --patch'
-alias gar="git add --renormalize -A $* "
+alias gar="git add --renormalize -v $* "
 alias gau='git add --update'
 alias ga.='git add .'
 alias gb='git branch --all --verbose'
@@ -182,4 +179,5 @@ if [[ -n "$(command -v bat)" ]]; then
     alias cat=bat
 fi
 
-alias tre="tree -FCa -I .git $*"
+alias tre="tree -FACa -I .git $*"
+alias tree="tree -AC -I node_modules"

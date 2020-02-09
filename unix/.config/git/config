@@ -213,6 +213,12 @@
     negotiationAlgorithm = skipping
     prune = true
     recurseSubmodules = true
+    parallel = 0
+
+    # Specifies the maximal number of fetch operations to be run in parallel
+    # at a time (submodules, or remotes when the --multiple option of
+    # git-fetch[1] is in effect).
+    # A value of 0 will give some reasonable default. If unset, it defaults to 1.
 
 # [filter]
     # lfs.clean=git-lfs clean -- %f

@@ -8,7 +8,7 @@ fzf_cmd() {
         fzf-tmux -d 35% --multi --exit-0 --cycle --reverse --bind='ctrl-r:toggle-all' --bind='ctrl-s:toggle-sort' --no-preview
     else
         fzf-tmux -d 35% --multi --exit-0 --cycle --reverse --bind='ctrl-r:toggle-all' --bind='ctrl-s:toggle-sort' --no-preview
-
+    fi
 }
 
 if hash xdg-open && hash nohup &>/dev/null; then

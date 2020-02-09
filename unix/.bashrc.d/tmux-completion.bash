@@ -143,6 +143,6 @@ _tmux() {
 
 }
 # http://linux.die.net/man/1/bash
-complete -F _tmux tmux
+complete -F _tmux -o default -o bashdefault -o nospace tmux
 
 # END tmux completion

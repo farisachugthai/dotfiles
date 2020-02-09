@@ -2,6 +2,8 @@
 ##         NAME:  fzf.bash
 #  DESCRIPTION:  From my bashrc. Note also pwsh compatible.
 #==============================================================================
+
+
 # Check that the main entry point is there.: {{{
 if [[ -f ~/.fzf.bash ]]; then
 
@@ -14,13 +16,9 @@ else
     echo -e 'FZF not installed.'
 fi
 
-# Dont source directly!!
-# if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh ]]; then
-#     source ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh
-# fi
-
 # Pushing fd up rg is being difficult to work with
 # }}}
+
 if [[ -n "$(command -v fd)" ]]; then  # fd {{{1
 
     # Base FZF command: {{{2
@@ -56,6 +54,7 @@ if [[ -n "$(command -v fd)" ]]; then  # fd {{{1
 
 # }}}
 # }}}
+
 elif [[ -n "$(command -v rg)" ]]; then  #: {{{1
     # Base FZF command: `fzf`: {{{2
     # May 28, 2019: works
@@ -99,7 +98,9 @@ elif [[ -n "$(command -v rg)" ]]; then  #: {{{1
     if [[ -n "$(command -v fd)" ]]; then  # Change dirs with Alt C: {{{2
         export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
     # TODO: else
-    fi
+    fi  # }}}
+# }}}
+
 else  # no rg or fd: Use find. {{{1
     export FZF_DEFAULT_COMMAND="find * -type f $@"
 
@@ -108,6 +109,7 @@ else  # no rg or fd: Use find. {{{1
 fi
 
 # }}}
+
 # Extra funcs from fzf: {{{1
 Ag() { ag -l -g "" | fzf-tmux $FZF_DEFAULT_OPTS - ; };
 Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
@@ -117,6 +119,7 @@ Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
 command -v tree > /dev/null && export FZF_ALT_C_OPTS+="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "
 
 # }}}
+
 # Enhance path completion: {{{1
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
@@ -134,7 +137,7 @@ if [[ -n "$(command -v fd)" ]]; then
 fi
 
 complete -F _fzf_path_completion -o default -o bashdefault rg
-complete -F _fzf_dir_completion -o default -o bashdefault tree
+complete -F _fzf_dir_completion -o default -o bashdefault tree  # }}}
 
 # Colors: {{{1
 
@@ -160,6 +163,13 @@ local color0F='#d65d0e'
 export FZF_COLORSCHEME="--color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D \
   --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C \
   --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"
+}
+
+_seoul_fzf() {
+
+export FZF_COLORSCHEME="--color='bg:#4B4B4B,bg+:#3F3F3F,info:#BDBB72,border:#6B6B6B,spinner:#98BC99'
+              \ --color='hl:#719872,fg:#D9D9D9,header:#719872,fg+:#D9D9D9'
+              \ --color='pointer:#E12672,marker:#E17899,prompt:#98BEDE,hl+:#98BC99'"
 }
 
 _gen_fzf_default_opts

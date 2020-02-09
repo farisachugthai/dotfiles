@@ -7,7 +7,7 @@
 
 # Every binding set -o emacs has that vim doesn't: {{{1
 # As a reminder \e == Alt == Esc + Pause
-#
+TAB: menu-complete
 "\C-g": abort
 "\C-a": beginning-of-line
 "\C-b": backward-char
