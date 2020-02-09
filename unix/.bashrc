@@ -38,7 +38,7 @@ export IPYTHONDIR="$HOME/.ipython"
 export PYTHONCOERCECLOCALE=warn
 
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
-
+# This actually messes with prompt_toolkit pretty bad
 export PYTHONUNBUFFERED=0
 
 export PYTHONASYNCIODEBUG=1
@@ -279,3 +279,4 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
     . "$HOME/.bashrc.local"
 fi
 
+# Vim: set foldlevelstart=0 fdm=marker:

@@ -11,9 +11,10 @@ set -g status-keys emacs
 set -g status-justify "centre"                    # put the windows in the middle
 # set -g status-justify "left"
 
-# Doesnt do well on termux
-set -g status-left-length "8"
-set -g status-right-length 30
+# Doesnt do well on termux. Note the quoting and that both of these works.
+set -g status-left-length "40"
+set -g status-right-length 60
+
 # NOTE: The super long format expressions are at the bottom
 set -g status-bg '#1d2021'
 set -g status-fg '#ebdbb2'
@@ -77,9 +78,7 @@ set-option -g status-right " #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitali
 # This is the only part I really care about anyway
 # set -ag status-right "#{?client_prefix,🚀 🚀 🚀,}"
 
-# set -g status-right
 # set -g status-right "#[fg=colour237,bg=colour237,nobold,nounderscore,noitalics] « #[fg=colour246,bg=colour237] #(date) #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]«#[fg=colour246,bg=colour237] #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]«#[fg=colour246,bg=colour237] #H "
-
 
 # indicate whether Prefix has been captured + time in the right-status area
 # set -g status-left "#[fg=colour166] #h #[fg=colour166] #S "
@@ -88,4 +87,3 @@ set-option -g status-right " #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitali
 setw -g window-status-format " #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics] » #[default] #I ▶ #W #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics] « "
 
 setw -g window-status-current-format " #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] » #[fg=#dfbf8e,bg=#504945] #I#F ▶ #W #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] » "
-

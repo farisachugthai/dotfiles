@@ -178,7 +178,7 @@
     "python.diagnostics.sourceMapsEnabled": true,
     "python.jediEnabled": false,
     "python.linting.banditEnabled": true,
-    "python.testing.pyTestEnabled": true,
+    "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": true,
     "vim.visualstar": true,
     "bracketPairColorizer.highlightActiveScope": true,

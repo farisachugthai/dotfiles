@@ -1,14 +1,43 @@
 # Git Attributes
 # From man 5 gitattributes line 551:
 
-# The system knows a built-in macro attribute, binary:
+# Line endings
+* eol=lf
+text=auto
 
+# File type specific line endings
+
+*.txt		text whitespace=trailing-space,space-before-tab
+*.rst		text whitespace=trailing-space,space-before-tab,tab-in-indent
+*.yml text
+*.html text
+
+
+# The system knows a built-in macro attribute, binary:
 *.spl binary
 *.ttf binary
 
-text=auto
+*.py        text diff=python whitespace=trailing-space,space-before-tab,tab-in-indent
+*.ipynb     diff=python
+*.ipy       diff=python
+*.js        diff=javascript
+*.html      diff=html
+*.sh  	    eol=lf
+# And because this just fucked up
+*.ps1 	    text  eol=input diff
 
-text eol=input
-*.txt text
-*.py diff=python
-*.sh eol=lf
+# Binary files
+doc/_images/* binary
+*.png binary
+*.doctree   binary
+*.pickle    binary
+*.ttf binary
+*.svg binary
+*.pdf binary
+*.jp[e]?g binary
+
+# This is an odd {to say the least} regex but I got from it from M$FT themselves
+# https://code.visualstudio.com/docs/remote/troubleshooting#_resolving-git-line-ending-issues-in-containers-resulting-in-many-modified-files
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+

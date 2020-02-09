@@ -64,8 +64,8 @@
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+k ctrl+k",
     "command": "editor.action.defineKeybinding",
+    "key": "ctrl+k ctrl+k",
     "when": "editorTextFocus"
   },
   {
@@ -146,22 +146,6 @@
     "key": "Ctrl+Enter",
     "when": "editorTextFocus && editorLangId == 'restructuredtext'"
   },
-  // {
-  //   "args": "-m IPython",
-  //   "command": "python.createTerminal",
-  //   "key": "ctrl+`",
-  //   "when": "!terminalFocus && editorLangId == 'python'"
-  // },
-  // {
-  //   "command": "python.execInTerminal",
-  //   "key": "Ctrl+Enter",
-  //   "when": "editorTextFocus && editorLangId == 'python'"
-  // },
-  // {
-  //   "command": "python.execSelectionInTerminal",
-  //   "key": "Ctrl+Enter",
-  //   "when": "editorTextFocus && !editorReadonly && editorLangId == 'python'"
-  // },
   {
     "command": "-workbench.action.splitEditor",
     "key": "Ctrl+\\"
@@ -170,16 +154,6 @@
     "command": "workbench.action.toggleMaximizedPanel",
     "key": "Ctrl+\\"
   },
-  // {
-  //   "command": "python.datascience.runallcells",
-  //   "key": "f5",
-  //   "when": "editorTextFocus && python.datascience.featureenabled && editorLangId == 'python' && python.datascience.hascodecells && !editorHasSelection"
-  // },
-  // {
-  //   "command": "python.selectAndDebugTestMethod",
-  //   "key": "f5",
-  //   "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
-  // },
   {
     "command": "-repl.action.filter",
     "key": "ctrl+f",
@@ -213,10 +187,6 @@
     "key": "shift+f5",
     "when": "!editorReadOnly && !inDebugRepl"
   },
-  // {
-  //   "command": "python.datascience.viewJupyterOutput",
-  //   "key": "ctrl+g ctrl+p"
-  // },
   {
     "command": "workbench.action.openActiveLogOutputFile",
     "key": "ctrl+g l"
@@ -249,11 +219,6 @@
     "key": "Ctrl+F4",
     "when": "terminalFocus"
   },
-  // {
-  //   "command": "python.execInTerminal",
-  //   "key": "f5",
-  //   "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
-  // },
   {
     "command": "workbench.action.openNextRecentlyUsedEditor",
     "key": "Ctrl+w n",
@@ -297,8 +262,6 @@
     "key": "Alt+x"
   },
   {
-    // alternatively
-    //"command": "workbench.action.openDefaultKeybindingsFile"
     "command": "workbench.action.openGlobalKeybindings",
     "key": "Ctrl+k Ctrl+k"
   },
@@ -311,7 +274,6 @@
     "key": "Ctrl+Shift+S"
   },
   {
-    // let's add some of these git things in here
     "command": "git.pullRebase",
     "key": "Ctrl+x Shift+P"
   },
@@ -324,58 +286,103 @@
     "key": "Ctrl+X Shift+Z"
   },
   {
-    "key": "shift+alt+f",
     "command": "-filesExplorer.findInFolder",
+    "key": "shift+alt+f",
     "when": "explorerResourceIsFolder && explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
-    "key": "shift+alt+f",
     "command": "editor.action.formatDocument.none",
-    "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorHasDocumentFormattingProvider && !editorReadonly"
-  },
-  {
-    "key": "ctrl+shift+i",
-    "command": "-editor.action.formatDocument.none",
-    "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorHasDocumentFormattingProvider && !editorReadonly"
-  },
-  {
     "key": "shift+alt+f",
-    "command": "editor.action.formatDocument",
-    "when": "editorHasDocumentFormattingProvider && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
+    "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorHasDocumentFormattingProvider && !editorReadonly"
   },
   {
+    "command": "-editor.action.formatDocument.none",
     "key": "ctrl+shift+i",
-    "command": "-editor.action.formatDocument",
+    "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorHasDocumentFormattingProvider && !editorReadonly"
+  },
+  {
+    "command": "editor.action.formatDocument",
+    "key": "shift+alt+f",
     "when": "editorHasDocumentFormattingProvider && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
   },
   {
-    "key": "shift+alt+a",
+    "command": "-editor.action.formatDocument",
+    "key": "ctrl+shift+i",
+    "when": "editorHasDocumentFormattingProvider && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
+  },
+  {
     "command": "editor.action.blockComment",
+    "key": "shift+alt+a",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+a",
     "command": "-editor.action.blockComment",
+    "key": "ctrl+shift+a",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "shift+alt+down",
     "command": "editor.action.copyLinesDownAction",
+    "key": "shift+alt+down",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+alt+down",
     "command": "-editor.action.copyLinesDownAction",
+    "key": "ctrl+shift+alt+down",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "shift+alt+up",
     "command": "editor.action.copyLinesUpAction",
+    "key": "shift+alt+up",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+alt+up",
     "command": "-editor.action.copyLinesUpAction",
+    "key": "ctrl+shift+alt+up",
     "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "command": "markdown.showPreview",
+    "key": "ctrl+k p",
+    "when": "editorLangId == 'markdown'"
+  },
+  {
+    "command": "-markdown.showPreview",
+    "key": "ctrl+shift+v",
+    "when": "editorLangId == 'markdown'"
+  },
+  {
+    "command": "workbench.action.files.copyPathOfActiveFile",
+    "key": "ctrl+k p",
+    "when": "editorFocus && !editorReadOnly"
+  },
+  {
+    "command": "-workbench.action.files.copyPathOfActiveFile",
+    "key": "ctrl+k p"
+  },
+  {
+    "command": "markdown.preview.toggleLock",
+    "key": "ctrl+w shift+p"
+  },
+  {
+    "command": "restructuredtext.showPreview",
+    "key": "ctrl+w shift+p"
+  },
+  {
+    "args": {
+      "apply": "ifSingle",
+      "kind": "refactor.extract.function"
+    },
+    "command": "editor.action.codeAction",
+    "key": "ctrl+shift+r ctrl+e"
+  },
+  {
+    "command": "insertSnippet",
+    "key": "tab",
+    "when": "editorTextFocus && && !inSnippetMode"
+  },
+  {
+    "command": "-insertSnippet",
+    "key": "tab",
+    "when": "editorTextFocus && hasSnippetCompletions && !editorTabMovesFocus && !inSnippetMode"
   }
 ]

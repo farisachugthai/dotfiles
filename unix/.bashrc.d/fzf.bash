@@ -1,8 +1,7 @@
 #==============================================================================
-##         NAME:  fzf.bash
+#         NAME:  fzf.bash
 #  DESCRIPTION:  From my bashrc. Note also pwsh compatible.
 #==============================================================================
-
 
 # Check that the main entry point is there.: {{{
 if [[ -f ~/.fzf.bash ]]; then
@@ -19,12 +18,13 @@ fi
 # Pushing fd up rg is being difficult to work with
 # }}}
 
-if [[ -n "$(command -v fd)" ]]; then  # fd {{{1
+if [[ -n "$(command -v fd)" ]]; then  # fd {{{
 
     # Base FZF command: {{{2
-    export FZF_DEFAULT_COMMAND="fd --hidden --follow -j 8 -d 6 --exclude .git"
+    export FZF_DEFAULT_COMMAND="fd --follow -j 8 -d 6 --exclude .git"
 
-    export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser. Press Alt-n to launch nvim. " --bind alt-n:execute:"nvim {}" '
+    export FZF_DEFAULT_OPTS='--multi --cycle --reverse --prompt "Query: " --tiebreak=begin,length,index --ansi --filepath-word --border --header="FZF: File Browser. Press Alt-n to launch nvim." --bind alt-n:execute:"nvim {}" --bind change:top --bind=ctrl-j:accept --bind ctrl-k:kill-line '
+
     #  --bind "?:toggle-preview" --preview-window=down:50%:wrap --preview "bat {}"
     # }}}
     # __fzf_history__: <Ctrl-r>: {{{2
@@ -41,13 +41,13 @@ if [[ -n "$(command -v fd)" ]]; then  # fd {{{1
     # fzf-file-widget: <Ctrl-t>: {{{2
     export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
 
-    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --ansi '
+    export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --ansi --tiebreak begin,length,index --filepath-word --bind alt-n:execute:"nvim {}" --bind change:top --bind=ctrl-j:accept --bind ctrl-k:kill-line '
 
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh && -n "$(command -v ruby)" ]]; then
         export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh {} | bat -' "
 
     elif [[ -n "$(command -v bat)" ]]; then
-        export FZF_CTRL_T_OPTS+='--preview "bat {}" --preview-window=down:50%:wrap --bind ?:toggle-preview --header "Press ? to toggle preview."'
+        export FZF_CTRL_T_OPTS+=' --preview "bat {}" --preview-window=down:50%:wrap --bind ?:toggle-preview --header "Press ? to toggle preview."'
     else
         export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " --preview-window=down:50%:wrap '
     fi
@@ -55,7 +55,7 @@ if [[ -n "$(command -v fd)" ]]; then  # fd {{{1
 # }}}
 # }}}
 
-elif [[ -n "$(command -v rg)" ]]; then  #: {{{1
+elif [[ -n "$(command -v rg)" ]]; then  #: {{{
     # Base FZF command: `fzf`: {{{2
     # May 28, 2019: works
     # I wanna see a line but only one at a time. Also check the ripgreprc.
@@ -101,7 +101,7 @@ elif [[ -n "$(command -v rg)" ]]; then  #: {{{1
     fi  # }}}
 # }}}
 
-else  # no rg or fd: Use find. {{{1
+else  # no rg or fd: Use find. {{{
     export FZF_DEFAULT_COMMAND="find * -type f $@"
 
     # Options for FZF no matter what.
@@ -161,8 +161,8 @@ local color0E='#d3869b'
 local color0F='#d65d0e'
 
 export FZF_COLORSCHEME="--color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D \
-  --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C \
-  --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"
+--color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C \
+--color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"
 }
 
 _seoul_fzf() {
@@ -178,3 +178,5 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_COLORSCHEME"
 export FZF_CTRL_R_OPTS="$FZF_CTRL_R_OPTS $FZF_COLORSCHEME"
 export FZF_CTRL_T_OPTS="$FZF_CTRL_T_OPTS $FZF_COLORSCHEME"
 export FZF_ALT_C_OPTS="$FZF_ALT_C_OPTS $FZF_COLORSCHEME"
+
+# Vim: set fdm=marker:

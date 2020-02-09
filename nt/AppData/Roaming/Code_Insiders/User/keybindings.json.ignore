@@ -1,0 +1,53 @@
+
+  // {
+  //   "args": "-m IPython",
+  //   "command": "python.createTerminal",
+  //   "key": "ctrl+`",
+  //   "when": "!terminalFocus && editorLangId == 'python'"
+  // },
+  // {
+  //   "command": "python.execInTerminal",
+  //   "key": "Ctrl+Enter",
+  //   "when": "editorTextFocus && editorLangId == 'python'"
+  // },
+  // {
+  //   "command": "python.execSelectionInTerminal",
+  //   "key": "Ctrl+Enter",
+  //   "when": "editorTextFocus && !editorReadonly && editorLangId == 'python'"
+  // },
+
+  // {
+  //   "command": "python.datascience.runallcells",
+  //   "key": "f5",
+  //   "when": "editorTextFocus && python.datascience.featureenabled && editorLangId == 'python' && python.datascience.hascodecells && !editorHasSelection"
+  // },
+  // {
+  //   "command": "python.selectAndDebugTestMethod",
+  //   "key": "f5",
+  //   "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
+  // },
+
+  // {
+  //   "command": "python.datascience.viewJupyterOutput",
+  //   "key": "ctrl+g ctrl+p"
+  // },
+
+// {
+//   "command": "python.execInTerminal",
+//   "key": "f5",
+//   "when": "editorTextFocus && !inDebugRepl && editorLangId == 'python'"
+// },
+
+  {
+    // alternatively
+    //"command": "workbench.action.openDefaultKeybindingsFile"
+    "command": "workbench.action.openGlobalKeybindings",
+    "key": "Ctrl+k Ctrl+k"
+  },
+
+  {
+    // let's add some of these git things in here
+    "command": "git.pullRebase",
+    "key": "Ctrl+x Shift+P"
+  },
+// Vim: set ft=json:

@@ -45,6 +45,24 @@ has been made portable to Windows.
 In situations where this proved excessively difficult, separate files have been
 included in [nt](nt).
 
+## Handling Git on Windows
+
+Git may try to treat files with extensions it doesn't recognize as binary.
+As Windows occasionally encodes things with `CP-437`, `UTF-16`, `ASCII` or
+`locale=C` depending on what mood it's in, this can be difficult to fix
+by means of decoding.
+
+A simple fix is to set the following in the
+[.gitattributes](./unix/.config/git/aattributes) file.
+
+`*.ps1    text eol=input diff`
+
+eol=input is only set because powershell needs `DOS` style lines, but I don't
+want the entire repository filled with differing line endings on Unix computers.
+
+text is to ensure it's not recognized as binary but if it already was, `diff`
+will reset it back to text.
+
 ## Bash Configuration
 
 The `$PAGER` is highly customized. From my bashrc.

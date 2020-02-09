@@ -5,7 +5,7 @@
 # To view currently set options run
 # `bind -v`
 
-# Every binding set -o emacs has that vim doesn't: {{{1
+# Newer settings: {{{
 # As a reminder \e == Alt == Esc + Pause
 TAB: menu-complete
 "\C-g": abort
@@ -23,18 +23,20 @@ TAB: menu-complete
 # Alt-BS
 "\e\C-h": backward-kill-word
 
-# info rluserman: {{{1
+# }}}
 
-"M-p": non-incremental-reverse-search-history
-"M-n": non-incremental-forward-search-history
+# info rluserman: {{{
+
+"\M-p": non-incremental-reverse-search-history
+"\M-n": non-incremental-forward-search-history
 
 "\C-q": quoted-insert
 
 # Kill the wole line regardless of cursor position
 "\C-k": kill-whole-line
+# }}}
 
-
-# Other: {{{1
+# Other: {{{
 "\e<": beginning-of-history
 "\e[200~": bracketed-paste-begin
 "\C-]": character-search
@@ -92,8 +94,9 @@ TAB: menu-complete
 "\C-x\C-u": undo
 "\C-_": undo
 
+# }}}
 
-# All options set by set -o vim
+# All options set by set -o vim: {{{
 "\C-h": backward-delete-char
 # "\C-?": backward-delete-char
 "\C-d": vi-eof-maybe
@@ -110,16 +113,17 @@ TAB: menu-complete
 "\C-w": vi-unix-word-rubout
 "\C-y": yank
 
-# Pyreadline: {{{1
+# }}}
+
+# Pyreadline: {{{
 
 # Use up down keys in a sensible manner and complete what i already typed
 "\e[B": history-search-forward
 "\e[A": history-search-backward
 
-# Binds: {{{1
-# To a shocking extent termux has nothing set up
-
 # "\C-w": unix-filename-rubout
+
+# }}}
 
 # Switch Keymaps: {{{1
 
@@ -130,6 +134,8 @@ TAB: menu-complete
 # In order to switch interactively between emacs and vi editing modes, use the
 # command M-C-j (bound to emacs-editing-mode when in vi mode and to
 # vi-editing-mode in emacs mode). The Readline default is emacs mode.
+
+# }}}
 
 # FZF: {{{1
 # Yeah definitely make sure all of these work though...
@@ -172,16 +178,9 @@ $endif
 # vi-editing-mode (M-C-j)
 #     When in emacs editing mode, this causes a switch to vi editing mode.
 
-# In an attempt to prevent RSI: {{{1
-# Woops. I just realized set -o emacs is still set in bashrc. Was wondering
-# why things were behaving oddly
-# set editing-mode vi
-# set keymap vi
-set editing-mode emacs
-set keymap emacs
-# Leave it on emacs they have so many more keys
+# }}}
 
-# Options: {{{1
+# Options: {{{
 set revert-all-at-newline on
 
 # From Arch Wiki and man bash
@@ -233,7 +232,7 @@ set expand-tilde on
 
 set completion-ignore-case on
 
-# From /usr/share/readline/inputrc example: {{{2
+# From /usr/share/readline/inputrc example:
 set bell-style none
 
 # should we? default off. my arrow keys work idk
@@ -251,7 +250,7 @@ set mark-symlinked-directories on
 
 set skip-completed-text on
 
-# History Search: {{{1
+# History Search:
 
 set history-preserve-point on
 
@@ -276,11 +275,9 @@ set history-size 10000
 # what are these? from bind -v
 # set completion-display-width -1
 # set completion-prefix-display-length 0
+# }}}
 
-# Include: {{{1
-# $include  /etc/inputrc
-
-# Bindings: {{{1
+# Bindings: {{{
 
 # some defaults / modifications for the emacs mode
 # $if mode=emacs
@@ -359,7 +356,7 @@ set history-size 10000
 # "\C-M-[C"       forward-char
 # "\C-M-[A"       previous-history
 # "\C-M-[B"       next-history
-
+# }}}
 
 # From clink: {{{1
 
@@ -419,3 +416,4 @@ $if Bash
 $endif
 
 # Well that was fucking awesome
+# }}}

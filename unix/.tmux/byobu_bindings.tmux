@@ -86,3 +86,5 @@ bind-key -n S-F12 source $BYOBU_PREFIX/share/byobu/keybindings/f-keys.tmux \; so
 unbind-key -n M-F12
 unbind-key -n C-S-F12
 unbind-key -n M-IC
+
+# Vim: set ft=tmux:
