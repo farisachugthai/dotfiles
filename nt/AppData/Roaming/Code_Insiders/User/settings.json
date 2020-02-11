@@ -498,7 +498,6 @@
   ],
   "python.linting.pydocstyleEnabled": true,
   "python.linting.pylintEnabled": false,
-  "python.pythonPath": "pipenv run python",
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.activateEnvironment": true,
   "python.terminal.executeInFileDir": true,
@@ -573,12 +572,12 @@
   "terminal.integrated.detectLocale": "on",
   "terminal.integrated.experimentalRefreshOnResume": true,
   "terminal.integrated.experimentalUseTitleEvent": true,
-  "terminal.integrated.fontFamily": "monospace",
+  "terminal.integrated.fontFamily": "'FuraMono Nerd Font Mono','Go Mono NF', 'Hack NF', monospace",
   "terminal.integrated.fontWeightBold": "normal",
   "terminal.integrated.rendererType": "experimentalWebgl",
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.shell.linux": "/bin/bash",
-  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
+  "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\6\\pwsh.exe",
   "terminal.integrated.windowsEnableConpty": true,
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.locale": "en",
@@ -730,5 +729,8 @@
   "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
   "workbench.tips.enabled": false,
-  "workbench.tree.renderIndentGuides": "onHover"
+  "workbench.tree.renderIndentGuides": "onHover",
+  "terminal.integrated.env.windows": {
+    "TERM": "cygwin"
+  }
 }

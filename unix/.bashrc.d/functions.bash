@@ -129,8 +129,8 @@ nman(){
 
 # lk: {{{1 show symbolic links using fd or fallback to grep
 lk() {
-    if [[ -n "$(fd)" ]]; then
-        ls -Fo -A "$@" | fd --type symlink --maxdepth 1
+    if [[ -n "$(command -v fd)" ]]; then
+        ls -Fo --dereference -A "$@" | fd --type symlink --maxdepth 1
     else
         ls -Fo "$@" | grep ^l
     fi

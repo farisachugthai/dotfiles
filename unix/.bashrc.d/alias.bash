@@ -28,12 +28,22 @@ alias cd......="cd ../../../../.."
 alias l='ls -hF --color=always'
 alias la='ls -AF --color=always'
 alias ldir='ls -po --color=always | grep /$'
-alias lf='ls -Fo --color=always | grep ^-'
-alias ll='ls -AFhog --color=always'
+
+# Broken
+# alias lf='ls -Fo --color=always | grep ^-'
+# Oh it might be because of wsl's fucky permissions.
+alias lf='ls -AFgo --color=always | grep *$'
+# You can use this one to dereference the symlinks aka show the real file
+# nah don't do that because there's a function with lk
+# alias lk='ls -lhAgoF --dereference --color=always'
+alias ll='ls -AFhogl --color=always'
 alias lr='ls -AlgFhtr --color=always'
 alias ls='ls -hF --color=always'
 alias lt='ls -Alght --color=always'
-alias lx='ls -Fo --color=always | grep ^-..x'
+
+# This is broken
+# alias lx='ls -Fo --color=always | grep ^-..x'
+alias lx='ls -Fl --color=always | grep ^l.*'
 
 # Alert: {{{1
 

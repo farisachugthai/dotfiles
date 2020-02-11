@@ -17,11 +17,12 @@ from prompt_toolkit.key_binding.key_processor import KeyPress
 from prompt_toolkit.keys import Keys
 from pygments.token import Token
 
-from ptpython.layout import CompletionVisualisation
+try:
+    from ptpython.layout import CompletionVisualisation
+except ImportError:
+    CompletionVisualisation = None
 
-__all__ = (
-    'configure',
-)
+__all__ = ("configure",)
 
 
 def configure(repl):
@@ -40,11 +41,12 @@ def configure(repl):
     repl.show_meta_enter_message = True
 
     # Show completions. (NONE, POP_UP, MULTI_COLUMN or TOOLBAR)
-    repl.completion_visualisation = CompletionVisualisation.POP_UP
+    if CompletionVisualisation is not None:
+        repl.completion_visualisation = CompletionVisualisation.POP_UP
 
-    # When CompletionVisualisation.POP_UP has been chosen, use this
-    # scroll_offset in the completion menu.
-    repl.completion_menu_scroll_offset = 0
+        # When CompletionVisualisation.POP_UP has been chosen, use this
+        # scroll_offset in the completion menu.
+        repl.completion_menu_scroll_offset = 0
 
     # Show line numbers (when the input contains multiple lines.)
     repl.show_line_numbers = True
@@ -76,7 +78,7 @@ def configure(repl):
     repl.paste_mode = False
 
     # Use the classic prompt. (Display '>>>' instead of 'In [1]'.)
-    repl.prompt_style = 'ipython'  # 'classic' or 'ipython'
+    repl.prompt_style = "ipython"  # 'classic' or 'ipython'
 
     # Don't insert a blank line after the output.
     repl.insert_blank_line_after_output = False
@@ -109,7 +111,7 @@ def configure(repl):
     repl.enable_input_validation = True
 
     # Use this colorscheme for the code.
-    repl.use_code_colorscheme('monokai')
+    repl.use_code_colorscheme("monokai")
 
     # Enable 24bit True color. (Not all terminals support this. -- maybe check
     # $TERM before changing.)
@@ -129,7 +131,7 @@ def configure(repl):
     @repl.add_key_binding(Keys.ControlB)
     def _(event):
         ' Pressing Control-B will insert "pdb.set_trace()" '
-        event.cli.current_buffer.insert_text('\nimport pdb; pdb.set_trace()\n')
+        event.cli.current_buffer.insert_text("\nimport pdb; pdb.set_trace()\n")
 
     # Typing ControlE twice should also execute the current command.
     # (Alternative for Meta-Enter.)
@@ -141,7 +143,7 @@ def configure(repl):
 
     # Typing 'jj' in Vi Insert mode, should send escape. (Go back to navigation
     # mode.)
-    @repl.add_key_binding('j', 'j', filter=ViInsertMode())
+    @repl.add_key_binding("j", "j", filter=ViInsertMode())
     def _(event):
         " Map 'jj' to Escape. "
         event.cli.input_processor.feed(KeyPress(Keys.Escape))
@@ -149,13 +151,13 @@ def configure(repl):
     # Custom key binding for some simple autocorrection while typing.
     # TODO: Observe how much this slows stuff down because if its a quick lookup then you could add your autocorrect.vim
     corrections = {
-        'impotr': 'import',
-        'pritn': 'print',
+        "impotr": "import",
+        "pritn": "print",
     }
 
-    @repl.add_key_binding(' ')
+    @repl.add_key_binding(" ")
     def _(event):
-        ' When a space is pressed. Check & correct word before cursor. '
+        " When a space is pressed. Check & correct word before cursor. "
         b = event.cli.current_buffer
         w = b.document.get_word_before_cursor()
 
@@ -164,17 +166,16 @@ def configure(repl):
                 b.delete_before_cursor(count=len(w))
                 b.insert_text(corrections[w])
 
-        b.insert_text(' ')
+        b.insert_text(" ")
 
 
 # Custom colorscheme for the UI. See `ptpython/layout.py` and
 # `ptpython/style.py` for all possible tokens.
 _custom_ui_colorscheme = {
     # Blue prompt.
-    Token.Layout.Prompt:                          'bg:#eeeeff #000000 bold',
-
+    Token.Layout.Prompt: "bg:#eeeeff #000000 bold",
     # Make the status toolbar red.
-    Token.Toolbar.Status:                         'bg:#ff0000 #000000',
+    Token.Toolbar.Status: "bg:#ff0000 #000000",
 }
 
 if __name__ == "__main__":

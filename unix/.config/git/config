@@ -162,7 +162,7 @@
 
 [credential]
     protocol = ssh
-    ; modalPrompt = True
+    modalPrompt = True
     store = approve
     username = farisachugthai
 
@@ -389,9 +389,6 @@
 
 [sequence]
     editor = nvim
-
-; [ssh]
-;     variant = "ssh -p 8022 $*"
 
 [status]
     branch = True

@@ -41,7 +41,6 @@ if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
 # This actually messes with prompt_toolkit pretty bad
 export PYTHONUNBUFFERED=0
 
-export PYTHONASYNCIODEBUG=1
 export RANGER_LOAD_DEFAULT_RC=False
 
 # >>> conda initialize >>>  {{{2

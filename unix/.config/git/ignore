@@ -2,6 +2,8 @@
 # Maintainer: Faris Chugthai
 
 # Personal
+tags.temp
+tags.lock
 .zim/
 tmux-history
 *.patch
