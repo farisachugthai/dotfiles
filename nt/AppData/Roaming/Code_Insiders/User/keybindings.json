@@ -59,11 +59,6 @@
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "command": "editor.action.marker.prevInFiles",
-    "key": "[+q",
-    "when": "editorFocus && !editorReadonly"
-  },
-  {
     "command": "editor.action.defineKeybinding",
     "key": "ctrl+k ctrl+k",
     "when": "editorTextFocus"
@@ -79,12 +74,12 @@
   },
   {
     "command": "selectNextSuggestion",
-    "key": "Ctrl+j",
+    "key": "Tab",
     "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
   },
   {
     "command": "selectPrevSuggestion",
-    "key": "Ctrl+k",
+    "key": "Shift+Tab",
     "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
   },
   {
@@ -189,11 +184,11 @@
   },
   {
     "command": "workbench.action.openActiveLogOutputFile",
-    "key": "ctrl+g l"
+    "key": "ctrl+x l"
   },
   {
     "command": "git.showOutput",
-    "key": "ctrl+g alt+g"
+    "key": "ctrl+x g"
   },
   {
     "command": "editor.action.fontZoomOut",
@@ -361,11 +356,13 @@
   },
   {
     "command": "markdown.preview.toggleLock",
-    "key": "ctrl+w shift+p"
+    "key": "ctrl+w shift+p",
+    "when": "editorTextFocus && editorLangId == 'markdown'"
   },
   {
     "command": "restructuredtext.showPreview",
-    "key": "ctrl+w shift+p"
+    "key": "ctrl+w shift+p",
+    "when": "editorTextFocus && editorLangId == 'markdown'"
   },
   {
     "args": {
@@ -384,5 +381,45 @@
     "command": "-insertSnippet",
     "key": "tab",
     "when": "editorTextFocus && hasSnippetCompletions && !editorTabMovesFocus && !inSnippetMode"
+  },
+  {
+    "command": "acceptSnippet",
+    "key": "f8"
+  },
+  {
+    "command": "workbench.action.openSnippets",
+    "key": "ctrl+k ctrl+n"
+  },
+  {
+    "command": "editor.action.showSnippets",
+    "key": "ctrl+k ctrl+s"
+  },
+  {
+    "args": "-i",
+    "command": "python.execInTerminal",
+    "key": "Ctrl+Shift+Enter",
+    "when": "editorLangId == 'python' && editorFocus && !editorReadOnly"
+  },
+  {
+    "args": "-i",
+    "command": "python.createTerminal",
+    "key": "Ctrl+Enter",
+    "when": "editorLangId == 'python' && editorFocus && !editorReadOnly"
+  },
+  {
+    "command": "workbench.action.moveEditorToAboveGroup",
+    "key": "ctrl+w shift+k"
+  },
+  {
+    "command": "workbench.action.moveEditorToBelowGroup",
+    "key": "ctrl+w shift+j"
+  },
+  {
+    "command": "workbench.action.moveEditorToLeftGroup",
+    "key": "ctrl+w shift+h"
+  },
+  {
+    "command": "workbench.action.moveEditorToRightGroup",
+    "key": "ctrl+w shift+l"
   }
 ]

@@ -38,16 +38,29 @@
                    #contained forward-search-history
                    #links to Function
 		   ## 
+
+set keymap vi
+# As silly as it is: Check the output of syn list
+#
+# From of all things, Vim's syntax highlighting file:
+
+"Insert": overwrite-mode 
+
+"\ec": capitalize-word 
+"\C-x e":call-last-kbd-macro 
+"\C-e": end-of-line
+
+# Dude with these extra ones set up I'm gonna go back to set -o vi
+
 # Newer settings: {{{
 # As a reminder \e == Alt == Esc + Pause
 TAB: complete
 "\C-g": abort
 "\C-a": beginning-of-line
 "\C-b": backward-char
-"\C-l": clear-screen
-
+"\C-d": delete-char
 "\C-f": forward-char
-
+"\C-l": clear-screen
 # Alt-Tab I think
 "\e\C-i": dynamic-complete-history
 
@@ -64,13 +77,16 @@ TAB: complete
 "\ep": non-incremental-reverse-search-history
 "\en": non-incremental-forward-search-history
 
-"\C-q": quoted-insert
-
+# Yeah but let's not do that.
+# "\C-q": quoted-insert
 # Kill the wole line regardless of cursor position
 "\C-k": kill-whole-line
 
 # kill-region? sounds fun. that should be alt-k
 "\ek": kill-region
+# Use unix-filename-rubout not unix-word-rubout so we can finally fucking
+# start taking '/' into account
+"\C-w": unix-filename-rubout
 # }}}
 
 # Other: {{{
@@ -78,9 +94,11 @@ TAB: complete
 "\e[200~": bracketed-paste-begin
 "\C-]": character-search
 "\e\C-]": character-search-backward
+# Alternatively spelled
+# "M-C-]": character-search-backward
 "\e\e": complete
 "\e!": complete-command
-"\e/": complete-filename
+"\e/": possible-completions
 "\e@": complete-hostname
 "\e{": complete-into-braces
 "\e~": complete-username
@@ -99,6 +117,7 @@ TAB: complete
 "\C-x\C-x": exchange-point-and-mark
 "\C-s": forward-search-history
 "\C-x*": glob-expand-word
+# Well that's fucking neat!
 "\C-xg": glob-list-expansions
 "\e#": insert-comment
 "\e*": insert-completions
@@ -110,20 +129,22 @@ TAB: complete
 "\C-x!": possible-command-completions
 "\e=": possible-completions
 "\e?": possible-completions
+# Are these real macros?
 "\C-x/": possible-filename-completions
 "\C-x@": possible-hostname-completions
 "\C-x~": possible-username-completions
 "\C-x$": possible-variable-completions
 # "\C-p": previous-history
 "\C-x\C-r": re-read-init-file
-# fzf
+# FZF
 # "\C-r": reverse-search-history
-"\e\C-r": revert-line
-"\er": revert-line
+# Might save this for FZF too
+# "\er": revert-line
 "\C-@": set-mark
 "\e ": set-mark
 # # fzf
 # "\C-t": transpose-chars
+
 "\e\C-e": shell-expand-line
 "\C-x(": start-kbd-macro
 "\et": transpose-words
@@ -141,23 +162,22 @@ TAB: complete
 "\C-?": dump-functions
 "\C-v": quoted-insert
 "\C-u": unix-line-discard
-"\C-w": unix-filename-rubout
 "\C-y": yank
 # }}}
-
-# Pyreadline: {{{
 
 # Use up down keys in a sensible manner and complete what i already typed
 "\e[B": history-search-forward
 "\e[A": history-search-backward
 
-
-# }}}
-
-# Switch Keymaps: {{{1
+# Switch Keymaps: {{{
 
 # emacs-editing-mode (not bound)
 # vi-movement-mode (not bound)
+
+# Let's bind it to the keys described in the readline library docs
+# In order to switch interactively between emacs and vi editing modes, use the
+# command M-C-j (bound to emacs-editing-mode when in vi mode and to
+# vi-editing-mode in emacs mode). The Readline default is emacs mode.
 $if mode = vi
 "jk": prefix-meta
 
@@ -222,17 +242,17 @@ $endif
 "\C-M-OC"       forward-char
 "\C-M-OA"       previous-history
 "\C-M-OB"       next-history
-#
+
 # }}}
 
 # Options: {{{
 
 set show-mode-in-prompt on
-
+# from info readline
+set match-hidden-files on
 set revert-all-at-newline on
 
 # From Arch Wiki and man bash
-
 # When using TAB for completions, the double tab can be changed to a single tab
 # This also shows all partial completions
 set show-all-if-ambiguous on
@@ -315,14 +335,6 @@ set mark-modified-lines on
 "\e[C": forward-char
 "\e[D": backward-char
 
-# The last two bindings ensure that the left and right keys continue to work correctly.
-
-# isn't working
-set history-size 10000
-
-# what are these? from bind -v
-# set completion-display-width -1
-# set completion-prefix-display-length 0
 # }}}
 
 # Bindings: {{{
@@ -344,11 +356,6 @@ set history-size 10000
 "\e[5~": beginning-of-history
 "\e[6~": end-of-history
 
-# alternate mappings for "page up" and "page down" to search the history
-# i think ctrl up and ctrl down
-# "\e[5~": history-search-backward
-# "\e[6~": history-search-forward
-
 # mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
 "\e[1;5C": forward-word
 "\e[1;5D": backward-word
@@ -357,40 +364,6 @@ set history-size 10000
 "\e\e[C": forward-word
 "\e\e[D": backward-word
 
-# I don't know what these escape codes mean so leave them commented out
-# $if term=rxvt
-# "\e[7~": beginning-of-line
-# "\e[8~": end-of-line
-# "\eOc": forward-word
-# "\eOd": backward-word
-# $endif
-
- # for non RH/Debian xterm, can't hurt for RH/Debian xterm
- # "\eOH": beginning-of-line
- # "\eOF": end-of-line
-
- # for freebsd console
- # "\e[H": beginning-of-line
- # "\e[F": end-of-line
-
-# From /usr/share/doc/bash/inputrc.arrows
-# This file controls the behaviour of line input editing for
-# programs that use the Gnu Readline library.
-#
-# Arrow keys in keypad mode
-#
-# "\C-[OD"        backward-char
-# "\C-[OC"        forward-char
-# "\C-[OA"        previous-history
-# "\C-[OB"        next-history
-#
-# Arrow keys in ANSI mode
-#
-# "\C-[[D"        backward-char
-# "\C-[[C"        forward-char
-# "\C-[[A"        previous-history
-# "\C-[[B"        next-history
-#
 # Arrow keys in 8 bit keypad mode
 # So we enabled keypad earlier so I'm gonna say this one
 "\C-M-OD"       backward-char
@@ -398,12 +371,6 @@ set history-size 10000
 "\C-M-OA"       previous-history
 "\C-M-OB"       next-history
 #
-# Arrow keys in 8 bit ANSI mode
-#
-# "\C-M-[D"       backward-char
-# "\C-M-[C"       forward-char
-# "\C-M-[A"       previous-history
-# "\C-M-[B"       next-history
 # }}}
 
 # From clink: {{{1
@@ -412,8 +379,12 @@ set history-size 10000
 # Gotta figure out how to check for the conditional clink tho
 
 # Easy. It's default installed everywhere so
-$if cmd.exe
 
+$if cmd.exe
+    set keymap emacs
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
 "\t":               clink-completion-shim
 "\C-V":                paste-from-clipboard
 "\C-q":                reload-lua-state
@@ -423,7 +394,10 @@ $if cmd.exe
 "\C-c":                ctrl-c
 "\e-a":                "..\\"
 
-"set" keymap vi-insert
+    set keymap vi-insert
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
 "\t":               clink-completion-shim
 "\C-v":                paste-from-clipboard
 "\C-z":                undo
@@ -431,31 +405,18 @@ $if cmd.exe
 "\e\C-c":              copy-line-to-clipboard
 "\C-c":                ctrl-c
 "\e-a":                "..\\"
-#
-"set" keymap vi-move
+
+    set keymap vi-move
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
+
 "\C-v":                paste-from-clipboard
 "\C-z":                undo
 "\e\C-h":                show-rl-help
 "\e\C-c":              copy-line-to-clipboard
 "\C-c":                ctrl-c
 "\ea":                "..\\"
-$endif
-
-$if cmd.exe
-    set keymap emacs
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-
-    set keymap vi-insert
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-
-    set keymap vi-move
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
 $endif
 
 $if Bash
@@ -465,3 +426,4 @@ $endif
 
 # Well that was fucking awesome
 # }}}
+# Vim: set fdm=marker:

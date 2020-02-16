@@ -76,7 +76,8 @@ fi   # }}}
 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
-[[ -x lesspipe ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(SHELL=/bin/bash lesspipe.sh)"
+# This is raising in error in mintty and it's driving me nuts fix this later
+# [[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(SHELL=/bin/bash lesspipe.sh)"
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
@@ -137,7 +138,8 @@ shopt -s histverify
 # Shopt and set: {{{1
 
 # The up key only works in emacs mode??? wth
-set -o emacs
+# We're back baby
+set -o vi
 # To check what options you've set with set, check the output of: $: echo $-
 # Don't just run `set` on the command line! It'll echo every var that's been set.
 # As of Aug 28, 2019 I got: bhimBCHs
@@ -236,7 +238,7 @@ export NODE_PRESERVE_SYMLINKS=1
 fasd_cache="$HOME/.fasd-init-bash"
 if [[ -n "$(command -v fasd)" ]]; then
     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-        fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
+        fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install > "$fasd_cache"
     fi
     source "$fasd_cache"
     unset fasd_cache
@@ -299,7 +301,32 @@ export _term_reset="\033[0m"
 export prompt_in2="\001\033[32m\002...: \001$_term_reset\002 "
 export PS2=$prompt_in2
 
-export PS1="\u@\h \w \@ \n \001\033[32m\002In [\001\033[32;1m\002 \# \001\033[0;32m\002] \$:\001$_term_reset\002 "
+# export PS1="\u@\h \w \@ \n \001\033[32m\002In [\001\033[32;1m\002 \# \001\033[0;32m\002] \$:\001$_term_reset\002 "
+
+# Prompt: {{{
+
+function git_branch() {
+    if branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"; then
+        echo -n " $branch"
+        [ -n "$(git status --porcelain 2> /dev/null)" ] && echo -n '*'
+    fi
+}
+
+function job_count() {
+  local count=$(jobs | wc -l)
+  printf -v spaces "%${count}s" ' '
+  (($count > 0)) && echo " ${spaces// /&}";
+}
+
+green=$(tput setaf 2)
+red=$(tput setaf 1)
+yellow=$(tput setaf 3)
+idk=$(tput setaf 4)
+neither=$(tput setaf 5)
+cyan=$(tput setaf 6)
+normal=$(tput sgr0)
+
+export PS1="\[$idk\]\u\[$neither\]@\h \w \@ \[$cyan\] $(git_branch) \[$red\] $(job_count)\n\[$green\]In [\#] \[$normal\] \$: "
 
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local

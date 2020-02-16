@@ -9,10 +9,16 @@
 # [include]
     # path = C:/Users/faris/projects/dotfiles/unix/.config/git/config
 
-[includeIf]
+[include]
 	path = C:/Users/faris/.gitconfig.local
+
 [user]
 	email = farischugthai@gmail.com
 	name = Faris A. Chugthai
 [credential "helperselector"]
-	selected = <no helper>
+	selected = wincred
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

@@ -7,7 +7,7 @@ Notes:
 #) You ran the following.:
 
     C:\Users\faris\Dropbox\git
-    »  Set-PSRepository -InstallationPolicy Trusted PSGallery
+»  Set-PSRepository -InstallationPolicy Trusted PSGallery
 
 #) KEEP POWERSHELLGET ABOVE INVOCATION OF FIND-COMMAND DUDE!
 
@@ -41,6 +41,7 @@ using module PSReadline
 using module posh-sshell
 using module posh-git
 
+using namespace System
 using namespace Console
 using namespace Microsoft.PowerShell.PSConsoleReadline
 using namespace System.Windows.Clipboard
@@ -48,43 +49,13 @@ using namespace System.Windows.Forms
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 using namespace System.ConsoleKey
+using namespace System.ConsoleKeyInfo
 
 # in case those didn't work
 
 # Import-Module posh-git
 # nope! actually it raises an error because using must be at the top
 # using module posh-git
-
-# Only here for readability.
-$Not_the_real_PATH = 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64',
-';C:\Program Files (x86)\Windows Kits\10\bin\x64',
-';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin',
-';C:\Windows\Microsoft.NET\Framework64\v4.0.30319',
-';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE',
-';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools',
-';C:\Windows',
-';C:\Windows\System32',
-';C:\Windows\System32\wbem',
-';C:\Windows\Syswow64',
-';C:\Windows\ImmersiveControlPanel',  # dude cpanel!
-';C:\ProgramData\chocolatey\bin',
-';C:\Program Files\Firefox Nightly',
-';C:\Neovim\bin',
-';C:\Windows\System32\WindowsPowerShell\v1.0',
-';C:\Program Files\PowerShell\6',
-';C:\Program Files\Racket',
-';C:\Python38',
-';C:\Program Files\KeePassXC',
-';C:\git\bin',
-';C:\git\usr\bin',
-';C:\git\cmd',
-';C:\Users\fac\scoop\apps\nvm\current\v13.7.0',
-';C:\Users\fac\scoop\shims',
-';C:\Users\fac\AppData\Roaming\Python\Python38\Scripts',
-';C:\Users\fac\src\ctags',
-';C:\Users\fac\AppData\Local\Programs\Microsoft\VS Code,
-;C:\Users\fac\AppData\Local\Yarn\bin'
-
 
 # Broken up because it actually exceeds the max column for syntax highlighting
 # in Vim and fucks the whole file up.
@@ -93,18 +64,25 @@ $Not_the_real_PATH = 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x6
 $env:PATH = 'C:\Windows;C:\Windows\System32;C:\Windows\System32\wbem;C:\Windows\Syswow64;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Windows\ImmersiveControlPanel'
 
 # Get the visual studio stuff
-$env:PATH = $env:PATH + ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools'
+$env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools'
 
-$env:PATH = $env:PATH + ';C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64;C:\Program Files (x86)\Windows Kits\10\bin\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
+$env:PATH += ';C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64;C:\Program Files (x86)\Windows Kits\10\bin\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
 
-# Don't add too many from scoop shims should take care of most except nvm
-$env:PATH = $env:PATH + ';C:\ProgramData\chocolatey\bin;C:\Program Files\Firefox Nightly;C:\Neovim\bin;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\PowerShell\6;C:\Program Files\Racket;C:\Python38;C:\Program Files\KeePassXC'
+$env:PATH += ';C:\ProgramData\chocolatey\bin;C:\Program Files\Firefox Nightly;C:\Neovim\bin;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\PowerShell\6;C:\Program Files\Racket;C:\Program Files\KeePassXC'
 
 # Git
-$env:PATH = $env:PATH + ';C:\git\bin;C:\git\usr\bin;C:\git\cmd'
+$env:PATH += ';C:\git\bin;C:\git\usr\bin;C:\git\cmd'
+
+# Don't add too many from scoop shims should take care of most except nvm
+$env:PATH += ';C:\Users\fac\scoop\apps\nvm\current\v13.7.0;C:\Users\fac\scoop\shims;C:\Users\fac\scoop\apps\winpython\current\Scripts'
+
+$env:PATH += ';C:\Python38\Scripts;C:\Users\fac\AppData\Roaming\Python\Python38\Scripts'
 
 # Your personal folders
-$env:PATH = $env:PATH + ';C:\Users\fac\scoop\apps\nvm\current\v13.7.0;C:\Users\fac\scoop\shims;C:\Users\fac\AppData\Roaming\Python\Python38\Scripts;C:\Users\fac\src\ctags;C:\Users\fac\AppData\Local\Programs\Microsoft\VS Code;C:\Users\fac\AppData\Local\Yarn\bin'
+$env:PATH += ';C:\Users\fac\src\ctags'
+$env:PATH += ';C:\Users\fac\AppData\Local\Programs\Microsoft VS Code'
+$env:PATH += ';C:\Users\fac\AppData\Local\Yarn\bin'
+$env:PATH += ';C:\Users\fac\omnisharp'
 
 # Holy bajeezuz is this important!
 if ($env:VIRTUAL_ENV) { $env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
@@ -120,13 +98,17 @@ C:\Windows\System32\chcp.com 65001
 try { $null = Get-Command concfg -ea stop; concfg tokencolor -n disable } catch { }
 ;
 
-#
+# Unix Utilities: {{{
+function head() { Get-Content -TotalCount 30 $args }
+
+function tail() { Get-Content -Tail 30 $args }
+# }}}
+
 # ------------------
 # functions - start
 # ------------------
-#
 
-#
+
 # function description:
 #    Allows an actual fucking human to parse the `$PATH`.
 #
@@ -142,8 +124,8 @@ if ( Test-Path alias:sl ) { Remove-Item alias:sl -Force }
 # FFS!
 if ( Test-Path alias:echo ) { Remove-Item alias:echo -Force }
 
-function Pro () { C:\Neovim\bin\nvim.exe "$Profile" }
-function Reload () { Invoke-Expression "$Profile" }
+function Pro () { C:\Neovim\bin\nvim.exe $Profile.CurrentUserCurrentHost }
+function Reload () { Invoke-Expression $Profile.CurrentUserCurrentHost }
 
 function nvim_init () { C:\Neovim\bin\nvim.exe C:\Users\faris\AppData\Local\nvim\init.vim }
 
@@ -161,26 +143,23 @@ if(!$PSScriptRoot) {
     $PSScriptRoot = Split-Path $Script:MyInvocation.MyCommand.Path
 }
 
-$gitLoaded = $false
-
-function Import-Git($Loaded){
-    if($Loaded) { return }
-    $GitModule = Get-Module -Name Posh-Git -ListAvailable
-    if($GitModule | select version | where version -le ([version]"0.6.1.20160330")){
-        Import-Module Posh-Git > $null
-    }
-    if(-not ($GitModule) ) {
-        # Write-Warning "Missing git support, install posh-git with 'Install-Module posh-git' and restart cmder."
-        return $false
-    }
-    # Make sure we only run once by alawys returning true
-    return $true
-}
-
 # Prompt Section: {{{
 #   Users should modify their user_profile.ps1 as it will be safe from updates.
-#
 
+
+$isGitLoaded = $false
+#Anonymice Powerline
+$arrowSymbol = [char]0xE0B0;
+$branchSymbol = [char]0xE0A0;
+
+$defaultForeColor = "White"
+$defaultBackColor = "Black"
+$pathForeColor = "White"
+$pathBackColor = "DarkBlue"
+$gitCleanForeColor = "White"
+$gitCleanBackColor = "Green"
+$gitDirtyForeColor = "Black"
+$gitDirtyBackColor = "Yellow"
 # Pre assign the hooks so the first run of cmder gets a working prompt.
 [ScriptBlock]$PrePrompt = {}
 [ScriptBlock]$PostPrompt = {}
@@ -195,18 +174,88 @@ This scriptblock runs every time the prompt is returned.
 Explicitly use functions from MS namespace to protect from being overridden in the user session.
 Custom prompt functions are loaded in as constants to get the same behaviour
 #>
-[ScriptBlock]$Prompt = {
-    $realLASTEXITCODE = $LASTEXITCODE
-    $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
-    PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
-    CmderPrompt
-    Microsoft.PowerShell.Utility\Write-Host "`nÃƒÅ½Ã‚Â» " -NoNewLine -ForegroundColor "DarkGray"
-    PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
-    $global:LASTEXITCODE = $realLASTEXITCODE
-    return " "
-}
+# [ScriptBlock]$Prompt = {
+#     $realLASTEXITCODE = $LASTEXITCODE
+#     $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
+#     PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
+#     CmderPrompt
+#     Microsoft.PowerShell.Utility\Write-Hos "" -NoNewLine -ForegroundColor "DarkGray"
+#     PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
+#     $global:LASTEXITCODE = $realLASTEXITCODE
+#     return " "
+# }
 
 # }}}
+
+# }}}
+
+# PoshGit: {{{
+
+# Check that var for debugging help
+# $Global:VcsPromptStatuses
+# But the $GitPromptSettings var is probably the best
+
+# Yeah you probablu shouldn't add this if pwsh version <6
+# TODO: Here's a template with correct syntax
+# if ($PSVersionTable.PSVersion.Major -gt 4) {
+    # code
+# } else {
+    # Code
+# }
+
+function global:PromptWriteErrorInfo() {
+    if ($global:GitPromptValues.DollarQuestion) { return }
+
+    if ($global:GitPromptValues.LastExitCode) {
+        "`e[31m(" + $global:GitPromptValues.LastExitCode + ") `e[0m"
+    }
+    else {
+	"`e[31m! `e[0m"
+    }
+}
+
+# $Global:GitPromptSettings.DefaultPromptBeforeSuffix.Text = '`n$(PromptWriteErrorInfo)$([DateTime]::now.ToString("MM-dd HH:mm:ss"))'
+# $Global:GitPromptSettings.DefaultPromptPrefix = '`n$(PromptWriteErrorInfo)$([DateTime]::now.ToString("MM-dd HH:mm:ss"))'
+
+# $Global:GitPromptSettings.DefaultPromptWriteStatusFirst = $true
+# $Global:GitPromptSettings.DefaultPromptSuffix.ForegroundColor = 0x808080
+
+$Global:GitPromptSettings.DefaultPromptSuffix = '   In[$((Get-History -Count 1).id + 1)$(">" * ($nestedPromptLevel + 1))]: $ '
+
+$gitLoaded = $false
+
+# Here's a glyph i like ÃƒÆ’Ã†â€™Ãƒâ€¦Ã‚Â½ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾
+
+# $GitPromptSettings.DefaultPromptPrefix.Text = '$(Get-Date -f "MM-dd-YYYY HH:mm:ss") '
+
+# So this is only a thing in powershell 5
+# $Global:GitPromptSettings.BeforeForegroundColor = 'Cyan'
+
+# This is only a thing in powershell 6
+# $Global:GitPromptSettings.DefaultPromptPrefix.ForegroundColor = 'Cyan'
+
+# Doesn't work
+# $GitPromptSettings.DefaultPromptPrefix.ForegroundColor = [ConsoleColor]::Cyan
+# $Global:GitPromptSettings.DefaultPromptPath.ForegroundColor = 'Orange'
+# $Global:GitPromptSettings.DefaultForegroundColor = 'Orange'
+
+$Global:GitPromptSettings.EnableStashStatus = $true
+
+$Global:GitPromptSettings.EnableFileStatus = $true
+
+function Import-Git($Loaded){
+    if($Loaded) { return }
+    $GitModule = Get-Module -Name Posh-Git -ListAvailable
+    if($GitModule | select version | where version -le ([version]"0.6.1.20160330")){
+        Import-Module Posh-Git > $null
+    }
+    if(-not ($GitModule) ) {
+        # Write-Warning "Missing git support, install posh-git with 'Install-Module posh-git' and restart cmder."
+        return $false
+    }
+    # Make sure we only run once by alawys returning true
+    return $true
+}
 
 # }}}
 
@@ -360,13 +409,40 @@ function grea() { git.exe rebase --abort $args }
 # Readline: {{{
 
 # Basic Options: {{{
-# https://github.com/PowerShell/PSReadLine#post-installation
-# According to MSFT themselves, use this syntax in profile.ps1 and you only
-# need Import-Module PSReadLine in the Microsoft.Powershell.ps1 file
+# Note that this is where we're at.:
+ 
+# MaximumKillRingCount                   : 10
+# ShowToolTips                           : True
+# ViModeIndicator                        : None
+# WordDelimiters                         : ;:,.[]{}()/\|^&*-=+'"–—―
+# CommandColor                           : "`e[93m"
+# CommentColor                           : "`e[32m"
+# ContinuationPromptColor                : "`e[37m"
+# DefaultTokenColor                      : "`e[37m"
+# EmphasisColor                          : "`e[96m"
+# ErrorColor                             : "`e[91m"
+# KeywordColor                           : "`e[92m"
+# MemberColor                            : "`e[97m"
+# NumberColor                            : "`e[97m"
+# OperatorColor                          : "`e[90m"
+# ParameterColor                         : "`e[90m"
+# SelectionColor                         : "`e[30;47m"
+# StringColor                            : "`e[36m"
+# TypeColor                              : "`e[37m"
+# VariableColor                          : "`e[92m"
+# }}}
 
-Import-Module PSReadline
+# Basic Bindings: {{{
+# https://github.com/PowerShell/PSReadLine#post-installation
+if ($host.Name -eq 'ConsoleHost')
+{
+    Import-Module PSReadLine
+}
+
 # I know I know. Hey at least the fucking tab key works now!
-Set-PSReadlineOption -EditMode Emacs
+# I'm sorry because this shouldn't be true but a lot of these bindings
+# depend on emacs mode being set. I can't wait to fix that but
+Set-PSReadlineOption -EditMode emacs
 
 # 06/11/201
 Set-PSReadlineOption -BellStyle None
@@ -378,18 +454,26 @@ Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 # Yo also Ctrl-Space never works for me. So I'm gonna put what Alt-= used to be
 # Set-PSReadLineKeyHandler -Key Ctrl+SPACEBAR -Function PossibleCompletions
-
+# I figured it out!
+# Set-PSReadLineKeyHandler -Key [System.ConsoleKey]::Ctrl+Spacebar -Function Complete
+Set-PSReadLineKeyHandler -Key "Ctrl+Spacebar" -Function Complete
 Set-PSReadlineOption -ExtraPromptLineCount 1
 
-# To enable bash style completion without using Emacs mode, you can use::
-# Set-PSReadlineKeyHandler -Key Tab -Function Complete
-# Except for the fact that it raises an error all the time
-Set-PSReadlineKeyHandler -Key Tab -Function PossibleCompletions
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+# This isn't a function???? fuck
+# Set-PSReadlineKeyHandler -Key Tab -Function MenuCompleteBackward
 
 # In Emacs mode - Tab acts like in bash, but the Windows style completion
 # is still useful sometimes, so bind some keys so we can do both
-Set-PSReadLineKeyHandler -Key Ctrl+Q -Function TabCompleteNext
-Set-PSReadLineKeyHandler -Key Ctrl+Shift+Q -Function TabCompletePrevious
+Set-PSReadlineKeyHandler -Key "Ctrl+/" -Function TabCompleteNext
+Set-PSReadlineKeyHandler -Key "Ctrl+Shift+/" -Function TabCompletePrevious
+
+# Except for the fact that it raises an error all the time
+# Oh my god this works SO much better
+Set-PSReadlineKeyHandler -Key "Alt+/" -Function PossibleCompletions
+Set-PSReadlineKeyHandler -Key "Alt+=" -Function PossibleCompletions
+
+Set-PSReadlineKeyHandler -Key "Alt+?" -Function ShowKeyBindings
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
@@ -465,10 +549,6 @@ Set-PSReadlineKeyHandler -Key Ctrl+B `
 # }}}
 
 # A few simple bindings: {{{
-# In Emacs mode - Tab acts like in bash, but the Windows style completion
-# is still useful sometimes, so bind some keys so we can do both
-Set-PSReadlineKeyHandler -Key Ctrl+Q -Function TabCompleteNext
-Set-PSReadlineKeyHandler -Key Ctrl+Shift+Q -Function TabCompletePrevious
 
 # Clipboard interaction is bound by default in Windows mode, but not Emacs mode.
 # wt handles this for us
@@ -936,20 +1016,20 @@ if (Test-Path $env\FZF_DEFAULT_COMMAND -IsValid){  # {{{FZF Env vars
     # $env:FZF_DEFAULT_COMMAND = 'rg --hidden --color=ansi --follow --no-messages --no-heading --smart-case --no-filename --glob "!.git/*" -g "!**node_modules/**" --passthru --max-depth 10 --max-count 2 --max-columns 200 -C 0 --files '
     $env:FZF_DEFAULT_COMMAND = 'fd -d 6 -t f --exclude "node_modules" --exclude "*.dll" --exclude "*.mui" '
 
-    $env:FZF_DEFAULT_OPTS = ' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"+"Press ? to toggle preview" --bind "?:toggle-preview" --bind "Ctrl-k:kill-line" '
+    $env:FZF_DEFAULT_OPTS = ' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"+"Press ? to toggle preview"'
 
 # --bind change:reload 
 #
     # $env:FZF_CTRL_T_COMMAND = 'rg --hidden --color=ansi  --follow --no-messages --no-heading --smart-case --files --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 --glob "!.git/* -g "!**node_modules/**" . '
     $env:FZF_CTRL_T_COMMAND = 'fd --follow -d 6 -t f --hidden --exclude "node_modules" --exclude "*.dll" --exclude "*.mui" '
-    $env:FZF_CTRL_T_OPTS = ' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --preview "less -RrFJKLMN {}" --ansi --bind "?:toggle-preview" --header "FZF: File Browser: Press ? to toggle preview.  Alt-n to launch nvim. " --bind "alt-n:execute(nvim {}) " --bind "Ctrl-k:kill-line" '
+    $env:FZF_CTRL_T_OPTS = ' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --preview "less -RrFJKLMN {}" --ansi --header "FZF: File Browser: Press ? to toggle preview.  Alt-n to launch nvim. " --bind "alt-n:execute(nvim {}) " '
 
     # $env:FZF_CTRL_R_COMMAND = "rg --hidden --color=ansi --no-heading --smart-case --no-filename --no-messages "
     $env:FZF_CTRL_R_COMMAND = 'fd --hidden '
-    $env:FZF_CTRL_R_OPTS = " --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --preview 'cat {}' --preview-window=down:hidden:wrap --bind '?:toggle-preview' --header 'Press ? to toggle preview' "
+    $env:FZF_CTRL_R_OPTS = " --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --preview 'cat {}' --preview-window=down:wrap --header 'Press ? to toggle preview' "
 
     $env:FZF_ALT_C_COMMAND = "fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
-    $env:FZF_ALT_C_OPTS = " --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind '?:toggle-preview' --header 'Press ? to toggle preview' --border --prompt 'FZF Dir Finder' --preview 'ls -lRhF --color=always {}' | head -n 200 "
+    $env:FZF_ALT_C_OPTS = " --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-wor' --header 'Press ? to toggle preview' --border --prompt 'FZF Dir Finder' --preview 'ls -lRhF --color=always {}' | head -n 200 "
 
 
 } # }}}
@@ -976,6 +1056,8 @@ function _gen_fzf_default_opts() {
 
     $env:FZF_COLORSCHEME=" --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0A --color=fg:$color06,header:$color09,info:$color0E,pointer:$color0F --color=marker:$color0D,fg+:$color06,prompt:$color08,hl+:$color04 "
 
+# Also I'm gonna tack on the binds that I want everywhere
+$env:FZF_COLORSCHEME += "--bind 'ctrl-u:half-page-up,ctrl-d:half-page-down,ctrl-v:preview-page-up,alt-v:preview-page-down,alt-j:preview-down,alt-k:preview-up,?:toggle-preview,ctrl-k:kill-line,change:top'"
 }
 _gen_fzf_default_opts  # }}}
 
@@ -985,8 +1067,6 @@ $env:FZF_CTRL_T_OPTS = $env:FZF_CTRL_T_OPTS + $env:FZF_COLORSCHEME
 $env:FZF_ALT_C_OPTS = $env:FZF_ALT_C_OPTS + $env:FZF_COLORSCHEME
 
 # Utilizing the PSFzf API: {{{
-
-# Remove-PSReadlineKeyHandler Ctrl-r
 
 # this is needed because he aliases fzf to fd but i have fd-find
 if ( Test-Path alias:fd ) { Remove-Item alias:fd -Force }
@@ -999,12 +1079,23 @@ Remove-PSReadlineKeyHandler Ctrl-t
 # }}}
 
 # Invoke-FuzzyEdit: {{{
-Set-PSReadlineKeyHandler -Key Ctrl-t `
+
+# Set-PSReadlineKeyHandler -Key "Ctrl+t" -Function Invoke-FuzzyEdit
+
+
+# TODO: Doesn't work
+Set-PSReadlineKeyHandler -Key "Alt+t" `
                     -BriefDescription Invoke-FuzzyEdit `
                     -LongDescription "Use FZF to preview files and edit with nvim." `
                     -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadline]::cd (gci -Recurse | where {$_.PSIsContainer} | Invoke-Fzf)
+    param($key, $arg)
+
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+    [Microsoft.PowerShell.PSConsoleReadLine]::AddToHistory($line)
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(gci -Recurse | where {$_.PSIsContainer} | Invoke-Fzf)")
     [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
     } # }}}
 
@@ -1018,16 +1109,43 @@ Set-PSReadlineKeyHandler -Chord 'Alt+r' `
     [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
 }  # }}}
 
-# Btw what is ghq?: {{{
-Set-PSReadlineKeyHandler -Chord 'Ctrl+x,p' `
--BriefDesription "fzf to...." `
--Description "Honestly don't know what ghq is" `
--ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(ghq list -p | fzf.exe)")
-    [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
-} # }}}
+# {{{
+Set-PSReadlineKeyHandler -Chord 'Ctrl+x,Ctrl+g' -ScriptBlock {
+  [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
+  [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(ghq list -p | fzf)")
+  [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
+}  # }}}
 
+# Remove-PSReadlineKeyHandler Ctrl-r
+
+# {{{
+# Set-PSReadlineKeyHandler -Chord 'Alt+Shift+r' -ScriptBlock {
+#   [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
+#   [Microsoft.PowerShell.PSConsoleReadline]::Insert("$(Get-History | % { $_.CommandLine } | fzf)")
+#   [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
+# }  # }}}
+
+# {{{
+Set-PSReadlineKeyHandler -Key 'Ctrl+l' -ScriptBlock {
+  [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
+  [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
+  Clear-Host
+}  # }}}
+
+# TODO: Doesn't work but most of the idea is right
+Set-PSReadLineKeyHandler -Key "Alt+Shift+c"  `
+                         -BriefDescription 'InvokeFuzzySetLocation' `
+                         -Description 'Set the location using fd and fzf' `
+                         -ScriptBlock {
+      [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
+      [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(fd -t d -H  | Invoke-Fzf)")
+      [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
+      Clear-Host
+ }
+
+# Not allowed to do it this way
+# Set-PSReadLineKeyHandler -Key "Alt+c" -Function fcd
+Import-Module PSFzf
 # }}}
 
 # PSCX: {{{
@@ -1118,4 +1236,4 @@ Write-Output "Success: Sourced Documents/PowerShell/profile.ps1"
 
 # }}}
 
-# Vim: set ff=dos fdls=0 fdm=marker:
+# Vim: set ff=dos fdls=0 fdm=marker fenc=utf-8:

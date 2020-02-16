@@ -1,5 +1,4 @@
 {
-  "C_Cpp.clang_format_path": "C:\\tools\\vs\\2019\\Community\\VC\\Tools\\Llvm\\bin\\clang-format.exe",
   "C_Cpp.clang_format_sortIncludes": true,
   "C_Cpp.commentContinuationPatterns": [
     "/**"
@@ -13,30 +12,43 @@
   "C_Cpp.default.cppStandard": "c++11",
   "C_Cpp.default.enableConfigurationSquiggles": true,
   "C_Cpp.default.includePath": [
-    "C:/tools/vs/2019/Community/VC/Tools/MSVC/14.23.28105/include",
-    "C:/tools/vs/2019/Community/VC/Tools/MSVC/14.23.28105/atlmfc/include"
+    "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\**",
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.24.28314\\Include\\**",
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\Include\\**",
+    "C:/Program Files (x86)/Windows Kits/NETFXSDK/4.8/Include/um",
+    "C:/Users/fac/scoop/apps/winpython/current/python-3.8.1.amd64/include/**"
   ],
   "C_Cpp.default.intelliSenseMode": "msvc-x64",
   "C_Cpp.default.systemIncludePath": [
-    "C:\\tools\\vs\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.23.28105\\include"
+    "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\**"
   ],
-  "C_Cpp.default.windowsSdkVersion": null,
+  "C_Cpp.default.windowsSdkVersion": "10.0.18362.0",
   "C_Cpp.experimentalFeatures": "Enabled",
   "C_Cpp.intelliSenseEngine": "Default",
   "C_Cpp.intelliSenseEngineFallback": "Enabled",
   "C_Cpp.loggingLevel": "Warning",
-  "C_Cpp.mefault.browse.limitSymbolsToIncludedHeaders": false,
+  "C_Cpp.preferredPathSeparator": "Forward Slash",
   "C_Cpp.suggestSnippets": true,
   "C_Cpp.updateChannel": "Insiders",
   "C_Cpp.workspaceParsingPriority": "low",
   "C_Cpp.workspaceSymbols": "All",
+  "[c]": {
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": false,
+    "editor.tabSize": 8,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 80,
+    "files.trimTrailingWhitespace": true
+  },
   "[css]": {
     "editor.suggest.insertMode": "replace"
   },
   "[git-commit]": {
     "editor.rulers": [
       72
-    ]
+    ],
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 72
   },
   "[go]": {
     "editor.insertSpaces": false
@@ -59,7 +71,6 @@
     },
     "editor.suggest.insertMode": "replace"
   },
-  "[jupyter]": {},
   "[less]": {
     "editor.suggest.insertMode": "replace"
   },
@@ -90,6 +101,7 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.python",
     "editor.foldingStrategy": "indentation",
+    "editor.formatOnSave": true,
     "editor.rulers": [
       80
     ]
@@ -135,12 +147,15 @@
   "csharp.suppressHiddenDiagnostics": false,
   "csharp.unitTestDebuggingOptions": {},
   "debug.allowBreakpointsEverywhere": true,
+  "debug.chrome.useV3": true,
   "debug.console.fontFamily": "'Source Code Pro', Hack, Menlo",
   "debug.console.wordWrap": true,
   "debug.enableAllHovers": true,
   "debug.extensionHost.useV3": true,
   "debug.inlineValues": true,
+  "debug.javascript.codelens.npmScripts": "all",
   "debug.javascript.usePreview": true,
+  "debug.javascript.warnOnLongPrediction": true,
   "debug.node.autoAttach": "on",
   "debug.node.useV3": true,
   "debug.onTaskErrors": "showErrors",
@@ -155,7 +170,6 @@
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.accessibilityPageSize": 1,
   "editor.accessibilitySupport": "off",
-  "editor.codeActionsOnSave": {},
   "editor.codeActionsOnSaveTimeout": 750,
   "editor.cursorBlinking": "solid",
   "editor.cursorSmoothCaretAnimation": true,
@@ -166,8 +180,6 @@
   "editor.foldingStrategy": "auto",
   "editor.fontFamily": "'Source Code Pro', Hack, Menlo, monospace",
   "editor.fontLigatures": true,
-  "editor.fontSize": 13,
-  "editor.fontWeight": "400",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnSaveTimeout": 3000,
@@ -217,6 +229,8 @@
   "extensions.ignoreRecommendations": true,
   "extensions.showRecommendationsOnlyOnDemand": true,
   "files.associations": {
+    "*.c": "c",
+    "*.h": "c",
     "*.ipy": "python",
     "*.jupyterlab-settings": "json",
     "*.vim": "viml",
@@ -407,6 +421,7 @@
   "problems.showCurrentInStatus": true,
   "pyright.openFilesOnly": true,
   "python.analysis.cacheFolderPath": "C:/Users/fac/AppData/Roaming/Code/Cache",
+  "python.analysis.cachingLevel": "Library",
   "python.autoComplete.addBrackets": true,
   "python.dataScience.changeDirOnImportExport": true,
   "python.dataScience.codeLenses": "python.datascience.runcell,  python.datascience.runallcellsabove, python.datascience.debugcell",
@@ -505,7 +520,9 @@
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": true,
   "python.venvFolders": [
-    "~/.local/share/virtualenvs"
+    "~/.local/share/virtualenvs",
+    "~/.virtualenvs",
+    "C:\\Python38"
   ],
   "python.workspaceSymbols.exclusionPatterns": [
     "**/site-packages/**",
@@ -524,10 +541,9 @@
   "restructuredtext.builtDocumentationPath": "${workspaceFolder}/docs/build/html",
   "restructuredtext.confPath": "${workspaceFolder}/source",
   "restructuredtext.experimental": true,
-  "restructuredtext.languageServer.disabled": false,
   "restructuredtext.linter.run": "onSave",
   "restructuredtext.preview.fontSize": 18,
-  "restructuredtext.trace": "off",
+  "restructuredtext.trace": "verbose",
   "restructuredtext.updateDelay": 800,
   "restructuredtext.updateOnTextChanged": "false",
   "rust-client.useWSL": true,
@@ -564,20 +580,24 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "terminal.external.linuxExec": "kitty",
-  "terminal.external.windowsExec": "C:\\Windows\\System32\\cmd.exe /U E:ON F:ON V:ON /K C:\\tools\\Cmder\\vendor\\init.bat",
   "terminal.integrated.automationShell.linux": "tmux",
+  "terminal.integrated.automationShell.windows": "C:\\Windows\\System32\\cmd.exe",
+  "terminal.integrated.allowChords": false,
   "terminal.integrated.confirmOnExit": false,
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.detectLocale": "on",
+  "terminal.integrated.env.windows": {
+    "TERM": "cygwin"
+  },
   "terminal.integrated.experimentalRefreshOnResume": true,
   "terminal.integrated.experimentalUseTitleEvent": true,
   "terminal.integrated.fontFamily": "'FuraMono Nerd Font Mono','Go Mono NF', 'Hack NF', monospace",
   "terminal.integrated.fontWeightBold": "normal",
   "terminal.integrated.rendererType": "experimentalWebgl",
   "terminal.integrated.scrollback": 10000,
-  "terminal.integrated.shell.linux": "/bin/bash",
-  "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\6\\pwsh.exe",
+  "terminal.integrated.shell.linux": "/usr/bin/tmux",
+  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
   "terminal.integrated.windowsEnableConpty": true,
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.locale": "en",
@@ -697,14 +717,13 @@
   "vim.whichwrap": "<,>,[,],h,l,<BS>",
   "window.menuBarVisibility": "toggle",
   "window.newWindowDimensions": "inherit",
-  "window.zoomLevel": 0,
+  "window.zoomLevel": -1,
   "workbench.activityBar.visible": false,
   "workbench.colorCustomizations": {
     "statusBar.background": "#005f5f",
     "statusBar.debuggingBackground": "#005f5f",
     "statusBar.noFolderBackground": "#005f5f"
   },
-  "workbench.colorTheme": "Gruvbox Dark Hard",
   "workbench.commandPalette.history": 500,
   "workbench.commandPalette.preserveInput": true,
   "workbench.editor.closeOnFileDelete": true,
@@ -715,12 +734,9 @@
   "workbench.editor.splitSizing": "split",
   "workbench.editor.tabSizing": "shrink",
   "workbench.enableExperiments": false,
-  "workbench.iconTheme": "material-icon-theme",
   "workbench.list.keyboardNavigation": "highlight",
   "workbench.list.openMode": "doubleClick",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.preferredDarkColorTheme": "Gruvbox Material Hard Dark",
-  "workbench.preferredLightColorTheme": "Gruvbox Material Hard Dark",
   "workbench.settings.editor": "json",
   "workbench.settings.enableNaturalLanguageSearch": false,
   "workbench.settings.openDefaultKeybindings": true,
@@ -729,8 +745,5 @@
   "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
   "workbench.tips.enabled": false,
-  "workbench.tree.renderIndentGuides": "onHover",
-  "terminal.integrated.env.windows": {
-    "TERM": "cygwin"
-  }
+  "workbench.tree.renderIndentGuides": "onHover"
 }
