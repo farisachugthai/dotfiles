@@ -4,15 +4,49 @@
 
 # To view currently set options run
 # `bind -v`
+# bind -p has some dope functions and a useful and very clear IMO layout of things
 
+# All:
+#readlineKeySeparator xxx match /-/  contained nextgroup=readlineKeyName,readlineKey
+                   #links to readlineKeySeq
+#readlineFunction xxx contained self-insert digit-argument vi-append-eol yank-last-arg
+                   #contained accept-line vi-subst vi-subst vi-undo vi-undo vi-char-search
+                   #contained vi-char-search vi-char-search vi-char-search vi-char-search
+                   #contained yank-pop vi-column vi-complete vi-yank-to vi-yank-to vi-match
+                   #contained character-search vi-prev-word vi-prev-word vi-search-again
+                   #contained vi-search-again beginning-of-line backward-kill-line kill-line
+                   #contained tilde-expand kill-region menu-complete prefix-meta end-kbd-macro
+                   #contained set-mark vi-redo next-history yank vi-end-word vi-end-word
+                   #contained vi-replace dump-variables redraw-current-line undo upcase-word
+                   #contained vi-goto-mark complete backward-delete-char print-last-kbd-macro
+                   #contained menu-complete-backward vi-change-case kill-whole-line
+                   #contained unix-filename-rubout beginning-of-history yank-nth-arg
+                   #contained insert-comment start-kbd-macro exchange-point-and-mark
+                   #contained non-incremental-forward-search-history re-read-init-file
+                   #contained vi-append-mode vi-arg-digit dump-macros do-uppercase-version
+                   #contained skip-csi-sequence call-last-kbd-macro kill-word vi-editing-mode
+                   #contained quoted-insert vi-movement-mode forward-word backward-word
+                   #contained clear-screen downcase-word tab-insert
+                   #contained non-incremental-reverse-search-history copy-region-as-kill
+                   #contained unix-word-rubout delete-char overwrite-mode transpose-chars                                                                contained copy-forward-word transpose-words history-search-forward
+                   #contained forward-char vi-put vi-put backward-char revert-line                                                                       contained backward-kill-word previous-history unix-line-discard vi-eof-maybe                                                         contained vi-search character-search-backward vi-set-mark capitalize-word                                                            contained end-of-history history-search-backward vi-insert-mode vi-delete-to                                                         contained vi-delete-to vi-yank-arg vi-tilde-expand vi-next-word vi-next-word
+                   #contained vi-insert-beg delete-horizontal-space insert-completions
+                   #contained possible-completions emacs-editing-mode end-of-line vi-change-char
+                   #contained dump-functions vi-fetch-history vi-change-to vi-change-to
+                   #contained reverse-search-history vi-first-print delete-char-or-list
+                   #contained forward-backward-delete-char vi-delete universal-argument abort copy-backward-word
+                   #contained forward-search-history
+                   #links to Function
+		   ## 
 # Newer settings: {{{
 # As a reminder \e == Alt == Esc + Pause
-TAB: menu-complete
+TAB: complete
 "\C-g": abort
 "\C-a": beginning-of-line
 "\C-b": backward-char
-"\C-d": delete-char
 "\C-l": clear-screen
+
+"\C-f": forward-char
 
 # Alt-Tab I think
 "\e\C-i": dynamic-complete-history
@@ -27,13 +61,16 @@ TAB: menu-complete
 
 # info rluserman: {{{
 
-"\M-p": non-incremental-reverse-search-history
-"\M-n": non-incremental-forward-search-history
+"\ep": non-incremental-reverse-search-history
+"\en": non-incremental-forward-search-history
 
 "\C-q": quoted-insert
 
 # Kill the wole line regardless of cursor position
 "\C-k": kill-whole-line
+
+# kill-region? sounds fun. that should be alt-k
+"\ek": kill-region
 # }}}
 
 # Other: {{{
@@ -60,8 +97,6 @@ TAB: menu-complete
 "\e[F": end-of-line
 
 "\C-x\C-x": exchange-point-and-mark
-
-"\C-f": forward-char
 "\C-s": forward-search-history
 "\C-x*": glob-expand-word
 "\C-xg": glob-list-expansions
@@ -69,9 +104,8 @@ TAB: menu-complete
 "\e*": insert-completions
 "\e.": insert-last-argument
 "\e_": insert-last-argument
-"\C-k": kill-line
 "\ed": kill-word
-"\C-n": next-history
+# "\C-n": next-history
 
 "\C-x!": possible-command-completions
 "\e=": possible-completions
@@ -80,14 +114,16 @@ TAB: menu-complete
 "\C-x@": possible-hostname-completions
 "\C-x~": possible-username-completions
 "\C-x$": possible-variable-completions
-"\C-p": previous-history
+# "\C-p": previous-history
 "\C-x\C-r": re-read-init-file
-"\C-r": reverse-search-history
+# fzf
+# "\C-r": reverse-search-history
 "\e\C-r": revert-line
 "\er": revert-line
 "\C-@": set-mark
 "\e ": set-mark
-"\C-t": transpose-chars
+# # fzf
+# "\C-t": transpose-chars
 "\e\C-e": shell-expand-line
 "\C-x(": start-kbd-macro
 "\et": transpose-words
@@ -100,19 +136,13 @@ TAB: menu-complete
 "\C-h": backward-delete-char
 # "\C-?": backward-delete-char
 "\C-d": vi-eof-maybe
-"\C-n": menu-complete
+"\C-n": complete
 "\C-p": menu-complete-backward
-
-# This would be neat
 "\C-?": dump-functions
-# Let's use one of the other history searches there are so many functions for this
-# "\C-r": reverse-search-history
 "\C-v": quoted-insert
-
 "\C-u": unix-line-discard
-"\C-w": vi-unix-word-rubout
+"\C-w": unix-filename-rubout
 "\C-y": yank
-
 # }}}
 
 # Pyreadline: {{{
@@ -121,7 +151,6 @@ TAB: menu-complete
 "\e[B": history-search-forward
 "\e[A": history-search-backward
 
-# "\C-w": unix-filename-rubout
 
 # }}}
 
@@ -129,58 +158,77 @@ TAB: menu-complete
 
 # emacs-editing-mode (not bound)
 # vi-movement-mode (not bound)
-
-# Let's bind it to the keys described in the readline library docs
-# In order to switch interactively between emacs and vi editing modes, use the
-# command M-C-j (bound to emacs-editing-mode when in vi mode and to
-# vi-editing-mode in emacs mode). The Readline default is emacs mode.
-
-# }}}
-
-# FZF: {{{1
-# Yeah definitely make sure all of these work though...
 $if mode = vi
+"jk": prefix-meta
 
-"\e\C-j": emacs-editing-mode
+"\eA": vi-append-mode
+"Shift-5": vi-match
 
-set keymap vi-insert
-"jj": vi-movement-mode
+	"\e\C-j": emacs-editing-mode
 
-set keymap vi-command
-"gg": beginning-of-history
-"G": end-of-history
-# bind '"\er": redraw-current-line'
-# bind '"\C-g\C-f": "$(fgf)\e\C-e\er"'
-# bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
-# bind '"\C-g\C-t": "$(fgt)\e\C-e\er"'
-# bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
-# bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
+	set keymap vi-insert
+	"jj": vi-movement-mode
+
+	set keymap vi-command
+	"gg": beginning-of-history
+	"G": end-of-history
+	set keymap vi
 
 $else
+	"\e\C-j": vi-editing-mode
 
-    # damn after removing a ton of bindings
-    # *which btw leave them out i didn't know what most did
-    # i came to the realization my readline bugs were from these bindings right here
-# bind '"\er": redraw-current-line'
-# bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
-# bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
-# bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
-# bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
-# bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
+	set keymap vi
+	"\e\C-j": emacs-editing-mode
+	set keymap vi-insert
+	"jj": vi-movement-mode
 
-"\e\C-j": vi-editing-mode
+	set keymap vi-command
+	"gg": beginning-of-history
+	"G": end-of-history
+	set keymap emacs
 
 $endif
 
-# emacs-editing-mode (C-e)
-#     When in vi command mode, this causes a switch to emacs editing mode.
+"\ex": emacs-editing-mode
+# i swear to god this is the correct spelling
+"\C-\:": vi-insertion-mode
+# }}}
 
-# vi-editing-mode (M-C-j)
-#     When in emacs editing mode, this causes a switch to vi editing mode.
+# Bindings: {{{
+# allow the use of the Home/End keys
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
 
+# allow the use of the Delete/Insert keys
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+
+# mappings for "page up" and "page down" to step to the beginning/end
+# of the history
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+# Arrow keys in 8 bit keypad mode
+# So we enabled keypad earlier so I'm gonna say this one
+"\C-M-OD"       backward-char
+"\C-M-OC"       forward-char
+"\C-M-OA"       previous-history
+"\C-M-OB"       next-history
+#
 # }}}
 
 # Options: {{{
+
+set show-mode-in-prompt on
+
 set revert-all-at-newline on
 
 # From Arch Wiki and man bash
@@ -226,7 +274,7 @@ set keyseq-timeout 1000
 # words which have more than one possible completion without any possible
 # partial completion (the possible completions don't share a common prefix)
 # cause the matches to be listed immediately instead of ringing the bell.
-set show-all-if-unmodified
+set show-all-if-unmodified on
 
 set expand-tilde on
 
@@ -262,8 +310,8 @@ set mark-modified-lines on
 # (by default Up and Down will just select previous commands without any
 # matching against history.)
 
-"\e[A":history-search-backward
-"\e[B":history-search-forward
+"\e[A": history-search-backward
+"\e[B": history-search-forward
 "\e[C": forward-char
 "\e[D": backward-char
 
@@ -390,7 +438,7 @@ $if cmd.exe
 "\e\C-h":                show-rl-help
 "\e\C-c":              copy-line-to-clipboard
 "\C-c":                ctrl-c
-"\e-a":                "..\\"
+"\ea":                "..\\"
 $endif
 
 $if cmd.exe
@@ -412,7 +460,7 @@ $endif
 
 $if Bash
     Space: magic-space
-    "C-SPC": menu-complete
+    "\C-Space": complete
 $endif
 
 # Well that was fucking awesome

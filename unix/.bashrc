@@ -2,6 +2,10 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
+set -h
+# this can get really annoyijg. good for debugging.
+# set -u
+
 # Don't run if not interactive: {{{1
 case $- in
     *i*);;
@@ -43,7 +47,7 @@ export PYTHONUNBUFFERED=0
 
 export RANGER_LOAD_DEFAULT_RC=False
 
-# >>> conda initialize >>>  {{{2
+# >>> conda initialize >>>  {{{
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
@@ -57,22 +61,36 @@ else
     fi
 fi
 unset __conda_setup
+# }}}
 
-# GCloud: {{{2
+# GCloud: {{{
 
 if [[ -d ~/google-cloud-sdk ]]; then
     # shellcheck source=~/google-cloud-sdk/completion.bash.inc
     source "$HOME/google-cloud-sdk/completion.bash.inc"
     # shellcheck source=~/google-cloud-sdk/path.bash.inc
     source "$HOME/google-cloud-sdk/path.bash.inc"
-fi
+fi   # }}}
 
-# Defaults in Ubuntu bashrcs: {{{1
+# Defaults in Ubuntu bashrcs: {{{
 
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
 [[ -x lesspipe ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(SHELL=/bin/bash lesspipe.sh)"
 
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+
+export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
+export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
+export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
+export LESS_TERMCAP_me=$(printf '\e[0m')           # turn off all appearance modes (mb, md, so, us)
+export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
+export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
+export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
+export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
+# }}}
 # Vim: {{{1
 
 if [[ -n "$(command -v nvim)" ]]; then
@@ -118,6 +136,7 @@ shopt -s histverify
 
 # Shopt and set: {{{1
 
+# The up key only works in emacs mode??? wth
 set -o emacs
 # To check what options you've set with set, check the output of: $: echo $-
 # Don't just run `set` on the command line! It'll echo every var that's been set.
@@ -181,10 +200,11 @@ shopt -s direxpand
 # if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
 shopt -s lastpipe
 
+# Less And $PAGER --- Checkout .lesskey for more {{{1
+
 export COLORTERM="truecolor"
 
-# Less And $PAGER --- Checkout .lesskey for more {{{1
-export PAGER="less -JRrKMLigeF"
+export PAGER="less -JRrKMNLigeF"
 export LESSHISTSIZE=5000  # default is 100
 
 LESSOPEN="|lesspipe.sh %s"; export LESSOPEN
@@ -244,6 +264,7 @@ complete -o bashdefault -o default -F _longopt ctags
 # I'm embarrassed by how happy figuring this out made me
 test "$(command -v dlink2)" && complete -o bashdefault -o default -F _fzf_path_completion dlink2
 
+complete -o bashdefault -o default -F _longopt -F _fzf_path_completion du
 # Sourced files: {{{1
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
@@ -271,7 +292,14 @@ firstpath "$HOME/.local/bin"
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"
 
-export PS1="\u@\h \w \@\nIn [\#] \$: "
+export _term_reset="\033[0m"
+# This is ugly because not only do we have a bunch of ansi escape
+# sequences, but we also have to wrap each escape code in \001 and \002
+# for readline to be able to insert history matches properly.
+export prompt_in2="\001\033[32m\002...: \001$_term_reset\002 "
+export PS2=$prompt_in2
+
+export PS1="\u@\h \w \@ \n \001\033[32m\002In [\001\033[32;1m\002 \# \001\033[0;32m\002] \$:\001$_term_reset\002 "
 
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local

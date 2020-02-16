@@ -5,14 +5,18 @@
 # Pathadd: {{{
 pathadd() {
     # https://superuser.com/a/39995
-    # Note that PATH should already be marked as exported, so reexporting is not needed.
+    # Set PATH so it includes user's private bin directories and set them first in path
     # This checks whether the directory exists & is a directory before adding it, which you may not care about.
-    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+    # Note that PATH should already be marked as exported, so reexporting is not needed.
+    if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
         PATH="${PATH:+"$PATH:"}$1"
     fi
 }   # }}}
 
 # Platform_Dependant: {{{
+# Set PATH so it includes user's private bin directories and set them first in path
+pathadd "$HOME/bin"
+pathadd "$HOME/.local/bin"
 
 # shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
@@ -82,12 +86,6 @@ if [[ -d "$_ROOT/share/pkgconfig" ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/x86_64-linux-gnu/pkgconfig"
 fi  # }}}
 
-# Pathadds --- User dirs first: {{{1
-
-# Set PATH so it includes user's private bin directories and set them first in path
-pathadd "$HOME/bin"
-pathadd "$HOME/.local/bin" # }}}
-
 # Python: {{{
 
 export PYTHONIOENCODING=utf-8:surrogateescape
@@ -95,7 +93,8 @@ export PYTHONDONTWRITEBYTECODE=1
 export IPYTHONDIR="$HOME/.ipython"
 export PYTHONCOERCECLOCALE=warn
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
-export PYTHONUNBUFFERED=1  # }}}
+export PYTHONUNBUFFERED=1
+# }}}
 
 # Ruby: {{{
 pathadd "$HOME/.gem/bin"
@@ -107,7 +106,8 @@ if [[ -n "$(command -v rvm)" ]]; then
 fi
 
 export GEM_HOME="$HOME/.gem"
-export GEM_PATH="$GEM_PATH:$GEM_HOME:$_ROOT/lib/ruby"  # idk if this is right }}}
+export GEM_PATH="$GEM_PATH:$GEM_HOME:$_ROOT/lib/ruby"  # idk if this is right
+# }}}
 
 # JavaScript: {{{
 if [[ -n "$(command -v yarn)" ]]; then
@@ -129,7 +129,8 @@ export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"  # }}}
 # even if we have bat installed.
 pathadd "$HOME/.cargo/bin"
 
-if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi # }}}
+if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
+# }}}
 
 # Go: {{{
 # Also check out :Man go and !go env
@@ -151,17 +152,15 @@ export LC_MESSAGES=en_US.UTF-8              # man i3: Prevents program output tr
 export LC_NUMERIC="en_US.UTF-8"
 export LC_MONETARY="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
-
 pathadd "$_ROOT/games"
 
 # From man bash - Bash Variables - lines ~1300
 export PROMPT_DIRTRIM=3
 export TIMEFORMAT=$'\nreal\t%3lR\nuser\t%3lU\nsys\t%3lS='
 export EXECIGNORE=.dll  # fuckin windows
-
 # }}}
 
-# Other Environment Variables: {{{1
+# Other Environment Variables: {{{
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -199,9 +198,7 @@ export POWERSHELL_TELEMETRY_OPTOUT=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export CLOUDSDK_CORE_DISABLE_USAGE_REPORTING=1
 export IHOPEYOUALLKNOWITHINKYOUAREFUCKINGCLOWNS=1
-
 export CURL_HOME="$HOME/.config/curl/curlrc"
-
 # Help find your dotfiles faster and setup nvim
 export DOT="$HOME/projects/dotfiles"
 export VICONF="$HOME/projects/viconf/.config/nvim"
@@ -209,20 +206,9 @@ export NVIM_CONF="$HOME/.config/nvim"
 export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIM_PYTHON_LOG_FILE="$XDG_DATA_HOME/nvim/nvim_python.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
-pathadd "$_ROOT/local/bin"  # }}}
+pathadd "$_ROOT/local/bin"
 
-# Pager Colors: {{{1
-
-
-# Thank byobu for these ones. Man pages now look pretty awesome
-export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
-export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
-export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
-export LESS_TERMCAP_me=$(printf '\e[0m')           # turn off all appearance modes (mb, md, so, us)
-export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
-export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
-export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
-export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
+export MANPAGER=bat
 # }}}
 
 # Source The Bashrc Last: {{{
