@@ -226,7 +226,6 @@
   "editor.wrappingIndent": "indent",
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": true,
-  "eslint.alwaysShowStatus": true,
   "eslint.experimental.incrementalSync": true,
   "eslint.lintTask.enable": true,
   "eslint.packageManager": "yarn",
@@ -412,7 +411,6 @@
   "markdown.links.openLocation": "beside",
   "markdown.preview.fontFamily": "'Fira Code', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif",
   "markdown.preview.fontSize": 18,
-  "markdown.trace": "verbose",
   "markdownlint.config": {
     "MD013": false,
     "MD033": false
@@ -786,11 +784,11 @@
   "window.menuBarVisibility": "default",
   "window.newWindowDimensions": "inherit",
   "window.zoomLevel": 0,
-  "workbench.activityBar.visible": false,
+  "workbench.activityBar.visible": true,
   "workbench.colorCustomizations": {
-    "statusBar.background": "#007acc",
-    "statusBar.debuggingBackground": "#007acc",
-    "statusBar.noFolderBackground": "#007acc"
+    "statusBar.background": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f"
   },
   "workbench.commandPalette.history": 500,
   "workbench.commandPalette.preserveInput": true,
@@ -809,10 +807,12 @@
   "workbench.settings.editor": "json",
   "workbench.settings.enableNaturalLanguageSearch": false,
   "workbench.settings.openDefaultKeybindings": true,
-  "workbench.settings.openDefaultSettings": false,
+  "workbench.settings.openDefaultSettings": true,
   "workbench.settings.useSplitJSON": true,
   "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
   "workbench.tips.enabled": false,
-  "workbench.tree.renderIndentGuides": "onHover"
+  "workbench.tree.renderIndentGuides": "onHover",
+  "eslint.format.enable": true,
+  "eslint.codeActionsOnSave.mode": "problems"
 }

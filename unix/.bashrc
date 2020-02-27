@@ -296,7 +296,7 @@ export _term_reset="\033[0m"
 # This is ugly because not only do we have a bunch of ansi escape
 # sequences, but we also have to wrap each escape code in \001 and \002
 # for readline to be able to insert history matches properly.
-export prompt_in2="\001\033[32m\002...: \001$_term_reset\002 "
+export prompt_in2="\001\033[32m\002      ...:\001$_term_reset\002 "
 export PS2=$prompt_in2
 
 # export PS1="\u@\h \w \@ \n \001\033[32m\002In [\001\033[32;1m\002 \# \001\033[0;32m\002] \$:\001$_term_reset\002 "
@@ -324,7 +324,7 @@ neither=$(tput setaf 5)
 cyan=$(tput setaf 6)
 normal=$(tput sgr0)
 
-export PS1="\[$idk\]\u\[$neither\]@\h \w \@ \[$cyan\] $(git_branch) \[$red\] $(job_count)\n\[$green\]In [\#] \[$normal\] \$: "
+export PS1="\[$idk\]\u\[$neither\]@\h \w \@ \[$cyan\] $(git_branch) \[$red\] $(job_count)\n\[$green\] In [\#]\[$normal\] \$: "
 
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local

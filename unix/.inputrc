@@ -137,7 +137,7 @@ set keymap vi-insert
 "\C-f": forward-char
 "\eOC": forward-char
 "\e[C": forward-char
-"\C-s": forward-search-history
+# "\C-s": forward-search-history
 "\e[1;3C": forward-word
 "\e[1;5C": forward-word
 "\ef": forward-word
@@ -287,38 +287,6 @@ set keymap vi-insert
 "|": self-insert
 "}": self-insert
 "~": self-insert
-"\200": self-insert
-"\201": self-insert
-"\202": self-insert
-"\203": self-insert
-"\204": self-insert
-"\205": self-insert
-"\206": self-insert
-"\207": self-insert
-"\210": self-insert
-"\211": self-insert
-"\212": self-insert
-"\213": self-insert
-"\214": self-insert
-"\215": self-insert
-"\216": self-insert
-"\217": self-insert
-"\220": self-insert
-"\221": self-insert
-"\222": self-insert
-"\223": self-insert
-"\224": self-insert
-"\225": self-insert
-"\226": self-insert
-"\227": self-insert
-"\230": self-insert
-"\231": self-insert
-"\232": self-insert
-"\233": self-insert
-"\234": self-insert
-"\235": self-insert
-"\236": self-insert
-"\237": self-insert
 
 "\C-@": set-mark
 "\e ": set-mark
@@ -346,6 +314,7 @@ set keymap vi-insert
 "\e\C-y": yank-nth-arg
 "\ey": yank-pop
 # }}}
+
 # Me struggling with the arrow keys: {{{
 "\eOA": previous-history
 "\e[A": previous-history
@@ -383,9 +352,66 @@ set keymap vi-insert
 
 # }}}
 
+# From clink: {{{1
+
+# Pleasantly surprised with these!
+# Gotta figure out how to check for the conditional clink tho
+
+# Easy. It's default installed everywhere so
+$if cmd.exe
+
+"\t":               clink-completion-shim
+"\C-V":                paste-from-clipboard
+"\C-q":                reload-lua-state
+"\C-z":                undo
+"\M-h":                show-rl-help
+"\e\C-c":              copy-line-to-clipboard
+"\C-c":                ctrl-c
+"\e-a":                "..\\"
+
+"set" keymap vi-insert
+"\t":               clink-completion-shim
+"\C-v":                paste-from-clipboard
+"\C-z":                undo
+"\e-h":                show-rl-help
+"\e\C-c":              copy-line-to-clipboard
+"\C-c":                ctrl-c
+"\e-a":                "..\\"
+#
+"set" keymap vi-move
+"\C-v":                paste-from-clipboard
+"\C-z":                undo
+"\e\C-h":                show-rl-help
+"\e\C-c":              copy-line-to-clipboard
+"\C-c":                ctrl-c
+"\e-a":                "..\\"
+$endif
+
+$if cmd.exe
+    set keymap emacs
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
+
+    set keymap vi-insert
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
+
+    set keymap vi-move
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
+$endif
+
+$if Bash
+    Space: magic-space
+    "C-SPC": menu-complete
+$endif
+# }}}
+
 set keymap vi-command
 # But I still want all the normal vi commands: {{{
-
 "A": vi-append-eol
 "a": vi-append-mode
 "1": vi-arg-digit
@@ -398,10 +424,10 @@ set keymap vi-command
 "8": vi-arg-digit
 "9": vi-arg-digit
 # vi-back-to-indent (not bound)
-# # vi-backward-bigword (not bound)
-# # vi-backward-word (not bound)
-# # vi-bword (not bound)
-# # vi-bWord (not bound)
+# vi-backward-bigword (not bound)
+# vi-backward-word (not bound)
+# vi-bword (not bound)
+# vi-bWord (not bound)
 "~": vi-change-case
 "r": vi-change-char
 "C": vi-change-to
@@ -564,64 +590,6 @@ set mark-modified-lines on
 "\e[A": history-search-backward
 "\e[B": history-search-forward
 # }}}
-# }}}
-
-# From clink: {{{1
-
-# Pleasantly surprised with these!
-# Gotta figure out how to check for the conditional clink tho
-
-# Easy. It's default installed everywhere so
-$if cmd.exe
-
-"\t":               clink-completion-shim
-"\C-V":                paste-from-clipboard
-"\C-q":                reload-lua-state
-"\C-z":                undo
-"\M-h":                show-rl-help
-"\e\C-c":              copy-line-to-clipboard
-"\C-c":                ctrl-c
-"\e-a":                "..\\"
-
-"set" keymap vi-insert
-"\t":               clink-completion-shim
-"\C-v":                paste-from-clipboard
-"\C-z":                undo
-"\e-h":                show-rl-help
-"\e\C-c":              copy-line-to-clipboard
-"\C-c":                ctrl-c
-"\e-a":                "..\\"
-#
-"set" keymap vi-move
-"\C-v":                paste-from-clipboard
-"\C-z":                undo
-"\e\C-h":                show-rl-help
-"\e\C-c":              copy-line-to-clipboard
-"\C-c":                ctrl-c
-"\e-a":                "..\\"
-$endif
-
-$if cmd.exe
-    set keymap emacs
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-
-    set keymap vi-insert
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-
-    set keymap vi-move
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-$endif
-
-$if Bash
-    Space: magic-space
-    "C-SPC": menu-complete
-$endif
 # }}}
 
 set keymap vi-insert
