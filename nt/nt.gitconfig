@@ -1,7 +1,8 @@
 [core]
     sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
-    pager = less
+    pager = less -RrFMJKNeg
     editor = nvim
+    symlinks = true
 
 ; [winUpdater]
 ; 	recentlySeenVersion = 2.23.0.windows.1
@@ -10,13 +11,15 @@
     # path = C:/Users/faris/projects/dotfiles/unix/.config/git/config
 
 [include]
-	path = C:/Users/faris/.gitconfig.local
+	path = C:/Users/fac/.gitconfig.local
 
 [user]
 	email = farischugthai@gmail.com
 	name = Faris A. Chugthai
+
 [credential "helperselector"]
 	selected = wincred
+
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f

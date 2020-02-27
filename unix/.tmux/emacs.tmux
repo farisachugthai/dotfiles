@@ -14,6 +14,18 @@
 # But we don't get anything with Alt, PgUp, PgDown like don't make me compromise
 # usability because I like vi!! *glares in readline*
 
+# Feb 22, 2020: missed a couple
+
+bind-key    -T copy-mode-vi    M-C-b                 send-keys -X previous-matching-bracket
+bind-key    -T copy-mode-vi    M-C-f                 send-keys -X next-matching-bracket
+
+bind-key    -T copy-mode-vi    C-g                   send-keys -X clear-selection
+bind-key    -T copy-mode-vi    C-n                   send-keys -X cursor-down
+bind-key    -T copy-mode-vi    C-p                   send-keys -X cursor-up
+bind-key    -T copy-mode-vi    R                     send-keys -X rectangle-toggle
+bind-key    -T copy-mode-vi    "M-{"                 send-keys -X previous-paragraph
+bind-key    -T copy-mode-vi    "M-}"                 send-keys -X next-paragraph
+
 # Leave in root
 bind-key -T root PageUp copy-mode -eu
 bind-key -T copy-mode-vi PageUp send-keys -X scroll-up

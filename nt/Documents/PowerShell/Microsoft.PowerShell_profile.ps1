@@ -37,11 +37,9 @@ The FZF section used to slow down the profile dramatically
 # Path and `using`: {{{
 
 using module PSFzf
-using module PSReadline
 using module posh-sshell
 using module posh-git
 
-using namespace System
 using namespace Console
 using namespace Microsoft.PowerShell.PSConsoleReadline
 using namespace System.Windows.Clipboard
@@ -49,7 +47,7 @@ using namespace System.Windows.Forms
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 using namespace System.ConsoleKey
-using namespace System.ConsoleKeyInfo
+# using namespace System.ConsoleKeyInfo
 
 # in case those didn't work
 
@@ -61,13 +59,20 @@ using namespace System.ConsoleKeyInfo
 # in Vim and fucks the whole file up.
 
 # Start with C:\Windows
+# PATH: {{{
 $env:PATH = 'C:\Windows;C:\Windows\System32;C:\Windows\System32\wbem;C:\Windows\Syswow64;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Windows\ImmersiveControlPanel'
+
+$env:PATH += ';C:\Windows\Microsoft.NET\Framework64\v3.5;C:\Windows\Microsoft.NET\Framework64\v3.0;C:\Windows\Microsoft.NET\Framework\v3.5;C:\Windows\Microsoft.NET\Framework\v3.0'
 
 # Get the visual studio stuff
 $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools'
 
 $env:PATH += ';C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64;C:\Program Files (x86)\Windows Kits\10\bin\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
 
+# Cmake 
+$env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin'
+
+# Choco pwsh firefox and other
 $env:PATH += ';C:\ProgramData\chocolatey\bin;C:\Program Files\Firefox Nightly;C:\Neovim\bin;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\PowerShell\6;C:\Program Files\Racket;C:\Program Files\KeePassXC'
 
 # Git
@@ -76,9 +81,8 @@ $env:PATH += ';C:\git\bin;C:\git\usr\bin;C:\git\cmd'
 # Don't add too many from scoop shims should take care of most except nvm
 $env:PATH += ';C:\Users\fac\scoop\apps\nvm\current\v13.7.0;C:\Users\fac\scoop\shims;C:\Users\fac\scoop\apps\winpython\current\Scripts'
 
-$env:PATH += ';C:\Python38\Scripts;C:\Users\fac\AppData\Roaming\Python\Python38\Scripts'
-
 # Your personal folders
+$env:PATH += ';C:\Users\fac\AppData\Roaming\Python\Python38\Scripts'
 $env:PATH += ';C:\Users\fac\src\ctags'
 $env:PATH += ';C:\Users\fac\AppData\Local\Programs\Microsoft VS Code'
 $env:PATH += ';C:\Users\fac\AppData\Local\Yarn\bin'
@@ -87,21 +91,41 @@ $env:PATH += ';C:\Users\fac\omnisharp'
 # Holy bajeezuz is this important!
 if ($env:VIRTUAL_ENV) { $env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
 
+$EXTRAS_VSDEVCMD_THROWSIN = ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja'
+
+# }}}
+
+# PSModulePATH: {{{
+
+$env:PSModulePATH='C:\Users\fac\Documents\PowerShell\Modules;C:\Program Files\PowerShell\Modules;c:\program files\powershell\6\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules;C:\Windows\Syswow64\WindowsPowerShell\v1.0\Modules;C:\Users\fac\Documents\WindowsPowerShell\Modules'
+
+# }}}
+
 # }}}
 
 # Beginning of me reworking this: {{{
 
 $env:HOME = 'C:\Users\fac'
 
-C:\Windows\System32\chcp.com 65001
+# The profiles root directory.
+Set-Item -force -path "env:ProfileRoot" -value "$PSScriptRoot\.."
 
-try { $null = Get-Command concfg -ea stop; concfg tokencolor -n disable } catch { }
-;
+# C:\Windows\System32\chcp.com 65001
+# Not supposed to actually do it that way
+$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
 # Unix Utilities: {{{
+
 function head() { Get-Content -TotalCount 30 $args }
 
 function tail() { Get-Content -Tail 30 $args }
+
+# Between you and I, i have no idea if thi is doing anything. oh well.
+# Here's an example of how to pipe to /dev/null if nothing else
+Out-Null -InputObject 'dircolors -c ~/.dircolors'
+
+# Invoke-Expression start-ssh-pageant.cmd
+
 # }}}
 
 # ------------------
@@ -137,6 +161,8 @@ if ( ! ( Test-Path alias:clist) ) { New-Alias clist Get-Local-ChocoPackages }
 # }}}
 
 # Cmder Contributions: {{{
+
+$moduleInstallerAvailable = [bool](Get-Command -Name 'Install-Module' -ErrorAction SilentlyContinue | Out-Null)
 
 # Compatibility with PS major versions <= 2
 if(!$PSScriptRoot) {
@@ -179,83 +205,13 @@ Custom prompt functions are loaded in as constants to get the same behaviour
 #     $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
 #     PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
 #     CmderPrompt
-#     Microsoft.PowerShell.Utility\Write-Hos "" -NoNewLine -ForegroundColor "DarkGray"
+#     Microsoft.PowerShell.Utility\Write-Host "" -NoNewLine -ForegroundColor "DarkGray"
 #     PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
 #     $global:LASTEXITCODE = $realLASTEXITCODE
 #     return " "
 # }
 
 # }}}
-
-# }}}
-
-# PoshGit: {{{
-
-# Check that var for debugging help
-# $Global:VcsPromptStatuses
-# But the $GitPromptSettings var is probably the best
-
-# Yeah you probablu shouldn't add this if pwsh version <6
-# TODO: Here's a template with correct syntax
-# if ($PSVersionTable.PSVersion.Major -gt 4) {
-    # code
-# } else {
-    # Code
-# }
-
-function global:PromptWriteErrorInfo() {
-    if ($global:GitPromptValues.DollarQuestion) { return }
-
-    if ($global:GitPromptValues.LastExitCode) {
-        "`e[31m(" + $global:GitPromptValues.LastExitCode + ") `e[0m"
-    }
-    else {
-	"`e[31m! `e[0m"
-    }
-}
-
-# $Global:GitPromptSettings.DefaultPromptBeforeSuffix.Text = '`n$(PromptWriteErrorInfo)$([DateTime]::now.ToString("MM-dd HH:mm:ss"))'
-# $Global:GitPromptSettings.DefaultPromptPrefix = '`n$(PromptWriteErrorInfo)$([DateTime]::now.ToString("MM-dd HH:mm:ss"))'
-
-# $Global:GitPromptSettings.DefaultPromptWriteStatusFirst = $true
-# $Global:GitPromptSettings.DefaultPromptSuffix.ForegroundColor = 0x808080
-
-$Global:GitPromptSettings.DefaultPromptSuffix = '   In[$((Get-History -Count 1).id + 1)$(">" * ($nestedPromptLevel + 1))]: $ '
-
-$gitLoaded = $false
-
-# Here's a glyph i like ÃƒÆ’Ã†â€™Ãƒâ€¦Ã‚Â½ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¾
-
-# $GitPromptSettings.DefaultPromptPrefix.Text = '$(Get-Date -f "MM-dd-YYYY HH:mm:ss") '
-
-# So this is only a thing in powershell 5
-# $Global:GitPromptSettings.BeforeForegroundColor = 'Cyan'
-
-# This is only a thing in powershell 6
-# $Global:GitPromptSettings.DefaultPromptPrefix.ForegroundColor = 'Cyan'
-
-# Doesn't work
-# $GitPromptSettings.DefaultPromptPrefix.ForegroundColor = [ConsoleColor]::Cyan
-# $Global:GitPromptSettings.DefaultPromptPath.ForegroundColor = 'Orange'
-# $Global:GitPromptSettings.DefaultForegroundColor = 'Orange'
-
-$Global:GitPromptSettings.EnableStashStatus = $true
-
-$Global:GitPromptSettings.EnableFileStatus = $true
-
-function Import-Git($Loaded){
-    if($Loaded) { return }
-    $GitModule = Get-Module -Name Posh-Git -ListAvailable
-    if($GitModule | select version | where version -le ([version]"0.6.1.20160330")){
-        Import-Module Posh-Git > $null
-    }
-    if(-not ($GitModule) ) {
-        # Write-Warning "Missing git support, install posh-git with 'Install-Module posh-git' and restart cmder."
-        return $false
-    }
-    # Make sure we only run once by alawys returning true
-    return $true
-}
 
 # }}}
 
@@ -1197,41 +1153,92 @@ function Set-MsbuildDevEnvironment
         }
     }
     Write-Host "Dev environment variables set" -ForegroundColor Green
-}   # }}}
+}
+# }}}
+
+# {{{
+#.SYNOPSIS
+# Finds and imports a module that should be local to the project
+#.PARAMETER ModuleName
+# The name of the module to import
+function Import-LocalModule
+{
+    [CmdletBinding()]
+    param(
+        [parameter(Mandatory=$true, Position=0)]
+        [string]$Name
+    )
+
+    $ErrorActionPreference = 'Stop'
+
+    $modules_root = "$env:OpenConsoleRoot\.PowershellModules"
+
+    $local = $null -eq (Get-Module -Name $Name)
+
+    if (-not $local)
+    {
+        return
+    }
+
+    if (-not (Test-Path $modules_root)) {
+        New-Item $modules_root -ItemType 'directory' | Out-Null
+    }
+
+    if (-not (Test-Path "$modules_root\$Name")) {
+        Write-Verbose "$Name not downloaded -- downloading now"
+        $module = Find-Module "$Name"
+        $version = $module.Version
+
+        Write-Verbose "Saving $Name to $modules_root"
+        Save-Module -InputObject $module -Path $modules_root
+        Import-Module "$modules_root\$Name\$version\$Name.psd1"
+    } else {
+        Write-Verbose "$Name already downloaded"
+        $versions = Get-ChildItem "$modules_root\$Name" | Sort-Object
+
+        Get-ChildItem -Path "$modules_root\$Name\$($versions[0])\$Name.psd1" | Import-Module
+    }
+}
+# }}}
 
 # Other: {{{
 
 # Holy cow do i need more. I realize that i typically set these in the GUI
 # but none of these were set!
-
-$env:TERM='cygwin'
-
+# $env:TERM='cygwin'
 $env:EDITOR='nvim-qt'
-
 $env:VISUAL='nvim-qt'
+$env:PAGER="less -JRrKMNLigeF"
+$env:LESSHISTSIZE=5000  # default is 100
 
-$env:PAGER='less -RfrJKLN'
+# $env:LESSOPEN="|lesspipe.sh %s"
+# $env:LESSCOLORIZER=pygmentize
 
 $env:PYTHONASYNCIODEBUG=1
 $env:PYTHONDONTWRITEBYTECODE=1
 $env:NPY_DISTUTILS_APPEND_FLAGS=1
 $env:PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
 $env:PYTHONIOENCODING='utf-8:surrogateescape'
-$env:IPYTHONDIR="$HOME/.ipython"
+
+$env:IPYTHONDIR="$HOME\.ipython"
 $env:PYTHONCOERCECLOCALE="warn"
 $env:PYTHONUNBUFFERED=0
+
 $env:SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
-$env:RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
+$env:RIPGREP_CONFIG_PATH="$HOME\.ripgreprc"
+
 $env:LESSHISTSIZE=5000
 $env:LESSCOLORIZER="pygmentize"
+
 $env:NODE_PRESERVE_SYMLINKS=1
-
 $env:NODE_REPL_HISTORY="$HOME/AppData/Local/node_log.js"
+$env:NVIM_NODE_LOG_FILE = "$HOME\AppData\Local\nvim-data\nvim_node.log"
 
- # $env:SHELL = 'pwsh'
-$env:CONEMU_ANSI = 'ON'
+$env:NVIM_PYTHON_LOG_FILE = "$HOME\AppData\Local\nvim-data\nvim_python.log"
 
 Write-Output "Success: Sourced Documents/PowerShell/profile.ps1"
+
 # }}}
 
 # }}}

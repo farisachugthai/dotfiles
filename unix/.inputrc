@@ -1,250 +1,481 @@
-# inputrc
-# Includes all persistant modifications to GNU readline
-# Maintainer: Faris Chugthai
+# All the emacs key bindings
+# bind -m vi -p
+# displays every key bindin i have and holy cow.
+# up and down work again too
 
-# To view currently set options run
-# `bind -v`
-# bind -p has some dope functions and a useful and very clear IMO layout of things
+set editing-mode vi
+set keymap vi-insert
+# {{{
+"\C-\[": vi-movement-mode
+"\e": vi-movement-mode
+"jj": vi-movement-mode
 
-# All:
-#readlineKeySeparator xxx match /-/  contained nextgroup=readlineKeyName,readlineKey
-                   #links to readlineKeySeq
-#readlineFunction xxx contained self-insert digit-argument vi-append-eol yank-last-arg
-                   #contained accept-line vi-subst vi-subst vi-undo vi-undo vi-char-search
-                   #contained vi-char-search vi-char-search vi-char-search vi-char-search
-                   #contained yank-pop vi-column vi-complete vi-yank-to vi-yank-to vi-match
-                   #contained character-search vi-prev-word vi-prev-word vi-search-again
-                   #contained vi-search-again beginning-of-line backward-kill-line kill-line
-                   #contained tilde-expand kill-region menu-complete prefix-meta end-kbd-macro
-                   #contained set-mark vi-redo next-history yank vi-end-word vi-end-word
-                   #contained vi-replace dump-variables redraw-current-line undo upcase-word
-                   #contained vi-goto-mark complete backward-delete-char print-last-kbd-macro
-                   #contained menu-complete-backward vi-change-case kill-whole-line
-                   #contained unix-filename-rubout beginning-of-history yank-nth-arg
-                   #contained insert-comment start-kbd-macro exchange-point-and-mark
-                   #contained non-incremental-forward-search-history re-read-init-file
-                   #contained vi-append-mode vi-arg-digit dump-macros do-uppercase-version
-                   #contained skip-csi-sequence call-last-kbd-macro kill-word vi-editing-mode
-                   #contained quoted-insert vi-movement-mode forward-word backward-word
-                   #contained clear-screen downcase-word tab-insert
-                   #contained non-incremental-reverse-search-history copy-region-as-kill
-                   #contained unix-word-rubout delete-char overwrite-mode transpose-chars                                                                contained copy-forward-word transpose-words history-search-forward
-                   #contained forward-char vi-put vi-put backward-char revert-line                                                                       contained backward-kill-word previous-history unix-line-discard vi-eof-maybe                                                         contained vi-search character-search-backward vi-set-mark capitalize-word                                                            contained end-of-history history-search-backward vi-insert-mode vi-delete-to                                                         contained vi-delete-to vi-yank-arg vi-tilde-expand vi-next-word vi-next-word
-                   #contained vi-insert-beg delete-horizontal-space insert-completions
-                   #contained possible-completions emacs-editing-mode end-of-line vi-change-char
-                   #contained dump-functions vi-fetch-history vi-change-to vi-change-to
-                   #contained reverse-search-history vi-first-print delete-char-or-list
-                   #contained forward-backward-delete-char vi-delete universal-argument abort copy-backward-word
-                   #contained forward-search-history
-                   #links to Function
-		   ## 
-
-set keymap vi
-# As silly as it is: Check the output of syn list
-#
-# From of all things, Vim's syntax highlighting file:
-
-"Insert": overwrite-mode 
-
-"\ec": capitalize-word 
-"\C-x e":call-last-kbd-macro 
-"\C-e": end-of-line
-
-# Dude with these extra ones set up I'm gonna go back to set -o vi
-
-# Newer settings: {{{
-# As a reminder \e == Alt == Esc + Pause
-TAB: complete
 "\C-g": abort
-"\C-a": beginning-of-line
+"\C-x\C-g": abort
+"\e\C-g": abort
+"\C-j": accept-line
+"\C-m": accept-line
+# alias-expand-line (not bound)
+# arrow-key-prefix (not bound)
+# backward-byte (not bound)
 "\C-b": backward-char
-"\C-d": delete-char
-"\C-f": forward-char
-"\C-l": clear-screen
-# Alt-Tab I think
-"\e\C-i": dynamic-complete-history
-
-# Yeah this is the chord C-x C-e
-"\C-x\C-e": edit-and-execute-command
-
-# Alt-BS
+"\eOD": backward-char
+"\e[D": backward-char
+"\C-h": backward-delete-char
+"\C-?": backward-delete-char
+"\C-x\C-?": backward-kill-line
 "\e\C-h": backward-kill-word
-
-# }}}
-
-# info rluserman: {{{
-
-"\ep": non-incremental-reverse-search-history
-"\en": non-incremental-forward-search-history
-
-# Yeah but let's not do that.
-# "\C-q": quoted-insert
-# Kill the wole line regardless of cursor position
-"\C-k": kill-whole-line
-
-# kill-region? sounds fun. that should be alt-k
-"\ek": kill-region
-# Use unix-filename-rubout not unix-word-rubout so we can finally fucking
-# start taking '/' into account
-"\C-w": unix-filename-rubout
-# }}}
-
-# Other: {{{
+"\e\C-?": backward-kill-word
+"\e[1;3D": backward-word
+"\e[1;5D": backward-word
+"\eb": backward-word
 "\e<": beginning-of-history
+"\C-a": beginning-of-line
+"\eOH": beginning-of-line
+"\e[1~": beginning-of-line
+"\e[H": beginning-of-line
 "\e[200~": bracketed-paste-begin
+"\C-xe": call-last-kbd-macro
+# capitalize-word (not bound)
 "\C-]": character-search
 "\e\C-]": character-search-backward
-# Alternatively spelled
-# "M-C-]": character-search-backward
+"\C-l": clear-screen
+"\C-i": complete
 "\e\e": complete
 "\e!": complete-command
-"\e/": possible-completions
+"\e/": complete-filename
 "\e@": complete-hostname
 "\e{": complete-into-braces
 "\e~": complete-username
 "\e$": complete-variable
-
+# copy-backward-word (not bound)
+# copy-forward-word (not bound)
+# copy-region-as-kill (not bound)
+# dabbrev-expand (not bound)
+"\C-d": delete-char-or-list 
+"\e[3~": delete-char
+"\e\\": delete-horizontal-space
+"\e-": digit-argument
+"\e0": digit-argument
+"\e1": digit-argument
+"\e2": digit-argument
+"\e3": digit-argument
+"\e4": digit-argument
+"\e5": digit-argument
+"\e6": digit-argument
+"\e7": digit-argument
+"\e8": digit-argument
+"\e9": digit-argument
 "\C-x\C-v": display-shell-version
-
+"\C-xA": do-lowercase-version
+"\C-xB": do-lowercase-version
+"\C-xC": do-lowercase-version
+"\C-xD": do-lowercase-version
+"\C-xE": do-lowercase-version
+"\C-xF": do-lowercase-version
+"\C-xG": do-lowercase-version
+"\C-xH": do-lowercase-version
+"\C-xI": do-lowercase-version
+"\C-xJ": do-lowercase-version
+"\C-xK": do-lowercase-version
+"\C-xL": do-lowercase-version
+"\C-xM": do-lowercase-version
+"\C-xN": do-lowercase-version
+"\C-xO": do-lowercase-version
+"\C-xP": do-lowercase-version
+"\C-xQ": do-lowercase-version
+"\C-xR": do-lowercase-version
+"\C-xS": do-lowercase-version
+"\C-xT": do-lowercase-version
+"\C-xU": do-lowercase-version
+"\C-xV": do-lowercase-version
+"\C-xW": do-lowercase-version
+"\C-xX": do-lowercase-version
+"\C-xY": do-lowercase-version
+"\C-xZ": do-lowercase-version
+"\eA": do-lowercase-version
+"\eB": do-lowercase-version
+"\eC": do-lowercase-version
+"\eD": do-lowercase-version
+"\eE": do-lowercase-version
+"\eF": do-lowercase-version
+"\eG": do-lowercase-version
+"\eH": do-lowercase-version
+"\eI": do-lowercase-version
+"\eJ": do-lowercase-version
+"\eK": do-lowercase-version
+"\eL": do-lowercase-version
+"\eM": do-lowercase-version
+"\eN": do-lowercase-version
+"\eP": do-lowercase-version
+"\eQ": do-lowercase-version
+"\eR": do-lowercase-version
+"\eS": do-lowercase-version
+"\eT": do-lowercase-version
+"\eU": do-lowercase-version
+"\eV": do-lowercase-version
+"\eW": do-lowercase-version
+"\eX": do-lowercase-version
+"\eY": do-lowercase-version
+"\eZ": do-lowercase-version
+"\el": downcase-word
+# dump-functions (not bound)
+# dump-macros (not bound)
+# dump-variables (not bound)
+"\e\C-i": dynamic-complete-history
+"\C-x\C-e": edit-and-execute-command
+# emacs-editing-mode (not bound)
 "\C-x)": end-kbd-macro
-
 "\e>": end-of-history
-
-# EOF! I get it now!!!
+"\C-e": end-of-line
 "\eOF": end-of-line
+"\e[4~": end-of-line
 "\e[F": end-of-line
-
 "\C-x\C-x": exchange-point-and-mark
+# forward-backward-delete-char (not bound)
+# forward-byte (not bound)
+"\C-f": forward-char
+"\eOC": forward-char
+"\e[C": forward-char
 "\C-s": forward-search-history
+"\e[1;3C": forward-word
+"\e[1;5C": forward-word
+"\ef": forward-word
+"\eg": glob-complete-word
 "\C-x*": glob-expand-word
-# Well that's fucking neat!
 "\C-xg": glob-list-expansions
+# history-expand-line (not bound)
+"\e^": history-and-alias-expand-line
+"\C-r": history-search-backward
+"\C-s": history-search-forward 
+"\eOA": previous-history
+"\e[A": previous-history
 "\e#": insert-comment
 "\e*": insert-completions
 "\e.": insert-last-argument
 "\e_": insert-last-argument
+# kill-line (not bound)
+"\C-k": kill-whole-line
+"\ek": kill-region 
+"\e[3;5~": kill-word
 "\ed": kill-word
-# "\C-n": next-history
-
+# magic-space (not bound)
+# "\C-i": menu-complete
+"TAB": menu-complete
+# Unfortunately i don't think this case-sensitive.
+# For now menu-complete-backward is unbound.
+# "\C-I": menu-complete-backward
+# or we could steal these keys
+"\e?": menu-complete
+"\e/": menu-complete-backward
+"\C-n": next-history
+# next-screen-line (not bound)
+"\en": non-incremental-forward-search-history
+"\ep": non-incremental-reverse-search-history
+# old-menu-complete (not bound)
+"\C-o": operate-and-get-next
+"\e[2~": overwrite-mode
 "\C-x!": possible-command-completions
 "\e=": possible-completions
-"\e?": possible-completions
-# Are these real macros?
+# "\e?": possible-completions
+# "\e/": possible-completions
 "\C-x/": possible-filename-completions
 "\C-x@": possible-hostname-completions
 "\C-x~": possible-username-completions
 "\C-x$": possible-variable-completions
-# "\C-p": previous-history
+"\C-p": previous-history
+# previous-screen-line (not bound)
+# print-last-kbd-macro (not bound)
+"\C-q": quoted-insert
+"\C-v": quoted-insert
+"\er": redraw-current-line
 "\C-x\C-r": re-read-init-file
-# FZF
-# "\C-r": reverse-search-history
-# Might save this for FZF too
-# "\er": revert-line
+# reverse-search-history (not bound)
+"\e\C-r": revert-line
+" ": self-insert
+"!": self-insert
+"\"": self-insert
+"#": self-insert
+"$": self-insert
+"%": self-insert
+"&": self-insert
+"'": self-insert
+"(": self-insert
+")": self-insert
+"*": self-insert
+"+": self-insert
+",": self-insert
+"-": self-insert
+".": self-insert
+"/": self-insert
+"0": self-insert
+"1": self-insert
+"2": self-insert
+"3": self-insert
+"4": self-insert
+"5": self-insert
+"6": self-insert
+"7": self-insert
+"8": self-insert
+"9": self-insert
+":": self-insert
+";": self-insert
+"<": self-insert
+"=": self-insert
+">": self-insert
+"?": self-insert
+"@": self-insert
+"A": self-insert
+"B": self-insert
+"C": self-insert
+"D": self-insert
+"E": self-insert
+"F": self-insert
+"G": self-insert
+"H": self-insert
+"I": self-insert
+"J": self-insert
+"K": self-insert
+"L": self-insert
+"M": self-insert
+"N": self-insert
+"O": self-insert
+"P": self-insert
+"Q": self-insert
+"R": self-insert
+"S": self-insert
+"T": self-insert
+"U": self-insert
+"V": self-insert
+"W": self-insert
+"X": self-insert
+"Y": self-insert
+"Z": self-insert
+"[": self-insert
+"\\": self-insert
+"]": self-insert
+"^": self-insert
+"_": self-insert
+"`": self-insert
+"a": self-insert
+"b": self-insert
+"c": self-insert
+"d": self-insert
+"e": self-insert
+"f": self-insert
+"g": self-insert
+"h": self-insert
+"i": self-insert
+"j": self-insert
+"k": self-insert
+"l": self-insert
+"m": self-insert
+"n": self-insert
+"o": self-insert
+"p": self-insert
+"q": self-insert
+"r": self-insert
+"s": self-insert
+"t": self-insert
+"u": self-insert
+"v": self-insert
+"w": self-insert
+"x": self-insert
+"y": self-insert
+"z": self-insert
+"{": self-insert
+"|": self-insert
+"}": self-insert
+"~": self-insert
+"\200": self-insert
+"\201": self-insert
+"\202": self-insert
+"\203": self-insert
+"\204": self-insert
+"\205": self-insert
+"\206": self-insert
+"\207": self-insert
+"\210": self-insert
+"\211": self-insert
+"\212": self-insert
+"\213": self-insert
+"\214": self-insert
+"\215": self-insert
+"\216": self-insert
+"\217": self-insert
+"\220": self-insert
+"\221": self-insert
+"\222": self-insert
+"\223": self-insert
+"\224": self-insert
+"\225": self-insert
+"\226": self-insert
+"\227": self-insert
+"\230": self-insert
+"\231": self-insert
+"\232": self-insert
+"\233": self-insert
+"\234": self-insert
+"\235": self-insert
+"\236": self-insert
+"\237": self-insert
+
 "\C-@": set-mark
 "\e ": set-mark
-# # fzf
-# "\C-t": transpose-chars
-
+# shell-backward-kill-word (not bound)
+# shell-backward-word (not bound)
 "\e\C-e": shell-expand-line
+# shell-forward-word (not bound)
+# shell-kill-word (not bound)
+# skip-csi-sequence (not bound)
 "\C-x(": start-kbd-macro
+# tab-insert (not bound)
+"\e&": tilde-expand
+"\C-t": transpose-chars
 "\et": transpose-words
+# tty-status (not bound)
 "\C-x\C-u": undo
 "\C-_": undo
-
-# }}}
-
-# All options set by set -o vim: {{{
-"\C-h": backward-delete-char
-# "\C-?": backward-delete-char
-"\C-d": vi-eof-maybe
-"\C-n": complete
-"\C-p": menu-complete-backward
-"\C-?": dump-functions
-"\C-v": quoted-insert
+# universal-argument (not bound)
 "\C-u": unix-line-discard
+"\C-w": unix-filename-rubout
+"\eu": upcase-word
 "\C-y": yank
+"\e.": yank-last-arg
+"\e_": yank-last-arg
+"\e\C-y": yank-nth-arg
+"\ey": yank-pop
 # }}}
+# Me struggling with the arrow keys: {{{
+"\eOA": previous-history
+"\e[A": previous-history
+"\eOB": next-history
+"\e[B": next-history
+"\eOD": backward-char
+"\e[C": forward-char
+"\e[D": backward-char
+# Meta-Control-h:    backward-kill-word      Text after the function name is ignored
 
-# Use up down keys in a sensible manner and complete what i already typed
-"\e[B": history-search-forward
-"\e[A": history-search-backward
-
-# Switch Keymaps: {{{
-
-# emacs-editing-mode (not bound)
-# vi-movement-mode (not bound)
-
-# Let's bind it to the keys described in the readline library docs
-# In order to switch interactively between emacs and vi editing modes, use the
-# command M-C-j (bound to emacs-editing-mode when in vi mode and to
-# vi-editing-mode in emacs mode). The Readline default is emacs mode.
-$if mode = vi
-"jk": prefix-meta
-
-"\eA": vi-append-mode
-"Shift-5": vi-match
-
-	"\e\C-j": emacs-editing-mode
-
-	set keymap vi-insert
-	"jj": vi-movement-mode
-
-	set keymap vi-command
-	"gg": beginning-of-history
-	"G": end-of-history
-	set keymap vi
-
-$else
-	"\e\C-j": vi-editing-mode
-
-	set keymap vi
-	"\e\C-j": emacs-editing-mode
-	set keymap vi-insert
-	"jj": vi-movement-mode
-
-	set keymap vi-command
-	"gg": beginning-of-history
-	"G": end-of-history
-	set keymap emacs
-
-$endif
-
-"\ex": emacs-editing-mode
-# i swear to god this is the correct spelling
-"\C-\:": vi-insertion-mode
-# }}}
-
-# Bindings: {{{
-# allow the use of the Home/End keys
-"\e[1~": beginning-of-line
-"\e[4~": end-of-line
-
-# allow the use of the Delete/Insert keys
-"\e[3~": delete-char
-"\e[2~": quoted-insert
-
-# mappings for "page up" and "page down" to step to the beginning/end
-# of the history
-"\e[5~": beginning-of-history
-"\e[6~": end-of-history
-
-# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
-"\e[5C": forward-word
-"\e[5D": backward-word
-"\e\e[C": forward-word
-"\e\e[D": backward-word
-
-# Arrow keys in 8 bit keypad mode
-# So we enabled keypad earlier so I'm gonna say this one
-"\C-M-OD"       backward-char
-"\C-M-OC"       forward-char
-"\C-M-OA"       previous-history
-"\C-M-OB"       next-history
+# Arrow keys in keypad mode
+#
+#"\M-OD":        backward-char
+#"\M-OC":        forward-char
+#"\M-OA":        previous-history
+#"\M-OB":        next-history
+#
+# Arrow keys in ANSI mode
+#
+"\M-[D":        backward-char
+"\M-[C":        forward-char
+"\M-[A":        previous-history
+"\M-[B":        next-history
+#
+# Arrow keys in 8 bit keypad mode                                                                         #
+#"\M-\C-OD":       backward-char
+#"\M-\C-OC":       forward-char
+#"\M-\C-OA":       previous-history
+#"\M-\C-OB":       next-history
+#                                                                                              # Arrow keys in 8 bit ANSI mode
+#"\M-\C-[D":       backward-char                                                                          
+##"\M-\C-[C":       forward-char                                                                           
+##"\M-\C-[A":       previous-history                                                                      
+##"\M-\C-[B":       next-history
 
 # }}}
 
+set keymap vi-command
+# But I still want all the normal vi commands: {{{
+
+"A": vi-append-eol
+"a": vi-append-mode
+"1": vi-arg-digit
+"2": vi-arg-digit
+"3": vi-arg-digit
+"4": vi-arg-digit
+"5": vi-arg-digit
+"6": vi-arg-digit
+"7": vi-arg-digit
+"8": vi-arg-digit
+"9": vi-arg-digit
+# vi-back-to-indent (not bound)
+# # vi-backward-bigword (not bound)
+# # vi-backward-word (not bound)
+# # vi-bword (not bound)
+# # vi-bWord (not bound)
+"~": vi-change-case
+"r": vi-change-char
+"C": vi-change-to
+"c": vi-change-to
+",": vi-char-search
+";": vi-char-search
+"F": vi-char-search
+"T": vi-char-search
+"f": vi-char-search
+"t": vi-char-search
+"|": vi-column
+"\C-Space": vi-complete
+"x": vi-delete
+"D": vi-delete-to
+"d": vi-delete-to
+
+# vi-end-bigword (not bound)
+"E": vi-end-word
+"e": vi-end-word
+"\C-d": vi-eof-maybe
+# vi-eword (not bound)
+# vi-eWord (not bound)
+"G": vi-fetch-history
+"^": vi-first-print
+# vi-forward-bigword (not bound)
+# vi-forward-word (not bound)
+# vi-fword (not bound)
+# vi-fWord (not bound)
+"`": vi-goto-mark
+"I": vi-insert-beg
+"i": vi-insertion-mode
+"%": vi-match
+
+# whats the difference between movement insertion and editing
+"W": vi-next-word
+"w": vi-next-word
+"Insert": vi-overstrike
+# vi-overstrike-delete (not bound)
+"B": vi-prev-word
+"b": vi-prev-word
+"P": vi-put
+"p": vi-put
+".": vi-redo
+"R": vi-replace
+"X": vi-rubout
+"/": vi-search
+"?": vi-search
+"N": vi-search-again
+"n": vi-search-again
+"m": vi-set-mark
+"S": vi-subst
+"s": vi-subst
+"&": vi-tilde-expand
+"\C-w": vi-unix-word-rubout
+"_": vi-yank-arg
+# vi-yank-pop (not bound)
+"Y": vi-yank-to
+
+"/": non-incremental-forward-search-history
+"n": non-incremental-forward-search-history-again
+"?": non-incremental-reverse-search-history
+"n": non-incremental-reverse-search-history-again
+
+# Dont forget arrow keys!!!!
+# Gonna copy paste this to vim-insert too
+"\eOA": previous-history
+"\e[A": previous-history
+"\eOB": next-history
+"\e[B": next-history
+"\eOD": backward-char
+"\e[C": forward-char
+"\e[D": backward-char
+
+#  you forgot about options
 # Options: {{{
 
 set show-mode-in-prompt on
@@ -332,45 +563,7 @@ set mark-modified-lines on
 
 "\e[A": history-search-backward
 "\e[B": history-search-forward
-"\e[C": forward-char
-"\e[D": backward-char
-
 # }}}
-
-# Bindings: {{{
-
-# some defaults / modifications for the emacs mode
-# $if mode=emacs
-# jk do it no matter what these are useful
-
-# allow the use of the Home/End keys
-"\e[1~": beginning-of-line
-"\e[4~": end-of-line
-
-# allow the use of the Delete/Insert keys
-"\e[3~": delete-char
-"\e[2~": quoted-insert
-
-# mappings for "page up" and "page down" to step to the beginning/end
-# of the history
-"\e[5~": beginning-of-history
-"\e[6~": end-of-history
-
-# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
-"\e[5C": forward-word
-"\e[5D": backward-word
-"\e\e[C": forward-word
-"\e\e[D": backward-word
-
-# Arrow keys in 8 bit keypad mode
-# So we enabled keypad earlier so I'm gonna say this one
-"\C-M-OD"       backward-char
-"\C-M-OC"       forward-char
-"\C-M-OA"       previous-history
-"\C-M-OB"       next-history
-#
 # }}}
 
 # From clink: {{{1
@@ -379,12 +572,8 @@ set mark-modified-lines on
 # Gotta figure out how to check for the conditional clink tho
 
 # Easy. It's default installed everywhere so
-
 $if cmd.exe
-    set keymap emacs
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
+
 "\t":               clink-completion-shim
 "\C-V":                paste-from-clipboard
 "\C-q":                reload-lua-state
@@ -394,10 +583,7 @@ $if cmd.exe
 "\C-c":                ctrl-c
 "\e-a":                "..\\"
 
-    set keymap vi-insert
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
+"set" keymap vi-insert
 "\t":               clink-completion-shim
 "\C-v":                paste-from-clipboard
 "\C-z":                undo
@@ -405,25 +591,37 @@ $if cmd.exe
 "\e\C-c":              copy-line-to-clipboard
 "\C-c":                ctrl-c
 "\e-a":                "..\\"
-
-    set keymap vi-move
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-
+#
+"set" keymap vi-move
 "\C-v":                paste-from-clipboard
 "\C-z":                undo
 "\e\C-h":                show-rl-help
 "\e\C-c":              copy-line-to-clipboard
 "\C-c":                ctrl-c
-"\ea":                "..\\"
+"\e-a":                "..\\"
+$endif
+
+$if cmd.exe
+    set keymap emacs
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
+
+    set keymap vi-insert
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
+
+    set keymap vi-move
+    "\e`U":         up-directory
+    "\e\C-u":          up-directory
+    "\e\C-e":          expand-env-vars
 $endif
 
 $if Bash
     Space: magic-space
-    "\C-Space": complete
+    "C-SPC": menu-complete
 $endif
-
-# Well that was fucking awesome
 # }}}
-# Vim: set fdm=marker:
+
+set keymap vi-insert

@@ -75,6 +75,7 @@
     rec = rebase --continue
     rei = rebase -i
     rel = rev-parse --show-prefix
+    remot = remote
     root = rev-parse --show-toplevel
     s = status -s
     sh = stash --all
@@ -87,6 +88,8 @@
     shsp = stash show --patch
     st = diff --stat
     staged = diff --cached
+# Isn't that shit the worst?
+    statu = status
     t = tag --list
     unstage = reset HEAD -- $*
     unstaged = diff

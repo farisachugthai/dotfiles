@@ -142,12 +142,9 @@
     "when": "editorTextFocus && editorLangId == 'restructuredtext'"
   },
   {
-    "command": "-workbench.action.splitEditor",
-    "key": "Ctrl+\\"
-  },
-  {
-    "command": "workbench.action.toggleMaximizedPanel",
-    "key": "Ctrl+\\"
+    "command": "python.runtests",
+    "key": "Ctrl+Shift+\\",
+    "when": "editorTextFocus && editorLangId == 'python'",
   },
   {
     "command": "-repl.action.filter",
@@ -189,10 +186,6 @@
   {
     "command": "git.showOutput",
     "key": "ctrl+x g"
-  },
-  {
-    "command": "editor.action.fontZoomOut",
-    "key": "ctrl+-"
   },
   {
     "command": "deleteFile",
@@ -421,5 +414,33 @@
   {
     "command": "workbench.action.moveEditorToRightGroup",
     "key": "ctrl+w shift+l"
+  },
+  {
+    "command": "-vscode.newWindow",
+    "key": "Ctrl+n"
+  },
+  {
+    "command": "workbench.action.files.newUntitledFile",
+    "key": "ctrl+n"
+  },
+  {
+    "command": "-editor.action.fontZoomOut",
+    "key": "ctrl+-"
+  },
+  {
+    "command": "python.execInTerminal-icon",
+    "key": "f5"
+  },
+  {
+    "command": "python.startREPL",
+    "key": "ctrl+shift+`"
+  },
+  {
+    "command": "workbench.action.closeOtherEditors",
+    "key": "ctrl+w o"
+  },
+  {
+    "command": "workbench.action.openSettingsJson",
+    "key": "ctrl+w ctrl+s"
   }
 ]

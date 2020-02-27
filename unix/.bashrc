@@ -18,6 +18,14 @@ pathadd() {  # {{{1
     fi
 }
 
+# IDK if this is working correctly .local bin isnt in termuxs path
+firstpath() {
+    # Check if a dir exists and if it does, prepend it to the $PATH.
+    if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
+        export PATH="$1:${PATH:+"$PATH"}"
+    fi
+}
+
 # $_ROOT: {{{1
 # shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
@@ -137,8 +145,6 @@ shopt -s histverify
 
 # Shopt and set: {{{1
 
-# The up key only works in emacs mode??? wth
-# We're back baby
 set -o vi
 # To check what options you've set with set, check the output of: $: echo $-
 # Don't just run `set` on the command line! It'll echo every var that's been set.
@@ -205,8 +211,8 @@ shopt -s lastpipe
 # Less And $PAGER --- Checkout .lesskey for more {{{1
 
 export COLORTERM="truecolor"
-
-export PAGER="less -JRrKMNLigeF"
+# I think the lowercase r is messing bat up on wsl
+export PAGER="less -JRKMNLigeF"
 export LESSHISTSIZE=5000  # default is 100
 
 LESSOPEN="|lesspipe.sh %s"; export LESSOPEN
@@ -279,14 +285,6 @@ if [[ -d ~/.bashrc.d ]]; then
     done
     unset -v config
 fi
-
-# IDK if this is working correctly .local bin isnt in termuxs path
-firstpath() {
-    # Check if a dir exists and if it does, prepend it to the $PATH.
-    if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
-        export PATH="$1:${PATH:+"$PATH"}"
-    fi
-}
 
 firstpath "$HOME/bin"
 firstpath "$HOME/.local/bin"

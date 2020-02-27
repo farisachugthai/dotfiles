@@ -4,12 +4,13 @@
 #==============================================================================
 
 # Check that the main entry point is there.: {{{
-if [[ -f ~/.fzf.bash ]]; then
+if [[ -f "$HOME/.fzf.bash" ]]; then
 
     export FZF_TMUX_HEIGHT=80%
     export FZF_TMUX=1
     # shellcheck source=/home/faris/.fzf.bash
-    source "$HOME/.fzf.bash"
+    # source "$HOME/.fzf.bash"
+    # don't need to source this i think it gets sourced elsewhere. yeah it doe from the ~/.fzf.bash file
     # should we do else; git clone fzf repo?
 else
     echo -e 'FZF not installed.'

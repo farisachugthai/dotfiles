@@ -4,19 +4,14 @@
 ;= rem In batch mode, jump to the end of the file
 ;= goto:eof
 ;= Add aliases below here
-alias=nvim C:\tools\Cmder\config\user_profile.cmd
+alias=nvim C:\Users\fac\projects\dotfile\nt\Cmder\user_aliases.cmd
 clear=cls
-clink="C:\tools\Cmder\vendor\clink/clink_x64.exe" --cfgdir "C:\tools\Cmder\config" $*
-cmderr=cd /d "%CMDER_ROOT%"
-conda="C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\condabin\conda.bat" $*
-condad=cd "C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64" $*
 df=df -ah --total $*
 dir=dir /ON $*
 ddir=dir /Q /ON $*
 dus=du -d 1 -h -all $*
 ex=explorer .
 free=free -mt $*
-
 git_alias="git config --get-regexp alias.*"
 g=git diff --stat --staged $*
 ga=git add --renormalize . $*
@@ -68,8 +63,6 @@ gshsp=git stash show --patch $*
 gst=git diff --stat $*
 gsw=git switch --progress $*
 gt=git tag --list $*
-
-history=cat -n "%CMDER_ROOT%\config\.history"
 l=ls -Fh --show-control-chars --append-exe --color=always $*
 la=ls -AF --color=always $*
 ldir=ls -po --color=always | grep /$ $*
@@ -79,7 +72,6 @@ lr=ls -AlgFhtr --color=always $*
 ls=ls --show-control-chars --append-exe -Fh --color=always $*
 lt=ls -Alght --color=always $*
 lx=ls -Fo --color=always | grep ^-..x $*
-pro=nvim C:\tools\Cmder\config\user_profile.cmd
 pwd=cd
 sort=sort /L C $*
 tree=tree /F /A $*

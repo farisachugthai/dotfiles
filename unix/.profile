@@ -11,12 +11,22 @@ pathadd() {
     if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
         PATH="${PATH:+"$PATH:"}$1"
     fi
-}   # }}}
+}
+
+# IDK if this is working correctly .local bin isnt in termuxs path
+firstpath() {
+    # Check if a dir exists and if it does, prepend it to the $PATH.
+    if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
+        export PATH="$1:${PATH:+"$PATH"}"
+    fi
+}
+
+# }}}
 
 # Platform_Dependant: {{{
 # Set PATH so it includes user's private bin directories and set them first in path
-pathadd "$HOME/bin"
-pathadd "$HOME/.local/bin"
+firstpath "$HOME/bin"
+firstpath "$HOME/.local/bin"
 
 # shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
@@ -127,7 +137,7 @@ export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"  # }}}
 # Remember to keep rust above the environment variables. If ./.cargo/bin isn't
 # added to the path when we evaluate the PAGER var, then we end up with less
 # even if we have bat installed.
-pathadd "$HOME/.cargo/bin"
+firstpath "$HOME/.cargo/bin"
 
 if [[ -f "$HOME/.ripgreprc" ]]; then export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"; fi
 # }}}
@@ -201,7 +211,7 @@ export IHOPEYOUALLKNOWITHINKYOUAREFUCKINGCLOWNS=1
 export CURL_HOME="$HOME/.config/curl/curlrc"
 # Help find your dotfiles faster and setup nvim
 export DOT="$HOME/projects/dotfiles"
-export VICONF="$HOME/projects/viconf/.config/nvim"
+export VICONF="$HOME/projects/viconf"
 export NVIM_CONF="$HOME/.config/nvim"
 export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIM_PYTHON_LOG_FILE="$XDG_DATA_HOME/nvim/nvim_python.log"
