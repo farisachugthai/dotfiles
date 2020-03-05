@@ -4,9 +4,12 @@
 # up and down work again too
 
 set editing-mode vi
+
 set keymap vi-insert
-# {{{
+
+# {{{ insert mode
 "\C-\[": vi-movement-mode
+"\C-["  vi-movement-mode
 "\e": vi-movement-mode
 "jj": vi-movement-mode
 
@@ -52,7 +55,7 @@ set keymap vi-insert
 # copy-forward-word (not bound)
 # copy-region-as-kill (not bound)
 # dabbrev-expand (not bound)
-"\C-d": delete-char-or-list 
+"\C-d": delete-char-or-list
 "\e[3~": delete-char
 "\e\\": delete-horizontal-space
 "\e-": digit-argument
@@ -147,19 +150,18 @@ set keymap vi-insert
 # history-expand-line (not bound)
 "\e^": history-and-alias-expand-line
 "\C-r": history-search-backward
-"\C-s": history-search-forward 
-"\eOA": previous-history
-"\e[A": previous-history
+"\C-s": history-search-forward
 "\e#": insert-comment
 "\e*": insert-completions
 "\e.": insert-last-argument
 "\e_": insert-last-argument
 # kill-line (not bound)
 "\C-k": kill-whole-line
-"\ek": kill-region 
+"\ek": kill-region
 "\e[3;5~": kill-word
 "\ed": kill-word
-# magic-space (not bound)
+"Space": magic-space
+# (not bound)
 # "\C-i": menu-complete
 "TAB": menu-complete
 # Unfortunately i don't think this case-sensitive.
@@ -192,22 +194,7 @@ set keymap vi-insert
 "\C-x\C-r": re-read-init-file
 # reverse-search-history (not bound)
 "\e\C-r": revert-line
-" ": self-insert
-"!": self-insert
-"\"": self-insert
-"#": self-insert
-"$": self-insert
-"%": self-insert
-"&": self-insert
-"'": self-insert
-"(": self-insert
-")": self-insert
-"*": self-insert
-"+": self-insert
-",": self-insert
-"-": self-insert
-".": self-insert
-"/": self-insert
+
 "0": self-insert
 "1": self-insert
 "2": self-insert
@@ -218,13 +205,6 @@ set keymap vi-insert
 "7": self-insert
 "8": self-insert
 "9": self-insert
-":": self-insert
-";": self-insert
-"<": self-insert
-"=": self-insert
-">": self-insert
-"?": self-insert
-"@": self-insert
 "A": self-insert
 "B": self-insert
 "C": self-insert
@@ -326,29 +306,29 @@ set keymap vi-insert
 # Meta-Control-h:    backward-kill-word      Text after the function name is ignored
 
 # Arrow keys in keypad mode
-#
-#"\M-OD":        backward-char
-#"\M-OC":        forward-char
-#"\M-OA":        previous-history
-#"\M-OB":        next-history
-#
+
+"\M-OD":        backward-char
+"\M-OC":        forward-char
+"\M-OA":        previous-history
+"\M-OB":        next-history
+
 # Arrow keys in ANSI mode
-#
 "\M-[D":        backward-char
 "\M-[C":        forward-char
 "\M-[A":        previous-history
 "\M-[B":        next-history
-#
-# Arrow keys in 8 bit keypad mode                                                                         #
-#"\M-\C-OD":       backward-char
-#"\M-\C-OC":       forward-char
-#"\M-\C-OA":       previous-history
-#"\M-\C-OB":       next-history
-#                                                                                              # Arrow keys in 8 bit ANSI mode
-#"\M-\C-[D":       backward-char                                                                          
-##"\M-\C-[C":       forward-char                                                                           
-##"\M-\C-[A":       previous-history                                                                      
-##"\M-\C-[B":       next-history
+
+# Arrow keys in 8 bit keypad mode                                           
+"\M-\C-OD":       backward-char
+"\M-\C-OC":       forward-char
+"\M-\C-OA":       previous-history
+"\M-\C-OB":       next-history
+
+# Arrow keys in 8 bit ANSI mode
+"\M-\C-[D":       backward-char
+"\M-\C-[C":       forward-char
+"\M-\C-[A":       previous-history
+"\M-\C-[B":       next-history
 
 # }}}
 
@@ -411,7 +391,9 @@ $endif
 # }}}
 
 set keymap vi-command
+
 # But I still want all the normal vi commands: {{{
+
 "A": vi-append-eol
 "a": vi-append-mode
 "1": vi-arg-digit
@@ -423,11 +405,13 @@ set keymap vi-command
 "7": vi-arg-digit
 "8": vi-arg-digit
 "9": vi-arg-digit
+# "B": vi-bWord
 # vi-back-to-indent (not bound)
-# vi-backward-bigword (not bound)
-# vi-backward-word (not bound)
+"gE": vi-backward-bigword
+# (not bound)
+"ge": vi-backward-word
+# (not bound)
 # vi-bword (not bound)
-# vi-bWord (not bound)
 "~": vi-change-case
 "r": vi-change-char
 "C": vi-change-to
@@ -443,13 +427,15 @@ set keymap vi-command
 "x": vi-delete
 "D": vi-delete-to
 "d": vi-delete-to
-
-# vi-end-bigword (not bound)
+"\C-E": vi-editing-mode
 "E": vi-end-word
 "e": vi-end-word
 "\C-d": vi-eof-maybe
+# change C-e so we dont end up in emacs!!!
 # vi-eword (not bound)
-# vi-eWord (not bound)
+# vi-fWord (not bound)
+"W": vi-forward-bigword (not bound)
+"w": vi-forward-word (not bound)
 "G": vi-fetch-history
 "^": vi-first-print
 # vi-forward-bigword (not bound)
@@ -462,12 +448,12 @@ set keymap vi-command
 "%": vi-match
 
 # whats the difference between movement insertion and editing
-"W": vi-next-word
-"w": vi-next-word
+# "W": vi-next-word
+# "w": vi-next-word
 "Insert": vi-overstrike
 # vi-overstrike-delete (not bound)
-"B": vi-prev-word
-"b": vi-prev-word
+# "B": vi-prev-word
+# "b": vi-prev-word
 "P": vi-put
 "p": vi-put
 ".": vi-redo
@@ -479,11 +465,14 @@ set keymap vi-command
 "n": vi-search-again
 "m": vi-set-mark
 "S": vi-subst
+"u": vi-undo
+"w": vi-next-word
+"x": vi-delete
 "s": vi-subst
 "&": vi-tilde-expand
-"\C-w": vi-unix-word-rubout
+"\C-w": vi-filename-rubout
 "_": vi-yank-arg
-# vi-yank-pop (not bound)
+"\C-y": vi-yank-pop
 "Y": vi-yank-to
 
 "/": non-incremental-forward-search-history
@@ -491,17 +480,87 @@ set keymap vi-command
 "?": non-incremental-reverse-search-history
 "n": non-incremental-reverse-search-history-again
 
-# Dont forget arrow keys!!!!
-# Gonna copy paste this to vim-insert too
-"\eOA": previous-history
-"\e[A": previous-history
-"\eOB": next-history
-"\e[B": next-history
-"\eOD": backward-char
-"\e[C": forward-char
-"\e[D": backward-char
+"\C-H"  backward-delete-char
+"\C-x\C-r": re-read-init-file
+Control-u: universal-argument
+Meta-Rubout: backward-kill-word
 
-#  you forgot about options
+# }}}
+
+# VI Command Mode functions: {{{
+
+# "C-G"  abort
+# "C-H"  backward-char
+# "C-J"  accept-line
+# "C-K"  kill-line
+# "C-L"  clear-screen
+# "C-M"  accept-line
+# "C-N"  next-history
+# "C-P"  previous-history
+# "C-Q"  quoted-insert
+# "C-R"  reverse-search-history
+# "C-S"  forward-search-history
+# "C-T"  transpose-chars
+# "C-U"  unix-line-discard
+# "C-V"  quoted-insert
+# "C-Y"  yank
+# "C-_"  vi-undo
+# " "  forward-char
+# "#"  insert-comment
+# "$"  end-of-line
+# "%"  vi-match
+# "&"  vi-tilde-expand
+# "*"  vi-complete
+# "+"  next-history
+# ","  vi-char-search
+# "-"  previous-history
+# "."  vi-redo
+# "/"  vi-search
+# "0"  beginning-of-line
+# "1" to "9"  vi-arg-digit
+# ";"  vi-char-search
+# "="  vi-complete
+# "?"  vi-search
+# "A"  vi-append-eol
+# "B"  vi-prev-word
+# "C"  vi-change-to
+# "D"  vi-delete-to
+# "E"  vi-end-word
+# "F"  vi-char-search
+# "G"  vi-fetch-history
+# "I"  vi-insert-beg
+# "N"  vi-search-again
+# "P"  vi-put
+# "R"  vi-replace
+# "S"  vi-subst
+# "T"  vi-char-search
+# "U"  revert-line
+# "W"  vi-next-word
+# "X"  backward-delete-char
+# "Y"  vi-yank-to
+# "\"  vi-complete
+# "^"  vi-first-print
+# "_"  vi-yank-arg
+# "`"  vi-goto-mark
+# "a"  vi-append-mode
+# "b"  vi-prev-word
+# "c"  vi-change-to
+# "d"  vi-delete-to
+# "e"  vi-end-word
+# "f"  vi-char-search
+# "h"  backward-char
+# "i"  vi-insertion-mode
+# "j"  next-history
+# "k"  prev-history
+# "l"  forward-char
+# "m"  vi-set-mark
+# "n"  vi-search-again
+# "p"  vi-put
+# "r"  vi-change-char
+# "t"  vi-char-search
+
+# }}}
+
 # Options: {{{
 
 set show-mode-in-prompt on
@@ -579,7 +638,6 @@ set skip-completed-text on
 
 set history-preserve-point on
 
-set mark-modified-lines on
 # https://ss64.com/bash/bind.html
 # Setup the shell to perform a history search when the Up and Down arrow keys are used.
 # This allows typing part of a command and then using the arrows to select
@@ -587,9 +645,8 @@ set mark-modified-lines on
 # (by default Up and Down will just select previous commands without any
 # matching against history.)
 
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-# }}}
+# "\e[A": history-search-backward
+# "\e[B": history-search-forward
 # }}}
 
 set keymap vi-insert

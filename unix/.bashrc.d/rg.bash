@@ -206,4 +206,4 @@ _rg() {
     esac
 }
 
-complete -F _rg -o bashdefault -o default rg
+complete -F __fzf_defc -F _rg -o bashdefault -o default rg

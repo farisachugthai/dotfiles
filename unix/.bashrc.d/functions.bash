@@ -3,13 +3,12 @@
 
 # Functions to make the day a little easier
 
-# mk: Create a new directory and enter it: {{{1
-mk() {
+mk() {  # mk: Create a new directory and enter it: {{{1
     mkdir -pv "$@" && cd "$@" || exit
 }
+# }}}
 
-# extract: Handy Extract Program: {{{1
-extract() {
+extract() {  # extract: Handy Extract Program: {{{1
 if [ -f "$1" ]; then
     case "$1" in
         *.tar.bz2) tar xvjf "$1" ;;
@@ -31,14 +30,16 @@ else
     echo "'$1' is not a valid file!"
 fi
 }
+# }}}
 
-# cs: Run cd and ls at once: {{{1
-cs () {
+cs () {  # cs: Run cd and ls at once: {{{1
     cd "$@" && ls -F
 }
+# }}}
 
-# ssh-day: Decrypt the ssh priv key for the day: {{{1
-ssh-day () {
+ssh-day () {  # ssh-day: Decrypt the ssh priv key for the day: {{{1
+    gpg-agent --daemon -v -s --enable-ssh-support
+
     if [[ -z "$SSH_AUTH_SOCK" ]]; then
         eval "$(ssh-agent -s)"
     else
@@ -47,17 +48,17 @@ ssh-day () {
     fi
     ssh-add
 }
+# }}}
 
-# add-alias: Adds an alias to the current shell and to ~/.bashrc.d/alias: {{{1
-add-alias () {
+add-alias () {  # add-alias: Adds an alias to the current shell and to ~/.bashrc.d/alias: {{{1
    local name=$1 value="$2"
    echo alias "$name"="$value" >> ~/.bashrc.d/alias.bash
    eval alias "$name"="$value"
    alias "$name"
 }
+# }}}
 
-# update-pip: Update the python packages you care about most: {{{1
-update-pip () {
+update-pip () {  # update-pip: Update the python packages you care about most: {{{1
     local pu="pip install -Uq"
     $pu pip
     $pu ipython
@@ -65,25 +66,30 @@ update-pip () {
     $pu jedi
     $pu flake8
 }
+# }}}
 
 # infovi: Send info to less for more reasonable keybindings: {{{1
 infovi () {
     info "$1" | "$PAGER"
 }
+# }}}
 
 # Dropbox: {{{1
 tldrbox_cheat() {
     tldr -m "$1" >> "$HOME/.cheat/$1" && termux-share "$1"
 }
+# }}}
 
-tldropbox_dir() {
+tldropbox_dir() {  # {{{
     tldr -m "$1" >> "$PWD/$1" && termux-share "$1"
 }
+# }}}
 
 # Python / Environment Managers: {{{1
 conda_switch() {
     conda deactivate && conda activate "$1"
 }
+# }}}
 
 # gpip: global pip. Disable required virtualenvs: {{{1
 # Feb 21, 2019: gpip2 and gpip3 added
@@ -92,18 +98,21 @@ gpip() {
     python -m pip "$@";
     export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
 }
+# }}}
 
-gpip2() {
+gpip2() {  # {{{
     export PIP_REQUIRE_VIRTUALENV=0;
     python2 -m pip "$@";
     export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
 }
+# }}}
 
-gpip3() {
+gpip3() {  # {{{
     export PIP_REQUIRE_VIRTUALENV=0;
     python3 -m pip "$@";
     export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
 }
+# }}}
 # Oct 04, 2018
 # in a manner similar to __fzf__history__ display all of hist to std out
 # noninteractive tho
@@ -111,6 +120,7 @@ gpip3() {
 hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
 }
+# }}}
 
 # Other TODO: Possibly rewrite the man function here. IE if nvim then do that,
 # elif most, else less
@@ -119,12 +129,14 @@ hist_std_out() {
 bak() {
     mv $1{,.bak}
 }
+# }}}
 
 # nman: send `man` to nvim: {{{1
 # I'm also gonna make it so that it stops shadowing the builtin. You have the choice if you want.
 nman(){
     nvim -c "Man $1" -c'wincmd T'
 }
+# }}}
 
 
 # lk: {{{1 show symbolic links using fd or fallback to grep
@@ -135,6 +147,7 @@ lk() {
         ls -Fo "$@" | grep ^l
     fi
 }
+# }}}
 
 # ssh-agent: {{{1
 # Refactored https://help.github.com/en/articles/working-with-ssh-key-passphrases
@@ -155,6 +168,7 @@ setup_ssh() {
         ssh-add
     fi
 }
+# }}}
 
 filetree() {  # {{{1
     if [[ -n "$1" ]]; then
@@ -163,6 +177,7 @@ filetree() {  # {{{1
         ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
     fi
 }
+# }}}
 
 
 recursive_line_count() {  # {{{1
@@ -172,3 +187,4 @@ recursive_line_count() {  # {{{1
         fd -H --follow -t f . "$1" | xargs cat | wc -l
     fi
 }
+# }}}

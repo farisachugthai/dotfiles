@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
@@ -6,11 +6,18 @@ set -h
 # this can get really annoyijg. good for debugging.
 # set -u
 
+bind -r "\C-c": self-insert
+bind -r "\C-x": self-insert
+bind -r "\C-\\": self-insert
+bind -r "\C-^": self-insert
+bind -f ~/.inputrc
+
 # Don't run if not interactive: {{{1
 case $- in
     *i*);;
     *) exit 0;;
 esac
+# }}}
 
 pathadd() {  # {{{1
     if [ -d "$1" ] && [ ":$PATH:" != *":$1:"* ]; then
@@ -24,7 +31,7 @@ firstpath() {
     if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
         export PATH="$1:${PATH:+"$PATH"}"
     fi
-}
+}  # }}}
 
 # $_ROOT: {{{1
 # shellcheck disable=2153
@@ -32,19 +39,16 @@ if [[ -n "$PREFIX" ]]; then
     export _ROOT="$PREFIX"
 else
     export _ROOT="/usr"
-fi
+fi  # }}}
 
 # Python: {{{1
 
 export PYTHONASYNCIODEBUG=1
 # Put python first because we need conda initialized right away
 export PYTHONDONTWRITEBYTECODE=1
-
 # LDflags gets defined in here and as a result numpy fails to build
 export NPY_DISTUTILS_APPEND_FLAGS=1
-
 export PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
-
 export PYTHONIOENCODING=utf-8:surrogateescape
 export IPYTHONDIR="$HOME/.ipython"
 export PYTHONCOERCECLOCALE=warn
@@ -52,7 +56,6 @@ export PYTHONCOERCECLOCALE=warn
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
 # This actually messes with prompt_toolkit pretty bad
 export PYTHONUNBUFFERED=0
-
 export RANGER_LOAD_DEFAULT_RC=False
 
 # >>> conda initialize >>>  {{{
@@ -92,14 +95,9 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 
 export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
-export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
-export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
-export LESS_TERMCAP_me=$(printf '\e[0m')           # turn off all appearance modes (mb, md, so, us)
-export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
-export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
-export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
-export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
 # }}}
+# }}}
+
 # Vim: {{{1
 
 if [[ -n "$(command -v nvim)" ]]; then
@@ -110,18 +108,18 @@ fi
 export EDITOR="$VISUAL"
 
 export FCEDIT=nvim
+# }}}
+
 # Builds: {{{1
 
 # Shellcheck
 if [[ -n "$(command -v shellcheck)" ]]; then
   export SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
 fi
-
 if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
-
 test "$(command -v luarocks)" && eval "$(luarocks path --bin)"
-
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+# }}}
 
 # History: {{{1
 
@@ -142,6 +140,7 @@ shopt -s histappend
 shopt -s histreedit
 shopt -s histverify
 # So on a related note let's set up shell options
+# }}}
 
 # Shopt and set: {{{1
 
@@ -198,27 +197,37 @@ if [[ $BASH_VERSINFO -gt 4 ]]; then shopt -s progcomp_alias; fi
 shopt -s shift_verbose
 
 shopt -s no_empty_cmd_completion
-
 # If set, and the cmdhist option is enabled, multi-line commands are saved to
 # the history with embedded newlines rather than using semicolon separators
 shopt -s lithist cmdhist
-
 shopt -s direxpand
-
 # if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
 shopt -s lastpipe
+# }}}
 
 # Less And $PAGER --- Checkout .lesskey for more {{{1
-
 export COLORTERM="truecolor"
 # I think the lowercase r is messing bat up on wsl
-export PAGER="less -JRKMNLigeF"
+export PAGER="less -JRKMrLigeFW"
 export LESSHISTSIZE=5000  # default is 100
 
 LESSOPEN="|lesspipe.sh %s"; export LESSOPEN
 export LESSCOLORIZER=pygmentize
 # Oh shit! --mouse is a bash>5 feature!
 if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
+
+export LESSCHARSET=utf-8
+export LESS='-JRKMrLIgeFW  -j0.5 --no-histdups --save-marks --follow-name'
+
+export BAT_PAGER="less $LESS"
+export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
+export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
+export LESS_TERMCAP_me=$(printf '\e[0m')           # turn off all appearance modes (mb, md, so, us)
+export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
+export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
+export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
+export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
+# }}}
 
 # JavaScript: {{{1
 
@@ -236,8 +245,7 @@ if [[ -d "$HOME/.nvm" ]]; then
 fi
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 export NODE_PRESERVE_SYMLINKS=1
-
-# source <(npx --shell-auto-fallback bash)
+# }}}
 
 # Fasd: {{{1
 
@@ -250,13 +258,22 @@ if [[ -n "$(command -v fasd)" ]]; then
     unset fasd_cache
 fi
 
+# }}}
+
 # Completions: {{{1
 
+# dynamic completions. from man bash
 _completion_loader()
 {
+    # source the bash-completions directory as needed
     . "$_ROOT/share/bash_completion/completions/*" >/dev/null 2>&1 && return 124
 }
-complete -D -F _completion_loader -o bashdefault -o default
+
+# oh also fzf
+complete -D -F _completion_loader -o bashdefault -o  default -o plusdirs -A command -F _fzf_complete
+
+# modify how completions are created by default
+compopt -D -o bashdefault -o dirnames -o plusdirs -o default
 
 # From /usr/share/doc/bash/README.md.bash-completion
 export COMP_CONFIGURE_HINTS=1
@@ -273,6 +290,11 @@ complete -o bashdefault -o default -F _longopt ctags
 test "$(command -v dlink2)" && complete -o bashdefault -o default -F _fzf_path_completion dlink2
 
 complete -o bashdefault -o default -F _longopt -F _fzf_path_completion du
+complete -o bashdefault -o default -A alias -F _fzf_alias_completion alias
+complete -o bashdefault -o default -F _longopt  -F _fzf_path_completion nvim
+
+# }}}
+
 # Sourced files: {{{1
 
 # shellcheck source=/usr/share/bash-completion/bash_completion
@@ -300,6 +322,7 @@ export prompt_in2="\001\033[32m\002      ...:\001$_term_reset\002 "
 export PS2=$prompt_in2
 
 # export PS1="\u@\h \w \@ \n \001\033[32m\002In [\001\033[32;1m\002 \# \001\033[0;32m\002] \$:\001$_term_reset\002 "
+# }}}
 
 # Prompt: {{{
 
@@ -316,19 +339,50 @@ function job_count() {
   (($count > 0)) && echo " ${spaces// /&}";
 }
 
-green=$(tput setaf 2)
-red=$(tput setaf 1)
-yellow=$(tput setaf 3)
-idk=$(tput setaf 4)
-neither=$(tput setaf 5)
-cyan=$(tput setaf 6)
-normal=$(tput sgr0)
+export green=$(tput setaf 2)
+export red=$(tput setaf 1)
+export yellow=$(tput setaf 3)
+export idk=$(tput setaf 4)
+export neither=$(tput setaf 5)
+export cyan=$(tput setaf 6)
+export normal=$(tput sgr0)
 
-export PS1="\[$idk\]\u\[$neither\]@\h \w \@ \[$cyan\] $(git_branch) \[$red\] $(job_count)\n\[$green\] In [\#]\[$normal\] \$: "
+export PS1="\[\e[31m\]$(byobu_prompt_status)\[\e[00;32m\]\u\[$neither\]@\h \w \@ \[$cyan\] $(git_branch) \[$red\] $(job_count)\n\[$green\] In [\#]\[$normal\] \$: "
 
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
+# }}}
 
+# byobu: {{{
+case "$TERM" in
+    xterm)
+        # Try to ensure we have 256 colors
+        export TERM="xterm-256color"
+    ;;
+esac
+
+if [ -n "$TMUX" ] || [ "${TERMCAP#*screen}" != "${TERMCAP}" ]; then
+
+    # Ensure that we're in bash, in a byobu environment
+if [ -n "$BYOBU_BACKEND" ] && [ -n "$BASH" ]; then
+
+byobu_prompt_status() {
+    local e=$?; [ $e != 0 ] && echo -e "$e ";
+}
+[ -n "$BYOBU_CHARMAP" ] || BYOBU_CHARMAP=$(locale charmap 2>/dev/null || echo)
+
+byobu_prompt_symbol() {
+    if [ "$USER" = "root" ]; then
+        printf "%s" "#";
+    else
+        printf "%s" "\$"
+    fi
+}
+
+# Use Googley colors (blue / red / yellow / blue / green / red )
+PS1="${debian_chroot:+($debian_chroot)}\[\e[31m\]\$(byobu_prompt_status)\[\e[38;5;69m\]\u\[\e[38;5;214m\]@\[\e[38;5;167m\]\h\[\e[38;5;214m\]:\[\e[38;5;71m\]\w\[\e[38;5;214m\]\$(byobu_prompt_symbol)\[\e[00m\] "
+fi
+fi
 # Vim: set foldlevelstart=0 fdm=marker:

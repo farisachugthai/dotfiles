@@ -22,8 +22,9 @@ fi
 if [[ -n "$(command -v fd)" ]]; then  # fd {{{
 
     # Base FZF command: {{{2
-    export FZF_DEFAULT_COMMAND="fd --follow -j 8 -d 6 --exclude .git"
+    # export FZF_DEFAULT_COMMAND="fd --follow -j 8 -d 6 --exclude .git"
 
+    export FZF_DEFAULT_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
     export FZF_DEFAULT_OPTS='--multi --cycle --reverse --prompt "Query: " --tiebreak=begin,length,index --ansi --filepath-word --border --header="FZF: File Browser. Press Alt-n to launch nvim." --bind alt-n:execute:"nvim {}" --bind change:top --bind=ctrl-j:accept --bind ctrl-k:kill-line '
 
     #  --bind "?:toggle-preview" --preview-window=down:50%:wrap --preview "bat {}"
@@ -73,7 +74,6 @@ elif [[ -n "$(command -v rg)" ]]; then  #: {{{
 
     # Works perfectly!!!
     # Display only filenames but provide a preview window.
-    export FZF_BACKUP_CTRL_T_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
     # Oct 08, 2019: Added nvim binding.
     export FZF_CTRL_T_COMMAND=" rg --hidden --follow --smart-case --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0  "
 
@@ -179,5 +179,6 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_COLORSCHEME"
 export FZF_CTRL_R_OPTS="$FZF_CTRL_R_OPTS $FZF_COLORSCHEME"
 export FZF_CTRL_T_OPTS="$FZF_CTRL_T_OPTS $FZF_COLORSCHEME"
 export FZF_ALT_C_OPTS="$FZF_ALT_C_OPTS $FZF_COLORSCHEME"
+# }}}
 
 # Vim: set fdm=marker:

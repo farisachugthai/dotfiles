@@ -1,37 +1,32 @@
 # This tmux statusbar config was created by tmuxline.vim
 # on Fri, 15 Nov 2019
 # Updates: Dec 10, 2019
+# NOTE: The super long format expressions are at the bottom
 
-# Basic Setup: {{{1
+# Basic Setup: {{{
 set -g status "on"
 set -g status-interval 1
 set -g status-keys emacs
-# set -g status-left-style "none"
-# set -g status-right-style "none"
-set -g status-justify "centre"                    # put the windows in the middle
-# set -g status-justify "left"
+# put the windows in the middle
+set -g status-justify "centre"
+# Note the quoting and that both of these works.
+set -g status-left-length "10"
+set -g status-right-length 25
 
-# Doesnt do well on termux. Note the quoting and that both of these works.
-set -g status-left-length "30"
-set -g status-right-length 45
-
-# NOTE: The super long format expressions are at the bottom
 set -g status-bg '#1d2021'
 set -g status-fg '#ebdbb2'
 
-set -g status-style "none,bg=#282828"
-# This line below is the same color but not 16m.
+# Equivalent to is the same color but not 16m.
 # set -g status-style "none,bg=colour237"
+set -g status-style "none,bg=#282828"
 
-# I don't know how this isn't listed as being set but pane-active-border-style
-# could use work
-# set-option -g pane-active-border-style #fg=colour240
 set-option -g pane-active-border-style "fg=#7daea3,bold"
 set-window-option -g pane-border-style "fg=#7daea3,bold"
 
-# setw -g pane-border-status
 # set -g pane-border-style "fg=#504945"
 # set -g pane-border-style "fg=colour237"
+setw -g pane-border-status top
+setw -g pane-border-format '#{t:window_activity}'
 
 set-window-option -g window-status-style default
 setw -g window-status-format "#[fg=cyan] #I#F #[fg=colour253 #W "
@@ -43,17 +38,10 @@ set-window-option -g window-status-current-style fg=colour166,bg=default,bright 
 # TODO: This needs to be conditional on tmux version
 # set-window-option -g window-size largest
 
-# TODO: Need better colors
-# set-window-option -g window-status-style bg=$BYOBU_DARK,fg=$BYOBU_LIGHT
-# set-window-option -g window-status-current-style bg=$BYOBU_DARK,fg=$BYOBU_LIGHT,reverse
-# set-window-option -g window-status-activity-style bg=$BYOBU_DARK,fg=$BYOBU_LIGHT,bold
-# setw -g window-status-current-attr bright
-# setw -g window-status-current-bg default
-# setw -g window-status-current-fg colour237
-
 setw -g window-status-activity-style "underscore,fg=#a89984,bg=#282828"
 setw -g window-status-separator ""
 setw -g window-status-style "none,fg=#a89984,bg=#282828"
+# }}}
 
 # Message Command Line: {{{1
 # set -g message-command-style "fg=colour223,bg=colour239"
@@ -67,12 +55,12 @@ set -g message-style "fg=#dfbf8e,bg=#504945"
 
 # Format statements: {{{1
 
-set-option -g status-left " #[fg=#504945,bg=#dfbf8e] ▶ #S: #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] » #[fg=colour246,bg=colour237] ▶ #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics] » "
+set-option -g status-left " #[fg=#504945,bg=#dfbf8e] ▶ #S: #[fg=#dfbf8e,bg=#282828] » #[fg=colour246,bg=colour237] ▶ #[fg=colour237,bg=colour237] » "
 
 # set -g status-left "#[fg=colour246,bg=colour237] #S #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»#[fg=colour246,bg=colour237] #(whoami) ▶  #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»"
 
 # Alright well this is dying on byobu so TODO: figure out a check for if wer're in their shell or tmux
-set-option -g status-right " #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] « #{=21:pane_title} %H:%M %d-%b-%y  #{?client_prefix,🚀 🚀 🚀,} #[fg=#dfbf8e,bg=#504945] %R ◀ %a ◀ %Y #[fg=#dfbf8e,bg=#504945,nobold,nounderscore,noitalics] « #[fg=#504945,bg=#dfbf8e] ◀ "
+set-option -g status-right " #[fg=#dfbf8e,bg=#282828] « #{=21:pane_title} %H:%M %d-%b-%y #{?client_prefix,🚀 🚀 🚀,} #[fg=#dfbf8e,bg=#504945] %R ◀ %a ◀ %Y #[fg=#dfbf8e,bg=#504945] « #[fg=#504945,bg=#dfbf8e] ◀ "
 
 # "#(tmux right -R pane_id=\`tmux display -p #D`)"
 # This is the only part I really care about anyway
@@ -84,6 +72,6 @@ set-option -g status-right " #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitali
 # set -g status-left "#[fg=colour166] #h #[fg=colour166] #S "
 # set -g status-right '#[fg=colour66]#[fg=colour66] %H:%M '
 
-setw -g window-status-format " #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics] » #[default] #I ▶ #W #[fg=#282828,bg=#282828,nobold,nounderscore,noitalics] « "
+setw -g window-status-format " #[fg=#dfbf8e,bg=#282828] » #[default] #I ▶ #W #[fg=#dfbf8e,bg=#282828] « "
 
-setw -g window-status-current-format " #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] » #[fg=#dfbf8e,bg=#504945] #I#F ▶ #W #[fg=#dfbf8e,bg=#282828,nobold,nounderscore,noitalics] » "
+setw -g window-status-current-format " #[fg=#dfbf8e,bg=#282828] » #[fg=#dfbf8e,bg=#504945] #I#F ▶ #W #[fg=#dfbf8e,bg=#282828] » "
