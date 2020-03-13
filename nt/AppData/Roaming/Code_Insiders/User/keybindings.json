@@ -10,12 +10,12 @@
   },
   {
     "command": "-workbench.action.closeWindow",
-    "key": "ctrl+w",
-    "when": "!editorIsOpen && !multipleEditorGroups"
+    "key": "ctrl+w"
   },
   {
-    "command": "-workbench.action.closeWindow",
-    "key": "ctrl+shift+w"
+    "command": "editor.action.showHover",
+    "key": "cmd+space",
+    "when": "editorTextFocus"  // so i see both editorTextFocus and editorFocus. Which one? Are they different?
   },
   {
     "command": "-workbench.action.terminal.focusFindWidget",
@@ -144,7 +144,7 @@
   {
     "command": "python.runtests",
     "key": "Ctrl+Shift+\\",
-    "when": "editorTextFocus && editorLangId == 'python'",
+    "when": "editorTextFocus && editorLangId == 'python'"
   },
   {
     "command": "-repl.action.filter",
@@ -442,5 +442,15 @@
   {
     "command": "workbench.action.openSettingsJson",
     "key": "ctrl+w ctrl+s"
+  },
+  {
+    "key": "ctrl+k ctrl+space",
+    "command": "editor.action.showHover",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+k ctrl+i",
+    "command": "-editor.action.showHover",
+    "when": "editorTextFocus"
   }
 ]

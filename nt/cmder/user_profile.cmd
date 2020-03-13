@@ -17,13 +17,18 @@
 chcp 65001 1>nul
 SET "LC_ALL=en_US.UTF-8"
 
+:: It literally makes me see red when apps change this
+set "HOME=C:\Users\fac"
+
 :: Now we can begin the convenience scripts.
 doskey /MACROFILE=C:\Users\fac\projects\dotfiles\nt\Cmder\user_aliases.cmd
 :: uncomment the next two lines to use pageant as the ssh authentication agent
 :: The script explicitly requires that this var is set
+
 SET SSH_AUTH_SOCK="%TMP%\.ssh-pageant-auth-sock"
 
-ssh-pageant 1>nul
+:: It doesn't kill the process
+::ssh-pageant 1>nul
 
 :: uncomment this to have the ssh agent load when cmder starts
 :: don't uncomment you'll get a password prompt
@@ -49,9 +54,8 @@ SET IPYTHONDIR=C:\Users\fac\.ipython
 :: --wheel-lines=N
 :: Each click of the mouse wheel moves N lines.
 SET "PAGER=less -JRKMLiegF"
-:: --mouse --save-marks --wheel-lines=5 "
-:: Idk if this work so comment out after the space
-SET "LESS=JRKMLiegF"
+:: This has priority over pager so let's set the oddball options here
+SET "LESS=JRKMLiegF --mouse --save-marks --wheel-lines=1 "
 :: apparently you're really not allowed to inline comments. Wtf?
 SET "LESSEDIT=nvim -q '%F %lm'"
 SET "LESSCOLORIZER=pygmentize"
@@ -122,6 +126,15 @@ dircolors -c C:\Users\fac\.dircolors 1>nul
 
 :: Aug 02, 2019: Here's a cool prompt I made today
 prompt $M$P$S$V$_$D$S$G$S$$$S
+
+:: XDG
+SET XDG_DATA_HOME=C:\Users\fac\.local\share
+SET XDG_CONFIG_HOME=C:\Users\fac\.config
+SET LANG=en_US.UTF-8
+SET LANGUAGE=en_US.UTF-8
+
+:: Might wanna setx this one
+SET REGIONCODE=65001
 
 :: @echo off
 :: Vim: set ff=dos:

@@ -3,8 +3,9 @@
 
 # For more information about this file see:
 # https://conda.io/docs/user-guide/configuration/use-condarc.html
+# enable_private_envs: true
 
-default_python: 3.8
+# default_python: 3.8
 
 # Don't know where this option is listed in conda config --describe.
 # Shit I mean it probably isn't
@@ -38,17 +39,19 @@ channels:
   - anaconda
   - bioconda
   - mkl
-
-
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
-  - https://repo.anaconda.com/pkgs/pro
   - https://repo.anaconda.com/pkgs/msys2
 
+  # Frustratingly these don't work
+  # - https://repo.anaconda.com/pkgs/r
+  # - https://repo.anaconda.com/pkgs/free
+  # - https://repo.anaconda.com/pkgs/archive
 
-# - https://repo.anaconda.com/pkgs/r
 
+    # This works but it always raises errors
+    # - https://repo.anaconda.com/pkgs/pro
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
 #
@@ -74,7 +77,8 @@ default_channels:
 #   add an entry 'conda-forge: https://anaconda-repo.dev/packages'.
 #
 # custom_channels:
-#   pkgs/pro: https://repo.anaconda.com
+#   - pro: https://repo.anaconda.com
+#   - anaconda: https://anaconda.org/anaconda
 
 # custom_multichannels (map: list)
 #   A multichannel is a metachannel composed of multiple channels. The two
@@ -183,13 +187,6 @@ restore_free_channel: true
 #   local:
 #     - file:///C:/tools/vs/2019/Community/Common7/IDE/Extensions/Microsoft/Python/Miniconda/Miniconda3-x64/conda-bld
 # debug: False
-# default_channels:
-#   - https://repo.anaconda.com/pkgs/main
-#   - https://repo.anaconda.com/pkgs/free
-#   - https://repo.anaconda.com/pkgs/free
-#   - https://repo.anaconda.com/pkgs/pro
-#   - https://repo.anaconda.com/pkgs/msys2
-# default_python: 3.8
 
 ######################################################
 ##            Basic Conda Configuration             ##
@@ -201,9 +198,9 @@ restore_free_channel: true
 #   The list of directories to search for named environments. When
 #   creating a new named environment, the environment will be placed in
 #   the first writable location.
-envs_dirs:
+# envs_dirs:
 
-  - C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\envs
+  # - C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\envs
 
 #   - C:\tools\miniconda3\envs
 #
@@ -215,9 +212,9 @@ envs_dirs:
 #
 # Oct 18, 2019: Had to update because there were 3 listed for no reason
 # Oooo actually can we add one to the base of big envs?
-pkgs_dirs:
+# pkgs_dirs:
 
-  - C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\pkgs
+  # - C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\pkgs
 
 
 #   - C:\tools\miniconda3\pkgs
@@ -338,7 +335,9 @@ auto_update_conda: false
 #   previous versions of conda, this parameter was configured as either
 #   True or False. True is now an alias to 'flexible'.
 #
+# default:
 # channel_priority: disabled
+channel_priority: strict
 
 # create_default_packages (sequence: str)
 #   env var string delimiter: ','
@@ -374,7 +373,7 @@ pinned_packages:
 # pip_interop_enabled (bool)
 #   Allow the conda solver to interact with non-conda-installed python
 #   packages.
-pip_interop_enabled: true
+pip_interop_enabled: false
 
 # prune (bool)
 #   Remove packages that have previously been brought into an environment
@@ -594,6 +593,7 @@ report_errors: false
 show_channel_urls: true
 
 ssl_verify: true
+
 # verbosity (int)
 #   aliases: verbose
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.

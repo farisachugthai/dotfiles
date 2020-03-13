@@ -30,6 +30,7 @@
   "C_Cpp.preferredPathSeparator": "Forward Slash",
   "C_Cpp.suggestSnippets": true,
   "C_Cpp.updateChannel": "Insiders",
+  "C_Cpp.vcpkg.enabled": false,
   "C_Cpp.workspaceParsingPriority": "low",
   "C_Cpp.workspaceSymbols": "All",
   "[c]": {
@@ -55,6 +56,9 @@
   },
   "[handlebars]": {
     "editor.suggest.insertMode": "replace"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features",
@@ -129,7 +133,8 @@
     "files.eol": "\n"
   },
   "[typescript]": {
-    "editor.rulers": []
+    "editor.rulers": [],
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
     "editor.autoIndent": "none",
@@ -224,11 +229,15 @@
   "editor.trimAutoWhitespace": true,
   "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
   "editor.wrappingIndent": "indent",
+  "emmet.includeLanguages": {
+    "javascript": "html"
+  },
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": true,
+  "eslint.codeActionsOnSave.mode": "problems",
   "eslint.experimental.incrementalSync": true,
+  "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
-  "eslint.packageManager": "yarn",
   "explorer.incrementalNaming": "smart",
   "extensions.autoCheckUpdates": true,
   "extensions.autoUpdate": false,
@@ -297,8 +306,10 @@
   "git.supportCancellation": true,
   "html.format.indentHandlebars": true,
   "html.format.indentInnerHtml": true,
+  "javascript.format.semicolons": "insert",
   "javascript.implicitProjectConfig.checkJs": true,
   "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "javascript.preferences.renameShorthandProperties": false,
   "javascript.referencesCodeLens.enabled": true,
   "javascript.referencesCodeLens.showOnAllFunctions": true,
   "javascript.suggest.completeFunctionCalls": true,
@@ -415,12 +426,10 @@
     "MD013": false,
     "MD033": false
   },
-  "material-icon-theme.showUpdateMessage": true,
   "merge-conflict.autoNavigateNextConflict.enabled": true,
   "merge-conflict.diffViewPosition": "Beside",
   "npm.enableRunFromFolder": true,
   "npm.enableScriptExplorer": true,
-  "npm.packageManager": "yarn",
   "npm.scriptExplorerAction": "run",
   "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
   "omnisharp.enableRoslynAnalyzers": true,
@@ -436,14 +445,13 @@
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.debugging.createTemporaryIntegratedConsole": true,
   "powershell.developer.editorServicesLogLevel": "Error",
-  "powershell.developer.powerShellExeIsWindowsDevBuild": true,
-  "powershell.powerShellDefaultVersion": "PowerShell Core 6 (x64)",
+  "powershell.powerShellDefaultVersion": "PowerShell Core 7 (x64)",
   "powershell.promptToUpdatePowerShell": false,
   "problems.showCurrentInStatus": true,
-  "pyright.openFilesOnly": true,
   "python.analysis.cacheFolderPath": "C:/Users/fac/AppData/Roaming/Code/Cache",
-  "python.analysis.cachingLevel": "Library",
+  "python.analysis.cachingLevel": "None",
   "python.autoComplete.addBrackets": true,
+  "python.condaPath": "C:\\Users\\fac\\scoop\\app\\miniconda3\\current\\Scripts\\conda",
   "python.dataScience.changeDirOnImportExport": true,
   "python.dataScience.codeLenses": "python.datascience.runcell,  python.datascience.runallcellsabove, python.datascience.debugcell",
   "python.dataScience.codeRegularExpression": "^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])",
@@ -517,8 +525,9 @@
   "python.dataScience.themeMatplotlibPlots": true,
   "python.dataScience.useDefaultConfigForJupyter": false,
   "python.dataScience.variableExplorerExclude": "",
+  "python.disableInstallationCheck": true,
   "python.experiments.enabled": false,
-  "python.insidersChannel": "daily",
+  // "python.insidersChannel": "daily",
   "python.jediEnabled": false,
   "python.jediPath": "jedi",
   "python.linting.enabled": true,
@@ -553,7 +562,8 @@
     "~/.virtualenvs",
     "C:\\Python38",
     ".virtualenvs",
-    ".venv"
+    ".venv",
+    "C:\\Users\\fac\\projects\\all_msft\\vscode-python\\pythonFiles\\tests\\ipython\\.venv"
   ],
   "python.workspaceSymbols.exclusionPatterns": [
     "site-packages",
@@ -581,25 +591,10 @@
   "remote.SSH.useLocalServer": true,
   "remote.WSL.debug": true,
   "remote.WSL.fileWatcher.polling": true,
-  "restructuredtext.builtDocumentationPath": "${workspaceFolder}/docs/build/html",
-  "restructuredtext.confPath": "${workspaceFolder}/source",
-  "restructuredtext.experimental": true,
-  "restructuredtext.linter.run": "onSave",
-  "restructuredtext.preview.fontSize": 18,
-  "restructuredtext.trace": "verbose",
-  "restructuredtext.updateDelay": 800,
-  "restructuredtext.updateOnTextChanged": "false",
-  "rust-client.disableRustup": true,
-  "rust-client.updateOnStartup": true,
-  "rust-client.useWSL": true,
-  "rust.all_features": true,
-  "rust.all_targets": false,
-  "rust.unstable_features": true,
   "scm.alwaysShowActions": true,
   "scm.countBadge": "focused",
   "scm.defaultViewMode": "tree",
   "scm.diffDecorations": "gutter",
-  "search.enableSearchEditorPreview": true,
   "search.exclude": {
     "**/site-packages/**/*.py": true,
     ".git": true,
@@ -632,7 +627,6 @@
   ],
   "shellcheck.run": "onSave",
   "shellcheck.useWorkspaceRootAsCwd": true,
-  "task.problemMatchers.neverPrompt": true,
   "task.quickOpen.skip": true,
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
@@ -647,7 +641,6 @@
   "terminal.integrated.env.windows": {
     "TERM": ""
   },
-  "terminal.integrated.experimentalRefreshOnResume": true,
   "terminal.integrated.experimentalUseTitleEvent": true,
   "terminal.integrated.fontFamily": "'FuraMono Nerd Font Mono','Go Mono NF', 'Hack NF', monospace",
   "terminal.integrated.fontWeightBold": "normal",
@@ -657,6 +650,9 @@
   "terminal.integrated.shell.linux": "/usr/bin/tmux",
   "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
   "terminal.integrated.windowsEnableConpty": true,
+  "timeline.showView": true,
+  "tslint.jsEnable": true,
+  "typescript.format.semicolons": "insert",
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.locale": "en",
   "typescript.referencesCodeLens.enabled": true,
@@ -783,9 +779,14 @@
   "vim.whichwrap": "<,>,[,],h,l,<BS>",
   "window.menuBarVisibility": "default",
   "window.newWindowDimensions": "inherit",
+  "window.openFoldersInNewWindow": "off",
+  "window.openWithoutArgumentsInNewWindow": "off",
   "window.zoomLevel": 0,
   "workbench.activityBar.visible": true,
   "workbench.colorCustomizations": {
+    "[Default Dark+]": {
+      "activityBar.background": "#105200"
+    },
     "statusBar.background": "#005f5f",
     "statusBar.debuggingBackground": "#005f5f",
     "statusBar.noFolderBackground": "#005f5f"
@@ -811,8 +812,14 @@
   "workbench.settings.useSplitJSON": true,
   "workbench.sideBar.location": "left",
   "workbench.statusBar.visible": true,
-  "workbench.tips.enabled": false,
   "workbench.tree.renderIndentGuides": "onHover",
-  "eslint.format.enable": true,
-  "eslint.codeActionsOnSave.mode": "problems"
+  "workbench.iconTheme": "vscode-icons",
+  "editor.columnSelection": false,
+  "python.diagnostics.sourceMapsEnabled": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.colorTheme": "Gruvbox Dark (Medium)",
+  "workbench.view.alwaysShowHeaderActions": true,
+  "breadcrumbs.symbolSortOrder": "position"
 }

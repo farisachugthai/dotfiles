@@ -138,7 +138,6 @@ nman(){
 }
 # }}}
 
-
 # lk: {{{1 show symbolic links using fd or fallback to grep
 lk() {
     if [[ -n "$(command -v fd)" ]]; then
@@ -178,7 +177,6 @@ filetree() {  # {{{1
     fi
 }
 # }}}
-
 
 recursive_line_count() {  # {{{1
     if [[ -z "$1" ]]; then

@@ -1,3 +1,10 @@
+# --theme='base16'
+
+# -m .conf:ini
+
+# -m .rkt:Lisp
+
+# --style full
 
 #     -m, --map-syntax <from:to>...
 #             Map a file extension or file name to an existing syntax. For example, to highlight
@@ -30,9 +37,11 @@
 
 --theme OneHalfDark
 
-# --wrap character
+--wrap character
 
---pager "less -JRKMLigeF --mouse --no-histdups --save-marks "
+--pager "less -JRKMLigeFrW --mouse --no-histdups --save-marks "
+
+--paging=always
 
 -m .conf:ini
 

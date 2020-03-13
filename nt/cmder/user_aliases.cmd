@@ -4,7 +4,8 @@
 ;= rem In batch mode, jump to the end of the file
 ;= goto:eof
 ;= Add aliases below here
-alias=nvim C:\Users\fac\projects\dotfile\nt\Cmder\user_aliases.cmd
+alias="nvim C:\Users\fac\projects\dotfile\nt\Cmder\user_aliases.cmd"
+cat=bat $*
 clear=cls
 df=df -ah --total $*
 dir=dir /ON $*
@@ -14,7 +15,7 @@ ex=explorer .
 free=free -mt $*
 git_alias="git config --get-regexp alias.*"
 g=git diff --stat --staged $*
-ga=git add --renormalize . $*
+ga=git add . $*
 gar=git add --renormalize . $*
 gb=git branch --all --verbose $*
 gbl=git blame $*
@@ -38,10 +39,10 @@ gf=git fetch --all $*
 gl=git log --graph --decorate --all --abbrev --abbrev-commit --pretty=lo $*
 glo=git log $*
 gls=git ls-tree
-gm=git merge --no-ff $*
+gm=git merge --proress --stat $*
 gma=git merge --abort $*
 gmc=git merge --continue $*
-gmm=git merge master $*
+gmm=git merge --progress --stat master $*
 gmt=git mergetool $*
 gp=git pull $*
 gpo=git pull origin
@@ -63,17 +64,16 @@ gshsp=git stash show --patch $*
 gst=git diff --stat $*
 gsw=git switch --progress $*
 gt=git tag --list $*
-l=ls -Fh --show-control-chars --append-exe --color=always $*
-la=ls -AF --color=always $*
-ldir=ls -po --color=always | grep /$ $*
-lf=ls -Fo --color=always | grep ^- $*
-ll=ls -AFhog --color=always $*
-lr=ls -AlgFhtr --color=always $*
-ls=ls --show-control-chars --append-exe -Fh --color=always $*
-lt=ls -Alght --color=always $*
-lx=ls -Fo --color=always | grep ^-..x $*
+l=ls -Fh --show-control-chars --append-exe --color=always --hide=NTUSER.* $*
+la=ls -AFh --show-control-chars --color=always --append-exe --hide=NTUSER.* $*
+ldir=ls -po --color=always --append-exe --hide=NTUSER.* | grep /$ $*
+lf=ls -Fo --color=always --append-exe --hide=NTUSER.* | grep ^- $*
+ll=ls -AFhog --show-control-chars --color=always --append-exe --hide=NTUSER.* $*
+lr=ls -AlgFhtr --color=always --append-exe --hide=NTUSER.* $*
+ls=ls -Fh --show-control-chars --append-exe --color=always --hide=NTUSER.* $*
+lt=ls -Alght --color=always --append-exe --hide=NTUSER.* $*
+lx=ls -Fo --color=always --append-exe --hide=NTUSER.* | grep ^-..x $*
 pwd=cd
 sort=sort /L C $*
 tree=tree /F /A $*
-unalias=alias /d $1
 vi=vim $*

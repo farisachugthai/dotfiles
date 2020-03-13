@@ -2,7 +2,7 @@
 Jun 17, 2019: Basically wiped the computer and am starting again sorta
 from scratch.
 
-Notes:
+Notes: {{{
 
 #) You ran the following.:
 
@@ -15,30 +15,42 @@ The FZF section used to slow down the profile dramatically
 
 #) DON'T EVER INSTALL the FASDR module it stole your tab expansion!
 
-#) Try-catch
+}}}
 
+#) Try-catch: {{{
 
-# try {
-    # Don't forget to add the word scripts so we get the actual binaries
-        # if ( Test-Path $env:VIRTUAL_ENV ){$env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
-# }
+try {
+  # Don't forget to add the word scripts so we get the actual binaries
+      # if ( Test-Path $env:VIRTUAL_ENV ){$env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
+}
 
-# Test path raises this
-# +      ~~~~~~~~~~~~~~~~~~~~~~~~~~
-# + CategoryInfo          : InvalidArgument: (:) [Test-Path], ArgumentNullException
-# + FullyQualifiedErrorId : NullPathNotPermitted,Microsoft.PowerShell.Commands.TestPathCommand
+Test path raises this
++      ~~~~~~~~~~~~~~~~~~~~~~~~~~
++ CategoryInfo          : InvalidArgument: (:) [Test-Path], ArgumentNullException
++ FullyQualifiedErrorId : NullPathNotPermitted,Microsoft.PowerShell.Commands.TestPathCommand
 
-# Fuck this still doesn't catch right!
-# catch  [InvalidArgument],[NullPathNotPermitted],[ArgumentNullException] { continue }
+Fuck this still doesn't catch right!
+catch  [InvalidArgument],[NullPathNotPermitted],[ArgumentNullException] { continue }
+}}}
 
+### DETERMINING VERSION: {{{
+
+Figured it out!
+
+$PSVersionTable.PSVersion.Major
+just printed 7. go to the beginning of the PSModulePATH section to see my
+Get-PSVersion function.
+
+# }}}
 
 }}} #>
 
 # Path and `using`: {{{
-
 using module PSFzf
-using module posh-sshell
+# using module PowerShellGet
 using module posh-git
+using module  posh-sshell
+# using module PSReadline
 
 using namespace Console
 using namespace Microsoft.PowerShell.PSConsoleReadline
@@ -47,19 +59,46 @@ using namespace System.Windows.Forms
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 using namespace System.ConsoleKey
-# using namespace System.ConsoleKeyInfo
 
-# in case those didn't work
 
-# Import-Module posh-git
-# nope! actually it raises an error because using must be at the top
-# using module posh-git
+If (Test-Path "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1") {
+    & "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1"  #  [PARAMETERS]
+}
 
-# Broken up because it actually exceeds the max column for syntax highlighting
-# in Vim and fucks the whole file up.
+# Learn more with this:
+# Get-Help "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1"               *
+# }}}
 
-# Start with C:\Windows
+# PSModulePATH: {{{
+
+# We were having some problems importing the right module into pwsh7.
+# Set this up first. Actually no usings ALWAYS need to be first.
+
+# Here's a useful function that works on all pwsh versions
+function Get-PSVersion {
+        if (test-path variable:psversiontable) {$psversiontable.psversion} else {[version]"1.0.0.0"}
+}
+
+$env:PSModulePATH='C:\Users\fac\Documents\PowerShell\Modules;C:\Users\fac\Documents\WindowsPowerShell\Modules'
+
+# Note the ternary operator was only introduced in version 7 and == isn't valid
+# as a comparison operator. Compare ints with -eq
+if ($PSVersionTable.PSVersion.Major -eq 7) {
+$env:PSModulePATH+=';C:\Program Files\PowerShell\7\Modules'
+}
+
+$env:PSModulePATH+=';C:\Program Files\WindowsPowerShell\Modules'
+$env:PSModulePATH+=';C:\WINDOWS\System32\WindowsPowerShell\v1.0\Modules;C:\Windows\Syswow64\WindowsPowerShell\v1.0\Modules'
+$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v3.5;C:\Windows\Microsoft.NET\Framework64\v3.5'
+$env:PSModulePATH+=';C:\Users\fac\scoop\apps\miniconda3\current\shell\condabin'
+
+if ($PSVersionTable.PSVersion.Major -eq 7) {
+Import-Module 'C:\Program Files\PowerShell\7\Modules\Microsoft.PowerShell.Utility'
+}
+# }}}
+
 # PATH: {{{
+# Start with C:\Windows
 $env:PATH = 'C:\Windows;C:\Windows\System32;C:\Windows\System32\wbem;C:\Windows\Syswow64;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Windows\ImmersiveControlPanel'
 
 $env:PATH += ';C:\Windows\Microsoft.NET\Framework64\v3.5;C:\Windows\Microsoft.NET\Framework64\v3.0;C:\Windows\Microsoft.NET\Framework\v3.5;C:\Windows\Microsoft.NET\Framework\v3.0'
@@ -69,42 +108,31 @@ $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Co
 
 $env:PATH += ';C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64;C:\Program Files (x86)\Windows Kits\10\bin\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
 
-# Cmake 
+# Cmake
 $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin'
 
 # Choco pwsh firefox and other
-$env:PATH += ';C:\ProgramData\chocolatey\bin;C:\Program Files\Firefox Nightly;C:\Neovim\bin;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\PowerShell\6;C:\Program Files\Racket;C:\Program Files\KeePassXC'
+$env:PATH += ';C:\ProgramData\chocolatey\bin;C:\Program Files\Firefox Nightly;C:\Neovim\bin;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\PowerShell\7;C:\Program Files\Racket;C:\Program Files\KeePassXC'
 
 # Git
-$env:PATH += ';C:\git\bin;C:\git\usr\bin;C:\git\cmd'
+$env:PATH += ';C:\git\bin;C:\git\usr\bin;C:\git\cmd;C:\git\mingw64\bin'
 
 # Don't add too many from scoop shims should take care of most except nvm
-$env:PATH += ';C:\Users\fac\scoop\apps\nvm\current\v13.7.0;C:\Users\fac\scoop\shims;C:\Users\fac\scoop\apps\winpython\current\Scripts'
+$env:PATH += ';C:\Users\fac\scoop\apps\nvm\current\v13.10.1;C:\Users\fac\scoop\shims;C:\Users\fac\scoop\apps\winpython\current\Scripts'
 
 # Your personal folders
 $env:PATH += ';C:\Users\fac\AppData\Roaming\Python\Python38\Scripts'
 $env:PATH += ';C:\Users\fac\src\ctags'
 $env:PATH += ';C:\Users\fac\AppData\Local\Programs\Microsoft VS Code'
 $env:PATH += ';C:\Users\fac\AppData\Local\Yarn\bin'
-$env:PATH += ';C:\Users\fac\omnisharp'
+$env:PATH += ';C:\Users\fac\omnisharp;C:\Users\fac\openjdk'
 
 # Holy bajeezuz is this important!
 if ($env:VIRTUAL_ENV) { $env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
 
-$EXTRAS_VSDEVCMD_THROWSIN = ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja'
-
 # }}}
-
-# PSModulePATH: {{{
-
-$env:PSModulePATH='C:\Users\fac\Documents\PowerShell\Modules;C:\Program Files\PowerShell\Modules;c:\program files\powershell\6\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules;C:\Windows\Syswow64\WindowsPowerShell\v1.0\Modules;C:\Users\fac\Documents\WindowsPowerShell\Modules'
-
-# }}}
-
-# }}}
-
+#
 # Beginning of me reworking this: {{{
-
 $env:HOME = 'C:\Users\fac'
 
 # The profiles root directory.
@@ -116,8 +144,10 @@ $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Obj
 
 # Unix Utilities: {{{
 
+if (Test-Path Alias:head) { Remove-Item Alias:head }
 function head() { Get-Content -TotalCount 30 $args }
 
+if (Test-Path Alias:tail) { Remove-Item Alias:tail }
 function tail() { Get-Content -Tail 30 $args }
 
 # Between you and I, i have no idea if thi is doing anything. oh well.
@@ -160,8 +190,8 @@ if ( ! ( Test-Path alias:clist) ) { New-Alias clist Get-Local-ChocoPackages }
 
 # }}}
 
-# Cmder Contributions: {{{
-
+# Prompt Section: {{{
+# Cmder:
 $moduleInstallerAvailable = [bool](Get-Command -Name 'Install-Module' -ErrorAction SilentlyContinue | Out-Null)
 
 # Compatibility with PS major versions <= 2
@@ -169,10 +199,7 @@ if(!$PSScriptRoot) {
     $PSScriptRoot = Split-Path $Script:MyInvocation.MyCommand.Path
 }
 
-# Prompt Section: {{{
-#   Users should modify their user_profile.ps1 as it will be safe from updates.
-
-
+# Users should modify their user_profile.ps1 as it will be safe from updates.
 $isGitLoaded = $false
 #Anonymice Powerline
 $arrowSymbol = [char]0xE0B0;
@@ -200,29 +227,25 @@ This scriptblock runs every time the prompt is returned.
 Explicitly use functions from MS namespace to protect from being overridden in the user session.
 Custom prompt functions are loaded in as constants to get the same behaviour
 #>
-# [ScriptBlock]$Prompt = {
-#     $realLASTEXITCODE = $LASTEXITCODE
-#     $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
-#     PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
-#     CmderPrompt
-#     Microsoft.PowerShell.Utility\Write-Host "" -NoNewLine -ForegroundColor "DarkGray"
-#     PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
-#     $global:LASTEXITCODE = $realLASTEXITCODE
-#     return " "
-# }
-
-# }}}
+[ScriptBlock]$Prompt = {
+    $realLASTEXITCODE = $LASTEXITCODE
+    $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
+    PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
+    CmderPrompt
+    Microsoft.PowerShell.Utility\Write-Host "" -NoNewLine -ForegroundColor "DarkGray"
+    PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
+    $global:LASTEXITCODE = $realLASTEXITCODE
+    return " "
+}
 
 # }}}
 
 # Aliases: {{{
 
-if ($PSVersionTable.PSVersion.Major -gt 5) {
-    # Fuckin raises an error otherwise
-    if (Test-Path alias:grep) { Remove-Alias grep }
-    if (Test-Path alias:rm) { Remove-Alias rm }
-    function grep() { C:\git\usr\bin\grep.exe $args }
-}
+if (Test-Path alias:grep) { Remove-Item Alias:grep }
+function grep() { C:\git\usr\bin\grep.exe $args }
+if (Test-Path alias:rm) { Remove-Item Alias:rm }
+if (Test-Path alias:curl) { Remove-Item Alias:curl }
 
 
 # ls aliases: {{{
@@ -240,9 +263,12 @@ function lr() { ls -Altcr --color=always $args }
 function lt() { ls -Altc --color=always $args }
 function lx() { ls -Fo --color=always $args | grep ^-..x }
 
-if ( Test-Path alias:mkdir ) { Remove-Item alias:mkdir -Force }
+if ( Test-Path alias:mkdir )
+    {
+        Remove-Item alias:mkdir -Force;
+        function mkdir() { C:\git\usr\bin\mkdir.exe $args }
+    }
 
-function mkdir() { C:\git\usr\bin\mkdir.exe $args }
 # Huh how do we do this part right
 function mk() { mkdir -pv $args ; cd $args }
 
@@ -366,7 +392,7 @@ function grea() { git.exe rebase --abort $args }
 
 # Basic Options: {{{
 # Note that this is where we're at.:
- 
+
 # MaximumKillRingCount                   : 10
 # ShowToolTips                           : True
 # ViModeIndicator                        : None
@@ -390,8 +416,8 @@ function grea() { git.exe rebase --abort $args }
 
 # Basic Bindings: {{{
 # https://github.com/PowerShell/PSReadLine#post-installation
-if ($host.Name -eq 'ConsoleHost')
-{
+if ($host.Name -eq 'ConsoleHost') {
+    # TODO: this is raising. you were missing left {
     Import-Module PSReadLine
 }
 
@@ -974,7 +1000,7 @@ if (Test-Path $env\FZF_DEFAULT_COMMAND -IsValid){  # {{{FZF Env vars
 
     $env:FZF_DEFAULT_OPTS = ' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"+"Press ? to toggle preview"'
 
-# --bind change:reload 
+# --bind change:reload
 #
     # $env:FZF_CTRL_T_COMMAND = 'rg --hidden --color=ansi  --follow --no-messages --no-heading --smart-case --files --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 --glob "!.git/* -g "!**node_modules/**" . '
     $env:FZF_CTRL_T_COMMAND = 'fd --follow -d 6 -t f --hidden --exclude "node_modules" --exclude "*.dll" --exclude "*.mui" '
@@ -1101,7 +1127,7 @@ Set-PSReadLineKeyHandler -Key "Alt+Shift+c"  `
 
 # Not allowed to do it this way
 # Set-PSReadLineKeyHandler -Key "Alt+c" -Function fcd
-Import-Module PSFzf
+Import-Module PSFzf -ArgumentList "Ctrl-t","Alt-c","Alt-a"
 # }}}
 
 # PSCX: {{{
@@ -1112,6 +1138,137 @@ Import-Module pscx
 # You now have shit like `get-clipboard` and other goodies. Also importing
 # it add their dir to the path and they have less and lesskey inexplicably
 # in their `Apps`
+# }}}
+
+# Python PowerShell Setup: {{{
+
+
+###############################
+### WinPython_PS_Prompt.ps1 ###
+###############################
+
+$0 = $myInvocation.MyCommand.Definition
+$dp0 = [System.IO.Path]::GetDirectoryName($0)
+
+$env:WINPYDIRBASE = "$dp0\.."
+# get a normalize path
+# http://stackoverflow.com/questions/1645843/resolve-absolute-path-from-relative-path-and-or-file-name
+$env:WINPYDIRBASE = [System.IO.Path]::GetFullPath( $env:WINPYDIRBASE )
+
+# So that's a neat way of doing this however it won't be right.
+$env:WINPYDIRBASE = 'C:\Users\fac\scoop\apps\winpython\current'
+#
+# avoid double_init (will only resize screen)
+if (-not ($env:WINPYDIR -eq [System.IO.Path]::GetFullPath( $env:WINPYDIRBASE+"\python-3.8.1.amd64")) ) {
+
+$env:WINPYDIR = $env:WINPYDIRBASE+"\python-3.8.1.amd64"
+# 2019-08-25 pyjulia needs absolutely a variable PYTHON=%WINPYDIR%python.exe
+$env:PYTHON = "%WINPYDIR%\python.exe"
+
+$env:WINPYVER = '3.8.1.0'
+# Stop fucking overwriting this jesus
+# $env:HOME = "$env:WINPYDIRBASE\settings"
+# $env:WINPYDIRBASE = ""
+# $env:JUPYTER_DATA_DIR = "$env:HOME"
+$env:WINPYARCH = 'WIN32'
+if ($env:WINPYARCH.subString($env:WINPYARCH.length-5, 5) -eq 'amd64')  {
+   $env:WINPYARCH = 'WIN-AMD64' }
+
+
+if (-not $env:PATH.ToLower().Contains(";"+ $env:WINPYDIR.ToLower()+ ";"))  {
+ $env:PATH = "$env:WINPYDIR\Lib\site-packages\PyQt5;$env:WINPYDIR\Lib\site-packages\PySide2;$env:WINPYDIR\;$env:WINPYDIR\DLLs;$env:WINPYDIR\Scripts;$env:WINPYDIR\..\t;$env:WINPYDIR\..\t\mingw32\bin;$env:WINPYDIR\..\t\R\bin\x64;$env:WINPYDIR\..\t\Julia\bin;$env:WINPYDIR\..\n;$env:path;" }
+
+#rem force default pyqt5 kit for Spyder if PyQt5 module is there
+if (Test-Path "$env:WINPYDIR\Lib\site-packages\PyQt5\__init__.py") { $env:QT_API = "pyqt5" }
+
+#####################
+### handle R if included
+#####################
+if (Test-Path "$env:WINPYDIR\..\t\R\bin") {
+    $env:R_HOME = "$env:WINPYDIR\..\t\R"
+    $env:R_HOMEbin = "$env:R_HOME\bin\x64"
+    if ("$env:WINPYARCH" -eq "WIN32") {
+        $env:R_HOMEbin = "$env:R_HOME\bin\i386"
+    }
+}
+
+#####################
+### handle Julia if included
+#####################
+if (Test-Path "$env:WINPYDIR\..\t\Julia\bin") {
+    $env:JULIA_HOME = "$env:WINPYDIR\..\t\Julia\bin\"
+    $env:JULIA_EXE = "julia.exe"
+    $env:JULIA = "$env:JULIA_HOME$env:JULIA_EXE"
+    $env:JULIA_PKGDIR = "$env:WINPYDIR\..\settings\.julia"
+}
+
+#####################
+### handle PySide2 if included
+#####################
+
+$env:tmp_pyz = "$env:WINPYDIR\Lib\site-packages\PySide2"
+if (Test-Path "$env:tmp_pyz") {
+   $env:tmp_pyz = "$env:tmp_pyz\qt.conf"
+   if (-not (Test-Path "$env:tmp_pyz")) {
+      "[Paths]"| Add-Content -Path $env:tmp_pyz
+      "Prefix = ."| Add-Content -Path $env:tmp_pyz
+      "Binaries = ."| Add-Content -Path $env:tmp_pyz
+   }
+}
+
+#####################
+### handle PyQt5 if included
+#####################
+$env:tmp_pyz = "$env:WINPYDIR\Lib\site-packages\PyQt5"
+if (Test-Path "$env:tmp_pyz") {
+   $env:tmp_pyz = "$env:tmp_pyz\qt.conf"
+   if (-not (Test-Path "$env:tmp_pyz")) {
+      "[Paths]"| Add-Content -Path $env:tmp_pyz
+      "Prefix = ."| Add-Content -Path $env:tmp_pyz
+      "Binaries = ."| Add-Content -Path $env:tmp_pyz
+   }
+}
+
+
+#####################
+### WinPython.ini part (removed from nsis)
+#####################
+if (-not (Test-Path "$env:WINPYDIR\..\settings")) { md -Path "$env:WINPYDIR\..\settings" }
+$env:winpython_ini = "$env:WINPYDIR\..\settings\winpython.ini"
+if (-not (Test-Path $env:winpython_ini)) {
+    "[debug]" | Add-Content -Path $env:winpython_ini
+    "state = disabled" | Add-Content -Path $env:winpython_ini
+    "[environment]" | Add-Content -Path $env:winpython_ini
+    "## <?> Uncomment lines to override environment variables" | Add-Content -Path $env:winpython_ini
+    "#HOME = %%HOMEDRIVE%%%%HOMEPATH%%\Documents\WinPython%%WINPYVER%%" | Add-Content -Path $env:winpython_ini
+    # "#JUPYTER_DATA_DIR = %%HOME%%" | Add-Content -Path $env:winpython_ini
+    "#WINPYWORKDIR = %%HOMEDRIVE%%%%HOMEPATH%%" | Add-Content -Path $env:winpython_ini
+}
+
+
+}
+###############################
+### Set-WindowSize
+###############################
+Function Set-WindowSize {
+Param([int]$x=$host.ui.rawui.windowsize.width,
+      [int]$y=$host.ui.rawui.windowsize.heigth,
+      [int]$buffer=$host.UI.RawUI.BufferSize.heigth)
+
+    $buffersize = new-object System.Management.Automation.Host.Size($x,$buffer)
+    $host.UI.RawUI.BufferSize = $buffersize
+    $size = New-Object System.Management.Automation.Host.Size($x,$y)
+    $host.ui.rawui.WindowSize = $size
+}
+# Windows10 yelling at us with 150 40 6000
+# no more needed ?
+# Set-WindowSize 195 40 6000
+
+### Colorize to distinguish
+#$host.ui.RawUI.BackgroundColor = "DarkBlue"
+$host.ui.RawUI.BackgroundColor = "Black"
+$host.ui.RawUI.ForegroundColor = "White"
+
 # }}}
 
 # Env vars: {{{
@@ -1156,51 +1313,6 @@ function Set-MsbuildDevEnvironment
 }
 # }}}
 
-# {{{
-#.SYNOPSIS
-# Finds and imports a module that should be local to the project
-#.PARAMETER ModuleName
-# The name of the module to import
-function Import-LocalModule
-{
-    [CmdletBinding()]
-    param(
-        [parameter(Mandatory=$true, Position=0)]
-        [string]$Name
-    )
-
-    $ErrorActionPreference = 'Stop'
-
-    $modules_root = "$env:OpenConsoleRoot\.PowershellModules"
-
-    $local = $null -eq (Get-Module -Name $Name)
-
-    if (-not $local)
-    {
-        return
-    }
-
-    if (-not (Test-Path $modules_root)) {
-        New-Item $modules_root -ItemType 'directory' | Out-Null
-    }
-
-    if (-not (Test-Path "$modules_root\$Name")) {
-        Write-Verbose "$Name not downloaded -- downloading now"
-        $module = Find-Module "$Name"
-        $version = $module.Version
-
-        Write-Verbose "Saving $Name to $modules_root"
-        Save-Module -InputObject $module -Path $modules_root
-        Import-Module "$modules_root\$Name\$version\$Name.psd1"
-    } else {
-        Write-Verbose "$Name already downloaded"
-        $versions = Get-ChildItem "$modules_root\$Name" | Sort-Object
-
-        Get-ChildItem -Path "$modules_root\$Name\$($versions[0])\$Name.psd1" | Import-Module
-    }
-}
-# }}}
-
 # Other: {{{
 
 # Holy cow do i need more. I realize that i typically set these in the GUI
@@ -1222,7 +1334,7 @@ $env:PYTHONIOENCODING='utf-8:surrogateescape'
 
 $env:IPYTHONDIR="$HOME\.ipython"
 $env:PYTHONCOERCECLOCALE="warn"
-$env:PYTHONUNBUFFERED=0
+# $env:PYTHONUNBUFFERED=0
 
 $env:SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
 
@@ -1234,13 +1346,21 @@ $env:LESSCOLORIZER="pygmentize"
 $env:NODE_PRESERVE_SYMLINKS=1
 $env:NODE_REPL_HISTORY="$HOME/AppData/Local/node_log.js"
 $env:NVIM_NODE_LOG_FILE = "$HOME\AppData\Local\nvim-data\nvim_node.log"
-
+$env:NVIM_NODE_LOG_LEVEL = "WARNING"
 $env:NVIM_PYTHON_LOG_FILE = "$HOME\AppData\Local\nvim-data\nvim_python.log"
+$env:NVIM_PYTHON_LOG_LEVEL = "DEBUG"
 
 Write-Output "Success: Sourced Documents/PowerShell/profile.ps1"
 
 # }}}
 
+# }}}
+
+# Cleanup: {{{
+if ( $sw.IsRunning ) {
+    write-host $sw.ElapsedMilliseconds
+    $sw.Stop()
+}
 # }}}
 
 # Vim: set ff=dos fdls=0 fdm=marker fenc=utf-8:

@@ -37,5 +37,18 @@
 #             Specify the text-wrapping mode (*auto*, never, character). The '--terminal-width' option
 #             can be used in addition to control the output width.
 
+--theme OneHalfDark
+
+--wrap character
+
+# --pager "less -JRKMLigeFrW --mouse --no-histdups --save-marks "
+--paging never
+
+-m .conf:ini
+
+-m .rkt:Lisp
+
+--style full
+
 
 # Vim: set ft=config cms=#\ %s:

@@ -3,7 +3,7 @@
 " From The Readme Largely Plugins: {{{1
 " https://github.com/JetBrains/ideavim
 " Probably fucking something up
-" source C:\Users\faris\AppData\Local\nvim\init.vim
+source C:\Users\faris\projects\viconf\init.vim
 
 set clipboard=unnamedplus,unnamed
 

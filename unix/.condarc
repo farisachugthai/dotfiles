@@ -42,7 +42,6 @@ channels:
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
-  - https://repo.anaconda.com/pkgs/pro
   - https://repo.anaconda.com/pkgs/msys2
 
   # Frustratingly these don't work
@@ -50,6 +49,9 @@ default_channels:
   # - https://repo.anaconda.com/pkgs/free
   # - https://repo.anaconda.com/pkgs/archive
 
+
+    # This works but it always raises errors
+    # - https://repo.anaconda.com/pkgs/pro
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
 #
@@ -74,8 +76,9 @@ default_channels:
 #   https://anaconda-repo.dev/packages/conda-forge/linux-64/repodata.json,
 #   add an entry 'conda-forge: https://anaconda-repo.dev/packages'.
 #
-custom_channels:
-  pkgs/pro: https://repo.anaconda.com
+# custom_channels:
+#   - pro: https://repo.anaconda.com
+#   - anaconda: https://anaconda.org/anaconda
 
 # custom_multichannels (map: list)
 #   A multichannel is a metachannel composed of multiple channels. The two

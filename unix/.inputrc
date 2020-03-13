@@ -43,10 +43,9 @@ set keymap vi-insert
 "\C-]": character-search
 "\e\C-]": character-search-backward
 "\C-l": clear-screen
-"\C-i": complete
-"\e\e": complete
 "\e!": complete-command
-"\e/": complete-filename
+# Is this escaped right?
+"\e\/": complete-filename
 "\e@": complete-hostname
 "\e{": complete-into-braces
 "\e~": complete-username
@@ -136,11 +135,9 @@ set keymap vi-insert
 "\e[F": end-of-line
 "\C-x\C-x": exchange-point-and-mark
 # forward-backward-delete-char (not bound)
-# forward-byte (not bound)
 "\C-f": forward-char
 "\eOC": forward-char
 "\e[C": forward-char
-# "\C-s": forward-search-history
 "\e[1;3C": forward-word
 "\e[1;5C": forward-word
 "\ef": forward-word
@@ -148,29 +145,29 @@ set keymap vi-insert
 "\C-x*": glob-expand-word
 "\C-xg": glob-list-expansions
 # history-expand-line (not bound)
+# Holy shit this is a cool binding. Doesn't dynamically change though.
+# l<Alt+Shift+6> --> ls -alth --color=always
+# Hitting \e^ again repeats the previously added text which is lame.
 "\e^": history-and-alias-expand-line
 "\C-r": history-search-backward
 "\C-s": history-search-forward
+# What in gods name is the difference between these 2?
+# "\C-s": forward-search-history
 "\e#": insert-comment
 "\e*": insert-completions
 "\e.": insert-last-argument
 "\e_": insert-last-argument
-# kill-line (not bound)
 "\C-k": kill-whole-line
 "\ek": kill-region
 "\e[3;5~": kill-word
 "\ed": kill-word
 "Space": magic-space
-# (not bound)
-# "\C-i": menu-complete
 "TAB": menu-complete
-# Unfortunately i don't think this case-sensitive.
-# For now menu-complete-backward is unbound.
-# "\C-I": menu-complete-backward
-# or we could steal these keys
 "\e?": menu-complete
 "\e/": menu-complete-backward
 "\C-n": next-history
+
+# What is PageUp and PageDown?
 # next-screen-line (not bound)
 "\en": non-incremental-forward-search-history
 "\ep": non-incremental-reverse-search-history
@@ -179,8 +176,6 @@ set keymap vi-insert
 "\e[2~": overwrite-mode
 "\C-x!": possible-command-completions
 "\e=": possible-completions
-# "\e?": possible-completions
-# "\e/": possible-completions
 "\C-x/": possible-filename-completions
 "\C-x@": possible-hostname-completions
 "\C-x~": possible-username-completions
@@ -284,8 +279,8 @@ set keymap vi-insert
 # tty-status (not bound)
 "\C-x\C-u": undo
 "\C-_": undo
-# universal-argument (not bound)
-"\C-u": unix-line-discard
+"\C-u": universal-argument
+# "\C-u": unix-line-discard
 "\C-w": unix-filename-rubout
 "\eu": upcase-word
 "\C-y": yank
@@ -293,6 +288,8 @@ set keymap vi-insert
 "\e_": yank-last-arg
 "\e\C-y": yank-nth-arg
 "\ey": yank-pop
+"\C-Space": menu-complete
+
 # }}}
 
 # Me struggling with the arrow keys: {{{
@@ -340,6 +337,7 @@ set keymap vi-insert
 # Easy. It's default installed everywhere so
 $if cmd.exe
 
+"set" keymap vi-insert
 "\t":               clink-completion-shim
 "\C-V":                paste-from-clipboard
 "\C-q":                reload-lua-state
@@ -348,8 +346,13 @@ $if cmd.exe
 "\e\C-c":              copy-line-to-clipboard
 "\C-c":                ctrl-c
 "\e-a":                "..\\"
+"\e`U":         up-directory
+"\e\C-u":          up-directory
+"\e\C-e":          expand-env-vars
 
-"set" keymap vi-insert
+
+"set" keymap emacs-insert
+
 "\t":               clink-completion-shim
 "\C-v":                paste-from-clipboard
 "\C-z":                undo
@@ -357,7 +360,10 @@ $if cmd.exe
 "\e\C-c":              copy-line-to-clipboard
 "\C-c":                ctrl-c
 "\e-a":                "..\\"
-#
+"\e`U":         up-directory
+"\e\C-u":          up-directory
+"\e\C-e":          expand-env-vars
+
 "set" keymap vi-move
 "\C-v":                paste-from-clipboard
 "\C-z":                undo
@@ -365,29 +371,11 @@ $if cmd.exe
 "\e\C-c":              copy-line-to-clipboard
 "\C-c":                ctrl-c
 "\e-a":                "..\\"
+"\e`U":         up-directory
+"\e\C-u":          up-directory
+"\e\C-e":          expand-env-vars
 $endif
 
-$if cmd.exe
-    set keymap emacs
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-
-    set keymap vi-insert
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-
-    set keymap vi-move
-    "\e`U":         up-directory
-    "\e\C-u":          up-directory
-    "\e\C-e":          expand-env-vars
-$endif
-
-$if Bash
-    Space: magic-space
-    "C-SPC": menu-complete
-$endif
 # }}}
 
 set keymap vi-command
@@ -434,8 +422,8 @@ set keymap vi-command
 # change C-e so we dont end up in emacs!!!
 # vi-eword (not bound)
 # vi-fWord (not bound)
-"W": vi-forward-bigword (not bound)
-"w": vi-forward-word (not bound)
+# "W": vi-forward-bigword (not bound)
+# "w": vi-forward-word (not bound)
 "G": vi-fetch-history
 "^": vi-first-print
 # vi-forward-bigword (not bound)
@@ -448,12 +436,12 @@ set keymap vi-command
 "%": vi-match
 
 # whats the difference between movement insertion and editing
-# "W": vi-next-word
-# "w": vi-next-word
+"W": vi-next-word
+"w": vi-next-word
 "Insert": vi-overstrike
 # vi-overstrike-delete (not bound)
-# "B": vi-prev-word
-# "b": vi-prev-word
+"B": vi-prev-word
+"b": vi-prev-word
 "P": vi-put
 "p": vi-put
 ".": vi-redo
@@ -489,75 +477,36 @@ Meta-Rubout: backward-kill-word
 
 # VI Command Mode functions: {{{
 
-# "C-G"  abort
-# "C-H"  backward-char
-# "C-J"  accept-line
-# "C-K"  kill-line
-# "C-L"  clear-screen
-# "C-M"  accept-line
-# "C-N"  next-history
-# "C-P"  previous-history
-# "C-Q"  quoted-insert
-# "C-R"  reverse-search-history
-# "C-S"  forward-search-history
-# "C-T"  transpose-chars
-# "C-U"  unix-line-discard
-# "C-V"  quoted-insert
-# "C-Y"  yank
-# "C-_"  vi-undo
-# " "  forward-char
-# "#"  insert-comment
-# "$"  end-of-line
-# "%"  vi-match
-# "&"  vi-tilde-expand
-# "*"  vi-complete
-# "+"  next-history
-# ","  vi-char-search
-# "-"  previous-history
-# "."  vi-redo
-# "/"  vi-search
-# "0"  beginning-of-line
+"\C-G":  abort
+"\C-H":  backward-char
+"\C-J":  accept-line
+"\C-K":  kill-whole-line
+"\C-L":  clear-screen
+"\C-M":  accept-line
+"\C-N":  next-history
+"\C-P":  previous-history
+"\C-Q":  quoted-insert
+"\C-R":  reverse-search-history
+"\C-S":  forward-search-history
+"\C-T":  transpose-chars
+# "\C-U":  unix-line-discard
+"\C-U":  universal-argument
+"\C-V":  quoted-insert
+"\C-Y":  yank
+"\C-_":  vi-undo
+" ":  forward-char
+"#":  insert-comment
+"$":  end-of-line
+"*":  vi-complete
+"+":  next-history
+"-":  previous-history
+"0":  beginning-of-line
 # "1" to "9"  vi-arg-digit
-# ";"  vi-char-search
-# "="  vi-complete
-# "?"  vi-search
-# "A"  vi-append-eol
-# "B"  vi-prev-word
-# "C"  vi-change-to
-# "D"  vi-delete-to
-# "E"  vi-end-word
-# "F"  vi-char-search
-# "G"  vi-fetch-history
-# "I"  vi-insert-beg
-# "N"  vi-search-again
-# "P"  vi-put
-# "R"  vi-replace
-# "S"  vi-subst
-# "T"  vi-char-search
-# "U"  revert-line
-# "W"  vi-next-word
-# "X"  backward-delete-char
-# "Y"  vi-yank-to
-# "\"  vi-complete
-# "^"  vi-first-print
-# "_"  vi-yank-arg
-# "`"  vi-goto-mark
-# "a"  vi-append-mode
-# "b"  vi-prev-word
-# "c"  vi-change-to
-# "d"  vi-delete-to
-# "e"  vi-end-word
-# "f"  vi-char-search
-# "h"  backward-char
-# "i"  vi-insertion-mode
-# "j"  next-history
-# "k"  prev-history
-# "l"  forward-char
-# "m"  vi-set-mark
-# "n"  vi-search-again
-# "p"  vi-put
-# "r"  vi-change-char
-# "t"  vi-char-search
+"=":  vi-complete
+"\\":  vi-complete
+"j":  next-history
+"k":  prev-history
+"l":  forward-char
 
 # }}}
 

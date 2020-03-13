@@ -11,7 +11,7 @@ set -g status-keys emacs
 set -g status-justify "centre"
 # Note the quoting and that both of these works.
 set -g status-left-length "10"
-set -g status-right-length 25
+set -g status-right-length 45
 
 set -g status-bg '#1d2021'
 set -g status-fg '#ebdbb2'
@@ -52,6 +52,7 @@ set -g message-command-style "fg=#dfbf8e,noreverse,bg=#504945,bright"
 set -g message-style "fg=#dfbf8e,bg=#504945"
 
 # set-option -g message-style bg=colour235,fg=colour166 # bg=base02, fg=orange
+# }}}
 
 # Format statements: {{{1
 
@@ -60,7 +61,7 @@ set-option -g status-left " #[fg=#504945,bg=#dfbf8e] ▶ #S: #[fg=#dfbf8e,bg=#28
 # set -g status-left "#[fg=colour246,bg=colour237] #S #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»#[fg=colour246,bg=colour237] #(whoami) ▶  #[fg=colour237,bg=colour237,nobold,nounderscore,noitalics]»"
 
 # Alright well this is dying on byobu so TODO: figure out a check for if wer're in their shell or tmux
-set-option -g status-right " #[fg=#dfbf8e,bg=#282828] « #{=21:pane_title} %H:%M %d-%b-%y #{?client_prefix,🚀 🚀 🚀,} #[fg=#dfbf8e,bg=#504945] %R ◀ %a ◀ %Y #[fg=#dfbf8e,bg=#504945] « #[fg=#504945,bg=#dfbf8e] ◀ "
+set-option -g status-right " #[fg=#dfbf8e,bg=#282828] « #{=21:pane_title} %H:%M %d-%b-%y #{?client_prefix,🚀 🚀 🚀,} #[fg=#dfbf8e,bg=#504945] « #(date) « %R ◀ %a ◀ %Y #[fg=#dfbf8e,bg=#504945] « #[fg=#504945,bg=#dfbf8e] ◀ #H "
 
 # "#(tmux right -R pane_id=\`tmux display -p #D`)"
 # This is the only part I really care about anyway
@@ -75,3 +76,8 @@ set-option -g status-right " #[fg=#dfbf8e,bg=#282828] « #{=21:pane_title} %H:%M
 setw -g window-status-format " #[fg=#dfbf8e,bg=#282828] » #[default] #I ▶ #W #[fg=#dfbf8e,bg=#282828] « "
 
 setw -g window-status-current-format " #[fg=#dfbf8e,bg=#282828] » #[fg=#dfbf8e,bg=#504945] #I#F ▶ #W #[fg=#dfbf8e,bg=#282828] » "
+
+# Who wants to see if we can add unicode symbols directly in here. Nope.
+# setw -ga window-status-current-format U+1F5A5
+
+# }}}

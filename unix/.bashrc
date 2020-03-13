@@ -96,18 +96,16 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 
 export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
 # }}}
-# }}}
-
-# Vim: {{{1
-
+# Vim: {{{
 if [[ -n "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
 else
     export VISUAL="vim"
 fi
 export EDITOR="$VISUAL"
-
 export FCEDIT=nvim
+# Here because i include it on account of nvim
+export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin"
 # }}}
 
 # Builds: {{{1
@@ -205,7 +203,7 @@ shopt -s direxpand
 shopt -s lastpipe
 # }}}
 
-# Less And $PAGER --- Checkout .lesskey for more {{{1
+# Less And $PAGER --- Checkout .lesskey for more {{{
 export COLORTERM="truecolor"
 # I think the lowercase r is messing bat up on wsl
 export PAGER="less -JRKMrLigeFW"
@@ -293,6 +291,18 @@ complete -o bashdefault -o default -F _longopt -F _fzf_path_completion du
 complete -o bashdefault -o default -A alias -F _fzf_alias_completion alias
 complete -o bashdefault -o default -F _longopt  -F _fzf_path_completion nvim
 
+# This allows set to behave slightly more as expected
+complete -A setopt -A shopt  set
+
+# this is good to konw about
+# complete -F _known_hosts traceroute
+complete -F _known_hosts -A hostname -F _longopt ssh
+
+obviously_a_terrible_idea() {
+    for i in /usr/share/bash-completion/completions/*; do
+        source "$i" && echo "$i"
+    done
+}
 # }}}
 
 # Sourced files: {{{1
@@ -315,13 +325,8 @@ firstpath "$HOME/.local/bin"
 eval "$( dircolors -b $HOME/.dircolors )"
 
 export _term_reset="\033[0m"
-# This is ugly because not only do we have a bunch of ansi escape
-# sequences, but we also have to wrap each escape code in \001 and \002
-# for readline to be able to insert history matches properly.
 export prompt_in2="\001\033[32m\002      ...:\001$_term_reset\002 "
 export PS2=$prompt_in2
-
-# export PS1="\u@\h \w \@ \n \001\033[32m\002In [\001\033[32;1m\002 \# \001\033[0;32m\002] \$:\001$_term_reset\002 "
 # }}}
 
 # Prompt: {{{
@@ -342,8 +347,6 @@ function job_count() {
 export green=$(tput setaf 2)
 export red=$(tput setaf 1)
 export yellow=$(tput setaf 3)
-export idk=$(tput setaf 4)
-export neither=$(tput setaf 5)
 export cyan=$(tput setaf 6)
 export normal=$(tput sgr0)
 
@@ -356,6 +359,13 @@ fi
 # }}}
 
 # byobu: {{{
+
+if [[ -n "$TERM"  ]]; then
+    export TERM='xterm-256color'
+fi
+
+export COLORTERM='16m'
+
 case "$TERM" in
     xterm)
         # Try to ensure we have 256 colors
@@ -385,4 +395,6 @@ byobu_prompt_symbol() {
 PS1="${debian_chroot:+($debian_chroot)}\[\e[31m\]\$(byobu_prompt_status)\[\e[38;5;69m\]\u\[\e[38;5;214m\]@\[\e[38;5;167m\]\h\[\e[38;5;214m\]:\[\e[38;5;71m\]\w\[\e[38;5;214m\]\$(byobu_prompt_symbol)\[\e[00m\] "
 fi
 fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # Vim: set foldlevelstart=0 fdm=marker:

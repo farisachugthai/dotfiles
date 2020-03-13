@@ -13,6 +13,7 @@ alias cd...="cd ../.."
 alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
 alias cd......="cd ../../../../.."
+# }}}
 
 # ls aliases: {{{1
 
@@ -44,12 +45,7 @@ alias lt='ls -Alght --color=always'
 # This is broken
 # alias lx='ls -Fo --color=always | grep ^-..x'
 alias lx='ls -Fl --color=always | grep ^l.*'
-
-# Alert: {{{1
-
-#  Add  an  "alert"  alias  for  long   running   commands.   Use   like   so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# }}}
 
 # Safer coreutils: {{{1
 
@@ -77,6 +73,7 @@ alias free='free -mt'
 alias echo='echo -e'
 alias head="head -n 30 $*"
 alias tail="tail -n 30 $*"
+# }}}
 
 # Termux alias: {{{1
 
@@ -94,12 +91,12 @@ if [[ -n "$ANDROID_ROOT" ]]; then
     # I still want to type less
     alias opn="termux-open --send"
 
-    #  Copy  and  paste  for  when  I  don't  feel   like   firing   up   tmux
+    # Copy and paste for when I don't feel like firing up tmux
     alias copy="termux-clipboard-get"
     # Paste is a coreutil though
     alias pste="termux-clipboard-set $*"
 
-fi
+fi  # }}}
 
 # Git aliases. {{{1
 
@@ -163,6 +160,7 @@ alias gshsp='git stash show -p'
 alias gst='git diff --stat'
 alias gsw="git switch --progress $* "
 alias gt='git tag --list'
+# }}}
 
 # Other: {{{1
 
@@ -191,3 +189,5 @@ fi
 
 alias tre="tree -FACa -I .git $*"
 alias tree="tree -AC -I node_modules"
+alias tmux="tmux -u"
+# }}}

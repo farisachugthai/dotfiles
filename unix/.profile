@@ -167,7 +167,7 @@ pathadd "$_ROOT/games"
 # From man bash - Bash Variables - lines ~1300
 export PROMPT_DIRTRIM=3
 export TIMEFORMAT=$'\nreal\t%3lR\nuser\t%3lU\nsys\t%3lS='
-export EXECIGNORE=.dll  # fuckin windows
+export EXECIGNORE=.dll,.mui,.config  # fuckin windows
 # }}}
 
 # Other Environment Variables: {{{
@@ -193,10 +193,13 @@ export XENVIRONMENT=~/.Xresources  # }}}
 if [[ -n "$TMPDIR" ]]; then
     export TMP="$TMPDIR"
 else
-    if [[ -s "_ROOT/tmp" ]]; then
+    if [[ -s "$_ROOT/tmp" ]]; then
         # don't have tmp set to more than one thing dingus
         export TMP="$_ROOT/var/tmp"
         export TMPDIR="$_ROOT/var/tmp"
+    else
+        export TMPDIR=/tmp
+        export TMP=/tmp
     fi
 fi
 export TEMP="$TMP"  # }}}

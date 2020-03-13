@@ -205,7 +205,7 @@
     wsErrorHighlight = old,new,context	 # same as all
 
 [difftool]
-    cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c 'wincmd J'
+    cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'
     prompt = false
 
 [feature]
@@ -415,4 +415,4 @@
     insteadOf = "gist:"
     pushInsteadOf = "gist:"
 
-; Vim: set et sts=4 ts=4 sw=4:
+; Vim: set et sts=4 ts=4 sw=4 ft=gitconfig:

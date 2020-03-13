@@ -25,3 +25,8 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+[gui]
+	recentrepo = C:/Users/fac/projects/dotfiles
+[guitool "nvim"]
+	cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'
+	confirm = yes

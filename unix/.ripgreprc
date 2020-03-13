@@ -2,9 +2,18 @@
 # Vim: set commentstring=#\ %s:
 
 # Options: {{{1
-
 # Globs: {{{2
+# -g '!.git/*'
+# -g '!*/.svn'
+# -g '!*/.hg'
+# -g '!*/CVS'
+# -g '!*/.DS_Store'
+# -g '!node_modules/*'
+# --glob=!.git/*
+--glob=!tags
+
 --glob-case-insensitive
+# }}}
 
 # Aug 19, 2019: Did you know this was a setting?
 --path-separator=/
@@ -12,8 +21,9 @@
 --hidden
 
 --smart-case
+# }}}
 
-# Limiting output: {{{2
+# Limiting output: {{{1
 # don't match super long lines
 --max-columns=300
 
@@ -27,10 +37,16 @@
 --max-columns-preview
 
 # if you need to debug run --messages on the command line.
---no-messages
+# --no-messages
+
 --no-ignore-messages
+# Jun 04, 2019: Let's make this better for fzf in nvim
+# --vimgrep
 
 --color=ansi
+
+# --no-column
+# --no-line-number
 
 # Don't group matches by each file. If --no-heading is provided in
 # addition to the -H/--with-filename flag, then file paths will be
@@ -39,8 +55,9 @@
 # --no-heading
 
 # --with-filename
+# }}}
 
-# Auto hybrid regex: {{{2
+# Auto hybrid regex: {{{1
 # Aug 01, 2019: Dude check this shit out
 
 # When this flag is used, ripgrep will dynamically choose between supported regex
@@ -69,8 +86,9 @@
 
 # This flag can be disabled with --no-auto-hybrid-regex.
 # --auto-hybrid-regex
+# }}}
 
-# Colors: {{{2
+# Colors: {{{1
 # Colors are limited to one of eight choices: red, blue, green, cyan,
 # magenta, yellow, white and black. Styles are limited to nobold,
 # bold, nointense, intense, nounderline or underline.
@@ -95,3 +113,4 @@
 --colors=column:fg:cyan
 
 --colors=match:style:intense
+# }}}
