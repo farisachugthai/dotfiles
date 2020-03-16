@@ -20,6 +20,8 @@
 --pseudo-tags=*
 --exclude=log
 --exclude=tmp
+# for cpython
+--exclude=externals
 --exclude=.git
 --exclude=node_modules
 --exclude=build

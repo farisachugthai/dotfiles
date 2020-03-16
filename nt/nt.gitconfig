@@ -11,7 +11,7 @@
     # path = C:/Users/faris/projects/dotfiles/unix/.config/git/config
 
 [include]
-	path = C:/Users/fac/.gitconfig.local
+	path = C:\\Users\\fac\\.gitconfig.local
 
 [user]
 	email = farischugthai@gmail.com

@@ -1,4 +1,4 @@
-<# The basics to not go insane --- Module Docstring: {{{
+<# Te basics to not go insane --- Module Docstring: {{{
 Jun 17, 2019: Basically wiped the computer and am starting again sorta
 from scratch.
 
@@ -46,7 +46,6 @@ Get-PSVersion function.
 }}} #>
 
 # Path and `using`: {{{
-using module PSFzf
 # using module PowerShellGet
 using module posh-git
 using module  posh-sshell
@@ -79,22 +78,30 @@ function Get-PSVersion {
         if (test-path variable:psversiontable) {$psversiontable.psversion} else {[version]"1.0.0.0"}
 }
 
-$env:PSModulePATH='C:\Users\fac\Documents\PowerShell\Modules;C:\Users\fac\Documents\WindowsPowerShell\Modules'
 
 # Note the ternary operator was only introduced in version 7 and == isn't valid
 # as a comparison operator. Compare ints with -eq
 if ($PSVersionTable.PSVersion.Major -eq 7) {
-$env:PSModulePATH+=';C:\Program Files\PowerShell\7\Modules'
+$env:PSModulePATH='C:\Program Files\PowerShell\7\Modules'
 }
-
-$env:PSModulePATH+=';C:\Program Files\WindowsPowerShell\Modules'
-$env:PSModulePATH+=';C:\WINDOWS\System32\WindowsPowerShell\v1.0\Modules;C:\Windows\Syswow64\WindowsPowerShell\v1.0\Modules'
-$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v3.5;C:\Windows\Microsoft.NET\Framework64\v3.5'
-$env:PSModulePATH+=';C:\Users\fac\scoop\apps\miniconda3\current\shell\condabin'
+else {
+    $env:PSModulePATH=''
+}
 
 if ($PSVersionTable.PSVersion.Major -eq 7) {
 Import-Module 'C:\Program Files\PowerShell\7\Modules\Microsoft.PowerShell.Utility'
 }
+$env:PSModulePATH+=';C:\Users\fac\Documents\PowerShell\Modules'
+$env:PSModulePATH+=';C:\Users\fac\Documents\WindowsPowerShell\Modules'
+$env:PSModulePATH+=';C:\Program Files\WindowsPowerShell\Modules'
+$env:PSModulePATH+=';C:\WINDOWS\System32\WindowsPowerShell\v1.0\Modules'
+$env:PSModulePATH+=';C:\Windows\Syswow64\WindowsPowerShell\v1.0\Modules'
+$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework64\v4.0.30319'
+$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework\v4.0.30319'
+$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework\v3.5'
+$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework64\v3.5'
+$env:PSModulePATH+=';C:\Users\fac\scoop\apps\miniconda3\current\shell\condabin'
+
 # }}}
 
 # PATH: {{{
@@ -162,7 +169,7 @@ Out-Null -InputObject 'dircolors -c ~/.dircolors'
 # functions - start
 # ------------------
 
-
+# Path: {{{
 # function description:
 #    Allows an actual fucking human to parse the `$PATH`.
 #
@@ -173,6 +180,19 @@ Out-Null -InputObject 'dircolors -c ~/.dircolors'
 #  returns path split on the ;
 #
 function path() { Write-Output "($env:PATH)".Split(';') }
+# }}}
+
+# Make: {{{
+# So i accidentally backgrounded a command and then was trying to figure out how to `fg` it.
+# wa reading output from (Get-Job).* and (Get-Job).Command outputs this
+# which is crazy to me but also if we make it a function then we don't need the
+# .\ prefix anymore i think
+
+# Note: I think the right way to capture the jobs output would be somethin like
+# $j = Get-Job
+# $received = $j | Receive-Job
+function make() { Microsoft.PowerShell.Management\Set-Location -LiteralPath $using:pwd ; .\make $args }
+# }}}
 
 if ( Test-Path alias:sl ) { Remove-Item alias:sl -Force }
 # FFS!
@@ -191,6 +211,7 @@ if ( ! ( Test-Path alias:clist) ) { New-Alias clist Get-Local-ChocoPackages }
 # }}}
 
 # Prompt Section: {{{
+#
 # Cmder:
 $moduleInstallerAvailable = [bool](Get-Command -Name 'Install-Module' -ErrorAction SilentlyContinue | Out-Null)
 
@@ -198,6 +219,9 @@ $moduleInstallerAvailable = [bool](Get-Command -Name 'Install-Module' -ErrorActi
 if(!$PSScriptRoot) {
     $PSScriptRoot = Split-Path $Script:MyInvocation.MyCommand.Path
 }
+
+$GitPromptSettings:DefaultPromptWriteStatusFirst = $True
+$GitPromptSettings:DefaultPromptEnableTiming = $True
 
 # Users should modify their user_profile.ps1 as it will be safe from updates.
 $isGitLoaded = $false
@@ -214,13 +238,98 @@ $gitCleanBackColor = "Green"
 $gitDirtyForeColor = "Black"
 $gitDirtyBackColor = "Yellow"
 # Pre assign the hooks so the first run of cmder gets a working prompt.
-[ScriptBlock]$PrePrompt = {}
-[ScriptBlock]$PostPrompt = {}
-[ScriptBlock]$CmderPrompt = {
-    $Host.UI.RawUI.ForegroundColor = "White"
-    Microsoft.PowerShell.Utility\Write-Host $pwd.ProviderPath -NoNewLine -ForegroundColor Green
-    checkGit($pwd.ProviderPath)
-}
+# [ScriptBlock]$PrePrompt = {}
+# [ScriptBlock]$PostPrompt = {}
+# [ScriptBlock]$CmderPrompt = {
+#     $Host.UI.RawUI.ForegroundColor = "White"
+#     Microsoft.PowerShell.Utility\Write-Host $pwd.ProviderPath -NoNewLine -ForegroundColor Green
+#     checkGit($pwd.ProviderPath)
+# }
+
+<# PoshGit Holy Hell: {{{
+
+They fucking killed it dude.
+
+
+    $settings = $global:GitPromptSettings
+    if (!$settings) {
+        return "<`$GitPromptSettings not found> "
+    }
+
+    if ($settings.DefaultPromptEnableTiming) {
+        $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    }
+
+    $origLastExitCode = $global:LASTEXITCODE
+
+    if ($settings.SetEnvColumns) {
+        # Set COLUMNS so git knows how wide the terminal is
+        $Env:COLUMNS = $Host.UI.RawUI.WindowSize.Width
+    }
+
+    # Construct/write the prompt text
+    $prompt = ''
+
+    # Write default prompt prefix
+    $prompt += Write-Prompt $settings.DefaultPromptPrefix.Expand()
+
+    # Get the current path - formatted correctly
+    $promptPath = $settings.DefaultPromptPath.Expand()
+
+    # Write the path and Git status summary information
+    if ($settings.DefaultPromptWriteStatusFirst) {
+        $prompt += Write-VcsStatus
+        $prompt += Write-Prompt $promptPath
+    }
+    else {
+        $prompt += Write-Prompt $promptPath
+        $prompt += Write-VcsStatus
+    }
+
+    # Write default prompt before suffix text
+    $prompt += Write-Prompt $settings.DefaultPromptBeforeSuffix.Expand()
+
+    # If stopped in the debugger, the prompt needs to indicate that by writing default propmt debug
+    if ((Test-Path Variable:/PSDebugContext) -or [runspace]::DefaultRunspace.Debugger.InBreakpoint) {
+        $prompt += Write-Prompt $settings.DefaultPromptDebug.Expand()
+    }
+
+    # Get the prompt suffix text
+    $promptSuffix = $settings.DefaultPromptSuffix.Expand()
+
+    # When using Write-Host, we return a single space from this function to prevent PowerShell from displaying "PS>"
+    # So to avoid two spaces at the end of the suffix, remove one here if it exists
+    if (!$settings.AnsiConsole -and $promptSuffix.Text.EndsWith(' ')) {
+        $promptSuffix.Text = $promptSuffix.Text.Substring(0, $promptSuffix.Text.Length - 1)
+    }
+
+    # This has to be *after* the call to Write-VcsStatus, which populates $global:GitStatus
+    Set-WindowTitle $global:GitStatus $IsAdmin
+
+    # If prompt timing enabled, write elapsed milliseconds
+    if ($settings.DefaultPromptEnableTiming) {
+        $timingInfo = [PoshGitTextSpan]::new($settings.DefaultPromptTimingFormat)
+        $sw.Stop()
+        $timingInfo.Text = $timingInfo.Text -f $sw.ElapsedMilliseconds
+        $prompt += Write-Prompt $timingInfo
+    }
+
+    $prompt += Write-Prompt $promptSuffix
+
+    # When using Write-Host, return at least a space to avoid "PS>" being unexpectedly displayed
+    if (!$settings.AnsiConsole) {
+        $prompt += " "
+    }
+    else {
+        # If using ANSI, set this global to help debug ANSI issues
+        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssigments', '')]
+        $global:PoshGitLastPrompt = EscapeAnsiString $prompt
+    }
+
+    $global:LASTEXITCODE = $origLastExitCode
+    $prompt
+
+    #>
 
 <#
 This scriptblock runs every time the prompt is returned.
@@ -228,25 +337,57 @@ Explicitly use functions from MS namespace to protect from being overridden in t
 Custom prompt functions are loaded in as constants to get the same behaviour
 #>
 [ScriptBlock]$Prompt = {
-    $realLASTEXITCODE = $LASTEXITCODE
-    $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
-    PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
-    CmderPrompt
-    Microsoft.PowerShell.Utility\Write-Host "" -NoNewLine -ForegroundColor "DarkGray"
-    PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
-    $global:LASTEXITCODE = $realLASTEXITCODE
-    return " "
-}
 
+    $(if (Test-Path variable:/PSDebugContext) { '[DBG]: ' }
+        else { '' }) + 'PS ' + $(Get-Location) +
+
+    $(if ($NestedPromptLevel -ge 1) { '<Nested:>' }) + '> ' +
+
+    '[' + $env:COMPUTERNAME + ']>' +
+
+    "$(Get-Date)> " 
+
+    $realLASTEXITCODE = $LASTEXITCODE
+ 
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = [Security.Principal.WindowsPrincipal] $identity
+
+    if($principal.IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { "[ADMIN]: " }
+    else { '' }
+
+    # $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
+    # PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
+    # CmderPrompt
+    # Microsoft.PowerShell.Utility\Write-Host "" -NoNewLine -ForegroundColor "DarkGray"
+    # PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
+    # $global:LASTEXITCODE = $realLASTEXITCODE
+    # return " "
+
+# Also:
+# The following Prompt function displays the history ID of the next command. To
+# view the command history, use the Get-History cmdlet.
+
+# function prompt {
+# The at sign creates an array in case only one history item exists.
+# $history = @(Get-History)
+# if($history.Count -gt 0)
+# {
+# $lastItem = $history[$history.Count - 1]
+# $lastId = $lastItem.Id } $nextCommand = $lastId + 1
+# $currentDirectory = Get-Location
+# "PS: $nextCommand $currentDirectory >" }
+}
 # }}}
 
 # Aliases: {{{
+
+# Mar 14, 2020: Look what I found today!
+function tree() { Show-Tree -ShowLeaf -UseAsciiLineArt $args }
 
 if (Test-Path alias:grep) { Remove-Item Alias:grep }
 function grep() { C:\git\usr\bin\grep.exe $args }
 if (Test-Path alias:rm) { Remove-Item Alias:rm }
 if (Test-Path alias:curl) { Remove-Item Alias:curl }
-
 
 # ls aliases: {{{
 
@@ -416,10 +557,11 @@ function grea() { git.exe rebase --abort $args }
 
 # Basic Bindings: {{{
 # https://github.com/PowerShell/PSReadLine#post-installation
-if ($host.Name -eq 'ConsoleHost') {
-    # TODO: this is raising. you were missing left {
-    Import-Module PSReadLine
-}
+# No just don't import it now that we have it in the using directives up top
+# if ($host.Name -eq 'ConsoleHost') {
+#     # TODO: this is raising. you were missing left {
+#     Import-Module PSReadLine
+# }
 
 # I know I know. Hey at least the fucking tab key works now!
 # I'm sorry because this shouldn't be true but a lot of these bindings
@@ -1058,6 +1200,7 @@ function fcd() { cd (gci -Recurse | where {$_.PSIsContainer} | Invoke-FuzzySetLo
 
 # Yo don't use his argument list let's just utilize a little powershell and we'll get there
 Remove-PSReadlineKeyHandler Ctrl-t
+Remove-PSReadlineKeyHandler -Chord 'Ctrl-r'
 # }}}
 
 # Invoke-FuzzyEdit: {{{
@@ -1127,14 +1270,13 @@ Set-PSReadLineKeyHandler -Key "Alt+Shift+c"  `
 
 # Not allowed to do it this way
 # Set-PSReadLineKeyHandler -Key "Alt+c" -Function fcd
-Import-Module PSFzf -ArgumentList "Ctrl-t","Alt-c","Alt-a"
+Import-Module PSFzf -ArgumentList "Ctrl+t","Alt+c","Alt+a","Ctrl+r"
+
 # }}}
 
 # PSCX: {{{
-
 # Dude holy fuck these are good
 Import-Module pscx
-
 # You now have shit like `get-clipboard` and other goodies. Also importing
 # it add their dir to the path and they have less and lesskey inexplicably
 # in their `Apps`
@@ -1322,10 +1464,6 @@ $env:EDITOR='nvim-qt'
 $env:VISUAL='nvim-qt'
 $env:PAGER="less -JRrKMNLigeF"
 $env:LESSHISTSIZE=5000  # default is 100
-
-# $env:LESSOPEN="|lesspipe.sh %s"
-# $env:LESSCOLORIZER=pygmentize
-
 $env:PYTHONASYNCIODEBUG=1
 $env:PYTHONDONTWRITEBYTECODE=1
 $env:NPY_DISTUTILS_APPEND_FLAGS=1
@@ -1334,12 +1472,8 @@ $env:PYTHONIOENCODING='utf-8:surrogateescape'
 
 $env:IPYTHONDIR="$HOME\.ipython"
 $env:PYTHONCOERCECLOCALE="warn"
-# $env:PYTHONUNBUFFERED=0
-
 $env:SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
-
 $env:RIPGREP_CONFIG_PATH="$HOME\.ripgreprc"
-
 $env:LESSHISTSIZE=5000
 $env:LESSCOLORIZER="pygmentize"
 

@@ -3,25 +3,19 @@
 # Maintainer: Faris Chugthai
 
 set -h
-# this can get really annoyijg. good for debugging.
+# this can get really annoying. good for debugging.
 # set -u
 
-bind -r "\C-c": self-insert
-bind -r "\C-x": self-insert
-bind -r "\C-\\": self-insert
-bind -r "\C-^": self-insert
-bind -f ~/.inputrc
-
-# Don't run if not interactive: {{{1
+# Don't run if not interactive: {{{
 case $- in
     *i*);;
     *) exit 0;;
 esac
 # }}}
 
-pathadd() {  # {{{1
+pathadd() {  # {{{
     if [ -d "$1" ] && [ ":$PATH:" != *":$1:"* ]; then
-        PATH="${PATH:+"$PATH:"}$1"
+    PATH="${PATH:+"$PATH:"}$1"
     fi
 }
 
@@ -29,11 +23,11 @@ pathadd() {  # {{{1
 firstpath() {
     # Check if a dir exists and if it does, prepend it to the $PATH.
     if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
-        export PATH="$1:${PATH:+"$PATH"}"
+    export PATH="$1:${PATH:+"$PATH"}"
     fi
 }  # }}}
 
-# $_ROOT: {{{1
+# $_ROOT: {{{
 # shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
     export _ROOT="$PREFIX"
@@ -41,7 +35,7 @@ else
     export _ROOT="/usr"
 fi  # }}}
 
-# Python: {{{1
+# Python: {{{
 
 export PYTHONASYNCIODEBUG=1
 # Put python first because we need conda initialized right away
@@ -65,10 +59,10 @@ if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
     if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
-        source "$HOME/miniconda3/etc/profile.d/conda.sh"
-        # commented out by conda initialize
+    source "$HOME/miniconda3/etc/profile.d/conda.sh"
+    # commented out by conda initialize
     elif [[ -d "$HOME/miniconda3/bin" ]]; then
-        pathadd "$HOME/miniconda3/bin"
+    pathadd "$HOME/miniconda3/bin"
     fi
 fi
 unset __conda_setup
@@ -82,20 +76,30 @@ if [[ -d ~/google-cloud-sdk ]]; then
     # shellcheck source=~/google-cloud-sdk/path.bash.inc
     source "$HOME/google-cloud-sdk/path.bash.inc"
 fi   # }}}
+# }}}
 
 # Defaults in Ubuntu bashrcs: {{{
+# .....have i really not set this?
+export SHELL=/bin/bash 
+export COLORTERM='16m'
 
+bind -r "\C-c": self-insert
+bind -r "\C-x": self-insert
+bind -r "\C-\\": self-insert
+bind -r "\C-^": self-insert
+bind -f "$HOME/.inputrc"
+
+if [[ -n "$TERM"  ]]; then
+    export TERM='xterm-256color'
+fi
 # make less more friendly for non-text input files, see lesspipe(1)
 # Also lesspipe is described in Input Preprocessors in man 1 less.
 # This is raising in error in mintty and it's driving me nuts fix this later
-# [[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(SHELL=/bin/bash lesspipe.sh)"
-
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
+[[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
 
 export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
 # }}}
+
 # Vim: {{{
 if [[ -n "$(command -v nvim)" ]]; then
     export VISUAL="nvim"
@@ -108,7 +112,7 @@ export FCEDIT=nvim
 export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin"
 # }}}
 
-# Builds: {{{1
+# Builds: {{{
 
 # Shellcheck
 if [[ -n "$(command -v shellcheck)" ]]; then
@@ -119,7 +123,7 @@ test "$(command -v luarocks)" && eval "$(luarocks path --bin)"
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 # }}}
 
-# History: {{{1
+# History: {{{
 
 # Don't put duplicate lines or lines starting with space in the history.
 export HISTCONTROL=ignoreboth
@@ -140,7 +144,7 @@ shopt -s histverify
 # So on a related note let's set up shell options
 # }}}
 
-# Shopt and set: {{{1
+# Shopt and set: {{{
 
 set -o vi
 # To check what options you've set with set, check the output of: $: echo $-
@@ -167,7 +171,8 @@ set -o notify
 shopt -s checkwinsize
 
 # Why the hell does termux have this listed as off?
-# if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
+# if a pipe fails it returns the far most right expr which could be 0.
+# stop that shit let me know what the err code was!
 shopt -s lastpipe
 
 # ** will match all files and zero or more directories and subdirectories.
@@ -180,9 +185,9 @@ shopt -s checkjobs
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
 shopt -s nocasematch
-set -o noclobber        # Still dont want to clobber things
-shopt -s xpg_echo       # Allows echo to read backslashes like \n and \t
-shopt -s dirspell       # Autocorrect the spelling if it can
+set -o noclobber    # Still dont want to clobber things
+shopt -s xpg_echo   # Allows echo to read backslashes like \n and \t
+shopt -s dirspell   # Autocorrect the spelling if it can
 shopt -s cdspell
 
 # This should be enabled by default but termux is listing it as off
@@ -199,12 +204,10 @@ shopt -s no_empty_cmd_completion
 # the history with embedded newlines rather than using semicolon separators
 shopt -s lithist cmdhist
 shopt -s direxpand
-# if a pipe fails it returns the far most right expr which could be 0. stop that shit let me know what the err code was!
-shopt -s lastpipe
 # }}}
 
 # Less And $PAGER --- Checkout .lesskey for more {{{
-export COLORTERM="truecolor"
+
 # I think the lowercase r is messing bat up on wsl
 export PAGER="less -JRKMrLigeFW"
 export LESSHISTSIZE=5000  # default is 100
@@ -220,10 +223,10 @@ export LESS='-JRKMrLIgeFW  -j0.5 --no-histdups --save-marks --follow-name'
 export BAT_PAGER="less $LESS"
 export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
 export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
-export LESS_TERMCAP_me=$(printf '\e[0m')           # turn off all appearance modes (mb, md, so, us)
-export LESS_TERMCAP_se=$(printf '\e[0m')           # leave standout mode
+export LESS_TERMCAP_me=$(printf '\e[0m')       # turn off all appearance modes (mb, md, so, us)
+export LESS_TERMCAP_se=$(printf '\e[0m')       # leave standout mode
 export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
-export LESS_TERMCAP_ue=$(printf '\e[0m')           # leave underline mode
+export LESS_TERMCAP_ue=$(printf '\e[0m')       # leave underline mode
 export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
 # }}}
 
@@ -243,6 +246,11 @@ if [[ -d "$HOME/.nvm" ]]; then
 fi
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 export NODE_PRESERVE_SYMLINKS=1
+
+if [[ -n "$(command -v yarn)" ]]; then
+    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fi
+
 # }}}
 
 # Fasd: {{{1
@@ -250,15 +258,14 @@ export NODE_PRESERVE_SYMLINKS=1
 fasd_cache="$HOME/.fasd-init-bash"
 if [[ -n "$(command -v fasd)" ]]; then
     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-        fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install > "$fasd_cache"
+    fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install > "$fasd_cache"
     fi
     source "$fasd_cache"
-    unset fasd_cache
 fi
 
 # }}}
 
-# Completions: {{{1
+# Completions: {{{
 
 # dynamic completions. from man bash
 _completion_loader()
@@ -300,23 +307,15 @@ complete -F _known_hosts -A hostname -F _longopt ssh
 
 obviously_a_terrible_idea() {
     for i in /usr/share/bash-completion/completions/*; do
-        source "$i" && echo "$i"
+        source "$i"
     done
 }
+
 # }}}
 
-# Sourced files: {{{1
-
+# Sourced files: {{{
 # shellcheck source=/usr/share/bash-completion/bash_completion
 test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
-
-if [[ -d ~/.bashrc.d ]]; then
-    for config in $HOME/.bashrc.d/*.bash; do
-        # shellcheck source=/home/faris/.bashrc.d/*.bash
-        source $config;
-    done
-    unset -v config
-fi
 
 firstpath "$HOME/bin"
 firstpath "$HOME/.local/bin"
@@ -324,33 +323,13 @@ firstpath "$HOME/.local/bin"
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"
 
-export _term_reset="\033[0m"
-export prompt_in2="\001\033[32m\002      ...:\001$_term_reset\002 "
-export PS2=$prompt_in2
-# }}}
-
-# Prompt: {{{
-
-function git_branch() {
-    if branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"; then
-        echo -n " $branch"
-        [ -n "$(git status --porcelain 2> /dev/null)" ] && echo -n '*'
-    fi
-}
-
-function job_count() {
-  local count=$(jobs | wc -l)
-  printf -v spaces "%${count}s" ' '
-  (($count > 0)) && echo " ${spaces// /&}";
-}
-
-export green=$(tput setaf 2)
-export red=$(tput setaf 1)
-export yellow=$(tput setaf 3)
-export cyan=$(tput setaf 6)
-export normal=$(tput sgr0)
-
-export PS1="\[\e[31m\]$(byobu_prompt_status)\[\e[00;32m\]\u\[$neither\]@\h \w \@ \[$cyan\] $(git_branch) \[$red\] $(job_count)\n\[$green\] In [\#]\[$normal\] \$: "
+if [[ -d ~/.bashrc.d ]]; then
+    for config in $HOME/.bashrc.d/*.bash; do
+    # shellcheck source=/home/faris/.bashrc.d/*.bash
+    source $config;
+    done
+    unset -v config
+fi
 
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/faris/.bashrc.local
@@ -358,43 +337,68 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 # }}}
 
-# byobu: {{{
+# Prompt: {{{
+export RESET="\033[0m"
+export PS2="\001\033[32m\002  ...:\001$RESET\002 "
+export RED="\[\e[31m\]"
+export LIGHT_RED="\[\e[91m\]"
+export ORANGE="\[\e[38;5;208m\]"
+export yellow="\[\033[0;33m\]"
+export YELLOW="\[\e[38;5;214m\]"
+export GREEN="\[\e[38;5;71m\]"
+export UGREEN="\[\e[38;5;71;1;4m\]"
+export SALMON="\[\e[38;5;167m\]"
+export BROWN="\[\e[38;5;166m\]"
+export CYAN="\[\e[36m\]"
+export WHITE="\[\e[97m\]"
+export BLUE="\[\e[38;5;116m\]"
 
-if [[ -n "$TERM"  ]]; then
-    export TERM='xterm-256color'
-fi
-
-export COLORTERM='16m'
-
-case "$TERM" in
-    xterm)
-        # Try to ensure we have 256 colors
-        export TERM="xterm-256color"
-    ;;
-esac
-
-if [ -n "$TMUX" ] || [ "${TERMCAP#*screen}" != "${TERMCAP}" ]; then
-
-    # Ensure that we're in bash, in a byobu environment
-if [ -n "$BYOBU_BACKEND" ] && [ -n "$BASH" ]; then
-
-byobu_prompt_status() {
-    local e=$?; [ $e != 0 ] && echo -e "$e ";
-}
-[ -n "$BYOBU_CHARMAP" ] || BYOBU_CHARMAP=$(locale charmap 2>/dev/null || echo)
-
-byobu_prompt_symbol() {
-    if [ "$USER" = "root" ]; then
-        printf "%s" "#";
-    else
-        printf "%s" "\$"
+git_branch() {
+    if branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"; then
+        [[ -n "$(git status --porcelain 2> /dev/null)" ]] && echo -n "\[$LIGHT_RED\]Dirty: "
+        echo -ne "\[$CYAN\]$branch "
+        # Idk if this is a new sub command but i just found it with git 2.25.1 and its neat
+        if [[ -n "$(command -v git show-branch)" ]]; then 
+            echo -en "\[$GREEN\]$(git show-branch --color=always --reflog=1)"
+        fi
     fi
 }
 
-# Use Googley colors (blue / red / yellow / blue / green / red )
-PS1="${debian_chroot:+($debian_chroot)}\[\e[31m\]\$(byobu_prompt_status)\[\e[38;5;69m\]\u\[\e[38;5;214m\]@\[\e[38;5;167m\]\h\[\e[38;5;214m\]:\[\e[38;5;71m\]\w\[\e[38;5;214m\]\$(byobu_prompt_symbol)\[\e[00m\] "
-fi
-fi
+_status() {
+    local error="$?"
+    [[ $error != 0 ]] && echo -en "\[$RED\]$error"
+}
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-# Vim: set foldlevelstart=0 fdm=marker:
+uhw() {
+    # Named so because the standard escapes in a prompt are \u@\h \w
+    # You know. For username, hostname, working directory.
+    echo -n "\[$WHITE\]\u @ \[$BLUE\]\h \[$BROWN\]\w "
+
+    [[ -n "$VIRTUAL_ENV" ]] && echo -n "\[$ORANGE\]$(basename $VIRTUAL_ENV) "
+
+    # Why the fuck is \A a timestamp you may say? I don't know.
+    echo -n "\[$YELLOW\]\A "
+    # Just realized that \$ is the root normal user check that symbol used to be
+    # Also \j is jobs. i really didn't need that job function either!
+    echo -n "\[$SALMON\]\j "
+}
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM="auto verbose git"
+export GIT_PS1_DESCRIBE_STYLE="tag"
+# TODO: removing $(git_branch) for the time being because this shit doesn't
+# re-evaluate when you change dir... Which is shitty because the cwd does
+# so it's objectively possible but idk how or what to do.
+
+# I don't know why quoting it like this makes it work but trust me when i say
+# EVERYTHING broke the more obvious way
+export PS1='$(__git_ps1)'"$(_status) $(uhw)\n\[$UGREEN\]In [\#] \[$RED\]\$ \[$RESET\]"
+
+# I got so close. But i don't even know how to debug whatever problem the
+# below is having
+# export PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$yellow`basename $VIRTUAL_ENV`$RESET]}" "$PS1 \\\$" "[%s]"'
+# }}}
+
+# Vim: set foldlevelstart=0 fdm=marker et sw=4 sts=4 ts=4:

@@ -57,9 +57,6 @@
   "[handlebars]": {
     "editor.suggest.insertMode": "replace"
   },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.quickSuggestions": {
@@ -73,7 +70,8 @@
     "editor.quickSuggestions": {
       "strings": true
     },
-    "editor.suggest.insertMode": "replace"
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[less]": {
     "editor.suggest.insertMode": "replace"
@@ -131,10 +129,6 @@
   },
   "[shellscript]": {
     "files.eol": "\n"
-  },
-  "[typescript]": {
-    "editor.rulers": [],
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
     "editor.autoIndent": "none",
@@ -257,7 +251,7 @@
     "winrc": "viml"
   },
   "files.autoSave": "afterDelay",
-  "files.defaultLanguage": "English",
+  "files.defaultLanguage": "powershell",
   "files.eol": "\n",
   "files.exclude": {
     "**/*.egg-info": true,
@@ -443,10 +437,9 @@
   "powershell.codeFormatting.autoCorrectAliases": true,
   "powershell.codeFormatting.preset": "Allman",
   "powershell.codeFormatting.useCorrectCasing": true,
-  "powershell.debugging.createTemporaryIntegratedConsole": true,
+  "powershell.debugging.createTemporaryIntegratedConsole": false,
   "powershell.developer.editorServicesLogLevel": "Error",
   "powershell.powerShellDefaultVersion": "PowerShell Core 7 (x64)",
-  "powershell.promptToUpdatePowerShell": false,
   "problems.showCurrentInStatus": true,
   "python.analysis.cacheFolderPath": "C:/Users/fac/AppData/Roaming/Code/Cache",
   "python.analysis.cachingLevel": "None",
@@ -460,67 +453,7 @@
   "python.dataScience.debugJustMyCode": false,
   "python.dataScience.enableGather": true,
   "python.dataScience.exportWithOutputEnabled": true,
-  "python.dataScience.gatherRules": [
-    {
-      "doesNotModify": [
-        "OBJECT"
-      ],
-      "functionName": "head",
-      "objectName": "df"
-    },
-    {
-      "doesNotModify": [
-        "OBJECT"
-      ],
-      "functionName": "describe",
-      "objectName": "df"
-    },
-    {
-      "doesNotModify": [
-        "OBJECT"
-      ],
-      "functionName": "tail",
-      "objectName": "df"
-    },
-    {
-      "doesNotModify": [
-        "ARGUMENTS"
-      ],
-      "functionName": "print"
-    },
-    {
-      "doesNotModify": [
-        "ARGUMENTS"
-      ],
-      "functionName": "KMeans"
-    },
-    {
-      "doesNotModify": [
-        "ARGUMENTS"
-      ],
-      "functionName": "scatter"
-    },
-    {
-      "doesNotModify": [
-        "ARGUMENTS"
-      ],
-      "functionName": "fit"
-    },
-    {
-      "doesNotModify": [
-        "ARGUMENTS"
-      ],
-      "functionName": "sum"
-    },
-    {
-      "doesNotModify": [
-        "ARGUMENTS"
-      ],
-      "functionName": "len"
-    }
-  ],
   "python.dataScience.markdownRegularExpression": "^(#\\s*%%\\s*\\[markdown\\]|#\\s*\\<markdowncell\\>)",
-  "python.dataScience.runStartupCommands": "%matplotlib inline\n",
   "python.dataScience.sendSelectionToInteractiveWindow": true,
   "python.dataScience.themeMatplotlibPlots": true,
   "python.dataScience.useDefaultConfigForJupyter": false,
@@ -782,7 +715,7 @@
   "window.openFoldersInNewWindow": "off",
   "window.openWithoutArgumentsInNewWindow": "off",
   "window.zoomLevel": 0,
-  "workbench.activityBar.visible": true,
+  "workbench.activityBar.visible": false,
   "workbench.colorCustomizations": {
     "[Default Dark+]": {
       "activityBar.background": "#105200"
@@ -816,10 +749,13 @@
   "workbench.iconTheme": "vscode-icons",
   "editor.columnSelection": false,
   "python.diagnostics.sourceMapsEnabled": false,
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "workbench.colorTheme": "Gruvbox Dark (Medium)",
   "workbench.view.alwaysShowHeaderActions": true,
-  "breadcrumbs.symbolSortOrder": "position"
+  "breadcrumbs.symbolSortOrder": "position",
+  "restructuredtext.languageServer.disabled": false,
+  "powershell.integratedConsole.suppressStartupBanner": true,
+  "debug.openDebug": "neverOpen",
+  "powershell.integratedConsole.focusConsoleOnExecute": false,
+  "powershell.integratedConsole.showOnStartup": false,
+  "powershell.powerShellAdditionalExePaths": [],
 }
