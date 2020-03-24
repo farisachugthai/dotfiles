@@ -2,18 +2,13 @@
 # Initialization file for non-login, interactive shell
 # Maintainer: Faris Chugthai
 
-set -h
-# this can get really annoying. good for debugging.
-# set -u
-
-# Don't run if not interactive: {{{
+# Setup: {{{
 case $- in
     *i*);;
     *) exit 0;;
 esac
-# }}}
 
-pathadd() {  # {{{
+pathadd() {
     if [ -d "$1" ] && [ ":$PATH:" != *":$1:"* ]; then
     PATH="${PATH:+"$PATH:"}$1"
     fi
@@ -25,18 +20,17 @@ firstpath() {
     if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
     export PATH="$1:${PATH:+"$PATH"}"
     fi
-}  # }}}
+}
 
-# $_ROOT: {{{
 # shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
     export _ROOT="$PREFIX"
 else
     export _ROOT="/usr"
-fi  # }}}
+fi
+# }}}
 
 # Python: {{{
-
 export PYTHONASYNCIODEBUG=1
 # Put python first because we need conda initialized right away
 export PYTHONDONTWRITEBYTECODE=1
@@ -51,6 +45,7 @@ if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
 # This actually messes with prompt_toolkit pretty bad
 export PYTHONUNBUFFERED=0
 export RANGER_LOAD_DEFAULT_RC=False
+# }}}
 
 # >>> conda initialize >>>  {{{
 # !! Contents within this block are managed by 'conda init' !!
@@ -66,22 +61,17 @@ else
     fi
 fi
 unset __conda_setup
-# }}}
-
-# GCloud: {{{
 
 if [[ -d ~/google-cloud-sdk ]]; then
     # shellcheck source=~/google-cloud-sdk/completion.bash.inc
     source "$HOME/google-cloud-sdk/completion.bash.inc"
     # shellcheck source=~/google-cloud-sdk/path.bash.inc
     source "$HOME/google-cloud-sdk/path.bash.inc"
-fi   # }}}
+fi 
 # }}}
 
 # Defaults in Ubuntu bashrcs: {{{
-# .....have i really not set this?
-export SHELL=/bin/bash 
-export COLORTERM='16m'
+export COLORTERM='truecolor'
 
 bind -r "\C-c": self-insert
 bind -r "\C-x": self-insert
@@ -92,9 +82,6 @@ bind -f "$HOME/.inputrc"
 if [[ -n "$TERM"  ]]; then
     export TERM='xterm-256color'
 fi
-# make less more friendly for non-text input files, see lesspipe(1)
-# Also lesspipe is described in Input Preprocessors in man 1 less.
-# This is raising in error in mintty and it's driving me nuts fix this later
 [[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
 
 export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
@@ -109,7 +96,7 @@ fi
 export EDITOR="$VISUAL"
 export FCEDIT=nvim
 # Here because i include it on account of nvim
-export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin"
+pathadd "$HOME/.gem/ruby/2.7.0/bin"
 # }}}
 
 # Builds: {{{
@@ -145,8 +132,7 @@ shopt -s histverify
 # }}}
 
 # Shopt and set: {{{
-
-set -o vi
+set -o emacs
 # To check what options you've set with set, check the output of: $: echo $-
 # Don't just run `set` on the command line! It'll echo every var that's been set.
 # As of Aug 28, 2019 I got: bhimBCHs
@@ -154,10 +140,12 @@ set -o vi
 set -o histexpand
 # set -o keyword  don't ever set it echoes EVERYTHING
 # set -o nounset Autocompletion gets annoying
-shopt -s autocd
-shopt -s dotglob
+shopt -s autocd cdable_vars
+shopt -s dotglob failglob
 shopt -s checkhash
-
+shopt -s extdebug
+shopt -s extglob extquote
+set -o pipefail
 # I always forget keep this below set -o vi!
 # Dont know how i never thought source my shit first
 [[ -f ~/.bashrc.d/fzf.bash ]] && source ~/.bashrc.d/fzf.bash
@@ -165,21 +153,11 @@ shopt -s checkhash
 
 # Be notified of asynchronous jobs completing in the background
 set -o notify
-
-# Check the window size after each command and update the values of LINES and COLUMNS.
-# Now the default in Bash 5!!!
+set -h
 shopt -s checkwinsize
-
-# Why the hell does termux have this listed as off?
-# if a pipe fails it returns the far most right expr which could be 0.
-# stop that shit let me know what the err code was!
 shopt -s lastpipe
-
-# ** will match all files and zero or more directories and subdirectories.
 # shellcheck disable=SC2128
 if [[ $BASH_VERSINFO -gt 3 ]]; then shopt -s globstar; fi
-
-# If an attempt is made to exit bash , list currently running jobs, their status and a warning
 shopt -s checkjobs
 
 # Case-insensitive globbing (used in pathname expansion)
@@ -190,15 +168,10 @@ shopt -s xpg_echo   # Allows echo to read backslashes like \n and \t
 shopt -s dirspell   # Autocorrect the spelling if it can
 shopt -s cdspell
 
-# This should be enabled by default but termux is listing it as off
-shopt -s hostcomplete
-
 # If you try to complete something that isn't a command, check if its an alias
 if [[ $BASH_VERSINFO -gt 4 ]]; then shopt -s progcomp_alias; fi
 
-# Print verbose error messages when using shift
 shopt -s shift_verbose
-
 shopt -s no_empty_cmd_completion
 # If set, and the cmdhist option is enabled, multi-line commands are saved to
 # the history with embedded newlines rather than using semicolon separators
@@ -207,7 +180,6 @@ shopt -s direxpand
 # }}}
 
 # Less And $PAGER --- Checkout .lesskey for more {{{
-
 # I think the lowercase r is messing bat up on wsl
 export PAGER="less -JRKMrLigeFW"
 export LESSHISTSIZE=5000  # default is 100
@@ -250,11 +222,9 @@ export NODE_PRESERVE_SYMLINKS=1
 if [[ -n "$(command -v yarn)" ]]; then
     export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
-
 # }}}
 
-# Fasd: {{{1
-
+# Fasd: {{{
 fasd_cache="$HOME/.fasd-init-bash"
 if [[ -n "$(command -v fasd)" ]]; then
     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
@@ -262,11 +232,9 @@ if [[ -n "$(command -v fasd)" ]]; then
     fi
     source "$fasd_cache"
 fi
-
 # }}}
 
 # Completions: {{{
-
 # dynamic completions. from man bash
 _completion_loader()
 {
@@ -287,7 +255,6 @@ export COMP_CONFIGURE_HINTS=1
 if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
 fi
-
 # Just figured this one out! Especially useful as I've been building universal-ctags from source
 complete -o bashdefault -o default -F _longopt ctags
 
@@ -310,7 +277,6 @@ obviously_a_terrible_idea() {
         source "$i"
     done
 }
-
 # }}}
 
 # Sourced files: {{{
@@ -340,6 +306,17 @@ fi
 # Prompt: {{{
 export RESET="\033[0m"
 export PS2="\001\033[32m\002  ...:\001$RESET\002 "
+
+export BLACK="\[\033[0;30m\]"
+export BLACKBOLD="\[\033[1;30m\]"
+export REDBOLD="\[\033[1;31m\]"
+export GREENBOLD="\[\033[1;32m\]"
+export YELLOWBOLD="\[\033[1;33m\]"
+export BLUEBOLD="\[\033[1;34m\]"
+export PURPLE="\[\033[0;35m\]"
+export PURPLEBOLD="\[\033[1;35m\]"
+export CYAN="\[\033[0;36m\]"
+export CYANBOLD="\[\033[1;36m\]"
 export RED="\[\e[31m\]"
 export LIGHT_RED="\[\e[91m\]"
 export ORANGE="\[\e[38;5;208m\]"
@@ -358,24 +335,26 @@ git_branch() {
         [[ -n "$(git status --porcelain 2> /dev/null)" ]] && echo -n "\[$LIGHT_RED\]Dirty: "
         echo -ne "\[$CYAN\]$branch "
         # Idk if this is a new sub command but i just found it with git 2.25.1 and its neat
-        if [[ -n "$(command -v git show-branch)" ]]; then 
+        if [[ -n "$(command -v git show-branch)" ]]; then
             echo -en "\[$GREEN\]$(git show-branch --color=always --reflog=1)"
         fi
     fi
 }
 
+_venv() {
+    [[ -n "$VIRTUAL_ENV" ]] && echo -n "\[$CYAN\]$(basename $VIRTUAL_ENV) "
+}
+
 _status() {
+    # Also im gonna just mash this in here
     local error="$?"
-    [[ $error != 0 ]] && echo -en "\[$RED\]$error"
+    [[ $error != 0 ]] && echo -n "\[$RED\]$error"
 }
 
 uhw() {
     # Named so because the standard escapes in a prompt are \u@\h \w
     # You know. For username, hostname, working directory.
     echo -n "\[$WHITE\]\u @ \[$BLUE\]\h \[$BROWN\]\w "
-
-    [[ -n "$VIRTUAL_ENV" ]] && echo -n "\[$ORANGE\]$(basename $VIRTUAL_ENV) "
-
     # Why the fuck is \A a timestamp you may say? I don't know.
     echo -n "\[$YELLOW\]\A "
     # Just realized that \$ is the root normal user check that symbol used to be
@@ -391,10 +370,9 @@ export GIT_PS1_DESCRIBE_STYLE="tag"
 # TODO: removing $(git_branch) for the time being because this shit doesn't
 # re-evaluate when you change dir... Which is shitty because the cwd does
 # so it's objectively possible but idk how or what to do.
-
-# I don't know why quoting it like this makes it work but trust me when i say
-# EVERYTHING broke the more obvious way
-export PS1='$(__git_ps1)'"$(_status) $(uhw)\n\[$UGREEN\]In [\#] \[$RED\]\$ \[$RESET\]"
+# fuck were doing something wrong because status doesnt re-evaluate on every prompt either
+export PS1="$(_venv)$(uhw)\n\[$UGREEN\]In [\#] \[$RED\]\$ \[$RESET\]"
+# $(_status)
 
 # I got so close. But i don't even know how to debug whatever problem the
 # below is having

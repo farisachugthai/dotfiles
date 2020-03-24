@@ -38,7 +38,7 @@ cs () {  # cs: Run cd and ls at once: {{{1
 # }}}
 
 ssh-day () {  # ssh-day: Decrypt the ssh priv key for the day: {{{1
-    gpg-agent --daemon -v -s --enable-ssh-support
+    gpg-agent --daemon -v -q --enable-ssh-support
 
     if [[ -z "$SSH_AUTH_SOCK" ]]; then
         eval "$(ssh-agent -s)"

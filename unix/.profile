@@ -51,7 +51,6 @@ if [[ -n "$ANDROID_DATA" ]]; then
     export SHELL="$PREFIX/bin/bash"
     export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$PREFIX/etc/xdg"
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$_ROOT/local/share:$_ROOT/share:$XDG_DATA_HOME/mime"
-    export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include"
     export CC='aarch64-linux-android-clang'
     umask 0077
 else
@@ -61,31 +60,21 @@ else
     # You forgot the one for snaps!
     export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_HOME/mime:$_ROOT/share:$_ROOT/share/xsessions:/var/lib/snapd/desktop:$XDG_DATA_HOME/flatpak:/var/lib/flatpak:$HOME/.local/share:/usr/share:/usr/xsessions/plasma:/usr/local/share:/usr/share/mime"
     pathadd "$_ROOT/lib/x86_64-linux-gnu/libexec"
-    export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include"
     umask 0022
 fi  # }}}
 
 # GNU specified directory vars: {{{
 # https://www.gnu.org/prep/standards/html_node/Directory-Variables.html
-if [[ -n "$ANDROID_DATA" ]]; then
-    export SYSCONFDIR="$PREFIX/etc"
-    export BINDIR="$PREFIX/bin"
-    export DATADIR="$PREFIX/share"
-    export DATAROOTDIR="$PREFIX/share"
-    # cscope
-    export INCDIR="$PREFIX/include"
-    export INCLUDEDIR="$PREFIX/include"
-    export INCLUDEDIRS="/usr/include:/usr/local/include"
-    export LD_LIBRARY_PATH="$_ROOT/lib:$_ROOT/local/lib:$HOME/.local/lib"
-else
-    export SYSCONFDIR="/etc"
-    export BINDIR="/usr/bin"
-    export DATADIR="/usr/local/share"
-    export DATAROOTDIR="/usr/share"
-    export INCDIR="/usr/include"
-    export INCLUDEDIR="/usr/include"
-    export INCLUDEDIRS="/usr/include:/usr/local/include"
-fi  # }}}
+export SYSCONFDIR="$_ROOT/etc"
+export BINDIR="$_ROOT/bin"
+export DATADIR="$_ROOT/share"
+export DATAROOTDIR="$_ROOT/share"
+# cscope
+export INCDIR="$_ROOT/include"
+export INCLUDEDIR="$_ROOT/include"
+export INCLUDEDIRS="$_ROOT/include:$_ROOT/local/include"
+export LD_LIBRARY_PATH="$_ROOT/lib:$_ROOT/local/lib:$HOME/.local/lib"
+# }}}
 
 # Pkgconfig: {{{
 if [[ -d "$_ROOT/share/pkgconfig" ]]; then
@@ -94,7 +83,10 @@ if [[ -d "$_ROOT/share/pkgconfig" ]]; then
 # export PKG_CONFIG_PATH=/mnt/c/Users/faris/src/neovim/.deps/usr/lib/pkgconfig
 # need a pathadd function for all these pkg_config dirs i'm finding
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/x86_64-linux-gnu/pkgconfig"
-fi  # }}}
+fi
+
+export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include"
+# }}}
 
 # Python: {{{
 

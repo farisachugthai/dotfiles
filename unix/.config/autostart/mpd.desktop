@@ -1,9 +1,0 @@
-[Desktop Entry]
-Comment=start MPD as user when you log in
-Exec=mpd
-Hidden=true
-Name=MPD Music Player Daemon
-OnlyShowIn=KDE;
-Terminal=false
-Type=Application
-X-GNOME-Autostart-enabled=true

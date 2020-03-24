@@ -21,26 +21,26 @@ fi
 
 if [[ -n "$(command -v fd)" ]]; then  # fd {{{
 
-    # Base FZF command: {{{2
+    # Base FZF command: {{{
     # export FZF_DEFAULT_COMMAND="fd --follow -j 8 -d 6 --exclude .git"
 
     export FZF_DEFAULT_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
     export FZF_DEFAULT_OPTS='--multi --cycle --reverse --prompt "Query: " --tiebreak=begin,length,index --ansi --filepath-word --border --header="FZF: File Browser. Press Alt-n to launch nvim." --bind alt-n:execute:"nvim {}" --bind change:top --bind=ctrl-j:accept --bind ctrl-k:kill-line '
-
     #  --bind "?:toggle-preview" --preview-window=down:50%:wrap --preview "bat {}"
     # }}}
-    # __fzf_history__: <Ctrl-r>: {{{2
+
+    # __fzf_history__: <Ctrl-r>: {{{
     export FZF_CTRL_R_COMMAND="fd "
     export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
-
     # }}}
-    # Change dirs with Alt C: {{{2
+
+    # Change dirs with Alt C: {{{
     export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
 
     export FZF_ALT_C_OPTS=' --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind "?:toggle-preview" --header "Press ? to toggle preview." --border --prompt "FZF Dir Finder" '
-
     # }}}
-    # fzf-file-widget: <Ctrl-t>: {{{2
+
+    # fzf-file-widget: <Ctrl-t>: {{{
     export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
 
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --ansi --tiebreak begin,length,index --filepath-word --bind alt-n:execute:"nvim {}" --bind change:top --bind=ctrl-j:accept --bind ctrl-k:kill-line '
@@ -53,12 +53,13 @@ if [[ -n "$(command -v fd)" ]]; then  # fd {{{
     else
         export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " --preview-window=down:50%:wrap '
     fi
-
 # }}}
+
 # }}}
 
 elif [[ -n "$(command -v rg)" ]]; then  #: {{{
-    # Base FZF command: `fzf`: {{{2
+
+    # Base FZF command: `fzf`: {{{
     # May 28, 2019: works
     # I wanna see a line but only one at a time. Also check the ripgreprc.
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
@@ -67,8 +68,9 @@ elif [[ -n "$(command -v rg)" ]]; then  #: {{{
     export FZF_DEFAULT_COMMAND='rg --hidden  --no-messages --smart-case  --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 -- .'
     export FZF_BACKUP_DEFAULT_COMMAND="rg --follow --hidden --smart-case --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
+    # }}}
 
-    # fzf-file-widget: <Ctrl-t>: {{{2
+    # fzf-file-widget: <Ctrl-t>: {{{
     # Might be implemented as __fzf_select__
     # Also i think its the fzf-file-widget you see in the autocomplete suggestion so add --filepath-word
 
@@ -91,15 +93,17 @@ elif [[ -n "$(command -v rg)" ]]; then  #: {{{
     else
         export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " '
     fi
+    # }}}
 
-    # __fzf_history__: <Ctrl-r>: {{{2
+    # __fzf_history__: <Ctrl-r>: {{{
     export FZF_CTRL_R_COMMAND=" rg --hidden --color=ansi --smart-case --no-heading --no-filename --no-messages --smart-case --glob '!.git/*' -g '!node_modules/*' "
     export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
 
-    if [[ -n "$(command -v fd)" ]]; then  # Change dirs with Alt C: {{{2
+    if [[ -n "$(command -v fd)" ]]; then  # Change dirs with Alt C: {{{
         export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
     # TODO: else
     fi  # }}}
+
 # }}}
 
 else  # no rg or fd: Use find. {{{
@@ -108,6 +112,8 @@ else  # no rg or fd: Use find. {{{
     # Options for FZF no matter what.
     export FZF_DEFAULT_OPTS=' --cycle --multi --border --ansi '
 fi
+
+# }}}
 
 # }}}
 
@@ -140,7 +146,7 @@ fi
 complete -F _fzf_path_completion -o default -o bashdefault rg
 complete -F _fzf_dir_completion -o default -o bashdefault tree  # }}}
 
-# Colors: {{{1
+# Colors: {{{
 
 _gen_fzf_default_opts() {
 
