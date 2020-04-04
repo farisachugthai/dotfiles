@@ -73,17 +73,10 @@ fi
 # Defaults in Ubuntu bashrcs: {{{
 export COLORTERM='truecolor'
 
-bind -r "\C-c": self-insert
-bind -r "\C-x": self-insert
-bind -r "\C-\\": self-insert
-bind -r "\C-^": self-insert
+bind -r "\C-g"
 bind -f "$HOME/.inputrc"
 
-if [[ -n "$TERM"  ]]; then
-    export TERM='xterm-256color'
-fi
 [[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
-
 export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
 # }}}
 
@@ -141,7 +134,8 @@ set -o histexpand
 # set -o keyword  don't ever set it echoes EVERYTHING
 # set -o nounset Autocompletion gets annoying
 shopt -s autocd cdable_vars
-shopt -s dotglob failglob
+shopt -s dotglob hostcomplete
+shopt -u failglob
 shopt -s checkhash
 shopt -s extdebug
 shopt -s extglob extquote
@@ -153,7 +147,7 @@ set -o pipefail
 
 # Be notified of asynchronous jobs completing in the background
 set -o notify
-set -h
+set -ha
 shopt -s checkwinsize
 shopt -s lastpipe
 # shellcheck disable=SC2128
@@ -190,7 +184,8 @@ export LESSCOLORIZER=pygmentize
 if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
 
 export LESSCHARSET=utf-8
-export LESS='-JRKMrLIgeFW  -j0.5 --no-histdups --save-marks --follow-name'
+lesskey -o ~/.lesskey.output ~/.lesskey
+export LESS="-JRKMrLIgeFW  -j0.5 --no-histdups --save-marks --follow-name -k $HOME/.lesskey.output"
 
 export BAT_PAGER="less $LESS"
 export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
@@ -231,6 +226,32 @@ if [[ -n "$(command -v fasd)" ]]; then
     fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install > "$fasd_cache"
     fi
     source "$fasd_cache"
+    export _FASD_VIMINFO="$XDG_DATA_HOME/nvim/shada/main.shada"
+fi
+# }}}
+
+# Sourced files: {{{
+# termux sources this in at $PREFIX/etc/profile so check that wsl does too
+# shellcheck source=/usr/share/bash-completion/bash_completion
+# test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
+
+firstpath "$HOME/bin"
+firstpath "$HOME/.local/bin"
+
+# add some cool colors to ls
+eval "$( dircolors -b $HOME/.dircolors )"
+
+if [[ -d ~/.bashrc.d ]]; then
+    for config in $HOME/.bashrc.d/*.bash; do
+    # shellcheck source=/home/faris/.bashrc.d/*.bash
+    source $config;
+    done
+    unset -v config
+fi
+
+if [[ -f "$HOME/.bashrc.local" ]]; then
+    # shellcheck source=/home/faris/.bashrc.local
+    . "$HOME/.bashrc.local"
 fi
 # }}}
 
@@ -239,7 +260,7 @@ fi
 _completion_loader()
 {
     # source the bash-completions directory as needed
-    . "$_ROOT/share/bash_completion/completions/*" >/dev/null 2>&1 && return 124
+    . "$_ROOT/share/bash-completion/completions/*" >/dev/null 2>&1 && return 124
 }
 
 # oh also fzf
@@ -264,9 +285,10 @@ test "$(command -v dlink2)" && complete -o bashdefault -o default -F _fzf_path_c
 complete -o bashdefault -o default -F _longopt -F _fzf_path_completion du
 complete -o bashdefault -o default -A alias -F _fzf_alias_completion alias
 complete -o bashdefault -o default -F _longopt  -F _fzf_path_completion nvim
+complete -o bashdefault -o default -F _longopt  -F _fzf_path_completion bat
 
 # This allows set to behave slightly more as expected
-complete -A setopt -A shopt  set
+complete -A setopt -A shopt set
 
 # this is good to konw about
 # complete -F _known_hosts traceroute
@@ -277,30 +299,9 @@ obviously_a_terrible_idea() {
         source "$i"
     done
 }
-# }}}
 
-# Sourced files: {{{
-# shellcheck source=/usr/share/bash-completion/bash_completion
-test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
+. "$_ROOT/share/bash-completion/bash_completion"
 
-firstpath "$HOME/bin"
-firstpath "$HOME/.local/bin"
-
-# add some cool colors to ls
-eval "$( dircolors -b $HOME/.dircolors )"
-
-if [[ -d ~/.bashrc.d ]]; then
-    for config in $HOME/.bashrc.d/*.bash; do
-    # shellcheck source=/home/faris/.bashrc.d/*.bash
-    source $config;
-    done
-    unset -v config
-fi
-
-if [[ -f "$HOME/.bashrc.local" ]]; then
-    # shellcheck source=/home/faris/.bashrc.local
-    . "$HOME/.bashrc.local"
-fi
 # }}}
 
 # Prompt: {{{

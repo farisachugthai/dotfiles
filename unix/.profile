@@ -85,7 +85,7 @@ if [[ -d "$_ROOT/share/pkgconfig" ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/x86_64-linux-gnu/pkgconfig"
 fi
 
-export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include"
+export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include -fstack-protector-strong -Oz"
 # }}}
 
 # Python: {{{
@@ -173,11 +173,11 @@ if [[ -n "$(command -v cheat)" ]];then
 fi
 
 # Idk if this is or isn't a bad idea
-export LDFLAGS="$LDFLAGS -lm"
+export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/blib"
 if [[ -d "/mnt/c/Users/faris/src/neovim/.deps/usr/lib" ]]; then  # literally only true on wsl in win10
    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/mnt/c/Users/faris/src/neovim/.deps/usr/lib"
 fi
-
+ 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources  # }}}
 
@@ -214,12 +214,11 @@ export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
 pathadd "$_ROOT/local/bin"
 
 export MANPAGER=bat
+# export BAT_STYLE="OneHalfDark"
+export PYGMENTIZE_STYLE="InkPot"
 # }}}
 
 # Source The Bashrc Last: {{{
-# oh one last thing. why isn't this showing up???
-shopt -s hostcomplete
-
 # shellcheck source=/home/faris/.bashrc
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi   # }}}
 

@@ -1,0 +1,23 @@
+#!/bin/bash
+# Maintainer: Faris Chugthai
+
+# this file is sourced from $PREFIX/etc/profile.d/bash_completion.sh
+# check the same is true on wsl
+# git bash as well
+
+if [[ -d ~/.bashrc.d ]]; then
+    for config in $HOME/.config/bash-completion/*; do
+        # shellcheck source=/home/faris/.config/bash-completion/*
+        source $config;
+    done
+    unset -v config
+fi
+
+# other completion things i wanted to add
+complete -F _fzf_path_completion -o dirnames -o filenames l
+complete -F _fzf_path_completion -o dirnames -o filenames la
+complete -F _fzf_path_completion -o dirnames -o filenames ll
+complete -F _fzf_path_completion -o dirnames -o filenames lt
+complete -F _fzf_path_completion -o dirnames -o filenames lr
+complete -F _fzf_path_completion -o dirnames -o filenames cd
+complete -F _fzf_path_completion -o dirnames -o filenames cs

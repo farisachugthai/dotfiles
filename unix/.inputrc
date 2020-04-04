@@ -3,19 +3,12 @@
 # displays every key bindin i have and holy cow.
 # up and down work again too
 
+# {{{
 set editing-mode vi
 
 set keymap vi-insert
 
 # {{{ insert mode
-"\C-\[": vi-movement-mode
-"\C-["  vi-movement-mode
-"\e": vi-movement-mode
-"jj": vi-movement-mode
-
-"\C-g": abort
-"\C-x\C-g": abort
-"\e\C-g": abort
 "\C-j": accept-line
 "\C-m": accept-line
 # alias-expand-line (not bound)
@@ -69,57 +62,6 @@ set keymap vi-insert
 "\e8": digit-argument
 "\e9": digit-argument
 "\C-x\C-v": display-shell-version
-"\C-xA": do-lowercase-version
-"\C-xB": do-lowercase-version
-"\C-xC": do-lowercase-version
-"\C-xD": do-lowercase-version
-"\C-xE": do-lowercase-version
-"\C-xF": do-lowercase-version
-"\C-xG": do-lowercase-version
-"\C-xH": do-lowercase-version
-"\C-xI": do-lowercase-version
-"\C-xJ": do-lowercase-version
-"\C-xK": do-lowercase-version
-"\C-xL": do-lowercase-version
-"\C-xM": do-lowercase-version
-"\C-xN": do-lowercase-version
-"\C-xO": do-lowercase-version
-"\C-xP": do-lowercase-version
-"\C-xQ": do-lowercase-version
-"\C-xR": do-lowercase-version
-"\C-xS": do-lowercase-version
-"\C-xT": do-lowercase-version
-"\C-xU": do-lowercase-version
-"\C-xV": do-lowercase-version
-"\C-xW": do-lowercase-version
-"\C-xX": do-lowercase-version
-"\C-xY": do-lowercase-version
-"\C-xZ": do-lowercase-version
-"\eA": do-lowercase-version
-"\eB": do-lowercase-version
-"\eC": do-lowercase-version
-"\eD": do-lowercase-version
-"\eE": do-lowercase-version
-"\eF": do-lowercase-version
-"\eG": do-lowercase-version
-"\eH": do-lowercase-version
-"\eI": do-lowercase-version
-"\eJ": do-lowercase-version
-"\eK": do-lowercase-version
-"\eL": do-lowercase-version
-"\eM": do-lowercase-version
-"\eN": do-lowercase-version
-"\eP": do-lowercase-version
-"\eQ": do-lowercase-version
-"\eR": do-lowercase-version
-"\eS": do-lowercase-version
-"\eT": do-lowercase-version
-"\eU": do-lowercase-version
-"\eV": do-lowercase-version
-"\eW": do-lowercase-version
-"\eX": do-lowercase-version
-"\eY": do-lowercase-version
-"\eZ": do-lowercase-version
 "\el": downcase-word
 # dump-functions (not bound)
 # dump-macros (not bound)
@@ -144,11 +86,6 @@ set keymap vi-insert
 "\eg": glob-complete-word
 "\C-x*": glob-expand-word
 "\C-xg": glob-list-expansions
-# history-expand-line (not bound)
-# Holy shit this is a cool binding. Doesn't dynamically change though.
-# l<Alt+Shift+6> --> ls -alth --color=always
-# Hitting \e^ again repeats the previously added text which is lame.
-"\e^": history-and-alias-expand-line
 "\C-r": history-search-backward
 "\C-s": history-search-forward
 # What in gods name is the difference between these 2?
@@ -190,79 +127,6 @@ set keymap vi-insert
 # reverse-search-history (not bound)
 "\e\C-r": revert-line
 
-"0": self-insert
-"1": self-insert
-"2": self-insert
-"3": self-insert
-"4": self-insert
-"5": self-insert
-"6": self-insert
-"7": self-insert
-"8": self-insert
-"9": self-insert
-"A": self-insert
-"B": self-insert
-"C": self-insert
-"D": self-insert
-"E": self-insert
-"F": self-insert
-"G": self-insert
-"H": self-insert
-"I": self-insert
-"J": self-insert
-"K": self-insert
-"L": self-insert
-"M": self-insert
-"N": self-insert
-"O": self-insert
-"P": self-insert
-"Q": self-insert
-"R": self-insert
-"S": self-insert
-"T": self-insert
-"U": self-insert
-"V": self-insert
-"W": self-insert
-"X": self-insert
-"Y": self-insert
-"Z": self-insert
-"[": self-insert
-"\\": self-insert
-"]": self-insert
-"^": self-insert
-"_": self-insert
-"`": self-insert
-"a": self-insert
-"b": self-insert
-"c": self-insert
-"d": self-insert
-"e": self-insert
-"f": self-insert
-"g": self-insert
-"h": self-insert
-"i": self-insert
-"j": self-insert
-"k": self-insert
-"l": self-insert
-"m": self-insert
-"n": self-insert
-"o": self-insert
-"p": self-insert
-"q": self-insert
-"r": self-insert
-"s": self-insert
-"t": self-insert
-"u": self-insert
-"v": self-insert
-"w": self-insert
-"x": self-insert
-"y": self-insert
-"z": self-insert
-"{": self-insert
-"|": self-insert
-"}": self-insert
-"~": self-insert
-
 "\C-@": set-mark
 "\e ": set-mark
 # shell-backward-kill-word (not bound)
@@ -281,7 +145,7 @@ set keymap vi-insert
 "\C-_": undo
 "\C-u": universal-argument
 # "\C-u": unix-line-discard
-"\C-w": unix-filename-rubout
+# "\C-w": unix-filename-rubout
 "\eu": upcase-word
 "\C-y": yank
 "\e.": yank-last-arg
@@ -289,8 +153,7 @@ set keymap vi-insert
 "\e\C-y": yank-nth-arg
 "\ey": yank-pop
 "\C-Space": menu-complete
-
-# }}}
+#  }}}
 
 # Me struggling with the arrow keys: {{{
 "\eOA": previous-history
@@ -329,7 +192,7 @@ set keymap vi-insert
 
 # }}}
 
-# From clink: {{{1
+# From clink: {{{
 
 # Pleasantly surprised with these!
 # Gotta figure out how to check for the conditional clink tho
@@ -599,3 +462,27 @@ set history-preserve-point on
 # }}}
 
 set keymap vi-insert
+# }}}
+# Ive been using emacs mode so we should try binding things to that namespace
+
+set editing-mode emacs
+
+"\C-w": unix-filename-rubout
+"\C-[": vi-movement-mode
+"\C-x\C-r": re-read-init-file
+"\C-Space": menu-complete
+"\C-x\C-e": edit-and-execute-command
+"\C-k": kill-whole-line
+"\eg": glob-complete-word
+"\C-x*": glob-expand-word
+"\C-xg": glob-list-expansions
+"Space": magic-space
+
+# history-expand-line (not bound)
+# Holy shit this is a cool binding. Doesn't dynamically change though.
+# l<Alt+Shift+6> --> ls -alth --color=always
+# Hitting \e^ again repeats the previously added text which is lame.
+"\e^": history-and-alias-expand-line
+"\e\C-e": shell-expand-line
+
+# Vim: set fdm=marker fdls=0:

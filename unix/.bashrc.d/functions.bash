@@ -38,15 +38,13 @@ cs () {  # cs: Run cd and ls at once: {{{1
 # }}}
 
 ssh-day () {  # ssh-day: Decrypt the ssh priv key for the day: {{{1
-    gpg-agent --daemon -v -q --enable-ssh-support
+    gpg-agent --daemon -q --enable-ssh-support
 
+    # dont force a restart any more
     if [[ -z "$SSH_AUTH_SOCK" ]]; then
         eval "$(ssh-agent -s)"
-    else
-        export SSH_AUTH_SOCK=''
-        eval "$(ssh-agent -s)"
+        ssh-add
     fi
-    ssh-add
 }
 # }}}
 
@@ -186,3 +184,7 @@ recursive_line_count() {  # {{{1
     fi
 }
 # }}}
+
+en() {  # {{{
+    env | fzf
+}  # }}}
