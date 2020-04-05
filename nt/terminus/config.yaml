@@ -87,35 +87,35 @@ ssh:
           - ecdsa-sha2-nistp384
           - ecdsa-sha2-nistp521
       scripts:
-        - expect: ''
-          send: ''
-        - expect: ''
-          send: ''
+        - expect: ""
+          send: ""
+        - expect: ""
+          send: ""
       group: personal
       privateKey: 'C:\Users\faris\.ssh\id_ed25519'
 terminal:
   colorScheme:
     name: Gruvbox Dark
-    foreground: '#e6d4a3'
-    background: '#1e1e1e'
-    cursor: '#bbbbbb'
+    foreground: "#e6d4a3"
+    background: "#1e1e1e"
+    cursor: "#bbbbbb"
     colors:
-      - '#161819'
-      - '#f73028'
-      - '#aab01e'
-      - '#f7b125'
-      - '#719586'
-      - '#c77089'
-      - '#7db669'
-      - '#faefbb'
-      - '#7f7061'
-      - '#be0f17'
-      - '#868715'
-      - '#cc881a'
-      - '#377375'
-      - '#a04b73'
-      - '#578e57'
-      - '#e6d4a3'
+      - "#161819"
+      - "#f73028"
+      - "#aab01e"
+      - "#f7b125"
+      - "#719586"
+      - "#c77089"
+      - "#7db669"
+      - "#faefbb"
+      - "#7f7061"
+      - "#be0f17"
+      - "#868715"
+      - "#cc881a"
+      - "#377375"
+      - "#a04b73"
+      - "#578e57"
+      - "#e6d4a3"
   frontend: xterm-webgl
   font: Source Code Pro Black Regular
   ligatures: true
@@ -134,12 +134,12 @@ terminal:
       sessionOptions:
         command: powershell.exe
         args:
-          - '-ExecutionPolicy'
+          - "-ExecutionPolicy"
           - Bypass
-          - '-nologo'
-          - '-noprofile'
-          - '-noexit'
-          - '-command'
+          - "-nologo"
+          - "-noprofile"
+          - "-noexit"
+          - "-command"
           - 'Invoke-Expression ''. ''''C:\tools\Cmder\vendor\profile.ps1'''''''
         env:
           TERM: cygwin
@@ -149,7 +149,7 @@ terminal:
       sessionOptions:
         command: 'C:\pwsh\7-preview\pwsh.exe'
         args:
-          - '-nologo'
+          - "-nologo"
         env: {}
         cwd: 'C:\Users\faris'
     - name: ipython
@@ -157,7 +157,7 @@ terminal:
         command: cmd
         args:
           - /K conda activate flask & conda run ipython
-          - ''
+          - ""
         env: {}
         cwd: 'C:\Users\faris'
         runAsAdministrator: true

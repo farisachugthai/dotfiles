@@ -7,16 +7,16 @@
 
 module.exports = {
   config: {
-
     // choose either `'stable'` for receiving highly polished,
     // or `'canary'` for less polished but more frequent updates
     updateChannel: "canary",
 
     // default font size in pixels for all tabs
-    "fontSize": 17,
+    fontSize: 17,
 
     // font family with optional fallbacks. yo furamono looks great
-    fontFamily: '"FuraMono Nerd Font Mono", Hack, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
+    fontFamily:
+      '"FuraMono Nerd Font Mono", Hack, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
 
     // default font weight: 'normal' or 'bold'
     fontWeight: "normal",
@@ -63,46 +63,46 @@ module.exports = {
 
     // if you're using a Linux setup which show native menus, set to false
     // default: `true` on Linux, `true` on Windows, ignored on macOS
-    "showHamburgerMenu": false,
+    showHamburgerMenu: false,
 
     // set to `false` (without backticks and without quotes) if you want to hide the minimize, maximize and close buttons
     // additionally, set to `'left'` if you want them on the left, like in Ubuntu
     // default: `true` (without backticks and without quotes) on Windows and Linux, ignored on macOS
-    "showWindowControls": "left",
+    showWindowControls: "left",
 
     // custom padding (CSS format, i.e.: `top right bottom left`)
     // "12px 14px"
     // holy shit is it weird only doing 2 of them
-    "padding": "4px 4px 4px 4px",
+    padding: "4px 4px 4px 4px",
 
     // the full list. if you're going to provide the full color palette,
     // including the 6 x 6 color cubes and the grayscale map, just provide
     // an array here instead of a color map object
-    "colors": {
+    colors: {
       // black: '#000000',
-      "black": "#1D2021",
+      black: "#1D2021",
       // red: '#C51E14',
-      "red": "#F73028",
-      "green": "#1DC121",
+      red: "#F73028",
+      green: "#1DC121",
       // yellow: '#C7C329',
-      "yellow": "#F7B125",
+      yellow: "#F7B125",
       // blue: '#0A2FC4',
       // that actually doesn't look very good at all
       // blue: "#83A598",
-      "blue": "7daea3",
-      "magenta": "#C839C5",
-      "cyan": "#20C5C6",
+      blue: "7daea3",
+      magenta: "#C839C5",
+      cyan: "#20C5C6",
       // white: '#C7C7C7',
-      "white": "#FAEFBB",
-      "lightBlack": "#928374",
+      white: "#FAEFBB",
+      lightBlack: "#928374",
       // lightBlack: '#686868',
-      "lightRed": "#FD6F6B",
-      "lightGreen": "#67F86F",
-      "lightYellow": "#FFFA72",
-      "lightBlue": "#6A76FB",
-      "lightMagenta": "#FD7CFC",
-      "lightCyan": "#68FDFE",
-      "lightWhite": "#FFFFFF"
+      lightRed: "#FD6F6B",
+      lightGreen: "#67F86F",
+      lightYellow: "#FFFA72",
+      lightBlue: "#6A76FB",
+      lightMagenta: "#FD7CFC",
+      lightCyan: "#68FDFE",
+      lightWhite: "#FFFFFF"
     },
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
@@ -125,9 +125,9 @@ module.exports = {
     // shell: "C:\\tools\\Cmder\\vendor\\conemu-maximus5\\ConEmuC.exe -Run",
     // Doesn't work.
     // shell: "C:\\tools\\Cmder\\vendor\\conemu-maximus5\\ConEmu\\ConEmuC64.exe",
-    "shell": "C: \\pwsh\\7-preview\\pwsh.exe",
+    shell: "C: \\pwsh\\7-preview\\pwsh.exe",
 
-    "shellArgs": [
+    shellArgs: [
       "-ExecutionPolicy",
       "Bypass",
       "-NoLogo",
@@ -166,23 +166,23 @@ module.exports = {
     // for environment variables
     // "TERM": "cygwin",
     // unset cmder_root it's fucking up pipenv
-    "env": {
-      "CMDER_ROOT": ""
+    env: {
+      CMDER_ROOT: ""
     },
     // env: {},
 
     // set to `false` for no bell
-    "bell": false,
+    bell: false,
 
     // if `true` (without backticks and without quotes), selected text will automatically be copied to the clipboard
-    "copyOnSelect": true,
+    copyOnSelect: true,
 
     // if `true` (without backticks and without quotes), hyper will be set as the default protocol client for SSH
-    "defaultSSHApp": true,
+    defaultSSHApp: true,
 
     // if `true` (without backticks and without quotes), on right click selected text will be copied or pasted if no
     // selection is present (`true` by default on Windows and disables the context menu feature)
-    "quickEdit": false,
+    quickEdit: false,
 
     // choose either `'vertical'`, if you want the column mode when Option key is hold during selection (Default)
     // or `'force'`, if you want to force selection regardless of whether the terminal is in mouse events mode
@@ -194,39 +194,38 @@ module.exports = {
 
     // Whether to use the WebGL renderer. Set it to false to use canvas-based
     // rendering (slower, but supports transparent backgrounds)
-    "webGLRenderer": true,
-
+    webGLRenderer: true
   },
 
   ////////////////////////// Your Plugins /////////////////////////////////
   // 1) Gruvbox
   // for advanced config flags please refer to https://hyper.is/#cfg
-  "gruvboxTheme": {
-    "style": "dark", // or 'light'
-    "contrast": "hard" // or 'soft', 'hard'
+  gruvboxTheme: {
+    style: "dark", // or 'light'
+    contrast: "hard" // or 'soft', 'hard'
   },
   // 2) add hyper-init!
-  "init": [
+  init: [
     {
-      rule: 'once',
-      commands: ['cd ~/Desktop', 'ls']
+      rule: "once",
+      commands: ["cd ~/Desktop", "ls"]
     },
     {
-      rule: 'windows',
-      commands: ['echo This is only executed on New Windows!']
+      rule: "windows",
+      commands: ["echo This is only executed on New Windows!"]
     },
     {
-      rule: ['splitted', 'tabs', 'windows'],
-      commands: ['echo Hey, I can set an array of rules!']
+      rule: ["splitted", "tabs", "windows"],
+      commands: ["echo Hey, I can set an array of rules!"]
     }
   ],
 
   // 3 hypercwd... is this supposed to be outside of config?
   // let's see if that worked
-  "hypercwd": {
-    "initialWorkingDirectory": "C:\\Users\\faris\\src",
-    "clearCommand": 'Clear-Host',
-    "commandSeparator": ';'
+  hypercwd: {
+    initialWorkingDirectory: "C:\\Users\\faris\\src",
+    clearCommand: "Clear-Host",
+    commandSeparator: ";"
     // holy shit it worked
   },
   // a list of plugins to fetch and install from npm
@@ -240,9 +239,16 @@ module.exports = {
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
   // to load it and avoid it being `npm install`ed
-  "localPlugins": ["hyper-tabs", "hyperpower", "hyperterm-gruvbox", "hyperlinks", "hypercwd", "hyper-init"],
+  localPlugins: [
+    "hyper-tabs",
+    "hyperpower",
+    "hyperterm-gruvbox",
+    "hyperlinks",
+    "hypercwd",
+    "hyper-init"
+  ],
 
-  "keymaps": {
+  keymaps: {
     // Example
     // 'window:devtools': 'cmd+alt+o',
     // all the linux ones
@@ -263,13 +269,13 @@ module.exports = {
     "window:toggleFullScreen": "f11",
     "tab:new": "ctrl+shift+t",
     "tab:next": [
-      "ctrl+shift+]",
+      "ctrl+shift+]"
       // "ctrl+shift+right",
       // "ctrl+alt+right"
       // 'ctrl+tab'
     ],
     "tab:prev": [
-      "ctrl+shift+[",
+      "ctrl+shift+["
       // "ctrl+shift+left",
       // "ctrl+alt+left"
       // 'ctrl+shift+tab'

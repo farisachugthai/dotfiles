@@ -3,13 +3,14 @@
 
 # For more information about this file see:
 # https://conda.io/docs/user-guide/configuration/use-condarc.html
+# But wait what is the option below again?
 # enable_private_envs: true
 
-# default_python: 3.8
+default_python: 3.8
 
 # Don't know where this option is listed in conda config --describe.
 # Shit I mean it probably isn't
-allow_conda_downgrades: true
+# allow_conda_downgrades: true
 
 # Damn there are so many options shown by conda config --show that aren't here
 use_index_cache: true
@@ -29,29 +30,39 @@ error_upload_url: ''
 #   Definitely worth noting that bokeh has its own channel though.
 #
 channels:
-
   - conda-forge
-  - defaults
-  - bokeh
   - conda-canary
+  - bokeh
   - intel
   - pytorch
-  - anaconda
   - bioconda
   - mkl
+  - anaconda
+  - defaults
+
+
 default_channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/free
   - https://repo.anaconda.com/pkgs/msys2
+  - https://repo.anaconda.com/pkgs/pro
+  - https://repo.anaconda.com/pkgs/mro
+  - https://repo.anaconda.com/pkgs/archive
+  - https://repo.anaconda.com/pkgs/mro-archive
+  - https://anaconda.org/anaconda  # idk if this works
+
 
   # Frustratingly these don't work
   # - https://repo.anaconda.com/pkgs/r
-  # - https://repo.anaconda.com/pkgs/free
-  # - https://repo.anaconda.com/pkgs/archive
+# - https://repo.anaconda.com/pkgs/free
+# - https://repo.anaconda.com/pkgs/archive
 
+# I think this works but isn't necessary with defaults enabled
+# - anaconda
 
-    # This works but it always raises errors
-    # - https://repo.anaconda.com/pkgs/pro
+# This works but it always raises errors
+# - https://repo.anaconda.com/pkgs/pro
+
 # override_channels_enabled (bool)
 #   Permit use of the --overide-channels command-line flag.
 #
@@ -137,9 +148,9 @@ restore_free_channel: true
 #   else to use an alternate index that has been reduced somehow.
 #
 #
-# repodata_fns:
-#   - current_repodata.json
-#   - repodata.json
+repodata_fns:
+  - current_repodata.json
+  - repodata.json
 
 # use_only_tar_bz2 (NoneType, bool)
 #   A boolean indicating that only .tar.bz2 conda packages should be
@@ -155,39 +166,6 @@ restore_free_channel: true
 #
 # repodata_threads: 0
 
-# as reference
-# channels:
-#   - conda-forge
-#   - defaults
-#   - bokeh
-#   - conda-canary
-#   - intel
-#   - pytorch
-#   - anaconda
-#   - bioconda
-# client_ssl_cert: None
-# client_ssl_cert_key: None
-# clobber: True
-# conda_build: {}
-# create_default_packages: []
-# croot: C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\conda-bld
-# custom_channels:
-#   pkgs/main: https://repo.anaconda.com
-#   pkgs/free: https://repo.anaconda.com
-#   pkgs/pro: https://repo.anaconda.com
-#   pkgs/msys2: https://repo.anaconda.com
-#   C:/tools/vs/2019/Community/Common7/IDE/Extensions/Microsoft/Python/Miniconda/Miniconda3-x64/conda-bld: file://
-# custom_multichannels:
-#   defaults:
-#     - https://repo.anaconda.com/pkgs/main
-#     - https://repo.anaconda.com/pkgs/free
-#     - https://repo.anaconda.com/pkgs/free
-#     - https://repo.anaconda.com/pkgs/pro
-#     - https://repo.anaconda.com/pkgs/msys2
-#   local:
-#     - file:///C:/tools/vs/2019/Community/Common7/IDE/Extensions/Microsoft/Python/Miniconda/Miniconda3-x64/conda-bld
-# debug: False
-
 ######################################################
 ##            Basic Conda Configuration             ##
 ######################################################
@@ -200,10 +178,6 @@ restore_free_channel: true
 #   the first writable location.
 # envs_dirs:
 
-  # - C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\envs
-
-#   - C:\tools\miniconda3\envs
-#
 # pkgs_dirs (sequence: str)
 #   env var string delimiter: ','
 #   The list of directories where locally-available packages are linked
@@ -213,11 +187,7 @@ restore_free_channel: true
 # Oct 18, 2019: Had to update because there were 3 listed for no reason
 # Oooo actually can we add one to the base of big envs?
 # pkgs_dirs:
-
   # - C:\tools\vs\2019\Community\Common7\IDE\Extensions\Microsoft\Python\Miniconda\Miniconda3-x64\pkgs
-
-
-#   - C:\tools\miniconda3\pkgs
   # - C:\tools\miniconda3\envs\working\pkgs
   # - C:\tools\miniconda3\envs\anaconda\pkgs
 
@@ -337,7 +307,7 @@ auto_update_conda: false
 #
 # default:
 # channel_priority: disabled
-channel_priority: strict
+channel_priority: flexible
 
 # create_default_packages (sequence: str)
 #   env var string delimiter: ','
@@ -379,7 +349,7 @@ pip_interop_enabled: false
 #   Remove packages that have previously been brought into an environment
 #   to satisfy dependencies of user-requested packages, but are no longer
 #   needed.
-# prune: true
+prune: true
 
 # track_features (sequence: str)
 #   env var string delimiter: ','
@@ -541,13 +511,13 @@ shortcuts: true
 #   initialization.
 #
 # Automatically activate the base environment during the initialization.
-# auto_activate_base: true
+auto_activate_base: true
 
 # changeps1 (bool)
 #   When using activate, change the command prompt ($PS1) to include the
 #   activated environment.
 #
-# changeps1: true
+changeps1: true
 
 # env_prompt (str)
 #   Template for prompt modification based on the active environment.
@@ -597,12 +567,12 @@ ssl_verify: true
 # verbosity (int)
 #   aliases: verbose
 #   Sets output log level. 0 is warn. 1 is info. 2 is debug. 3 is trace.
-# verbosity: 0
+verbosity: 1
 
 # unsatisfiable_hints (bool)
 #   A boolean to determine if conda should find conflicting packages in
 #   the case of a failed install.
 #
-# unsatisfiable_hints: true
+unsatisfiable_hints: true
 
 # Vim: set ft=yaml:

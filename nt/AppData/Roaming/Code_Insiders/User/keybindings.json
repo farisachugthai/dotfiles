@@ -15,7 +15,7 @@
   {
     "command": "editor.action.showHover",
     "key": "cmd+space",
-    "when": "editorTextFocus"  // so i see both editorTextFocus and editorFocus. Which one? Are they different?
+    "when": "editorTextFocus"
   },
   {
     "command": "-workbench.action.terminal.focusFindWidget",
@@ -47,11 +47,6 @@
   {
     "command": "-workbench.action.closeAllEditors",
     "key": "Ctrl+K Ctrl+W"
-  },
-  {
-    "command": "editor.action.marker.nextInFiles",
-    "key": "ctrl+]",
-    "when": "editorFocus && !editorReadonly"
   },
   {
     "command": "-editor.action.marker.nextInFiles",
@@ -133,8 +128,8 @@
   },
   {
     "command": "editor.action.marker.prev",
-    "key": "Ctrl+[",
-    "when": "editorTextFocus && !editorReadonly"
+    "key": "ctrl+k [",
+    "when": "editorTextFocus && !editorReadonly && !isInDiffEditor"
   },
   {
     "command": "restructuredtext.showPreview",
@@ -429,7 +424,8 @@
   },
   {
     "command": "python.execInTerminal-icon",
-    "key": "f5"
+    "key": "f5",
+    "when": "!inDebugMode && editorLangId == 'python'"
   },
   {
     "command": "python.startREPL",
@@ -444,13 +440,46 @@
     "key": "ctrl+w ctrl+s"
   },
   {
-    "key": "ctrl+k ctrl+space",
     "command": "editor.action.showHover",
+    "key": "ctrl+k ctrl+space",
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+k ctrl+i",
     "command": "-editor.action.showHover",
+    "key": "ctrl+k ctrl+i",
     "when": "editorTextFocus"
+  },
+  {
+    "command": "editor.action.marker.nextInFiles",
+    "key": "ctrl+k ]",
+    "when": "editorFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "workbench.action.gotoSymbol",
+    "when": "editorHasFocus && editorlangID != 'python'"
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "-workbench.action.gotoSymbol"
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "python.goToPythonObject"
+  },
+  {
+    "key": "ctrl+k [",
+    "command": "editor.action.diffReview.prev",
+    "when": "isInDiffEditor"
+  },
+  {
+    "key": "shift+f7",
+    "command": "-editor.action.diffReview.prev",
+    "when": "isInDiffEditor"
+  },
+  {
+    "key": "ctrl+k ctrl+y",
+    "command": "python.runFailedTests",
+    "when": "editorTextFocus && editorLangId == 'python'"
   }
 ]

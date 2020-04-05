@@ -61,7 +61,7 @@ alias rmdir='rmdir -v'
 alias rm='rm -Iv'
 
 # Print each PATH entry on a separate line
-alias path='echo -e ${PATH//:/\\n}'
+alias path='echo -e ${PATH:/\\n}'
 
 # Options i use every time i run these commands
 # probably shouldn't clobber the namespace though, there are conflicting options

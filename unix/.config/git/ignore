@@ -10,6 +10,8 @@ tmux-history
 
 # Local files
 *.local
+*.ignore
+
 # Should probably stop checking these out
 .idea/workspace.xml
 

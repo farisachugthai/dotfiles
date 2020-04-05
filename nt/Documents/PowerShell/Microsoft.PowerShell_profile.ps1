@@ -1,56 +1,43 @@
-<# Te basics to not go insane --- Module Docstring: {{{
-Jun 17, 2019: Basically wiped the computer and am starting again sorta
-from scratch.
+<# The basics so I won't go insane: {{{
 
-Notes: {{{
+Jun 17, 2019: Basically wiped the computer and am starting again from scratch.
 
-#) You ran the following.:
+Notes:
+
+#) You ran the following.::
 
     C:\Users\faris\Dropbox\git
-»  Set-PSRepository -InstallationPolicy Trusted PSGallery
-
-#) KEEP POWERSHELLGET ABOVE INVOCATION OF FIND-COMMAND DUDE!
-
-The FZF section used to slow down the profile dramatically
+    Set-PSRepository -InstallationPolicy Trusted PSGallery
 
 #) DON'T EVER INSTALL the FASDR module it stole your tab expansion!
 
-}}}
+#) Try-catch::
 
-#) Try-catch: {{{
+    try {
+      # Don't forget to add the word scripts so we get the actual binaries
+        if ( Test-Path $env:VIRTUAL_ENV ){
+            $env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH
+        }
+    #Fuck this still doesn't catch right!
+    catch  [InvalidArgument],[NullPathNotPermitted],[ArgumentNullException] {
+        continue
+        }
+    }
 
-try {
-  # Don't forget to add the word scripts so we get the actual binaries
-      # if ( Test-Path $env:VIRTUAL_ENV ){$env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
-}
+### DETERMINING VERSION:
 
-Test path raises this
-+      ~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ CategoryInfo          : InvalidArgument: (:) [Test-Path], ArgumentNullException
-+ FullyQualifiedErrorId : NullPathNotPermitted,Microsoft.PowerShell.Commands.TestPathCommand
+Figured it out!::
 
-Fuck this still doesn't catch right!
-catch  [InvalidArgument],[NullPathNotPermitted],[ArgumentNullException] { continue }
-}}}
+    $PSVersionTable.PSVersion.Major
 
-### DETERMINING VERSION: {{{
-
-Figured it out!
-
-$PSVersionTable.PSVersion.Major
 just printed 7. go to the beginning of the PSModulePATH section to see my
 Get-PSVersion function.
-
-# }}}
 
 }}} #>
 
 # Path and `using`: {{{
-# using module PowerShellGet
 using module posh-git
 using module  posh-sshell
-# using module PSReadline
-
 using namespace Console
 using namespace Microsoft.PowerShell.PSConsoleReadline
 using namespace System.Windows.Clipboard
@@ -58,7 +45,6 @@ using namespace System.Windows.Forms
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 using namespace System.ConsoleKey
-
 
 If (Test-Path "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1") {
     & "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1"  #  [PARAMETERS]
@@ -69,20 +55,23 @@ If (Test-Path "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1") {
 # }}}
 
 # PSModulePATH: {{{
-
 # We were having some problems importing the right module into pwsh7.
 # Set this up first. Actually no usings ALWAYS need to be first.
 
 # Here's a useful function that works on all pwsh versions
 function Get-PSVersion {
-        if (test-path variable:psversiontable) {$psversiontable.psversion} else {[version]"1.0.0.0"}
-}
+        if (test-path variable:psversiontable) {
+            $psversiontable.psversion
+        } else {
+            [version]"1.0.0.0"
+        }
+    }
 
 
 # Note the ternary operator was only introduced in version 7 and == isn't valid
 # as a comparison operator. Compare ints with -eq
 if ($PSVersionTable.PSVersion.Major -eq 7) {
-$env:PSModulePATH='C:\Program Files\PowerShell\7\Modules'
+    $env:PSModulePATH='C:\Program Files\PowerShell\7\Modules'
 }
 else {
     $env:PSModulePATH=''
@@ -108,24 +97,29 @@ $env:PSModulePATH+=';C:\Users\fac\scoop\apps\miniconda3\current\shell\condabin'
 # Start with C:\Windows
 $env:PATH = 'C:\Windows;C:\Windows\System32;C:\Windows\System32\wbem;C:\Windows\Syswow64;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Windows\ImmersiveControlPanel'
 
+# .NET
 $env:PATH += ';C:\Windows\Microsoft.NET\Framework64\v3.5;C:\Windows\Microsoft.NET\Framework64\v3.0;C:\Windows\Microsoft.NET\Framework\v3.5;C:\Windows\Microsoft.NET\Framework\v3.0'
 
 # Get the visual studio stuff
-$env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools'
-
-$env:PATH += ';C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64;C:\Program Files (x86)\Windows Kits\10\bin\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
-
+$env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE'
+$env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools'
+$env:PATH += ';C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64;C:\Program Files (x86)\Windows Kits\10\bin\x64'
+$env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
 # Cmake
 $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin'
 
-# Choco pwsh firefox and other
-$env:PATH += ';C:\ProgramData\chocolatey\bin;C:\Program Files\Firefox Nightly;C:\Neovim\bin;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\PowerShell\7;C:\Program Files\Racket;C:\Program Files\KeePassXC'
+# Choco pwsh firefox and other app folders
+$env:PATH += ';C:\ProgramData\chocolatey\bin;C:\Program Files\Firefox Nightly;C:\Neovim\bin'
+$env:PATH += ';C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\PowerShell\7'
+$env:PATH += ';C:\Program Files\Racket;C:\Program Files\KeePassXC;C:\Python27;C:\totalcmd'
 
-# Git
-$env:PATH += ';C:\git\bin;C:\git\usr\bin;C:\git\cmd;C:\git\mingw64\bin'
+# Git. 03/23/2020. Moved to a new dir
+$env:GITDIR =  'C:/Users/fac/scoop/apps/git-with-openssh/current'
 
-# Don't add too many from scoop shims should take care of most except nvm
-$env:PATH += ';C:\Users\fac\scoop\apps\nvm\current\v13.10.1;C:\Users\fac\scoop\shims;C:\Users\fac\scoop\apps\winpython\current\Scripts'
+$env:PATH += "$env:GITDIR/bin;$env:GITDIR/usr/bin;$env:GITDIR/cmd;$env:GITDIR/mingw64/bin"
+
+# Don't add too many from scoop shims should take care of most except winpython and the nested node_modules thing that's going on
+$env:PATH += ';C:\Users\fac\scoop\apps\winpython\current\n;C:\Users\fac\scoop\shims;C:\Users\fac\scoop\apps\winpython\current\Scripts'
 
 # Your personal folders
 $env:PATH += ';C:\Users\fac\AppData\Roaming\Python\Python38\Scripts'
@@ -138,7 +132,7 @@ $env:PATH += ';C:\Users\fac\omnisharp;C:\Users\fac\openjdk'
 if ($env:VIRTUAL_ENV) { $env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
 
 # }}}
-#
+
 # Beginning of me reworking this: {{{
 $env:HOME = 'C:\Users\fac'
 
@@ -160,9 +154,6 @@ function tail() { Get-Content -Tail 30 $args }
 # Between you and I, i have no idea if thi is doing anything. oh well.
 # Here's an example of how to pipe to /dev/null if nothing else
 Out-Null -InputObject 'dircolors -c ~/.dircolors'
-
-# Invoke-Expression start-ssh-pageant.cmd
-
 # }}}
 
 # ------------------
@@ -191,15 +182,15 @@ function path() { Write-Output "($env:PATH)".Split(';') }
 # Note: I think the right way to capture the jobs output would be somethin like
 # $j = Get-Job
 # $received = $j | Receive-Job
-function make() { Microsoft.PowerShell.Management\Set-Location -LiteralPath $using:pwd ; .\make $args }
+# function make() { Microsoft.PowerShell.Management\Set-Location -LiteralPath $using:pwd ; .\make $args }
 # }}}
 
 if ( Test-Path alias:sl ) { Remove-Item alias:sl -Force }
 # FFS!
 if ( Test-Path alias:echo ) { Remove-Item alias:echo -Force }
 
-function Pro () { C:\Neovim\bin\nvim.exe $Profile.CurrentUserCurrentHost }
-function Reload () { Invoke-Expression $Profile.CurrentUserCurrentHost }
+function Pro { C:\Neovim\bin\nvim.exe $Profile.CurrentUserCurrentHost }
+function Reload { . $Profile.CurrentUserCurrentHost }
 
 function nvim_init () { C:\Neovim\bin\nvim.exe C:\Users\faris\AppData\Local\nvim\init.vim }
 
@@ -208,11 +199,8 @@ function Get-Local-ChocoPackages() { choco list --local --pre $args }
 
 if ( ! ( Test-Path alias:clist) ) { New-Alias clist Get-Local-ChocoPackages }
 
-# }}}
+function Invoke-JQ() { jq -SMRr . $args }
 
-# Prompt Section: {{{
-#
-# Cmder:
 $moduleInstallerAvailable = [bool](Get-Command -Name 'Install-Module' -ErrorAction SilentlyContinue | Out-Null)
 
 # Compatibility with PS major versions <= 2
@@ -220,8 +208,8 @@ if(!$PSScriptRoot) {
     $PSScriptRoot = Split-Path $Script:MyInvocation.MyCommand.Path
 }
 
-$GitPromptSettings:DefaultPromptWriteStatusFirst = $True
-$GitPromptSettings:DefaultPromptEnableTiming = $True
+$Global:GitPromptSettings:DefaultPromptWriteStatusFirst = $True
+$Global:GitPromptSettings:DefaultPromptEnableTiming = $True
 
 # Users should modify their user_profile.ps1 as it will be safe from updates.
 $isGitLoaded = $false
@@ -237,39 +225,141 @@ $gitCleanForeColor = "White"
 $gitCleanBackColor = "Green"
 $gitDirtyForeColor = "Black"
 $gitDirtyBackColor = "Yellow"
-# Pre assign the hooks so the first run of cmder gets a working prompt.
-# [ScriptBlock]$PrePrompt = {}
-# [ScriptBlock]$PostPrompt = {}
-# [ScriptBlock]$CmderPrompt = {
-#     $Host.UI.RawUI.ForegroundColor = "White"
-#     Microsoft.PowerShell.Utility\Write-Host $pwd.ProviderPath -NoNewLine -ForegroundColor Green
-#     checkGit($pwd.ProviderPath)
-# }
+# }}}
+
+# Prompt: {{{
+<#
+This scriptblock runs every time the prompt is returned.
+Explicitly use functions from MS namespace to protect from being overridden in the user session.
+Custom prompt functions are loaded in as constants to get the same behaviour
+
+# fuck this is getting overwritten at some point
+~\projects\dynamic_ipython\docs [windows ≡ +1 ~0 -0 !]> (Get-Item function:prompt).ScriptBlock
+
+        if ($Env:CONDA_PROMPT_MODIFIER) {
+            $Env:CONDA_PROMPT_MODIFIER | Write-Host -NoNewline
+        }
+        CondaPromptBackup;
+
+
+    # PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
+    # CmderPrompt
+    # Microsoft.PowerShell.Utility\Write-Host "" -NoNewLine -ForegroundColor "DarkGray"
+    # PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
+    # $global:LASTEXITCODE = $realLASTEXITCODE
+    # return " "
+
+# TODO: Change the Write-Hosts they set off the linters
+#>
+
+###############################
+### Set-WindowSize
+###############################
+Function Set-WindowSize {
+Param([int]$x=$host.ui.rawui.windowsize.width,
+      [int]$y=$host.ui.rawui.windowsize.heigth,
+      [int]$buffer=$host.UI.RawUI.BufferSize.heigth)
+
+    $buffersize = new-object System.Management.Automation.Host.Size($x,$buffer)
+    $host.UI.RawUI.BufferSize = $buffersize
+    $size = New-Object System.Management.Automation.Host.Size($x,$y)
+    $host.ui.rawui.WindowSize = $size
+}
+
+$host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
+
+# Windows10 yelling at us with 150 40 6000
+# no more needed ?
+# Set-WindowSize 195 40 6000
+
+### Colorize to distinguish
+#$host.ui.RawUI.BackgroundColor = "DarkBlue"
+$host.ui.RawUI.BackgroundColor = "Black"
+$host.ui.RawUI.ForegroundColor = "White"
+
+# Cmder PowerShell Prompt: {{{
+function Write-GitPrompt() {
+    $status = Get-GitStatus
+
+    if ($status) {
+        # assume git folder is clean
+        $gitBackColor = $gitCleanBackColor
+        $gitForeColor = $gitCleanForeColor
+        if ($status.HasWorking -Or $status.HasIndex) {
+        # but if it's dirty, change the back color
+        $gitBackColor = $gitDirtyBackColor
+        $gitForeColor = $gitDirtyForeColor
+        }
+
+        # Close path prompt
+        Write-Host $arrowSymbol -NoNewLine -BackgroundColor $gitBackColor -ForegroundColor $pathBackColor
+#
+        # Write branch symbol and name
+        Write-Host " " $branchSymbol " " $status.Branch " " -NoNewLine -BackgroundColor $gitBackColor -ForegroundColor $gitForeColor
+        #
+        <# Git status info
+        HasWorking   : False
+        Branch       : master
+        AheadBy      : 0
+        Working      : {}
+        Upstream     : origin/master
+        StashCount   : 0
+        Index        : {}
+        HasIndex     : False
+        BehindBy     : 0
+        HasUntracked : False
+        GitDir       : D:\amr\SourceCode\DevDiary\.git
+        #>
+                        #
+        # close git prompt
+        Write-Host $arrowSymbol -NoNewLine -BackgroundColor $defaultBackColor -ForegroundColor $gitBackColor
+    }
+}
+                        #
+function getGitStatus($Path) {
+    if (Test-Path -Path (Join-Path $Path '.git') ) {
+                        #
+                        #                                                                                                                                                                                                                                             $isGitLoaded = Import-GitModule $isGitLoaded
+        Write-GitPrompt
+        return
+    }
+    $SplitPath = split-path $path
+    if ($SplitPath) {
+        getGitStatus($SplitPath)
+    }
+    else{
+        Write-Host $arrowSymbol -NoNewLine -ForegroundColor $pathBackColor
+    }
+}
+
+
+function tildaPath($Path) {
+    return $Path.replace($env:USERPROFILE, "~")
+}
+
+# Replace the cmder prompt entirely with this.
+[ScriptBlock]$CmderPrompt = {
+    $tp = tildaPath($pwd.ProviderPath)
+    Microsoft.PowerShell.Utility\Write-Host "`n" $tp " " -NoNewLine -BackgroundColor $pathBackColor -ForegroundColor $pathForeColor
+
+    getGitStatus($pwd.ProviderPath)
+}
+
+[ScriptBlock]$PostPrompt = {
+}
+
+## <Continue to add your own>
+# }}}
 
 <# PoshGit Holy Hell: {{{
+They fucking killed it dude. #>
 
-They fucking killed it dude.
+function PrePrompt(){
+$settings = $global:GitPromptSettings
+if (!$settings) {
+    return "<`$GitPromptSettings not found> "
 
-
-    $settings = $global:GitPromptSettings
-    if (!$settings) {
-        return "<`$GitPromptSettings not found> "
-    }
-
-    if ($settings.DefaultPromptEnableTiming) {
-        $sw = [System.Diagnostics.Stopwatch]::StartNew()
-    }
-
-    $origLastExitCode = $global:LASTEXITCODE
-
-    if ($settings.SetEnvColumns) {
-        # Set COLUMNS so git knows how wide the terminal is
-        $Env:COLUMNS = $Host.UI.RawUI.WindowSize.Width
-    }
-
-    # Construct/write the prompt text
-    $prompt = ''
-
+# Most of this is raising an error so let's shuttle it inside of a function for now
     # Write default prompt prefix
     $prompt += Write-Prompt $settings.DefaultPromptPrefix.Expand()
 
@@ -297,6 +387,21 @@ They fucking killed it dude.
     # Get the prompt suffix text
     $promptSuffix = $settings.DefaultPromptSuffix.Expand()
 
+    # Interruptin realy quick
+    # The following Prompt function displays the history ID of the next command. To
+    # view the command history, use the Get-History cmdlet.
+    # The at sign creates an array in case only one history item exists.
+    $history = @(Get-History)
+    if($history.Count -gt 0)
+    {
+        $lastItem = $history[$history.Count - 1]
+        $lastId = $lastItem.Id
+    }
+    $nextCommand = $lastId + 1
+    $currentDirectory = Get-Location
+    Write-Prompt "PS: $nextCommand $currentDirectory >"
+
+    # Back to poshgit
     # When using Write-Host, we return a single space from this function to prevent PowerShell from displaying "PS>"
     # So to avoid two spaces at the end of the suffix, remove one here if it exists
     if (!$settings.AnsiConsole -and $promptSuffix.Text.EndsWith(' ')) {
@@ -304,7 +409,7 @@ They fucking killed it dude.
     }
 
     # This has to be *after* the call to Write-VcsStatus, which populates $global:GitStatus
-    Set-WindowTitle $global:GitStatus $IsAdmin
+    # Set-WindowTitle $global:GitStatus $IsAdmin
 
     # If prompt timing enabled, write elapsed milliseconds
     if ($settings.DefaultPromptEnableTiming) {
@@ -323,21 +428,20 @@ They fucking killed it dude.
     else {
         # If using ANSI, set this global to help debug ANSI issues
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssigments', '')]
-        $global:PoshGitLastPrompt = EscapeAnsiString $prompt
+        $global:PoshGitLastPrompt = $prompt
     }
 
     $global:LASTEXITCODE = $origLastExitCode
-    $prompt
 
-    #>
+}
 
-<#
-This scriptblock runs every time the prompt is returned.
-Explicitly use functions from MS namespace to protect from being overridden in the user session.
-Custom prompt functions are loaded in as constants to get the same behaviour
-#>
-[ScriptBlock]$Prompt = {
+if ($settings.DefaultPromptEnableTiming) {
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+}
+}
+# [ScriptBlock]$Prompt = {
 
+function prompt() {
     $(if (Test-Path variable:/PSDebugContext) { '[DBG]: ' }
         else { '' }) + 'PS ' + $(Get-Location) +
 
@@ -345,47 +449,36 @@ Custom prompt functions are loaded in as constants to get the same behaviour
 
     '[' + $env:COMPUTERNAME + ']>' +
 
-    "$(Get-Date)> " 
+    "$(Get-Date)> "
 
     $realLASTEXITCODE = $LASTEXITCODE
- 
+
     $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
     $principal = [Security.Principal.WindowsPrincipal] $identity
 
     if($principal.IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { "[ADMIN]: " }
     else { '' }
+$origLastExitCode = $global:LASTEXITCODE
 
-    # $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.ProviderPath -Leaf
-    # PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
-    # CmderPrompt
-    # Microsoft.PowerShell.Utility\Write-Host "" -NoNewLine -ForegroundColor "DarkGray"
-    # PostPrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
-    # $global:LASTEXITCODE = $realLASTEXITCODE
-    # return " "
-
-# Also:
-# The following Prompt function displays the history ID of the next command. To
-# view the command history, use the Get-History cmdlet.
-
-# function prompt {
-# The at sign creates an array in case only one history item exists.
-# $history = @(Get-History)
-# if($history.Count -gt 0)
-# {
-# $lastItem = $history[$history.Count - 1]
-# $lastId = $lastItem.Id } $nextCommand = $lastId + 1
-# $currentDirectory = Get-Location
-# "PS: $nextCommand $currentDirectory >" }
+if ($settings.SetEnvColumns) {
+    # Set COLUMNS so git knows how wide the terminal is
+    $Env:COLUMNS = $Host.UI.RawUI.WindowSize.Width
 }
+
+}
+
+    $prompt
+    #>
+# }}}
 # }}}
 
 # Aliases: {{{
 
 # Mar 14, 2020: Look what I found today!
-function tree() { Show-Tree -ShowLeaf -UseAsciiLineArt $args }
+function tree { Show-Tree -ShowLeaf -UseAsciiLineArt $args }
 
 if (Test-Path alias:grep) { Remove-Item Alias:grep }
-function grep() { C:\git\usr\bin\grep.exe $args }
+function grep { C:\git\usr\bin\grep.exe $args }
 if (Test-Path alias:rm) { Remove-Item Alias:rm }
 if (Test-Path alias:curl) { Remove-Item Alias:curl }
 
@@ -393,25 +486,35 @@ if (Test-Path alias:curl) { Remove-Item Alias:curl }
 
 # damn i love how every time i do this i use a slightly different syntax lol
 if ( Test-Path alias:ls ) { Remove-Item alias:ls -Force }
-function ls() { C:\git\usr\bin\ls.exe -Fh --color=always $args }
 
-function l() {  ls -FC --color=always $args }
-function la() { ls -AFh --color=always $args }
-function ldir() { ls -Fhpo $args | grep /$ }
-function lf() { ls -Foh $args | grep ^- }
-function ll() { ls -FAgh --color=always $args }
-function lr() { ls -Altcr --color=always $args }
-function lt() { ls -Altc --color=always $args }
-function lx() { ls -Fo --color=always $args | grep ^-..x }
+# Okay so because we decided to make ls dependent on where git was installed lets try to be smarter about this
+# fuck if we define it this way then `ls` doesn't accept args and this raises ughhhhh
+# function ls() { Invoke-Expression "$env:GITDIR/usr/bin/ls.exe" -Fh --color=always $args }
 
-if ( Test-Path alias:mkdir )
-    {
+# These don't take arguments correctly
+# function InvokeLS {  Invoke-Expression -Command $env:GITDIR/usr/bin/ls.exe }
+# function CloserToLs { InvokeLS  -Fh --color=always $args }
+# function ls { CloserToLs $args }
+
+function l() {  ls -Fh --hide="NTUSER.*" --color=always $args }
+function la() { ls -AFh --hide="NTUSER.*" --color=always $args }
+function ldir() { ls -Fhpo --hide="NTUSER.*" $args | grep /$ }
+function lf() { ls -Foh --hide="NTUSER.*" $args | grep ^- }
+
+# *sigh*
+function ll { Get-ChildItem -Verbose -Force $args }
+# function ll() { ls -FAgoh --hide="NTUSER.*" --color=always $args }
+function lr() { ls -Altcr --hide="NTUSER.*" --color=always $args }
+function lt() { ls -Altc --hide="NTUSER.*" --color=always $args }
+function lx() { ls -Fo --color=always --hide=NTUSER.* $args | grep ^-..x }
+
+if ( Test-Path alias:mkdir ) {
         Remove-Item alias:mkdir -Force;
         function mkdir() { C:\git\usr\bin\mkdir.exe $args }
-    }
+}
 
-# Huh how do we do this part right
-function mk() { mkdir -pv $args ; cd $args }
+# Huh how do we do this part right. maybe?
+function mk() { mkdir -pv $args[0] ; cd $args[1] }
 
 # }}}
 #
@@ -575,6 +678,11 @@ Set-PSReadlineOption -HistorySearchCursorMovesToEnd
 # Let's setup better history searching:
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
+
+                         # Can only define description with scriptblocks
+                         # -BriefDescription 'Search history' `
+                         # -Description 'Complete the buffer with the currently entered text.'
+
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 # Yo also Ctrl-Space never works for me. So I'm gonna put what Alt-= used to be
 # Set-PSReadLineKeyHandler -Key Ctrl+SPACEBAR -Function PossibleCompletions
@@ -1142,8 +1250,6 @@ if (Test-Path $env\FZF_DEFAULT_COMMAND -IsValid){  # {{{FZF Env vars
 
     $env:FZF_DEFAULT_OPTS = ' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"+"Press ? to toggle preview"'
 
-# --bind change:reload
-#
     # $env:FZF_CTRL_T_COMMAND = 'rg --hidden --color=ansi  --follow --no-messages --no-heading --smart-case --files --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 --glob "!.git/* -g "!**node_modules/**" . '
     $env:FZF_CTRL_T_COMMAND = 'fd --follow -d 6 -t f --hidden --exclude "node_modules" --exclude "*.dll" --exclude "*.mui" '
     $env:FZF_CTRL_T_OPTS = ' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --preview "less -RrFJKLMN {}" --ansi --header "FZF: File Browser: Press ? to toggle preview.  Alt-n to launch nvim. " --bind "alt-n:execute(nvim {}) " '
@@ -1205,9 +1311,6 @@ Remove-PSReadlineKeyHandler -Chord 'Ctrl-r'
 
 # Invoke-FuzzyEdit: {{{
 
-# Set-PSReadlineKeyHandler -Key "Ctrl+t" -Function Invoke-FuzzyEdit
-
-
 # TODO: Doesn't work
 Set-PSReadlineKeyHandler -Key "Alt+t" `
                     -BriefDescription Invoke-FuzzyEdit `
@@ -1234,21 +1337,11 @@ Set-PSReadlineKeyHandler -Chord 'Alt+r' `
     [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
 }  # }}}
 
-# {{{
-Set-PSReadlineKeyHandler -Chord 'Ctrl+x,Ctrl+g' -ScriptBlock {
+Set-PSReadlineKeyHandler -Chord 'Ctrl+x,Ctrl+g' -ScriptBlock {  # {{{
   [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
   [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(ghq list -p | fzf)")
   [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
 }  # }}}
-
-# Remove-PSReadlineKeyHandler Ctrl-r
-
-# {{{
-# Set-PSReadlineKeyHandler -Chord 'Alt+Shift+r' -ScriptBlock {
-#   [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
-#   [Microsoft.PowerShell.PSConsoleReadline]::Insert("$(Get-History | % { $_.CommandLine } | fzf)")
-#   [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
-# }  # }}}
 
 # {{{
 Set-PSReadlineKeyHandler -Key 'Ctrl+l' -ScriptBlock {
@@ -1263,7 +1356,8 @@ Set-PSReadLineKeyHandler -Key "Alt+Shift+c"  `
                          -Description 'Set the location using fd and fzf' `
                          -ScriptBlock {
       [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
-      [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(fd -t d -H  | Invoke-Fzf)")
+      # [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(fd -t d -H  | Invoke-Fzf)")
+      [Microsoft.PowerShell.PSConsoleReadline]::Insert("Invoke-FuzzySetLocation -Directory $env:HOME")
       [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
       Clear-Host
  }
@@ -1272,9 +1366,18 @@ Set-PSReadLineKeyHandler -Key "Alt+Shift+c"  `
 # Set-PSReadLineKeyHandler -Key "Alt+c" -Function fcd
 Import-Module PSFzf -ArgumentList "Ctrl+t","Alt+c","Alt+a","Ctrl+r"
 
+# Idk how to check that there's a handler
+# if get-psreadlinekeyhandler is none....
+# Set-PSReadLineKeyHandler  -Key "Ctrl-t" `
+#                           -BriefDescription "FZF File widget" `
+#                           -ScriptBlock { Invoke-Fzf -Preview "bat --color=always {}" }
+
 # }}}
 
 # PSCX: {{{
+# raises
+ # $Pscx:Preferences['TextEditor'] = 'nvim'
+
 # Dude holy fuck these are good
 Import-Module pscx
 # You now have shit like `get-clipboard` and other goodies. Also importing
@@ -1284,9 +1387,13 @@ Import-Module pscx
 
 # Python PowerShell Setup: {{{
 
+#region conda initialize
+# !! Contents within this block are managed by 'conda init' !!
+(& "C:\Users\fac\scoop\apps\miniconda3\current\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
+#endregion
 
 ###############################
-### WinPython_PS_Prompt.ps1 ###
+### WinPython_PS_Prompt.ps1 ###  {{{
 ###############################
 
 $0 = $myInvocation.MyCommand.Definition
@@ -1317,8 +1424,9 @@ if ($env:WINPYARCH.subString($env:WINPYARCH.length-5, 5) -eq 'amd64')  {
    $env:WINPYARCH = 'WIN-AMD64' }
 
 
-if (-not $env:PATH.ToLower().Contains(";"+ $env:WINPYDIR.ToLower()+ ";"))  {
- $env:PATH = "$env:WINPYDIR\Lib\site-packages\PyQt5;$env:WINPYDIR\Lib\site-packages\PySide2;$env:WINPYDIR\;$env:WINPYDIR\DLLs;$env:WINPYDIR\Scripts;$env:WINPYDIR\..\t;$env:WINPYDIR\..\t\mingw32\bin;$env:WINPYDIR\..\t\R\bin\x64;$env:WINPYDIR\..\t\Julia\bin;$env:WINPYDIR\..\n;$env:path;" }
+# if (-not $env:PATH.ToLower().Contains(";"+ $env:WINPYDIR.ToLower()+ ";"))  {
+
+#  $env:PATH = "$env:WINPYDIR\Lib\site-packages\PyQt5;$env:WINPYDIR\Lib\site-packages\PySide2;$env:WINPYDIR\;$env:WINPYDIR\DLLs;$env:WINPYDIR\Scripts;$env:WINPYDIR\..\t;$env:WINPYDIR\..\t\mingw32\bin;$env:WINPYDIR\..\t\R\bin\x64;$env:WINPYDIR\..\t\Julia\bin;$env:WINPYDIR\..\n;$env:path;" }
 
 #rem force default pyqt5 kit for Spyder if PyQt5 module is there
 if (Test-Path "$env:WINPYDIR\Lib\site-packages\PyQt5\__init__.py") { $env:QT_API = "pyqt5" }
@@ -1382,35 +1490,13 @@ if (-not (Test-Path $env:winpython_ini)) {
     "state = disabled" | Add-Content -Path $env:winpython_ini
     "[environment]" | Add-Content -Path $env:winpython_ini
     "## <?> Uncomment lines to override environment variables" | Add-Content -Path $env:winpython_ini
-    "#HOME = %%HOMEDRIVE%%%%HOMEPATH%%\Documents\WinPython%%WINPYVER%%" | Add-Content -Path $env:winpython_ini
+    # "#HOME = %%HOMEDRIVE%%%%HOMEPATH%%\Documents\WinPython%%WINPYVER%%" | Add-Content -Path $env:winpython_ini
     # "#JUPYTER_DATA_DIR = %%HOME%%" | Add-Content -Path $env:winpython_ini
     "#WINPYWORKDIR = %%HOMEDRIVE%%%%HOMEPATH%%" | Add-Content -Path $env:winpython_ini
 }
 
 
 }
-###############################
-### Set-WindowSize
-###############################
-Function Set-WindowSize {
-Param([int]$x=$host.ui.rawui.windowsize.width,
-      [int]$y=$host.ui.rawui.windowsize.heigth,
-      [int]$buffer=$host.UI.RawUI.BufferSize.heigth)
-
-    $buffersize = new-object System.Management.Automation.Host.Size($x,$buffer)
-    $host.UI.RawUI.BufferSize = $buffersize
-    $size = New-Object System.Management.Automation.Host.Size($x,$y)
-    $host.ui.rawui.WindowSize = $size
-}
-# Windows10 yelling at us with 150 40 6000
-# no more needed ?
-# Set-WindowSize 195 40 6000
-
-### Colorize to distinguish
-#$host.ui.RawUI.BackgroundColor = "DarkBlue"
-$host.ui.RawUI.BackgroundColor = "Black"
-$host.ui.RawUI.ForegroundColor = "White"
-
 # }}}
 
 # Env vars: {{{
@@ -1457,21 +1543,33 @@ function Set-MsbuildDevEnvironment
 
 # Other: {{{
 
+$env:CFLAGS="-Wno-unused-value -Wno-empty-body -Qunused-arguments -no-integrated-as"
+$env:CC="clang"
+$env:CXX="clang++"
+$env:XDG_DATA_HOME='C:\Users\fac\.local\share'
+$env:XDG_CONFIG_HOME='C:\Users\fac\.config'
+$env:LANG='en_US.UTF-8'
+$env:LANGUAGE='en_US.UTF-8'
+
 # Holy cow do i need more. I realize that i typically set these in the GUI
 # but none of these were set!
 # $env:TERM='cygwin'
-$env:EDITOR='nvim-qt'
+$env:EDITOR='nvim'
 $env:VISUAL='nvim-qt'
 $env:PAGER="less -JRrKMNLigeF"
 $env:LESSHISTSIZE=5000  # default is 100
-$env:PYTHONASYNCIODEBUG=1
-$env:PYTHONDONTWRITEBYTECODE=1
+
 $env:NPY_DISTUTILS_APPEND_FLAGS=1
+
+$env:PYTHONASYNCIODEBUG=1
+$env:PYTHONCASEOK=1
+$env:PYTHONCOERCECLOCALE="warn"
 $env:PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
+$env:PYTHONDONTWRITEBYTECODE=1
 $env:PYTHONIOENCODING='utf-8:surrogateescape'
+$env:PYTHONMALLOC="debug"
 
 $env:IPYTHONDIR="$HOME\.ipython"
-$env:PYTHONCOERCECLOCALE="warn"
 $env:SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
 $env:RIPGREP_CONFIG_PATH="$HOME\.ripgreprc"
 $env:LESSHISTSIZE=5000
@@ -1485,6 +1583,8 @@ $env:NVIM_PYTHON_LOG_FILE = "$HOME\AppData\Local\nvim-data\nvim_python.log"
 $env:NVIM_PYTHON_LOG_LEVEL = "DEBUG"
 
 Write-Output "Success: Sourced Documents/PowerShell/profile.ps1"
+
+# }}}
 
 # }}}
 

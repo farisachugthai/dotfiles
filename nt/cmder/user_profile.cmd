@@ -53,14 +53,13 @@ SET IPYTHONDIR=C:\Users\fac\.ipython
 :: Retain marks across invocations of less.
 :: --wheel-lines=N
 :: Each click of the mouse wheel moves N lines.
-SET "PAGER=less -JRKMLiegF"
+SET "PAGER=less -JRKMrLigeFW"
 :: This has priority over pager so let's set the oddball options here
-SET "LESS=JRKMLiegF --mouse --save-marks --wheel-lines=1 "
+SET "LESS=JRKMrLigeFW --mouse --save-marks --wheel-lines=1 "
 :: apparently you're really not allowed to inline comments. Wtf?
 SET "LESSEDIT=nvim -q '%F %lm'"
 SET "LESSCOLORIZER=pygmentize"
 SET "LESSHISTSIZE=5000"
-SET BAT_PAGER=""
 SET "BROWSER=C:\Program Files\Firefox Nightly\firefox.exe"
 :: }}}
 

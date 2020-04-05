@@ -4,7 +4,7 @@
 ;= rem In batch mode, jump to the end of the file
 ;= goto:eof
 ;= Add aliases below here
-alias=nvim "C:\Users\fac\projects\dotfile\nt\Cmder\user_aliases.cmd"
+alias="nvim C:\Users\fac\projects\dotfile\nt\Cmder\user_aliases.cmd"
 cat=bat $*
 clear=cls
 df=df -ah --total $*
@@ -64,16 +64,16 @@ gshsp=git stash show --patch $*
 gst=git diff --stat $*
 gsw=git switch --progress $*
 gt=git tag --list $*
-l=ls -Fh --show-control-chars --append-exe --color=always --hide=NTUSER.* $*
-la=ls -AFh --show-control-chars --color=always --append-exe --hide=NTUSER.* $*
-ldir=ls -po --color=always --append-exe --hide=NTUSER.* | grep /$ $*
-lf=ls -Fo --color=always --append-exe --hide=NTUSER.* | grep ^- $*
-ll=ls -AFhog --show-control-chars --color=always --append-exe --hide=NTUSER.* $*
-lr=ls -AlgFhtr --color=always --append-exe --hide=NTUSER.* $*
-ls=ls -Fh --show-control-chars --append-exe --color=always --hide=NTUSER.* $*
-lt=ls -Alght --color=always --append-exe --hide=NTUSER.* $*
-lx=ls -Fo --color=always --append-exe --hide=NTUSER.* | grep ^-..x $*
+l=ls -Fh --show-control-chars --color=always --hide=NTUSER.* $*
+la=ls -AFh --show-control-chars --color=always --hide=NTUSER.* $*
+ldir=ls -po --color=always --hide=NTUSER.* | grep /$ $*
+lf=ls -Fo --color=always --hide=NTUSER.* | grep ^- $*
+ll=ls -AFhog --show-control-chars --color=always --hide=NTUSER.* $*
+lr=ls -AlgFhtr --color=always --hide=NTUSER.* $*
+ls=ls -Fh --show-control-chars --color=always --hide=NTUSER.* $*
+lt=ls -Alght --color=always --hide=NTUSER.* $*
+lx=ls -Fo --color=always --hide=NTUSER.* | grep ^-..x $*
 pwd=cd
-sort=sort /L C $*
-tree=tree /F /A $*
+sort="sort /L C $*"
+tree="tree /F /A $*"
 vi=vim $*

@@ -2,7 +2,8 @@
 # Initialization file for login, non-interactive shell
 # Maintainer: Faris Chugthai
 
-# Pathadd: {{{
+# Necessary setup: {{{
+# All the stuff that has to come first
 pathadd() {
     # https://superuser.com/a/39995
     # Set PATH so it includes user's private bin directories and set them first in path
@@ -21,6 +22,11 @@ firstpath() {
     fi
 }
 
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CACHE_DIRECTORY="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+
 # }}}
 
 # Platform_Dependant: {{{
@@ -35,10 +41,13 @@ else
     export _ROOT="/usr"
 fi
 
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CACHE_DIRECTORY="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
+if [[ -n "$TERM"  ]]; then
+    if [[ -n "$TMUX" ]]; then
+        export TERM='tmux-256color'
+    else
+        export TERM='xterm-256color'
+    fi
+fi
 
 # this is what xdg data dirs is set to with no modification on my part. That has so many simple errors in it
 # /usr/share//usr/share/xsessions/plasma:/home/faris/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:
@@ -63,7 +72,7 @@ else
     umask 0022
 fi  # }}}
 
-# GNU specified directory vars: {{{
+# Builds: {{{
 # https://www.gnu.org/prep/standards/html_node/Directory-Variables.html
 export SYSCONFDIR="$_ROOT/etc"
 export BINDIR="$_ROOT/bin"
@@ -74,32 +83,46 @@ export INCDIR="$_ROOT/include"
 export INCLUDEDIR="$_ROOT/include"
 export INCLUDEDIRS="$_ROOT/include:$_ROOT/local/include"
 export LD_LIBRARY_PATH="$_ROOT/lib:$_ROOT/local/lib:$HOME/.local/lib"
-# }}}
 
-# Pkgconfig: {{{
+# TODO: Really should come up with a functino similar to pathadd that does what
+# I repeat 3 times in a row here
 if [[ -d "$_ROOT/share/pkgconfig" ]]; then
     export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"
-# TODO
-# export PKG_CONFIG_PATH=/mnt/c/Users/faris/src/neovim/.deps/usr/lib/pkgconfig
-# need a pathadd function for all these pkg_config dirs i'm finding
+fi
+
+if [[ -d "$_ROOT/lib/x86_64-linux-gnu/pkgconfig" ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/x86_64-linux-gnu/pkgconfig"
 fi
 
 export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include -fstack-protector-strong -Oz"
+if [[ -d "$_ROOT/lib/pkgconfig" ]]; then
+  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/pkgconfig"
+fi
 # }}}
 
 # Python: {{{
-
-export PYTHONIOENCODING=utf-8:surrogateescape
-export PYTHONDONTWRITEBYTECODE=1
+# Put python first because we need conda initialized right away
 export IPYTHONDIR="$HOME/.ipython"
+
+# LDflags gets defined in here and as a result numpy fails to build
+export NPY_DISTUTILS_APPEND_FLAGS=1
+
+export PYTHONASYNCIODEBUG=1
 export PYTHONCOERCECLOCALE=warn
+export PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONIOENCODING=utf-8:surrogateescape
+
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
-export PYTHONUNBUFFERED=1
+
+# This actually messes with prompt_toolkit pretty bad
+export PYTHONUNBUFFERED=0
+export RANGER_LOAD_DEFAULT_RC=False
 # }}}
 
 # Ruby: {{{
 pathadd "$HOME/.gem/bin"
+pathadd "$HOME/.gem/ruby/2.7.0/bin"
 if [[ -n "$(command -v rvm)" ]]; then
     # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
     pathadd "$HOME/.rvm/bin"
@@ -122,10 +145,10 @@ if [[ -n "$(command -v yarn)" ]]; then
         source "$HOME/.local/share/yarn/global/node_modules/tldr/bin/autocompletion.bash"
     fi
 fi
-export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"  # }}}
+export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
+# }}}
 
 # Rust: {{{
-
 # Remember to keep rust above the environment variables. If ./.cargo/bin isn't
 # added to the path when we evaluate the PAGER var, then we end up with less
 # even if we have bat installed.
@@ -145,32 +168,37 @@ if [[ -n "$(command -v go)" ]]; then
     pathadd "$_ROOT/local/go/bin"
 fi # }}}
 
+# Vim: {{{
+if [[ -n "$(command -v nvim)" ]]; then
+    export VISUAL="nvim"
+else
+    export VISUAL="vim"
+fi
+export EDITOR="$VISUAL"
+export FCEDIT=nvim
+# }}}
+
 # Miscellaneous: {{{
 export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8                 # the python default
+# export LC_CTYPE=en_US.UTF-8                 # the python default
 export LC_IDENTIFICATION=C          	# got this from `locale -c language` I don't know if set right
-export LC_COLLATE=en_US.UTF-8
-export LC_MESSAGES=en_US.UTF-8              # man i3: Prevents program output translation
-export LC_NUMERIC="en_US.UTF-8"
-export LC_MONETARY="en_US.UTF-8"
-export LC_TIME="en_US.UTF-8"
-pathadd "$_ROOT/games"
+# export LC_COLLATE=en_US.UTF-8
+# export LC_MESSAGES=en_US.UTF-8              # man i3: Prevents program output translation
+# export LC_NUMERIC="en_US.UTF-8"
+# export LC_MONETARY="en_US.UTF-8"
+# export LC_TIME="en_US.UTF-8"
+# yo honestly isn't this easier?
+export LC_ALL=C
 
+pathadd "$_ROOT/games"
 # From man bash - Bash Variables - lines ~1300
 export PROMPT_DIRTRIM=3
 export TIMEFORMAT=$'\nreal\t%3lR\nuser\t%3lU\nsys\t%3lS='
 export EXECIGNORE=.dll,.mui,.config  # fuckin windows
-# }}}
-
-# Other Environment Variables: {{{
-
+export COLORTERM='truecolor'
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-if [[ -n "$(command -v cheat)" ]];then
-    export CHEATCOLORS=true
-    export CHEATPATH="$HOME/python/tutorials:$HOME/python/site-packages:$CHEATPATH"
-fi
+test "$(command -v clang)" && export CC=clang; export CXX=clang++
 
 # Idk if this is or isn't a bad idea
 export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/blib"
@@ -179,24 +207,8 @@ if [[ -d "/mnt/c/Users/faris/src/neovim/.deps/usr/lib" ]]; then  # literally onl
 fi
  
 # Emacs doesn't read Xresources files????
-export XENVIRONMENT=~/.Xresources  # }}}
-
-# Tmp: {{{
-if [[ -n "$TMPDIR" ]]; then
-    export TMP="$TMPDIR"
-else
-    if [[ -s "$_ROOT/tmp" ]]; then
-        # don't have tmp set to more than one thing dingus
-        export TMP="$_ROOT/var/tmp"
-        export TMPDIR="$_ROOT/var/tmp"
-    else
-        export TMPDIR=/tmp
-        export TMP=/tmp
-    fi
-fi
-export TEMP="$TMP"  # }}}
-
-# More other: {{{
+export XENVIRONMENT=~/.Xresources
+if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
 export POWERSHELL_TELEMETRY_OPTOUT=1
@@ -216,10 +228,29 @@ pathadd "$_ROOT/local/bin"
 export MANPAGER=bat
 # export BAT_STYLE="OneHalfDark"
 export PYGMENTIZE_STYLE="InkPot"
+
+_byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
 # }}}
 
-# Source The Bashrc Last: {{{
+# Tmp: {{{
+if [[ -n "$TMPDIR" ]]; then
+    export TMP="$TMPDIR"
+else
+    if [[ -s "$_ROOT/tmp" ]]; then
+        # don't have tmp set to more than one thing dingus
+        export TMP="$_ROOT/var/tmp"
+        export TMPDIR="$_ROOT/var/tmp"
+    else
+        export TMPDIR=/tmp
+        export TMP=/tmp
+    fi
+fi
+export TEMP="$TMP"
+export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
+# }}}
+
+# Source The Bashrc Last:
 # shellcheck source=/home/faris/.bashrc
-if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi   # }}}
+if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi
 
 # Vim: set fdm=marker:

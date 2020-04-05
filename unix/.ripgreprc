@@ -1,7 +1,8 @@
 # ripgrep
 # Vim: set commentstring=#\ %s:
 
-# Options: {{{1
+# Options: {{{
+
 # Globs: {{{2
 # -g '!.git/*'
 # -g '!*/.svn'
@@ -10,17 +11,35 @@
 # -g '!*/.DS_Store'
 # -g '!node_modules/*'
 # --glob=!.git/*
---glob=!tags
 
 --glob-case-insensitive
 # }}}
 
 # Aug 19, 2019: Did you know this was a setting?
---path-separator=/
-
 --hidden
 
 --smart-case
+
+# Additional Types: {{{
+
+# add new types to search by
+# type-add g:*.{pug,jade}
+
+# type-add pl:*.{html,hbs,pug}
+
+--type-add
+ts:*.d.ts
+
+# type-add ec:*.spec.{ts,tsx,js,jsx}
+
+--type-add
+tsx:*.tsx
+
+--type-add
+jsx:*.jsx
+
+# }}}
+
 # }}}
 
 # Limiting output: {{{1
@@ -37,7 +56,7 @@
 --max-columns-preview
 
 # if you need to debug run --messages on the command line.
-# --no-messages
+--no-messages
 
 --no-ignore-messages
 # Jun 04, 2019: Let's make this better for fzf in nvim
@@ -57,51 +76,8 @@
 # --with-filename
 # }}}
 
-# Auto hybrid regex: {{{1
-# Aug 01, 2019: Dude check this shit out
-
-# When this flag is used, ripgrep will dynamically choose between supported regex
-# engines depending on the features used in a pattern. When ripgrep chooses a
-# regex engine, it applies that choice for every regex provided to ripgrep (e.g.,
-# via multiple -e/--regexp or -f/--file flags).
-
-# As an example of how this flag might behave, ripgrep will attempt to use
-# its default finite automata based regex engine whenever the pattern can be
-# successfully compiled with that regex engine. If PCRE2 is enabled and if the
-# pattern given could not be compiled with the default regex engine, then PCRE2
-# will be automatically used for searching. If PCRE2 isn't available, then this
-# flag has no effect because there is only one regex engine to choose from.
-
-# In the future, ripgrep may adjust its heuristics for how it decides which
-# regex engine to use. In general, the heuristics will be limited to a static
-# analysis of the patterns, and not to any specific runtime behavior observed
-# while searching files.
-
-# The primary downside of using this flag is that it may not always be obvious
-# which regex engine ripgrep uses, and thus, the match semantics or performance
-# profile of ripgrep may subtly and unexpectedly change. However, in many cases,
-# all regex engines will agree on what constitutes a match and it can be nice
-# to transparently support more advanced regex features like look-around and
-# backreferences without explicitly needing to enable them.
-
-# This flag can be disabled with --no-auto-hybrid-regex.
-# --auto-hybrid-regex
-# }}}
-
-# Colors: {{{1
-# Colors are limited to one of eight choices: red, blue, green, cyan,
-# magenta, yellow, white and black. Styles are limited to nobold,
-# bold, nointense, intense, nounderline or underline.
-
-# The format of the flag is {type}:{attribute}:{value}.
-
-# {type} should be one of path, line, column or match.
-
-# {attribute} can be fg, bg or style.
-
-# {value} is either a color (for fg and bg) or a text style
-
-# A special format, {type}:none, will clear all color settings for {type}.
+# Colors: {{{
+# doesn't work
 # --colors=path:fg:#7daea3
 --colors=path:fg:blue
 # --colors=line:bg:#282828
@@ -109,7 +85,7 @@
 # --colors=line:fg:#ebdbb2
 --colors=line:fg:white
 
---colors=column:style:underline
+# --colors=column:style:underline
 --colors=column:fg:cyan
 
 --colors=match:style:intense

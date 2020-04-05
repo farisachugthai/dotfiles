@@ -18,15 +18,22 @@
 	name = Faris A. Chugthai
 
 [credential "helperselector"]
-	selected = wincred
+	selected = store
+	; selected = wincred
 
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+
 [gui]
 	recentrepo = C:/Users/fac/projects/dotfiles
+	recentrepo = C:/Users/fac/scoop/persist/PyCharm-portable/profile/config/settingsRepository/repository
+
 [guitool "nvim"]
 	cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'
 	confirm = yes
+
+[credential]
+	helper = manager

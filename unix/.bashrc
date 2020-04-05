@@ -9,11 +9,14 @@ case $- in
 esac
 
 pathadd() {
-    if [ -d "$1" ] && [ ":$PATH:" != *":$1:"* ]; then
-    PATH="${PATH:+"$PATH:"}$1"
+    # https://superuser.com/a/39995
+    # Set PATH so it includes user's private bin directories and set them first in path
+    # This checks whether the directory exists & is a directory before adding it, which you may not care about.
+    # Note that PATH should already be marked as exported, so reexporting is not needed.
+    if [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
     fi
 }
-
 # IDK if this is working correctly .local bin isnt in termuxs path
 firstpath() {
     # Check if a dir exists and if it does, prepend it to the $PATH.
@@ -30,81 +33,21 @@ else
 fi
 # }}}
 
-# Python: {{{
-export PYTHONASYNCIODEBUG=1
-# Put python first because we need conda initialized right away
-export PYTHONDONTWRITEBYTECODE=1
-# LDflags gets defined in here and as a result numpy fails to build
-export NPY_DISTUTILS_APPEND_FLAGS=1
-export PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
-export PYTHONIOENCODING=utf-8:surrogateescape
-export IPYTHONDIR="$HOME/.ipython"
-export PYTHONCOERCECLOCALE=warn
-
-if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
-# This actually messes with prompt_toolkit pretty bad
-export PYTHONUNBUFFERED=0
-export RANGER_LOAD_DEFAULT_RC=False
-# }}}
-
-# >>> conda initialize >>>  {{{
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [[ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]]; then
-    source "$HOME/miniconda3/etc/profile.d/conda.sh"
-    # commented out by conda initialize
-    elif [[ -d "$HOME/miniconda3/bin" ]]; then
-    pathadd "$HOME/miniconda3/bin"
-    fi
-fi
-unset __conda_setup
-
-if [[ -d ~/google-cloud-sdk ]]; then
-    # shellcheck source=~/google-cloud-sdk/completion.bash.inc
-    source "$HOME/google-cloud-sdk/completion.bash.inc"
-    # shellcheck source=~/google-cloud-sdk/path.bash.inc
-    source "$HOME/google-cloud-sdk/path.bash.inc"
-fi 
-# }}}
-
-# Defaults in Ubuntu bashrcs: {{{
-export COLORTERM='truecolor'
-
+# Builds: {{{
 bind -r "\C-g"
 bind -f "$HOME/.inputrc"
 
 [[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
-export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
-# }}}
-
-# Vim: {{{
-if [[ -n "$(command -v nvim)" ]]; then
-    export VISUAL="nvim"
-else
-    export VISUAL="vim"
-fi
-export EDITOR="$VISUAL"
-export FCEDIT=nvim
-# Here because i include it on account of nvim
-pathadd "$HOME/.gem/ruby/2.7.0/bin"
-# }}}
-
-# Builds: {{{
 
 # Shellcheck
 if [[ -n "$(command -v shellcheck)" ]]; then
   export SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
 fi
-if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
+
 test "$(command -v luarocks)" && eval "$(luarocks path --bin)"
-export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 # }}}
 
 # History: {{{
-
 # Don't put duplicate lines or lines starting with space in the history.
 export HISTCONTROL=ignoreboth
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -215,7 +158,7 @@ export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
 export NODE_PRESERVE_SYMLINKS=1
 
 if [[ -n "$(command -v yarn)" ]]; then
-    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    pathadd "$HOME/.yarn/bin"
 fi
 # }}}
 
@@ -263,8 +206,8 @@ _completion_loader()
     . "$_ROOT/share/bash-completion/completions/*" >/dev/null 2>&1 && return 124
 }
 
-# oh also fzf
-complete -D -F _completion_loader -o bashdefault -o  default -o plusdirs -A command -F _fzf_complete
+# oh also fzf. but -A command is a bad idea so don't do that
+complete -D -F _completion_loader -o bashdefault -o  default -o plusdirs -F _fzf_complete -F _longopt
 
 # modify how completions are created by default
 compopt -D -o bashdefault -o dirnames -o plusdirs -o default
@@ -300,38 +243,54 @@ obviously_a_terrible_idea() {
     done
 }
 
-. "$_ROOT/share/bash-completion/bash_completion"
+# so i'm gonna leave this commented out. this is explicitly sourced on WSL.
+# i need to double check that it isn't on termux. needs to be commented out on WSL though because otherwise it emits a never ending spew of errors
+# . "$_ROOT/share/bash-completion/bash_completion"
 
 # }}}
 
 # Prompt: {{{
-export RESET="\033[0m"
-export PS2="\001\033[32m\002  ...:\001$RESET\002 "
 
+# CUSTOM BASH COLOR PROMPT
+# 30m - Black
+# 31m - Red
+# 32m - Green
+# 33m - Yellow
+# 34m - Blue
+# 35m - Purple
+# 36m - Cyan
+# 37m - White
+# 0 - Normal
+# 1 - Bold
 export BLACK="\[\033[0;30m\]"
 export BLACKBOLD="\[\033[1;30m\]"
+export RED="\[\033[0;31m\]"
 export REDBOLD="\[\033[1;31m\]"
+export GREEN="\[\033[0;32m\]"
 export GREENBOLD="\[\033[1;32m\]"
+export YELLOW="\[\033[0;33m\]"
 export YELLOWBOLD="\[\033[1;33m\]"
+export BLUE="\[\033[0;34m\]"
 export BLUEBOLD="\[\033[1;34m\]"
 export PURPLE="\[\033[0;35m\]"
 export PURPLEBOLD="\[\033[1;35m\]"
 export CYAN="\[\033[0;36m\]"
 export CYANBOLD="\[\033[1;36m\]"
-export RED="\[\e[31m\]"
+export WHITE="\[\033[0;37m\]"
+export WHITEBOLD="\[\033[1;37m\]"
+
+export RESET="\033[0m"
+export PS2="\001\033[32m\002  ...:\001$RESET\002 "
 export LIGHT_RED="\[\e[91m\]"
 export ORANGE="\[\e[38;5;208m\]"
-export yellow="\[\033[0;33m\]"
-export YELLOW="\[\e[38;5;214m\]"
+# Different shade
+export yellow="\[\e[38;5;214m\]"
 export GREEN="\[\e[38;5;71m\]"
 export UGREEN="\[\e[38;5;71;1;4m\]"
 export SALMON="\[\e[38;5;167m\]"
 export BROWN="\[\e[38;5;166m\]"
-export CYAN="\[\e[36m\]"
-export WHITE="\[\e[97m\]"
-export BLUE="\[\e[38;5;116m\]"
 
-git_branch() {
+git_branch() {   # {{{
     if branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"; then
         [[ -n "$(git status --porcelain 2> /dev/null)" ]] && echo -n "\[$LIGHT_RED\]Dirty: "
         echo -ne "\[$CYAN\]$branch "
@@ -340,7 +299,7 @@ git_branch() {
             echo -en "\[$GREEN\]$(git show-branch --color=always --reflog=1)"
         fi
     fi
-}
+}  # }}}
 
 _venv() {
     [[ -n "$VIRTUAL_ENV" ]] && echo -n "\[$CYAN\]$(basename $VIRTUAL_ENV) "
@@ -352,7 +311,7 @@ _status() {
     [[ $error != 0 ]] && echo -n "\[$RED\]$error"
 }
 
-uhw() {
+uhw() {   # {{{
     # Named so because the standard escapes in a prompt are \u@\h \w
     # You know. For username, hostname, working directory.
     echo -n "\[$WHITE\]\u @ \[$BLUE\]\h \[$BROWN\]\w "
@@ -361,23 +320,30 @@ uhw() {
     # Just realized that \$ is the root normal user check that symbol used to be
     # Also \j is jobs. i really didn't need that job function either!
     echo -n "\[$SALMON\]\j "
-}
+}  # }}}
 
+# Git, PS1 and Prompt Command: {{{
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWUPSTREAM="auto verbose git"
 export GIT_PS1_DESCRIBE_STYLE="tag"
+
 # TODO: removing $(git_branch) for the time being because this shit doesn't
 # re-evaluate when you change dir... Which is shitty because the cwd does
 # so it's objectively possible but idk how or what to do.
 # fuck were doing something wrong because status doesnt re-evaluate on every prompt either
+# Git bash is really struggling with this one.
 export PS1="$(_venv)$(uhw)\n\[$UGREEN\]In [\#] \[$RED\]\$ \[$RESET\]"
-# $(_status)
 
 # I got so close. But i don't even know how to debug whatever problem the
-# below is having
+# below is having. When used in prompt_command, git_ps1 needs 2 to 3 arguments.
+
 # export PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$yellow`basename $VIRTUAL_ENV`$RESET]}" "$PS1 \\\$" "[%s]"'
+# PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[$YELLOW`basename $VIRTUAL_ENV`$COLOR_OFF]}" "$TMP_PS1" "[%s]"'
+# }}}
+
 # }}}
 
 # Vim: set foldlevelstart=0 fdm=marker et sw=4 sts=4 ts=4:

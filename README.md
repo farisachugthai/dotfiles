@@ -22,13 +22,13 @@ programming and conventional Unix terminal workflows.
 
 Configurations exist for:
 
-* Emacs {in multiple locations}
- 
-* [ansible](unix/.ansible.cfg)
+- Emacs {in multiple locations}
 
-* A 1000+ line [dircolors](unix/.dircolors)
+- [ansible](unix/.ansible.cfg)
 
-* [Modifications](unix/.profile) [for](unix/.bashrc) [bash](unix/.bash_logout)
+- A 1000+ line [dircolors](unix/.dircolors)
+
+- [Modifications](unix/.profile) [for](unix/.bashrc) [bash](unix/.bash_logout)
   [are](unix/.bashrc.d/alias.bash) [abundant](unix/.bashrc.d/functions.bash).
 
 In addition, global configurations for [git](./unix/.config/git)
@@ -55,7 +55,7 @@ by means of decoding.
 A simple fix is to set the following in the
 [.gitattributes](./unix/.config/git/aattributes) file.
 
-`*.ps1    text eol=input diff`
+`*.ps1 text eol=input diff`
 
 eol=input is only set because powershell needs `DOS` style lines, but I don't
 want the entire repository filled with differing line endings on Unix computers.
@@ -125,8 +125,8 @@ Hopefully these tips will help someone else one day.
    wasted a ton of time as a result. Then move forward.
 
 2. View your setup as it's individual components. This will be akin to unit
-   testing, and when you're in the middle of doing something will, *unfortunately*,
-   be the integration test.
+   testing, and when you're in the middle of doing something will,
+   _unfortunately_, be the integration test.
 
    - However doing this correctly can save you a lot of headache. Take
      concatenating a file as a simple example. To page a file, requires cmd
@@ -134,16 +134,16 @@ Hopefully these tips will help someone else one day.
      git, ensure that env var is consistent with the rest of your setup.
      Not setting the `$TERM` envvar may cause issues here.
 
-      - Sticking with the pager example. `Git` called `bat`, a new version of `cat`
-        rewritten in rust. This called `less` to open the file. If `cmder`,
-        `powershell`, or `cmd` hadn't decoded/encoded the file incorrectly,
-        the colorscheme of the file would render the file practically illegible.
-        If this occurred while using `ipython` to run system commands, I would,
-        on occasion, have 5 different levels of the command to debug.
+     - Sticking with the pager example. `Git` called `bat`, a new version of `cat`
+       rewritten in rust. This called `less` to open the file. If `cmder`,
+       `powershell`, or `cmd` hadn't decoded/encoded the file incorrectly,
+       the colorscheme of the file would render the file practically illegible.
+       If this occurred while using `ipython` to run system commands, I would,
+       on occasion, have 5 different levels of the command to debug.
 
 3. A user can set parameters in the GUI using Control Panel as well as in the
-   registry. Registry problems are functionally impossible to debug, *at least
-   so far I've found*, and as a result, it will frequently be more easy to
+   registry. Registry problems are functionally impossible to debug, _at least
+   so far I've found_, and as a result, it will frequently be more easy to
    recover from mistakes in classic ini-style config files.
 
 4. Use `*nix` line endings. Trust me.
@@ -160,7 +160,8 @@ Interactively defining an alias on the cmdline destroys the alias file.
 It looks like an encoding problem which is definitely possible
 as nvim is set to automatically assume utf-8, as is the windows terminal and cmder.
 
-`chcp` is included as one of the first commands of my [user_profile.cmd](./nt/cmder/user_profile.cmd).
+`chcp` is included as one of the first commands of my
+[user_profile.cmd](./nt/cmder/user_profile.cmd).
 
 However, if the alias command provided by ConEmu isn't aware of that, then
 any input from the terminal to the file will corrupt it.
@@ -172,7 +173,6 @@ So be careful and simply define them non-interactively!
 While most people consider dotfiles very personal, I've posted as many as I
 found reasonable with the intention of encouraging some discussion on how
 to solve common problems more seemlessly.
-
 
 ## License
 

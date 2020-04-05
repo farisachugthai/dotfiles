@@ -1,12 +1,15 @@
 # --theme='base16'
+--theme OneHalfDark
+
+--wrap character
 
 # --paging=never
 
-# -m .conf:ini
+-m .conf:ini
 
-# -m .rkt:Lisp
+-m .rkt:Lisp
 
-# --style full
+--style full
 
 #     -m, --map-syntax <from:to>...
 #             Map a file extension or file name to an existing syntax. For example, to highlight
@@ -37,18 +40,5 @@
 #             Specify the text-wrapping mode (*auto*, never, character). The '--terminal-width' option
 #             can be used in addition to control the output width.
 
---theme OneHalfDark
-
---wrap character
-
 # --pager "less -JRKMLigeFrW --mouse --no-histdups --save-marks "
---paging never
-
--m .conf:ini
-
--m .rkt:Lisp
-
---style full
-
-
 # Vim: set ft=config cms=#\ %s:

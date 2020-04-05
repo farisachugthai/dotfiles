@@ -37,7 +37,7 @@ cs () {  # cs: Run cd and ls at once: {{{1
 }
 # }}}
 
-ssh-day () {  # ssh-day: Decrypt the ssh priv key for the day: {{{1
+ssh-day () {  # ssh-day: Decrypt the ssh priv key for the day: {{{
     gpg-agent --daemon -q --enable-ssh-support
 
     # dont force a restart any more
@@ -167,7 +167,7 @@ setup_ssh() {
 }
 # }}}
 
-filetree() {  # {{{1
+filetree() {  # {{{
     if [[ -n "$1" ]]; then
         ls -R "$1" | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
     else
@@ -176,7 +176,7 @@ filetree() {  # {{{1
 }
 # }}}
 
-recursive_line_count() {  # {{{1
+recursive_line_count() {  # {{{
     if [[ -z "$1" ]]; then
         fd -H --follow -t f . | xargs cat | wc -l
     else
@@ -188,3 +188,12 @@ recursive_line_count() {  # {{{1
 en() {  # {{{
     env | fzf
 }  # }}}
+
+PATH() {  # {{{
+    # Let's try this again
+    for i in "$(cut -d ':' $PATH)"; do
+        echo -en "$i\n"
+    done
+}
+# }}}
+
