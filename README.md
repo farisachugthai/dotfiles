@@ -86,6 +86,7 @@ export LESSHISTSIZE=5000  # default is 100
 # Oh shit! --mouse is a bash>5 feature!
 if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
 
+
 # Thank byobu for these ones. Man pages now look pretty awesome
 export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
 export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
@@ -113,7 +114,52 @@ fi
 This is just a simple example of how extensive some frequently used options
 have gotten.
 
-### Porting to Windows
+### Useful ANSI escape sequences
+
+```bash
+
+# CUSTOM BASH COLOR PROMPT
+# 30m - Black
+# 31m - Red
+# 32m - Green
+# 33m - Yellow
+# 34m - Blue
+# 35m - Purple
+# 36m - Cyan
+# 37m - White
+# 0 - Normal
+# 1 - Bold
+export BLACK="\[\033[0;30m\]"
+export BLACKBOLD="\[\033[1;30m\]"
+export RED="\[\033[0;31m\]"
+export REDBOLD="\[\033[1;31m\]"
+export GREEN="\[\033[0;32m\]"
+export GREENBOLD="\[\033[1;32m\]"
+export YELLOW="\[\033[0;33m\]"
+export YELLOWBOLD="\[\033[1;33m\]"
+export BLUE="\[\033[0;34m\]"
+export BLUEBOLD="\[\033[1;34m\]"
+export PURPLE="\[\033[0;35m\]"
+export PURPLEBOLD="\[\033[1;35m\]"
+export CYAN="\[\033[0;36m\]"
+export CYANBOLD="\[\033[1;36m\]"
+export WHITE="\[\033[0;37m\]"
+export WHITEBOLD="\[\033[1;37m\]"
+
+export RESET="\033[0m"
+export PS2="\001\033[32m\002  ...:\001$RESET\002 "
+export LIGHT_RED="\[\e[91m\]"
+export ORANGE="\[\e[38;5;208m\]"
+# Different shade
+export yellow="\[\e[38;5;214m\]"
+export GREEN="\[\e[38;5;71m\]"
+export UGREEN="\[\e[38;5;71;1;4m\]"
+export SALMON="\[\e[38;5;167m\]"
+export BROWN="\[\e[38;5;166m\]"
+
+```
+
+## Porting to Windows
 
 Has been nothing short of a massive pain in the ass.
 

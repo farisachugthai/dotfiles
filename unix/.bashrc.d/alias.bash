@@ -3,7 +3,6 @@
 
 # cd aliases: {{{1
 # Make navigation easier
-alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias cd..='cd ..'

@@ -8,7 +8,7 @@ mk() {  # mk: Create a new directory and enter it: {{{1
 }
 # }}}
 
-extract() {  # extract: Handy Extract Program: {{{1
+extract() {  # extract: Handy Extract Program: {{{
 if [ -f "$1" ]; then
     case "$1" in
         *.tar.bz2) tar xvjf "$1" ;;
@@ -111,32 +111,37 @@ gpip3() {  # {{{
     export PIP_REQUIRE_VIRTUALENV=1 > /dev/null
 }
 # }}}
-# Oct 04, 2018
-# in a manner similar to __fzf__history__ display all of hist to std out
-# noninteractive tho
-# hist_std_out: Edit previously run commands: {{{1
+
+# hist_std_out: Edit previously run commands: {{{
 hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
 }
 # }}}
 
-# Other TODO: Possibly rewrite the man function here. IE if nvim then do that,
-# elif most, else less
-
-# bak: Back up a file using bracket expansion I.E. mv foo.py foo.py.bak: {{{1
+# bak: Back up a file using bracket expansion I.E. mv foo.py foo.py.bak: {{{
 bak() {
     mv $1{,.bak}
 }
 # }}}
 
-# nman: send `man` to nvim: {{{1
-# I'm also gonna make it so that it stops shadowing the builtin. You have the choice if you want.
+# nman: send `man` to nvim: {{{
 nman(){
-    nvim -c "Man $1" -c'wincmd T'
+    if [[ -z "$1" ]]; then
+        ${EDITOR:-nvim}
+    elif [[ -n "$2" ]]; then
+        nvim -c "Man $1" -c'wincmd T' -- "$@"
+    else
+        nvim -c "Man $1" -c'wincmd T'
+    fi
 }
+
+complete -A helptopic nman
+
+# for convenience
+alias h=nman
 # }}}
 
-# lk: {{{1 show symbolic links using fd or fallback to grep
+# lk: {{{ show symbolic links using fd or fallback to grep
 lk() {
     if [[ -n "$(command -v fd)" ]]; then
         ls -Fo --dereference -A "$@" | fd --type symlink --maxdepth 1
@@ -146,7 +151,7 @@ lk() {
 }
 # }}}
 
-# ssh-agent: {{{1
+# ssh-agent: {{{
 # Refactored https://help.github.com/en/articles/working-with-ssh-key-passphrases
 # to be one function and make variables they unset local so we don't need to
 setup_ssh() {

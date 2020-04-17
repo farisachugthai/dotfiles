@@ -94,10 +94,21 @@ if [[ -d "$_ROOT/lib/x86_64-linux-gnu/pkgconfig" ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/x86_64-linux-gnu/pkgconfig"
 fi
 
-export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include -fstack-protector-strong -Oz"
+export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include -fstack-protector-strong -O2"
+
 if [[ -d "$_ROOT/lib/pkgconfig" ]]; then
   export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/pkgconfig"
 fi
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+test "$(command -v clang)" && export CC=clang; export CXX=clang++
+
+# Idk if this is or isn't a bad idea
+export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/lib -lncursesw -liconv -L$_ROOT/lib/python3.8/config-3.8/ -lpython3.8 -lcrypt -ldl"
+
+if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
+
 # }}}
 
 # Python: {{{
@@ -114,6 +125,9 @@ export PYTHONDONTWRITEBYTECODE=1
 export PYTHONIOENCODING=utf-8:surrogateescape
 
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
+
+export PYTHONPROFILEIMPORTTIME=1
+export PYTHONSTARTUP="$HOME/site_customize.py"
 
 # This actually messes with prompt_toolkit pretty bad
 export PYTHONUNBUFFERED=0
@@ -146,6 +160,7 @@ if [[ -n "$(command -v yarn)" ]]; then
     fi
 fi
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
+export NODE_PRESERVE_SYMLINKS=1
 # }}}
 
 # Rust: {{{
@@ -188,7 +203,13 @@ export LC_IDENTIFICATION=C          	# got this from `locale -c language` I don'
 # export LC_MONETARY="en_US.UTF-8"
 # export LC_TIME="en_US.UTF-8"
 # yo honestly isn't this easier?
-export LC_ALL=C
+# export LC_ALL=C
+# holy fuck
+# Python runtime initialized with LC_CTYPE=C (a locale with default ASCII
+# encoding), which may cause Unicode compatibility problems. Using C.UTF-8,
+# C.utf8, or UTF-8 (if available) as alternative Unicode-compatible locales
+# is recommended.
+export LC_ALL=C.UTF-8
 
 pathadd "$_ROOT/games"
 # From man bash - Bash Variables - lines ~1300
@@ -196,19 +217,8 @@ export PROMPT_DIRTRIM=3
 export TIMEFORMAT=$'\nreal\t%3lR\nuser\t%3lU\nsys\t%3lS='
 export EXECIGNORE=.dll,.mui,.config  # fuckin windows
 export COLORTERM='truecolor'
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-test "$(command -v clang)" && export CC=clang; export CXX=clang++
-
-# Idk if this is or isn't a bad idea
-export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/blib"
-if [[ -d "/mnt/c/Users/faris/src/neovim/.deps/usr/lib" ]]; then  # literally only true on wsl in win10
-   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/mnt/c/Users/faris/src/neovim/.deps/usr/lib"
-fi
- 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources
-if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi
 
 export POWERSHELL_TELEMETRY_OPTOUT=1
@@ -229,7 +239,6 @@ export MANPAGER=bat
 # export BAT_STYLE="OneHalfDark"
 export PYGMENTIZE_STYLE="InkPot"
 
-_byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
 # }}}
 
 # Tmp: {{{
@@ -247,6 +256,36 @@ else
 fi
 export TEMP="$TMP"
 export GREP_COLORS="ms=01;38;5;202:mc=01;31:sl=:cx=:fn=01;38;5;132:ln=32:bn=32:se=00;38;5;242"
+# }}}
+
+# Colors: {{{
+
+export BLACK="\[\033[0;30m\]"
+export BLACKBOLD="\[\033[1;30m\]"
+export RED="\[\033[0;31m\]"
+export REDBOLD="\[\033[1;31m\]"
+export GREEN="\[\033[0;32m\]"
+export GREENBOLD="\[\033[1;32m\]"
+export YELLOW="\[\033[0;33m\]"
+export YELLOWBOLD="\[\033[1;33m\]"
+export BLUE="\[\033[0;34m\]"
+export BLUEBOLD="\[\033[1;34m\]"
+export PURPLE="\[\033[0;35m\]"
+export PURPLEBOLD="\[\033[1;35m\]"
+export CYAN="\[\033[0;36m\]"
+export CYANBOLD="\[\033[1;36m\]"
+export WHITE="\[\033[0;37m\]"
+export WHITEBOLD="\[\033[1;37m\]"
+export RESET="\033[0m"
+export PS2="\001\033[32m\002  ...:\001$RESET\002 "
+export LIGHT_RED="\[\e[91m\]"
+export ORANGE="\[\e[38;5;208m\]"
+# Different shade
+export yellow="\[\e[38;5;214m\]"
+export GREEN="\[\e[38;5;71m\]"
+export UGREEN="\[\e[38;5;71;1;4m\]"
+export SALMON="\[\e[38;5;167m\]"
+export BROWN="\[\e[38;5;166m\]"
 # }}}
 
 # Source The Bashrc Last:

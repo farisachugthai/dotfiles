@@ -45,6 +45,9 @@ if [[ -n "$(command -v shellcheck)" ]]; then
 fi
 
 test "$(command -v luarocks)" && eval "$(luarocks path --bin)"
+
+export BYOBU_CONFIG_DIR="$HOME/.config/byobu"
+export BYOBU_PREFIX_DIR="$_ROOT/share/byobu"
 # }}}
 
 # History: {{{
@@ -131,16 +134,16 @@ lesskey -o ~/.lesskey.output ~/.lesskey
 export LESS="-JRKMrLIgeFW  -j0.5 --no-histdups --save-marks --follow-name -k $HOME/.lesskey.output"
 
 export BAT_PAGER="less $LESS"
-export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode – red
-export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode – bold light orange
+export LESS_TERMCAP_mb=$(printf '\e[01;31m')       # enter blinking mode ... red
+export LESS_TERMCAP_md=$(printf '\e[01;38;5;180m') # enter double-bright mode ... bold light orange
 export LESS_TERMCAP_me=$(printf '\e[0m')       # turn off all appearance modes (mb, md, so, us)
 export LESS_TERMCAP_se=$(printf '\e[0m')       # leave standout mode
-export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode – orange background highlight (or italics)
+export LESS_TERMCAP_so=$(printf '\e[03;38;5;202m') # enter standout mode ... orange background highlight (or italics)
 export LESS_TERMCAP_ue=$(printf '\e[0m')       # leave underline mode
-export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode – underline aubergine
+export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode ... underline aubergine
 # }}}
 
-# JavaScript: {{{1
+# JavaScript: {{{
 
 # Export nvm if the directory exists
 if [[ -d "$HOME/.nvm" ]]; then
@@ -153,12 +156,6 @@ if [[ -d "$HOME/.nvm" ]]; then
     pathadd "$HOME/.nvm"  # Not a ton of good reasons but good to see it in path
     npm config delete prefix
     nvm use default --delete-prefix
-fi
-export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_log.js"
-export NODE_PRESERVE_SYMLINKS=1
-
-if [[ -n "$(command -v yarn)" ]]; then
-    pathadd "$HOME/.yarn/bin"
 fi
 # }}}
 
@@ -174,10 +171,6 @@ fi
 # }}}
 
 # Sourced files: {{{
-# termux sources this in at $PREFIX/etc/profile so check that wsl does too
-# shellcheck source=/usr/share/bash-completion/bash_completion
-# test  -f "$_ROOT/share/bash-completion/bash_completion" && source "$_ROOT/share/bash-completion/bash_completion"
-
 firstpath "$HOME/bin"
 firstpath "$HOME/.local/bin"
 
@@ -207,7 +200,7 @@ _completion_loader()
 }
 
 # oh also fzf. but -A command is a bad idea so don't do that
-complete -D -F _completion_loader -o bashdefault -o  default -o plusdirs -F _fzf_complete -F _longopt
+complete -D -F _completion_loader -o bashdefault -o  default -o plusdirs -F _fzf_complete
 
 # modify how completions are created by default
 compopt -D -o bashdefault -o dirnames -o plusdirs -o default
@@ -237,58 +230,26 @@ complete -A setopt -A shopt set
 # complete -F _known_hosts traceroute
 complete -F _known_hosts -A hostname -F _longopt ssh
 
+complete -A export env -F _terms -F _longopt env
+
 obviously_a_terrible_idea() {
-    for i in /usr/share/bash-completion/completions/*; do
+    for i in $_ROOT/share/bash-completion/completions/*; do
         source "$i"
     done
 }
 
-# so i'm gonna leave this commented out. this is explicitly sourced on WSL.
-# i need to double check that it isn't on termux. needs to be commented out on WSL though because otherwise it emits a never ending spew of errors
-# . "$_ROOT/share/bash-completion/bash_completion"
+# other completion things i wanted to add
+complete -F _fzf_path_completion -o dirnames -o filenames l
+complete -F _fzf_path_completion -o dirnames -o filenames la
+complete -F _fzf_path_completion -o dirnames -o filenames ll
+complete -F _fzf_path_completion -o dirnames -o filenames lt
+complete -F _fzf_path_completion -o dirnames -o filenames lr
+complete -F _fzf_path_completion -o dirnames -o filenames cd
+complete -F _fzf_path_completion -o dirnames -o filenames cs
 
 # }}}
 
 # Prompt: {{{
-
-# CUSTOM BASH COLOR PROMPT
-# 30m - Black
-# 31m - Red
-# 32m - Green
-# 33m - Yellow
-# 34m - Blue
-# 35m - Purple
-# 36m - Cyan
-# 37m - White
-# 0 - Normal
-# 1 - Bold
-export BLACK="\[\033[0;30m\]"
-export BLACKBOLD="\[\033[1;30m\]"
-export RED="\[\033[0;31m\]"
-export REDBOLD="\[\033[1;31m\]"
-export GREEN="\[\033[0;32m\]"
-export GREENBOLD="\[\033[1;32m\]"
-export YELLOW="\[\033[0;33m\]"
-export YELLOWBOLD="\[\033[1;33m\]"
-export BLUE="\[\033[0;34m\]"
-export BLUEBOLD="\[\033[1;34m\]"
-export PURPLE="\[\033[0;35m\]"
-export PURPLEBOLD="\[\033[1;35m\]"
-export CYAN="\[\033[0;36m\]"
-export CYANBOLD="\[\033[1;36m\]"
-export WHITE="\[\033[0;37m\]"
-export WHITEBOLD="\[\033[1;37m\]"
-
-export RESET="\033[0m"
-export PS2="\001\033[32m\002  ...:\001$RESET\002 "
-export LIGHT_RED="\[\e[91m\]"
-export ORANGE="\[\e[38;5;208m\]"
-# Different shade
-export yellow="\[\e[38;5;214m\]"
-export GREEN="\[\e[38;5;71m\]"
-export UGREEN="\[\e[38;5;71;1;4m\]"
-export SALMON="\[\e[38;5;167m\]"
-export BROWN="\[\e[38;5;166m\]"
 
 git_branch() {   # {{{
     if branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"; then
