@@ -45,6 +45,66 @@ has been made portable to Windows.
 In situations where this proved excessively difficult, separate files have been
 included in [nt](nt).
 
+
+## Completions
+
+The way that auto-completions are set up can fundamentally change the user
+experience when working with a shell. This is especially true for when the
+user is unfamiliar with the ins and outs of the shell.
+
+However the way that bash handles auto-completion can be largely inconsistent
+as a product of how differing OSes have it set up by default in addition
+to large amounts of customization that users are afforded but potentially may
+not be aware of.
+
+Following are my notes on this to attempt setting things up consistently.
+
+### WSL
+
+On the Arch flavor of WSL, /etc/profile and /etc/profile.d exist but don't do
+anything to setup completions.
+
+The /etc/bash.bashrc does the fairly standard idiom.:
+
+`[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion`
+
+Otherwise little is set up.
+
+I just created a directory /etc/bash_completion.d as one was needed by `activate-global-python-argcomplete`.
+
+### /usr/share/bash-completion/bash_completion
+
+It appears that the following dirs are sourced by the frequently present file at
+/usr/share/bash-completion/bash_completion.
+
+The following is defined in a function `__load_completion()`, IE check that
+it's defined in the shell before placing files here!
+
+    local -a dirs=( ${BASH_COMPLETION_USER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion}/completions )
+
+This is defined globally.:
+
+    # source compat completion directory definitions
+    compat_dir=${BASH_COMPLETION_COMPAT_DIR:-/etc/bash_completion.d}
+
+As is this.:
+
+    # source user completion file
+    user_completion=${BASH_COMPLETION_USER_FILE:-~/.bash_completion}
+
+On Termux,
+
+
+### Readline
+
+**TODO**
+
+[.inputrc](./unix/.inputrc)
+
+
+### `complete` and `compgen`
+
+
 ## Handling Git on Windows
 
 Git may try to treat files with extensions it doesn't recognize as binary.
@@ -57,10 +117,10 @@ A simple fix is to set the following in the
 
 `*.ps1 text eol=input diff`
 
-eol=input is only set because powershell needs `DOS` style lines, but I don't
+`eol=input` is only set because powershell needs `DOS` style lines, but I don't
 want the entire repository filled with differing line endings on Unix computers.
 
-text is to ensure it's not recognized as binary but if it already was, `diff`
+`text` is to ensure it's not recognized as binary but if it already was, `diff`
 will reset it back to text.
 
 ## Bash Configuration
@@ -159,7 +219,7 @@ export BROWN="\[\e[38;5;166m\]"
 
 ```
 
-## Porting to Windows
+### Porting to Windows
 
 Has been nothing short of a massive pain in the ass.
 
@@ -199,6 +259,7 @@ Hopefully these tips will help someone else one day.
 
    - When in Rome!
 
+
 ### Cmder
 
 Something in these configuration files has to be set wrong.
@@ -218,7 +279,7 @@ So be careful and simply define them non-interactively!
 
 While most people consider dotfiles very personal, I've posted as many as I
 found reasonable with the intention of encouraging some discussion on how
-to solve common problems more seemlessly.
+to solve common problems more seamlessly.
 
 ## License
 

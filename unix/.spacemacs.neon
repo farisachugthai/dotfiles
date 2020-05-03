@@ -1641,15 +1641,13 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(evil-leader yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org terminal-here symon symbol-overlay string-inflection sphinx-mode spaceline-all-the-icons smeargle slime-company shell-pop restart-emacs request-deferred realgud-ipdb ranger rainbow-delimiters racket-mode python-mode pytest pyenv-mode py-isort prettier-js popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file ob-ipython neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-section magit-gitflow lsp-ui lsp-python-ms lorem-ipsum live-py-mode link-hint json-navigator json-mode jinja2-mode indent-guide importmagic ibuffer-projectile hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers helpful helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag gruvbox-theme google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fzf fuzzy font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-tabs evil-surround evil-snipe evil-org evil-numbers evil-matchit evil-magit evil-lisp-state evil-lion evil-leader evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elpy elisp-slime-nav ein editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl devdocs define-word dap-mode cython-mode conda company-statistics company-quickhelp company-lua company-lsp company-ansible company-anaconda common-lisp-snippets column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote bm blacken auto-yasnippet auto-package-update auto-highlight-symbol auto-complete-rst auto-compile ansible-doc ansible aggressive-indent ace-link ace-jump-helm-line ac-ispell))
- '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+)
 )
 (provide '.spacemacs)
 

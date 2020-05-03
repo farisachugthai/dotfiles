@@ -481,5 +481,9 @@
     "key": "ctrl+k ctrl+y",
     "command": "python.runFailedTests",
     "when": "editorTextFocus && editorLangId == 'python'"
+  },
+  {
+    "key": "alt+`",
+    "command": "workbench.action.terminal.newInActiveWorkspace"
   }
 ]

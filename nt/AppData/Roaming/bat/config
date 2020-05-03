@@ -1,9 +1,9 @@
 # --theme='base16'
---theme OneHalfDark
+--theme ansi-dark
 
---wrap character
+--wrap never
 
-# --paging=never
+--paging never
 
 -m .conf:ini
 
@@ -41,4 +41,5 @@
 #             can be used in addition to control the output width.
 
 # --pager "less -JRKMLigeFrW --mouse --no-histdups --save-marks "
+
 # Vim: set ft=config cms=#\ %s:

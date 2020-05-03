@@ -146,17 +146,16 @@ export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode ... un
 # JavaScript: {{{
 
 # Export nvm if the directory exists
-if [[ -d "$HOME/.nvm" ]]; then
+if [[ -d "$HOME/.config/nvm" ]]; then
+    export NVM_DIR="$HOME/.config/nvm"
+elif [[ -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
-    # Load nvm and bash completion
-    # shellcheck source=/home/faris/.nvm/nvm.sh
-    [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh" # This loads nvm
-    # shellcheck source=/home/faris/.nvm/bash_completion
-    [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
-    pathadd "$HOME/.nvm"  # Not a ton of good reasons but good to see it in path
-    npm config delete prefix
-    nvm use default --delete-prefix
 fi
+
+# shellcheck source=/home/faris/.nvm/nvm.sh
+test $NVM_DIR && source "$NVM_DIR/nvm.sh" && npm config delete prefix && nvm use default --delete-prefix
+
+pathadd "$NVM_DIR"
 # }}}
 
 # Fasd: {{{
@@ -225,11 +224,20 @@ complete -o bashdefault -o default -o filenames -F _longopt -F _fzf_path_complet
 # This allows set to behave slightly more as expected.
 complete -A setopt -A shopt -k set
 # The -A flag is fucking amazing for getting complete to behave as expected
+# this is good to konw about
+# complete -F _known_hosts traceroute
 complete -F _known_hosts -A hostname -F _longopt ssh
 complete -F _known_hosts -A hostname -F _longopt traceroute
 complete -F _known_hosts -A hostname -F _longopt ping
 complete -A alias -F _fzf_alias_completion alias
 complete -A export -F _terms -F _longopt env
+
+complete -F _longopt a2ps awk base64 bash bc bison cat chroot colordiff cp \
+    csplit cut date df diff dir enscript expand fmt fold gperf \
+    grep grub head irb ld ldd less ln ls m4 md5sum mkdir mkfifo mknod \
+    mv netstat nl nm objcopy objdump od paste pr ptx readelf rm rmdir \
+    sed seq sha{,1,224,256,384,512}sum shar sort split strip sum tac tail tee \
+    texindex touch tr uname unexpand uniq units vdir wc who
 
 obviously_a_terrible_idea() {
     for i in $_ROOT/share/bash-completion/completions/*; do

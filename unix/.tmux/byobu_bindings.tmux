@@ -24,67 +24,68 @@ bind a send-prefix
 
 # Undo Byobu's Keybindings
 unbind-key -n F1
-unbind-key -n S-F1
+# unbind-key -n S-F1
 unbind-key -n F2
-unbind-key -n C-F2
-unbind-key -n S-F2
-unbind-key -n C-S-F2
+# unbind-key -n C-F2
+# unbind-key -n S-F2
+# unbind-key -n C-S-F2
 unbind-key -n F3
 unbind-key -n F4
-unbind-key -n C-Up
-unbind-key -n C-Down
-unbind-key -n C-Left
-unbind-key -n C-Right
-unbind-key -n C-S-Left
-unbind-key -n C-S-Right
-unbind-key -n C-S-Up
-unbind-key -n C-S-Down
-unbind-key -n S-F3
-unbind-key -n S-F4
-unbind-key -n S-Up
-unbind-key -n S-Down
-unbind-key -n S-Left
-unbind-key -n S-Right
-unbind-key -n C-F3
-unbind-key -n C-F4
-unbind-key -n C-S-F3
-unbind-key -n C-S-F4
-unbind-key -n M-Up
-unbind-key -n M-Down
-unbind-key -n M-Left
-unbind-key -n M-Right
-unbind-key -n S-M-Up
-unbind-key -n S-M-Down
-unbind-key -n S-M-Left
-unbind-key -n S-M-Right
+# unbind-key -n C-Up
+# unbind-key -n C-Down
+# unbind-key -n C-Left
+# unbind-key -n C-Right
+# unbind-key -n C-S-Left
+# unbind-key -n C-S-Right
+# unbind-key -n C-S-Up
+# unbind-key -n C-S-Down
+# unbind-key -n S-F3
+# unbind-key -n S-F4
+# unbind-key -n S-Up
+# unbind-key -n S-Down
+# unbind-key -n S-Left
+# unbind-key -n S-Right
+# unbind-key -n C-F3
+# unbind-key -n C-F4
+# unbind-key -n C-S-F3
+# unbind-key -n C-S-F4
+
+# unbind-key -n M-NPage
+# unbind-key -n M-PPage
+# unbind-key -n M-Up
+# unbind-key -n M-Down
+# unbind-key -n M-Left
+# unbind-key -n M-Right
+# unbind-key -n S-M-Up
+# unbind-key -n S-M-Down
+# unbind-key -n S-M-Left
+# unbind-key -n S-M-Right
 unbind-key -n F5
-unbind-key -n M-F5
-unbind-key -n S-F5
-unbind-key -n C-F5
-unbind-key -n C-S-F5
+# unbind-key -n M-F5
+# unbind-key -n S-F5
+# unbind-key -n C-F5
+# unbind-key -n C-S-F5
 unbind-key -n F6
-unbind-key -n M-F6
-unbind-key -n S-F6
-unbind-key -n C-F6
+# unbind-key -n M-F6
+# unbind-key -n S-F6
+# unbind-key -n C-F6
 unbind-key -n F7
-unbind-key -n S-F7
-unbind-key -n M-NPage
-unbind-key -n M-PPage
+# unbind-key -n S-F7
 unbind-key -n F8
-unbind-key -n C-F8
-unbind-key -n C-S-F8
-unbind-key -n M-S-F8
-unbind-key -n S-F8
+# unbind-key -n C-F8
+# unbind-key -n C-S-F8
+# unbind-key -n M-S-F8
+# unbind-key -n S-F8
 unbind-key -n F9
-unbind-key -n M-F9
-unbind-key -n S-F9
-unbind-key -n C-F9
-unbind-key -n M-F11
-unbind-key -n C-F11
-unbind-key -n S-F11
+# unbind-key -n M-F9
+# unbind-key -n S-F9
+# unbind-key -n C-F9
+# unbind-key -n M-F11
+# unbind-key -n C-F11
+# unbind-key -n S-F11
 bind-key -n S-F12 source $BYOBU_PREFIX/share/byobu/keybindings/f-keys.tmux \; source $HOME/.byobu/keybindings.tmux \; display-message "Byobu F-keys: ENABLED"
-unbind-key -n M-F12
-unbind-key -n C-S-F12
-unbind-key -n M-IC
+# unbind-key -n M-F12
+# unbind-key -n C-S-F12
+# unbind-key -n M-IC
 
 # Vim: set ft=tmux:

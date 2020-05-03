@@ -90,7 +90,8 @@ if [[ -d "$_ROOT/lib/x86_64-linux-gnu/pkgconfig" ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/x86_64-linux-gnu/pkgconfig"
 fi
 
-export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include -fstack-protector-strong -O2"
+# This is probably wrong
+export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include -fstack-protector-strong -O3 -Wno-unused-value -Wno-empty-body -Qunused-arguments -no-integrated-as"
 
 if [[ -d "$_ROOT/lib/pkgconfig" ]]; then
   export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/pkgconfig"
@@ -201,13 +202,17 @@ export GIT_PS1_DESCRIBE_STYLE="tag"
 
 # Miscellaneous: {{{
 export LANG=en_US.UTF-8
-# export LC_CTYPE=en_US.UTF-8                 # the python default
-export LC_IDENTIFICATION=C          	# got this from `locale -c language` I don't know if set right
 export LC_COLLATE=en_US.UTF-8
-export LC_MESSAGES=en_US.UTF-8              # man i3: Prevents program output translation
-export LC_NUMERIC="en_US.UTF-8"
-export LC_MONETARY="en_US.UTF-8"
-export LC_TIME="en_US.UTF-8"
+export LC_MESSAGES=en_US.UTF-8                # man i3: Prevents program output translation
+export LC_IDENTIFICATION=C          	      # got this from `locale -c language` I don't know if set right
+export LC_NUMERIC=en_US.UTF-8
+export LC_MONETARY=en_US.UTF-8
+export LC_TIME=en_US.UTF-8
+# Python runtime initialized with LC_CTYPE=C (a locale with default ASCII
+# encoding), which may cause Unicode compatibility problems. Using C.UTF-8,
+# C.utf8, or UTF-8 (if available) as alternative Unicode-compatible locales
+# is recommended.
+export LC_CTYPE=en_US.UTF-8
 
 pathadd "$_ROOT/games"
 # From man bash - Bash Variables - lines ~1300
@@ -215,6 +220,12 @@ export PROMPT_DIRTRIM=3
 export TIMEFORMAT=$'\nreal\t%3lR\nuser\t%3lU\nsys\t%3lS='
 export EXECIGNORE=.dll,.mui,.config  # fuckin windows
 export COLORTERM='truecolor'
+
+test "$(command -v clang)" && export CC=clang; export CXX=clang++
+
+# Idk if this is or isn't a bad idea
+export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/lib"
+ 
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi

@@ -1,4 +1,5 @@
 <# The basics so I won't go insane: {{{
+Functions in the Math Module
 
 Jun 17, 2019: Basically wiped the computer and am starting again from scratch.
 
@@ -33,9 +34,15 @@ Figured it out!::
 just printed 7. go to the beginning of the PSModulePATH section to see my
 Get-PSVersion function.
 
+#) TODO: Is this a terrible idea?::
+
+    (Get-PSProvider 'function').home = 'C:\Users\fac'
+
+Makes it possible to `cd` back home from the function drive.
+
 }}} #>
 
-# Path and `using`: {{{
+# `using`: {{{
 using module posh-git
 using module  posh-sshell
 using namespace Console
@@ -67,56 +74,82 @@ function Get-PSVersion {
         }
     }
 
-
+# Apr 07, 2020: Uh i'm gonna move this into a function because i don't actually think this needs to execute anymore.
+# Nope! Amazingly this is still needed for some reason.
+function Set-PSModulePathCorrectly {
 # Note the ternary operator was only introduced in version 7 and == isn't valid
 # as a comparison operator. Compare ints with -eq
-if ($PSVersionTable.PSVersion.Major -eq 7) {
-    $env:PSModulePATH='C:\Program Files\PowerShell\7\Modules'
-}
-else {
-    $env:PSModulePATH=''
+    if ($PSVersionTable.PSVersion.Major -eq 7) {
+        $env:PSModulePATH='C:\Program Files\PowerShell\7\Modules'
+    }
+    else {
+        $env:PSModulePATH=''
+    }
+
+    if ($PSVersionTable.PSVersion.Major -eq 7) {
+    Import-Module 'C:\Program Files\PowerShell\7\Modules\Microsoft.PowerShell.Utility'
+    }
+    $env:PSModulePATH+=';C:\Users\fac\Documents\PowerShell\Modules'
+    $env:PSModulePATH+=';C:\Users\fac\Documents\WindowsPowerShell\Modules'
+    $env:PSModulePATH+=';C:\Program Files\WindowsPowerShell\Modules'
+    $env:PSModulePATH+=';C:\WINDOWS\System32\WindowsPowerShell\v1.0\Modules'
+    $env:PSModulePATH+=';C:\Windows\Syswow64\WindowsPowerShell\v1.0\Modules'
+    $env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework64\v4.0.30319'
+    $env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework\v4.0.30319'
+    $env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework\v3.5'
+    $env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework64\v3.5'
+    $env:PSModulePATH+=';C:\Users\fac\scoop\apps\miniconda3\current\shell\condabin'
+    # think i forgot the chocolatey mods
+    $env:PSModulePATH+=';C:\ProgramData\chocolatey\lib\chocolatey-core.extension\extensions'
+    $env:PSModulePATH+=';C:\ProgramData\chocolatey\lib\chocolatey-dotnetfx.extension\extensions'
+    $env:PSModulePATH+=';C:\ProgramData\chocolatey\lib\chocolatey-fastanswers.extension\extensions'
+    $env:PSModulePATH+=';C:\ProgramData\chocolatey\lib\chocolatey-visualstudio.extension\extensions'
+
 }
 
-if ($PSVersionTable.PSVersion.Major -eq 7) {
-Import-Module 'C:\Program Files\PowerShell\7\Modules\Microsoft.PowerShell.Utility'
-}
-$env:PSModulePATH+=';C:\Users\fac\Documents\PowerShell\Modules'
-$env:PSModulePATH+=';C:\Users\fac\Documents\WindowsPowerShell\Modules'
-$env:PSModulePATH+=';C:\Program Files\WindowsPowerShell\Modules'
-$env:PSModulePATH+=';C:\WINDOWS\System32\WindowsPowerShell\v1.0\Modules'
-$env:PSModulePATH+=';C:\Windows\Syswow64\WindowsPowerShell\v1.0\Modules'
-$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework64\v4.0.30319'
-$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework\v4.0.30319'
-$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework\v3.5'
-$env:PSModulePATH+=';C:\Windows\Microsoft.NET\Framework64\v3.5'
-$env:PSModulePATH+=';C:\Users\fac\scoop\apps\miniconda3\current\shell\condabin'
-
+Set-PSModulePathCorrectly
 # }}}
 
 # PATH: {{{
 # Start with C:\Windows
-$env:PATH = 'C:\Windows;C:\Windows\System32;C:\Windows\System32\wbem;C:\Windows\Syswow64;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Windows\ImmersiveControlPanel'
-
+$env:PATH = 'C:\Windows;C:\Windows\System32;C:\Windows\System32\wbem'
+$env:PATH += ';C:\Windows\SysWOW64'
+$env:PATH += ';C:\Windows\Microsoft.NET\Framework64\v4.0.30319'
+$env:PATH += ';C:\Windows\Microsoft.NET\Framework\v4.0.30319'
+$env:PATH += ';C:\Windows\ImmersiveControlPanel'
+$env:PATH += ';C:\Windows\System32\WindowsPowerShell\v1.0'
+$env:PATH += ';C:\Windows\System32\OpenSSH'
+$env:PATH += ';C:\Windows\WinSxS'
 # .NET
-$env:PATH += ';C:\Windows\Microsoft.NET\Framework64\v3.5;C:\Windows\Microsoft.NET\Framework64\v3.0;C:\Windows\Microsoft.NET\Framework\v3.5;C:\Windows\Microsoft.NET\Framework\v3.0'
+$env:PATH += ';C:\Windows\Microsoft.NET\Framework64\v3.5;C:\Windows\Microsoft.NET\Framework64\v3.0'
+$env:PATH += ';C:\Windows\Microsoft.NET\Framework\v3.5;C:\Windows\Microsoft.NET\Framework\v3.0'
+
+# Choco pwsh firefox and other app folders
+$env:PATH += ';C:\ProgramData\chocolatey\bin'
 
 # Get the visual studio stuff
 $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE'
 $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools'
-$env:PATH += ';C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64;C:\Program Files (x86)\Windows Kits\10\bin\x64'
+$env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\IDE'
+$env:PATH += ';C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64'
+$env:PATH += ';C:\Program Files (x86)\Windows Kits\10\bin\x64'
 $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
-# Cmake
 $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin'
+$env:PATH += ';C:\Program Files (x86)\WindowsPowerShell'
 
-# Choco pwsh firefox and other app folders
-$env:PATH += ';C:\ProgramData\chocolatey\bin;C:\Program Files\Firefox Nightly;C:\Neovim\bin'
-$env:PATH += ';C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\PowerShell\7'
-$env:PATH += ';C:\Program Files\Racket;C:\Program Files\KeePassXC;C:\Python27;C:\totalcmd'
+$env:PATH += ';C:\Program Files\PowerShell\7'
+$env:PATH += ';C:\Program Files\dotnet'
+$env:PATH += ';C:\Program Files\Racket'
+$env:PATH += ';C:\Program Files\KeePassXC'
+$env:PATH += ';C:\Program Files\Firefox Nightly'
+$env:PATH += ';C:\Program Files\WindowsPowerShell'
+$env:PATH += ';C:\Neovim\bin'
+$env:PATH += ';C:\Python27;C:\totalcmd'
 
 # Git. 03/23/2020. Moved to a new dir
 $env:GITDIR =  'C:/Users/fac/scoop/apps/git-with-openssh/current'
 
-$env:PATH += "$env:GITDIR/bin;$env:GITDIR/usr/bin;$env:GITDIR/cmd;$env:GITDIR/mingw64/bin"
+$env:PATH += ";$env:GITDIR/bin;$env:GITDIR/usr/bin;$env:GITDIR/cmd;$env:GITDIR/mingw64/bin"
 
 # Don't add too many from scoop shims should take care of most except winpython and the nested node_modules thing that's going on
 $env:PATH += ';C:\Users\fac\scoop\apps\winpython\current\n;C:\Users\fac\scoop\shims;C:\Users\fac\scoop\apps\winpython\current\Scripts'
@@ -127,6 +160,7 @@ $env:PATH += ';C:\Users\fac\src\ctags'
 $env:PATH += ';C:\Users\fac\AppData\Local\Programs\Microsoft VS Code'
 $env:PATH += ';C:\Users\fac\AppData\Local\Yarn\bin'
 $env:PATH += ';C:\Users\fac\omnisharp;C:\Users\fac\openjdk'
+$env:PATH += ';C:\Users\fac\bin'
 
 # Holy bajeezuz is this important!
 if ($env:VIRTUAL_ENV) { $env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
@@ -171,6 +205,8 @@ Out-Null -InputObject 'dircolors -c ~/.dircolors'
 #  returns path split on the ;
 #
 function path() { Write-Output "($env:PATH)".Split(';') }
+
+function psmodulepath() { Write-Output "($env:PSModulePATH)".Split(';') }
 # }}}
 
 # Make: {{{
@@ -208,6 +244,7 @@ if(!$PSScriptRoot) {
     $PSScriptRoot = Split-Path $Script:MyInvocation.MyCommand.Path
 }
 
+$Global:GitPromptSettings:EnableStashStatus = $True
 $Global:GitPromptSettings:DefaultPromptWriteStatusFirst = $True
 $Global:GitPromptSettings:DefaultPromptEnableTiming = $True
 
@@ -217,14 +254,15 @@ $isGitLoaded = $false
 $arrowSymbol = [char]0xE0B0;
 $branchSymbol = [char]0xE0A0;
 
-$defaultForeColor = "White"
-$defaultBackColor = "Black"
-$pathForeColor = "White"
-$pathBackColor = "DarkBlue"
-$gitCleanForeColor = "White"
-$gitCleanBackColor = "Green"
-$gitDirtyForeColor = "Black"
-$gitDirtyBackColor = "Yellow"
+# $defaultForeColor = "White"
+# $defaultBackColor = "Black"
+# $pathForeColor = "White"
+# $pathBackColor = "DarkBlue"
+# $gitCleanForeColor = "black"
+# $gitCleanBackColor = "white"
+# $gitDirtyForeColor = "black"
+# $gitDirtyBackColor = "white"
+
 # }}}
 
 # Prompt: {{{
@@ -234,13 +272,7 @@ Explicitly use functions from MS namespace to protect from being overridden in t
 Custom prompt functions are loaded in as constants to get the same behaviour
 
 # fuck this is getting overwritten at some point
-~\projects\dynamic_ipython\docs [windows ≡ +1 ~0 -0 !]> (Get-Item function:prompt).ScriptBlock
-
-        if ($Env:CONDA_PROMPT_MODIFIER) {
-            $Env:CONDA_PROMPT_MODIFIER | Write-Host -NoNewline
-        }
-        CondaPromptBackup;
-
+# (Get-Item function:prompt).ScriptBlock
 
     # PrePrompt | Microsoft.PowerShell.Utility\Write-Host -NoNewline
     # CmderPrompt
@@ -317,9 +349,9 @@ function Write-GitPrompt() {
 }
                         #
 function getGitStatus($Path) {
+
+    if (!$Path) { return }
     if (Test-Path -Path (Join-Path $Path '.git') ) {
-                        #
-                        #                                                                                                                                                                                                                                             $isGitLoaded = Import-GitModule $isGitLoaded
         Write-GitPrompt
         return
     }
@@ -441,6 +473,17 @@ if ($settings.DefaultPromptEnableTiming) {
 }
 # [ScriptBlock]$Prompt = {
 
+
+# prompt: {{{
+# function description:
+#    Create my prompt
+#
+# Parameters:
+#  none
+#
+# Return Value:
+#  A string i guess idfk
+#
 function prompt() {
     $(if (Test-Path variable:/PSDebugContext) { '[DBG]: ' }
         else { '' }) + 'PS ' + $(Get-Location) +
@@ -466,9 +509,10 @@ if ($settings.SetEnvColumns) {
 }
 
 }
+# }}}
 
-    $prompt
-    #>
+$prompt
+
 # }}}
 # }}}
 
@@ -478,7 +522,10 @@ if ($settings.SetEnvColumns) {
 function tree { Show-Tree -ShowLeaf -UseAsciiLineArt $args }
 
 if (Test-Path alias:grep) { Remove-Item Alias:grep }
-function grep { C:\git\usr\bin\grep.exe $args }
+
+# function grep { C:\git\usr\bin\grep.exe $args }
+function grep { "$env:GITDIR" + "\usr\bin\grep.exe" }
+
 if (Test-Path alias:rm) { Remove-Item Alias:rm }
 if (Test-Path alias:curl) { Remove-Item Alias:curl }
 
@@ -496,6 +543,7 @@ if ( Test-Path alias:ls ) { Remove-Item alias:ls -Force }
 # function CloserToLs { InvokeLS  -Fh --color=always $args }
 # function ls { CloserToLs $args }
 
+function ls() { C:/Users/fac/scoop/apps/git-with-openssh/current/usr/bin/ls.exe -Fh --hide="NTUSER.*" --color=always $args }
 function l() {  ls -Fh --hide="NTUSER.*" --color=always $args }
 function la() { ls -AFh --hide="NTUSER.*" --color=always $args }
 function ldir() { ls -Fhpo --hide="NTUSER.*" $args | grep /$ }
@@ -1364,6 +1412,7 @@ Set-PSReadLineKeyHandler -Key "Alt+Shift+c"  `
 
 # Not allowed to do it this way
 # Set-PSReadLineKeyHandler -Key "Alt+c" -Function fcd
+# how to do if not loaded
 Import-Module PSFzf -ArgumentList "Ctrl+t","Alt+c","Alt+a","Ctrl+r"
 
 # Idk how to check that there's a handler
@@ -1385,14 +1434,6 @@ Import-Module pscx
 # in their `Apps`
 # }}}
 
-# Python PowerShell Setup: {{{
-
-#region conda initialize
-# !! Contents within this block are managed by 'conda init' !!
-(& "C:\Users\fac\scoop\apps\miniconda3\current\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
-#endregion
-
-###############################
 ### WinPython_PS_Prompt.ps1 ###  {{{
 ###############################
 
@@ -1412,7 +1453,7 @@ if (-not ($env:WINPYDIR -eq [System.IO.Path]::GetFullPath( $env:WINPYDIRBASE+"\p
 
 $env:WINPYDIR = $env:WINPYDIRBASE+"\python-3.8.1.amd64"
 # 2019-08-25 pyjulia needs absolutely a variable PYTHON=%WINPYDIR%python.exe
-$env:PYTHON = "%WINPYDIR%\python.exe"
+# $env:PYTHON = "%WINPYDIR%\python.exe"
 
 $env:WINPYVER = '3.8.1.0'
 # Stop fucking overwriting this jesus
@@ -1493,14 +1534,37 @@ if (-not (Test-Path $env:winpython_ini)) {
     # "#HOME = %%HOMEDRIVE%%%%HOMEPATH%%\Documents\WinPython%%WINPYVER%%" | Add-Content -Path $env:winpython_ini
     # "#JUPYTER_DATA_DIR = %%HOME%%" | Add-Content -Path $env:winpython_ini
     "#WINPYWORKDIR = %%HOMEDRIVE%%%%HOMEPATH%%" | Add-Content -Path $env:winpython_ini
+    }
 }
 
+# it only does
+# Import-Module C:\Users\fac\scoop\apps\miniconda3\current\shell\condabin\conda-hook
 
-}
+$Env:CONDA_EXE = "C:/Users/fac/scoop/apps/miniconda3/current\Scripts\conda.exe"
+$Env:_CE_M = ""
+$Env:_CE_CONDA = ""
+$Env:_CONDA_ROOT = "C:/Users/fac/scoop/apps/miniconda3/current"
+$Env:_CONDA_EXE = "C:/Users/fac/scoop/apps/miniconda3/current\Scripts\conda.exe"
+
+Import-Module "$Env:_CONDA_ROOT\shell\condabin\Conda.psm1"
+# Add-CondaEnvironmentToPrompt
+
 # }}}
 
-# Env vars: {{{
+# Python Env vars: {{{
 
+$env:PYTHONASYNCIODEBUG=1
+$env:PYTHONCASEOK=1
+$env:PYTHONCOERCECLOCALE="warn"
+$env:PYTHONDOCS="$env:HOME/python/official-python-docs/3.7/library/build/html"
+$env:PYTHONDONTWRITEBYTECODE=1
+$env:PYTHONIOENCODING='utf-8:surrogateescape'
+# $env:PYTHONMALLOC="debug"
+$env:PYTHONUTF8=1
+
+$env:IPYTHONDIR="$env:HOME\.ipython"
+# }}}
+#
 # Set-MsbuildDevEnvironment: {{{
 #.SYNOPSIS
 # Grabs all environment variable set after vcvarsall.bat is called and pulls
@@ -1543,13 +1607,18 @@ function Set-MsbuildDevEnvironment
 
 # Other: {{{
 
-$env:CFLAGS="-Wno-unused-value -Wno-empty-body -Qunused-arguments -no-integrated-as"
+$env:CFLAGS="-Wno-unused-value -Wno-empty-body -Qunused-arguments -no-integrated-as -fstack-protector-strong -O3 "
 $env:CC="clang"
 $env:CXX="clang++"
+$env:XDG_CACHE_HOME="$env:HOME\.cache"
 $env:XDG_DATA_HOME='C:\Users\fac\.local\share'
 $env:XDG_CONFIG_HOME='C:\Users\fac\.config'
-$env:LANG='en_US.UTF-8'
-$env:LANGUAGE='en_US.UTF-8'
+# $env:LANG='en_US.UTF-8'
+# $env:LANGUAGE='en_US.UTF-8'
+# vim starts up so much faster that you HAVE to keep this set to this
+$env:LC_ALL="C"
+$env:LANG="C"
+$env:LANGUAGE="C"
 
 # Holy cow do i need more. I realize that i typically set these in the GUI
 # but none of these were set!
@@ -1557,34 +1626,27 @@ $env:LANGUAGE='en_US.UTF-8'
 $env:EDITOR='nvim'
 $env:VISUAL='nvim-qt'
 $env:PAGER="less -JRrKMNLigeF"
+$env:MANPAGER=$env:PAGER
+# Also seemingly don't set $TERM to xterm256-color. i lost the changes you get
+# to the cursor in nvim
 $env:LESSHISTSIZE=5000  # default is 100
-
+$env:POWERSHELL_TELEMETRY_OPTOUT=1
+$env:DOTNET_CLI_TELEMETRY_OPTOUT=1
 $env:NPY_DISTUTILS_APPEND_FLAGS=1
 
-$env:PYTHONASYNCIODEBUG=1
-$env:PYTHONCASEOK=1
-$env:PYTHONCOERCECLOCALE="warn"
-$env:PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
-$env:PYTHONDONTWRITEBYTECODE=1
-$env:PYTHONIOENCODING='utf-8:surrogateescape'
-$env:PYTHONMALLOC="debug"
-
-$env:IPYTHONDIR="$HOME\.ipython"
 $env:SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
-$env:RIPGREP_CONFIG_PATH="$HOME\.ripgreprc"
+$env:RIPGREP_CONFIG_PATH="$env:HOME\.ripgreprc"
 $env:LESSHISTSIZE=5000
 $env:LESSCOLORIZER="pygmentize"
 
 $env:NODE_PRESERVE_SYMLINKS=1
-$env:NODE_REPL_HISTORY="$HOME/AppData/Local/node_log.js"
-$env:NVIM_NODE_LOG_FILE = "$HOME\AppData\Local\nvim-data\nvim_node.log"
+$env:NODE_REPL_HISTORY="$env:HOME/AppData/Local/node_log.js"
+$env:NVIM_NODE_LOG_FILE = "$env:HOME\AppData\Local\nvim-data\nvim_node.log"
 $env:NVIM_NODE_LOG_LEVEL = "WARNING"
-$env:NVIM_PYTHON_LOG_FILE = "$HOME\AppData\Local\nvim-data\nvim_python.log"
+$env:NVIM_PYTHON_LOG_FILE = "$env:HOME\AppData\Local\nvim-data\nvim_python.log"
 $env:NVIM_PYTHON_LOG_LEVEL = "DEBUG"
 
 Write-Output "Success: Sourced Documents/PowerShell/profile.ps1"
-
-# }}}
 
 # }}}
 

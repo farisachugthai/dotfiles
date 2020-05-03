@@ -15,11 +15,14 @@
 
 :: So this should stay at the top
 chcp 65001 1>nul
-SET "LC_ALL=en_US.UTF-8"
+
+:: Vim starts up so much faster that you can never change this
+set LC_ALL=C
 
 :: It literally makes me see red when apps change this
 set "HOME=C:\Users\fac"
 
+:: doskey /MACROFILE=C:\\Users\\fac\\projects\\dotfiles\\nt\\cmder\\user_aliases.cmd 
 :: Now we can begin the convenience scripts.
 doskey /MACROFILE=C:\Users\fac\projects\dotfiles\nt\Cmder\user_aliases.cmd
 :: uncomment the next two lines to use pageant as the ssh authentication agent
@@ -55,7 +58,8 @@ SET IPYTHONDIR=C:\Users\fac\.ipython
 :: Each click of the mouse wheel moves N lines.
 SET "PAGER=less -JRKMrLigeFW"
 :: This has priority over pager so let's set the oddball options here
-SET "LESS=JRKMrLigeFW --mouse --save-marks --wheel-lines=1 "
+:: Some versions of less tare to old to support the long form options
+SET "LESS=JRKMrLigeFW"
 :: apparently you're really not allowed to inline comments. Wtf?
 SET "LESSEDIT=nvim -q '%F %lm'"
 SET "LESSCOLORIZER=pygmentize"
@@ -64,17 +68,29 @@ SET "BROWSER=C:\Program Files\Firefox Nightly\firefox.exe"
 :: }}}
 
 :: Python: {{{
+::
 :: https://docs.python.org/3/using/cmdline.html
-SET "PYTHONIOENCODING=utf-8:strict"
-SET "PYTHONDONTWRITEBYTECODE=1"
-SET "PYTHONUNBUFFERED=1"
-SET "PYTHONDOCS=C:\Users\fac\Dropbox\python\official-python-docs\3.7"
 SET "PYTHONASYNCIODEBUG=1"
 SET "PYTHONCASEOK=1"
+SET "PYTHONDOCS=C:\Users\fac\Dropbox\python\official-python-docs\3.7"
+SET "PYTHONDONTWRITEBYTECODE=1"
+SET "PYTHONIOENCODING=utf-8:strict"
+SET "PYTHONMALLOC=debug"
+SET "PYTHONUNBUFFERED=1"
+SET "PYTHONUTF8=1"
 :: Holy actual fuck does this get annoying
 :: SET "PYTHONPROFILEIMPORTTIME=1"
 
-SET "PYTHONMALLOC=debug"
+:: I learned some DOS today! Assumes CMDEXTENSIONS enabled
+:: Only active conda if we're not in a pipenv shell. todo: venv and stuff.
+:: Actually don't do this. this is evaluated on not just startup but every single subshell
+:: if DEFINED PIPENV_ACTIVE (
+:: :: what the hell is the dos equivalent of pass or continue?
+::   echo
+:: ) else (
+::   C:\Users\fac\scoop\shims\conda activate
+:: )
+
 :: }}}
 
 :: FZF: {{{
@@ -116,6 +132,7 @@ SET "FZF_ALT_C_OPTS=--cycle --ansi --tiebreak begin,length,index --no-multi --fi
 set "CFLAGS=-Wno-unused-value -Wno-empty-body -Qunused-arguments -no-integrated-as"
 set "CC=clang"
 set "CXX=clang++"
+set "CMAKE_SH=CMAKE_SH-NOTFOUND"
 
 :: Don't do it like this. The var below is expanded from where you execute.
 :: So if you're in $HOME, it'll set CMDER_USER_CONFIG to home :/
@@ -131,6 +148,7 @@ SET XDG_DATA_HOME=C:\Users\fac\.local\share
 SET XDG_CONFIG_HOME=C:\Users\fac\.config
 SET LANG=en_US.UTF-8
 SET LANGUAGE=en_US.UTF-8
+SET LC_ALL=C
 
 :: Might wanna setx this one
 SET REGIONCODE=65001

@@ -15,6 +15,10 @@ ignore =
 
     C,               # fucking pylint.
 
+    D100,            # public module
+    D105,            # docstrings for magic methods
+    D104,            # public package
+
 # the defaults for excluded files are
 
 exclude =

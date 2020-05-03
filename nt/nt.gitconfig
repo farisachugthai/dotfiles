@@ -3,6 +3,8 @@
     pager = less -RrFMJKNeg
     editor = nvim
     symlinks = true
+    filemode = false
+	longpaths = true
 
 ; [winUpdater]
 ; 	recentlySeenVersion = 2.23.0.windows.1
@@ -14,11 +16,11 @@
 	path = C:\\Users\\fac\\.gitconfig.local
 
 [user]
-	email = farischugthai@gmail.com
-	name = Faris A. Chugthai
+	email = "farischugthai@gmail.com "
+	name = farisachugthai
 
 [credential "helperselector"]
-	selected = store
+	selected = wincred
 	; selected = wincred
 
 [filter "lfs"]
@@ -30,6 +32,13 @@
 [gui]
 	recentrepo = C:/Users/fac/projects/dotfiles
 	recentrepo = C:/Users/fac/scoop/persist/PyCharm-portable/profile/config/settingsRepository/repository
+	fontui = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	commitmsgwidth = 72
+	pruneduringfetch = true
+	diffcontext = 1
+	matchtrackingbranch = true
+	encoding = utf-8
 
 [guitool "nvim"]
 	cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'
@@ -37,3 +46,8 @@
 
 [credential]
 	helper = manager
+
+[branch]
+    autosetuprebase=always
+[merge]
+	summary = true
