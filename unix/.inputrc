@@ -4,10 +4,6 @@
 # up and down work again too
 
 # {{{
-set editing-mode vi
-
-set keymap vi-insert
-
 # {{{ insert mode
 "\C-j": accept-line
 "\C-m": accept-line
@@ -466,6 +462,7 @@ set keymap vi-insert
 # Ive been using emacs mode so we should try binding things to that namespace
 
 set editing-mode emacs
+set keymap emacs
 
 "\C-w": unix-filename-rubout
 "\C-[": vi-movement-mode
@@ -476,7 +473,8 @@ set editing-mode emacs
 "\eg": glob-complete-word
 "\C-x*": glob-expand-word
 "\C-xg": glob-list-expansions
-"Space": magic-space
+"\Space": magic-space
+"\C-p": previous-history
 
 # history-expand-line (not bound)
 # Holy shit this is a cool binding. Doesn't dynamically change though.

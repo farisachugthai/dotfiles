@@ -30,10 +30,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # }}}
 
 # Platform_Dependant: {{{
-# Set PATH so it includes user's private bin directories and set them first in path
-firstpath "$HOME/bin"
-firstpath "$HOME/.local/bin"
-
 # shellcheck disable=2153
 if [[ -n "$PREFIX" ]]; then
     export _ROOT="$PREFIX"
@@ -126,7 +122,7 @@ export PYTHONIOENCODING=utf-8:surrogateescape
 
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
 
-export PYTHONPROFILEIMPORTTIME=1
+# export PYTHONPROFILEIMPORTTIME=1
 export PYTHONSTARTUP="$HOME/site_customize.py"
 
 # This actually messes with prompt_toolkit pretty bad
@@ -193,23 +189,25 @@ export EDITOR="$VISUAL"
 export FCEDIT=nvim
 # }}}
 
+# Git: {{{
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWUPSTREAM="auto verbose git"
+export GIT_PS1_DESCRIBE_STYLE="tag"
+# }}}
+
 # Miscellaneous: {{{
 export LANG=en_US.UTF-8
 # export LC_CTYPE=en_US.UTF-8                 # the python default
 export LC_IDENTIFICATION=C          	# got this from `locale -c language` I don't know if set right
-# export LC_COLLATE=en_US.UTF-8
-# export LC_MESSAGES=en_US.UTF-8              # man i3: Prevents program output translation
-# export LC_NUMERIC="en_US.UTF-8"
-# export LC_MONETARY="en_US.UTF-8"
-# export LC_TIME="en_US.UTF-8"
-# yo honestly isn't this easier?
-# export LC_ALL=C
-# holy fuck
-# Python runtime initialized with LC_CTYPE=C (a locale with default ASCII
-# encoding), which may cause Unicode compatibility problems. Using C.UTF-8,
-# C.utf8, or UTF-8 (if available) as alternative Unicode-compatible locales
-# is recommended.
-export LC_ALL=C.UTF-8
+export LC_COLLATE=en_US.UTF-8
+export LC_MESSAGES=en_US.UTF-8              # man i3: Prevents program output translation
+export LC_NUMERIC="en_US.UTF-8"
+export LC_MONETARY="en_US.UTF-8"
+export LC_TIME="en_US.UTF-8"
 
 pathadd "$_ROOT/games"
 # From man bash - Bash Variables - lines ~1300
@@ -233,7 +231,6 @@ export NVIM_CONF="$HOME/.config/nvim"
 export NVIM_LOG_FILE="$XDG_DATA_HOME/nvim/nvim.log"
 export NVIM_PYTHON_LOG_FILE="$XDG_DATA_HOME/nvim/nvim_python.log"
 export NVIMRUNTIME="$_ROOT/share/nvim/runtime"
-pathadd "$_ROOT/local/bin"
 
 export MANPAGER=bat
 # export BAT_STYLE="OneHalfDark"

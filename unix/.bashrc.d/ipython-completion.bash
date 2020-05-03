@@ -134,4 +134,11 @@ EOF
     fi
 
 }
-complete -o bashdefault -o default -o nospace -F _ipython ipython
+
+# HOLY HELL THIS IS SO MUCH FASTER THAN THE ORIGINAL (probably because we circumvent the python portion mostly)
+complete -o bashdefault -o default -o nospace -o nosort -F _longopt -o filenames -o dirnames -F _ipython ipython ipython3
+
+# ipython should do this
+# complete -o bashdefault -o default -F _longopt -o filenames
+# actually bashdefaults probably unnecessary
+complete -o filenames -F _longopt iptest iptest3

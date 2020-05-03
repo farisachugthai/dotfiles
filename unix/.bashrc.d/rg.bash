@@ -206,4 +206,4 @@ _rg() {
     esac
 }
 
-complete -F __fzf_defc -F _rg -o bashdefault -o default rg
+complete -F __fzf_defc -F _fzf_path_completion -F _rg -o bashdefault -o default -f -F _longopt rg

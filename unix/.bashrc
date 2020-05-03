@@ -173,21 +173,18 @@ fi
 # Sourced files: {{{
 firstpath "$HOME/bin"
 firstpath "$HOME/.local/bin"
+pathadd "$_ROOT/local/bin"
+pathadd "$_ROOT/libexec"
 
 # add some cool colors to ls
 eval "$( dircolors -b $HOME/.dircolors )"
 
 if [[ -d ~/.bashrc.d ]]; then
     for config in $HOME/.bashrc.d/*.bash; do
-    # shellcheck source=/home/faris/.bashrc.d/*.bash
-    source $config;
+        # shellcheck source=/home/faris/.bashrc.d/*.bash
+        source $config;
     done
     unset -v config
-fi
-
-if [[ -f "$HOME/.bashrc.local" ]]; then
-    # shellcheck source=/home/faris/.bashrc.local
-    . "$HOME/.bashrc.local"
 fi
 # }}}
 
@@ -199,11 +196,14 @@ _completion_loader()
     . "$_ROOT/share/bash-completion/completions/*" >/dev/null 2>&1 && return 124
 }
 
-# oh also fzf. but -A command is a bad idea so don't do that
-complete -D -F _completion_loader -o bashdefault -o  default -o plusdirs -F _fzf_complete
+# oh also fzf. but -A command is a bad idea so don't do that.
+# dude bash should complete its own fucking keywords. oh man is this nice.
+# `-k` is the same as -A keyword
+complete -D -F _completion_loader -o bashdefault -o default -k
+# -o plusdirs -F _fzf_complete
 
 # modify how completions are created by default
-compopt -D -o bashdefault -o dirnames -o plusdirs -o default
+compopt -D -o bashdefault -o default
 
 # From /usr/share/doc/bash/README.md.bash-completion
 export COMP_CONFIGURE_HINTS=1
@@ -213,24 +213,23 @@ if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
 fi
 # Just figured this one out! Especially useful as I've been building universal-ctags from source
-complete -o bashdefault -o default -F _longopt ctags
+complete -o bashdefault -o default -o dirnames -F _longopt ctags
 
 # I'm embarrassed by how happy figuring this out made me
-test "$(command -v dlink2)" && complete -o bashdefault -o default -F _fzf_path_completion dlink2
+test "$(command -v dlink2)" && complete -o bashdefault -o default -o dirnames -F _fzf_path_completion dlink2
 
-complete -o bashdefault -o default -F _longopt -F _fzf_path_completion du
-complete -o bashdefault -o default -A alias -F _fzf_alias_completion alias
-complete -o bashdefault -o default -F _longopt  -F _fzf_path_completion nvim
-complete -o bashdefault -o default -F _longopt  -F _fzf_path_completion bat
+complete -o bashdefault -o default -o dirnames -o filenames -F _longopt -F _fzf_path_completion du
+complete -o bashdefault -o default -o dirnames -o filenames -F _longopt  -F _fzf_path_completion nvim
+complete -o bashdefault -o default -o filenames -F _longopt -F _fzf_path_completion bat
 
-# This allows set to behave slightly more as expected
-complete -A setopt -A shopt set
-
-# this is good to konw about
-# complete -F _known_hosts traceroute
+# This allows set to behave slightly more as expected.
+complete -A setopt -A shopt -k set
+# The -A flag is fucking amazing for getting complete to behave as expected
 complete -F _known_hosts -A hostname -F _longopt ssh
-
-complete -A export env -F _terms -F _longopt env
+complete -F _known_hosts -A hostname -F _longopt traceroute
+complete -F _known_hosts -A hostname -F _longopt ping
+complete -A alias -F _fzf_alias_completion alias
+complete -A export -F _terms -F _longopt env
 
 obviously_a_terrible_idea() {
     for i in $_ROOT/share/bash-completion/completions/*; do
@@ -239,14 +238,8 @@ obviously_a_terrible_idea() {
 }
 
 # other completion things i wanted to add
-complete -F _fzf_path_completion -o dirnames -o filenames l
-complete -F _fzf_path_completion -o dirnames -o filenames la
-complete -F _fzf_path_completion -o dirnames -o filenames ll
-complete -F _fzf_path_completion -o dirnames -o filenames lt
-complete -F _fzf_path_completion -o dirnames -o filenames lr
-complete -F _fzf_path_completion -o dirnames -o filenames cd
-complete -F _fzf_path_completion -o dirnames -o filenames cs
-
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt cd
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt cs
 # }}}
 
 # Prompt: {{{
@@ -284,12 +277,6 @@ uhw() {   # {{{
 }  # }}}
 
 # Git, PS1 and Prompt Command: {{{
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWCOLORHINTS=1
-export GIT_PS1_SHOWUPSTREAM="auto verbose git"
-export GIT_PS1_DESCRIBE_STYLE="tag"
 
 # TODO: removing $(git_branch) for the time being because this shit doesn't
 # re-evaluate when you change dir... Which is shitty because the cwd does
@@ -306,5 +293,11 @@ export PS1="$(_venv)$(uhw)\n\[$UGREEN\]In [\#] \[$RED\]\$ \[$RESET\]"
 # }}}
 
 # }}}
+
+# Local bashrc
+if [[ -f "$HOME/.bashrc.local" ]]; then
+    # shellcheck source=/home/faris/.bashrc.local
+    . "$HOME/.bashrc.local"
+fi
 
 # Vim: set foldlevelstart=0 fdm=marker et sw=4 sts=4 ts=4:

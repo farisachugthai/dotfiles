@@ -37,7 +37,7 @@
 
 --theme OneHalfDark
 
---wrap character
+--wrap never
 
 --pager "less -JRKMLigeFrW --mouse --no-histdups --save-marks "
 

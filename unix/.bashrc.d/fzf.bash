@@ -19,19 +19,27 @@ fi
 # Pushing fd up rg is being difficult to work with
 # }}}
 
+# **New**: FZF Preview Command:
+
+if [[ -n "$(command -v bat)" ]]; then
+  export FZF_PREVIEW_WINDOW='bat --style="${BAT_STYLE:-numbers}" --color=always --pager=never \
+      --line-range=$FIRST:$LAST --highlight-line=$CENTER "$FILE"'
+fi
+
 if [[ -n "$(command -v fd)" ]]; then  # fd {{{
 
     # Base FZF command: {{{
     # export FZF_DEFAULT_COMMAND="fd --follow -j 8 -d 6 --exclude .git"
 
     export FZF_DEFAULT_COMMAND=" rg --hidden --color ansi --no-messages --follow --files --passthru * $@ | tr -d '\017' "
-    export FZF_DEFAULT_OPTS='--multi --cycle --reverse --prompt "Query: " --tiebreak=begin,length,index --ansi --filepath-word --border --header="FZF: File Browser. Press Alt-n to launch nvim." --bind alt-n:execute:"nvim {}" --bind change:top --bind=ctrl-j:accept --bind ctrl-k:kill-line '
+    export FZF_DEFAULT_OPTS='--multi --cycle --reverse --prompt "Query: " --tiebreak=begin,length,index --ansi --filepath-word --border --header="FZF: File Browser. Press Alt-n to launch nvim." --bind alt-n:execute:"nvim {}" --bind change:top --bind ctrl-j:accept --bind ctrl-k:kill-line'
+
     #  --bind "?:toggle-preview" --preview-window=down:50%:wrap --preview "bat {}"
     # }}}
 
     # __fzf_history__: <Ctrl-r>: {{{
     export FZF_CTRL_R_COMMAND="fd "
-    export FZF_CTRL_R_OPTS=" --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' "
+    export FZF_CTRL_R_OPTS="--sort --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' --bind change:top"
     # }}}
 
     # Change dirs with Alt C: {{{
@@ -143,8 +151,8 @@ if [[ -n "$(command -v fd)" ]]; then
     }
 fi
 
-complete -F _fzf_path_completion -o default -o bashdefault rg
-complete -F _fzf_dir_completion -o default -o bashdefault tree  # }}}
+# complete -F _fzf_path_completion -o default -o bashdefault rg
+# }}}
 
 # Colors: {{{
 

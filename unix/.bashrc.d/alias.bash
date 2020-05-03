@@ -29,10 +29,16 @@ alias l='ls -hF --color=always'
 alias la='ls -AF --color=always'
 alias ldir='ls -po --color=always | grep /$'
 
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt l
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt la
+complete -o bashdefault -o default -o dirnames -o filenames -o plusdirs -F _fzf_dir_completion -F _longopt ldir
+
+
 # Broken
 # alias lf='ls -Fo --color=always | grep ^-'
 # Oh it might be because of wsl's fucky permissions.
 alias lf='ls -AFgo --color=always | grep *$'
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt lf
 # You can use this one to dereference the symlinks aka show the real file
 # nah don't do that because there's a function with lk
 # alias lk='ls -lhAgoF --dereference --color=always'
@@ -40,10 +46,15 @@ alias ll='ls -AFhogl --color=always'
 alias lr='ls -AlgFhtr --color=always'
 alias ls='ls -hF --color=always'
 alias lt='ls -Alght --color=always'
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt ls
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt ll
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt lr
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt lt
 
 # This is broken
 # alias lx='ls -Fo --color=always | grep ^-..x'
 alias lx='ls -Fl --color=always | grep ^l.*'
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt lx
 # }}}
 
 # Safer coreutils: {{{1
@@ -52,26 +63,34 @@ alias lx='ls -Fl --color=always | grep ^l.*'
 # Please don't turn the p flag for rmdir again.
 # You're lucky parent dirs weren't empty
 alias cp='cp -v'
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt cp
 alias mv='mv -v'
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt mv
 alias mkdir='mkdir -pv'
+complete -o bashdefault -o default -o dirnames -o plusdirs -F _fzf_dir_completion -F _longopt mkdir
 alias rmdir='rmdir -v'
+complete -o dirnames -o plusdirs -F _fzf_dir_completion -F _longopt rmdir
 # Less annoying than i but more safe
 #   only   prompts   with   more   than   3   files    or    recursed    dirs.
 alias rm='rm -Iv'
-
-# Print each PATH entry on a separate line
-alias path='echo -e ${PATH:/\\n}'
+complete -o bashdefault -o default -o dirnames -o filenames -o plusdirs -F _fzf_path_completion -F _longopt rm
 
 # Options i use every time i run these commands
 # probably shouldn't clobber the namespace though, there are conflicting options
 # for du so i'll change to du shallow
 alias dus='du -d 1 -h --all'
+complete -o bashdefault -o default -o dirnames -F _longopt -F _fzf_dir_completion dus
 alias dU='du  -d  1  -h  --apparent-size  --all  |  sort  -h  |  tail  -n  10'
+complete -o bashdefault -o default -o dirnames -F _longopt -F _fzf_dir_completion dU
 alias df='df -ah --total'
 alias free='free -mt'
 alias echo='echo -e'
+# complete filenames, options and vars. `-v` is the same as -A variable
+complete -A setopt -o bashdefault -o default -o filenames -v echo
 alias head="head -n 30 $*"
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt -f -o plusdirs head
 alias tail="tail -n 30 $*"
+complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt -f -o plusdirs tail
 # }}}
 
 # Termux alias: {{{1
@@ -166,7 +185,7 @@ alias gt='git tag --list'
 #   enable   color   support   of   ls   and   also    add    handy    aliases
 if [[ -x "$PREFIX/dircolors" ]]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls -F --color=auto'
+    # alias ls='ls -F --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
 
@@ -187,6 +206,10 @@ if [[ -n "$(command -v bat)" ]]; then
 fi
 
 alias tre="tree -FACa -I .git $*"
+complete -F _fzf_dir_completion -o default -o bashdefault tree
 alias tree="tree -AC -I node_modules"
+
+# fucking forgot about dircompletion
+complete -F _fzf_dir_completion -o default -o bashdefault tree
 alias tmux="tmux -u"
 # }}}

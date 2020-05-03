@@ -194,11 +194,12 @@ en() {  # {{{
     env | fzf
 }  # }}}
 
-PATH() {  # {{{
+path() {  # {{{
+    # used to be
+    # Print each PATH entry on a separate line
+    # alias path='echo -e ${PATH:/\\n}'
     # Let's try this again
-    for i in "$(cut -d ':' $PATH)"; do
-        echo -en "$i\n"
-    done
+    echo "$PATH" | tr ':' '\n'
 }
 # }}}
 
