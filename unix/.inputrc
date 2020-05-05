@@ -2,378 +2,544 @@
 # bind -m vi -p
 # displays every key bindin i have and holy cow.
 # up and down work again too
+# pro tip:
+# syn list readlineFunction is amazing
 
-# {{{
-# {{{ insert mode
-"\C-j": accept-line
-"\C-m": accept-line
+# pro tip2:
+# Tabularize /:/r0c0l0
+
+# todo: {{{
 # alias-expand-line (not bound)
 # arrow-key-prefix (not bound)
 # backward-byte (not bound)
-"\C-b": backward-char
-"\eOD": backward-char
-"\e[D": backward-char
-"\C-h": backward-delete-char
-"\C-?": backward-delete-char
-"\C-x\C-?": backward-kill-line
-"\e\C-h": backward-kill-word
-"\e\C-?": backward-kill-word
-"\e[1;3D": backward-word
-"\e[1;5D": backward-word
-"\eb": backward-word
-"\e<": beginning-of-history
-"\C-a": beginning-of-line
-"\eOH": beginning-of-line
-"\e[1~": beginning-of-line
-"\e[H": beginning-of-line
-"\e[200~": bracketed-paste-begin
-"\C-xe": call-last-kbd-macro
+# "\C-h":backward-delete-char
 # capitalize-word (not bound)
-"\C-]": character-search
-"\e\C-]": character-search-backward
-"\C-l": clear-screen
-"\e!": complete-command
-# Is this escaped right?
-"\e\/": complete-filename
-"\e@": complete-hostname
-"\e{": complete-into-braces
-"\e~": complete-username
-"\e$": complete-variable
 # copy-backward-word (not bound)
 # copy-forward-word (not bound)
 # copy-region-as-kill (not bound)
 # dabbrev-expand (not bound)
-"\C-d": delete-char-or-list
-"\e[3~": delete-char
-"\e\\": delete-horizontal-space
-"\e-": digit-argument
-"\e0": digit-argument
-"\e1": digit-argument
-"\e2": digit-argument
-"\e3": digit-argument
-"\e4": digit-argument
-"\e5": digit-argument
-"\e6": digit-argument
-"\e7": digit-argument
-"\e8": digit-argument
-"\e9": digit-argument
-"\C-x\C-v": display-shell-version
-"\el": downcase-word
 # dump-functions (not bound)
 # dump-macros (not bound)
 # dump-variables (not bound)
-"\e\C-i": dynamic-complete-history
-"\C-x\C-e": edit-and-execute-command
-# emacs-editing-mode (not bound)
-"\C-x)": end-kbd-macro
-"\e>": end-of-history
-"\C-e": end-of-line
-"\eOF": end-of-line
-"\e[4~": end-of-line
-"\e[F": end-of-line
-"\C-x\C-x": exchange-point-and-mark
-# forward-backward-delete-char (not bound)
-"\C-f": forward-char
-"\eOC": forward-char
-"\e[C": forward-char
-"\e[1;3C": forward-word
-"\e[1;5C": forward-word
-"\ef": forward-word
-"\eg": glob-complete-word
-"\C-x*": glob-expand-word
-"\C-xg": glob-list-expansions
-"\C-r": history-search-backward
-"\C-s": history-search-forward
-# What in gods name is the difference between these 2?
-# "\C-s": forward-search-history
-"\e#": insert-comment
-"\e*": insert-completions
-"\e.": insert-last-argument
-"\e_": insert-last-argument
-"\C-k": kill-whole-line
-"\ek": kill-region
-"\e[3;5~": kill-word
-"\ed": kill-word
-"Space": magic-space
-"TAB": menu-complete
-"\e?": menu-complete
-"\e/": menu-complete-backward
-"\C-n": next-history
-
+# history-and-alias-expand-line (not bound)
+# history-expand-line (not bound)
+# Holy shit this is a cool binding. Doesn't dynamically change though.
+# l<Alt+Shift+6> --> ls -alth --color=always
+# Hitting \e^ again repeats the previously added text which is lame.
+# history-search-backward (not bound)
+# history-search-forward (not bound)
+# history-substring-search-backward (not bound)
+# history-substring-search-forward (not bound)
+# kill-region (not bound)
+# kill-whole-line (not bound)
+# magic-space (not bound)
+# menu-complete (not bound)
+# menu-complete-backward (not bound)
 # What is PageUp and PageDown?
 # next-screen-line (not bound)
-"\en": non-incremental-forward-search-history
-"\ep": non-incremental-reverse-search-history
 # old-menu-complete (not bound)
-"\C-o": operate-and-get-next
-"\e[2~": overwrite-mode
-"\C-x!": possible-command-completions
-"\e=": possible-completions
-"\C-x/": possible-filename-completions
-"\C-x@": possible-hostname-completions
-"\C-x~": possible-username-completions
-"\C-x$": possible-variable-completions
-"\C-p": previous-history
 # previous-screen-line (not bound)
 # print-last-kbd-macro (not bound)
-"\C-q": quoted-insert
-"\C-v": quoted-insert
-"\er": redraw-current-line
-"\C-x\C-r": re-read-init-file
-# reverse-search-history (not bound)
-"\e\C-r": revert-line
-
-"\C-@": set-mark
-"\e ": set-mark
 # shell-backward-kill-word (not bound)
 # shell-backward-word (not bound)
-"\e\C-e": shell-expand-line
 # shell-forward-word (not bound)
 # shell-kill-word (not bound)
 # skip-csi-sequence (not bound)
-"\C-x(": start-kbd-macro
-# tab-insert (not bound)
-"\e&": tilde-expand
-"\C-t": transpose-chars
-"\et": transpose-words
 # tty-status (not bound)
-"\C-x\C-u": undo
-"\C-_": undo
-"\C-u": universal-argument
-# "\C-u": unix-line-discard
-# "\C-w": unix-filename-rubout
-"\eu": upcase-word
-"\C-y": yank
-"\e.": yank-last-arg
-"\e_": yank-last-arg
-"\e\C-y": yank-nth-arg
-"\ey": yank-pop
-"\C-Space": menu-complete
-#  }}}
+# reverse-search-history (not bound)
 
-# Me struggling with the arrow keys: {{{
-"\eOA": previous-history
-"\e[A": previous-history
-"\eOB": next-history
-"\e[B": next-history
-"\eOD": backward-char
-"\e[C": forward-char
-"\e[D": backward-char
-# Meta-Control-h:    backward-kill-word      Text after the function name is ignored
+# "*":vi-complete
+# "/":vi-search
+# "1" to "9"  vi-arg-digit
+# "?":vi-search
+# "B":vi-bWord
+# "N":vi-search-again
+# "W":vi-forward-bigword (not bound)
+# "\C-f":forward-char
+# "w":vi-forward-word (not bound)
+# (not bound)
+# (not bound)
+# aka if vi-insert
+# and movement!
+# change C-e so we dont end up in emacs!!!
+# though keep in mind this is an else so dont put keys you want for both vi-insert
+# vi-back-to-indent (not bound)
+# vi-bword (not bound)
+# vi-eword (not bound)
+# vi-fWord (not bound)
+# vi-fWord (not bound)
+# vi-forward-bigword (not bound)
+# vi-forward-word (not bound)
+# vi-fword (not bound)
+# vi-overstrike-delete (not bound)
 
-# Arrow keys in keypad mode
-
-"\M-OD":        backward-char
-"\M-OC":        forward-char
-"\M-OA":        previous-history
-"\M-OB":        next-history
-
-# Arrow keys in ANSI mode
-"\M-[D":        backward-char
-"\M-[C":        forward-char
-"\M-[A":        previous-history
-"\M-[B":        next-history
-
-# Arrow keys in 8 bit keypad mode                                           
-"\M-\C-OD":       backward-char
-"\M-\C-OC":       forward-char
-"\M-\C-OA":       previous-history
-"\M-\C-OB":       next-history
-
-# Arrow keys in 8 bit ANSI mode
-"\M-\C-[D":       backward-char
-"\M-\C-[C":       forward-char
-"\M-\C-[A":       previous-history
-"\M-\C-[B":       next-history
-
+# set keymap emacs
 # }}}
 
-# From clink: {{{
+# Unconditional: {{{
+# Requires no escapes and metas can be dicey or err ob side of caution
+# emacs-editing-mode (not bound)
 
+"\C-x\C-g":abort
+    "\C-g":abort
+    "\C-j":accept-line
+    "\C-m":accept-line
+"\C-b":backward-char
+"\C-?":backward-delete-char
+"\C-x":self-insert
+"\C-x\C-?":backward-kill-line
+"\C-a":beginning-of-line
+"\C-xe":call-last-kbd-macro
+"\C-]":character-search
+"\C-l":clear-screen
+"\C-i":complete
+"\C-h":delete-char-or-list
+Rubout:delete-char
+"\C-x\C-v":display-shell-version
+"\C-xA":do-lowercase-version
+"\C-xB":do-lowercase-version
+"\C-xC":do-lowercase-version
+"\C-xD":do-lowercase-version
+"\C-xE":do-lowercase-version
+"\C-xF":do-lowercase-version
+"\C-xG":do-lowercase-version
+"\C-xH":do-lowercase-version
+"\C-xI":do-lowercase-version
+"\C-xJ":do-lowercase-version
+"\C-xK":do-lowercase-version
+"\C-xL":do-lowercase-version
+"\C-xM":do-lowercase-version
+"\C-xN":do-lowercase-version
+"\C-xO":do-lowercase-version
+"\C-xP":do-lowercase-version
+"\C-xQ":do-lowercase-version
+"\C-xR":do-lowercase-version
+"\C-xS":do-lowercase-version
+"\C-xT":do-lowercase-version
+"\C-xU":do-lowercase-version
+"\C-xV":do-lowercase-version
+"\C-xW":do-lowercase-version
+"\C-xX":do-lowercase-version
+"\C-xY":do-lowercase-version
+"\C-xZ":do-lowercase-version
+"\C-x\C-e":edit-and-execute-command
+"\C-x)":end-kbd-macro
+"\C-e":end-of-line
+"\C-x\C-x":exchange-point-and-mark
+"\C-f":forward-char
+# What in gods name is the difference between these 2?
+"\C-s":forward-search-history
+"\C-x*":glob-expand-word
+"\C-xg":glob-list-expansions
+# "\C-r":history-search-backward
+"\C-k":kill-whole-line
+Space":magic-space
+"\C-Space":menu-complete
+"\C-n":next-history
+"\C-o":operate-and-get-next
+"Insert":overwrite-mode
+"\C-x!":possible-command-completions
+"\C-x/":possible-filename-completions
+"\C-x@":possible-hostname-completions
+"\C-x~":possible-username-completions
+"\C-x$":possible-variable-completions
+"\C-p":previous-history
+"\C-q":quoted-insert
+# "\C-r":reverse-search-history
+"\C-x\C-r":re-read-init-file
+"\C-@":set-mark
+"\C-x(":start-kbd-macro
+# "\C-t":transpose-chars
+"\C-x\C-u":undo
+"\C-_":undo
+"\C-u":universal-argument
+"\C-w":unix-filename-rubout
+Control-Space:vi-complete
+"\C-[":vi-movement-mode
+"\C-_":vi-undo
+"\C-y":yank
+
+# WOOPS
+"a":self-insert
+"b":self-insert
+"c":self-insert
+"d":self-insert
+"e":self-insert
+"f":self-insert
+"g":self-insert
+"h":self-insert
+"i":self-insert
+"j":self-insert
+"k":self-insert
+"l":self-insert
+"m":self-insert
+"n":self-insert
+"o":self-insert
+"p":self-insert
+"q":self-insert
+"r":self-insert
+"s":self-insert
+"t":self-insert
+"u":self-insert
+"v":self-insert
+"w":self-insert
+"x":self-insert
+"y":self-insert
+"z":self-insert
+"A":self-insert
+"B":self-insert
+"C":self-insert
+"D":self-insert
+"E":self-insert
+"F":self-insert
+"G":self-insert
+"H":self-insert
+"I":self-insert
+"J":self-insert
+"K":self-insert
+"L":self-insert
+"M":self-insert
+"N":self-insert
+"O":self-insert
+"P":self-insert
+"Q":self-insert
+"R":self-insert
+"S":self-insert
+"T":self-insert
+"U":self-insert
+"V":self-insert
+"W":self-insert
+"X":self-insert
+"Y":self-insert
+"Z":self-insert
+
+#  }}}
+
+# Arrow keys in keypad mode:{{{
+# omfg this actually works on termux thank you god
+# Arrow keys in 8 bit keypad mode
+"\M-\C-OD":backward-char
+"\M-\C-OC":forward-char
+"\M-\C-OA":previous-history
+"\M-\C-OB":next-history
+
+# Arrow keys in 8 bit ANSI mode
+"\M-\C-[D":backward-char
+"\M-\C-[C":forward-char
+"\M-\C-[A":previous-history
+"\M-\C-[B":next-history
+# }}}
+
+# From clink if cmd:{{{
 # Pleasantly surprised with these!
 # Gotta figure out how to check for the conditional clink tho
 
 # Easy. It's default installed everywhere so
 $if cmd.exe
 
-"set" keymap vi-insert
-"\t":               clink-completion-shim
-"\C-V":                paste-from-clipboard
-"\C-q":                reload-lua-state
-"\C-z":                undo
-"\M-h":                show-rl-help
-"\e\C-c":              copy-line-to-clipboard
-"\C-c":                ctrl-c
-"\e-a":                "..\\"
-"\e`U":         up-directory
-"\e\C-u":          up-directory
-"\e\C-e":          expand-env-vars
+# set keymap vi-insert
+# "\t":clink-completion-shim
+# "\C-V":paste-from-clipboard
+# "\C-q":reload-lua-state
+# "\C-z":undo
+# "\M-h":show-rl-help
+# "\e\C-c":copy-line-to-clipboard
+# "\C-c":ctrl-c
+# "\e-a":"..\\"
+# "\e`U":up-directory
+# "\e\C-u":up-directory
+# "\e\C-e":expand-env-vars
 
+# set keymap emacs-insert
+"\t":clink-completion-shim
+"\C-v":paste-from-clipboard
+"\C-z":undo
+"\e-h":show-rl-help
+"\e\C-c":copy-line-to-clipboard
+"\C-c":ctrl-c
+"\e-a":"..\\"
+"\e`U":up-directory
+"\e\C-u":up-directory
+"\e\C-e":expand-env-vars
 
-"set" keymap emacs-insert
+# set keymap vi-move
+# "\C-v":paste-from-clipboard
+# "\C-z":undo
+# "\e\C-h":show-rl-help
+# "\e\C-c":copy-line-to-clipboard
+# "\C-c":ctrl-c
+# "\e-a":"..\\"
+# "\e`U":up-directory
+"\e\C-j":emacs-editing-mode
+# "\e\C-u":up-directory
+# "\e\C-e":expand-env-vars
+# set editing-mode emacs
 
-"\t":               clink-completion-shim
-"\C-v":                paste-from-clipboard
-"\C-z":                undo
-"\e-h":                show-rl-help
-"\e\C-c":              copy-line-to-clipboard
-"\C-c":                ctrl-c
-"\e-a":                "..\\"
-"\e`U":         up-directory
-"\e\C-u":          up-directory
-"\e\C-e":          expand-env-vars
-
-"set" keymap vi-move
-"\C-v":                paste-from-clipboard
-"\C-z":                undo
-"\e\C-h":                show-rl-help
-"\e\C-c":              copy-line-to-clipboard
-"\C-c":                ctrl-c
-"\e-a":                "..\\"
-"\e`U":         up-directory
-"\e\C-u":          up-directory
-"\e\C-e":          expand-env-vars
 $endif
 
 # }}}
 
-set keymap vi-command
-
-# But I still want all the normal vi commands: {{{
-
-"A": vi-append-eol
-"a": vi-append-mode
-"1": vi-arg-digit
-"2": vi-arg-digit
-"3": vi-arg-digit
-"4": vi-arg-digit
-"5": vi-arg-digit
-"6": vi-arg-digit
-"7": vi-arg-digit
-"8": vi-arg-digit
-"9": vi-arg-digit
-# "B": vi-bWord
-# vi-back-to-indent (not bound)
-"gE": vi-backward-bigword
-# (not bound)
-"ge": vi-backward-word
-# (not bound)
-# vi-bword (not bound)
-"~": vi-change-case
-"r": vi-change-char
-"C": vi-change-to
-"c": vi-change-to
-",": vi-char-search
-";": vi-char-search
-"F": vi-char-search
-"T": vi-char-search
-"f": vi-char-search
-"t": vi-char-search
-"|": vi-column
-"\C-Space": vi-complete
-"x": vi-delete
-"D": vi-delete-to
-"d": vi-delete-to
-"\C-E": vi-editing-mode
-"E": vi-end-word
-"e": vi-end-word
-"\C-d": vi-eof-maybe
-# change C-e so we dont end up in emacs!!!
-# vi-eword (not bound)
-# vi-fWord (not bound)
-# "W": vi-forward-bigword (not bound)
-# "w": vi-forward-word (not bound)
-"G": vi-fetch-history
-"^": vi-first-print
-# vi-forward-bigword (not bound)
-# vi-forward-word (not bound)
-# vi-fword (not bound)
-# vi-fWord (not bound)
-"`": vi-goto-mark
-"I": vi-insert-beg
-"i": vi-insertion-mode
-"%": vi-match
-
-# whats the difference between movement insertion and editing
-"W": vi-next-word
-"w": vi-next-word
-"Insert": vi-overstrike
-# vi-overstrike-delete (not bound)
-"B": vi-prev-word
-"b": vi-prev-word
-"P": vi-put
-"p": vi-put
-".": vi-redo
-"R": vi-replace
-"X": vi-rubout
-"/": vi-search
-"?": vi-search
-"N": vi-search-again
-"n": vi-search-again
-"m": vi-set-mark
-"S": vi-subst
-"u": vi-undo
-"w": vi-next-word
-"x": vi-delete
-"s": vi-subst
-"&": vi-tilde-expand
-"\C-w": vi-filename-rubout
-"_": vi-yank-arg
-"\C-y": vi-yank-pop
-"Y": vi-yank-to
-
-"/": non-incremental-forward-search-history
-"n": non-incremental-forward-search-history-again
-"?": non-incremental-reverse-search-history
-"n": non-incremental-reverse-search-history-again
-
-"\C-H"  backward-delete-char
-"\C-x\C-r": re-read-init-file
-Control-u: universal-argument
-Meta-Rubout: backward-kill-word
-
+# Vi insert:{{{
+$if keymap=vi-insert
+"\C-J":accept-line
+"\C-M":accept-line
+"\C-G":abort
+"\C-x\C-G":abort
+"\C-H":backward-char
+"\C-b":backward-char
+"\C-?":backward-delete-char
+# "\C-h":backward-delete-char
+"\C-x\C-?":backward-kill-line
+"\C-a":beginning-of-line
+"\C-L":clear-screen
+"\C-xe":call-last-kbd-macro
+"\C-]":character-search
+"\C-l":clear-screen
+"\C-i":complete
+"\C-h":delete-char-or-list
+Rubout:delete-char
+"\C-x\C-v":display-shell-version
+"\C-x\C-e":edit-and-execute-command
+"\e\C-j":emacs-editing-mode
+"\C-e":end-of-line
+"\C-x)":end-kbd-macro
+"\C-x\C-x":exchange-point-and-mark
+"\C-f":forward-char
+"\C-s":forward-search-history
+"\C-S":forward-search-history
+"\C-K":kill-whole-line
+"\C-k":kill-whole-line
+"\C-x*":glob-expand-word
+"\C-xg":glob-list-expansions
+# "\C-r":history-search-backward
+Space:magic-space
+"\C-Space":menu-complete
+"\C-N":next-history
+"\C-n":next-history
+"\C-o":operate-and-get-next
+"Insert":overwrite-mode
+"\C-P":previous-history
+"\C-p":previous-history
+"\C-x!":possible-command-completions
+"\C-x/":possible-filename-completions
+"\C-x@":possible-hostname-completions
+"\C-x~":possible-username-completions
+"\C-x$":possible-variable-completions
+"\C-p":previous-history
+"\C-P":previous-history
+"\C-q":quoted-insert
+"\C-Q":quoted-insert
+# "\C-V":quoted-insert
+# "\C-R":reverse-search-history
+"\C-x\C-r":re-read-init-file
+# "\C-r":reverse-search-history
+"\C-@":set-mark
+"\C-x":self-insert
+"\C-x(":start-kbd-macro
+# "\C-t":transpose-chars
+# "\C-T":transpose-chars
+# "\C-U":unix-line-discard
+"\C-x\C-u":undo
+"\C-_":undo
+# check that this works
+# "\C-.":undo
+"\C-u":universal-argument
+# "\C-u":unix-line-discard
+"\C-W":unix-filename-rubout
+"\C-w":unix-filename-rubout
+"\C-Space":vi-complete
+"\C-D":vi-eof-maybe
+"\C-d":vi-eof-maybe
+"\C-[":vi-movement-mode
+"\e":vi-movement-mode
+"\C-_":vi-undo
+# "\C-_":vi-undo
+"\C-Y":yank
+"\C-y":yank
+$endif
 # }}}
 
-# VI Command Mode functions: {{{
+# VI Command Mode functions:{{{
+$if keymap=vi-command
 
-"\C-G":  abort
-"\C-H":  backward-char
-"\C-J":  accept-line
-"\C-K":  kill-whole-line
-"\C-L":  clear-screen
-"\C-M":  accept-line
-"\C-N":  next-history
-"\C-P":  previous-history
-"\C-Q":  quoted-insert
-"\C-R":  reverse-search-history
-"\C-S":  forward-search-history
-"\C-T":  transpose-chars
-# "\C-U":  unix-line-discard
-"\C-U":  universal-argument
-"\C-V":  quoted-insert
-"\C-Y":  yank
-"\C-_":  vi-undo
-" ":  forward-char
-"#":  insert-comment
-"$":  end-of-line
-"*":  vi-complete
-"+":  next-history
-"-":  previous-history
-"0":  beginning-of-line
-# "1" to "9"  vi-arg-digit
-"=":  vi-complete
-"\\":  vi-complete
-"j":  next-history
-"k":  prev-history
-"l":  forward-char
+# "?":non-incremental-reverse-search-history
+"\C-J":accept-line
+"\C-M":accept-line
+"\C-G":abort
+# "\C-b":backward-char
+"0":beginning-of-line
+"\C-a":beginning-of-line
+"\C-L":clear-screen
+"\C-H":delete-char-or-list
+"\e\C-j":emacs-editing-mode
+# "\C-e":emacs-editing-mode
+"\C-e":end-of-line
+"\C-x)":end-kbd-macro
+"$":end-of-line
+" ":forward-char
+"\C-S":forward-search-history
+"\C-s":forward-search-history
+"\C-x\C-e":edit-and-execute-command
+"\C-x\C-x":exchange-point-and-mark
+"\C-x*":glob-expand-word
+"\C-xg":glob-list-expansions
+# "\C-r":history-search-backward
+"\C-K":kill-whole-line
+"\C-k":kill-whole-line
+"#":insert-comment
+"\C-N":next-history
+"\C-n":next-history
+"+":next-history
+"\C-p":previous-history
+"\C-P":previous-history
+"-":previous-history
+"\C-Q":quoted-insert
+# "\C-R":reverse-search-history
+# "\C-T":transpose-chars
+# "\C-U":unix-line-discard
+# "\C-V":quoted-insert
+# "\C-W":vi-unix
+"1":vi-arg-digit
+"2":vi-arg-digit
+"3":vi-arg-digit
+"4":vi-arg-digit
+"5":vi-arg-digit
+"6":vi-arg-digit
+"7":vi-arg-digit
+"8":vi-arg-digit
+"9":vi-arg-digit
+"~":vi-change-case
+";":vi-char-search
+"=":vi-complete
+"*":vi-complete
+"|":vi-column
+"\C-Space":vi-complete
+",":vi-char-search
+",":vi-char-search
+"\C-D":vi-eof-maybe
+"\C-d":vi-eof-maybe
+"^":vi-first-print
+"`":vi-goto-mark
+"%":vi-match
+".":vi-redo
+"/":vi-search
+"?":vi-search
+"&":vi-tilde-expand
+# "/":non-incremental-forward-search-history
+"\C-_":vi-undo
+"_":vi-yank-arg
 
+"A":vi-append-eol
+"a":vi-append-mode
+"B":vi-prev-word
+"b":vi-prev-word
+"C":vi-change-to
+"c":vi-change-to
+"D":vi-delete-to
+# "\":vi-complete
+"d":vi-delete-to
+"E":vi-end-word
+"e":vi-end-word
+"f":vi-char-search
+"F":vi-char-search
+"G":vi-fetch-history
+"gE":vi-backward-bigword
+"ge":vi-backward-word
+"h":backward-char
+"i":vi-insert-mode
+"I":vi-insert-beg
+"j":next-history
+"k":previous-history
+"l":forward-char
+"m":vi-set-mark
+"n":vi-search-again
+"N":vi-search-again
+"P":vi-put
+"p":vi-put
+"r":vi-change-char
+"R":vi-replace
+"S":vi-subst
+"s":vi-subst
+"t":vi-char-search
+"T":vi-char-search
+"U":revert-line
+"u":vi-undo
+"w":vi-next-word
+"W":vi-next-word
+"x":vi-delete
+"x":vi-delete
+# "X":backward-delete-char
+"X":vi-rubout
+"Y":vi-yank-to
+"y":vi-yank-to
+
+"\C-Y":yank
+
+# so we cant use Meta in insert mode. but we totally should be able to
+# in vi command mode so here we go.
+Meta-Control-h:backward-kill-word
+Meta-Control-?:backward-kill-word
+Meta-Rubout:backward-kill-word
+Meta-b:backward-word
+Meta-<:beginning-of-history
+Control-]:character-search
+Meta-Control-]:character-search-backward
+Meta-!:complete-command
+Meta-/:complete-filename
+Meta-@:complete-hostname
+Meta-{:complete-into-braces
+Meta-~:complete-username
+Meta-$:complete-variable
+Meta-\\:delete-horizontal-space
+Meta-0:digit-argument
+Meta-1:digit-argument
+Meta-2:digit-argument
+Meta-3:digit-argument
+Meta-4:digit-argument
+Meta-5:digit-argument
+Meta-6:digit-argument
+Meta-7:digit-argument
+Meta-8:digit-argument
+Meta-9:digit-argument
+Meta-l:downcase-word
+Meta-\C-i:dynamic-complete-history
+Meta->:end-of-history
+Meta-f:forward-word
+Meta-g:glob-complete-word
+Meta-^:history-and-alias-expand-line
+# Meta-[A:history-search-backward
+# Meta-[B:history-search-forward
+Meta-#:insert-comment
+Meta-*:insert-completions
+Meta-.:insert-last-argument
+Meta-_:insert-last-argument
+Meta-k:kill-region
+Meta-d:kill-word
+Space:magic-space
+Meta-?:menu-complete
+Meta-/:menu-complete-backward
+Meta-n:non-incremental-forward-search-history
+Meta-p:non-incremental-reverse-search-history
+# Meta-[2~:overwrite-mode
+Meta-=:possible-completions
+Meta-r:redraw-current-line
+Meta-Control-r:revert-line
+Meta-Space:set-mark
+Meta-Control-e:shell-expand-line
+Meta-&:tilde-expand
+Meta-t:transpose-words
+Meta-Tab:tab-insert
+Meta-u:upcase-word
+Meta-.:yank-last-arg
+Meta-_:yank-last-arg
+Meta-Control-y:yank-nth-arg
+Meta-y:yank-pop
+
+$endif
 # }}}
 
-# Options: {{{
-
+# Options:{{{
 set show-mode-in-prompt on
-# from info readline
-set match-hidden-files on
 set revert-all-at-newline on
 
 # From Arch Wiki and man bash
@@ -409,11 +575,11 @@ set menu-complete-display-prefix On
 set enable-bracketed-paste On
 
 # Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
-# Apr 12, 2019: Line 3200 man bash
+# Apr 12, 2019:Line 3200 man bash
 set blink-matching-paren
 
 # Times out too fast at 500
-set keyseq-timeout 1000
+# set keyseq-timeout -1
 
 # words which have more than one possible completion without any possible
 # partial completion (the possible completions don't share a common prefix)
@@ -429,7 +595,7 @@ set bell-style none
 
 # should we? default off. my arrow keys work idk
 # not the arrow keys the application keypad too. do it
-set enable-keypad on
+# set enable-keypad on
 
 # 8 bit clean
 set input-meta on
@@ -437,6 +603,7 @@ set output-meta on
 
 # YO! don't do this we don't need fucking umlauts i need teh ALT key
 # set convert-meta off
+set convert-meta on
 
 set mark-symlinked-directories on
 
@@ -453,34 +620,94 @@ set history-preserve-point on
 # (by default Up and Down will just select previous commands without any
 # matching against history.)
 
-# "\e[A": history-search-backward
-# "\e[B": history-search-forward
+set history-size -1
 # }}}
 
-set keymap vi-insert
+# Ive been using emacs mode so we should try binding things to that namespace: {{{
+$if editing-mode=emacs
+"\eOD":backward-char
+"\e[D":backward-char
+Meta-Control-h:backward-kill-word
+Meta-Control-?:backward-kill-word
+Meta-Rubout:backward-kill-word
+"\e[1;3D":backward-word
+"\e[1;5D":backward-word
+Meta-b:backward-word
+Meta-<:beginning-of-history
+"\e[1~":beginning-of-line
+"\e[H":beginning-of-line
+"\e[200~":bracketed-paste-begin
+"\eOH":beginning-of-line
+Control-]:character-search
+Meta-Control-]:character-search-backward
+Meta-!:complete-command
+Meta-/:complete-filename
+Meta-@:complete-hostname
+Meta-{:complete-into-braces
+"\e~":complete-username
+"\e$":complete-variable
+"\e[3~":delete-char
+"\C-h":delete-char-or-list
+"\e\\":delete-horizontal-space
+"\e-":digit-argument
+"\e0":digit-argument
+"\e1":digit-argument
+"\e2":digit-argument
+"\e3":digit-argument
+"\e4":digit-argument
+"\e5":digit-argument
+"\e6":digit-argument
+"\e7":digit-argument
+"\e8":digit-argument
+"\e9":digit-argument
+"\el":downcase-word
+"\e\C-i":dynamic-complete-history
+"\e>":end-of-history
+"\eOF":end-of-line
+"\e[4~":end-of-line
+"\e[F":end-of-line
+"\eOC":forward-char
+"\e[C":forward-char
+"\e[1;3C":forward-word
+"\e[1;5C":forward-word
+"\ef":forward-word
+"\eg":glob-complete-word
+"\e^":history-and-alias-expand-line
+"\e[A":history-search-backward
+"\e[B":history-search-forward
+"\e#":insert-comment
+"\e*":insert-completions
+"\e.":insert-last-argument
+"\e_":insert-last-argument
+"\ek":kill-region
+"\e[3;5~":kill-word
+"\ed":kill-word
+Space:magic-space
+"\e?":menu-complete
+"\e/":menu-complete-backward
+"\en":non-incremental-forward-search-history
+"\ep":non-incremental-reverse-search-history
+"\e[2~":overwrite-mode
+"\e=":possible-completions
+"\er":redraw-current-line
+"\e\C-r":revert-line
+"\e ":set-mark
+"\e\C-e":shell-expand-line
+"\e&":tilde-expand
+"\et":transpose-words
+Meta-Tab:tab-insert
+"\C-u":universal-argument
+"\C-w":unix-filename-rubout
+Meta-u:upcase-word
+Meta-.:yank-last-arg
+Meta-_:yank-last-arg
+Meta-Control-y:yank-nth-arg
+Meta-y:yank-pop
+
+# Meta-Control-h:backward-kill-word      Text after the function name is ignored
+$endif
 # }}}
-# Ive been using emacs mode so we should try binding things to that namespace
 
-set editing-mode emacs
-set keymap emacs
+# $include ~/.fzf/shell/key-bindings.bash
 
-"\C-w": unix-filename-rubout
-"\C-[": vi-movement-mode
-"\C-x\C-r": re-read-init-file
-"\C-Space": menu-complete
-"\C-x\C-e": edit-and-execute-command
-"\C-k": kill-whole-line
-"\eg": glob-complete-word
-"\C-x*": glob-expand-word
-"\C-xg": glob-list-expansions
-"\Space": magic-space
-"\C-p": previous-history
-
-# history-expand-line (not bound)
-# Holy shit this is a cool binding. Doesn't dynamically change though.
-# l<Alt+Shift+6> --> ls -alth --color=always
-# Hitting \e^ again repeats the previously added text which is lame.
-"\e^": history-and-alias-expand-line
-"\e\C-e": shell-expand-line
-
-# Vim: set fdm=marker fdls=0:
+# Vim:set fdm=marker fdls=0:

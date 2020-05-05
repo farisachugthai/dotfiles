@@ -112,6 +112,8 @@ gpip3() {  # {{{
 }
 # }}}
 
+complete -o default -F _pip_completion gpip gpip2 gpip3
+
 # hist_std_out: Edit previously run commands: {{{
 hist_std_out() {
     fc -nl 1 "$HISTFILESIZE"
@@ -171,6 +173,8 @@ setup_ssh() {
     fi
 }
 # }}}
+
+_fzf_setup_completion 'host'  ssh-agent ssh-day ssha
 
 filetree() {  # {{{
     if [[ -n "$1" ]]; then

@@ -34,9 +34,6 @@ fi
 # }}}
 
 # Builds: {{{
-bind -r "\C-g"
-bind -f "$HOME/.inputrc"
-
 [[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
 
 # Shellcheck
@@ -83,13 +80,18 @@ shopt -s autocd cdable_vars
 shopt -s dotglob hostcomplete
 shopt -u failglob
 shopt -s checkhash
+shopt -s hostcomplete
 shopt -s extdebug
 shopt -s extglob extquote
 set -o pipefail
 # I always forget keep this below set -o vi!
 # Dont know how i never thought source my shit first
 [[ -f ~/.bashrc.d/fzf.bash ]] && source ~/.bashrc.d/fzf.bash
+# source this directly from the .inputrc so that when we update the
+# keybindings we dont lose our fzf bindings. that raises an error.
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+
+bind -f "$HOME/.inputrc"
 
 # Be notified of asynchronous jobs completing in the background
 set -o notify
@@ -198,7 +200,7 @@ _completion_loader()
 # oh also fzf. but -A command is a bad idea so don't do that.
 # dude bash should complete its own fucking keywords. oh man is this nice.
 # `-k` is the same as -A keyword
-complete -D -F _completion_loader -o bashdefault -o default -k
+complete -D -F _completion_loader -F _fzf_path_completion -k -f -d
 # -o plusdirs -F _fzf_complete
 
 # modify how completions are created by default
@@ -211,33 +213,37 @@ export COMP_CONFIGURE_HINTS=1
 if [[ -n "$(command -v kitty)" ]]; then
     source <(kitty + complete setup bash)
 fi
-# Just figured this one out! Especially useful as I've been building universal-ctags from source
-complete -o bashdefault -o default -o dirnames -F _longopt ctags
 
-# I'm embarrassed by how happy figuring this out made me
-test "$(command -v dlink2)" && complete -o bashdefault -o default -o dirnames -F _fzf_path_completion dlink2
+# Never noticed this before!
+# this variable is called in ~/.fzf/shell/completion.bash with each command in the var fed to this
+# __fzf_defc "$cmd" _fzf_dir_completion "-o nospace -o dirnames"
+export FZF_COMPLETION_DIR_COMMANDS="cd cs pushd rmdir mkdir mk du tree dlink ctags"
 
-complete -o bashdefault -o default -o dirnames -o filenames -F _longopt -F _fzf_path_completion du
-complete -o bashdefault -o default -o dirnames -o filenames -F _longopt  -F _fzf_path_completion nvim
-complete -o bashdefault -o default -o filenames -F _longopt -F _fzf_path_completion bat
+# From man bash Programmable Completion
 
-# This allows set to behave slightly more as expected.
-complete -A setopt -A shopt -k set
+#        First, the actions specified by the compspec are used.  Only matches
+#        which are prefixed by the word being completed are returned.  When the
+#        -f or -d option is used for filename or directory name completion, the
+#        shell variable FIGNORE is used to filter the matches.
+
+# This allows set to behave slightly more as expected.  -k is keyword.
+complete -k -A setopt -A shopt -F _fzf_var_completion set unset
+
 # The -A flag is fucking amazing for getting complete to behave as expected
-# this is good to konw about
-# complete -F _known_hosts traceroute
-complete -F _known_hosts -A hostname -F _longopt ssh
-complete -F _known_hosts -A hostname -F _longopt traceroute
-complete -F _known_hosts -A hostname -F _longopt ping
-complete -A alias -F _fzf_alias_completion alias
-complete -A export -F _terms -F _longopt env
+complete -A hostname -F _longopt -F _fzf_host_completion -F _known_hosts ssh traceroute ping
 
-complete -F _longopt a2ps awk base64 bash bc bison cat chroot colordiff cp \
-    csplit cut date df diff dir enscript expand fmt fold gperf \
-    grep grub head irb ld ldd less ln ls m4 md5sum mkdir mkfifo mknod \
-    mv netstat nl nm objcopy objdump od paste pr ptx readelf rm rmdir \
+complete -A alias -F _fzf_alias_completion alias unalias
+# where did _terms come from?
+complete -A export -F _terms -F _longopt -F _fzf_var_completion env export
+complete -F _fzf_var_completion echo
+
+complete -o bashdefault -o default -F _longopt -F _completion_loader -F _fzf_path_completion \
+    a2ps awk base64 bash bc bison cat chroot colordiff cp \
+    csplit cut date df diff dir enscript expand find fmt fold gperf \
+    grep grub head irb ld ldd less ln ls m4 md5sum mkfifo mknod \
+    mv netstat nl nm nvim objcopy objdump od paste pr ptx readelf   \
     sed seq sha{,1,224,256,384,512}sum shar sort split strip sum tac tail tee \
-    texindex touch tr uname unexpand uniq units vdir wc who
+    texindex touch tr uname unexpand uniq units vi vim vdir wc who
 
 obviously_a_terrible_idea() {
     for i in $_ROOT/share/bash-completion/completions/*; do
@@ -245,14 +251,11 @@ obviously_a_terrible_idea() {
     done
 }
 
-# other completion things i wanted to add
-complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt cd
-complete -o bashdefault -o default -o dirnames -o filenames -F _fzf_path_completion -F _longopt cs
 # }}}
 
 # Prompt: {{{
 
-git_branch() {   # {{{
+_prompt_git_branch() {   # {{{
     if branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"; then
         [[ -n "$(git status --porcelain 2> /dev/null)" ]] && echo -n "\[$LIGHT_RED\]Dirty: "
         echo -ne "\[$CYAN\]$branch "
