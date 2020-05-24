@@ -97,6 +97,7 @@ set -o pipefail
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 
 bind -f "$HOME/.inputrc"
+export INPUTRC="$HOME/.inputrc"
 
 # Be notified of asynchronous jobs completing in the background
 set -o notify
@@ -167,7 +168,7 @@ test "$NVM_DIR" && source "$NVM_DIR/nvm.sh" && nvm use default && pathadd "$NVM_
 
 # }}}
 
-# Fasd: {{{
+# Other: {{{
 fasd_cache="$HOME/.fasd-init-bash"
 if [[ -n "$(command -v fasd)" ]]; then
     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
@@ -176,6 +177,15 @@ if [[ -n "$(command -v fasd)" ]]; then
     source "$fasd_cache"
     export _FASD_VIMINFO="$XDG_DATA_HOME/nvim/shada/main.shada"
 fi
+
+PATH="/data/data/com.termux/files/home/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/data/data/com.termux/files/home/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/data/data/com.termux/files/home/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/data/data/com.termux/files/home/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/data/data/com.termux/files/home/perl5"; export PERL_MM_OPT;
+
+# Random dirs Termux adds to path when run as failsafe:
+export PATH="$PATH:/sbin:/system/sbin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin"
 # }}}
 
 # Sourced files: {{{
@@ -183,9 +193,10 @@ firstpath "$HOME/bin"
 firstpath "$HOME/.local/bin"
 pathadd "$_ROOT/local/bin"
 pathadd "$_ROOT/libexec"
+pathadd "$_ROOT/libexec/git-core"
 
 # add some cool colors to ls
-eval "$( dircolors -b $HOME/.dircolors )"
+test -f "$HOME/.dircolors" && [[ -n "$(command -v dircolors)" ]] && eval "$( dircolors -b $HOME/.dircolors )"
 
 if [[ -d ~/.bashrc.d ]]; then
     for config in $HOME/.bashrc.d/*.bash; do
@@ -224,7 +235,7 @@ fi
 # Never noticed this before!
 # this variable is called in ~/.fzf/shell/completion.bash with each command in the var fed to this
 # __fzf_defc "$cmd" _fzf_dir_completion "-o nospace -o dirnames"
-export FZF_COMPLETION_DIR_COMMANDS="cd cs pushd rmdir mkdir mk du tree dlink ctags"
+export FZF_COMPLETION_DIR_COMMANDS="pushd rmdir mkdir mk du tree dlink ctags"
 
 # From man bash Programmable Completion
 #        First, the actions specified by the compspec are used.  Only matches
@@ -240,11 +251,11 @@ complete -A hostname -F _longopt -F _fzf_host_completion -F _known_hosts ssh tra
 # where did _terms come from?
 complete -A export -F _terms -F _longopt -F _fzf_var_completion env export
 complete -A setopt -A shopt set unset shopt
-complete -A variable -F _fzf_var_completion echo
+complete -v -F _fzf_var_completion echo
 
 complete -o bashdefault -o default -F _longopt -F _completion_loader -F _fzf_path_completion \
-    a2ps awk base64 bash bc bison cat chroot colordiff cp \
-    csplit cut date df diff dir enscript expand find fmt fold gperf \
+    a2ps awk base64 bash bc bison cat cd chroot colordiff cp cs \
+    csplit cut date df diff dir dirs enscript expand find fmt fold gperf \
     grep grub head irb ld ldd less ln ls m4 md5sum mkfifo mknod \
     mv netstat nl nm nvim objcopy objdump od paste pr ptx readelf   \
     sed seq sha{,1,224,256,384,512}sum shar sort split strip sum tac tail tee \

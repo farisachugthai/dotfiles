@@ -78,86 +78,91 @@
 
 # Unconditional: {{{
 # Requires no escapes and metas can be dicey or err ob side of caution
-# emacs-editing-mode (not bound)
+
+# Few macros:
+# prepare to type a quoted word
+# insert open and close double quotes
+# and move to just after the open quote
+"\C-x\"": "\"\"\C-b"
+# insert a backslash (testing backslash escapes in sequences and macros)
+"\C-x\\": "\\"
 
 "\C-x\C-g":abort
     "\C-g":abort
     "\C-j":accept-line
     "\C-m":accept-line
-"\C-b":backward-char
-"\C-?":backward-delete-char
-"\C-x":self-insert
+    "\C-b":backward-char
+    "\C-?":backward-delete-char
+    "\C-x":self-insert
 "\C-x\C-?":backward-kill-line
-"\C-a":beginning-of-line
-"\C-xe":call-last-kbd-macro
-"\C-]":character-search
-"\C-l":clear-screen
-"\C-i":complete
-"\C-h":delete-char-or-list
-Rubout:delete-char
+    "\C-a":beginning-of-line
+   "\C-xe":call-last-kbd-macro
+    "\C-]":character-search
+    "\C-l":clear-screen
+    "\C-i":complete
+    "\C-h":delete-char-or-list
+    Rubout:delete-char
 "\C-x\C-v":display-shell-version
-"\C-xA":do-lowercase-version
-"\C-xB":do-lowercase-version
-"\C-xC":do-lowercase-version
-"\C-xD":do-lowercase-version
-"\C-xE":do-lowercase-version
-"\C-xF":do-lowercase-version
-"\C-xG":do-lowercase-version
-"\C-xH":do-lowercase-version
-"\C-xI":do-lowercase-version
-"\C-xJ":do-lowercase-version
-"\C-xK":do-lowercase-version
-"\C-xL":do-lowercase-version
-"\C-xM":do-lowercase-version
-"\C-xN":do-lowercase-version
-"\C-xO":do-lowercase-version
-"\C-xP":do-lowercase-version
-"\C-xQ":do-lowercase-version
-"\C-xR":do-lowercase-version
-"\C-xS":do-lowercase-version
-"\C-xT":do-lowercase-version
-"\C-xU":do-lowercase-version
-"\C-xV":do-lowercase-version
-"\C-xW":do-lowercase-version
-"\C-xX":do-lowercase-version
-"\C-xY":do-lowercase-version
-"\C-xZ":do-lowercase-version
+   "\C-xA":do-lowercase-version
+   "\C-xB":do-lowercase-version
+   "\C-xC":do-lowercase-version
+   "\C-xD":do-lowercase-version
+   "\C-xE":do-lowercase-version
+   "\C-xF":do-lowercase-version
+   "\C-xG":do-lowercase-version
+   "\C-xH":do-lowercase-version
+   "\C-xI":do-lowercase-version
+   "\C-xJ":do-lowercase-version
+   "\C-xK":do-lowercase-version
+   "\C-xL":do-lowercase-version
+   "\C-xM":do-lowercase-version
+   "\C-xN":do-lowercase-version
+   "\C-xO":do-lowercase-version
+   "\C-xP":do-lowercase-version
+   "\C-xQ":do-lowercase-version
+   "\C-xR":do-lowercase-version
+   "\C-xS":do-lowercase-version
+   "\C-xT":do-lowercase-version
+   "\C-xU":do-lowercase-version
+   "\C-xV":do-lowercase-version
+   "\C-xW":do-lowercase-version
+   "\C-xX":do-lowercase-version
+   "\C-xY":do-lowercase-version
+   "\C-xZ":do-lowercase-version
 "\C-x\C-e":edit-and-execute-command
-"\C-x)":end-kbd-macro
-"\C-e":end-of-line
+   "\C-x)":end-kbd-macro
+    "\C-e":end-of-line
 "\C-x\C-x":exchange-point-and-mark
-"\C-f":forward-char
+    "\C-f":forward-char
 # What in gods name is the difference between these 2?
-"\C-s":forward-search-history
-"\C-x*":glob-expand-word
-"\C-xg":glob-list-expansions
-# "\C-r":history-search-backward
-"\C-k":kill-whole-line
-Space":magic-space
+    "\C-s":forward-search-history
+   "\C-x*":glob-expand-word
+   "\C-xg":glob-list-expansions
+  # "\C-r":history-search-backward
+    "\C-k":kill-whole-line
+    Space":magic-space
 "\C-Space":menu-complete
-"\C-n":next-history
-"\C-o":operate-and-get-next
-"Insert":overwrite-mode
-"\C-x!":possible-command-completions
-"\C-x/":possible-filename-completions
-"\C-x@":possible-hostname-completions
-"\C-x~":possible-username-completions
-"\C-x$":possible-variable-completions
-"\C-p":previous-history
-"\C-q":quoted-insert
-# "\C-r":reverse-search-history
+    "\C-n":next-history
+    "\C-o":operate-and-get-next
+  "Insert":overwrite-mode
+   "\C-x!":possible-command-completions
+   "\C-x/":possible-filename-completions
+   "\C-x@":possible-hostname-completions
+   "\C-x~":possible-username-completions
+   "\C-x$":possible-variable-completions
+    "\C-p":previous-history
+    "\C-q":quoted-insert
 "\C-x\C-r":re-read-init-file
-"\C-@":set-mark
-"\C-x(":start-kbd-macro
-# "\C-t":transpose-chars
+    "\C-@":set-mark
+   "\C-x(":start-kbd-macro
 "\C-x\C-u":undo
-"\C-_":undo
-"\C-u":universal-argument
-"\C-w":unix-filename-rubout
+    "\C-_":undo
+    "\C-u":universal-argument
+    "\C-w":unix-filename-rubout
 Control-Space:vi-complete
-"\C-[":vi-movement-mode
-"\C-_":vi-undo
-"\C-y":yank
+    "\C-[":vi-movement-mode
+    "\C-_":vi-undo
+    "\C-y":yank
 
 # WOOPS
 "a":self-insert
@@ -286,82 +291,70 @@ $endif
 
 # Vi insert:{{{
 $if keymap=vi-insert
-"\C-J":accept-line
-"\C-M":accept-line
-"\C-G":abort
+
+    "\C-J":accept-line
+    "\C-M":accept-line
+    "\C-G":abort
 "\C-x\C-G":abort
-"\C-H":backward-char
-"\C-b":backward-char
-"\C-?":backward-delete-char
-# "\C-h":backward-delete-char
+    "\C-H":backward-char
+    "\C-b":backward-char
+    "\C-?":backward-delete-char
 "\C-x\C-?":backward-kill-line
-"\C-a":beginning-of-line
-"\C-L":clear-screen
-"\C-xe":call-last-kbd-macro
-"\C-]":character-search
-"\C-l":clear-screen
-"\C-i":complete
-# ^H	BS	0x08	  8	BACKSPACE (BS)
-"\C-h":delete-char-or-list
-Rubout:delete-char
+    "\C-a":beginning-of-line
+    "\C-L":clear-screen
+   "\C-xe":call-last-kbd-macro
+    "\C-]":character-search
+    "\C-l":clear-screen
+    "\C-i":complete
+    "\C-h":delete-char-or-list
+    Rubout:delete-char
+    `
 "\C-x\C-v":display-shell-version
 "\C-x\C-e":edit-and-execute-command
-"\e\C-j":emacs-editing-mode
-"\C-e":end-of-line
-"\C-x)":end-kbd-macro
+  "\e\C-j":emacs-editing-mode
+    "\C-e":end-of-line
+   "\C-x)":end-kbd-macro
 "\C-x\C-x":exchange-point-and-mark
-"\C-f":forward-char
-"\C-s":forward-search-history
-"\C-S":forward-search-history
-"\C-K":kill-whole-line
-"\C-k":kill-whole-line
-"\C-x*":glob-expand-word
-"\C-xg":glob-list-expansions
-# "\C-r":history-search-backward
-Space:magic-space
+    "\C-f":forward-char
+    "\C-s":forward-search-history
+    "\C-S":forward-search-history
+    "\C-K":kill-whole-line
+    "\C-k":kill-whole-line
+   "\C-x*":glob-expand-word
+   "\C-xg":glob-list-expansions
+     Space:magic-space
 "\C-Space":menu-complete
-"\C-N":next-history
-"\C-n":next-history
-"\C-o":operate-and-get-next
-"Insert":overwrite-mode
-"\C-P":previous-history
-"\C-p":previous-history
-"\C-x!":possible-command-completions
-"\C-x/":possible-filename-completions
-"\C-x@":possible-hostname-completions
-"\C-x~":possible-username-completions
-"\C-x$":possible-variable-completions
-"\C-p":previous-history
-"\C-P":previous-history
-"\C-q":quoted-insert
-"\C-Q":quoted-insert
-# "\C-V":quoted-insert
-# "\C-R":reverse-search-history
+    "\C-N":next-history
+    "\C-n":next-history
+    "\C-o":operate-and-get-next
+  "Insert":overwrite-mode
+    "\C-P":previous-history
+    "\C-p":previous-history
+   "\C-x!":possible-command-completions
+   "\C-x/":possible-filename-completions
+   "\C-x@":possible-hostname-completions
+   "\C-x~":possible-username-completions
+   "\C-x$":possible-variable-completions
+    "\C-p":previous-history
+    "\C-P":previous-history
+    "\C-q":quoted-insert
+    "\C-Q":quoted-insert
 "\C-x\C-r":re-read-init-file
-# "\C-r":reverse-search-history
-"\C-@":set-mark
-"\C-x":self-insert
-"\C-x(":start-kbd-macro
-# "\C-t":transpose-chars
-# "\C-T":transpose-chars
-# "\C-U":unix-line-discard
+    "\C-@":set-mark
+    "\C-x":self-insert
+   "\C-x(":start-kbd-macro
 "\C-x\C-u":undo
-"\C-_":undo
-# check that this works
-# "\C-.":undo
-"\C-u":universal-argument
-# "\C-u":unix-line-discard
-"\C-W":unix-filename-rubout
-"\C-w":unix-filename-rubout
+    "\C-u":universal-argument
+    "\C-W":unix-filename-rubout
+    "\C-w":unix-filename-rubout
 "\C-Space":vi-complete
-"\C-D":vi-eof-maybe
-"\C-d":vi-eof-maybe
-"\C-[":vi-movement-mode
-"\e":vi-movement-mode
-"\C-_":vi-undo
-# "\C-_":vi-undo
-"\C-Y":yank
-"\C-y":yank
+    "\C-D":vi-eof-maybe
+    "\C-d":vi-eof-maybe
+    "\C-[":vi-movement-mode
+      "\e":vi-movement-mode
+    "\C-_":vi-undo
+    "\C-Y":yank
+    "\C-y":yank
 $endif
 # }}}
 
@@ -508,7 +501,7 @@ Meta-7:digit-argument
 Meta-8:digit-argument
 Meta-9:digit-argument
 Meta-l:downcase-word
-Meta-\C-i:dynamic-complete-history
+Meta-Control-i:dynamic-complete-history
 Meta->:end-of-history
 Meta-f:forward-word
 Meta-g:glob-complete-word

@@ -31,7 +31,6 @@ set -g pane-active-border-style "fg=#7daea3,bold"
 # note the setw
 setw -g pane-border-style "fg=#7daea3,bold"
 setw -g pane-border-status top
-setw -g pane-border-format '#{t:window_activity}'
 
 set-window-option -g window-status-style default
 
@@ -75,5 +74,10 @@ setw -g window-status-current-format " #[fg=#dfbf8e,bg=#282828] » #[fg=#dfbf8e,
 
 # Who wants to see if we can add unicode symbols directly in here. Nope.
 # setw -ga window-status-current-format U+1F5A5
+
+# So this is kinda neat but mostly jarring
+# setw -g pane-border-format '#{t:window_activity} #{w:#{e:window-status-format} ,#{e:window-status-current-format} } #[fg=#dfbf8e,bg=#282828] » #[fg=#dfbf8e,bg=#504945] #I#F ▶ #W #[fg=#dfbf8e,bg=#282828] » '
+setw -g pane-border-format '#{t:window_activity} #{w:#{e:window-status-format} ,#{e:window-status-current-format} } » #W « '
+
 # }}}
 
