@@ -228,6 +228,11 @@ Control-Space:vi-complete
 "\M-\C-[C":forward-char
 "\M-\C-[A":previous-history
 "\M-\C-[B":next-history
+
+# Yo please don't let this fuck it up
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
 # }}}
 
 # From clink if cmd:{{{
@@ -296,6 +301,7 @@ $if keymap=vi-insert
 "\C-]":character-search
 "\C-l":clear-screen
 "\C-i":complete
+# ^H	BS	0x08	  8	BACKSPACE (BS)
 "\C-h":delete-char-or-list
 Rubout:delete-char
 "\C-x\C-v":display-shell-version
@@ -710,4 +716,4 @@ $endif
 
 # $include ~/.fzf/shell/key-bindings.bash
 
-# Vim:set fdm=marker fdls=0:
+# Vim: set fdm=marker fdls=0:

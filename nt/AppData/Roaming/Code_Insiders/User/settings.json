@@ -24,15 +24,6 @@
     "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\**"
   ],
   "C_Cpp.default.windowsSdkVersion": "10.0.18362.0",
-  "C_Cpp.experimentalFeatures": "Enabled",
-  "C_Cpp.intelliSenseEngine": "Default",
-  "C_Cpp.intelliSenseEngineFallback": "Enabled",
-  "C_Cpp.loggingLevel": "Warning",
-  "C_Cpp.preferredPathSeparator": "Forward Slash",
-  "C_Cpp.suggestSnippets": true,
-  "C_Cpp.updateChannel": "Insiders",
-  "C_Cpp.workspaceParsingPriority": "low",
-  "C_Cpp.workspaceSymbols": "All",
   "[bat]": {},
   "[c]": {
     "editor.defaultFormatter": "ms-vscode.cpptools",
@@ -74,7 +65,7 @@
     "editor.tabSize": 2
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.insertSpaces": true,
     "editor.quickSuggestions": {
       "strings": true
@@ -173,8 +164,8 @@
   "debug.showInStatusBar": "always",
   "debug.showSubSessionsInToolBar": true,
   "debug.toolBarLocation": "docked",
-  "diffEditor.ignoreTrimWhitespace": false,
-  "diffEditor.renderSideBySide": false,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.renderSideBySide": true,
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.accessibilityPageSize": 1,
   "editor.accessibilitySupport": "off",
@@ -201,17 +192,24 @@
   "extensions.ignoreRecommendations": true,
   "extensions.showRecommendationsOnlyOnDemand": true,
   "files.associations": {
-    "**/requirements{.txt,}": "pip-requirements",
+    "requirements{.txt,}": "pip-requirements",
     "*.c": "c",
     "*.h": "cpp",
     "*.ipy": "python",
     "*.jupyterlab-settings": "json",
+    "*.rst": "restructuredtext",
     "*.rst_t": "jinja",
     "*.toml": "toml",
     "*.vim": "viml",
     "*.xsh": "python",
     "*.yml": "yaml",
-    ".travis.yml": "yaml",
+    "*.babelrc": "jsonc",
+    "*.dockerignore": "ignore",
+    "*.eslintignore": "ignore",
+    "*.eslintrc": "jsonc",
+    "*.prettierrc": "jsonc",
+    "*.stylelintrc": "json",
+    "*.travis.yml": "yaml",
     "vimrc": "viml",
     "winrc": "viml"
   },
@@ -219,24 +217,25 @@
   "files.encoding": "utf8",
   "files.eol": "\n",
   "files.exclude": {
-    "**/*.egg-info": true,
+    ".idea": true,
+    ".tox": true,
+    ".venv": true,
+    "\"**/*.js\": {\"when\": \"$(basename).ts\"}": true,
+    "{workspaceFolder}/.idea": true,
+    "{workspaceFolder}/.tox": true,
+    "{workspaceFolder}/**/_static": true,
+    "{workspaceFolder}/build": true,
+    "{workspaceFolder}/dist": true,
+    "**/__pycache__/**": true,
     "**/.coverage": true,
     "**/.eggs": true,
     "**/.git": true,
     "**/.mypy_cache": true,
     "**/.pytest_cache": true,
     "**/.venv": true,
-    "**/__pycache__/**": true,
+    "**/*.egg-info": true,
     "**/bower_components": true,
-    "**/site-packages/**/*.py": true,
-    ".idea": true,
-    ".tox": true,
-    ".venv": true,
-    "{workspaceFolder}/**/_static": true,
-    "{workspaceFolder}/.idea": true,
-    "{workspaceFolder}/.tox": true,
-    "{workspaceFolder}/build": true,
-    "{workspaceFolder}/dist": true
+    "**/site-packages/**/*.py": true
   },
   "files.simpleDialog.enable": true,
   "files.trimFinalNewlines": true,
@@ -257,9 +256,6 @@
   },
   "git.allowForcePush": true,
   "git.alwaysShowStagedChangesResourceGroup": true,
-  "git.autoStash": true,
-  "git.autofetch": true,
-  "git.confirmForcePush": false,
   "git.defaultCloneDirectory": "%userprofile%\\projects",
   "git.enableSmartCommit": true,
   "git.fetchOnPull": true,
@@ -267,8 +263,10 @@
   "git.rebaseWhenSync": true,
   "git.showPushSuccessNotification": true,
   "git.smartCommitChanges": "tracked",
-  "python.condaPath": "C:\\Users\\fac\\scoop\\app\\miniconda3\\current\\Scripts\\conda",
   "python.dataScience.debugJustMyCode": false,
+  "python.diagnostics.sourceMapsEnabled": false,
+  "python.experiments.enabled": false,
+  "python.insidersChannel": "daily",
   "python.linting.flake8Args": [
     "--config-file",
     "C:\\Users\\faris\\AppData\\Local\\flake8"
@@ -288,7 +286,7 @@
   ],
   "python.linting.pydocstyleEnabled": true,
   "python.linting.pylintEnabled": true,
-  "python.pythonPath": "/usr/sbin/python3.8",
+  "python.pythonPath": "C:\\Users\\fac\\scoop\\apps\\winpython\\current\\python-3.8.1.amd64\\python.exe",
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.activateEnvironment": true,
   "python.terminal.executeInFileDir": true,
@@ -323,25 +321,12 @@
   ],
   "python.workspaceSymbols.rebuildOnFileSave": false,
   "python.workspaceSymbols.rebuildOnStart": false,
-  "razor.devmode": true,
-  "references.preferredLocation": "view",
-  "remote.SSH.allowLocalServerDownload": true,
-  "remote.SSH.configFile": "~/.ssh/config",
-  "remote.SSH.defaultExtensions": [
-    "python"
-  ],
-  "remote.SSH.showLoginTerminal": true,
-  "remote.SSH.useLocalServer": true,
-  "remote.WSL.debug": true,
   "remote.WSL.fileWatcher.polling": true,
   "remote.extensionKind": {
     "vscode.vim": [
       "workspace"
     ]
   },
-  "restructuredtext.experimental": true,
-  "restructuredtext.languageServer.disabled": false,
-  "restructuredtext.languageServer.trace.server": "messages",
   "scm.alwaysShowActions": true,
   "scm.countBadge": "focused",
   "scm.defaultViewMode": "tree",
@@ -363,7 +348,8 @@
   "search.smartCase": true,
   "search.useGlobalIgnoreFiles": true,
   "sync.ignoredExtensions": [
-    "christian-kohler.path-intellisense"
+    "christian-kohler.path-intellisense",
+    "**"
   ],
   "task.quickOpen.skip": true,
   "telemetry.enableCrashReporter": false,
@@ -376,17 +362,15 @@
   "terminal.integrated.windowsEnableConpty": true,
   "terminal.integrated.wordSeparators": "`~!@#$%^&*()-=+[]{}\\|;:'\",.<>/?`",
   "vim.camelCaseMotion.enable": true,
-  "vim.changeWordIncludesWhitespace": false,
+  "vim.changeWordIncludesWhitespace": true,
   "vim.cursorStylePerMode.insert": "line-thin",
   "vim.debug.loggingLevelForAlert": "error",
-  "vim.debug.loggingLevelForConsole": "verbose",
   "vim.digraphs": {},
   "vim.easymotion": true,
   "vim.easymotionJumpToAnywhereRegex": "\\b[A-Za-z0-9]|[A-Za-z0-9]\\b|_.|#.|[a-z][A-Z]",
   "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf;",
   "vim.easymotionMarkerFontFamily": "Hack",
   "vim.enableNeovim": true,
-  "vim.experimentalOptimizations": true,
   "vim.foldfix": true,
   "vim.handleKeys": {
     "<C-d>": true,
@@ -399,78 +383,19 @@
   "vim.iskeyword": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
   "vim.leader": "<Space>",
   "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": [
-        "Z",
-        "Z"
-      ],
-      "commands": [
-        ":wq"
-      ]
-    },
-    {
-      "before": [
-        ">"
-      ],
-      "commands": [
-        "editor.action.indentLines"
-      ]
-    },
-    {
-      "before": [
-        "<"
-      ],
-      "commands": [
-        "editor.action.outdentLines"
-      ]
-    },
-    {
-      "after": [
-        "g",
-        "j"
-      ],
-      "before": [
-        "j"
-      ]
-    },
-    {
-      "after": [
-        "g",
-        "k"
-      ],
-      "before": [
-        "k"
-      ]
-    },
-    {
-      "after": [
-        "\"",
-        "+",
-        "p"
-      ],
-      "before": [
-        "p"
-      ]
-    },
-    {
-      "after": [
-        "\"",
-        "+",
-        "P"
-      ],
-      "before": [
-        "P"
-      ]
-    },
-    {
-      "before": [
-        "leader",
-        "S"
-      ],
-      "commands": [
-        "workbench.action.files.save"
-      ]
-    }
+    { "before": [ "Z", "Z" ], "commands": [ ":wq" ] },
+    { "before": [ ">" ], "commands": [ "editor.action.indentLines" ] },
+    // {"before": [ "za" ], "commands": [ "toggle" ] },
+    // todo: find what the real command is
+    { "before": [ "<" ], "commands": [ "editor.action.outdentLines" ] },
+    { "after": [ "g", "j" ], "before": [ "j" ] },
+    { "after": [ "g", "k" ], "before": [ "k" ] },
+    { "after": [ "\"", "+", "p" ], "before": [ "p" ] },
+    { "after": [ "\"", "+", "P" ], "before": [ "P" ] },
+    { "before": [ "leader", "S" ], "commands": [ "workbench.action.files.save" ] },
+    {"before":["ctrl+w n"], "commands": ["workbench.action.newWindow"]},
+    // TODO: the rest of these. open up default keybindings JSON
+    {"before":["ctrl+w shift+j"], "commands": ["workbench.action.moveEditorToNextGroup"]},
   ],
   "vim.overrideCopy": true,
   "vim.replaceWithRegister": true,
@@ -489,18 +414,14 @@
   ],
   "vim.surround": true,
   "vim.useSystemClipboard": true,
-  "vim.vimrc.enable": true,
-  "vim.vimrc.path": "$HOME/.config/nvim/init.vim",
   "vim.visualstar": true,
   "vim.whichwrap": "<,>,[,],h,l,<BS>",
-  "vsicons.presets.jsonOfficial": true,
   "window.menuBarVisibility": "default",
   "window.newWindowDimensions": "inherit",
   "window.openFoldersInNewWindow": "off",
   "window.openWithoutArgumentsInNewWindow": "off",
-  "window.zoomLevel": -2,
+  "window.zoomLevel": 0,
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "Gruvbox Dark (Hard)",
   "workbench.commandPalette.history": 500,
   "workbench.commandPalette.preserveInput": true,
   "workbench.editor.closeOnFileDelete": true,
@@ -511,15 +432,41 @@
   "workbench.list.keyboardNavigation": "highlight",
   "workbench.list.openMode": "doubleClick",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.quickOpen.preserveInput": true,
-  "workbench.settings.editor": "json",
-  "workbench.settings.enableNaturalLanguageSearch": false,
-  "workbench.settings.openDefaultKeybindings": true,
-  "workbench.settings.openDefaultSettings": true,
+  "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Gruvbox Material Dark",
   "workbench.colorCustomizations": {
     "statusBar.background": "#005f5f",
     "statusBar.noFolderBackground": "#005f5f",
     "statusBar.debuggingBackground": "#005f5f"
   },
-  "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+  "restructuredtext.experimental": true,
+  "restructuredtext.languageServer.trace.server": "verbose",
+  "restructuredtext.languageServer.supportedPlatforms": [
+
+    "Ubuntu Linux",
+    "Fedora",
+    "Debian",
+    "Linux Mint",
+    "SUSE Linux",
+    "Alpine Linux",
+    "RHEL",
+    "Centos"
+  ],
+  "restructuredtext.languageServer.disabled": false,
+  "restructuredtext.conflictingExtensions": [
+
+    "tht13.rst-vscode"
+  ],
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showSuggestionsAsSnippets": true,
+  "debug.chrome.useV3": true,
+  "eslint.lintTask.enable": true,
+  "eslint.format.enable": true,
+  "eslint.run": "onSave",
+  "eslint.packageManager": "yarn",
+  "npm.enableScriptExplorer": true,
+  "npm.enableRunFromFolder": true,
+  "python.autoComplete.addBrackets": true,
+  "workbench.quickOpen.preserveInput": true,
 }

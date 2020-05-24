@@ -51,7 +51,6 @@ F         forw-forever
 R         repaint-flush
 r         repaint
 ^R        repaint
-^L        repaint
 \eu       undo-hilite
 g         goto-line
 \kh       goto-line

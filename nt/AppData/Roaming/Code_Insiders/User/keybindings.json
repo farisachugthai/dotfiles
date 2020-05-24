@@ -1,9 +1,5 @@
 [
   {
-    "command": "vim.showQuickpickCmdLine",
-    "key": "ctrl+shift+; shift+alt+;"
-  },
-  {
     "command": "-workbench.action.terminal.openNativeConsole",
     "key": "ctrl+shift+c",
     "when": "!terminalFocus"
@@ -21,11 +17,6 @@
     "command": "-workbench.action.terminal.focusFindWidget",
     "key": "ctrl+f",
     "when": "terminalFocus"
-  },
-  {
-    "command": "restructuredtext.preview.refresh",
-    "key": "f5",
-    "when": "editorLangId == 'restructuredtext'"
   },
   {
     "command": "workbench.action.closeAllEditors",
@@ -56,7 +47,7 @@
   {
     "command": "editor.action.defineKeybinding",
     "key": "ctrl+k ctrl+k",
-    "when": "editorTextFocus"
+    "when": "!editorTextFocus"
   },
   {
     "command": "-editor.action.marker.prevInFiles",
@@ -69,12 +60,12 @@
   },
   {
     "command": "selectNextSuggestion",
-    "key": "Tab",
+    "key": "Ctrl+n",
     "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
   },
   {
     "command": "selectPrevSuggestion",
-    "key": "Shift+Tab",
+    "key": "Ctrl+p",
     "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
   },
   {
@@ -107,24 +98,19 @@
     "when": "!suggestWidgetMultipleSuggestions && !inQuickOpen"
   },
   {
-    "command": "workbench.action.focusRightGroup",
-    "key": "Ctrl+l"
-  },
-  {
-    "command": "workbench.action.splitEditorDown",
-    "key": "Ctrl+W s"
-  },
-  {
     "command": "workbench.action.closeActiveEditor",
-    "key": "Ctrl+W c"
+    "key": "Ctrl+W c",
+    "when": "editorTextFocus"
   },
   {
     "command": "workbench.action.closeEditorsInOtherGroups",
-    "key": "Ctrl+W o"
+    "key": "Ctrl+W o",
+    "when": "editorTextFocus"
   },
   {
     "command": "workbench.action.splitEditorRight",
-    "key": "Ctrl+W v"
+    "key": "Ctrl+W v",
+    "when": "editorTextFocus"
   },
   {
     "command": "editor.action.marker.prev",
@@ -245,10 +231,6 @@
     "key": "Alt+x"
   },
   {
-    "command": "workbench.action.openGlobalKeybindings",
-    "key": "Ctrl+k Ctrl+k"
-  },
-  {
     "command": "-workbench.action.files.saveAs",
     "key": "Ctrl+Shift+S"
   },
@@ -363,7 +345,7 @@
   {
     "command": "insertSnippet",
     "key": "tab",
-    "when": "editorTextFocus && && !inSnippetMode"
+    "when": "editorTextFocus && !inSnippetMode && suggestWidgetVisible"
   },
   {
     "command": "-insertSnippet",
@@ -372,7 +354,7 @@
   },
   {
     "command": "acceptSnippet",
-    "key": "f8"
+    "key": "alt+enter"
   },
   {
     "command": "workbench.action.openSnippets",
@@ -423,13 +405,9 @@
     "key": "ctrl+-"
   },
   {
-    "command": "python.execInTerminal-icon",
-    "key": "f5",
-    "when": "!inDebugMode && editorLangId == 'python'"
-  },
-  {
     "command": "python.startREPL",
-    "key": "ctrl+shift+`"
+    "key": "ctrl+shift+`",
+    "when": "editor.langId == 'python'"
   },
   {
     "command": "workbench.action.closeOtherEditors",
@@ -455,35 +433,133 @@
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+o",
     "command": "workbench.action.gotoSymbol",
+    "key": "ctrl+shift+o",
     "when": "editorHasFocus && editorlangID != 'python'"
   },
   {
+    "command": "-workbench.action.gotoSymbol",
+    "key": "ctrl+shift+o"
+  },
+  {
+    "command": "python.goToPythonObject",
     "key": "ctrl+shift+o",
-    "command": "-workbench.action.gotoSymbol"
-  },
-  {
-    "key": "ctrl+shift+o",
-    "command": "python.goToPythonObject"
-  },
-  {
-    "key": "ctrl+k [",
-    "command": "editor.action.diffReview.prev",
-    "when": "isInDiffEditor"
-  },
-  {
-    "key": "shift+f7",
-    "command": "-editor.action.diffReview.prev",
-    "when": "isInDiffEditor"
-  },
-  {
-    "key": "ctrl+k ctrl+y",
-    "command": "python.runFailedTests",
     "when": "editorTextFocus && editorLangId == 'python'"
   },
   {
-    "key": "alt+`",
-    "command": "workbench.action.terminal.newInActiveWorkspace"
+    "command": "editor.action.diffReview.prev",
+    "key": "ctrl+k [",
+    "when": "isInDiffEditor"
+  },
+  {
+    "command": "-editor.action.diffReview.prev",
+    "key": "shift+f7",
+    "when": "isInDiffEditor"
+  },
+  {
+    "command": "python.runFailedTests",
+    "key": "ctrl+k ctrl+y",
+    "when": "editorTextFocus && editorLangId == 'python'"
+  },
+  {
+    "command": "workbench.action.terminal.newInActiveWorkspace",
+    "key": "alt+`"
+  },
+  {
+    "command": "editor.action.insertSnippet",
+    "key": "ctrl+alt+j",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "-editor.action.insertSnippet",
+    "key": "ctrl+alt+j",
+    "when": "editorTextFocus && editorLangId == 'powershell'"
+  },
+  {
+    "command": "-editor.action.insertSnippet",
+    "key": "ctrl+alt+j",
+    "when": "editorTextFocus && editorLangId == 'powershell'"
+  },
+  {
+    "command": "keybindings.editor.copyCommandKeybindingEntry",
+    "key": "ctrl+y"
+  },
+  {
+    "command": "keybindings.editor.defineWhenExpression",
+    "key": "ctrl+e",
+    "when": "inKeybindings && keybindingFocus"
+  },
+  {
+    "command": "-keybindings.editor.defineWhenExpression",
+    "key": "ctrl+k ctrl+e",
+    "when": "inKeybindings && keybindingFocus"
+  },
+  {
+    "command": "keybindings.editor.searchKeybindings",
+    "key": "/",
+    "when": "inKeybindings"
+  },
+  {
+    "command": "-keybindings.editor.searchKeybindings",
+    "key": "ctrl+f",
+    "when": "inKeybindings"
+  },
+  {
+    "command": "-list.toggleKeyboardNavigation",
+    "key": "/",
+    "when": "listFocus && listSupportsKeyboardNavigation && !inputFocus"
+  },
+  {
+    "command": "workbench.action.openGlobalKeybindings",
+    "key": "ctrl+w ctrl+k"
+  },
+  {
+    "command": "-workbench.action.openGlobalKeybindings",
+    "key": "ctrl+k ctrl+s"
+  },
+  {
+    "command": "-workbench.action.openGlobalKeybindings",
+    "key": "ctrl+k ctrl+s"
+  },
+  {
+    "command": "workbench.action.openGlobalKeybindingsFile",
+    "key": "ctrl+w alt+j"
+  },
+  {
+    "command": "-workbench.action.terminal.focusFind",
+    "key": "ctrl+f",
+    "when": "terminalFindFocused || terminalFocus"
+  },
+  {
+    "command": "-workbench.action.terminal.hideFind",
+    "key": "escape",
+    "when": "terminalFindVisible && terminalFocus"
+  },
+  {
+    "command": "-workbench.action.terminal.hideFind",
+    "key": "shift+escape",
+    "when": "terminalFindVisible && terminalFocus"
+  },
+  {
+    "command": "-workbench.action.terminal.paste",
+    "key": "ctrl+v",
+    "when": "terminalFocus"
+  },
+  {
+    "command": "-workbench.action.terminal.toggleFindCaseSensitive",
+    "key": "alt+c",
+    "when": "terminalFindFocused || terminalFocus"
+  },
+  {
+    "command": "workbench.action.terminal.focus",
+    "key": "alt+t"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "-workbench.action.newWindow"
+  },
+  {
+    "key": "ctrl+k ]",
+    "command": "editor.action.diffReview.next"
   }
 ]

@@ -78,7 +78,7 @@
     remot = remote
     root = rev-parse --show-toplevel
     s = status -s
-    sh = stash --all
+    sh = stash
     sha = stash apply
     shc = stash clear
     shd = stash drop
@@ -91,6 +91,7 @@
 # Isn't that shit the worst?
     statu = status
     t = tag --list
+    ta = tag  # AGHHH isn't shit like this really the worst
     unstage = reset HEAD -- $*
     unstaged = diff
     url = ls-remote --get-url
@@ -108,7 +109,7 @@
     defaultRemote = origin
     # the default is to overwrite ignored files. if you need to do so then
     # override on the cmd line but otherwise encourage more safe behavior
-    no-overwrite-ignore = true
+    no-overwrite-ignore
 
 [clean]
     requireForce = False
@@ -119,7 +120,7 @@
     expandtab = True
     boldheaders = True
 
-[color]
+; [color]
     # always and not auto because this setting still only affects porcelain commands
     ; ui = always
     ; LIKE DIFFS IN FUGITIVE WHOA IS THIS IS A BAD IDEA

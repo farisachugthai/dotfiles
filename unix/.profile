@@ -80,14 +80,22 @@ export INCLUDEDIR="$_ROOT/include"
 export INCLUDEDIRS="$_ROOT/include:$_ROOT/local/include"
 export LD_LIBRARY_PATH="$_ROOT/lib:$_ROOT/local/lib:$HOME/.local/lib"
 
+if [[ -z "$PKG_CONFIG_PATH" ]]; then
+    PKG_CONFIG_PATH=""
+fi
+
 # TODO: Really should come up with a functino similar to pathadd that does what
 # I repeat 3 times in a row here
 if [[ -d "$_ROOT/share/pkgconfig" ]]; then
-    export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"
+    export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig:$PKG_CONFIG_PATH"
 fi
 
 if [[ -d "$_ROOT/lib/x86_64-linux-gnu/pkgconfig" ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/x86_64-linux-gnu/pkgconfig"
+fi
+
+if [[ -d "$_ROOT/local/lib/pkgconfig" ]]; then
+    export PKG_CONFIG_PATH="$_ROOT/local/lib/pkgconfig:$PKG_CONFIG_PATH"
 fi
 
 # This is probably wrong
@@ -104,11 +112,7 @@ test "$(command -v clang)" && export CC=clang; export CXX=clang++
 # Idk if this is or isn't a bad idea
 export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/lib -lncursesw -liconv -L$_ROOT/lib/python3.8/config-3.8/ -lpython3.8 -lcrypt -ldl"
 
-if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
-
-# }}}
-
-# Python: {{{
+# Python:
 # Put python first because we need conda initialized right away
 export IPYTHONDIR="$HOME/.ipython"
 
@@ -218,14 +222,16 @@ pathadd "$_ROOT/games"
 # From man bash - Bash Variables - lines ~1300
 export PROMPT_DIRTRIM=3
 export TIMEFORMAT=$'\nreal\t%3lR\nuser\t%3lU\nsys\t%3lS='
-export EXECIGNORE=.dll,.mui,.config  # fuckin windows
-export COLORTERM='truecolor'
+# A **colon-separated** list of shell patterns
+export EXECIGNORE=.dll:.mui:.config  # fuckin windows
+export FIGNORE=.dll:.mui:.config
+export COLORTERM=truecolor
 
 test "$(command -v clang)" && export CC=clang; export CXX=clang++
 
 # Idk if this is or isn't a bad idea
 export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/lib"
- 
+
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources
 if [[ -d "$HOME/.tmux" ]]; then export TMUXP_CONFIGDIR="$HOME/.tmux"; fi

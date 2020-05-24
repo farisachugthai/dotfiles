@@ -5,6 +5,11 @@
     symlinks = true
     filemode = false
 	longpaths = true
+    ignorestat = True
+
+[difftool]
+    cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'
+    prompt = false
 
 ; [winUpdater]
 ; 	recentlySeenVersion = 2.23.0.windows.1
@@ -49,5 +54,17 @@
 
 [branch]
     autosetuprebase=always
+
 [merge]
 	summary = true
+
+[mergetool]
+    cmd = nvim -d $LOCAL $REMOTE $MERGED -c 'wincmd w' -c 'wincmd J'
+    # if it's not immediately clear what's going on, read up from this link:
+    # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
+    # from this link we see that BASE is the commit that the file diverged at.
+    # local and remote are the 2 paths we're trying to merge, and we can
+    # determine which changes are necessary and what needs to be kept by
+    # looking at those 4 buffers as a timeline
+    prompt = False
+

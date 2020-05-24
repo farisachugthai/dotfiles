@@ -8,6 +8,10 @@ case $- in
     *) exit 0;;
 esac
 
+# fucking load 1 time jesus
+# Oh shit this doesn't work the way you want. There are vars $BASH_SUBSHELL and $BASH_SOURCE tho
+# test "$_BEEN_THERE_DONE_THAT" && return || export _BEEN_THERE_DONE_THAT=1
+
 pathadd() {
     # https://superuser.com/a/39995
     # Set PATH so it includes user's private bin directories and set them first in path
@@ -34,7 +38,6 @@ fi
 # }}}
 
 # Builds: {{{
-[[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
 
 # Shellcheck
 if [[ -n "$(command -v shellcheck)" ]]; then
@@ -45,6 +48,8 @@ test "$(command -v luarocks)" && eval "$(luarocks path --bin)"
 
 export BYOBU_CONFIG_DIR="$HOME/.config/byobu"
 export BYOBU_PREFIX_DIR="$_ROOT/share/byobu"
+# Ugh this shit again WSL you are breaking my balls
+umask 0022
 # }}}
 
 # History: {{{
@@ -104,7 +109,9 @@ shopt -s checkjobs
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
-shopt -s nocasematch
+# don't do this. bind -p and -P are similar but stuff like
+# complete -a and A are nowhere similar
+# shopt -s nocasematch
 set -o noclobber    # Still dont want to clobber things
 shopt -s xpg_echo   # Allows echo to read backslashes like \n and \t
 shopt -s dirspell   # Autocorrect the spelling if it can
@@ -126,11 +133,11 @@ shopt -s direxpand
 export PAGER="less -JRKMrLigeFW"
 export LESSHISTSIZE=5000  # default is 100
 
-LESSOPEN="|lesspipe.sh %s"; export LESSOPEN
 export LESSCOLORIZER=pygmentize
 # Oh shit! --mouse is a bash>5 feature!
 if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
 
+[[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
 export LESSCHARSET=utf-8
 lesskey -o ~/.lesskey.output ~/.lesskey
 export LESS="-JRKMrLIgeFW  -j0.5 --no-histdups --save-marks --follow-name -k $HOME/.lesskey.output"
@@ -154,10 +161,10 @@ elif [[ -d "$HOME/.nvm" ]]; then
     export NVM_DIR="$HOME/.nvm"
 fi
 
+export NPM_CONFIG_DIR="$HOME/.config/nvm"
 # shellcheck source=/home/faris/.nvm/nvm.sh
-test $NVM_DIR && source "$NVM_DIR/nvm.sh" && npm config delete prefix && nvm use default --delete-prefix
+test "$NVM_DIR" && source "$NVM_DIR/nvm.sh" && nvm use default && pathadd "$NVM_DIR"
 
-pathadd "$NVM_DIR"
 # }}}
 
 # Fasd: {{{
@@ -200,11 +207,11 @@ _completion_loader()
 # oh also fzf. but -A command is a bad idea so don't do that.
 # dude bash should complete its own fucking keywords. oh man is this nice.
 # `-k` is the same as -A keyword
-complete -D -F _completion_loader -F _fzf_path_completion -k -f -d
+complete -k -f -d -F _completion_loader -F _fzf_path_completion -D
 # -o plusdirs -F _fzf_complete
 
 # modify how completions are created by default
-compopt -D -o bashdefault -o default
+# compopt -D -F _completion_loader -F _fzf_path_completion
 
 # From /usr/share/doc/bash/README.md.bash-completion
 export COMP_CONFIGURE_HINTS=1
@@ -220,22 +227,20 @@ fi
 export FZF_COMPLETION_DIR_COMMANDS="cd cs pushd rmdir mkdir mk du tree dlink ctags"
 
 # From man bash Programmable Completion
-
 #        First, the actions specified by the compspec are used.  Only matches
 #        which are prefixed by the word being completed are returned.  When the
 #        -f or -d option is used for filename or directory name completion, the
 #        shell variable FIGNORE is used to filter the matches.
-
-# This allows set to behave slightly more as expected.  -k is keyword.
-complete -k -A setopt -A shopt -F _fzf_var_completion set unset
-
+# so i think -f and -d have first priority alongside with -F
 # The -A flag is fucking amazing for getting complete to behave as expected
-complete -A hostname -F _longopt -F _fzf_host_completion -F _known_hosts ssh traceroute ping
-
 complete -A alias -F _fzf_alias_completion alias unalias
+complete -A binding -F _bind bind
+complete -A enabled enable
+complete -A hostname -F _longopt -F _fzf_host_completion -F _known_hosts ssh traceroute ping
 # where did _terms come from?
 complete -A export -F _terms -F _longopt -F _fzf_var_completion env export
-complete -F _fzf_var_completion echo
+complete -A setopt -A shopt set unset shopt
+complete -A variable -F _fzf_var_completion echo
 
 complete -o bashdefault -o default -F _longopt -F _completion_loader -F _fzf_path_completion \
     a2ps awk base64 bash bc bison cat chroot colordiff cp \
@@ -312,3 +317,4 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 
 # Vim: set foldlevelstart=0 fdm=marker et sw=4 sts=4 ts=4:
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

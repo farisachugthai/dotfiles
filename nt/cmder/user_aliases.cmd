@@ -17,7 +17,7 @@ free=free -mt $*
 git_alias="git config --get-regexp alias.*"
 g=git diff --stat --staged $*
 ga=git add . $*
-gar=git add --renormalize . $*
+gar=git add --renormalize -v $*
 gb=git branch --all --verbose $*
 gbl=git blame $*
 gbr=git branch $*
@@ -34,7 +34,7 @@ gco=git checkout $*
 gcob=git checkout -b $*
 gd=git diff $*
 gds=git diff --staged $*
-gds2=git diff --stat --staged $*
+gds2=git diff --stat --staged
 gdt=git difftool $*
 gf=git fetch --all $*
 gl=git log --graph --decorate --all --abbrev --abbrev-commit --pretty=lo $*
@@ -49,7 +49,7 @@ gp=git pull $*
 gpo=git pull origin
 gpom=git pull origin master
 gpu=git push $*
-gr=git remote -arv $*
+gr=git remote -v $*
 grb=git rebase $*
 grba=git rebase --abort $*
 grbc=git rebase --continue $*
@@ -58,22 +58,22 @@ gre=git remote $*
 gs=git status $*
 gsh=git stash $*
 gshd=git stash drop $*
-gshl=git stash --list $*
+gshl=git stash list $*
 gshp=git stash pop $*
 gshs=git stash show $*
 gshsp=git stash show --patch $*
 gst=git diff --stat $*
 gsw=git switch --progress $*
 gt=git tag --list $*
-l=ls -Fh --show-control-chars --color=always --hide=ntuser* $*
+l=ls -Fh --show-control-chars --color=always --hide=NTUSER* $*
 la=ls -AFh --show-control-chars --color=always --hide=ntuser* $*
 ldir=ls -po --color=always --hide=ntuser* | grep /$ $*
 lf=ls -Fo --color=always --hide=ntuser* | grep ^- $*
 ll=ls -AFhog --show-control-chars --color=always --hide=ntuser* $*
-lr=ls -AlgFhtr --color=always --hide=ntuser* $*
-ls=ls -Fh --show-control-chars --color=always --hide=ntuser* $*
-lt=ls -Alght --color=always --hide=ntuser* $*
+lr=ls -lgFhtr --color=always --hide=ntuser* $*
+ls=ls -Fh --show-control-chars --color=always --hide=NTUSER* $*
+lt=ls -lght --color=always --hide=ntuser* $*
 lx=ls -Fo --color=always --hide=ntuser* | grep ^-..x $*
 pwd=cd
-tree=tree /F /A $*
+tree=tree /F /A
 vi=vim $*

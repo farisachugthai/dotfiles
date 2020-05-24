@@ -62,7 +62,7 @@ jsx:*.jsx
 # Jun 04, 2019: Let's make this better for fzf in nvim
 # --vimgrep
 
---color=ansi
+# --color=ansi
 
 # --no-column
 # --no-line-number
@@ -88,5 +88,5 @@ jsx:*.jsx
 # --colors=column:style:underline
 --colors=column:fg:cyan
 
---colors=match:style:intense
+# --colors=match:style:intense
 # }}}

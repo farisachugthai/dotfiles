@@ -6,9 +6,13 @@
 // For documentation on these settings, see: https://aka.ms/terminal-documentation
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402447}",
     // You can add more global application settings here.
+
     // To learn more about global settings, visit https://aka.ms/terminal-global-settings
+
+    // Selection
+    "wordDelimiters": " /\\()\"'-.,:;<>~!@#$%^&*|+=[]{}~?\u2502",
     // If enabled, selections are automatically copied to your clipboard.
     "copyOnSelect": true,
     // If enabled, formatted data is also copied to your clipboard
@@ -17,91 +21,94 @@
     // Each one of them will appear in the 'New Tab' dropdown,
     //   and can be invoked from the commandline with `wt.exe -p xxx`
     // To learn more about profiles, visit https://aka.ms/terminal-profile-settings
+
+    // Launch Settings
+    // "initialCols": 80,
+    // "initialRows": 30,
+    "launchMode": "default",
+
+    // Tab UI
+    "alwaysShowTabs": true,
+    "showTabsInTitlebar": true,
+    "showTerminalTitleInTitlebar": true,
+    "tabWidthMode": "equal",
+
+    // Miscellaneous
+    "confirmCloseAllTabs": true,
+    "theme": "system",
+    "rowsToScroll": "system",
+    "snapToGridOnResize": true,
+
     "profiles":
     {
         "defaults":
         {
             // Put settings here that you want to apply to all profiles.
+          "antialiasingMode": "grayscale",
           "acrylicOpacity": 0.90,
           "closeOnExit": "graceful",
           "colorScheme": "Gruvbox",
           "cursorShape": "emptyBox",
+          "fontFace": "Cascadia Code",
+          "fontSize": 12,
           "hidden": false,
           "historySize": 9999,
+          "padding": "8, 8, 8, 8",
           "scrollbarState": "visible",
+          "snapOnInput": true,
           "source": "Windows.Terminal",
           "startingDirectory": "%USERPROFILE%",
           "suppressApplicationTitle": true,
           "useAcrylic": true
         },
         "list": [
-        { // pwsh
-          "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe -NoExit -Command 'source C:\\Users\\fac\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1'",
-          "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-          "name": "PowerShell Core",
-          "source": "Windows.Terminal.PowershellCore",
-          "startingDirectory": "C:\\Users\\fac\\Documents\\PowerShell",
-          "tabTitle": "pwsh core"
-        },
         { // clink
-          "commandline": "cmd /U /E:ON /F:ON /K doskey /MACROFILE=C:\\Users\\fac\\projects\\dotfiles\\nt\\cmder\\user_aliases.cmd",
-          "cursorColor": "#FFFFFF",
-          "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-          "icon": "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
+          "commandline": "cmd /U /E:ON /F:ON ",
+          "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402447}",
           "name": "clink",
-          "source": "Windows.Terminal.cmd",
           "tabTitle": "Clink:",
           "useAcrylic": false
         },
+        { // pwsh
+          "commandline": "pwsh.exe -NoExit",
+          "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+          "name": "PowerShellCore",
+          "source": "Windows.Terminal.PowershellCore",
+          "startingDirectory": "C:\\Users\\fac\\Documents\\PowerShell",
+          "tabTitle": "pwsh"
+        },
         { // powershell
           "commandline": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-          "fontFace": "FuraMono Nerd Font Mono",
-          "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-          "name": "Windows PowerShell",
-          "source": "Windows.PowerShell",
-          "tabTitle": "Windows PowerShell"
-        },
-        { // pipenv
-          "commandline": "cmd /U /E:ON /F:ON /K python3 -m pipenv shell",
           "guid": "{9e3761da-29da-4047-a640-912664a5be49}",
-          "name": "pipenv",
-          "startingDirectory": "%USERPROFILE%\\projects\\dynamic_ipython",
-          "tabTitle": "pipenv"
-        },
-        { // cmd
-          "commandline": "cmd.exe",
-          "guid": "{c05ef305-600a-4432-879a-ce1ec86e16c1}",
-          "icon": "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
-          "name": "cmd",
-          "tabTitle": "cmd",
-          "useAcrylic": false
-        },
-        { // azure
-          "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-          "hidden": true,
-          "name": "Azure Cloud Shell",
-          "source": "Windows.Terminal.Azure"
+          "fontFace": "FuraMono Nerd Font Mono",
+          "name": "PowerShell",
+          "source": "Windows.PowerShell",
+          "tabTitle": "PowerShell"
         },
         { // arch auto added!
-          // heres ubuntus old guid""
-          "commandline": "wsl -e byobu -2u bash -il",
-          "font": "DejaVu Sans Mono",
+          "commandline": "wsl -e tmux -2u",
           "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
-          // "icon": "ms-appx:///ProfileIcons/"
-          "name": "Arch",
+          "name": "tmux",
           "startingDirectory": "//wsl$/root"
         },
+        {
+          "commandline": "wsl",
+          "guid": "{a5a97cb8-8961-5535-816d-772efe0c7a5f}",
+          "name": "arch",
+          "startingDirectory": "//wsl$/root"
+        },
+        {
+            "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+            "hidden": false,
+            "name": "Azure Cloud Shell",
+            "source": "Windows.Terminal.Azure"
+        },
         { // vcvars
-          "commandline": "cmd /U /E:ON /F:ON /K %PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat x64",
+          "commandline": "%COMSPEC% /U /E:ON /F:ON /K %PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat x64",
           "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
           "icon": "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
           "name": "VcVars 2019 x64",
           "tabTitle": "VcVars 2019 x64"
-        },
-        {
-          "icon": "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
-          "commandline": "%COMSPEC% /U /E:ON /F:ON /K %PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat x64",
-          "name": "VS 2017 x86"
         }
       ]
     },
@@ -139,331 +146,88 @@
         // Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.
         // These two lines additionally bind them to Ctrl+C and Ctrl+V.
         // To learn more about selection, visit https://aka.ms/terminal-selection
-        { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
-        { "command": "paste", "keys": "ctrl+v" },
+        // { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
+        // { "command": "paste", "keys": "ctrl+v" },
         // Press Ctrl+Shift+F to open the search box
-        // { "command": "find", "keys": "ctrl+shift+f" },
+        { "command": "find", "keys": "ctrl+shift+f" },
         // Press Alt+Shift+D to open a new pane.
         // - "split": "auto" makes this pane open in the direction that provides the most surface area.
         // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
         // To learn more about panes, visit https://aka.ms/terminal-panes
         { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" },
-    {
-      "command": "closeTab",
-      "keys": [
-        "ctrl-F4"
-      ]
-    },
-    {
-      "command": "closeWindow",
-      "keys": [
-        "alt-F4"
-      ]
-    },
-    {
-      "command": "toggleFullscreen",
-      "keys": [
-        "alt+enter"
-      ]
-    },
-    {
-      "command": {
-        "action": "resizePane",
-        "direction": "down"
-      },
-      "keys": [
-        "alt+shift+down"
-      ]
-    },
-    {
-      "command": {
-        "action": "resizePane",
-        "direction": "left"
-      },
-      "keys": [
-        "alt+shift+left"
-      ]
-    },
-    {
-      "command": {
-        "action": "resizePane",
-        "direction": "right"
-      },
-      "keys": [
-        "alt+shift+right"
-      ]
-    },
-    {
-      "command": {
-        "action": "resizePane",
-        "direction": "up"
-      },
-      "keys": [
-        "alt+shift+up"
-      ]
-    },
-    {
-      "command": {
-        "action": "moveFocus",
-        "direction": "down"
-      },
-      "keys": [
-        "alt+down"
-      ]
-    },
-    {
-      "command": {
-        "action": "moveFocus",
-        "direction": "left"
-      },
-      "keys": [
-        "alt+left"
-      ]
-    },
-    {
-      "command": {
-        "action": "moveFocus",
-        "direction": "right"
-      },
-      "keys": [
-        "alt+right"
-      ]
-    },
-    {
-      "command": {
-        "action": "moveFocus",
-        "direction": "up"
-      },
-      "keys": [
-        "alt+up"
-      ]
-    },
-    {
-      "command": "switchToTab0",
-      "keys": [
-        "Ctrl-0"
-      ]
-    },
-    {
-      "command": "closeWindow",
-      "keys": [
-        "alt+f4"
-      ]
-    },
-    {
-      "command": "copy",
-      "keys": [
-        "ctrl+shift+c"
-      ]
-    },
-    {
-      "command": "duplicateTab",
-      "keys": [
-        "unbound"
-      ]
-    },
-    {
-      "command": "newTab",
-      "keys": [
-        "ctrl+shift+t"
-      ]
-    },
-    {
-      "command": "newTabProfile0",
-      "keys": [
-        "alt+1"
-      ]
-    },
-    {
-      "command": "newTabProfile1",
-      "keys": [
-        "alt+2"
-      ]
-    },
-    {
-      "command": "newTabProfile2",
-      "keys": [
-        "alt+3"
-      ]
-    },
-    {
-      "command": "newTabProfile3",
-      "keys": [
-        "alt+4"
-      ]
-    },
-    {
-      "command": "newTabProfile4",
-      "keys": [
-        "alt+5"
-      ]
-    },
+    { "command": "toggleFullscreen", "keys": "alt+enter" },
+    { "command": { "action": "resizePane", "direction": "down" }, "keys":  "alt+shift+down"  },
+    { "command": { "action": "resizePane", "direction": "left" }, "keys":  "alt+shift+left"  },
+    { "command": { "action": "resizePane", "direction": "right" }, "keys":  "alt+shift+right"  },
+    { "command": { "action": "resizePane", "direction": "up" }, "keys":  "alt+shift+up"  },
+    { "command": { "action": "moveFocus", "direction": "down" }, "keys":  "alt+down"  },
 
-    {
-      "command": "newTabProfile5",
-      "keys": [
-        "alt+6"
-      ]
-    },
-    {
-      "command": "unbound",
-      "keys": [
-        "ctrl-shift-6"
-      ]
-    },
-    {
-      "command": "newTabProfile6",
-      "keys": [
-        "alt+7"
-      ]
-    },
-    {
-      "command": "newTabProfile7",
-      "keys": [
-        "alt+8"
-      ]
-    },
-    {
-      "command": "newTabProfile8",
-      "keys": [
-        "alt+9"
-      ]
-    },
-    {
-      "command": "nextTab",
-      "keys": [
-        "ctrl+shift+right"
-      ]
-    },
-    {
-      "command": "openNewTabDropdown",
-      "keys": [
-        "ctrl+shift+space"
-      ]
-    },
-    {
-      "command": "openSettings",
-      "keys": [
-        "ctrl+,"
-      ]
-    },
-    {
-      "command": "paste",
-      "keys": [
-        "ctrl+shift+v"
-      ]
-    },
-    {
-      "command": "paste",
-      "keys": [
-      "shift+insert"
-      ]
-    },
-    {
-      "command": "prevTab",
-      "keys": [
-        "ctrl+shift+left"
-      ]
-    },
-    {
-      "command": "scrollDown",
-      "keys": [
-        "ctrl+shift+down"
-      ]
-    },
-    {
-      "command": "scrollDownPage",
-      "keys": [
-        "ctrl+shift+pgdn"
-      ]
-    },
-    {
-      "command": "scrollUp",
-      "keys": [
-        "ctrl+shift+up"
-      ]
-    },
-    {
-      "command": "scrollUpPage",
-      "keys": [
-        "ctrl+shift+pgup"
-      ]
-    },
-    {
-      "command": "switchToTab0",
-      "keys": [
-        "ctrl+alt+1"
-      ]
-    },
-    {
-      "command": "switchToTab1",
-      "keys": [
-        "ctrl+alt+2"
-      ]
-    },
-    {
-      "command": "switchToTab2",
-      "keys": [
-        "ctrl+alt+3"
-      ]
-    },
-    {
-      "command": "switchToTab3",
-      "keys": [
-        "ctrl+alt+4"
-      ]
-    },
-    {
-      "command": "switchToTab4",
-      "keys": [
-        "ctrl+alt+5"
-      ]
-    },
-    {
-      "command": "switchToTab5",
-      "keys": [
-        "ctrl+alt+6"
-      ]
-    },
-    {
-      "command": "switchToTab6",
-      "keys": [
-        "ctrl+alt+7"
-      ]
-    },
-    {
-      "command": "switchToTab7",
-      "keys": [
-        "ctrl+alt+8"
-      ]
-    },
-    {
-      "command": "switchToTab8",
-      "keys": [
-        "ctrl+alt+9"
-      ]
-    },
-    {
-      "command": "decreaseFontSize",
-      "keys": [
-        "ctrl+-"
-      ]
-    },
-    {
-      "command": "toggleFullscreen",
-      "keys": [
-        "F11"
-      ]
-    },
-    {
-      "command": "increaseFontSize",
-      "keys": [
-        "ctrl+="
-      ]
-    },
-    {
-      "command": "unbound",
-      "keys": "alt+shift+plus"
-    }
-    ]
+    { "command": { "action": "moveFocus", "direction": "left" }, "keys":  "alt+left"  },
+    { "command": { "action": "moveFocus", "direction": "right" }, "keys":  "alt+right"  },
+    { "command": { "action": "moveFocus", "direction": "up" }, "keys":  "alt+up"  },
+
+    // Application-level Keys
+    { "command": "closeWindow", "keys": "alt+f4" },
+    { "command": "toggleFullscreen", "keys": "alt+enter" },
+    { "command": "toggleFullscreen", "keys": "f11" },
+    { "command": "openNewTabDropdown", "keys": "ctrl+shift+space" },
+    { "command": "openSettings", "keys": "ctrl+," },
+    // { "command": "find", "keys": "ctrl+shift+f" },
+
+    // Tab Management
+    // "command": "closeTab" is unbound by default.
+    //   The closeTab command closes a tab without confirmation, even if it has multiple panes.
+    { "command": "newTab", "keys": "ctrl+shift+t" },
+    { "command": { "action": "newTab", "index": 0 }, "keys": "ctrl+shift+1" },
+    { "command": { "action": "newTab", "index": 1 }, "keys": "ctrl+shift+2" },
+    { "command": { "action": "newTab", "index": 2 }, "keys": "ctrl+shift+3" },
+    { "command": { "action": "newTab", "index": 3 }, "keys": "ctrl+shift+4" },
+    { "command": { "action": "newTab", "index": 4 }, "keys": "ctrl+shift+5" },
+    { "command": { "action": "newTab", "index": 5 }, "keys": "ctrl+shift+6" },
+    { "command": { "action": "newTab", "index": 6 }, "keys": "ctrl+shift+7" },
+    { "command": { "action": "newTab", "index": 7 }, "keys": "ctrl+shift+8" },
+    { "command": { "action": "newTab", "index": 8 }, "keys": "ctrl+shift+9" },
+    { "command": "duplicateTab", "keys": "ctrl+shift+d" },
+    { "command": "nextTab", "keys": "ctrl+tab" },
+    { "command": "prevTab", "keys": "ctrl+shift+tab" },
+    { "command": { "action": "switchToTab", "index": 0 }, "keys": "ctrl+alt+1" },
+    { "command": { "action": "switchToTab", "index": 1 }, "keys": "ctrl+alt+2" },
+    { "command": { "action": "switchToTab", "index": 2 }, "keys": "ctrl+alt+3" },
+    { "command": { "action": "switchToTab", "index": 3 }, "keys": "ctrl+alt+4" },
+    { "command": { "action": "switchToTab", "index": 4 }, "keys": "ctrl+alt+5" },
+    { "command": { "action": "switchToTab", "index": 5 }, "keys": "ctrl+alt+6" },
+    { "command": { "action": "switchToTab", "index": 6 }, "keys": "ctrl+alt+7" },
+    { "command": { "action": "switchToTab", "index": 7 }, "keys": "ctrl+alt+8" },
+    { "command": { "action": "switchToTab", "index": 8 }, "keys": "ctrl+alt+9" },
+
+    // Pane Management
+    { "command": "closePane", "keys": "ctrl+shift+w" },
+    { "command": { "action": "splitPane", "split": "horizontal" }, "keys": "alt+shift+-" },
+    { "command": { "action": "splitPane", "split": "vertical" }, "keys": "alt+shift+plus" },
+    { "command": { "action": "resizePane", "direction": "down" }, "keys": "alt+shift+down" },
+    { "command": { "action": "resizePane", "direction": "left" }, "keys": "alt+shift+left" },
+    { "command": { "action": "resizePane", "direction": "right" }, "keys": "alt+shift+right" },
+    { "command": { "action": "resizePane", "direction": "up" }, "keys": "alt+shift+up" },
+    { "command": { "action": "moveFocus", "direction": "down" }, "keys": "alt+down" },
+    { "command": { "action": "moveFocus", "direction": "left" }, "keys": "alt+left" },
+    { "command": { "action": "moveFocus", "direction": "right" }, "keys": "alt+right" },
+    { "command": { "action": "moveFocus", "direction": "up" }, "keys": "alt+up" },
+
+    // Clipboard Integration
+    { "command": { "action": "copy", "singleLine": false }, "keys": "ctrl+shift+c" },
+    { "command": { "action": "copy", "singleLine": false }, "keys": "ctrl+insert" },
+    { "command": "paste", "keys": "ctrl+shift+v" },
+    { "command": "paste", "keys": "shift+insert" },
+
+    // Scrollback
+    { "command": "scrollDown", "keys": "ctrl+shift+down" },
+    { "command": "scrollDownPage", "keys": "ctrl+shift+pgdn" },
+    { "command": "scrollUp", "keys": "ctrl+shift+up" },
+    { "command": "scrollUpPage", "keys": "ctrl+shift+pgup" },
+
+    // Visual Adjustments
+    { "command": { "action": "adjustFontSize", "delta": 1 }, "keys": "ctrl+=" },
+    { "command": { "action": "adjustFontSize", "delta": -1 }, "keys": "ctrl+-" },
+    { "command": "resetFontSize", "keys": "ctrl+0" }
+  ]
 }
