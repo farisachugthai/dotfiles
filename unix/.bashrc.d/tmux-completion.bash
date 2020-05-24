@@ -10,7 +10,7 @@
 # Based upon the example at http://paste-it.appspot.com/Pj4mLycDE
 
 # And I myself `wget -O tmux-completion.bash ...` this from
-# https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux 
+# https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux
 
 function _tmux_complete_client() {
     local IFS=$'\n'
@@ -143,6 +143,6 @@ _tmux() {
 
 }
 # http://linux.die.net/man/1/bash
-complete -F _tmux -o default -o bashdefault -o nospace tmux
+complete -F _tmux -o nosort tmux
 
 # END tmux completion

@@ -56,9 +56,8 @@ using namespace System.ConsoleKey
 If (Test-Path "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1") {
     & "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1"  #  [PARAMETERS]
 }
-
 # Learn more with this:
-# Get-Help "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1"               *
+# Get-Help "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1"
 # }}}
 
 # PSModulePATH: {{{
@@ -1537,22 +1536,9 @@ if (-not (Test-Path $env:winpython_ini)) {
     }
 }
 
-# it only does
-# Import-Module C:\Users\fac\scoop\apps\miniconda3\current\shell\condabin\conda-hook
-
-$Env:CONDA_EXE = "C:/Users/fac/scoop/apps/miniconda3/current\Scripts\conda.exe"
-$Env:_CE_M = ""
-$Env:_CE_CONDA = ""
-$Env:_CONDA_ROOT = "C:/Users/fac/scoop/apps/miniconda3/current"
-$Env:_CONDA_EXE = "C:/Users/fac/scoop/apps/miniconda3/current\Scripts\conda.exe"
-
-Import-Module "$Env:_CONDA_ROOT\shell\condabin\Conda.psm1"
-# Add-CondaEnvironmentToPrompt
-
 # }}}
 
 # Python Env vars: {{{
-
 $env:PYTHONASYNCIODEBUG=1
 $env:PYTHONCASEOK=1
 $env:PYTHONCOERCECLOCALE="warn"
@@ -1647,8 +1633,6 @@ $env:NVIM_PYTHON_LOG_FILE = "$env:HOME\AppData\Local\nvim-data\nvim_python.log"
 $env:NVIM_PYTHON_LOG_LEVEL = "DEBUG"
 
 Write-Output "Success: Sourced Documents/PowerShell/profile.ps1"
-
-# }}}
 
 # }}}
 

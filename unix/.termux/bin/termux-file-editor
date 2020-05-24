@@ -1,0 +1,6 @@
+#!/bin/bash
+# Maintainer: Faris Chugthai
+
+nvim "$@"
+
+exit 0

@@ -154,6 +154,8 @@ __ipython() {
   # opts="
     _init_completion -s || return
 
+    if [[ ${cur} == -* ]]; then
+
     case $prev in
         --help|--version|-[?hVc])
             return 0
@@ -175,18 +177,19 @@ __ipython() {
         return 0
         ;;
     esac
-
-    if [[ $cur == -* ]]; then
-        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
-        [[ $COMPREPLY == *= ]] && compopt -o nospace
-        return
     fi
 
-    _filedir py
-} && complete -f -d -o bashdefault -o default -o nospace -o nosort -F __ipython -F _ipython ipython ipython3
+    # if [[ $cur == -* ]]; then
+        # COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
+        # [[ $COMPREPLY == *= ]] && compopt -o nospace
+        # return
+    # fi
+
+    # _filedir py
+} && complete -o bashdefault -o default -o nosort -F __ipython -F _longopt ipython ipython3
 # HOLY HELL THIS IS SO MUCH FASTER THAN THE ORIGINAL (probably because we circumvent the python portion mostly)
 
 # ipython should do this
 # complete -o bashdefault -o default -F _longopt -o filenames
 # actually bashdefaults probably unnecessary
-complete -o filenames -F _longopt iptest iptest3
+complete -f -F _longopt iptest iptest3

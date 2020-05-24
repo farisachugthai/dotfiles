@@ -91,7 +91,7 @@ if [[ -d "$_ROOT/lib/x86_64-linux-gnu/pkgconfig" ]]; then
 fi
 
 # This is probably wrong
-export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include -fstack-protector-strong -O3 -Wno-unused-value -Wno-empty-body -Qunused-arguments -no-integrated-as"
+# export CFLAGS="-I$_ROOT/include -I$_ROOT/local/include -I$HOME/.local/include -fstack-protector-strong -O3 -Wno-unused-value -Wno-empty-body -Qunused-arguments -no-integrated-as"
 
 if [[ -d "$_ROOT/lib/pkgconfig" ]]; then
   export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$_ROOT/lib/pkgconfig"
@@ -101,9 +101,12 @@ fi
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 test "$(command -v clang)" && export CC=clang; export CXX=clang++
 
-# Idk if this is or isn't a bad idea
-export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/lib -lncursesw -liconv -L$_ROOT/lib/python3.8/config-3.8/ -lpython3.8 -lcrypt -ldl"
+# LDflags gets defined in here and as a result numpy fails to build
+# export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/lib -lncursesw -liconv -L$_ROOT/lib/python3.8/config-3.8/ -lpython3.8m -lcrypt -ldl -lreadline -i"
+export LDFLAGS="-L$_ROOT/lib -L$_ROOT/local/lib -L$HOME/.local/lib -L$_ROOT/lib/python3.8/config-3.8 -lm -lcompiler_rt"
 
+export INPUTRC="$HOME/.inputrc"
+export NPY_NUM_BUILD_JOBS=1
 if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
 
 # }}}
@@ -111,21 +114,14 @@ if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/
 # Python: {{{
 # Put python first because we need conda initialized right away
 export IPYTHONDIR="$HOME/.ipython"
-
-# LDflags gets defined in here and as a result numpy fails to build
 export NPY_DISTUTILS_APPEND_FLAGS=1
-
-export PYTHONASYNCIODEBUG=1
 export PYTHONCOERCECLOCALE=warn
 export PYTHONDOCS="$HOME/python/official-python-docs/3.7/library/build/html"
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONIOENCODING=utf-8:surrogateescape
-
 if [[ -n "$(command -v ipdb)" ]];  then export PYTHONBREAKPOINT="ipdb"; fi
-
 # export PYTHONPROFILEIMPORTTIME=1
 export PYTHONSTARTUP="$HOME/site_customize.py"
-
 # This actually messes with prompt_toolkit pretty bad
 export PYTHONUNBUFFERED=0
 export RANGER_LOAD_DEFAULT_RC=False
@@ -222,9 +218,6 @@ export EXECIGNORE=.dll,.mui,.config  # fuckin windows
 export COLORTERM='truecolor'
 
 test "$(command -v clang)" && export CC=clang; export CXX=clang++
-
-# Idk if this is or isn't a bad idea
-export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/lib"
  
 # Emacs doesn't read Xresources files????
 export XENVIRONMENT=~/.Xresources

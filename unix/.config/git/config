@@ -14,42 +14,43 @@
     whitespace = fix
 
 [alias]
-    a = add
-    aa = add --all
-    ai = add --interactive
-    amend = commit --amend
-    ar = add --renormalize -A
-    ap = add --patch
-    ar = add --renormalize
-    au = add --update
-    b = branch -va
-    bd = branch -d
-    bD = branch -D
-    bl = blame
-    br = branch
-    brd = branch -rd
-    brD = branch -rD
-    ci = commit
-    cia = commit --amend
-    ciad = commit --amend --date=
-    cid = commit --date=
-    cl =  clone
-    cls= clone --depth 1
-    co = checkout
-    cob = checkout -b
+        a=add -v
+       aa=add --all
+       ai=add --interactive
+    amend=commit --amend
+       ar=add --renormalize -v
+       ap=add --patch
+       ar=add --renormalize
+       au=add --update
+        b=branch -va
+       bd=branch -d
+       bD=branch -D
+       bl=blame
+       br=branch
+      brd=branch -rd
+      brD=branch -rD
+       ci=commit
+      cia=commit --amend
+     ciad=commit --amend --date=
+      cid=commit --date=
+       cl=clone
+      cls=clone --depth 1
+       co=checkout
+      cob=checkout -b
     # fucking gotta be kidding me
-    commi = commit
-    d = diff
-    ds = diff --staged
-    ds2 = diff --stat --staged
-    dt = difftool
-    f = fetch --all
-    fe = fetch
-    g = grep
-    h = help
-    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-    l = log
-    last = log -- HEAD $*
+    commi=commit
+        d=diff
+       ds=diff --staged
+      ds2=diff --stat --staged
+       dt=difftool
+        f=fetch --all
+       fe=fetch
+        g=grep
+        h=help
+     hist=log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+        i=init
+        l=log
+     last=log --HEAD
     # from man git-alias. added '-msg' to make distinct from other last
     last-msg = cat-file commit HEAD
 	lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -78,7 +79,8 @@
     remot = remote
     root = rev-parse --show-toplevel
     s = status -s
-    sh = stash --all
+    sb = status -sb
+    sh = stash
     sha = stash apply
     shc = stash clear
     shd = stash drop
@@ -90,6 +92,7 @@
     staged = diff --cached
 # Isn't that shit the worst?
     statu = status
+    sw = switch --progress
     t = tag --list
     unstage = reset HEAD -- $*
     unstaged = diff
@@ -153,11 +156,12 @@
 
     # False by default.
     ignorestat = True
-
-    # cmder and less aren't getting along
     # paging = False
+    # uhhhhh so this works??
+    # pager = nvim
+    # oh btw dont list things multiple times.
+    # i tried doing that to indicate fallbacks but this file doesnt work like that
     pager = bat
-    pager = less -JRKMLieg
     protocol = ssh
     symlink = True
     sshCommand = ssh

@@ -1,6 +1,5 @@
 # Tmux mouse enable
-
-#### TODO: We need to figure out version checks because these are the events
+# TODO: We need to figure out version checks because these are the events
 # in tmux2
            # WheelUp       WheelDown
            # MouseDown1    MouseUp1      MouseDrag1   MouseDragEnd1
@@ -8,7 +7,6 @@
            # MouseDown3    MouseUp3      MouseDrag3   MouseDragEnd3
            # DoubleClick1  DoubleClick2  DoubleClick3 WheelUp
            # TripleClick1  TripleClick2  TripleClick3 WheelDown
-
 
 set -g mouse on
 
@@ -22,7 +20,6 @@ bind-key    -T copy-mode-vi    WheelUpPane           select-pane \; send-keys -M
 bind-key    -T copy-mode-vi    WheelDownPane         select-pane \; send-keys -M -N 5 scroll-down
 bind-key    -T copy-mode-vi    DoubleClick1Pane      select-pane \; send-keys -M select-word
 bind-key    -T copy-mode-vi    TripleClick1Pane      select-pane \; send-keys -M select-line
-
 # }}}
 
 # Root mouse:  {{{

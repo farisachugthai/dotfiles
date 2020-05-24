@@ -1,32 +1,22 @@
-#==============================================================================
-#         NAME:  fzf.bash
-#  DESCRIPTION:  From my bashrc. Note also pwsh compatible.
-#==============================================================================
+#!/bin/bash
+# Maintainer: Faris Chugthai
 
-# Check that the main entry point is there.: {{{
+# Set up
+# Check that the main entry point is there.:
 if [[ -f "$HOME/.fzf.bash" ]]; then
-
     export FZF_TMUX_HEIGHT=80%
     export FZF_TMUX=1
-    # shellcheck source=/home/faris/.fzf.bash
-    # source "$HOME/.fzf.bash"
-    # don't need to source this i think it gets sourced elsewhere. yeah it doe from the ~/.fzf.bash file
-    # should we do else; git clone fzf repo?
 else
-    echo -e 'FZF not installed.'
+    echo -e "\n"'****<.bashrc.d/fzf.bash>: FZF not installed.****'"\n"
 fi
 
-# Pushing fd up rg is being difficult to work with
-# }}}
-
 # **New**: FZF Preview Command:
-
 if [[ -n "$(command -v bat)" ]]; then
   export FZF_PREVIEW_WINDOW='bat --style="${BAT_STYLE:-numbers}" --color=always --pager=never \
       --line-range=$FIRST:$LAST --highlight-line=$CENTER "$FILE"'
 fi
 
-if [[ -n "$(command -v fd)" ]]; then  # fd {{{
+if [[ -n "$(command -v fd)" ]]; then  # fd
 
     # Base FZF command: {{{
     # export FZF_DEFAULT_COMMAND="fd --follow -j 8 -d 6 --exclude .git"
@@ -35,39 +25,47 @@ if [[ -n "$(command -v fd)" ]]; then  # fd {{{
     export FZF_DEFAULT_OPTS='--multi --cycle --reverse --prompt "Query: " --tiebreak=begin,length,index --ansi --filepath-word --border --header="FZF: File Browser. Press Alt-n to launch nvim." --bind alt-n:execute:"nvim {}" --bind change:top --bind ctrl-j:accept --bind ctrl-k:kill-line'
 
     #  --bind "?:toggle-preview" --preview-window=down:50%:wrap --preview "bat {}"
-    # }}}
 
-    # __fzf_history__: <Ctrl-r>: {{{
+    # __fzf_history__: <Ctrl-r>:
     export FZF_CTRL_R_COMMAND="fd "
     export FZF_CTRL_R_OPTS="--sort --cycle --reverse --prompt 'Query: ' --tiebreak begin,length,index --history-size=10000 --ansi --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard' --bind change:top"
-    # }}}
 
-    # Change dirs with Alt C: {{{
+    # Change dirs with Alt C:
     export FZF_ALT_C_COMMAND=" fd --type d --hidden --follow --exclude .git --color always --ignore-file $HOME/.ignore "
 
     export FZF_ALT_C_OPTS=' --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-word --bind "?:toggle-preview" --header "Press ? to toggle preview." --border --prompt "FZF Dir Finder" '
-    # }}}
 
-    # fzf-file-widget: <Ctrl-t>: {{{
+    # fzf-file-widget: <Ctrl-t>:
     export FZF_CTRL_T_COMMAND='fd --type f --type d --hidden --follow -j 8 -d 6 --exclude .git'
 
     export FZF_CTRL_T_OPTS='--multi --cycle --border --reverse --ansi --tiebreak begin,length,index --filepath-word --bind alt-n:execute:"nvim {}" --bind change:top --bind=ctrl-j:accept --bind ctrl-k:kill-line '
 
     if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh && -n "$(command -v ruby)" ]]; then
-        export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh {} | bat -' "
+        export FZF_CTRL_T_OPTS+="--preview-window=down:50%:wrap --bind ?:toggle-preview --header 'Press ? to toggle preview.' --preview ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh' {} | bat -' "
 
     elif [[ -n "$(command -v bat)" ]]; then
         export FZF_CTRL_T_OPTS+=' --preview "bat {}" --preview-window=down:50%:wrap --bind ?:toggle-preview --header "Press ? to toggle preview."'
     else
         export FZF_CTRL_T_OPTS+=' --preview "head -n 100 {} " --preview-window=down:50%:wrap '
     fi
-# }}}
 
-# }}}
+# Enhance path completion:
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
 
-elif [[ -n "$(command -v rg)" ]]; then  #: {{{
+    _fzf_compgen_path() {
+        fd --hidden --follow --exclude ".git" . "$1"
+    }
+    # Use fd to generate the list for directory completion
+    _fzf_compgen_dir() {
+        fd --type d --hidden --follow --exclude ".git" . "$1"
+    }
 
-    # Base FZF command: `fzf`: {{{
+elif [[ -n "$(command -v rg)" ]]; then  #:
+
+    # Base FZF command: `fzf`:
     # May 28, 2019: works
     # I wanna see a line but only one at a time. Also check the ripgreprc.
     # This works!!! Takes arguments, searches file contents not just titles. We got it man
@@ -76,9 +74,8 @@ elif [[ -n "$(command -v rg)" ]]; then  #: {{{
     export FZF_DEFAULT_COMMAND='rg --hidden  --no-messages --smart-case  --passthru --max-depth 10 --max-count 20 --max-columns 200 -C 0 -- .'
     export FZF_BACKUP_DEFAULT_COMMAND="rg --follow --hidden --smart-case --vimgrep -e ^.*$ "
     export FZF_DEFAULT_OPTS=' --multi --cycle --reverse --prompt "Query: " --tiebreak begin,length,index --ansi --filepath-word --border --header "FZF: File Browser"  '
-    # }}}
 
-    # fzf-file-widget: <Ctrl-t>: {{{
+    # fzf-file-widget: <Ctrl-t>:
     # Might be implemented as __fzf_select__
     # Also i think its the fzf-file-widget you see in the autocomplete suggestion so add --filepath-word
 
@@ -89,11 +86,11 @@ elif [[ -n "$(command -v rg)" ]]; then  #: {{{
 
     export FZF_CTRL_T_OPTS=' --tiebreak begin,length,index --filepath-word --multi --cycle --border --reverse --preview-window=right:60%:wrap --ansi --bind "?:toggle-preview" --header "Press ? to toggle preview. Alt-n to launch nvim. " --bind "alt-n:execute(nvim {}) " '
 
-    if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh && -n "$(command -v ruby)" ]]; then
-        # doesn't this stop tilde expansion?
-        export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh {} | bat - ' "
+    # if [[ -x ~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh && -n "$(command -v ruby)" ]]; then
+    #     # doesn't this stop tilde expansion?
+    #     export FZF_CTRL_T_OPTS+=" --preview '~/.local/share/nvim/plugged/fzf.vim/bin/preview.sh {} | bat - ' "
 
-    elif [[ -n "$(command -v bat)" ]]; then
+    if [[ -n "$(command -v bat)" ]]; then
         # TODO: Fzf is reading these as options to itself not as bats options
         # export FZF_DEFAULT_BAT_OPTS=' "--italic-text always" "--wrap character" "--color always" "--paging always" {} '
         # export FZF_CTRL_T_OPTS+="--preview $FZF_DEFAULT_BAT_OPTS"
@@ -112,49 +109,42 @@ elif [[ -n "$(command -v rg)" ]]; then  #: {{{
     # TODO: else
     fi  # }}}
 
-# }}}
-
-else  # no rg or fd: Use find. {{{
+else  # no rg or fd: Use find.
     export FZF_DEFAULT_COMMAND="find * -type f $@"
 
     # Options for FZF no matter what.
     export FZF_DEFAULT_OPTS=' --cycle --multi --border --ansi '
+
+# To use custom commands instead of find, override _fzf_compgen_{path,dir}
+
+  _fzf_compgen_path() {
+    echo "$1"
+    command find -L "$1" \
+      -name .git -prune -o -name .hg -prune -o -name .svn -prune -o \( -type d -o -type f -o -type l \) \
+      -a -not -path "$1" -print 2> /dev/null | sed 's@^\./@@'
+  }
+
+  _fzf_compgen_dir() {
+    command find -L "$1" \
+      -name .git -prune -o -name .hg -prune -o -name .svn -prune -o -type d \
+      -a -not -path "$1" -print 2> /dev/null | sed 's@^\./@@'
+  }
+
 fi
 
-# }}}
+# Extra Funcs Using FZF:
 
-# }}}
-
-# Extra funcs from fzf: {{{1
 Ag() { ag -l -g "" | fzf-tmux $FZF_DEFAULT_OPTS - ; };
+complete -F _fzf_path_completion -F _ag -o default -o bashdefault Ag ag
+
 Rg() { $FZF_DEFAULT_COMMAND  | fzf-tmux $FZF_DEFAULT_OPTS -r 40; };
+complete -F _fzf_path_completion -F _rg -o default -o bashdefault rg Rg
 
 # TODO:
 # termux doesnt have xclip or xsel
-command -v tree > /dev/null && export FZF_ALT_C_OPTS+="--preview 'tree -aF -I .git -I __pycache__ -C {} | head -200' "
+command -v tree > /dev/null && export FZF_ALT_C_OPTS+="--preview 'tree -aFh -I .git -I __pycache__ -C {} | head -200' "
 
-# }}}
-
-# Enhance path completion: {{{1
-# Use fd (https://github.com/sharkdp/fd) instead of the default find
-# command for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-
-if [[ -n "$(command -v fd)" ]]; then
-    _fzf_compgen_path() {
-        fd --hidden --follow --exclude ".git" . "$1"
-    }
-    # Use fd to generate the list for directory completion
-    _fzf_compgen_dir() {
-        fd --type d --hidden --follow --exclude ".git" . "$1"
-    }
-fi
-
-# complete -F _fzf_path_completion -o default -o bashdefault rg
-# }}}
-
-# Colors: {{{
+# Colors:
 
 _gen_fzf_default_opts() {
 
@@ -193,6 +183,5 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_COLORSCHEME"
 export FZF_CTRL_R_OPTS="$FZF_CTRL_R_OPTS $FZF_COLORSCHEME"
 export FZF_CTRL_T_OPTS="$FZF_CTRL_T_OPTS $FZF_COLORSCHEME"
 export FZF_ALT_C_OPTS="$FZF_ALT_C_OPTS $FZF_COLORSCHEME"
-# }}}
 
-# Vim: set fdm=marker:
+# Vim: set fdm=syntax fdls=0:

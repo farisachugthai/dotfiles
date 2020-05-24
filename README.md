@@ -22,29 +22,12 @@ programming and conventional Unix terminal workflows.
 
 Configurations exist for:
 
-- Emacs {in multiple locations}
-
-- [ansible](unix/.ansible.cfg)
-
-- A 1000+ line [dircolors](unix/.dircolors)
+- Customized Completions
 
 - [Modifications](unix/.profile) [for](unix/.bashrc) [bash](unix/.bash_logout)
   [are](unix/.bashrc.d/alias.bash) [abundant](unix/.bashrc.d/functions.bash).
 
-In addition, global configurations for [git](./unix/.config/git)
-and [Anaconda](./unix/.condarc) exist.
-
-A configuration for [Tmux](./unix/.tmux.conf) exists as well.
-
-These configurations exist primarily for Linux only platforms as there
-are extensively commented files for [Xmodmap](./unix/.Xmodmap),
-[.xbindkeys](./unix/.xbindkeys), [.Xresources](./unix/.Xresources),
-[.xsession](./unix/.xsession); however, to the maximum extent possible, the code
-has been made portable to Windows.
-
-In situations where this proved excessively difficult, separate files have been
-included in [nt](nt).
-
+- [Tmux settings](./unix/.tmux.conf) and [tmux scripts](./unix/.tmux) as well.
 
 ## Completions
 
@@ -52,12 +35,39 @@ The way that auto-completions are set up can fundamentally change the user
 experience when working with a shell. This is especially true for when the
 user is unfamiliar with the ins and outs of the shell.
 
-However the way that bash handles auto-completion can be largely inconsistent
-as a product of how differing OSes have it set up by default in addition
-to large amounts of customization that users are afforded but potentially may
-not be aware of.
+However, the way that bash handles auto-completion can be largely 
+inconsistent. It seems that this is largely a product of how differing 
+flavors of Unix set up their shells by default, in addition to a large 
+amounts of configurability and customization that users are afforded but 
+potentially may not be aware of.
+
+It's unfortunate bash doesn't have a simpler "drop down menu interface" for 
+it's users. However, I'm hoping that all of my digging through man
+pages will save you from the same fate.
 
 Following are my notes on this to attempt setting things up consistently.
+
+### General set up
+
+```bash
+
+u0_a144 @ localhost ~ 11:59 0
+*@In [11] $ complete -p | sort | uniq | wc -l
+475
+
+u0_a144 @ localhost ~ 11:59 0
+*@In [11] $ complete -p | sort | uniq | rg --max-count=999999 '.*fzf*' | wc -l
+145
+
+```
+
+The above shows how many commands have tab completion set up, which as of May 09, 2020, is 475 commands.
+
+Being able to mindlessly jam the <kbd>Tab</kbd> key is outstandingly
+helpful to working in a shell frequently.
+
+In addition, 145 of those commands utilize FZF's shell completion, as it noticeably speeds up completion generation.
+
 
 ### WSL
 
