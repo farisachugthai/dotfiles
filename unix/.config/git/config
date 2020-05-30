@@ -205,11 +205,14 @@
     strategy-option = resolve
     # Idk if this is a new option but man am I glad to have stumbled upon it
     suppressBlankEmpty = true
-    tool = vimdiff
+    tool = nvimdiff
     word-diff = color
     wsErrorHighlight = old,new,context	 # same as all
 
-[difftool]
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+[difftool "nvimdiff"]
     cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'
     prompt = false
 

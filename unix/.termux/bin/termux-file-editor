@@ -1,6 +1,10 @@
 #!/bin/bash
 # Maintainer: Faris Chugthai
 
-nvim "$@"
+if [[ -n "$TMUX" ]]; then
+    tmux detach
+fi
 
-exit 0
+tmux new nvim "$@"
+
+# Vim: set ft=sh:

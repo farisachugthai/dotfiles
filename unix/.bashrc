@@ -38,6 +38,7 @@ fi
 # }}}
 
 # Builds: {{{
+[[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
 
 # Shellcheck
 if [[ -n "$(command -v shellcheck)" ]]; then
@@ -89,15 +90,16 @@ shopt -s hostcomplete
 shopt -s extdebug
 shopt -s extglob extquote
 set -o pipefail
+
+export INPUTRC="$HOME/.inputrc"
+bind -f "$HOME/.inputrc"
+
 # I always forget keep this below set -o vi!
 # Dont know how i never thought source my shit first
 [[ -f ~/.bashrc.d/fzf.bash ]] && source ~/.bashrc.d/fzf.bash
 # source this directly from the .inputrc so that when we update the
 # keybindings we dont lose our fzf bindings. that raises an error.
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
-
-bind -f "$HOME/.inputrc"
-export INPUTRC="$HOME/.inputrc"
 
 # Be notified of asynchronous jobs completing in the background
 set -o notify
@@ -136,7 +138,6 @@ export LESSHISTSIZE=5000  # default is 100
 
 export LESSCOLORIZER=pygmentize
 # Oh shit! --mouse is a bash>5 feature!
-if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
 
 [[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
 export LESSCHARSET=utf-8
@@ -154,7 +155,6 @@ export LESS_TERMCAP_us=$(printf '\e[04;38;5;139m') # enter underline mode ... un
 # }}}
 
 # JavaScript: {{{
-
 # Export nvm if the directory exists
 if [[ -d "$HOME/.config/nvm" ]]; then
     export NVM_DIR="$HOME/.config/nvm"
@@ -177,15 +177,12 @@ if [[ -n "$(command -v fasd)" ]]; then
     source "$fasd_cache"
     export _FASD_VIMINFO="$XDG_DATA_HOME/nvim/shada/main.shada"
 fi
-
-PATH="/data/data/com.termux/files/home/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/data/data/com.termux/files/home/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/data/data/com.termux/files/home/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/data/data/com.termux/files/home/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/data/data/com.termux/files/home/perl5"; export PERL_MM_OPT;
-
 # Random dirs Termux adds to path when run as failsafe:
-export PATH="$PATH:/sbin:/system/sbin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin"
+pathadd "/system/sbin"
+pathadd "/system/bin"
+pathadd "/system/xbin"
+pathadd "/vendor/bin"
+pathadd "/vendor/xbin"
 # }}}
 
 # Sourced files: {{{
@@ -209,6 +206,8 @@ fi
 
 # Completions: {{{
 # dynamic completions. from man bash
+# export BASH_COMPLETION_DEBUG=1
+
 _completion_loader()
 {
     # source the bash-completions directory as needed
@@ -218,7 +217,7 @@ _completion_loader()
 # oh also fzf. but -A command is a bad idea so don't do that.
 # dude bash should complete its own fucking keywords. oh man is this nice.
 # `-k` is the same as -A keyword
-complete -k -f -d -F _completion_loader -F _fzf_path_completion -D
+complete -o bashdefault -o default -D -F _completion_loader -F _longopt -f -d
 # -o plusdirs -F _fzf_complete
 
 # modify how completions are created by default
@@ -243,15 +242,23 @@ export FZF_COMPLETION_DIR_COMMANDS="pushd rmdir mkdir mk du tree dlink ctags"
 #        -f or -d option is used for filename or directory name completion, the
 #        shell variable FIGNORE is used to filter the matches.
 # so i think -f and -d have first priority alongside with -F
+
+# This allows set to behave slightly more as expected.  -k is keyword.
+complete -A setopt -A shopt set unset shopt
+complete -e -k -A setopt set unset
+complete -v -e -f  -F _fzf_var_completion echo
+complete -e -F _longopt env export printenv
+complete -a -F _fzf_alias_completion alias unalias
+
+# original
+# _fzf_setup_completion 'var'   export unset
+_fzf_setup_completion 'var' shopt set unset echo env export printenv
 # The -A flag is fucking amazing for getting complete to behave as expected
-complete -A alias -F _fzf_alias_completion alias unalias
+# where did _terms come from?
 complete -A binding -F _bind bind
 complete -A enabled enable
-complete -A hostname -F _longopt -F _fzf_host_completion -F _known_hosts ssh traceroute ping
-# where did _terms come from?
 complete -A export -F _terms -F _longopt -F _fzf_var_completion env export
-complete -A setopt -A shopt set unset shopt
-complete -v -F _fzf_var_completion echo
+complete -A hostname -F _longopt -F _fzf_host_completion -F _known_hosts ssh traceroute ping
 
 complete -o bashdefault -o default -F _longopt -F _completion_loader -F _fzf_path_completion \
     a2ps awk base64 bash bc bison cat cd chroot colordiff cp cs \
@@ -328,4 +335,3 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 
 # Vim: set foldlevelstart=0 fdm=marker et sw=4 sts=4 ts=4:
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -77,7 +77,7 @@ export DATAROOTDIR="$_ROOT/share"
 # cscope
 export INCDIR="$_ROOT/include"
 export INCLUDEDIR="$_ROOT/include"
-export INCLUDEDIRS="$_ROOT/include:$_ROOT/local/include"
+export INCLUDEDIRS="$_ROOT/include:$_ROOT/local/include:$HOME/.local/include"
 export LD_LIBRARY_PATH="$_ROOT/lib:$_ROOT/local/lib:$HOME/.local/lib"
 
 if [[ -z "$PKG_CONFIG_PATH" ]]; then
@@ -223,7 +223,6 @@ export TIMEFORMAT=$'\nreal\t%3lR\nuser\t%3lU\nsys\t%3lS='
 export EXECIGNORE=.dll:.mui:.config  # fuckin windows
 export FIGNORE=.dll:.mui:.config
 export COLORTERM=truecolor
-
 test "$(command -v clang)" && export CC=clang; export CXX=clang++
 
 # Idk if this is or isn't a bad idea
@@ -300,4 +299,4 @@ export BROWN="\[\e[38;5;166m\]"
 # shellcheck source=/home/faris/.bashrc
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi
 
-# Vim: set fdm=marker:
+# Vim: set fdm=marker fdls=0:
