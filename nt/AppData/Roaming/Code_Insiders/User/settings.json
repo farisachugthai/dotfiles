@@ -266,7 +266,7 @@
   "python.dataScience.debugJustMyCode": false,
   "python.diagnostics.sourceMapsEnabled": false,
   "python.experiments.enabled": false,
-  "python.insidersChannel": "daily",
+  "python.insidersChannel": "off",
   "python.linting.flake8Args": [
     "--config-file",
     "C:\\Users\\faris\\AppData\\Local\\flake8"
@@ -286,7 +286,6 @@
   ],
   "python.linting.pydocstyleEnabled": true,
   "python.linting.pylintEnabled": true,
-  "python.pythonPath": "C:\\Users\\fac\\scoop\\apps\\winpython\\current\\python-3.8.1.amd64\\python.exe",
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.activateEnvironment": true,
   "python.terminal.executeInFileDir": true,
@@ -436,9 +435,9 @@
   "workbench.iconTheme": "material-icon-theme",
   "workbench.colorTheme": "Gruvbox Material Dark",
   "workbench.colorCustomizations": {
-    "statusBar.background": "#005f5f",
-    "statusBar.noFolderBackground": "#005f5f",
-    "statusBar.debuggingBackground": "#005f5f"
+    "statusBar.background": "#007acc",
+    "statusBar.noFolderBackground": "#007acc",
+    "statusBar.debuggingBackground": "#007acc"
   },
   "restructuredtext.experimental": true,
   "restructuredtext.languageServer.trace.server": "verbose",
@@ -469,4 +468,6 @@
   "npm.enableRunFromFolder": true,
   "python.autoComplete.addBrackets": true,
   "workbench.quickOpen.preserveInput": true,
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.experimentalUseTitleEvent": true,
 }

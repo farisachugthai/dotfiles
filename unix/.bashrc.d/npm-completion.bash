@@ -55,6 +55,7 @@ elif type compctl &>/dev/null; then
                        2>/dev/null)) || return $?
     IFS="$si"
   }
-  compctl -K _npm_completion npm
+  # compctl -K _npm_completion npm
+  complete -F _npm_completion npm
 fi
 ###-end-npm-completion-###

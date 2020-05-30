@@ -240,7 +240,8 @@
   },
   {
     "command": "git.pullRebase",
-    "key": "Ctrl+x Shift+P"
+    "key": "Ctrl+x Shift+P",
+    "when": "editorTextFocus && !inSnippetMode"
   },
   {
     "command": "git.fetchAll",
@@ -256,54 +257,14 @@
     "when": "explorerResourceIsFolder && explorerViewletVisible && filesExplorerFocus && !inputFocus"
   },
   {
-    "command": "editor.action.formatDocument.none",
-    "key": "shift+alt+f",
-    "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorHasDocumentFormattingProvider && !editorReadonly"
-  },
-  {
     "command": "-editor.action.formatDocument.none",
     "key": "ctrl+shift+i",
     "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorHasDocumentFormattingProvider && !editorReadonly"
   },
   {
-    "command": "editor.action.formatDocument",
-    "key": "shift+alt+f",
-    "when": "editorHasDocumentFormattingProvider && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
-  },
-  {
     "command": "-editor.action.formatDocument",
     "key": "ctrl+shift+i",
     "when": "editorHasDocumentFormattingProvider && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
-  },
-  {
-    "command": "editor.action.blockComment",
-    "key": "shift+alt+a",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "command": "-editor.action.blockComment",
-    "key": "ctrl+shift+a",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "command": "editor.action.copyLinesDownAction",
-    "key": "shift+alt+down",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "command": "-editor.action.copyLinesDownAction",
-    "key": "ctrl+shift+alt+down",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "command": "editor.action.copyLinesUpAction",
-    "key": "shift+alt+up",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "command": "-editor.action.copyLinesUpAction",
-    "key": "ctrl+shift+alt+up",
-    "when": "editorTextFocus && !editorReadonly"
   },
   {
     "command": "markdown.showPreview",
@@ -343,9 +304,9 @@
     "key": "ctrl+shift+r ctrl+e"
   },
   {
-    "command": "insertSnippet",
+    "command": "editor.action.insertSnippet",
     "key": "tab",
-    "when": "editorTextFocus && !inSnippetMode && suggestWidgetVisible"
+    "when": "editorTextFocus && hasSnippetCompletions && !editorTabMovesFocus && !inSnippetMode"
   },
   {
     "command": "-insertSnippet",
@@ -354,7 +315,8 @@
   },
   {
     "command": "acceptSnippet",
-    "key": "alt+enter"
+    "key": "alt+enter",
+    "when": "inSnippetMode && suggestWidgetVisible"
   },
   {
     "command": "workbench.action.openSnippets",
@@ -467,8 +429,8 @@
   },
   {
     "command": "editor.action.insertSnippet",
-    "key": "ctrl+alt+j",
-    "when": "editorTextFocus"
+    "key": "ctrl+j",
+    "when": "editorTextFocus && hasSnippetCompletions && !editorTabMovesFocus && !inSnippetMode"
   },
   {
     "command": "-editor.action.insertSnippet",
@@ -482,7 +444,8 @@
   },
   {
     "command": "keybindings.editor.copyCommandKeybindingEntry",
-    "key": "ctrl+y"
+    "key": "ctrl+y",
+    "when": "inKeybindings && keybindingFocus"
   },
   {
     "command": "keybindings.editor.defineWhenExpression",
@@ -511,7 +474,7 @@
   },
   {
     "command": "workbench.action.openGlobalKeybindings",
-    "key": "ctrl+w ctrl+k"
+    "key": "ctrl+k ctrl+k"
   },
   {
     "command": "-workbench.action.openGlobalKeybindings",
@@ -523,7 +486,7 @@
   },
   {
     "command": "workbench.action.openGlobalKeybindingsFile",
-    "key": "ctrl+w alt+j"
+    "key": "ctrl+k alt+j"
   },
   {
     "command": "-workbench.action.terminal.focusFind",
@@ -552,7 +515,8 @@
   },
   {
     "command": "workbench.action.terminal.focus",
-    "key": "alt+t"
+    "key": "alt+t",
+    "when": "!terminalFocus"
   },
   {
     "key": "ctrl+shift+n",
@@ -560,6 +524,57 @@
   },
   {
     "key": "ctrl+k ]",
-    "command": "editor.action.diffReview.next"
+    "command": "editor.action.diffReview.next",
+    "when": "isInDiffEditor"
+  },
+  {
+    "key": "ctrl+k ctrl+f",
+    "command": "editor.action.formatDocument.multiple",
+    "when": "editorHasDocumentSelectionFormattingProvider && editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "f1",
+    "command": "workbench.action.terminal.showEnvironmentInformation",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+f1",
+    "command": "-editor.action.showAccessibilityHelp",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.closeActiveEditor"
+  },
+  {
+    "key": "ctrl+x 0",
+    "command": "workbench.action.closeActiveEditor"
+  },
+  {
+    "key": "ctrl+x 2",
+    "command": "workbench.action.splitEditor"
+  },
+  {
+    "key": "ctrl+\\",
+    "command": "-workbench.action.splitEditor"
+  },
+  {
+    "key": "ctrl+k o",
+    "command": "outline.focus",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "ctrl+k n",
+    "command": "npm.focus",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "ctrl+k t",
+    "command": "timeline.focus",
+    "when": "explorerViewletVisible && filesExplorerFocus"
+  },
+  {
+    "key": "ctrl+shift+w",
+    "command": "-workbench.action.closeWindow"
   }
 ]

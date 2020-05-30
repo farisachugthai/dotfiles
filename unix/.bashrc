@@ -135,10 +135,9 @@ export PAGER="less -JRKMrLigeFW"
 export LESSHISTSIZE=5000  # default is 100
 
 export LESSCOLORIZER=pygmentize
-# Oh shit! --mouse is a bash>5 feature!
-if [[ $BASH_VERSINFO -gt 4 ]]; then export PAGER="$PAGER --mouse --no-histdups --save-marks "; fi
 
-[[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
+[[ -n "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
+
 export LESSCHARSET=utf-8
 lesskey -o ~/.lesskey.output ~/.lesskey
 export LESS="-JRKMrLIgeFW  -j0.5 --no-histdups --save-marks --follow-name -k $HOME/.lesskey.output"
@@ -163,8 +162,10 @@ elif [[ -d "$HOME/.nvm" ]]; then
 fi
 
 export NPM_CONFIG_DIR="$HOME/.config/nvm"
-# shellcheck source=/home/faris/.nvm/nvm.sh
-test "$NVM_DIR" && source "$NVM_DIR/nvm.sh" && nvm use default && pathadd "$NVM_DIR"
+
+# This loads nvm bash_completion
+# shellcheck source=/home/fac/.nvm/nvm.sh
+[ -s "$NVM_DIR/bash_completion" ] &&  source "$NVM_DIR/bash_completion" && source "$NVM_DIR/nvm.sh" && nvm use default && pathadd "$NVM_DIR"
 
 # }}}
 
@@ -323,9 +324,8 @@ export PS1="$(_venv)$(uhw)\n\[$UGREEN\]In [\#] \[$RED\]\$ \[$RESET\]"
 
 # Local bashrc
 if [[ -f "$HOME/.bashrc.local" ]]; then
-    # shellcheck source=/home/faris/.bashrc.local
+    # shellcheck source=/home/fac/.bashrc.local
     . "$HOME/.bashrc.local"
 fi
 
 # Vim: set foldlevelstart=0 fdm=marker et sw=4 sts=4 ts=4:
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

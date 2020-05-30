@@ -1,14 +1,6 @@
 #!/bin/bash
 # Maintainer: Faris Chugthai
 
-complete -f -F _fzf_path_completion termux-share
-
-# this works beautifully
-source $PREFIX/share/bash-completion/completions/apt
-complete -F _apt pkg
-
-complete -A command termux-chroot
-
 # tergent would benefit from this
 
 if [[ -n "$ANDROID_ROOT" ]]; then
@@ -31,6 +23,14 @@ if [[ -n "$ANDROID_ROOT" ]]; then
     alias copy="termux-clipboard-get"
     # Paste is a coreutil though
     alias pste="termux-clipboard-set"
+
+    complete -f -F _fzf_path_completion termux-share
+
+    # this works beautifully
+    source $PREFIX/share/bash-completion/completions/apt
+    complete -F _apt pkg
+
+    complete -A command termux-chroot
 
 fi
 

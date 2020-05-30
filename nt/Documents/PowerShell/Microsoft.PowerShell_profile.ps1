@@ -119,12 +119,13 @@ $env:PATH += ';C:\Users\fac\scoop\apps\python-alpha\current\Scripts'
 $env:PATH += ';C:\Users\fac\scoop\apps\python-alpha\current'
 $env:PATH += ';C:\Users\fac\scoop\shims'
 $env:PATH += ';C:\Users\fac\scoop\apps\ruby\current\bin'
-$env:PATH += ';C:\Users\fac\scoop\apps\ruby\current\gems'
+# $env:PATH += ';C:\Users\fac\scoop\apps\ruby\current\gems'
 
 # Git. 03/23/2020. Moved to a new dir. Also btw there's an installation of it in VS
-$env:GITDIR =  'C:\\Users\\fac\\scoop\\apps\\git-with-openssh\\current'
-$env:PATH += ";$env:GITDIR\\mingw64\\libexec\\git-core;$env:GITDIR\\mingw64\\bin;$env:GITDIR\\cmd"
-$env:PATH += ';C:\msys64\mingw64\bin'
+# $env:GITDIR =  'C:\\Users\\fac\\scoop\\apps\\git-with-openssh\\current'
+# $env:PATH += ";$env:GITDIR\\mingw64\\libexec\\git-core;$env:GITDIR\\mingw64\\bin;$env:GITDIR\\cmd"
+# $env:PATH += ';C:\msys64\mingw64\bin'
+# $env:PATH += ';C:\msys64\usr\bin'
 
 # Your personal folders
 $env:PATH += ';C:\Users\fac\AppData\Roaming\Python\Python38\Scripts'

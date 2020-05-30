@@ -115,6 +115,7 @@ export LDFLAGS="-L$_ROOT/lib -L$_ROOT/local/lib -L$HOME/.local/lib -L$_ROOT/lib/
 export INPUTRC="$HOME/.inputrc"
 export NPY_NUM_BUILD_JOBS=1
 if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi
+# }}}
 
 # Python: {{{
 # Put python first because we need conda initialized right away

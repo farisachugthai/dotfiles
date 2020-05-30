@@ -210,6 +210,9 @@
     wsErrorHighlight = old,new,context	 # same as all
 
 [difftool]
+    tool = nvimdiff
+
+[difftool "nvimdiff"]
     cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'
     prompt = false
 
@@ -322,11 +325,11 @@
     strategy-option = patience
     # strategy-option--diff-algorithm = --set
     summary = true
-    tool = vimdiff
+    tool = nvimdiff
 
 # this is from justinmk
 # https://github.com/neovim/neovim/issues/2377
-[mergetool]
+[mergetool "nvimdiff"]
     cmd = nvim -d $LOCAL $REMOTE $MERGED -c 'wincmd w' -c 'wincmd J'
     # if it's not immediately clear what's going on, read up from this link:
     # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html

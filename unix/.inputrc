@@ -1,9 +1,22 @@
-# All the emacs key bindings
-# bind -m vi -p
-# displays every key bindin i have and holy cow.
-# up and down work again too
+# Inputrc: Configuring readline
+
+## Helpful pointers
+# bind -p
+# Displays every key binding listened in keybinding order.
+# As in, C-a, C-b, C-c etc...
+
+# bind -P
+# Prints bindings ordered by command. Good for avoiding repetitive walls of self-insert
+
+
+# bind -l 
+# Lists commands but L doesn't
+
+# compgen -A binding is a different way of viewing all the different commands you can bind to
+
+
 # pro tip:
-# syn list readlineFunction is amazing
+# vim -c'syn list readlineFunction' is amazing
 
 # pro tip2:
 # Tabularize /:/r0c0l0
@@ -87,136 +100,136 @@
 # insert a backslash (testing backslash escapes in sequences and macros)
 "\C-x\\": "\\"
 
-"\C-x\C-g":abort
-    "\C-g":abort
-    "\C-j":accept-line
-    "\C-m":accept-line
-    "\C-b":backward-char
-    "\C-?":backward-delete-char
-    "\C-x":self-insert
-"\C-x\C-?":backward-kill-line
-    "\C-a":beginning-of-line
-   "\C-xe":call-last-kbd-macro
-    "\C-]":character-search
-    "\C-l":clear-screen
-    "\C-i":complete
-    "\C-h":delete-char-or-list
-    Rubout:delete-char
-"\C-x\C-v":display-shell-version
-   "\C-xA":do-lowercase-version
-   "\C-xB":do-lowercase-version
-   "\C-xC":do-lowercase-version
-   "\C-xD":do-lowercase-version
-   "\C-xE":do-lowercase-version
-   "\C-xF":do-lowercase-version
-   "\C-xG":do-lowercase-version
-   "\C-xH":do-lowercase-version
-   "\C-xI":do-lowercase-version
-   "\C-xJ":do-lowercase-version
-   "\C-xK":do-lowercase-version
-   "\C-xL":do-lowercase-version
-   "\C-xM":do-lowercase-version
-   "\C-xN":do-lowercase-version
-   "\C-xO":do-lowercase-version
-   "\C-xP":do-lowercase-version
-   "\C-xQ":do-lowercase-version
-   "\C-xR":do-lowercase-version
-   "\C-xS":do-lowercase-version
-   "\C-xT":do-lowercase-version
-   "\C-xU":do-lowercase-version
-   "\C-xV":do-lowercase-version
-   "\C-xW":do-lowercase-version
-   "\C-xX":do-lowercase-version
-   "\C-xY":do-lowercase-version
-   "\C-xZ":do-lowercase-version
-"\C-x\C-e":edit-and-execute-command
-   "\C-x)":end-kbd-macro
-    "\C-e":end-of-line
-"\C-x\C-x":exchange-point-and-mark
-    "\C-f":forward-char
-# What in gods name is the difference between these 2?
-    "\C-s":forward-search-history
-   "\C-x*":glob-expand-word
-   "\C-xg":glob-list-expansions
-  # "\C-r":history-search-backward
-    "\C-k":kill-whole-line
-    Space":magic-space
-"\C-Space":menu-complete
-    "\C-n":next-history
-    "\C-o":operate-and-get-next
-  "Insert":overwrite-mode
-   "\C-x!":possible-command-completions
-   "\C-x/":possible-filename-completions
-   "\C-x@":possible-hostname-completions
-   "\C-x~":possible-username-completions
-   "\C-x$":possible-variable-completions
-    "\C-p":previous-history
-    "\C-q":quoted-insert
-"\C-x\C-r":re-read-init-file
-    "\C-@":set-mark
-   "\C-x(":start-kbd-macro
-"\C-x\C-u":undo
-    "\C-_":undo
-    "\C-u":universal-argument
-    "\C-w":unix-filename-rubout
-Control-Space:vi-complete
-    "\C-[":vi-movement-mode
-    "\C-_":vi-undo
-    "\C-y":yank
+# "\C-x\C-g":abort
+#     "\C-g":abort
+#     "\C-j":accept-line
+#     "\C-m":accept-line
+#     "\C-b":backward-char
+#     "\C-?":backward-delete-char
+#     "\C-x":self-insert
+# "\C-x\C-?":backward-kill-line
+#     "\C-a":beginning-of-line
+#    "\C-xe":call-last-kbd-macro
+#     "\C-]":character-search
+#     "\C-l":clear-screen
+#     "\C-i":complete
+#     "\C-h":delete-char-or-list
+#     Rubout:delete-char
+# "\C-x\C-v":display-shell-version
+#    "\C-xA":do-lowercase-version
+#    "\C-xB":do-lowercase-version
+#    "\C-xC":do-lowercase-version
+#    "\C-xD":do-lowercase-version
+#    "\C-xE":do-lowercase-version
+#    "\C-xF":do-lowercase-version
+#    "\C-xG":do-lowercase-version
+#    "\C-xH":do-lowercase-version
+#    "\C-xI":do-lowercase-version
+#    "\C-xJ":do-lowercase-version
+#    "\C-xK":do-lowercase-version
+#    "\C-xL":do-lowercase-version
+#    "\C-xM":do-lowercase-version
+#    "\C-xN":do-lowercase-version
+#    "\C-xO":do-lowercase-version
+#    "\C-xP":do-lowercase-version
+#    "\C-xQ":do-lowercase-version
+#    "\C-xR":do-lowercase-version
+#    "\C-xS":do-lowercase-version
+#    "\C-xT":do-lowercase-version
+#    "\C-xU":do-lowercase-version
+#    "\C-xV":do-lowercase-version
+#    "\C-xW":do-lowercase-version
+#    "\C-xX":do-lowercase-version
+#    "\C-xY":do-lowercase-version
+#    "\C-xZ":do-lowercase-version
+# "\C-x\C-e":edit-and-execute-command
+#    "\C-x)":end-kbd-macro
+#     "\C-e":end-of-line
+# "\C-x\C-x":exchange-point-and-mark
+#     "\C-f":forward-char
+# # What in gods name is the difference between these 2?
+#     "\C-s":forward-search-history
+#    "\C-x*":glob-expand-word
+#    "\C-xg":glob-list-expansions
+#   # "\C-r":history-search-backward
+#     "\C-k":kill-whole-line
+#     Space":magic-space
+# "\C-Space":menu-complete
+#     "\C-n":next-history
+#     "\C-o":operate-and-get-next
+#   "Insert":overwrite-mode
+#    "\C-x!":possible-command-completions
+#    "\C-x/":possible-filename-completions
+#    "\C-x@":possible-hostname-completions
+#    "\C-x~":possible-username-completions
+#    "\C-x$":possible-variable-completions
+#     "\C-p":previous-history
+#     "\C-q":quoted-insert
+# "\C-x\C-r":re-read-init-file
+#     "\C-@":set-mark
+#    "\C-x(":start-kbd-macro
+# "\C-x\C-u":undo
+#     "\C-_":undo
+#     "\C-u":universal-argument
+#     "\C-w":unix-filename-rubout
+# Control-Space:vi-complete
+#     "\C-[":vi-movement-mode
+#     "\C-_":vi-undo
+#     "\C-y":yank
 
 # WOOPS
-"a":self-insert
-"b":self-insert
-"c":self-insert
-"d":self-insert
-"e":self-insert
-"f":self-insert
-"g":self-insert
-"h":self-insert
-"i":self-insert
-"j":self-insert
-"k":self-insert
-"l":self-insert
-"m":self-insert
-"n":self-insert
-"o":self-insert
-"p":self-insert
-"q":self-insert
-"r":self-insert
-"s":self-insert
-"t":self-insert
-"u":self-insert
-"v":self-insert
-"w":self-insert
-"x":self-insert
-"y":self-insert
-"z":self-insert
-"A":self-insert
-"B":self-insert
-"C":self-insert
-"D":self-insert
-"E":self-insert
-"F":self-insert
-"G":self-insert
-"H":self-insert
-"I":self-insert
-"J":self-insert
-"K":self-insert
-"L":self-insert
-"M":self-insert
-"N":self-insert
-"O":self-insert
-"P":self-insert
-"Q":self-insert
-"R":self-insert
+# "a":self-insert
+# "b":self-insert
+# "c":self-insert
+# "d":self-insert
+# "e":self-insert
+# "f":self-insert
+# "g":self-insert
+# "h":self-insert
+# "i":self-insert
+# "j":self-insert
+# "k":self-insert
+# "l":self-insert
+# "m":self-insert
+# "n":self-insert
+# "o":self-insert
+# "p":self-insert
+# "q":self-insert
+# "r":self-insert
+# "s":self-insert
+# "t":self-insert
+# "u":self-insert
+# "v":self-insert
+# "w":self-insert
+# "x":self-insert
+# "y":self-insert
+# "z":self-insert
+# "A":self-insert
+# "B":self-insert
+# "C":self-insert
+# "D":self-insert
+# "E":self-insert
+# "F":self-insert
+# "G":self-insert
+# "H":self-insert
+# "I":self-insert
+# "J":self-insert
+# "K":self-insert
+# "L":self-insert
+# "M":self-insert
+# "N":self-insert
+# "O":self-insert
+# "P":self-insert
+# "Q":self-insert
+# "R":self-insert
 "S":self-insert
-"T":self-insert
-"U":self-insert
-"V":self-insert
-"W":self-insert
-"X":self-insert
-"Y":self-insert
-"Z":self-insert
+# "T":self-insert
+# "U":self-insert
+# "V":self-insert
+# "W":self-insert
+# "X":self-insert
+# "Y":self-insert
+# "Z":self-insert
 
 #  }}}
 
@@ -575,7 +588,7 @@ set enable-bracketed-paste On
 
 # Show mode in prompt! IPythons been doing this as well. Line 3209 man bash
 # Apr 12, 2019:Line 3200 man bash
-set blink-matching-paren
+set blink-matching-paren On
 
 # Times out too fast at 500
 # set keyseq-timeout -1

@@ -1,9 +1,13 @@
-# --theme='base16'
+# --theme base16
+
 --theme ansi-dark
 
 --wrap never
 
---paging never
+# Holy fuck i got the pager working on windows
+--pager "less -RrFJKLMi "
+
+--paging always
 
 -m .conf:ini
 
