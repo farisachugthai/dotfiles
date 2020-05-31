@@ -607,7 +607,7 @@ set bell-style none
 
 # should we? default off. my arrow keys work idk
 # not the arrow keys the application keypad too. do it
-# set enable-keypad on
+set enable-keypad on
 
 # 8 bit clean
 set input-meta on
