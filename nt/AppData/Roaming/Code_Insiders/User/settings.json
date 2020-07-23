@@ -16,7 +16,7 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.24.28314\\Include\\**",
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\Include\\**",
     "C:/Program Files (x86)/Windows Kits/NETFXSDK/4.8/Include/um/**",
-    "C:/Users/fac/scoop/apps/winpython/current/python-3.8.1.amd64/include/**",
+    "C:/Users/Casey/scoop/apps/miniconda/current/include/**",
     "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/**"
   ],
   "C_Cpp.default.intelliSenseMode": "msvc-x64",
@@ -65,7 +65,7 @@
     "editor.tabSize": 2
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "vscode.json-language-features",
     "editor.insertSpaces": true,
     "editor.quickSuggestions": {
       "strings": true
@@ -266,7 +266,7 @@
   "python.dataScience.debugJustMyCode": false,
   "python.diagnostics.sourceMapsEnabled": false,
   "python.experiments.enabled": false,
-  "python.insidersChannel": "off",
+  "python.insidersChannel": "daily",
   "python.linting.flake8Args": [
     "--config-file",
     "C:\\Users\\faris\\AppData\\Local\\flake8"
@@ -285,12 +285,11 @@
     "D105  # docstrings in magic methods"
   ],
   "python.linting.pydocstyleEnabled": true,
-  "python.linting.pylintEnabled": true,
+  "python.linting.pylintEnabled": false,
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.activateEnvironment": true,
   "python.terminal.executeInFileDir": true,
   "python.testing.promptToConfigure": false,
-  "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": true,
   "python.venvFolders": [
     "~/.local/share/virtualenvs/bin",
@@ -368,8 +367,6 @@
   "vim.easymotion": true,
   "vim.easymotionJumpToAnywhereRegex": "\\b[A-Za-z0-9]|[A-Za-z0-9]\\b|_.|#.|[a-z][A-Z]",
   "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf;",
-  "vim.easymotionMarkerFontFamily": "Hack",
-  "vim.enableNeovim": true,
   "vim.foldfix": true,
   "vim.handleKeys": {
     "<C-d>": true,
@@ -435,9 +432,9 @@
   "workbench.iconTheme": "material-icon-theme",
   "workbench.colorTheme": "Gruvbox Material Dark",
   "workbench.colorCustomizations": {
-    "statusBar.background": "#007acc",
-    "statusBar.noFolderBackground": "#007acc",
-    "statusBar.debuggingBackground": "#007acc"
+    "statusBar.background": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f"
   },
   "restructuredtext.experimental": true,
   "restructuredtext.languageServer.trace.server": "verbose",
@@ -470,4 +467,22 @@
   "workbench.quickOpen.preserveInput": true,
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.experimentalUseTitleEvent": true,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
+  "python.dataScience.exportWithOutputEnabled": true,
+  "python.dataScience.searchForJupyter": false,
+  "editor.definitionLinkOpensInPeek": true,
+  "editor.mouseWheelZoom": true,
+  "editor.parameterHints.cycle": true,
+  "editor.renameOnType": true,
+  "editor.tabCompletion": "on",
+  "editor.smoothScrolling": true,
+  "gruvboxMaterial.colorfulSyntax": true,
+  "gruvboxMaterial.italicKeywords": true,
+  "diffEditor.codeLens": true,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "npm.packageManager": "yarn",
+  "terminal.integrated.rendererType": "dom",
+  "python.condaPath": "C:\\Users\\Casey\\scoop\\apps\\miniconda3\\current\\Scripts\\conda.exe",
+  "git.autofetch": true,
 }

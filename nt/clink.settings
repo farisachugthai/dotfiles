@@ -1,19 +1,19 @@
 # name: Pressing Ctrl-D exits session
 # type: bool
 # Ctrl-D exits cmd.exe when it is pressed on an empty line.
-ctrld_exits = 1
+ctrld_exits = True
 
 # name: Toggle if pressing Esc clears line
 # type: bool
 # Clink clears the current line when Esc is pressed (unless Readline's Vi mode
 # is enabled).
-esc_clears_line = 0
+esc_clears_line = False
 
 # name: Match display colour
 # type: int
 # Colour to use when displaying matches. A value less than 0 will be the
 # opposite brightness of the default colour.
-match_colour = 15
+match_colour = -1
 
 # name: Executable match style
 # type: enum
@@ -30,13 +30,13 @@ exec_match_style = 2
 # type: bool
 # If the line begins with whitespace then Clink bypasses executable matching and
 # will match all files and directories instead.
-space_prefix_match_files = 1
+space_prefix_match_files = True
 
 # name: Colour of the prompt
 # type: int
 # Surrounds the prompt in ANSI escape codes to set the prompt's colour. Disabled
 # when the value is less than 0.
-prompt_colour = -1
+prompt_colour = 14
 
 # name: Auto-answer terminate prompt
 # type: enum
@@ -74,7 +74,7 @@ history_dupe_mode = 2
 # type: bool
 # When non-zero the history will be read from disk before editing a new line and
 # written to disk afterwards.
-history_io = 1
+history_io = 0
 
 # name: Sets how command history expansion is applied
 # type: enum
@@ -87,7 +87,7 @@ history_io = 1
 # from the history. This can be enabled and disable by setting this value to 1
 # or 0. Values or 2, 3 or 4 will skip any ! character quoted in single, double,
 # or both quotes respectively.
-history_expand_mode = 0
+history_expand_mode = 3
 
 # name: Support Windows' Ctrl-Alt substitute for AltGr
 # type: bool
@@ -112,5 +112,5 @@ strip_crlf_on_paste = 1
 # codes to control the text colours. This is automatically disabled if a third
 # party tool is detected that also provides this facility. It can also be
 # disabled by setting this to 0.
-ansi_code_support = 0
+ansi_code_support = 1
 

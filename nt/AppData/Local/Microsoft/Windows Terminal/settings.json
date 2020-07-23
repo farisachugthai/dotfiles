@@ -23,8 +23,8 @@
     // To learn more about profiles, visit https://aka.ms/terminal-profile-settings
 
     // Launch Settings
-    // "initialCols": 80,
-    // "initialRows": 30,
+    "initialCols": 80,
+    "initialRows": 30,
     "launchMode": "default",
 
     // Tab UI
@@ -85,16 +85,6 @@
           "source": "Windows.PowerShell",
           "tabTitle": "PowerShell"
         },
-        { // msys2 tmux
-          "commandline": "msys2_shell.cmd -lic tmux -2u",
-          "guid": "{a5a98cb8-8961-5535-816d-772efe0c6a3f}",
-          "name": "msys2-tmux"
-        },
-        {  // mingw64
-          "commandline": "msys2_shell.cmd --shell mingw64 -lic tmux -2u",
-          "guid": "{a5a99cb8-8961-5535-816d-772efe0c6a3f}",
-          "name": "mintty-tmux"
-        },
         { // arch auto added!
           "commandline": "wsl",
           "hidden": true,
@@ -125,6 +115,12 @@
         {
             "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
             "name": "Arch",
+            "source": "Windows.Terminal.Wsl"
+        },
+        {
+            "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+            "hidden": false,
+            "name": "Ubuntu",
             "source": "Windows.Terminal.Wsl"
         }
       ]
@@ -160,18 +156,19 @@
     // To learn more about keybindings, visit https://aka.ms/terminal-keybindings
     "keybindings":
     [
-        // Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.
-        // These two lines additionally bind them to Ctrl+C and Ctrl+V.
-        // To learn more about selection, visit https://aka.ms/terminal-selection
-        // { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
-        // { "command": "paste", "keys": "ctrl+v" },
-        // Press Ctrl+Shift+F to open the search box
-        { "command": "find", "keys": "ctrl+shift+f" },
-        // Press Alt+Shift+D to open a new pane.
-        // - "split": "auto" makes this pane open in the direction that provides the most surface area.
-        // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
-        // To learn more about panes, visit https://aka.ms/terminal-panes
-        { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" },
+    // Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.
+    // These two lines additionally bind them to Ctrl+C and Ctrl+V.
+    // To learn more about selection, visit https://aka.ms/terminal-selection
+    // { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
+    // { "command": "paste", "keys": "ctrl+v" },
+    // Press Ctrl+Shift+F to open the search box
+    // { "command": "find", "keys": "ctrl+shift+f" },
+    // Press Alt+Shift+D to open a new pane.
+    // - "split": "auto" makes this pane open in the direction that provides the most surface area.
+    // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
+    // To learn more about panes, visit https://aka.ms/terminal-panes
+    { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" },
+
     { "command": "toggleFullscreen", "keys": "alt+enter" },
     { "command": { "action": "resizePane", "direction": "down" }, "keys":  "alt+shift+down"  },
     { "command": { "action": "resizePane", "direction": "left" }, "keys":  "alt+shift+left"  },

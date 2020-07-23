@@ -37,10 +37,7 @@ else
 fi
 # }}}
 
-# Builds: {{{
-[[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
-
-# Shellcheck
+# Build: {{{
 if [[ -n "$(command -v shellcheck)" ]]; then
   export SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
 fi
@@ -134,12 +131,10 @@ shopt -s direxpand
 # Less And $PAGER --- Checkout .lesskey for more {{{
 # I think the lowercase r is messing bat up on wsl
 export PAGER="less -JRKMrLigeFW"
+[[ -z "$(command -v lesspipe)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe)"
 export LESSHISTSIZE=5000  # default is 100
 
 export LESSCOLORIZER=pygmentize
-
-[[ -n "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
-
 export LESSCHARSET=utf-8
 lesskey -o ~/.lesskey.output ~/.lesskey
 export LESS="-JRKMrLIgeFW  -j0.5 --no-histdups --save-marks --follow-name -k $HOME/.lesskey.output"
@@ -337,3 +332,9 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 
 # Vim: set foldlevelstart=0 fdm=marker et sw=4 sts=4 ts=4:
+
+PATH="/home/casey/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/casey/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/casey/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/casey/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/casey/perl5"; export PERL_MM_OPT;

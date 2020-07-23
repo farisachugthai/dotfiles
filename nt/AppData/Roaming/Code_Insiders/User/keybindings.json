@@ -1,4 +1,20 @@
+// Place your key bindings in this file to override the defaultsauto[]
 [
+  {
+    "key": "f5",
+    "command": "python.execInTerminal",
+    "when": "editorTextFocus && editorLangId == 'python'"
+  },
+  {
+    "key": "f5",
+    "command": "workbench.action.debug.start",
+    "when": "!inDebugMode && editorLangId != 'python'"
+  },
+  {
+    "key": "f5",
+    "command": "-workbench.action.debug.start",
+    "when": "!inDebugMode"
+  },
   {
     "command": "-workbench.action.terminal.openNativeConsole",
     "key": "ctrl+shift+c",
@@ -360,7 +376,10 @@
   },
   {
     "command": "workbench.action.files.newUntitledFile",
-    "key": "ctrl+n"
+    "key": "ctrl+n",
+    "args": {
+      "viewType": "${fileDirname}"
+    }
   },
   {
     "command": "-editor.action.fontZoomOut",
@@ -576,5 +595,46 @@
   {
     "key": "ctrl+shift+w",
     "command": "-workbench.action.closeWindow"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "!inQuickOpen && !suggestWidgetVisible && !parameterHintsVisible"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown",
+    "when": "!inQuickOpen && !suggestWidgetVisible && !parameterHintsVisible && !inKeybindingsSearch && !problemsFilterFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.navigateUp",
+    "when": "!inQuickOpen && !suggestWidgetVisible && !parameterHintsVisible"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "!inQuickOpen && !suggestWidgetVisible && !parameterHintsVisible"
+  },
+  {
+    "key": "Ctrl+k, Ctrl+u",
+    "command": "workbench.action.openSettings",
+  },
+  {
+    "key": "alt+left",
+    "command": "workbench.action.navigateBack"
+  },
+  {
+    "key": "alt+right",
+    "command": "workbench.action.navigateForward"
+  },
+  // Global keybindings using chords (two keys)
+  {
+    "key": "ctrl+k enter",
+    "command": "workbench.action.keepEditor"
+  },
+  {
+    "key": "ctrl+k ctrl+w",
+    "command": "workbench.action.closeAllEditors"
   }
 ]

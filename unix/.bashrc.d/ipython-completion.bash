@@ -150,7 +150,7 @@ __ipython() {
   COMPREPLY=()
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
-  # over 150+ default options 
+  # over 150+ default options
   # opts="
     _init_completion -s || return
 

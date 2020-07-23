@@ -9,7 +9,7 @@
 # Prints bindings ordered by command. Good for avoiding repetitive walls of self-insert
 
 
-# bind -l 
+# bind -l
 # Lists commands but L doesn't
 
 # compgen -A binding is a different way of viewing all the different commands you can bind to
@@ -222,7 +222,7 @@
 # "P":self-insert
 # "Q":self-insert
 # "R":self-insert
-"S":self-insert
+# "S":self-insert
 # "T":self-insert
 # "U":self-insert
 # "V":self-insert
@@ -236,16 +236,16 @@
 # Arrow keys in keypad mode:{{{
 # omfg this actually works on termux thank you god
 # Arrow keys in 8 bit keypad mode
-"\M-\C-OD":backward-char
-"\M-\C-OC":forward-char
-"\M-\C-OA":previous-history
-"\M-\C-OB":next-history
+# "\M-\C-OD":backward-char
+# "\M-\C-OC":forward-char
+# "\M-\C-OA":previous-history
+# "\M-\C-OB":next-history
 
-# Arrow keys in 8 bit ANSI mode
-"\M-\C-[D":backward-char
-"\M-\C-[C":forward-char
-"\M-\C-[A":previous-history
-"\M-\C-[B":next-history
+# # Arrow keys in 8 bit ANSI mode
+# "\M-\C-[D":backward-char
+# "\M-\C-[C":forward-char
+# "\M-\C-[A":previous-history
+# "\M-\C-[B":next-history
 
 # Yo please don't let this fuck it up
 "\e[A": history-search-backward
