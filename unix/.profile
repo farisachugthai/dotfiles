@@ -301,3 +301,5 @@ export BROWN="\[\e[38;5;166m\]"
 if [[ -f "$HOME/.bashrc" ]]; then . "$HOME/.bashrc"; fi
 
 # Vim: set fdm=marker fdls=0:
+
+export PATH="$HOME/.cargo/bin:$PATH"

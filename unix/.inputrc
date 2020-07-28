@@ -253,55 +253,6 @@
 
 # }}}
 
-# From clink if cmd:{{{
-# Pleasantly surprised with these!
-# Gotta figure out how to check for the conditional clink tho
-
-# Easy. It's default installed everywhere so
-$if cmd.exe
-
-# set keymap vi-insert
-# "\t":clink-completion-shim
-# "\C-V":paste-from-clipboard
-# "\C-q":reload-lua-state
-# "\C-z":undo
-# "\M-h":show-rl-help
-# "\e\C-c":copy-line-to-clipboard
-# "\C-c":ctrl-c
-# "\e-a":"..\\"
-# "\e`U":up-directory
-# "\e\C-u":up-directory
-# "\e\C-e":expand-env-vars
-
-# set keymap emacs-insert
-"\t":clink-completion-shim
-"\C-v":paste-from-clipboard
-"\C-z":undo
-"\e-h":show-rl-help
-"\e\C-c":copy-line-to-clipboard
-"\C-c":ctrl-c
-"\e-a":"..\\"
-"\e`U":up-directory
-"\e\C-u":up-directory
-"\e\C-e":expand-env-vars
-
-# set keymap vi-move
-# "\C-v":paste-from-clipboard
-# "\C-z":undo
-# "\e\C-h":show-rl-help
-# "\e\C-c":copy-line-to-clipboard
-# "\C-c":ctrl-c
-# "\e-a":"..\\"
-# "\e`U":up-directory
-"\e\C-j":emacs-editing-mode
-# "\e\C-u":up-directory
-# "\e\C-e":expand-env-vars
-# set editing-mode emacs
-
-$endif
-
-# }}}
-
 # Vi insert:{{{
 $if keymap=vi-insert
 

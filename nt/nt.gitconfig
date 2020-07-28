@@ -63,8 +63,6 @@
 	# path = C:/Program Files (x86)/Git/etc/gitconfig
 
 [gui]
-	recentrepo = C:/Users/fac/projects/dotfiles
-	recentrepo = C:/Users/fac/scoop/persist/PyCharm-portable/profile/config/settingsRepository/repository
 	fontui = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
 	commitmsgwidth = 72
@@ -72,6 +70,7 @@
 	diffcontext = 1
 	matchtrackingbranch = true
 	encoding = utf-8
+	recentrepo = C:/Users/Casey/projects/dotfiles
 
 [guitool "nvim"]
 	cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'

@@ -1,0 +1,24 @@
+# From clink if cmd:
+# Pleasantly surprised with these!
+# Gotta figure out how to check for the conditional clink tho
+
+# Easy. It's default installed everywhere so
+$if cmd.exe
+
+"\t":clink-completion-shim
+# wt.exe uses C-S-v
+# "\C-v":paste-from-clipboard
+"\C-z":undo
+"\e-h":show-rl-help
+"\e\C-c":copy-line-to-clipboard
+"\C-c":ctrl-c
+"\e-a":"..\\"
+"\e`U":up-directory
+"\e\C-u":up-directory
+"\e\C-e":expand-env-vars
+"\e\C-j":emacs-editing-mode
+set editing-mode emacs
+
+$endif
+
+# Vim: set ft=readline:

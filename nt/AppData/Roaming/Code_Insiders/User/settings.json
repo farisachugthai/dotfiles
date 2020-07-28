@@ -266,7 +266,7 @@
   "python.dataScience.debugJustMyCode": false,
   "python.diagnostics.sourceMapsEnabled": false,
   "python.experiments.enabled": false,
-  "python.insidersChannel": "daily",
+  "python.insidersChannel": "off",
   "python.linting.flake8Args": [
     "--config-file",
     "C:\\Users\\faris\\AppData\\Local\\flake8"
@@ -292,13 +292,10 @@
   "python.testing.promptToConfigure": false,
   "python.testing.unittestEnabled": true,
   "python.venvFolders": [
-    "~/.local/share/virtualenvs/bin",
-    "~/.virtualenvs/bin",
-    ".virtualenvs/",
+    "~/.local/share/virtualenvs",
+    "~/.virtualenvs",
     ".venv",
-    "C:\\Users\\fac\\scoop\\app\\winpython\\current",
-    "C:\\Users\\fac\\scoop\\app\\miniconda3\\current\\envs",
-    "C:\\Users\\fac\\projects\\all_msft\\vscode-python\\pythonFiles\\tests\\ipython\\.venv",
+    "C:\\Users\\Casey\\scoop\\app\\miniconda3\\current\\envs",
     "/usr/bin",
     "/usr/local/bin",
     "/usr/sbin"
@@ -318,7 +315,6 @@
     ".vscode"
   ],
   "python.workspaceSymbols.rebuildOnFileSave": false,
-  "python.workspaceSymbols.rebuildOnStart": false,
   "remote.WSL.fileWatcher.polling": true,
   "remote.extensionKind": {
     "vscode.vim": [
@@ -485,4 +481,6 @@
   "terminal.integrated.rendererType": "dom",
   "python.condaPath": "C:\\Users\\Casey\\scoop\\apps\\miniconda3\\current\\Scripts\\conda.exe",
   "git.autofetch": true,
+  "python.workspaceSymbols.enabled": true,
+  "python.languageServer": "Microsoft",
 }
