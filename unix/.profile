@@ -111,7 +111,7 @@ test "$(command -v clang)" && export CC=clang; export CXX=clang++
 
 # LDflags gets defined in here and as a result numpy fails to build
 # export LDFLAGS="-L$_ROOT/lib -lm -L$_ROOT/local/lib -L$HOME/.local/lib -lncursesw -liconv -L$_ROOT/lib/python3.8/config-3.8/ -lpython3.8m -lcrypt -ldl -lreadline -i"
-export LDFLAGS="-L$_ROOT/lib -L$_ROOT/local/lib -L$HOME/.local/lib -L$_ROOT/lib/python3.8/config-3.8 -lm -lcompiler_rt"
+export LDFLAGS="-L$_ROOT/lib -L$_ROOT/local/lib -L$HOME/.local/lib -L$_ROOT/lib/python3.8/config-3.8 -lm -lcompiler_rt -L/system/lib/"
 export INPUTRC="$HOME/.inputrc"
 export NPY_NUM_BUILD_JOBS=1
 if [[ -d "$_ROOT/share/pkgconfig" ]]; then export PKG_CONFIG_PATH="$_ROOT/share/pkgconfig"; fi

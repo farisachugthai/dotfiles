@@ -79,12 +79,14 @@
     remot = remote
     root = rev-parse --show-toplevel
     s = status -s
-    sb = status -sb
+    # sb = status -sb
+    sb = show-branch
     sh = stash
     sha = stash apply
     shc = stash clear
     shd = stash drop
     shl = stash list
+    sho = show
     shp = stash pop
     shs = stash show
     shsp = stash show --patch
@@ -98,8 +100,6 @@
     unstage = reset HEAD -- $*
     unstaged = diff
     url = ls-remote --get-url
-    whatis = show -s --pretty=´tformat:%h (%s, %ad)´ --date=short
-    whois = !sh -c ´git log -i -1 --pretty="format:%an <%ae>"
 
 [blame]
     coloring = highlightRecent

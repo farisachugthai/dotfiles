@@ -18,6 +18,8 @@
 --regex-UltiSnips=/^snippet (.*)/\1/s,snippet/
 --extras=*
 --pseudo-tags=*
+
+# excludes
 --exclude=log
 --exclude=tmp
 

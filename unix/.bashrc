@@ -112,7 +112,9 @@ shopt -s nocaseglob
 # don't do this. bind -p and -P are similar but stuff like
 # complete -a and A are nowhere similar
 # shopt -s nocasematch
-set -o noclobber    # Still dont want to clobber things
+
+# fasd does a `fasd --init > file` that emits an error if this is enabled
+# set -o noclobber    # Still dont want to clobber things
 shopt -s xpg_echo   # Allows echo to read backslashes like \n and \t
 shopt -s dirspell   # Autocorrect the spelling if it can
 shopt -s cdspell
@@ -168,11 +170,11 @@ export NPM_CONFIG_DIR="$HOME/.config/nvm"
 # Other: {{{
 fasd_cache="$HOME/.fasd-init-bash"
 if [[ -n "$(command -v fasd)" ]]; then
+    export _FASD_VIMINFO="$XDG_DATA_HOME/nvim/shada/main.shada"
     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
     fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install > "$fasd_cache"
     fi
     source "$fasd_cache"
-    export _FASD_VIMINFO="$XDG_DATA_HOME/nvim/shada/main.shada"
 fi
 # Random dirs Termux adds to path when run as failsafe:
 pathadd "/system/sbin"
@@ -257,8 +259,10 @@ complete -A enabled enable
 complete -A export -F _terms -F _longopt -F _fzf_var_completion env export
 complete -A hostname -F _longopt -F _fzf_host_completion -F _known_hosts ssh traceroute ping
 
+complete -o bashdefault -o default -F _longopt -F _completion_loader -F _fzf_path_completion -o nospace cd cs
+
 complete -o bashdefault -o default -F _longopt -F _completion_loader -F _fzf_path_completion \
-    a2ps awk base64 bash bc bison cat cd chroot colordiff cp cs \
+    a2ps awk base64 bash bc bison cat chroot colordiff cp \
     csplit cut date df diff dir dirs enscript expand find fmt fold gperf \
     grep grub head irb ld ldd less ln ls m4 md5sum mkfifo mknod \
     mv netstat nl nm nvim objcopy objdump od paste pr ptx readelf   \
@@ -325,6 +329,16 @@ export PS1="$(_venv)$(uhw)\n\[$UGREEN\]In [\#] \[$RED\]\$ \[$RESET\]"
 
 # }}}
 
+# Perl: {{{
+if [[ -d "$HOME/perl5/bin" ]]; then
+PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+fi
+# }}}
+
 # Local bashrc
 if [[ -f "$HOME/.bashrc.local" ]]; then
     # shellcheck source=/home/fac/.bashrc.local
@@ -332,9 +346,3 @@ if [[ -f "$HOME/.bashrc.local" ]]; then
 fi
 
 # Vim: set foldlevelstart=0 fdm=marker et sw=4 sts=4 ts=4:
-
-PATH="/home/casey/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/casey/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/casey/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/casey/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/casey/perl5"; export PERL_MM_OPT;

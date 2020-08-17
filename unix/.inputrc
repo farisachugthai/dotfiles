@@ -229,24 +229,17 @@
 # "W":self-insert
 # "X":self-insert
 # "Y":self-insert
-# "Z":self-insert
+# # "Z":self-insert
 
-#  }}}
+# #  }}}
 
 # Arrow keys in keypad mode:{{{
 # omfg this actually works on termux thank you god
 # Arrow keys in 8 bit keypad mode
-# "\M-\C-OD":backward-char
-# "\M-\C-OC":forward-char
-# "\M-\C-OA":previous-history
-# "\M-\C-OB":next-history
-
-# # Arrow keys in 8 bit ANSI mode
-# "\M-\C-[D":backward-char
-# "\M-\C-[C":forward-char
-# "\M-\C-[A":previous-history
-# "\M-\C-[B":next-history
-
+"\M-\C-OD":backward-char
+"\M-\C-OC":forward-char
+"\M-\C-OA":previous-history
+"\M-\C-OB":next-history
 # Yo please don't let this fuck it up
 "\e[A": history-search-backward
 "\e[B": history-search-forward
@@ -662,6 +655,7 @@ Meta-Tab:tab-insert
 "\C-u":universal-argument
 "\C-w":unix-filename-rubout
 Meta-u:upcase-word
+"\C-y": yank
 Meta-.:yank-last-arg
 Meta-_:yank-last-arg
 Meta-Control-y:yank-nth-arg

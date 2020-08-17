@@ -247,12 +247,12 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # }}}
 
 # Documents: {{{1
-.README               38;5;29;1;4
-.README.rst           38;5;29;1;4
-.README.md            38;5;29;1;4
+README               38;5;29;1;4
+README.rst           38;5;29;1;4
+README.md            38;5;29;1;4
 *MANIFEST.in          38;5;222;1;4
 *LICENSE*             38;5;220;4
-*COPYING              38;5;220;
+*COPYING              38;5;220;4
 *INSTALL              38;5;220;1
 *COPYRIGHT            38;5;220;1
 *AUTHORS              38;5;220;1
@@ -276,9 +276,10 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .nfo                  38;5;184
 .pod                  38;5;184
 # Feb 13, 2019: Figured why not add some flavor?
-.rst                  38;5;215
+.rst                  38;5;215;1
 .tex                  38;5;184
 .textile              38;5;184
+.toml                 38;5;31;4
 # key-value, non-relational data {{{2
 .bib                  38;5;178
 .json                 38;5;178
@@ -302,7 +303,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .mobi                 38;5;141
 .epub                 38;5;141
 # }}}
-
 # words {{{3
 .docm                 38;5;111
 .doc                  38;5;111
@@ -409,6 +409,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .t                    38;5;114
 .cpan_history         38;5;113
 *pm_to_blib           38;5;248
+# I dont think the regex works
+.bash_history[0-9]*   38;5;113
 .bash_history         38;5;113
 .python_history       38;5;113
 
@@ -559,6 +561,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .rgignore             38;5;144
 .ripgreprc            38;5;154
 .npmignore            38;5;144
+
+tags                  38;5;146
 
 # patch files
 .diff                 48;5;197;38;5;232

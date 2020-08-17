@@ -13,7 +13,7 @@
 # as -lg...? Why.
 # -p means append / indicator to directoreis
 alias l='ls -hF --color=always'
-alias la='ls -AF --color=always'
+alias la='ls -AFhg --color=always'
 alias ldir='ls -po --color=always | grep /$'
 
 alias lf='ls -AFgo --color=always | grep ^-'
@@ -175,4 +175,9 @@ fi
 alias tre="tree -FACa -I .git $*"
 alias tree="tree -I node_modules"
 complete -F _fzf_dir_completion -o default -o bashdefault tree tre
+
+# Jump to a tempdir
+alias tempdir='pushd "$(mktemp -d)"'
 # }}}
+
+# Vim: set fdm=marker:
