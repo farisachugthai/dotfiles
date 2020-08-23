@@ -1,11 +1,10 @@
-# --theme base16
 
 --theme ansi-dark
 
---wrap never
+--wrap auto
 
 # Holy fuck i got the pager working on windows
---pager "less -RrFJKLMi "
+--pager "less -JRKMLigeFrW"
 
 --paging always
 
@@ -14,35 +13,6 @@
 -m .rkt:Lisp
 
 --style full
-
-#     -m, --map-syntax <from:to>...
-#             Map a file extension or file name to an existing syntax. For example, to highlight
-#             *.conf files with the INI syntax, use '-m conf:ini'. To highlight files named
-#             '.myignore' with the Git Ignore syntax, use '-m .myignore:gitignore'.
-#         --theme <theme>
-#             Set the theme for syntax highlighting. Use '--list-themes' to see all available themes.
-#             To set a default theme, add the '--theme="..."' option to the configuration file or
-#             export the BAT_THEME environment variable (e.g.: export BAT_THEME="...").
-#         --list-themes
-#             Display a list of supported themes for syntax highlighting.
-#         --style <style-components>
-#             Configure which elements (line numbers, file headers, grid borders, Git modifications,
-#             ..) to display in addition to the file contents. The argument is a comma-separated list
-#             of components to display (e.g. 'numbers,changes,grid') or a pre-defined style ('full').
-#             To set a default style, add the '--style=".."' option to the configuration file or
-#             export the BAT_STYLE environment variable (e.g.: export BAT_STYLE=".."). Possible
-#             values: *auto*, full, plain, changes, header, grid, numbers, snip.
-#         --italic-text <when>
-#             Specify when to use ANSI sequences for italic text in the output. Possible values:
-#             always, *never*.
-#         --paging <when>
-#             Specify when to use the pager. To control which pager is used, set the PAGER or
-#             BAT_PAGER environment variables (the latter takes precedence) or use the '--pager'
-#             option. To disable the pager permanently, set BAT_PAGER to an empty string or set
-#             '--paging=never' in the configuration file. Possible values: *auto*, never, always.
-#         --wrap <mode>
-#             Specify the text-wrapping mode (*auto*, never, character). The '--terminal-width' option
-#             can be used in addition to control the output width.
 
 # --pager "less -JRKMLigeFrW --mouse --no-histdups --save-marks "
 

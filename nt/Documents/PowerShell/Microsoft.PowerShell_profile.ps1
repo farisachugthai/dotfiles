@@ -1,7 +1,7 @@
-<# The basics so I won't go insane: {{{
+<# The basics so I won't go insane:
 }}} #>
 
-# `using`: {{{
+# `using`:
 using namespace Console
 using namespace Microsoft.PowerShell.PSConsoleReadline
 using namespace System.Windows.Clipboard
@@ -30,9 +30,9 @@ If (Test-Path "C:\Program Files\openssh-win64\Set-SSHDefaultShell.ps1") {
 Import-Module "PowerTab" -ArgumentList "C:\Users\fac\Documents\PowerShell\PowerTabConfig.xml"
 ################ End of PowerTab Initialization Code ##########################
 
-# }}}
 
-# PSModulePATH: {{{
+
+# PSModulePATH:
 # Here's a useful function that works on all pwsh versions
 function Get-PSVersion {
         if (test-path variable:psversiontable) {
@@ -70,9 +70,9 @@ function Set-PSModulePathCorrectly {
 }
 
 Set-PSModulePathCorrectly
-# }}}
 
-# PATH: {{{
+
+# PATH:
 # Start with C:\Windows
 $env:PATH = 'C:\Windows;C:\Windows\System32;C:\Windows\Syswow64;C:\Windows\System32\OpenSSH;C:\Windows\System32\wbem'
 # $env:PATH += ';C:\Windows\Microsoft.NET\Framework64\v4.0.30319'
@@ -101,14 +101,16 @@ $env:PATH += ';C:\Program Files\WindowsPowerShell'
 $env:PATH += ';C:\Program Files (x86)\dotnet'
 $env:PATH += ';C:\Program Files\dotnet'
 # $env:PATH += ';C:\Program Files\Racket'
-$env:PATH += ';C:\Program Files\KeePassXC'
 $env:PATH += ';C:\Program Files\Firefox Nightly'
+$env:PATH += ';C:\Program Files\KeePassXC'
 $env:PATH += ';C:\Program Files\Microsoft VS Code Insiders\bin'
 $env:PATH += ';C:\Program Files\Oracle\VirtualBox'
 $env:PATH += ';C:\Program Files\PowerToys'
 
 $env:PATH += ';C:\totalcmd'
 $env:PATH += ';C:\msys64'
+$env:PATH += ';C:\msys64\usr\bin'
+$env:PATH += ';C:\msys64\mingw64\bin'
 
 # Scoop Dirs:
 # Winpython
@@ -122,10 +124,9 @@ $env:PATH += ';C:\Users\fac\scoop\apps\ruby\current\bin'
 # $env:PATH += ';C:\Users\fac\scoop\apps\ruby\current\gems'
 
 # Git. 03/23/2020. Moved to a new dir. Also btw there's an installation of it in VS
+$env:GITDIR = 'C:\Program Files\Git'
 # $env:GITDIR =  'C:\\Users\\fac\\scoop\\apps\\git-with-openssh\\current'
-# $env:PATH += ";$env:GITDIR\\mingw64\\libexec\\git-core;$env:GITDIR\\mingw64\\bin;$env:GITDIR\\cmd"
-# $env:PATH += ';C:\msys64\mingw64\bin'
-# $env:PATH += ';C:\msys64\usr\bin'
+$env:PATH += ";$env:GITDIR\\mingw64\\libexec\\git-core;$env:GITDIR\\mingw64\\bin;$env:GITDIR\\cmd"
 
 # Your personal folders
 $env:PATH += ';C:\Users\fac\AppData\Roaming\Python\Python38\Scripts'
@@ -139,10 +140,7 @@ $env:PATH += ';C:\Users\fac\bin'
 # Holy bajeezuz is this important!
 if ($env:VIRTUAL_ENV) { $env:PATH = $env:VIRTUAL_ENV + '\Scripts;' + $env:PATH}
 
-
-# }}}
-
-# Beginning of me reworking this: {{{
+# Beginning of me reworking this:
 $env:HOME = 'C:\Users\fac'
 
 (Get-PSProvider 'function').home = 'C:\Users\fac'
@@ -154,7 +152,7 @@ Set-Item -force -path "env:ProfileRoot" -value "$PSScriptRoot\.."
 # Not supposed to actually do it that way
 $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
-# Unix Utilities: {{{
+# Unix Utilities:
 
 if (Test-Path Alias:head) { Remove-Item Alias:head }
 function head() { Get-Content -TotalCount 30 $args }
@@ -165,13 +163,13 @@ function tail() { Get-Content -Tail 30 $args }
 # Between you and I, i have no idea if thi is doing anything. oh well.
 # Here's an example of how to pipe to /dev/null if nothing else
 Out-Null -InputObject 'dircolors -c ~/.dircolors'
-# }}}
+
 
 # ------------------
 # functions - start
 # ------------------
 
-# Path: {{{
+# Path:
 # function description:
 #    Allows an actual fucking human to parse the `$PATH`.
 #
@@ -184,7 +182,7 @@ Out-Null -InputObject 'dircolors -c ~/.dircolors'
 function path() { Write-Output "($env:PATH)".Split(';') }
 
 function psmodulepath() { Write-Output "($env:PSModulePATH)".Split(';') }
-# }}}
+
 
 ###############################
 ### Set-WindowSize
@@ -211,7 +209,7 @@ $host.UI.RawUI.WindowTitle = Microsoft.PowerShell.Management\Split-Path $pwd.Pro
 $host.ui.RawUI.BackgroundColor = "Black"
 $host.ui.RawUI.ForegroundColor = "White"
 
-# Make: {{{
+# Make:
 # So i accidentally backgrounded a command and then was trying to figure out how to `fg` it.
 # wa reading output from (Get-Job).* and (Get-Job).Command outputs this
 # which is crazy to me but also if we make it a function then we don't need the
@@ -221,7 +219,7 @@ $host.ui.RawUI.ForegroundColor = "White"
 # $j = Get-Job
 # $received = $j | Receive-Job
 # function make() { Microsoft.PowerShell.Management\Set-Location -LiteralPath $using:pwd ; .\make $args }
-# }}}
+
 
 if ( Test-Path alias:sl ) { Remove-Item alias:sl -Force }
 # FFS!
@@ -239,12 +237,10 @@ if ( ! ( Test-Path alias:clist) ) { New-Alias clist Get-Local-ChocoPackages }
 
 function Invoke-JQ() { jq -SMRr . $args }
 
-# }}}
-
-# Prompt: {{{
+# Prompt:
 # This scriptblock runs every time the prompt is returned.
 
-# Cmder PowerShell Prompt: {{{
+# Cmder PowerShell Prompt:
 $moduleInstallerAvailable = [bool](Get-Command -Name 'Install-Module' -ErrorAction SilentlyContinue | Out-Null)
 
 # Compatibility with PS major versions <= 2
@@ -293,7 +289,7 @@ function Write-GitPrompt() {
         # close git prompt
         Write-Host $arrowSymbol -NoNewLine -BackgroundColor $defaultBackColor -ForegroundColor $gitBackColor
     }
-}  # }}}
+}
 
 function getGitStatus($Path) {   # {{{
 
@@ -325,9 +321,9 @@ function tildaPath($Path) {
 
 [ScriptBlock]$PostPrompt = {}
 ## <Continue to add your own>
-# }}}
 
-<# PoshGit Holy Hell: {{{
+
+<# PoshGit Holy Hell:
 They fucking killed it dude. #>
 function PrePrompt() {
 $settings = $global:GitPromptSettings
@@ -375,7 +371,7 @@ if (!$settings) {
         }
     }
 }
-# }}}
+
 
 [ScriptBlock]$Prompt = {
 
@@ -403,13 +399,11 @@ $origLastExitCode = $global:LASTEXITCODE
     # Set COLUMNS so git knows how wide the terminal is
     $Env:COLUMNS = $Host.UI.RawUI.WindowSize.Width
   }
-}  # }}}
+}
 
 $prompt
 
-# }}}
-
-# Aliases: {{{
+# Aliases:
 
 # Mar 14, 2020: Look what I found today!
 function tree { Show-Tree -ShowLeaf -UseAsciiLineArt $args }
@@ -422,7 +416,7 @@ function grep { "$env:GITDIR" + "\usr\bin\grep.exe" }
 if (Test-Path alias:rm) { Remove-Item Alias:rm }
 if (Test-Path alias:curl) { Remove-Item Alias:curl }
 
-# ls aliases: {{{
+# ls aliases:
 
 # damn i love how every time i do this i use a slightly different syntax lol
 if ( Test-Path alias:ls ) { Remove-Item alias:ls -Force }
@@ -436,7 +430,7 @@ if ( Test-Path alias:ls ) { Remove-Item alias:ls -Force }
 # function CloserToLs { InvokeLS  -Fh --color=always $args }
 # function ls { CloserToLs $args }
 
-function ls() { C:/Users/fac/scoop/apps/git-with-openssh/current/usr/bin/ls.exe -Fh --hide="NTUSER.*" --color=always $args }
+function ls() { ls.exe -Fh --hide="NTUSER.*" --color=always $args }
 function l() {  ls -Fh --hide=NTUSER.* --color=always $args }
 function la() { ls -AFh --hide=NTUSER.* --color=always }
 function ldir() { ls -Fhpo --hide="NTUSER.*" $args | grep /$ }
@@ -457,9 +451,7 @@ if ( Test-Path alias:mkdir ) {
 # Huh how do we do this part right. maybe?
 function mk() { mkdir -pv $args[0] ; cd $args[1] }
 
-# }}}
-#
-# Wall of Git aliases: {{{
+# Wall of Git aliases:
 
 if ( Test-Path alias:gci ) {
     Remove-Item alias:gci -Force
@@ -570,13 +562,9 @@ function grei() { git.exe rebase --interactive $args }
 function grec() { git.exe rebase --continue $args }
 function grea() { git.exe rebase --abort $args }
 
-# }}}
+# Readline:
 
-# }}}
-
-# Readline: {{{
-
-# Basic Bindings: {{{
+# Basic Bindings:
 # https://github.com/PowerShell/PSReadLine#post-installation
 # No just don't import it now that we have it in the using directives up top
 # if ($host.Name -eq 'ConsoleHost') {
@@ -631,11 +619,11 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
-# }}}
 
-# From the author of PSReadline himself: {{{
 
-# Show Command History: {{{
+# From the author of PSReadline himself:
+
+# Show Command History:
 # This key handler shows the entire or filtered history using Out-GridView. The
 # typed text is used as the substring pattern for filtering. A selected command
 # is inserted to the command line without invoking. Multiple command selection
@@ -683,9 +671,9 @@ Set-PSReadlineKeyHandler -Key F7 `
         [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
         [Microsoft.PowerShell.PSConsoleReadLine]::Insert(($command -join "`n"))
     }
-}  # }}}
+}
 
-# Build Current Directory: {{{
+# Build Current Directory:
 # This is an example of a macro that you might use to execute a command.
 # This will add the command to history.
 Set-PSReadlineKeyHandler -Key Ctrl+B `
@@ -696,9 +684,9 @@ Set-PSReadlineKeyHandler -Key Ctrl+B `
     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("msbuild")
     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
-# }}}
 
-# A few simple bindings: {{{
+
+# A few simple bindings:
 
 # Clipboard interaction is bound by default in Windows mode, but not Emacs mode.
 # wt handles this for us
@@ -720,16 +708,16 @@ Set-PSReadlineKeyHandler -Key Alt+F -Function ShellForwardWord
 Set-PSReadlineKeyHandler -Key Shift+Alt+B -Function SelectShellBackwardWord
 Set-PSReadlineKeyHandler -Key Shift+Alt+F -Function SelectShellForwardWord
 
-# }}}
 
-# region Smart Insert/Delete: {{{
+
+# region Smart Insert/Delete:
 
 # The next four key handlers are designed to make entering matched quotes
 # parens, and braces a nicer experience.  I'd like to include functions
 # in the module that do this, but this implementation still isn't as smart
 # as ReSharper, so I'm just providing it as a sample.
 
-# Smart \": {{{
+# Smart \":
 
 Set-PSReadlineKeyHandler -Key '"', "'" `
     -BriefDescription SmartInsertQuote `
@@ -821,9 +809,9 @@ Set-PSReadlineKeyHandler -Key '"', "'" `
 
     # We failed to be smart, so just insert a single quote
     [Microsoft.PowerShell.PSConsoleReadLine]::Insert($quote)
-}  # }}}
+}
 
-# InsertPairedBraces: {{{
+# InsertPairedBraces:
 Set-PSReadlineKeyHandler -Key '(', '{', '[' `
     -BriefDescription InsertPairedBraces `
     -LongDescription "Insert matching braces" `
@@ -841,9 +829,9 @@ Set-PSReadlineKeyHandler -Key '(', '{', '[' `
     $cursor = $null
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
     [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition($cursor - 1)
-}  # }}}
+}
 
-# SmartCloseBraces: {{{
+# SmartCloseBraces:
 Set-PSReadlineKeyHandler -Key ')', ']', '}' `
     -BriefDescription SmartCloseBraces `
     -LongDescription "Insert closing brace or skip" `
@@ -860,9 +848,9 @@ Set-PSReadlineKeyHandler -Key ')', ']', '}' `
     else {
         [Microsoft.PowerShell.PSConsoleReadLine]::Insert("$($key.KeyChar)")
     }
-}  # }}}
+}
 
-# SmartBackspace: {{{
+# SmartBackspace:
 Set-PSReadlineKeyHandler -Key Backspace `
     -BriefDescription SmartBackspace `
     -LongDescription "Delete previous character or matching quotes/parens/braces" `
@@ -892,11 +880,11 @@ Set-PSReadlineKeyHandler -Key Backspace `
             [Microsoft.PowerShell.PSConsoleReadLine]::BackwardDeleteChar($key, $arg)
         }
     }
-}  # }}}
+}
 
-#endregion Smart Insert/Delete  # }}}
+#endregion Smart Insert/Delete
 
-# SaveInHistory: {{{
+# SaveInHistory:
 # Sometimes you enter a command but realize you forgot to do something else first.
 # This binding will let you save that command in the history so you can recall it,
 # but it doesn't actually execute.  It also clears the line with RevertLine so the
@@ -912,9 +900,9 @@ Set-PSReadlineKeyHandler -Key Alt+w `
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
     [Microsoft.PowerShell.PSConsoleReadLine]::AddToHistory($line)
     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-}  # }}}
+}
 
-# Insert text from the clipboard as a here string: {{{
+# Insert text from the clipboard as a here string:
 Set-PSReadlineKeyHandler -Key Alt+v `
     -BriefDescription PasteAsHereString `
     -LongDescription "Paste the clipboard text as a here string" `
@@ -930,9 +918,9 @@ Set-PSReadlineKeyHandler -Key Alt+v `
     else {
         [Microsoft.PowerShell.PSConsoleReadLine]::Ding()
     }
-}  # }}}
+}
 
-# ParenthesizeSelection: {{{
+# ParenthesizeSelection:
 # Sometimes you want to get a property of invoke a member on what you've entered so far
 # but you need parens to do that.  This binding will help by putting parens around the current selection,
 # or if nothing is selected, the whole line.
@@ -957,9 +945,9 @@ Set-PSReadlineKeyHandler -Key 'Alt+(' `
         [Microsoft.PowerShell.PSConsoleReadLine]::Replace(0, $line.Length, '(' + $line + ')')
         [Microsoft.PowerShell.PSConsoleReadLine]::EndOfLine()
     }
-}  # }}}
+}
 
-# ToggleQuoteArgument: {{{
+# ToggleQuoteArgument:
 # Each time you press Alt+', this key handler will change the token
 # under or before the cursor.  It will cycle through single quotes, double quotes, or
 # no quotes each time it is invoked.
@@ -1014,9 +1002,9 @@ Set-PSReadlineKeyHandler -Key "Alt+'" `
             $tokenText.Length,
             $replacement)
     }
-}   # }}}
+}
 
-# ExpandAliases: {{{
+# ExpandAliases:
 # This example will replace any aliases on the command line with the resolved commands.
 Set-PSReadlineKeyHandler -Key "Alt+%" `
     -BriefDescription ExpandAliases `
@@ -1051,9 +1039,9 @@ Set-PSReadlineKeyHandler -Key "Alt+%" `
             }
         }
     }
-}   # }}}
+}
 
-# F1 for help on the command line - naturally: {{{
+# F1 for help on the command line - naturally:
 Set-PSReadlineKeyHandler -Key F1 `
     -BriefDescription CommandHelp `
     -LongDescription "Open the help window for the current command" `
@@ -1086,11 +1074,11 @@ Set-PSReadlineKeyHandler -Key F1 `
             }
         }
     }
-}  # }}}
+}
 
 $global:PSReadLineMarks = @{ }
 
-# Ctrl+Shift+j then type a key to mark the current directory.: {{{
+# Ctrl+Shift+j then type a key to mark the current directory.:
 Set-PSReadlineKeyHandler -Key Ctrl+Shift+j `
     -BriefDescription MarkDirectory `
     -LongDescription "Mark the current directory" `
@@ -1099,9 +1087,9 @@ Set-PSReadlineKeyHandler -Key Ctrl+Shift+j `
 
     $key = [Console]::ReadKey($true)
     $global:PSReadLineMarks[$key.KeyChar] = $pwd
-}  # }}}
+}
 
-# Jump to marked directory: {{{
+# Jump to marked directory:
 # Ctrj+j then the same key will change back to that directory without
 # needing to type cd and won't change the command line.
 Set-PSReadlineKeyHandler -Key Ctrl+j `
@@ -1116,9 +1104,9 @@ Set-PSReadlineKeyHandler -Key Ctrl+j `
         cd $dir
         [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
     }
-}   # }}}
+}
 
-# ShowDirectoryMarks: {{{
+# ShowDirectoryMarks:
 Set-PSReadlineKeyHandler -Key Alt+j `
     -BriefDescription ShowDirectoryMarks `
     -LongDescription "Show the currently marked directories" `
@@ -1130,9 +1118,9 @@ Set-PSReadlineKeyHandler -Key Alt+j `
     Format-Table -AutoSize | Out-Host
 
     [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
-}  # }}}
+}
 
-# CommandValidationHandler: {{{
+# CommandValidationHandler:
 # So wait is the point of this that it fixes cmt to commit
 Set-PSReadlineOption -CommandValidationHandler {
     param([CommandAst]$CommandAst)
@@ -1148,13 +1136,9 @@ Set-PSReadlineOption -CommandValidationHandler {
             }
         }
     }
-} # }}}
+}
 
-# }}}
-
-# }}}
-
-# FZF:  {{{
+# FZF:
 if (Test-Path $env\FZF_DEFAULT_COMMAND -IsValid){  # {{{FZF Env vars
 
     # $env:FZF_DEFAULT_COMMAND = 'rg --hidden --color=ansi --follow --no-messages --no-heading --smart-case --no-filename --glob "!.git/*" -g "!**node_modules/**" --passthru --max-depth 10 --max-count 2 --max-columns 200 -C 0 --files '
@@ -1174,10 +1158,9 @@ if (Test-Path $env\FZF_DEFAULT_COMMAND -IsValid){  # {{{FZF Env vars
     $env:FZF_ALT_C_OPTS = " --cycle --ansi --tiebreak begin,length,index --no-multi --filepath-wor' --header 'Press ? to toggle preview' --border --prompt 'FZF Dir Finder' --preview 'ls -lRhF --color=always {}' | head -n 200 "
 
 
-} # }}}
+}
 
-# Colorscheme: {{{
-
+# Colorscheme:
 function _gen_fzf_default_opts() {
     $color00='#1d2021'
     $color01='#3c3836'
@@ -1201,14 +1184,14 @@ function _gen_fzf_default_opts() {
 # Also I'm gonna tack on the binds that I want everywhere
 $env:FZF_COLORSCHEME += "--bind 'ctrl-u:half-page-up,ctrl-d:half-page-down,ctrl-v:preview-page-up,alt-v:preview-page-down,alt-j:preview-down,alt-k:preview-up,?:toggle-preview,ctrl-k:kill-line,change:top'"
 }
-_gen_fzf_default_opts  # }}}
+_gen_fzf_default_opts
 
 $env:FZF_DEFAULT_OPTS = $env:FZF_DEFAULT_OPTS + $env:FZF_COLORSCHEME
 $env:FZF_CTRL_R_OPTS = $env:FZF_CTRL_R_OPTS + $env:FZF_COLORSCHEME
 $env:FZF_CTRL_T_OPTS = $env:FZF_CTRL_T_OPTS + $env:FZF_COLORSCHEME
 $env:FZF_ALT_C_OPTS = $env:FZF_ALT_C_OPTS + $env:FZF_COLORSCHEME
 
-# Utilizing the PSFzf API: {{{
+# Utilizing the PSFzf API:
 
 # this is needed because he aliases fzf to fd but i have fd-find
 if ( Test-Path alias:fd ) { Remove-Item alias:fd -Force }
@@ -1219,9 +1202,8 @@ function fcd() { cd (gci -Recurse | where {$_.PSIsContainer} | Invoke-FuzzySetLo
 # Yo don't use his argument list let's just utilize a little powershell and we'll get there
 Remove-PSReadlineKeyHandler Ctrl-t
 Remove-PSReadlineKeyHandler -Chord 'Ctrl-r'
-# }}}
 
-# Invoke-FuzzyEdit: {{{
+# Invoke-FuzzyEdit:
 
 # TODO: Doesn't work
 Set-PSReadlineKeyHandler -Key "Alt+t" `
@@ -1237,9 +1219,9 @@ Set-PSReadlineKeyHandler -Key "Alt+t" `
     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
     [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(gci -Recurse | where {$_.PSIsContainer} | Invoke-Fzf)")
     [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
-    } # }}}
+    }
 
-# ReverseSearchHistory: {{{
+# ReverseSearchHistory:
 Set-PSReadlineKeyHandler -Chord 'Alt+r' `
                          -BriefDescription "ReverseSearchHistory"  `
                          -Description "Search the user's command history using FZF." `
@@ -1247,20 +1229,19 @@ Set-PSReadlineKeyHandler -Chord 'Alt+r' `
     [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
     [Microsoft.PowerShell.PSConsoleReadline]::Insert("$(Get-History | ForEach-Object { $_.CommandLine } | fzf.exe)")
     [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
-}  # }}}
+}
 
 Set-PSReadlineKeyHandler -Chord 'Ctrl+x,Ctrl+g' -ScriptBlock {  # {{{
   [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
   [Microsoft.PowerShell.PSConsoleReadline]::Insert("cd $(ghq list -p | fzf)")
   [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
-}  # }}}
+}
 
-# {{{
 Set-PSReadlineKeyHandler -Key 'Ctrl+l' -ScriptBlock {
   [Microsoft.PowerShell.PSConsoleReadline]::RevertLine()
   [Microsoft.PowerShell.PSConsoleReadline]::AcceptLine()
   Clear-Host
-}  # }}}
+}
 
 # TODO: Doesn't work but most of the idea is right
 Set-PSReadLineKeyHandler -Key "Alt+Shift+c"  `
@@ -1285,9 +1266,7 @@ Import-Module PSFzf -ArgumentList "Ctrl+t","Alt+c","Alt+a","Ctrl+r"
 #                           -BriefDescription "FZF File widget" `
 #                           -ScriptBlock { Invoke-Fzf -Preview "bat --color=always {}" }
 
-# }}}
-
-### WinPython_PS_Prompt.ps1 ###  {{{
+### WinPython_PS_Prompt.ps1 ###
 ###############################
 
 $0 = $myInvocation.MyCommand.Definition
@@ -1390,7 +1369,7 @@ if (-not (Test-Path $env:winpython_ini)) {
     }
 }
 
-# Python Env vars:
+# Python Env Vars:
 $env:PYTHONASYNCIODEBUG=0
 $env:PYTHONCASEOK=1
 $env:PYTHONCOERCECLOCALE="warn"
@@ -1401,14 +1380,24 @@ $env:PYTHONDUMPREFS=1
 $env:PYTHONIOENCODING='utf-8:surrogateescape'
 $env:PYTHONMALLOC="debug"
 # $env:PYTHONMALLOCSTATS="nonemptystring"
+$env:PYTHONSTARTUP="C:\Users\fac\site_customize.py"
 $env:PYTHONTHREADDEBUG=1
 # $env:PYTHONTRACEMALLOC=1
 $env:PYTHONUTF8=1
 
 $env:IPYTHONDIR="$env:HOME\.ipython"
-# }}}
 
-# Set-MsbuildDevEnvironment: {{{
+$env:PIP_UNSTABLE_FEATURE="resolver"
+# Realistically more of a reminder this exists
+$env:PIP_VERBOSE=0
+$env:PIP_UPGRADE_STRATEGY="eager"
+$env:PIP_USE_PEP517="True"
+$env:PY_PYTHON=3
+$env:PY_PYTHON=3.8
+
+
+
+# Set-MsbuildDevEnvironment:
 #.SYNOPSIS
 # Grabs all environment variable set after vcvarsall.bat is called and pulls
 # them into the Powershell environment.
@@ -1420,7 +1409,7 @@ function Set-MsbuildDevEnvironment
         [switch]$Prerelease
     )
     $ErrorActionPreference = 'Stop'
-    Import-LocalModule -Name 'VSSetup'
+    Import-Module -Name 'VSSetup'
     Write-Verbose 'Searching for VC++ instances'
     $vsinfo = `
         Get-VSSetupInstance  -All -Prerelease:$Prerelease `
@@ -1446,9 +1435,20 @@ function Set-MsbuildDevEnvironment
     }
     Write-Host "Dev environment variables set" -ForegroundColor Green
 }
-# }}}
 
-# Other: {{{
+# NOTE: Takes a long ass time
+Set-MsbuildDevEnvironment
+
+# Unsure of why this isn't able to work. Something about the metadata from some
+# attribute being messed up. Might simply be the function call above.
+# Regardless startup is ~20 seconds so let's not make it worse.
+# if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\Launch-VsDevShell.ps1") {
+#     Import-Module "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\Launch-VsDevShell.ps1"
+# }
+
+
+
+# Other:
 $env:CFLAGS="-Wno-unused-value -Wno-empty-body -Qunused-arguments -no-integrated-as -fstack-protector-strong -O3 "
 $env:CC="clang"
 $env:CXX="clang++"
@@ -1458,10 +1458,13 @@ $env:XDG_CONFIG_HOME='C:\Users\fac\.config'
 # $env:LANG='en_US.UTF-8'
 # $env:LANGUAGE='en_US.UTF-8'
 # vim starts up so much faster that you HAVE to keep this set to this
-$env:LC_ALL="C"
-$env:LC_COLLATE="C.UTF-8"
-$env:LANG="C"
-$env:LANGUAGE="C"
+# $env:LC_ALL=C
+$env:LC_CTYPE="C.UTF-8"
+# Xonsh
+# $env:LC_COLLATE="C.UTF-8"
+$env:LC_COLLATE="C"
+$env:LANG="en_US.UTF-8"
+$env:LANGUAGE="en_US.UTF-8"
 # $env:LANG="en_US.UTF-8"
 
 # Holy cow do i need more. I realize that i typically set these in the GUI
@@ -1469,11 +1472,18 @@ $env:LANGUAGE="C"
 # $env:TERM='cygwin'
 $env:EDITOR='nvim'
 $env:VISUAL='nvim-qt'
-$env:PAGER="less -JRrKMNLigeF"
+$env:PAGER="less -JRKMrLigeFW"
 $env:MANPAGER=$env:PAGER
+
+$env:BROWSER="C:\Program Files\Firefox Nightly\firefox.exe"
+
 # Also seemingly don't set $TERM to xterm256-color. i lost the changes you get
 # to the cursor in nvim
+
 $env:LESSHISTSIZE=5000  # default is 100
+$env:LESSEDIT="nvim -q '%F %lm'"
+$env:LESSCOLORIZER="pygmentize"
+
 $env:POWERSHELL_TELEMETRY_OPTOUT=1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT=1
 $env:NPY_DISTUTILS_APPEND_FLAGS=1
@@ -1493,11 +1503,9 @@ $env:NVIM_PYTHON_LOG_LEVEL = "logging.DEBUG"
 
 Write-Output "Success: Sourced Documents/PowerShell/profile.ps1"
 
-# }}}
-
-# Cleanup: {{{
+# Cleanup:
 if ( $sw.IsRunning ) {
     write-host $sw.ElapsedMilliseconds
     $sw.Stop()
 }
-# }}}
+

@@ -139,6 +139,7 @@
     autocrlf = False
 	compression = 5
     editor = nvim-qt
+    editor = vim
     editor = nvim
     eol = lf
     excludesfile = "$HOME/.config/git/ignore"
@@ -163,6 +164,9 @@
     # oh btw dont list things multiple times.
     # i tried doing that to indicate fallbacks but this file doesnt work like that
     pager = bat
+    pager = $PAGER
+    pager = less
+    pager = more
     protocol = ssh
     symlink = True
     sshCommand = ssh
@@ -272,6 +276,7 @@
     autocorrect = 5
     format = man
     format = web
+    format = browser
 
 [index]
     version = 4

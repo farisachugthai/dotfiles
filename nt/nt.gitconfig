@@ -5,9 +5,8 @@
     autosetuprebase=always
 
 [core]
-    sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
     pager = less -RrFMJKNeg
-    editor = vim
+    editor = nvim
     symlinks = true
     filemode = false
     longpaths = true
@@ -23,18 +22,9 @@
 [credential "helperselector"]
 	selected = manager
 
-#[credential]
-	# helper = manager
-
 [credential "helper"]
 	selected = wincred
-	; selected = wincred
 
-[filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
 [diff]
     tool = default-difftool
 
@@ -58,9 +48,16 @@
 	cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\TeamFoundation\\Team Explorer\\vsdiffmerge.exe\" \"$LOCAL\" \"$REMOTE\" //t
 	keepBackup = false
 
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+
 [include]
 	path = C:/Users/Casey/.gitconfig.local
-	# path = C:/Program Files (x86)/Git/etc/gitconfig
+	path = C:/Users/fac/.gitconfig.local
+
 
 [gui]
 	fontui = -family \"FuraMono Nerd Font Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
@@ -70,23 +67,15 @@
 	diffcontext = 1
 	matchtrackingbranch = true
 	encoding = utf-8
-	recentrepo = C:/Users/Casey/projects/dotfiles
 
 [guitool "nvim"]
 	cmd = nvim -d $LOCAL $REMOTE $BASE $MERGED -c 'wincmd w' -c'wincmd J'
 	confirm = yes
 
-# [mergetool]
-#     tool = "nvimdiff"
+[mergetool]
+	tool = nvimdiff
 
 [mergetool "nvimdiff"]
-    cmd = nvim -d $LOCAL $REMOTE $MERGED -c 'wincmd w' -c 'wincmd J'
-    # if it's not immediately clear what's going on, read up from this link:
-    # http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
-    # from this link we see that BASE is the commit that the file diverged at.
-    # local and remote are the 2 paths we're trying to merge, and we can
-    # determine which changes are necessary and what needs to be kept by
-    # looking at those 4 buffers as a timeline
 	prompt = false
 
 [mergetool "vsdiffmerge"]
@@ -96,11 +85,15 @@
 
 [pull]
 	rebase = true
-
-[user]
-	email = "farischugthai@gmail.com "
-	name = farisachugthai
-
-; [winUpdater]
-; 	recentlySeenVersion = 2.23.0.windows.1
-
+[fetch]
+	prune = true
+[rebase]
+	autoStash = true
+[i18n]
+	filesEncoding = utf-8
+[diff]
+	guitool = nvimdiff
+	tool = vsdiffmerge
+[merge]
+	guitool = nvimdiff
+	tool = vsdiffmerge

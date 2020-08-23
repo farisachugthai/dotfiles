@@ -85,19 +85,6 @@
           "source": "Windows.PowerShell",
           "tabTitle": "PowerShell"
         },
-        { // arch auto added!
-          "commandline": "wsl",
-          "hidden": true,
-          "guid": "{a5a97cb8-8961-5535-816d-772efe0c7a5f}",
-          "name": "arch",
-          "startingDirectory": "//wsl$/root"
-        },
-        {
-            "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-            "hidden": true,
-            "name": "Azure Cloud Shell",
-            "source": "Windows.Terminal.Azure"
-        },
         { // vcvars
           "commandline": "%COMSPEC% /U /E:ON /F:ON /K %PROGRAMFILES(x86)%\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat x64",
           "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
@@ -108,20 +95,21 @@
         },
         {
             "guid": "{fe66f4b8-350f-56bb-adb0-c2ce745f6db5}",
-          "hidden": true,
             "name": "PowerShell (scoop)",
             "source": "Windows.Terminal.PowershellCore"
         },
         {
+            "commandline": "wsl",
             "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
             "name": "Arch",
-            "source": "Windows.Terminal.Wsl"
+            "source": "Windows.Terminal.Wsl",
+            "startingDirectory": "//wsl$/root"
         },
         {
-            "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+            "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
             "hidden": false,
-            "name": "Ubuntu",
-            "source": "Windows.Terminal.Wsl"
+            "name": "Azure Cloud Shell",
+            "source": "Windows.Terminal.Azure"
         }
       ]
     },

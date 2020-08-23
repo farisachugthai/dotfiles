@@ -341,10 +341,6 @@
   "search.showLineNumbers": true,
   "search.smartCase": true,
   "search.useGlobalIgnoreFiles": true,
-  "sync.ignoredExtensions": [
-    "christian-kohler.path-intellisense",
-    "**"
-  ],
   "task.quickOpen.skip": true,
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
@@ -483,4 +479,8 @@
   "git.autofetch": true,
   "python.workspaceSymbols.enabled": true,
   "python.languageServer": "Microsoft",
+  "settingsSync.ignoredExtensions": [
+    "christian-kohler.path-intellisense",
+    "**"
+  ],
 }

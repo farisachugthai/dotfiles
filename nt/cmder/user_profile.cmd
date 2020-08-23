@@ -16,9 +16,9 @@
 :: So this should stay at the top
 chcp 65001 1>nul
 
-:: Vim starts up so much faster that you can never change this
 set LC_CTYPE=C
-set LC_ALL=C
+set LC_COLLATE=C.UTF-8
+:: set LC_ALL=C
 
 :: And these get everyone else to stop complaining that non utf-8
 SET LANG=en_US.UTF-8
@@ -88,12 +88,17 @@ SET "PY_PYTHON=3"
 SET "PY_PYTHON=3.8"
 
 :: https://docs.python.org/3/using/cmdline.html
-SET "PYTHONASYNCIODEBUG=1"
+SET "PYTHONASYNCIODEBUG=0"
 SET "PYTHONCASEOK=1"
+SET "PYTHONCOERCELOCALE=warn"
+SET PYTHONDEVMODE=1
 SET "PYTHONDOCS=C:\Users\fac\Dropbox\python\official-python-docs\3.7"
 SET "PYTHONDONTWRITEBYTECODE=1"
 SET "PYTHONIOENCODING=utf-8:strict"
 SET "PYTHONMALLOC=debug"
+:: $env:PYTHONMALLOCSTATS="nonemptystring"
+set "PYTHONSTARTUP=C:\Users\fac\site_customize.py"
+set PYTHONTHREADDEBUG=1
 SET "PYTHONUNBUFFERED=1"
 SET "PYTHONUTF8=1"
 :: Holy actual fuck does this get annoying

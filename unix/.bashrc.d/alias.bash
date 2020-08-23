@@ -12,16 +12,16 @@
 # -o is similar to -l but don't print group. So wait  that's  the  same  thing
 # as -lg...? Why.
 # -p means append / indicator to directoreis
-alias l='ls -hF --color=always'
-alias la='ls -AFhg --color=always'
-alias ldir='ls -po --color=always | grep /$'
+alias l='ls -hF --color=always --hide="NTUSER.*" '
+alias la='ls -AF --color=always --hide="NTUSER.*" '
+alias ldir='ls -po --color=always --hide="NTUSER.*"  | grep /$'
 
-alias lf='ls -AFgo --color=always | grep ^-'
+alias lf='ls -AFgo --color=always --hide="NTUSER.*"  | grep ^-'
 # You can use this one to dereference the symlinks aka show the real file
 # nah don't do that because there's a function with lk
 # alias lk='ls -lhAgoF --dereference --color=always'
-alias ll='ls -Fl --color=always'
-alias lm='ls -AFhogl --color=always'
+alias ll='ls -Fl --color=always --hide="NTUSER.*" '
+alias lm='ls -AFhogl --color=always --hide="NTUSER.*" '
 alias lr='ls -AlgFhtr --color=always'
 alias ls='ls -hF --color=always'
 alias lt='ls -Alght --color=always'
@@ -149,6 +149,7 @@ complete -F _git_tag gt
 
 # Other: {{{1
 
+alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 3000 sqlite3 -interactive"
 #   enable   color   support   of   ls   and   also    add    handy    aliases
 if [[ -x "$PREFIX/dircolors" ]]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"

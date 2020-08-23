@@ -38,6 +38,10 @@ fi
 # }}}
 
 # Build: {{{
+# [[ -z "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
+[[ -n "$(command -v lesspipe.sh)" ]] && export LESSOPEN="|lesspipe.sh %s"; eval "$(lesspipe.sh)"
+
+# Shellcheck
 if [[ -n "$(command -v shellcheck)" ]]; then
   export SHELLCHECKOPTS='--shell=bash -X --exclude=SC2016'
 fi
@@ -190,6 +194,8 @@ firstpath "$HOME/.local/bin"
 pathadd "$_ROOT/local/bin"
 pathadd "$_ROOT/libexec"
 pathadd "$_ROOT/libexec/git-core"
+
+test "$(command -v ruby)" &&  "$(ruby -rrubygems -e puts Gem.user_dir)/bin"
 
 # add some cool colors to ls
 test -f "$HOME/.dircolors" && [[ -n "$(command -v dircolors)" ]] && eval "$( dircolors -b $HOME/.dircolors )"
